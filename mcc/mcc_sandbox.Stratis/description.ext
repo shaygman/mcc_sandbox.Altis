@@ -1,0 +1,446 @@
+#include "defines.hpp"
+
+author = Shay_gman;
+overviewPicture = "data\mcc_loadingScreen.paa";
+overviewText = "Inspired by VBS and it's in game real time editor we tried to create something similar that will let any player as the role of an instructor or as we call him the mission maker, to create different real life scenarios and put them to the test. Then he can alter and change the mission progress as he see fit in order to give the other players a more divert and intense experience.";
+onLoadName = MCC Sandbox;
+loadScreen = "data\mcc_loadingScreen.paa";
+onLoadMission = MCC Sandbox is a dynamic mission environment when one can set missions and play them on the fly;
+
+respawn      = "BASE";
+respawndelay = 4;
+disabledAI   = 0;
+
+class Header
+{
+	gameType = Coop;
+	minPlayers = 1;
+	maxPlayers = 149;
+};
+
+class RscTitles
+{
+	titles[]={"img"};
+
+	class img
+	{
+		idd=-1;
+		movingEnable=0;
+		duration=5;  
+		fadein=2; 
+        fadeout = 1;		  
+		name="img";
+		controls[]={"GR"};
+
+		class GR : MCC_RscPicture
+		{
+			style=48;
+			text= "title.jpg";
+			sizeEx = 0.4;
+			x=0.25;
+            y=0.3;
+            w=0.5;
+            h=0.4;
+        };
+	};
+};
+
+class CfgSounds	{	
+	class noSound
+	{
+	name = "noSound";
+	sound[] = {"", 0, 1};
+	titles[] = {};
+	};
+	//================================Arti sound================================
+	class requestO1 {
+	name = "requestO1";
+	sound[] = {"sounds\artysounds\1requestO.ogg", 1, 1};
+	titles[] = {};
+	};
+	class requestS1 {
+	name = "requestS1";
+	sound[] = {"sounds\artysounds\1requestS.ogg", 1, 1};
+	titles[] = {};
+	};
+	class gridO2 {
+	name = "gridO2";
+	sound[] = {"sounds\artysounds\2gridO.ogg", 1, 1};
+	titles[] = {};
+	};
+	class gridS2 {
+	name = "gridS2";
+	sound[] = {"sounds\artysounds\2gridS.ogg", 1, 1};
+	titles[] = {};
+	};
+	class splashO3 {
+	name = "splashO3";
+	sound[] = {"sounds\artysounds\3splashO.ogg", 1, 1};
+	titles[] = {};
+	};
+	class splashS3 {
+	name = "splashS3";
+	sound[] = {"sounds\artysounds\3splashS.ogg", 1, 1};
+	titles[] = {};
+	};
+	class messegeS4 {
+	name = "messegeS4";
+	sound[] = {"sounds\artysounds\4messegeS.ogg", 1, 1};
+	titles[] = {};
+	};
+	class messegeO4 {
+	name = "messegeO4";
+	sound[] = {"sounds\artysounds\4messegeO.ogg", 1, 1};
+	titles[] = {};
+	};
+	class shoutS5 {
+	name = "shoutS5";
+	sound[] = {"sounds\artysounds\5shoutS.ogg", 1, 1};
+	titles[] = {};
+	};
+	class shoutO5 {
+	name = "shoutO5";
+	sound[] = {"sounds\artysounds\5shoutO.ogg", 1, 1};
+	titles[] = {};
+	};
+	class splashO6 {
+	name = "splashO6";
+	sound[] = {"sounds\artysounds\6splashO.ogg", 1, 1};
+	titles[] = {};
+	};
+	class splashS6 {
+	name = "splashS6";
+	sound[] = {"sounds\artysounds\6splashS.ogg", 1, 1};
+	titles[] = {};
+	};
+	class endmissionO7 {
+	name = "endmissionO7";
+	sound[] = {"sounds\artysounds\7endmissionO.ogg", 1, 1};
+	titles[] = {};
+	};
+	class endmissionS7 {
+	name = "endmissionS7";
+	sound[] = {"sounds\artysounds\7endmissionS.ogg", 1, 1};
+	titles[] = {};
+	};
+		
+	class bon_Shell_In_v01 {
+	name = "bon_Shell_In_v01";
+	sound[] = {"sounds\bon_Shell_In_v01.wss", 3, 1};
+	titles[] = {};
+	};
+	class bon_Shell_In_v02 {
+	name = "bon_Shell_In_v02";
+	sound[] = {"sounds\bon_Shell_In_v02.wss", 3, 1};
+	titles[] = {};
+	};
+	class bon_Shell_In_v03 {
+	name = "bon_Shell_In_v03";
+	sound[] = {"sounds\bon_Shell_In_v03.wss", 3, 1};
+	titles[] = {};
+	};
+	class bon_Shell_In_v04 {
+	name = "bon_Shell_In_v04";
+	sound[] = {"sounds\bon_Shell_In_v04.wss", 3, 1};
+	titles[] = {};
+	};
+	class bon_Shell_In_v05 {
+	name = "bon_Shell_In_v05";
+	sound[] = {"sounds\bon_Shell_In_v05.wss", 3, 1};
+	titles[] = {};
+	};
+	class bon_Shell_In_v06 { 
+	name = "bon_Shell_In_v06";
+	sound[] = {"sounds\bon_Shell_In_v06.wss", 3, 1};
+	titles[] = {};
+	};
+	class bon_Shell_In_v07 {
+	name = "bon_Shell_In_v07";
+	sound[] = {"sounds\bon_Shell_In_v07.wss", 3, 1};
+	titles[] = {};
+	};
+	//================================Traps=======================================
+	class suicide
+	{
+	name = "suicide";
+	sound[] = {"sounds\suicide.ogg", 3, 1};
+	titles[] = {};
+	};
+	class dontshot
+	{
+	name = "dontshot";
+	sound[] = {"sounds\dont_shot.ogg", 1, 1};
+	titles[] = {};
+	};
+	class enough
+	{
+	name = "enough";
+	sound[] = {"sounds\enough.ogg", 1, 1};
+	titles[] = {};
+	};
+	class hands
+	{
+	name = "hands";
+	sound[] = {"sounds\hands.ogg", 1, 1};
+	titles[] = {};
+	};
+	class dontmove
+	{
+	name = "dontmove";
+	sound[] = {"sounds\dont_move.ogg", 1, 1};
+	titles[] = {};
+	};
+	class hell
+	{
+	name = "hell";
+	sound[] = {"sounds\hell.ogg", 1, 1};
+	titles[] = {};
+	};
+	class alone
+	{
+	name = "alone";
+	sound[] = {"sounds\alone.ogg", 1, 1};
+	titles[] = {};
+	};
+	class pig
+	{
+	name = "pig";
+	sound[] = {"sounds\pig.ogg", 1, 1};
+	titles[] = {};
+	};
+	class disarm1
+	{
+	name = "disarm1";
+	sound[] = {"sounds\disarm1.ogg", 1, 1};
+	titles[] = {};
+	};
+	class disarm2
+	{
+	name = "disarm2";
+	sound[] = {"sounds\disarm2.ogg", 1, 1};
+	titles[] = {};
+	};
+	class disarm3
+	{
+	name = "disarm3";
+	sound[] = {"sounds\disarm3.ogg", 1, 1};
+	titles[] = {};
+	};
+	class disarm4
+	{
+	name = "disarm4";
+	sound[] = {"sounds\disarm4.ogg", 1, 1};
+	titles[] = {};
+	};
+	class disarmfail1
+	{
+	name = "disarmfail1";
+	sound[] = {"sounds\disarmfail1.ogg", 1, 1};
+	titles[] = {};
+	};
+	class disarmfail2
+	{
+	name = "disarmfail2";
+	sound[] = {"sounds\disarmfail2.ogg", 1, 1};
+	titles[] = {};
+	};
+	class disarmfail3
+	{
+	name = "disarmfail3";
+	sound[] = {"sounds\disarmfail3.ogg", 1, 1};
+	titles[] = {};
+	};
+	class disarmcrit1
+	{
+	name = "disarmcrit1";
+	sound[] = {"sounds\disarmcrit1.ogg", 1, 1};
+	titles[] = {};
+	};
+	class disarmcrit2
+	{
+	name = "disarmcrit2";
+	sound[] = {"sounds\disarmcrit2.ogg", 1, 1};
+	titles[] = {};
+	};
+	//======================================= AC sounds================================
+	class gun1
+	{
+	name = "gun1";
+	sound[] = {"sounds\gun1.ogg", 1, 1};
+	titles[] = {};
+	};
+	class gun2
+	{
+	name = "gun2";
+	sound[] = {"sounds\gun2.ogg", 1, 1};
+	titles[] = {};
+	};
+	class gun3
+	{
+	name = "gun3";
+	sound[] = {"sounds\gun3.ogg", 1, 1};
+	titles[] = {};
+	};
+	class gunReload
+	{
+	name = "gunReload";
+	sound[] = {"sounds\gunReload.ogg", 1, 1};
+	titles[] = {};
+	};
+	class missileLunch
+	{
+	name = "missileLunch";
+	sound[] = {"sounds\missile.ogg", 1, 1};
+	titles[] = {};
+	};
+	class ac130
+	{
+	name = "ac130";
+	sound[] = {"sounds\ac130.ogg", 1, 1};
+	titles[] = {};
+	};
+};
+
+//================================================================F3=======================================================================
+class Params
+{
+
+// ============================================================================================
+
+// F3 - Debug Mode
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+// WARNING: DO NOT DISABLE THIS COMPONENT OR PLACE ANY OTHER PARAMETERS BEFORE OR AFTER IT
+
+        class f_param_debugMode
+        {
+                title = "$STR_f_param_debugMode";
+                values[] = {0,1};
+                texts[] = {"Off","On"};
+                default = 0;
+                code = "f_var_debugMode = %1";
+        }; 
+
+// ============================================================================================
+
+// F3 - Folk Assign Gear Script
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+// WARNING: DO NOT DISABLE THIS COMPONENT OR PLACE ANY OTHER PARAMETERS BEFORE OR AFTER IT
+
+        class f_param_backpacks
+        {
+                title = "$STR_f_param_backpacks";
+                values[] = {0,1,2};
+                texts[] = {"Off","Light","Heavy"};
+                default = 2;
+                code = "f_param_backpacks = %1";
+        }; 
+		
+		 class f_param_divers
+        {
+                title = "SF Uniform";
+                values[] = {0,1,2};
+                texts[] = {"Normal","Divers","Ghillie Suit"};
+                default = 0;
+                code = "f_param_divers = %1";
+        }; 
+		
+		class f_param_nightvision
+        {
+                title = "Night Vision";
+                values[] = {0,1};
+                texts[] = {"Off","On"};
+                default = 1;
+                code = "f_param_nightvision = %1";
+        }; 
+
+// ============================================================================================
+
+// F3 - Mission Conditions Selector
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+        class f_param_timeOfDay
+        {
+                title = "$STR_f_param_timeOfDay";
+                values[] = {0,1,2,3,4,5,6,7};
+                texts[] = {$STR_f_param_timeOfDay_Option0,$STR_f_param_timeOfDay_Option1,$STR_f_param_timeOfDay_Option2,$STR_f_param_timeOfDay_Option3,$STR_f_param_timeOfDay_Option4,$STR_f_param_timeOfDay_Option5,$STR_f_param_timeOfDay_Option6,$STR_f_param_timeOfDay_Option7};
+                default = 3;
+                code = "f_param_timeOfDay = %1";
+        };   
+
+// WARNING: WEATHER PARAMETER IS DISABLED UNTIL CERTAIN ARMA 3 COMMANDS ARE FIXED
+//        class f_param_weather
+//	{
+//		title = "$STR_f_param_weather";
+//		values[] = {0,1,2,3,4,5,6,7,8,9,10};
+//		texts[] = {$STR_f_param_weather_Option0,$STR_f_param_weather_Option1,$STR_f_param_weather_Option2,$STR_f_param_weather_Option3,$STR_f_param_weather_Option4,$STR_f_param_weather_Option5,$STR_f_param_weather_Option6,$STR_f_param_weather_Option7,$STR_f_param_weather_Option8,$STR_f_param_weather_Option9,$STR_f_param_weather_Option10};
+//		default = 0;
+//		code = "f_param_weather = %1";
+//        };
+
+// ============================================================================================
+
+// F3 - AI Skill Selector (coop)
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+//	class f_param_AISkill_Friendly
+//	{
+//		title = "$STR_f_param_AISkill_Friendly";
+//		values[] = {0,1,2,3};
+//		texts[] = {$STR_f_param_AISkill_Option0,$STR_f_param_AISkill_Option1,$STR_f_param_AISkill_Option2,$STR_f_param_AISkill_Option3};
+//		default = 2;
+//		code = "f_param_AISkill_Friendly = %1";
+//	};
+//	class f_param_AISkill_Enemy
+//	{
+//		title = "$STR_f_param_AISkill_Enemy";
+//		values[] = {0,1,2,3};
+//		texts[] = {$STR_f_param_AISkill_Option0,$STR_f_param_AISkill_Option1,$STR_f_param_AISkill_Option2,$STR_f_param_AISkill_Option3};
+//		default = 2;
+//		code = "f_param_AISkill_Enemy = %1";
+//	};
+
+// ============================================================================================
+
+// F3 - AI Skill Selector (A&D)
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+//	class f_param_AISkill_BLUFOR
+//	{
+//		title = "$STR_f_param_AISkill_BLUFOR";
+//		values[] = {0,1,2,3};
+//		texts[] = {$STR_f_param_AISkill_Option0,$STR_f_param_AISkill_Option1,$STR_f_param_AISkill_Option2,$STR_f_param_AISkill_Option3};
+//		default = 2;
+//		code = "f_param_AISkill_BLUFOR = %1";
+//	};
+//	class f_param_AISkill_OPFOR
+//	{
+//		title = "$STR_f_param_AISkill_OPFOR";
+//		values[] = {0,1,2,3};
+//		texts[] = {$STR_f_param_AISkill_Option0,$STR_f_param_AISkill_Option1,$STR_f_param_AISkill_Option2,$STR_f_param_AISkill_Option3};
+//		default = 2;
+//		code = "f_param_AISkill_OPFOR = %1";
+//	};
+
+// ============================================================================================
+
+// F3 - End of Params code blocks.
+// WARNING: DO NOT DELETE OR COMMENT OUT THIS CODE BLOCK
+
+};
+
+// ============================================================================================
+
+// F3 - Kegetys Spectator Script
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+#include "f\common\f_spect\spectating.hpp"
+
+// ============================================================================================
+
+// F3 - Gear Snippets
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+// #include "f\common\f_gearSnippets.hpp"
+
+// ============================================================================================
+

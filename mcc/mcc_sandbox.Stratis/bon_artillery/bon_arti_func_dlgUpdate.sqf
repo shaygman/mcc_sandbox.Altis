@@ -1,0 +1,34 @@
+//by Bon_Inf*
+#define BON_ARTY_DIALOG 999900
+#define BON_ARTY_SHELLSLEFT 999901
+#define BON_ARTY_XRAY 999902
+#define BON_ARTY_YANKEE 999903
+#define BON_ARTY_CANNONLIST 999904
+#define BON_ARTY_XRAYEDIT 999905
+#define BON_ARTY_YANKEEEDIT 999906
+#define BON_ARTY_DIRECTION 999907
+#define BON_ARTY_DISTANCE 999908
+#define BON_ARTY_HEIGHT 999909
+#define BON_ARTY_HEIGHTINDEX 999910
+#define BON_ARTY_DELAYEDIT 999911
+#define BON_ARTY_SUMMARY 999913
+#define BON_ARTY_REQUESTBUTTON 999914
+#define BON_ARTY_TYPE 999915
+#define BON_ARTY_NRSHELLS 999916
+#define BON_ARTY_SPREAD 999917
+#define BON_ARTY_XCORRECTION 999918
+#define BON_ARTY_YCORRECTION 999919
+#define BON_ARTY_ADJUSTBUTTON 999920
+#define BON_ARTY_MISSIONTYPE 999921
+disableSerialization;
+
+private ['_arti_settings'];
+
+_arti_settings = player getVariable format["Arti_%2_Cannon%1Summary",(lbCurSel BON_ARTY_CANNONLIST)+1,playerSide];
+if(not isNil "_arti_settings") then{
+	ctrlSetText [BON_ARTY_SUMMARY,_arti_settings];
+} else {
+	ctrlSetText [BON_ARTY_SUMMARY,""];
+};
+
+true

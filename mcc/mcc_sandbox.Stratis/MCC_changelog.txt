@@ -1,0 +1,96 @@
+Change log r8 - Beta:
+- Fixed new Beta classnames and new commandnames.
+- Fixed 3D editor items sometimes spawn underground. 
+- Fixed placing vehicles sometimes make them explode. 
+- Fixed synching tasks to a new JIP end up in error message. 
+- Changed end mission to new BIS_fnc_endMission.
+- Added SDV.
+- Added Green army and green army gear to MCC.
+- Revised gear scripts, added mortar, AA and MG teams. 
+
+Mission Settings
+- Added mission settings menu.
+- Define green army hostility. 
+- Define AI skills.
+- Reduced AI aimming and spotting skills. - no more killer AI
+
+EVAC
+- Added submarines to evac
+- Submarines will try to stay submerged in EVAC missions. 
+- Added precise smoke signal landing for EVAC helicopters. 
+
+Save & Load
+- Added saving missions in profile namespaces.
+
+IED 
+- Fixed synched IEDs won't work after loading a mission. 
+- Fixed Disarm script
+- Added new beta items to IEDS
+
+Save Gear & respawn
+- Fixed while respawn is off dead units will not have drowning effects while in spectator mod. 
+- Fixed Save gears script now fully work again.
+- Fixed body deleted after respawn. 
+
+SF moudle
+- unit synced with SF module don't need to wear a specific helmet to get a live feed.
+
+Box Gen
+- Fixed gearbox showing unavailable weapons and duplicated weapons. 
+- Added subclasses: uniforms, machineguns, sniper rifles, magazines, grenades, explosives, underbarrel grenades. 
+- Added Goggles to BoxGen - so far there is no command to actually put them in a box :(
+
+Paradrop
+- Renabled the paradrop spawn option - still at the current Beta state sometimes the jumping troops collides with the aricraft
+	and sometimes the game crush. 
+
+Garrison
+- Added a garrison function to group spawn that will automaticlly populate buildings in the given zone. 
+
+- TODO DOC
+- TODO Spectator
+- TODO HALO
+- TODO fog settings
+- TODO gearscript
+
+
+http://forums.bistudio.com/showthread.php?148577-GET-SET-Loadout-(saves-and-loads-pretty-much-everything)
+
+Change log rc8b V0.7:
+- Added notification for spawning UAV/AC-130/adding artillery and CAS.
+- Added trigger capture for UAV/AC-130
+- Added unit tracking with menu 4 is toggled on and off instead of 15 seconds interval. 
+- Fixed Access Rights module is now working again.
+- Fixed Access Rigts depends on Player's UId nor names - logic should have something like this in it's init: this setvariable ["names",["76561198007956840","1","232421"],true];
+- Fixed 3D editor can be closed with Tab key.
+- Fixed got rid of the cfgWeapon error.
+- Fixed 3Wp Evac button now shows the right description. 
+- Fixed when dying in 3D editor you no longer stuck in it.
+- Fixed time for NV to start working in 3D editor is before 05:30 and after 18:30. 
+- Fixed try spawning something without defining a zone first will be aborted and hint the mission maker that he should create a zone first.
+- Fixed trying to set a WP without creating a task first. 
+
+
+Change log r7:
+- Added: Bon Forward Artillery Observer script and dialog to menu 4 in the MCC Console. 
+- Added: Real AI artillery will adjust fire, fire and broadcast a live feed once Bon Forward Artillery is used. 
+- Added: Mini-map to the UAV and AC-130 dialogs.
+- Added: 3D compass to the UAV and AC-130 dialogs - thanks to Feint for the idea.
+- Added: Placing an IED from the 3D menu
+- Added: Use Shift key to switch between smooth or normal gain for the mousewheel Z elevation while placing objects using the 3D editor. 
+- Added: Place minefields by drawing a box on the mini-map
+
+
+- Fixed AC-130 turret rotation is limited to the left side as in real life.
+- Fixed AC-130 showing 20mm guns instead of 25mm.
+- Fixed AC-130 turret rotation was too fast. 
+- Fixed UAV is spawned by the mission maker only and will circle specefic zone, the conosle handler won't be able to move it across the map. 
+- Fixed AC-130 GAU-12 and Bufors 40 l/60 fire rate adjust to real life fire rate and muzzle velocity
+- Fixed space between mines in minefields doubled. 
+- Fixed Fog over created on MCC sync. 
+- Fixed 3D editor sometimes break when pressing apply
+
+To do:
+0 ctursc "RscSpectator"
+0 cutRsc ["RscSpectator","Plain",2];
+cutRsc ["binocular","PLAIN"]
