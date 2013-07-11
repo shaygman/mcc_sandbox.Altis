@@ -9,6 +9,8 @@ uiNamespace setVariable ["CP_squadsPanelActiveSquadTittle", _disp displayCtrl 2]
 uiNamespace setVariable ["CP_squadPanelJoinButton", _disp displayCtrl 3];
 uiNamespace setVariable ["CP_squadPanelCreateSquadText", _disp displayCtrl 4];
 uiNamespace setVariable ["CP_squadPanelCreateSquadButton", _disp displayCtrl 5];
+uiNamespace setVariable ["CP_gearPanelPiP", _disp displayCtrl 6];
+uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 7];
 
 #define CP_SQUADPANEL_IDD (uiNamespace getVariable "CP_SQUADPANEL_IDD")
 #define CP_squadPanelSquadList (uiNamespace getVariable "CP_squadPanelSquadList")
@@ -17,6 +19,8 @@ uiNamespace setVariable ["CP_squadPanelCreateSquadButton", _disp displayCtrl 5];
 #define CP_squadPanelJoinButton (uiNamespace getVariable "CP_squadPanelJoinButton")
 #define CP_squadPanelCreateSquadText (uiNamespace getVariable "CP_squadPanelCreateSquadText")
 #define CP_squadPanelCreateSquadButton (uiNamespace getVariable "CP_squadPanelCreateSquadButton")
+#define CP_gearPanelPiP (uiNamespace getVariable "CP_gearPanelPiP")
+#define CP_InfoText (uiNamespace getVariable "CP_InfoText")
 
 CP_respawnPanelOpen = false;
 CP_groupPanelOpen	= true; 

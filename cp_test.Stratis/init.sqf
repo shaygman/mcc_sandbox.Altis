@@ -26,8 +26,16 @@ if (CP_isMode) then {
 CP_availablePilots 	= 1;
 CP_availableCrew 	= 3; 
 
-
-
+//---------------------------------------------
+//		gears array
+//---------------------------------------------
+//Officer
+CP_officerWeaponWest =[[10,"arifle_TRG21_GL_F",["30Rnd_556x45_Stanag",10,"1Rnd_HE_Grenade_shell",6]],
+					   [20,"arifle_Mk20_GL_F",["30Rnd_65x39_caseless_green",10,"3Rnd_HE_Grenade_shell",6]]]; 
+CP_officerWeaponEast =[[10,"arifle_Katiba_GL_F",["30Rnd_556x45_Stanag",10,"3Rnd_HE_Grenade_shell",6],
+					   [20,"arifle_Mk20_GL_F",["30Rnd_65x39_caseless_green",10,"3Rnd_HE_Grenade_shell",6]]]]; 
+CP_officerWeaponGuer =[[10,"arifle_TRG21_GL_F",["30Rnd_556x45_Stanag",10,"1Rnd_HE_Grenade_shell",6]],
+					   [20,"arifle_Mk20_GL_F",["30Rnd_65x39_caseless_green",10,"3Rnd_HE_Grenade_shell",6]]]; 
 
 
 
@@ -44,7 +52,8 @@ CP_fnc_getVariable 		= compileFinal preprocessFileLineNumbers (CP_path + "script
 CP_fnc_buildSpawnPoint 	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_buildSpawnPoint.sqf");
 CP_fnc_setGroupID 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setGroupID.sqf");
 CP_fnc_getGroupID 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_getGroupID.sqf");
-
+CP_fnc_setGear			= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setGear.sqf");
+CP_fnc_assignGear		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_assignGear.sqf");
 
 //---------------------------------------------
 //		Server Init
@@ -68,5 +77,5 @@ if (!isDedicated) then {
 //---------------------------------------------
 CP_respawnPointsIndex 	= 0;
 CP_squadListIndex		= 0;
-CP_classes = ["Commander","Automatic-Rifleman","Rifleman","Anti-tank","Corpsman","Marksman","Specialist","Crew","Pilot"];
+CP_classes = ["Officer","Automatic-Rifleman","Rifleman","Anti-tank","Corpsman","Marksman","Specialist","Crew","Pilot"];
 CP_classesIndex = 0; 

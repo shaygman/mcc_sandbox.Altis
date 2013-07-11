@@ -26,4 +26,4 @@ _var = "testVar"; call compile format ["%1=%2;",_var,15];
 
  [["Vartest2","76561198007956840",100], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
  
- profileNamespace setVariable ["Vartest2_76561198007956840",2]
+ profileNamespace setVariable ["Vartest2_76561198007956840",2]sds

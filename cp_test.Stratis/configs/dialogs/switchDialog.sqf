@@ -12,4 +12,7 @@ switch (CP_screen) do
    case 1:
    { _ok = createDialog "CP_SQUADPANEL";
 	 if !(_ok) exitWith { hint "create Dialog failed"; diag_log  "CP: create group Dialog failed";};};
+   case 2:
+   { _ok = createDialog "CP_GEARPANEL";
+	 if !(_ok) exitWith { hint "create Dialog failed"; diag_log  "CP: create gear Dialog failed";};};
 };

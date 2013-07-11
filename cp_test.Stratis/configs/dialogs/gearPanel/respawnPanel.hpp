@@ -5,7 +5,8 @@ class CP_RESPAWNPANEL {
 	  
 	  controlsBackground[] = 
 	  {
-	  	  CP_respawnPanelBckg
+	  	  CP_respawnPanelBckg,
+		  CP_tittle
 	  };
 	  
 
@@ -26,7 +27,10 @@ class CP_RESPAWNPANEL {
 	  CP_deployPanelButton,
 	  CP_respawnPanelRoleTittle,
 	  CP_respawnPanelRoleCombo,
-	  CP_respawnPanelSpawnpointsTittle
+	  CP_respawnPanelSpawnpointsTittle,
+	  CP_gearPanelPiP,
+	  CP_gearPanelPiPFake,
+	  CP_InfoText	  
 	  };
 
 		class CP_respawnPanelButton: CP_RscButtonMenu
@@ -62,6 +66,7 @@ class CP_RESPAWNPANEL {
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\switchDialog.sqf'");
 		};
 		class CP_respawnPointsList: CP_RscListbox
 		{
@@ -70,6 +75,7 @@ class CP_RESPAWNPANEL {
 			y = 0.335063 * safezoneH + safezoneY;
 			w = 0.194792 * safezoneW;
 			h = 0.285889 * safezoneH;
+			colorBackground[] = {0,0,0,0.8};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			onLBSelChanged = __EVAL("[0] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
 		};
@@ -135,15 +141,16 @@ class CP_RESPAWNPANEL {
 			h = 0.0439828 * safezoneH;
 			tooltip = "Select your role in the battlefield"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			onLBSelChanged = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
 		};
 		class CP_respawnPanelBckg: CP_RscText
 		{
 			idc = -1;
-			x = 0.270833 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
-			w = 0.458333 * safezoneW;
-			h = 0.549786 * safezoneH;
-			colorBackground[] = {0,0,0,0.5};
+			x = 0 * safezoneW + safezoneX;
+			y = 0.2 * safezoneH + safezoneY;
+			w = 1 * safezoneW;
+			h = 0.6 * safezoneH;
+			colorBackground[] = {1,1,1,0.2};
 		};
 		class CP_respawnPanelSpawnpointsTittle: CP_RscText
 		{
@@ -155,5 +162,46 @@ class CP_RESPAWNPANEL {
 			h = 0.0439828 * safezoneH;
 			tooltip = "Select a valid spawn point and press Deploy"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		};
+		class CP_gearPanelPiP: CP_RscPicture
+		{
+			idc = 5;
+			text = "#(argb,512,512,1)r2t(rendertarget10,1.0);";
+			x = 0.74 * safezoneW + safezoneX;
+			y = 0.291081 * safezoneH + safezoneY;
+			w = 0.250521 * safezoneW;
+			h = 0.47 * safezoneH;
+		};
+		class CP_gearPanelPiPFake: CP_RscListBox
+		{
+			idc = -1;
+			x = 0.74 * safezoneW + safezoneX;
+			y = 0.291081 * safezoneH + safezoneY;
+			w = 0.250521 * safezoneW;
+			h = 0.47 * safezoneH;
+			onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseButtonUp = __EVAL("['MouseButtonUp',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+		};
+		class CP_InfoText: CP_RscText
+		{
+			idc = 6;
+			x = 0.1 * safezoneW + safezoneX;
+			y = 0.225107 * safezoneH + safezoneY;
+			w = 0.161476 * safezoneW;
+			h = 0.544025 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+			colorBackground[] = {0,0,0,0.8};
+		};
+		class CP_tittle: CP_RscPicture
+		{
+			idc = -1;
+			x = 0.22804 * safezoneW + safezoneX;
+			y = 0.0409789 * safezoneH + safezoneY;
+			w = 0.492927 * safezoneW;
+			h = 0.153007 * safezoneH;
+			text = __EVAL(CPPATH+"configs\data\chockpoints.paa");
+			colorText[] = {1,1,1,1.8};
 		};
 };

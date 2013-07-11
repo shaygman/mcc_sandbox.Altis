@@ -1,4 +1,4 @@
-private ["_disp","_comboBox","_index","_displayname"];
+private ["_disp","_comboBox","_index","_displayname","_html"];
 disableSerialization;
 
 _disp = _this select 0;
@@ -8,6 +8,8 @@ uiNamespace setVariable ["CP_ticketsWestText", _disp displayCtrl 1];
 uiNamespace setVariable ["CP_ticketsEastText", _disp displayCtrl 2];
 uiNamespace setVariable ["CP_respawnPanelRoleCombo", _disp displayCtrl 3];
 uiNamespace setVariable ["CP_deployPanelMiniMap", _disp displayCtrl 4];
+uiNamespace setVariable ["CP_gearPanelPiP", _disp displayCtrl 5];
+uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 6];
 
 #define CP_RESPAWNPANEL_IDD (uiNamespace getVariable "CP_RESPAWNPANEL_IDD")
 #define CP_respawnPointsList (uiNamespace getVariable "CP_respawnPointsList")
@@ -15,6 +17,8 @@ uiNamespace setVariable ["CP_deployPanelMiniMap", _disp displayCtrl 4];
 #define CP_ticketsEastText (uiNamespace getVariable "CP_ticketsEastText")
 #define CP_respawnPanelRoleCombo (uiNamespace getVariable "CP_respawnPanelRoleCombo")
 #define CP_deployPanelMiniMap (uiNamespace getVariable "CP_deployPanelMiniMap")
+#define CP_gearPanelPiP (uiNamespace getVariable "CP_gearPanelPiP")
+#define CP_InfoText (uiNamespace getVariable "CP_InfoText")
 
 //Respawn panel indecator
 CP_respawnPanelOpen = true; 
@@ -51,6 +55,15 @@ lbClear _comboBox;
 	} foreach CP_classes;
 _comboBox lbSetCurSel CP_classesIndex;
 
+//Add Info sheet data
+_html = "<t color='#8E8B8A' size='1' shadow='1' align='left' underline='true'>" + name player + "Level" + str (playerLevel select 0)
+		+ "</t><br/><br/>";
+/*_html = _html + "<t color='#a9b08e' size='2' shadow='0' shadowColor='#312100' align='left' >" + 
+		name player + "<br/>" +
+		"Smooth placing: " + MCC_smooth3DText + "</t>";
+	*/
+CP_InfoText ctrlSetStructuredText parseText(_html);
+	
 [] spawn {
 			private ["_comboBox","_displayname","_index"];
 			disableSerialization;

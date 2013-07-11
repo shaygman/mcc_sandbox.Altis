@@ -61,6 +61,8 @@ switch (_cmd) do
 			camDestroy CP_gearCam;
 			deleteVehicle CP_gearCam;
 			deleteVehicle CP_camLogic; 
+			deleteVehicle CP_camBuildings; 
+			deleteVehicle CP_camLight;
 			setviewdistance 2500;
 			closedialog 0; 
 			waituntil {!dialog};
@@ -74,6 +76,11 @@ switch (_cmd) do
 			deletemarkerlocal "spawnSelected";
 			CP_respawnPanelOpen = false; 
 			CP_groupPanelOpen	= false; 
-			//-- TO DO role selection gear
+			[CP_classes select CP_classesIndex] call CP_fnc_assignGear;			
+		};
+		
+		case 2:				//Change role
+		{ 
+		 [(lbCurSel CP_respawnPanelRoleCombo),0] call CP_fnc_setGear; 
 		};
 	};

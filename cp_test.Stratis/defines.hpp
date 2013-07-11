@@ -4,6 +4,7 @@
 #include "configs\dialogs\cp_dialogs.hpp"
 #include "configs\dialogs\gearPanel\respawnPanel.hpp"
 #include "configs\dialogs\gearPanel\squadsPanel.hpp"
+#include "configs\dialogs\gearPanel\gearPanel.hpp"
 
 
 
