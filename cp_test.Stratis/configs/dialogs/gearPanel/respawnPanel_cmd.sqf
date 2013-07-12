@@ -24,9 +24,6 @@ switch (_cmd) do
 			"spawnSelected" setMarkerSizeLocal [50,50];
 			"spawnSelected" setMarkerShapeLocal  "ELLIPSE";
 			"spawnSelected" setMarkerBrushLocal  "SOLID";
-			/*
-			"spawnSelected" setMarkerTypeLocal (if (_spawn getvariable "type" == "FOB") then {"mil_triangle"} else {"mil_start"});
-			"spawnSelected" setMarkerColorLocal "ColorBlue";*/
 			CP_deployPanelMiniMap ctrlMapAnimAdd [0.4, 0.5, _pos];
 			ctrlMapAnimCommit CP_deployPanelMiniMap;
 			CP_activeSpawn = _spawn; 
@@ -73,6 +70,8 @@ switch (_cmd) do
 			//Remove escape event handlers and reseting menu
 			CP_RESPAWNPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
 			CP_SQUADPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
+			CP_GEARPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
+			CP_WEAPONSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
 			deletemarkerlocal "spawnSelected";
 			CP_respawnPanelOpen = false; 
 			CP_groupPanelOpen	= false; 

@@ -5,6 +5,7 @@
 #include "configs\dialogs\gearPanel\respawnPanel.hpp"
 #include "configs\dialogs\gearPanel\squadsPanel.hpp"
 #include "configs\dialogs\gearPanel\gearPanel.hpp"
+#include "configs\dialogs\gearPanel\weaponsPanel.hpp"
 
 
 

@@ -62,6 +62,7 @@ switch (_cmd) do
 			_group = grpNull;
 			deleteGroup _group;
 			player sidechat format["You are now part of the %1 side", side player]; 
+			[CP_classesIndex,0] call CP_fnc_setGear; 
 		};
 		
 		case 3:				//Create Squad
