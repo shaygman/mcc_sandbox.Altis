@@ -1,4 +1,6 @@
 TODO - 
+- set player rating 
+- delete custom squad after leaving
 - Starting pos west/east
 - Logistics - mortarts
 - No fly zone

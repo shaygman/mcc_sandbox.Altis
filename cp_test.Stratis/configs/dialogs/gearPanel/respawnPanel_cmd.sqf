@@ -57,23 +57,7 @@ switch (_cmd) do
 			//looking for a spawn point
 			_safepos    =[(getpos CP_activeSpawn),1,30,1,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
 			if (format["%1",_safepos] == "[-500,-500,0]" ) exitWith {player sidechat " No good position found! Try again."};
-			//Spawn point found clearing not needed stuff
-			detach player;
-			detach CP_gearCam; 
-			CP_gearCam cameraeffect ["Terminate","back"];
-			player setpos _safepos;
-			camDestroy CP_gearCam;
-			deleteVehicle CP_gearCam;
-			deleteVehicle CP_camLogic; 
-			deleteVehicle CP_camBuildings; 
-			deleteVehicle CP_camLight;
-			setviewdistance 2500;
-			closedialog 0; 
-			waituntil {!dialog};
-			//Respawning
-			cutText ["Deploying ....","BLACK IN",5];
-			closedialog 0; 
-			waituntil {!dialog};
+			playerDeploy = true;
 			//Remove escape event handlers and reseting menu
 			CP_RESPAWNPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
 			CP_SQUADPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
@@ -84,6 +68,7 @@ switch (_cmd) do
 			deletemarkerlocal "spawnSelected";
 			CP_respawnPanelOpen = false; 
 			CP_groupPanelOpen	= false; 
+			player setpos _safepos;
 		};
 		
 		case 2:				//Change role

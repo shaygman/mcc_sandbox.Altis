@@ -1,4 +1,4 @@
-private ["_mode","_ctrl","_posX","_posY"];
+private ["_mode","_ctrl","_posX","_posY","_center"];
 
 disableSerialization;
 _mode = _this select 0;
@@ -47,7 +47,8 @@ if (_mode == "mousemoving") then
 			if (_newX > 0) then {CP_camMouseMovingAttachpos = CP_camMouseMovingAttachpos - 0.1} else {CP_camMouseMovingAttachpos = CP_camMouseMovingAttachpos + 0.1}; 
 			if (CP_camMouseMovingAttachpos < -1.5) then {CP_camMouseMovingAttachpos = -1.5};
 			if (CP_camMouseMovingAttachpos > 1.5) then {CP_camMouseMovingAttachpos = 1.5};
-			CP_gearCam attachto [CP_camLogic,[CP_camMouseMovingAttachpos,12,2.6],""];	
+			_center = player getvariable "attachObject";
+			CP_gearCam attachto [_center,[CP_camMouseMovingAttachpos,12,2.6],""];	
 			CP_camMouseMovingX = _posX			
 			};
 		};
