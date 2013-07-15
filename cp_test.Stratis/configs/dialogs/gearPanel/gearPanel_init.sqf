@@ -3,17 +3,17 @@ disableSerialization;
 
 _disp = _this select 0;
 uiNamespace setVariable ["CP_GEARPANEL_IDD", _disp];
-uiNamespace setVariable ["CP_gearPanelCommander", _disp displayCtrl 0];
-uiNamespace setVariable ["CP_gearPanelAR", _disp displayCtrl 1];
-uiNamespace setVariable ["CP_gearPanelRifleman", _disp displayCtrl 2];
-uiNamespace setVariable ["CP_gearPanelAntitank", _disp displayCtrl 3];
-uiNamespace setVariable ["CP_gearPanelCorpsman", _disp displayCtrl 4];
-uiNamespace setVariable ["CP_gearPanelMarksman", _disp displayCtrl 5];
-uiNamespace setVariable ["CP_gearPanelSpecialist", _disp displayCtrl 6];
-uiNamespace setVariable ["CP_gearPanelCrewman", _disp displayCtrl 7];
-uiNamespace setVariable ["CP_gearPanelPilot", _disp displayCtrl 8];
-uiNamespace setVariable ["CP_gearPanelPiP", _disp displayCtrl 9];
-uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 10];
+uiNamespace setVariable ["CP_gearPanelCommander", _disp displayCtrl 10];
+uiNamespace setVariable ["CP_gearPanelAR", _disp displayCtrl 11];
+uiNamespace setVariable ["CP_gearPanelRifleman", _disp displayCtrl 12];
+uiNamespace setVariable ["CP_gearPanelAntitank", _disp displayCtrl 13];
+uiNamespace setVariable ["CP_gearPanelCorpsman", _disp displayCtrl 14];
+uiNamespace setVariable ["CP_gearPanelMarksman", _disp displayCtrl 15];
+uiNamespace setVariable ["CP_gearPanelSpecialist", _disp displayCtrl 16];
+uiNamespace setVariable ["CP_gearPanelCrewman", _disp displayCtrl 17];
+uiNamespace setVariable ["CP_gearPanelPilot", _disp displayCtrl 18];
+uiNamespace setVariable ["CP_gearPanelPiP", _disp displayCtrl 19];
+uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 20];
 
 #define CP_GEARPANEL_IDD (uiNamespace getVariable "CP_GEARPANEL_IDD")
 #define CP_gearPanelCommander (uiNamespace getVariable "CP_gearPanelCommander")

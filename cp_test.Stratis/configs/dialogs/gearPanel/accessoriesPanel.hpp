@@ -1,165 +1,158 @@
-////////////////////////////////////////////////////////
-// GUI EDITOR OUTPUT START (by shay_gman, v1.062, #Tojyde)
-////////////////////////////////////////////////////////
+class CP_ACCESPANEL {
+	  idd = -1;
+	  movingEnable = false;
+	  onLoad =  __EVAL("_this execVM '"+CPPATH+"configs\dialogs\gearPanel\accessPanel_init.sqf'");
+	  
+	  controlsBackground[] = 
+	  {
+		CP_respawnPanelBckg,
+		CP_tittle
+	  };
+	  
 
-class CP_respawnPanelButton: RscButton
-{
-	idc = 1600;
-	text = "Respawn"; //--- ToDo: Localize;
-	x = 0.270833 * safezoneW + safezoneX;
-	y = 0.225107 * safezoneH + safezoneY;
-	w = 0.0973958 * safezoneW;
-	h = 0.0439828 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
+	  //---------------------------------------------
+	  objects[] = 
+	  { 
+	  };
+	  
+	  controls[] = 
+	  {
+		CP_uniformPanelBackButton,
+		CP_accessoriesPanelOptics,
+		CP_accessoriesPanelBarrel,
+		CP_accessoriesPanelAttachment,
+		CP_opticsTittle,
+		CP_barrelTittle,
+		CP_attachmentTittle,
+		CP_gearPanelPiP,
+		CP_gearPanelPiPFake,
+		CP_InfoText
+	  };
+
+		class CP_uniformPanelBackButton: CP_RscButtonMenu
+		{
+			idc = -1;
+			text = "Back"; //--- ToDo: Localize;
+			x = 0.631771 * safezoneW + safezoneX;
+			y = 0.247099 * safezoneH + safezoneY;
+			w = 0.0973958 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[4] execVM '"+CPPATH+"configs\dialogs\switchDialog.sqf'");
+		};
+		class CP_respawnPanelBckg: CP_RscText
+		{
+			idc = -1;
+			x = 0 * safezoneW + safezoneX;
+			y = 0.2 * safezoneH + safezoneY;
+			w = 1 * safezoneW;
+			h = 0.6 * safezoneH;
+			colorBackground[] = {1,1,1,0.2};
+		};
+		class CP_accessoriesPanelOptics: CP_RscCombo
+		{
+			idc = 0;
+			text = "Optics"; //--- ToDo: Localize;
+			x = 0.415013 * safezoneW + safezoneX;
+			y = 0.312991 * safezoneH + safezoneY;
+			w = 0.300001 * safezoneW;
+			h = 0.0879658 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			onLBSelChanged = __EVAL("[0] execVM '"+CPPATH+"configs\dialogs\gearPanel\accessPanel_cmd.sqf'");
+		};
+		class CP_accessoriesPanelBarrel: CP_RscCombo
+		{
+			idc = 1;
+			text = "Barrel"; //--- ToDo: Localize;
+			x = 0.415013 * safezoneW + safezoneX;
+			y = 0.465998 * safezoneH + safezoneY;
+			w = 0.300001 * safezoneW;
+			h = 0.0879658 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			onLBSelChanged = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\gearPanel\accessPanel_cmd.sqf'");
+		};
+		class CP_accessoriesPanelAttachment: CP_RscCombo
+		{
+			idc = 2;
+			text = "Attachment"; //--- ToDo: Localize;
+			x = 0.415013 * safezoneW + safezoneX;
+			y = 0.619005 * safezoneH + safezoneY;
+			w = 0.300001 * safezoneW;
+			h = 0.0879658 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			onLBSelChanged = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\gearPanel\accessPanel_cmd.sqf'");
+		};
+		class CP_opticsTittle: CP_rscText
+		{
+			idc = -1
+
+			text = "Optics:"; //--- ToDo: Localize;
+			x = 0.270534 * safezoneW + safezoneX;
+			y = 0.312991 * safezoneH + safezoneY;
+			w = 0.127481 * safezoneW;
+			h = 0.0680031 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		class CP_barrelTittle: CP_rscText
+		{
+			idc = -1
+
+			text = "Barrel:"; //--- ToDo: Localize;
+			x = 0.270534 * safezoneW + safezoneX;
+			y = 0.465998 * safezoneH + safezoneY;
+			w = 0.127481 * safezoneW;
+			h = 0.0680031 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		class CP_attachmentTittle: CP_rscText
+		{
+			idc = -1
+
+			text = "Attachments:"; //--- ToDo: Localize;
+			x = 0.270534 * safezoneW + safezoneX;
+			y = 0.619005 * safezoneH + safezoneY;
+			w = 0.127481 * safezoneW;
+			h = 0.0680031 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		class CP_gearPanelPiP: CP_RscPicture
+		{
+			idc = -1;
+			text = "#(argb,512,512,1)r2t(rendertarget10,1.0);";
+			x = 0.74 * safezoneW + safezoneX;
+			y = 0.291081 * safezoneH + safezoneY;
+			w = 0.250521 * safezoneW;
+			h = 0.47 * safezoneH;
+		};
+		class CP_gearPanelPiPFake: CP_RscListBox
+		{
+			idc = -1;
+			x = 0.74 * safezoneW + safezoneX;
+			y = 0.291081 * safezoneH + safezoneY;
+			w = 0.250521 * safezoneW;
+			h = 0.47 * safezoneH;
+			onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseButtonUp = __EVAL("['MouseButtonUp',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+		};
+		class CP_InfoText: CP_RscText
+		{
+			idc = 3;
+			x = 0.1 * safezoneW + safezoneX;
+			y = 0.225107 * safezoneH + safezoneY;
+			w = 0.161476 * safezoneW;
+			h = 0.544025 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+			colorBackground[] = {0,0,0,0.8};
+		};
+		class CP_tittle: CP_RscPicture
+		{
+			idc = -1;
+			x = 0.22804 * safezoneW + safezoneX;
+			y = 0.0409789 * safezoneH + safezoneY;
+			w = 0.492927 * safezoneW;
+			h = 0.153007 * safezoneH;
+			text = __EVAL(CPPATH+"configs\data\chockpoints.paa");
+		};
 };
-class CP_squadPanelButton: RscButton
-{
-	idc = 1601;
-	text = "Squad"; //--- ToDo: Localize;
-	x = 0.373958 * safezoneW + safezoneX;
-	y = 0.225107 * safezoneH + safezoneY;
-	w = 0.0973958 * safezoneW;
-	h = 0.0439828 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_gearPanelButton: RscButton
-{
-	idc = 1602;
-	text = "Gear"; //--- ToDo: Localize;
-	x = 0.477083 * safezoneW + safezoneX;
-	y = 0.225107 * safezoneH + safezoneY;
-	w = 0.0973958 * safezoneW;
-	h = 0.0439828 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_uniformPanelBackButton: RscButton
-{
-	idc = 1603;
-	text = "Back"; //--- ToDo: Localize;
-	x = 0.631771 * safezoneW + safezoneX;
-	y = 0.247099 * safezoneH + safezoneY;
-	w = 0.0973958 * safezoneW;
-	h = 0.0439828 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_respawnPanelBckg: RscText
-{
-	idc = 1003;
-	x = 0.270833 * safezoneW + safezoneX;
-	y = 0.225107 * safezoneH + safezoneY;
-	w = 0.458333 * safezoneW;
-	h = 0.549786 * safezoneH;
-	colorBackground[] = {0,0,0,0.5};
-};
-class CP_accessoriesPanelWeapon: RscShortcutButton
-{
-	idc = 1700;
-	text = "Primary Weapon"; //--- ToDo: Localize;
-	x = 0.29375 * safezoneW + safezoneX;
-	y = 0.291081 * safezoneH + safezoneY;
-	w = 0.200521 * safezoneW;
-	h = 0.0989614 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_gearPanelPiP: RscPicture
-{
-	idc = 1200;
-	text = "#(argb,8,8,3)color(1,1,1,1)";
-	x = 0.528645 * safezoneW + safezoneX;
-	y = 0.291081 * safezoneH + safezoneY;
-	w = 0.200521 * safezoneW;
-	h = 0.373854 * safezoneH;
-};
-class CP_accessoriesPanelOptics: RscShortcutButton
-{
-	idc = 1701;
-	text = "Optics"; //--- ToDo: Localize;
-	x = 0.29375 * safezoneW + safezoneX;
-	y = 0.412034 * safezoneH + safezoneY;
-	w = 0.200521 * safezoneW;
-	h = 0.0879657 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_accessoriesPanelOpticsForward: RscButton
-{
-	idc = 1607;
-	text = ">"; //--- ToDo: Localize;
-	x = 0.494271 * safezoneW + safezoneX;
-	y = 0.412034 * safezoneH + safezoneY;
-	w = 0.0114583 * safezoneW;
-	h = 0.0879657 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_accessoriesPanelOpticsBack: RscButton
-{
-	idc = 1608;
-	text = "<"; //--- ToDo: Localize;
-	x = 0.282292 * safezoneW + safezoneX;
-	y = 0.412034 * safezoneH + safezoneY;
-	w = 0.0114583 * safezoneW;
-	h = 0.0879657 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_accessoriesPanelBarrelBack: RscButton
-{
-	idc = 1609;
-	text = "<"; //--- ToDo: Localize;
-	x = 0.282292 * safezoneW + safezoneX;
-	y = 0.510996 * safezoneH + safezoneY;
-	w = 0.0114583 * safezoneW;
-	h = 0.0879657 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_accessoriesPanelBarrel: RscShortcutButton
-{
-	idc = 1702;
-	text = "Barrel"; //--- ToDo: Localize;
-	x = 0.29375 * safezoneW + safezoneX;
-	y = 0.510996 * safezoneH + safezoneY;
-	w = 0.200521 * safezoneW;
-	h = 0.0879657 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_accessoriesPanelBarrelForward: RscButton
-{
-	idc = 1610;
-	text = ">"; //--- ToDo: Localize;
-	x = 0.494271 * safezoneW + safezoneX;
-	y = 0.510996 * safezoneH + safezoneY;
-	w = 0.0114583 * safezoneW;
-	h = 0.0879657 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_accessoriesPanelAttachmentForward: RscButton
-{
-	idc = 1616;
-	text = ">"; //--- ToDo: Localize;
-	x = 0.494271 * safezoneW + safezoneX;
-	y = 0.609957 * safezoneH + safezoneY;
-	w = 0.0114583 * safezoneW;
-	h = 0.0879657 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_accessoriesPanelAttachmentBack: RscButton
-{
-	idc = 1606;
-	text = "<"; //--- ToDo: Localize;
-	x = 0.282292 * safezoneW + safezoneX;
-	y = 0.609957 * safezoneH + safezoneY;
-	w = 0.0114583 * safezoneW;
-	h = 0.0879657 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-class CP_accessoriesPanelAttachment: RscShortcutButton
-{
-	idc = 1703;
-	text = "Attachment"; //--- ToDo: Localize;
-	x = 0.29375 * safezoneW + safezoneX;
-	y = 0.609957 * safezoneH + safezoneY;
-	w = 0.200521 * safezoneW;
-	h = 0.0879657 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";;
-};
-////////////////////////////////////////////////////////
-// GUI EDITOR OUTPUT END
-////////////////////////////////////////////////////////

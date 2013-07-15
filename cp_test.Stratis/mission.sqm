@@ -52,6 +52,7 @@ class Mission
 					player="PLAYER COMMANDER";
 					leader=1;
 					skill=0.60000002;
+					init="this addEventHandler [""kiled"",{this execVM ""scripts\player\player_init.sqf"";}];";
 				};
 				class Item1
 				{
@@ -61,6 +62,7 @@ class Mission
 					vehicle="B_Soldier_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					init="this addEventHandler [""kiled"",{this execVM ""scripts\player\player_init.sqf"";}];";
 				};
 				class Item2
 				{
@@ -70,6 +72,7 @@ class Mission
 					vehicle="B_Soldier_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					init="this addEventHandler [""kiled"",{this execVM ""scripts\player\player_init.sqf"";}];";
 				};
 				class Item3
 				{
@@ -79,6 +82,7 @@ class Mission
 					vehicle="B_Soldier_F";
 					player="PLAY CDG";
 					skill=0.60000002;
+					init="this addEventHandler [""kiled"",{this execVM ""scripts\player\player_init.sqf"";}];";
 				};
 			};
 		};
@@ -89,7 +93,7 @@ class Mission
 		class Item0
 		{
 			position[]={1839.9182,5.5,5673.0752};
-			azimut=83.555779;
+			azimut=83.555801;
 			age="ACTUAL";
 			id=4;
 			side="EMPTY";

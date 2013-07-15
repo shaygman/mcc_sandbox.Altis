@@ -14,19 +14,26 @@ switch (_cmd) do
 	{
 		case 0:				//LBL change on respawn marker
 		{ 
-			CP_respawnPointsIndex = (lbCurSel CP_respawnPointsList);
+			_spawnArray	 = switch (side player) do	{
+					case west:			{CP_westSpawnPoints};
+					case east:			{CP_eastSpawnPoints};
+					case resistance:	{CP_guarSpawnPoints};
+				};
 			deletemarkerlocal "spawnSelected";
-			_spawnArray	 = if (side player == west) then {CP_westSpawnPoints} else {CP_eastSpawnPoints};  
-			_spawn		 = _spawnArray select (lbCurSel CP_respawnPointsList);
-			_pos 		 = [(getpos _spawn) select 0, (getpos _spawn) select 1];
-			createMarkerLocal ["spawnSelected",_pos];	//Create group's marker
-			"spawnSelected" setMarkerColorLocal "ColorBlue";
-			"spawnSelected" setMarkerSizeLocal [50,50];
-			"spawnSelected" setMarkerShapeLocal  "ELLIPSE";
-			"spawnSelected" setMarkerBrushLocal  "SOLID";
-			CP_deployPanelMiniMap ctrlMapAnimAdd [0.4, 0.5, _pos];
-			ctrlMapAnimCommit CP_deployPanelMiniMap;
-			CP_activeSpawn = _spawn; 
+			
+			if (count _spawnArray > 0) then {
+				CP_respawnPointsIndex = (lbCurSel CP_respawnPointsList);
+				_spawn	 = _spawnArray select (lbCurSel CP_respawnPointsList);
+				_pos 		 = [(getpos _spawn) select 0, (getpos _spawn) select 1];
+				createMarkerLocal ["spawnSelected",_pos];	//Create group's marker
+				"spawnSelected" setMarkerColorLocal "ColorBlue";
+				"spawnSelected" setMarkerSizeLocal [50,50];
+				"spawnSelected" setMarkerShapeLocal  "ELLIPSE";
+				"spawnSelected" setMarkerBrushLocal  "SOLID";
+				CP_deployPanelMiniMap ctrlMapAnimAdd [0.4, 0.5, _pos];
+				ctrlMapAnimCommit CP_deployPanelMiniMap;
+				CP_activeSpawn = _spawn; 
+				} else {CP_activeSpawn = objnull};
 		};
 		
 		case 1:				//Deploy pressed
@@ -72,10 +79,11 @@ switch (_cmd) do
 			CP_SQUADPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
 			CP_GEARPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
 			CP_WEAPONSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
+			CP_ACCESPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
+			CP_UNIFORMSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
 			deletemarkerlocal "spawnSelected";
 			CP_respawnPanelOpen = false; 
 			CP_groupPanelOpen	= false; 
-			[CP_classes select CP_classesIndex] call CP_fnc_assignGear;			
 		};
 		
 		case 2:				//Change role

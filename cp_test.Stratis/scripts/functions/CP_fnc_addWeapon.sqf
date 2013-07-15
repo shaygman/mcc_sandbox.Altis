@@ -16,4 +16,5 @@ for [{_i = 0},{_i < count _magazines},{_i = _i+2}] do
 				if (isClass (configFile >> "CfgGlasses" >> _mag)) then {player additem _mag};
 			};
 	};
-player addWeapon (_currentWeapon select 1); 
+	
+if ((_currentWeapon select 1) != "") then {player addWeapon (_currentWeapon select 1)}; 

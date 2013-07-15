@@ -35,4 +35,8 @@ _dummy addEventHandler ["handledamage", { 							//Only destroyable with satchel
 										if ((_this select 4) == "SatchelCharge_Remote_Ammo" || (_this select 4) == "DemoCharge_Remote_Ammo") then [{_this select 2},{0}]; 
 									}];  
 if (!_destructable) then {_sphere = "ProtectionZone_Invisible_F" createvehicle (getpos _dummy);_sphere setpos (getpos _dummy)};
-if (_side == "WEST") then {CP_westSpawnPoints set [count CP_westSpawnPoints, _dummy]; publicvariable "CP_westSpawnPoints"} else {CP_eastSpawnPoints set [count CP_eastSpawnPoints, _dummy]; publicvariable "CP_eastSpawnPoints"}; 
+switch (_side) do	{
+					case "WEST":	{CP_westSpawnPoints set [count CP_westSpawnPoints, _dummy]; publicvariable "CP_westSpawnPoints"};
+					case "EAST":	{CP_eastSpawnPoints set [count CP_eastSpawnPoints, _dummy]; publicvariable "CP_eastSpawnPoints"};
+					case "GUAR":	{CP_guarSpawnPoints set [count CP_guarSpawnPoints, _dummy]; publicvariable "CP_guarSpawnPoints"};
+				};

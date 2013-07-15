@@ -5,7 +5,8 @@ class CP_GEARPANEL {
 	  
 	  controlsBackground[] = 
 	  {
-		CP_respawnPanelBckg
+		CP_respawnPanelBckg,
+		CP_tittle
 	  };
 	  
 
@@ -48,8 +49,7 @@ class CP_GEARPANEL {
 		CP_gearPanelPilotUni,
 		CP_gearPanelPiP,
 		CP_gearPanelPiPFake,
-		CP_InfoText,
-		CP_tittle
+		CP_InfoText
 	  };
 
 	class CP_respawnPanelButton: CP_RscButtonMenu
@@ -95,7 +95,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelCommander: CP_RscButton
 	{
-		idc = 0;
+		idc = 10;
 		text = "Officer"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
 		y = 0.280086 * safezoneH + safezoneY;
@@ -106,7 +106,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelAR: CP_RscButton
 	{
-		idc = 1;
+		idc = 11;
 		text = "Automatic Rifleman"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
 		y = 0.335064 * safezoneH + safezoneY;
@@ -117,7 +117,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelRifleman: CP_RscButton
 	{
-		idc = 2;
+		idc = 12;
 		text = "Rifleman"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
 		y = 0.390043 * safezoneH + safezoneY;
@@ -128,7 +128,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelAntitank: CP_RscButton
 	{
-		idc = 3;
+		idc = 13;
 		text = "Anti-Tank"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
 		y = 0.445021 * safezoneH + safezoneY;
@@ -139,7 +139,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelCorpsman: CP_RscButton
 	{
-		idc = 4;
+		idc = 14;
 		text = "Corpsman"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
 		y = 0.5 * safezoneH + safezoneY;
@@ -150,7 +150,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelMarksman: CP_RscButton
 	{
-		idc = 5;
+		idc = 15;
 		text = "Marksman"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
 		y = 0.554979 * safezoneH + safezoneY;
@@ -161,7 +161,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelSpecialist: CP_RscButton
 	{
-		idc = 6;
+		idc = 16;
 		text = "Specialist"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
 		y = 0.609957 * safezoneH + safezoneY;
@@ -172,7 +172,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelCrewman: CP_RscButton
 	{
-		idc = 7;
+		idc = 17;
 		text = "Crewman"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
 		y = 0.664936 * safezoneH + safezoneY;
@@ -183,7 +183,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelPilot: CP_RscButton
 	{
-		idc = 8;
+		idc = 18;
 		text = "Pilot"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
 		y = 0.719914 * safezoneH + safezoneY;
@@ -401,7 +401,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelPiP: CP_RscPicture
 	{
-		idc = 9;
+		idc = 19;
 		text = "#(argb,512,512,1)r2t(rendertarget10,1.0);";
 		x = 0.74 * safezoneW + safezoneX;
 		y = 0.291081 * safezoneH + safezoneY;
@@ -422,7 +422,7 @@ class CP_GEARPANEL {
 	};
 	class CP_InfoText: CP_RscText
 	{
-		idc = 10;
+		idc = 20;
 		x = 0.1 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.161476 * safezoneW;

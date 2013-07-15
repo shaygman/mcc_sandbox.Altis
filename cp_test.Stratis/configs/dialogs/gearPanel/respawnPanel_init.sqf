@@ -1,4 +1,4 @@
-private ["_disp","_comboBox","_index","_displayname","_html"];
+private ["_disp","_comboBox","_index","_displayname","_html","_spawnArray"];
 disableSerialization;
 
 _disp = _this select 0;
@@ -35,6 +35,15 @@ CP_disableEsc = CP_RESPAWNPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_th
 	if (!alive _x) then {CP_eastSpawnPoints =  CP_eastSpawnPoints - [_x]; publicVariable "CP_eastSpawnPoints"};
 } foreach CP_eastSpawnPoints; 
 
+{
+	if (!alive _x) then {CP_guarSpawnPoints =  CP_guarSpawnPoints - [_x]; publicVariable "CP_guarSpawnPoints"};
+} foreach CP_guarSpawnPoints;
+
+_spawnArray	 = switch (side player) do	{
+					case west:			{CP_westSpawnPoints};
+					case east:			{CP_eastSpawnPoints};
+					case resistance:	{CP_guarSpawnPoints};
+				};
 //Load respawn points
 _comboBox = CP_respawnPointsList; 
 lbClear _comboBox;
@@ -42,7 +51,7 @@ lbClear _comboBox;
 		_displayname = _x getvariable "type";
 		//_pic = _x select 2;
 		_index = _comboBox lbAdd _displayname;
-	} foreach (if ((side player)== west) then {CP_westSpawnPoints} else {CP_eastSpawnPoints});
+	} foreach _spawnArray;
 _comboBox lbSetCurSel CP_respawnPointsIndex;
 
 //Load Classes
@@ -50,8 +59,9 @@ _comboBox = CP_respawnPanelRoleCombo;
 lbClear _comboBox;
 	{
 		_displayname = _x;
-		//_pic = _x select 2;
+		_pic = CP_classesPic select _forEachIndex;
 		_index = _comboBox lbAdd _displayname;
+		_comboBox lbsetpicture [_index,_pic];
 	} foreach CP_classes;
 _comboBox lbSetCurSel CP_classesIndex;
 
@@ -64,9 +74,10 @@ _html = "<t color='#8E8B8A' size='1' shadow='1' align='left' underline='true'>" 
 	*/
 CP_InfoText ctrlSetStructuredText parseText(_html);
 	
-[] spawn {
-			private ["_comboBox","_displayname","_index"];
+[_spawnArray] spawn {
+			private ["_comboBox","_displayname","_index","_spawnArray"];
 			disableSerialization;
+			_spawnArray = _this select 0;
 			while {dialog && CP_respawnPanelOpen} do {
 					//Tickets
 					CP_ticketsWestText ctrlSetText format ["WEST: %1",CP_westTickets];
@@ -79,7 +90,7 @@ CP_InfoText ctrlSetStructuredText parseText(_html);
 							_displayname = format ["(%1) - %2",_x getvariable "side", _x getvariable "type"];
 							//_pic = _x select 2;
 							_index = _comboBox lbAdd _displayname;
-						} foreach (if ((side player)== west) then {CP_westSpawnPoints} else {CP_eastSpawnPoints});
+						} foreach _spawnArray;
 					//_comboBox lbSetCurSel CP_respawnPointsIndex;
 					sleep 3; 
 				};

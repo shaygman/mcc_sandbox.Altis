@@ -17,6 +17,12 @@ switch (_cmd) do
 	{
 		case 0:				//LBL change on Primary weapon
 		{ 
+			if (CP_currentWeaponIndex != lbCurSel CP_weaponsPanelPrimary) then {
+				CP_weaponAttachments =[];
+				CP_opticsIndex = 0;
+				CP_barrelIndex = 0;
+				CP_attachsIndex = 0;
+				};
 			CP_currentWeaponIndex = lbCurSel CP_weaponsPanelPrimary;
 			missionNamespace setVariable [format ["CP_player%1Weapon_%2_%3",_role, getplayerUID player,side player], CP_currentWeaponArray select CP_currentWeaponIndex];
 		};
@@ -34,7 +40,17 @@ switch (_cmd) do
 		case 3:				//LBL change on Items1
 		{ 
 			CP_currentItems1Index = lbCurSel CP_weaponsPanelItem1;
-			missionNamespace setVariable [format ["CP_player%1Items1_%2_%3",_role,getplayerUID player,side player], CP_officerItmes1 select CP_currentItems1Index];
+			missionNamespace setVariable [format ["CP_player%1Items1_%2_%3",_role,getplayerUID player,side player], CP_currentItmes1 select CP_currentItems1Index];
+		};
+		case 4:				//LBL change on Items2
+		{ 
+			CP_currentItems2Index = lbCurSel CP_weaponsPanelItem2;
+			missionNamespace setVariable [format ["CP_player%1Items2_%2_%3",_role,getplayerUID player,side player], CP_currentItmes2 select CP_currentItems2Index];
+		};
+		case 5:				//LBL change on Items3
+		{ 
+			CP_currentItems3Index = lbCurSel CP_weaponsPanelItem3;
+			missionNamespace setVariable [format ["CP_player%1Items3_%2_%3",_role,getplayerUID player,side player], CP_currentItmes3 select CP_currentItems3Index];
 		};
 	};
 	

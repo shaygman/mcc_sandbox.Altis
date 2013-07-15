@@ -14,4 +14,4 @@ if (isnil "_value") then {														//if it's first time then set us default
 	profileNamespace setVariable [format ["%1_%2",_varName,_id], _varDefault];
 	};
 _value = profileNamespace getVariable format ["%1_%2",_varName,_id];	
-[[_varName,_id,_value], "CP_fnc_setValue", true, false] spawn BIS_fnc_MP;			//returns value		
+[[_varName,_value,_id], "CP_fnc_setValue", true, false] spawn BIS_fnc_MP;			//returns value		

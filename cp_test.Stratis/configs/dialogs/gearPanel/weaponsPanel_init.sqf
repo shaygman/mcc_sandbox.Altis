@@ -86,10 +86,10 @@ _comboBox lbSetCurSel CP_currentHandgunsIndex;
 
 //Load Items1
 _array = [];
-for [{_i = 0},{_i < count CP_officerItmes1},{_i = _i+1}] do 
+for [{_i = 0},{_i < count CP_currentItmes1},{_i = _i+1}] do 
 	{
-		if (CP_currentLevel >= (CP_officerItmes1 select _i)select 0) then {
-			_array set [count _array, (CP_officerItmes1 select _i) select 1];
+		if (CP_currentLevel >= (CP_currentItmes1 select _i)select 0) then {
+			_array set [count _array, (CP_currentItmes1 select _i) select 1];
 		};
 	};
 _comboBox = CP_weaponsPanelItem1; 
@@ -103,3 +103,43 @@ lbClear _comboBox;
 		_comboBox lbSetData [_index, _class];
 	} foreach _array;
 _comboBox lbSetCurSel CP_currentItems1Index;
+
+//Load Items2
+_array = [];
+for [{_i = 0},{_i < count CP_currentItmes2},{_i = _i+1}] do 
+	{
+		if (CP_currentLevel >= (CP_currentItmes2 select _i)select 0) then {
+			_array set [count _array, (CP_currentItmes2 select _i) select 1];
+		};
+	};
+_comboBox = CP_weaponsPanelItem2; 
+lbClear _comboBox;
+	{
+		_class			= configName(configFile >> "CfgMagazines">> _x);
+		_displayname 	= getText(configFile >> "CfgMagazines">> _x >> "displayname");
+		_pic 			= getText(configFile >> "CfgMagazines">> _x >> "picture");
+		_index = _comboBox lbAdd _displayname;
+		_comboBox lbSetPicture [_index, _pic];
+		_comboBox lbSetData [_index, _class];
+	} foreach _array;
+_comboBox lbSetCurSel CP_currentItems2Index;
+
+//Load Items3
+_array = [];
+for [{_i = 0},{_i < count CP_currentItmes3},{_i = _i+1}] do 
+	{
+		if (CP_currentLevel >= (CP_currentItmes3 select _i)select 0) then {
+			_array set [count _array, (CP_currentItmes3 select _i) select 1];
+		};
+	};
+_comboBox = CP_weaponsPanelItem3; 
+lbClear _comboBox;
+	{
+		_class			= configName(configFile >> "CfgMagazines">> _x);
+		_displayname 	= getText(configFile >> "CfgMagazines">> _x >> "displayname");
+		_pic 			= getText(configFile >> "CfgMagazines">> _x >> "picture");
+		_index = _comboBox lbAdd _displayname;
+		_comboBox lbSetPicture [_index, _pic];
+		_comboBox lbSetData [_index, _class];
+	} foreach _array;
+_comboBox lbSetCurSel CP_currentItems3Index;

@@ -1,4 +1,4 @@
-private ["_cmd","_comboBox","_spawnArray","_spawn","_groupName","_groupArray","_group","_array"];
+private ["_cmd","_comboBox","_spawnArray","_spawn","_groupName","_groupArray","_group","_array","_groups"];
 disableSerialization;
 
 #define CP_SQUADPANEL_IDD (uiNamespace getVariable "CP_SQUADPANEL_IDD")
@@ -10,18 +10,25 @@ disableSerialization;
 #define CP_squadPanelCreateSquadButton (uiNamespace getVariable "CP_squadPanelCreateSquadButton")
 
 _cmd = _this select 0; 
+
+_groups	 = switch (side player) do	{
+					case west:			{CP_westGroups};
+					case east:			{CP_eastGroups};
+					case resistance:	{CP_guarGroups};
+				};
+				
 //Build dummy array with only the groups in it
 _array = []; 
 {
 	_array set [count _array, _x select 0]; 
-} foreach (if ((side player)== west) then {CP_westGroups} else {CP_eastGroups}); 
+} foreach _groups; 
 switch (_cmd) do
 	{
 		case 0:				//LBL change on Squad List
 		{ 
 			CP_squadListIndex = (lbCurSel CP_squadPanelSquadList);
 			deletemarkerlocal "squadSelected";
-			_spawnArray	 = if (side player == west) then {CP_westGroups} else {CP_eastGroups};  
+			_spawnArray	 =_groups;  
 			_spawn		 = _spawnArray select (lbCurSel CP_squadPanelSquadList);
 			CP_activeGroup = _spawn; 
 			CP_squadsPanelActiveSquadTittle ctrlSetText (CP_activeGroup select 1);
@@ -36,7 +43,9 @@ switch (_cmd) do
 							_groupName 	= (CP_activeGroup select 1); 
 							[player] join grpNull;
 							_group = creategroup (side player); 
-							(if ((side player)== west) then {CP_westGroups} else {CP_eastGroups}) set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]];
+							if ((side player)== west) then {CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]};
+							if ((side player)== east) then {CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]};
+							if ((side player)== resistance) then {CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]};
 							} else	{
 									[player] join grpNull;
 								};
@@ -52,16 +61,36 @@ switch (_cmd) do
 				}; 
 				
 			//check if there is room in the other side
-			if ((playersNumber (if ((side player)== west) then {east} else {west})) >= CP_maxPlayers) exitWith {
-				player sidechat "Opposite side is full"; 
+			if ((playersNumber (if ((side player)== west) then {east})) >= CP_maxPlayers) exitWith {
+				player sidechat "East side is full"; 
+				};
+				
+			//check if there is room in the other side
+			if ((playersNumber (if ((side player)== east) then {resistance})) >= CP_maxPlayers) exitWith {
+				player sidechat "Resistance side is full"; 
+				};
+				
+			//check if there is room in the other side
+			if ((playersNumber (if ((side player)== resistance) then {west})) >= CP_maxPlayers) exitWith {
+				player sidechat "West side is full"; 
 				};
 				
 			//Make the switch
-			_group = creategroup (if ((side player)== west) then {east} else {west});
+			_group = creategroup (switch (side player) do	{
+					case west:			{east};
+					case east:			{resistance};
+					case resistance:	{west};
+				});
 			[player] join _group;
 			_group = grpNull;
 			deleteGroup _group;
-			player sidechat format["You are now part of the %1 side", side player]; 
+			player sidechat format["You are now part of the %1 side", side player];
+			CP_weaponAttachments =[];		//Reset atachments choice
+			CP_playerUniforms =  nil;
+			CP_opticsIndex = 0;
+			CP_barrelIndex = 0;
+			CP_attachsIndex = 0;
+			CP_weaponAttachments =[]; 
 			[CP_classesIndex,0] call CP_fnc_setGear; 
 		};
 		
@@ -69,8 +98,10 @@ switch (_cmd) do
 		{ 
 			if (ctrlText CP_squadPanelCreateSquadButton ==  "Rename Squad") then {
 				if (ctrlText CP_squadPanelCreateSquadText == "") exitWith {player sidechat "Squad name can't be empty"}; 
-				if (side player == west) then {CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,ctrlText CP_squadPanelCreateSquadText]]} else	{
-					CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,ctrlText CP_squadPanelCreateSquadText]]
+				switch (side player) do	{
+					case west:			{CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,ctrlText CP_squadPanelCreateSquadText]]};
+					case east:			{CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,ctrlText CP_squadPanelCreateSquadText]]};
+					case resistance:	{CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,ctrlText CP_squadPanelCreateSquadText]]};
 					};
 				} else {
 				
@@ -80,21 +111,22 @@ switch (_cmd) do
 						}; 
 						
 					//check if there is room to make another squad
-					if ((count (if ((side player)== west) then {CP_westGroups} else {CP_eastGroups})) >= CP_maxSquads) exitWith {
-						player sidechat format ["Max number of squads reached %1/%2", count (if ((side player)== west) then {CP_westGroups} else {CP_eastGroups}), CP_maxSquads]; 
+					if ((count _groups) >= CP_maxSquads) exitWith {
+						player sidechat format ["Max number of squads reached %1/%2", count _groups, CP_maxSquads]; 
 						};
 						
 					//Create a new squad
 					_group = creategroup (side player);
 					if (ctrlText CP_squadPanelCreateSquadText == "") exitWith {player sidechat "Squad name can't be empty"}; 
 					[player] join _group;
-					if (side player == west) then {
-						CP_westGroups set [count CP_westGroups,[_group,ctrlText CP_squadPanelCreateSquadText]];
-						publicvariable "CP_westGroups";
-						} else {
-							CP_eastGroups set [count CP_eastGroups,[_group,ctrlText CP_squadPanelCreateSquadText]];
-							publicvariable "CP_eastGroups";
-							}; 
+					switch (side player) do	{
+							case west:			{CP_westGroups set [count CP_westGroups,[_group,ctrlText CP_squadPanelCreateSquadText]];
+													publicvariable "CP_westGroups";};
+							case east:			{CP_eastGroups set [count CP_eastGroups,[_group,ctrlText CP_squadPanelCreateSquadText]];
+													publicvariable "CP_eastGroups";};
+							case resistance:	{CP_guarGroups set [count CP_guarGroups,[_group,ctrlText CP_squadPanelCreateSquadText]];
+											publicvariable "CP_guarGroups";};
+						};
 					player sidechat format ["Squad %1 Created",ctrlText CP_squadPanelCreateSquadText, _group];
 				};
 		};

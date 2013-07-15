@@ -3,7 +3,7 @@ private ["_null","_uid","_name","_value","_playerLevel","_commanderLevel","_arLe
 
 _uid = _this select 0;
 _name = _this select 1;
-if (CP_debug) then {diag_log format ["%1: Player: %2 - %3 joined game", time, _uid,_name]};
+if (CP_debug) then {diag_log format ["CP: %1: Player: %2 - %3 joined game", time, _uid,_name]};
 
 _playerLevel = profileNamespace getVariable format ["CP_playerLevel_%1",_uid];						// Player level
 if (isnil "_playerLevel") then {														

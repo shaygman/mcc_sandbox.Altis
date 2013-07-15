@@ -8,8 +8,6 @@ _value 		= _this select 1;
 _id			= _this select 2; 
 
 if (getPlayerUID player == _id) then	{
-	for [{_x = 0},{_x < (count _varName)},{_x = _x+1}] do	{
-		call compile format ["%1=%2;",(_varName select _x),(_value select _x)];
-		};
+		call compile format ["%1=%2;",_varName,_value];
 	};
 

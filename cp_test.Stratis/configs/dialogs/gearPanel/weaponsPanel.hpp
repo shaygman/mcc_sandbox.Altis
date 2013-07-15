@@ -24,6 +24,12 @@ class CP_WEAPONSPANEL {
 		CP_weaponsPanelItem1,
 		CP_weaponsPanelItem2,
 		CP_weaponsPanelItem3,
+		CP_PrimaryTittle,
+		CP_SecondaryTittle,
+		CP_HandgunTittle,
+		CP_item1Tittle,
+		CP_item2Tittle,
+		CP_item3Tittle,
 		CP_gearPanelPiP,
 		CP_gearPanelPiPFake,
 		CP_InfoText,
@@ -34,10 +40,10 @@ class CP_WEAPONSPANEL {
 	{
 		idc = -1;
 		text = "Back"; //--- ToDo: Localize;
-		x = 0.631771 * safezoneW + safezoneX;
-		y = 0.247099 * safezoneH + safezoneY;
+		x = 0.618982 * safezoneW + safezoneX;
+		y = 0.210987 * safezoneH + safezoneY;
 		w = 0.0973958 * safezoneW;
-		h = 0.0439828 * safezoneH;
+		h = 0.0439827 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\switchDialog.sqf'");
 	};
@@ -50,85 +56,153 @@ class CP_WEAPONSPANEL {
 		h = 0.6 * safezoneH;
 		colorBackground[] = {1,1,1,0.2};
 	};
-	class CP_weaponsPanelPrimary: CP_RscListbox
+	class CP_weaponsPanelPrimary: CP_RscCombo
 	{
 		idc = 0;
 		text = "Primary"; //--- ToDo: Localize;
-		x = 0.29375 * safezoneW + safezoneX;
-		y = 0.291081 * safezoneH + safezoneY;
-		w = 0.3 * safezoneW;
-		h = 0.0659743 * safezoneH;
+		x = 0.43201 * safezoneW + safezoneX;
+		y = 0.261989 * safezoneH + safezoneY;
+		w = 0.263461 * safezoneW;
+		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		onLBSelChanged = __EVAL("[0] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
 	class CP_weaponsPanelPrimaryAccessories: CP_RscButtonMenu
 	{
 		idc = -1;
 		text = "Accessories"; //--- ToDo: Localize;
-		x = 0.351042 * safezoneW + safezoneX;
-		y = 0.357056 * safezoneH + safezoneY;
-		w = 0.2 * safezoneW;
+		x = 0.491501 * safezoneW + safezoneX;
+		y = 0.329992 * safezoneH + safezoneY;
+		w = 0.199999 * safezoneW;
 		h = 0.0219914 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.3)";
+		action = __EVAL("[3] execVM '"+CPPATH+"configs\dialogs\switchDialog.sqf'");
 	};
-	class CP_weaponsPanelSecondary: CP_RscListbox
+	class CP_weaponsPanelSecondary: CP_RscCombo
 	{
 		idc = 1;
 		text = "Secondary"; //--- ToDo: Localize;
-		x = 0.29375 * safezoneW + safezoneX;
-		y = 0.390043 * safezoneH + safezoneY;
-		w = 0.3 * safezoneW;
-		h = 0.0659743 * safezoneH;
+		x = 0.43201 * safezoneW + safezoneX;
+		y = 0.363994 * safezoneH + safezoneY;
+		w = 0.263461 * safezoneW;
+		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		onLBSelChanged = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
-	class CP_weaponsPanelHandgun: CP_RscListbox
+	class CP_weaponsPanelHandgun: CP_RscCombo
 	{
 		idc = 2;
 		text = "Handgun"; //--- ToDo: Localize;
-		x = 0.29375 * safezoneW + safezoneX;
-		y = 0.467013 * safezoneH + safezoneY;
-		w = 0.3 * safezoneW;
-		h = 0.0659743 * safezoneH;
+		x = 0.43201 * safezoneW + safezoneX;
+		y = 0.448998 * safezoneH + safezoneY;
+		w = 0.263461 * safezoneW;
+		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		onLBSelChanged = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
-	class CP_weaponsPanelItem1: CP_RscListbox
+	class CP_weaponsPanelItem1: CP_RscCombo
 	{
 		idc = 3;
 		text = "Item1"; //--- ToDo: Localize;
-		x = 0.29375 * safezoneW + safezoneX;
-		y = 0.543983 * safezoneH + safezoneY;
-		w = 0.3 * safezoneW;
-		h = 0.0659743 * safezoneH;
+		x = 0.43201 * safezoneW + safezoneX;
+		y = 0.534002 * safezoneH + safezoneY;
+		w = 0.263461 * safezoneW;
+		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		onLBSelChanged = __EVAL("[3] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
-	class CP_weaponsPanelItem2: CP_RscListbox
+	class CP_weaponsPanelItem2: CP_RscCombo
 	{
 		idc = 4;
 		text = "Item2"; //--- ToDo: Localize;
-		x = 0.29375 * safezoneW + safezoneX;
-		y = 0.620953 * safezoneH + safezoneY;
-		w = 0.3 * safezoneW;
-		h = 0.0659743 * safezoneH;
+		x = 0.43201 * safezoneW + safezoneX;
+		y = 0.619005 * safezoneH + safezoneY;
+		w = 0.263461 * safezoneW;
+		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		onLBSelChanged = __EVAL("[4] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
-	class CP_weaponsPanelItem3: CP_RscListbox
+	class CP_weaponsPanelItem3: CP_RscCombo
 	{
 		idc = 5;
 		text = "Item3"; //--- ToDo: Localize;
-		x = 0.29375 * safezoneW + safezoneX;
-		y = 0.697923 * safezoneH + safezoneY;
-		w = 0.3 * safezoneW;
-		h = 0.0659743 * safezoneH;
+		x = 0.43201 * safezoneW + safezoneX;
+		y = 0.704009 * safezoneH + safezoneY;
+		w = 0.263461 * safezoneW;
+		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		onLBSelChanged = __EVAL("[5] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
+	};
+	class CP_PrimaryTittle: CP_RscText
+	{
+		idc = -1;
+		text = "Primary: "; //--- ToDo: Localize;
+		x = 0.313028 * safezoneW + safezoneX;
+		y = 0.261989 * safezoneH + safezoneY;
+		w = 0.101985 * safezoneW;
+		h = 0.0510023 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	};
+	class CP_SecondaryTittle: CP_RscText
+	{
+		idc = -1;
+
+		text = "Secondary: "; //--- ToDo: Localize;
+		x = 0.313028 * safezoneW + safezoneX;
+		y = 0.363994 * safezoneH + safezoneY;
+		w = 0.101985 * safezoneW;
+		h = 0.0510023 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	};
+	class CP_HandgunTittle: CP_RscText
+	{
+		idc = -1;
+
+		text = "Handgun: "; //--- ToDo: Localize;
+		x = 0.313028 * safezoneW + safezoneX;
+		y = 0.448998 * safezoneH + safezoneY;
+		w = 0.101985 * safezoneW;
+		h = 0.0510023 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	};
+	class CP_item1Tittle: CP_RscText
+	{
+		idc = -1;
+
+		text = "Item 1:"; //--- ToDo: Localize;
+		x = 0.313028 * safezoneW + safezoneX;
+		y = 0.534002 * safezoneH + safezoneY;
+		w = 0.101985 * safezoneW;
+		h = 0.0510023 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	};
+	class CP_item2Tittle: CP_RscText
+	{
+		idc = -1;
+
+		text = "Item 2:"; //--- ToDo: Localize;
+		x = 0.313028 * safezoneW + safezoneX;
+		y = 0.619005 * safezoneH + safezoneY;
+		w = 0.101985 * safezoneW;
+		h = 0.0510023 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	};
+	class CP_item3Tittle: CP_RscText
+	{
+		idc = -1;
+
+		text = "Item 3:"; //--- ToDo: Localize;
+		x = 0.313028 * safezoneW + safezoneX;
+		y = 0.704009 * safezoneH + safezoneY;
+		w = 0.101985 * safezoneW;
+		h = 0.0510023 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	};
 	class CP_gearPanelPiP: CP_RscPicture
 	{

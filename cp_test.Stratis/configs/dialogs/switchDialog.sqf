@@ -15,4 +15,13 @@ switch (CP_screen) do
    case 2:
    { _ok = createDialog "CP_GEARPANEL";
 	 if !(_ok) exitWith { hint "create Dialog failed"; diag_log  "CP: create gear Dialog failed";};};
+   case 3:
+   { _ok = createDialog "CP_ACCESPANEL";
+	 if !(_ok) exitWith { hint "create Dialog failed"; diag_log  "CP: create accessory Dialog failed";};};
+   case 4:
+   { _ok = createDialog "CP_WEAPONSPANEL";
+	 if !(_ok) exitWith { hint "create Dialog failed"; diag_log  "CP: create weapon Dialog failed";};};
+   case 5:
+   { _ok = createDialog "CP_UNIFORMSPANEL";
+	 if !(_ok) exitWith { hint "create Dialog failed"; diag_log  "CP: create uniforms Dialog failed";};};
 };

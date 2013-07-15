@@ -1,4 +1,4 @@
-private ["_disp","_comboBox","_index","_displayname"];
+private ["_disp","_comboBox","_index","_displayname","_groups"];
 disableSerialization;
 
 _disp = _this select 0;
@@ -28,20 +28,30 @@ CP_groupPanelOpen	= true;
 //Disable Esc while respawn is on
 CP_disableEsc = CP_SQUADPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"]; 
 
+_groups	 = switch (side player) do	{
+					case west:			{CP_westGroups};
+					case east:			{CP_eastGroups};
+					case resistance:	{CP_guarGroups};
+				};
+				
 //Load active Groups
 _comboBox = CP_squadPanelSquadList; 
 lbClear _comboBox;
 	{
 		_displayname = _x select 1;
 		_index = _comboBox lbAdd _displayname;
-	} foreach (if ((side player)== west) then {CP_westGroups} else {CP_eastGroups});
+	} foreach _groups;
 _comboBox lbSetCurSel 0;
 
 [] spawn {
 			private ["_comboBox","_displayname","_index","_groups","_array"];
 			disableSerialization;
 			while {dialog && CP_groupPanelOpen} do {
-				_groups = if (side player == west) then {CP_westGroups} else {CP_eastGroups};
+				_groups	 = switch (side player) do	{
+					case west:			{CP_westGroups};
+					case east:			{CP_eastGroups};
+					case resistance:	{CP_guarGroups};
+				};
 				
 				_array = []; 
 				{
@@ -68,7 +78,7 @@ _comboBox lbSetCurSel 0;
 					{
 						_displayname = _x select 1;
 						_index = _comboBox lbAdd _displayname;
-					} foreach (if ((side player)== west) then {CP_westGroups} else {CP_eastGroups});
+					} foreach _groups;
 				
 				//Rename Squad
 				if (player == leader (CP_activeGroup select 0)) then {
