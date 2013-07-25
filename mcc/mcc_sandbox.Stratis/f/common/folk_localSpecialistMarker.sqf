@@ -22,14 +22,9 @@ call compile format ["
 	_unt = %1;
 ",_this select 0];
 
-_untName = _this select 0;
-_mkrType = _this select 1;
-_mkrText = _this select 2;
-_mkrColor = _this select 3;
-_mkrName = format ["mkr_%1",_unt];
-
 
 // ====================================================================================
+
 
 // WAIT FOR UNIT TO EXIST IN-MISSION
 // We wait for the unit to exist before creating the marker.
@@ -43,6 +38,13 @@ if (isNil "_unt") then
 	",_untName,_unt];
 	_mkrName = format ["mkr_%1",_unt];
 };
+
+_untName = _this select 0;
+_mkrType = _this select 1;
+_mkrText = _this select 2;
+_mkrColor = _this select 3;
+_mkrName = format ["mkr_%1",_unt];
+
 
 // ====================================================================================
 

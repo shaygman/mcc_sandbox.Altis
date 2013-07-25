@@ -1,7 +1,8 @@
 TODO - 
-- set player rating 
-- delete custom squad after leaving
-- Starting pos west/east
+- set player rating  					- Done
+- delete custom squad after leaving 	- Done
+- Starting pos west/east				- Done	
+- rearange UI for respawn				- Done
 - Logistics - mortarts
 - No fly zone
 - Safe zone

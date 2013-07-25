@@ -95,3 +95,4 @@ _muzzles = getArray(configFile>>"cfgWeapons" >> _primaryWeapon >> "muzzles");
 player selectWeapon (_muzzles select 0);
 mcc_actionInedx = player addaction ["> Mission generator", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 _null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
+if (CP_activated) exitWith {_null=[] execVM CP_path + "scripts\player\player_init.sqf"}; 

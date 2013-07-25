@@ -3,10 +3,16 @@ private ["_string","_null","_nul","_dummyGroup","_dummy","_name","_keyDown","_sa
 ACEIsEnabled = isClass (configFile >> "CfgPatches" >> "ace_main");	//check if ACE is Enabled
 MCC_isMode = isClass (configFile >> "CfgPatches" >> "mcc_sandbox");	//check if MCC is mod version
 MCC_initDone = false; 
+
+//Debug
+CP_debug = true; 
+
 if (MCC_isMode) then {
 	MCC_path = "\mcc_sandbox_mod\";
+	CP_path	 = "\mcc_sandbox_mod\";
 		} else {
-			MCC_path = ""; 
+			MCC_path = "";
+			CP_path	 = "";
 			[] execVM MCC_path +"init_mission.sqf";
 			enableSaving [false, false];
 			};
@@ -97,6 +103,9 @@ mccPresets = [
 		,['Set Locked', '_this setVehicleLock "LOCKED";']
 		,['Set Renegade', '_this addrating -2001;']
 		,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
+		,['Create West FOB', ' [[getpos _this, getdir _this, "west" ,"FOB",true], "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP; deletevehicle _this']
+		,['Create East FOB', ' [[getpos _this, getdir _this, "east" ,"FOB",true], "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP; deletevehicle _this']
+		,['Create Resistance FOB', ' [[getpos _this, getdir _this, "GUAR" ,"FOB",true], "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP; deletevehicle _this']
 	];
 
 
@@ -468,8 +477,71 @@ _null=[] execVM MCC_path + "mcc\pv_handling\mcc_extras_pv_handler.sqf";
 diag_log format ["%1 - MCC Headless Client available: %2", time, MCC_isHC];
 diag_log format ["%1 - MCC Local Headless Client: %2", time, MCC_isLocalHC];
 
-//==========================Fire init=======================
-finishMissionInit;
+
+//******************************************************************************************************************************
+//											CP Stuff
+//******************************************************************************************************************************			
+//---------------------------------------------
+//		Handle functions
+//---------------------------------------------
+CP_fnc_globalExecute 	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_globalExecute.sqf");
+CP_fnc_setValue 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setValue.sqf");
+CP_fnc_getVariable 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_getVariable.sqf");
+CP_fnc_buildSpawnPoint 	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_buildSpawnPoint.sqf");
+CP_fnc_setGroupID 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setGroupID.sqf");
+CP_fnc_getGroupID 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_getGroupID.sqf");
+CP_fnc_setGear			= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setGear.sqf");
+CP_fnc_assignGear		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_assignGear.sqf");
+CP_fnc_addWeapon		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_addWeapon.sqf");
+CP_fnc_addItem			= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_addItem.sqf");
+CP_fnc_setVehicleInit	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setVehicleInit.sqf");
+
+//---------------------------------------------
+//		Server Init
+//---------------------------------------------
+if (isServer || isdedicated) then {
+		_null=[] execVM CP_path + "scripts\server\server_init.sqf";
+	};
+	
+//---------------------------------------------
+//		Global CP Defines
+//---------------------------------------------
+
+CP_classes = ["Officer","AR","Rifleman","AT","Corpsman","Marksman","Specialist","Crew","Pilot"];
+CP_classesPic = [	CP_path +"configs\data\Officer.paa",
+					CP_path +"configs\data\AR.paa",
+					CP_path +"configs\data\Rifleman.paa",
+					CP_path +"configs\data\AT.paa",
+					CP_path +"configs\data\Corpsman.paa",
+					CP_path +"configs\data\Marksman.paa",
+					CP_path +"configs\data\Specialist.paa",
+					CP_path +"configs\data\Crew.paa",
+					CP_path +"configs\data\Pilot.paa"
+				];
+				
+//Indexs
+CP_respawnPointsIndex 	= 0;
+CP_squadListIndex		= 0;
+CP_classesIndex = 0; 
+CP_NVIndex 			= 0;
+CP_headgearIndex 	= 0;
+CP_gogglesIndex 	= 0;
+CP_vestIndex 		= 0;
+CP_backpackIndex 	= 0;
+CP_uniformsIndex 	= 0;
+CP_currentItems1Index = 0;
+CP_currentItems2Index = 0;
+CP_currentItems3Index = 0;
+
+CP_dialogInitDone = true; 				//define if dialog is been initialize
+CP_weaponAttachments = ["","",""];	
+CP_defaultLevel = [1,0];
+
+CP_activated = false; 			//CP activated on MCC mode
+
+//******************************************************************************************************************************
+//											CP Stuff Ended
+//******************************************************************************************************************************
 
 //=============================Sync with server when JIP======================
 waituntil {alive player};
@@ -520,6 +592,6 @@ if (isnil "MCC_saveFiles") then {
 MCC_saveFiles = [["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""]];
 	profileNamespace setVariable ["MCC_saveFiles", MCC_saveFiles];
 		};
-
 //============= Init MCC done===========================
 MCC_initDone = true; 
+finishMissionInit;

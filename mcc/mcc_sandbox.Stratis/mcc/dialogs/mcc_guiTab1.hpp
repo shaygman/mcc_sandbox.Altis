@@ -37,6 +37,7 @@
 #define SPAWNEMPTY 1024
 #define SPAWNAWARNESS 1025
 #define MCC_ZONE_LOC 1026
+#define MCCENABLECP 1027
 
 class MCC_Sandbox {
 	  idd = MCC_SANDBOX_IDD;
@@ -97,6 +98,7 @@ class MCC_Sandbox {
 	  MCC_TSHour,
 	  MCC_TSMinute,
 	  MCC_TSSetButton,
+	  MCC_TSSetWeatherButton,
 	  MCC_stopCapture,
 	  MCC_MissionSettings,
 	  MCC_groupGenerator,
@@ -107,6 +109,7 @@ class MCC_Sandbox {
 	  MCC_StartGuar,
 	  MCC_StartCiv,
 	  MCC_StartDisableRespawn,
+	  MCC_StartEnableCP,
 	  MCC_StartLocationsTittle,
 	  MCC_CSSettings,
 	  MCC_EnvironmentTittle,
@@ -328,87 +331,111 @@ class MCC_grassDensity: MCC_RscCombo {idc = MCCGRASSDENSITY;x = 0.245038 * safez
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	onLBSelChanged =  __EVAL("[1] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
 };
-class MCC_WeatherTittle: MCC_RscText {idc = -1;	text = "Weather:"; x = 0.185546 * safezoneW + safezoneX;
-	y = 0.636006 * safezoneH + safezoneY;
-	w = 0.06799 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_WeatherTittle: MCC_RscText {idc = -1;	text = "Weather:"; 
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.631949 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_FogTittle: MCC_RscText {idc = -1;	text = "Fog:"; x = 0.185546 * safezoneW + safezoneX;
-	y = 0.602005 * safezoneH + safezoneY;
-	w = 0.06799 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_FogTittle: MCC_RscText {idc = -1;	text = "Fog:"; 
+	x = 0.185583 * safezoneW + safezoneX;
+	y = 0.60204 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_Weather: MCC_RscCombo {idc = MCCWEATHER;	x = 0.253536 * safezoneW + safezoneX;
-	y = 0.636006 * safezoneH + safezoneY;
-	w = 0.0764887 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_Weather: MCC_RscCombo {idc = MCCWEATHER;	
+	x = 0.253646 * safezoneW + safezoneX;
+	y = 0.631949 * safezoneH + safezoneY;
+	w = 0.0744792 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 	colorText[] = {1,1,1,1};
 	colorBackground[] = {0,0,0,1};
 };
-class MCC_Fog: MCC_RscCombo {idc = MCCFOG;x = 0.253536 * safezoneW + safezoneX;
-	y = 0.602005 * safezoneH + safezoneY;
-	w = 0.0764887 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_Fog: MCC_RscCombo {idc = MCCFOG;
+	x = 0.255594 * safezoneW + safezoneX;
+	y = 0.60204 * safezoneH + safezoneY;
+	w = 0.0744792 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 	colorText[] = {1,1,1,1};
 	colorBackground[] = {0,0,0,1};
 };
-class MCC_TSMonthTittle: MCC_RscText {idc = -1;	text = "Month:"; x = 0.185546 * safezoneW + safezoneX;
-	y = 0.670008 * safezoneH + safezoneY;
-	w = 0.06799 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_TSMonthTittle: MCC_RscText {idc = -1;	text = "Month:"; 
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.697923 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_TSDayTittle: MCC_RscText {idc = -1; text = "Day:"; x = 0.185546 * safezoneW + safezoneX;
-	y = 0.704009 * safezoneH + safezoneY;
-	w = 0.06799 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_TSDayTittle: MCC_RscText {idc = -1; text = "Day:"; 
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.73091 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_TSHourTittle: MCC_RscText {idc = -1; text = "Hour:"; x = 0.185546 * safezoneW + safezoneX;
-	y = 0.738011 * safezoneH + safezoneY;
-	w = 0.06799 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_TSHourTittle: MCC_RscText {idc = -1; text = "Hour:"; 
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.763897 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_TSMinuteTittle: MCC_RscText {idc = -1; text = "Minute:";x = 0.185546 * safezoneW + safezoneX;
-	y = 0.772012 * safezoneH + safezoneY;
-	w = 0.06799 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_TSMinuteTittle: MCC_RscText {idc = -1; text = "Minute:";
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.796884 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_TSMonth: MCC_RscCombo {idc = TSMONTH;	x = 0.253536 * safezoneW + safezoneX;
-	y = 0.670008 * safezoneH + safezoneY;
-	w = 0.0764887 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_TSMonth: MCC_RscCombo {idc = TSMONTH;	
+	x = 0.253646 * safezoneW + safezoneX;
+	y = 0.697923 * safezoneH + safezoneY;
+	w = 0.0744792 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_TSDay: MCC_RscCombo {idc = TSDAY;	x = 0.253536 * safezoneW + safezoneX;
-	y = 0.704009 * safezoneH + safezoneY;
-	w = 0.0764887 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_TSDay: MCC_RscCombo {idc = TSDAY;	
+	x = 0.253646 * safezoneW + safezoneX;
+	y = 0.73091 * safezoneH + safezoneY;
+	w = 0.0744792 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_TSHour: MCC_RscCombo {idc = TSHOUR;x = 0.253536 * safezoneW + safezoneX;
-	y = 0.738011 * safezoneH + safezoneY;
-	w = 0.0764887 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_TSHour: MCC_RscCombo {idc = TSHOUR;
+	x = 0.253646 * safezoneW + safezoneX;
+	y = 0.763897 * safezoneH + safezoneY;
+	w = 0.0744792 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_TSMinute: MCC_RscCombo {idc = TSMINUTE; x = 0.253536 * safezoneW + safezoneX;
-	y = 0.772012 * safezoneH + safezoneY;
-	w = 0.0764887 * safezoneW;
-	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+class MCC_TSMinute: MCC_RscCombo {idc = TSMINUTE; 
+	x = 0.253646 * safezoneW + safezoneX;
+	y = 0.796884 * safezoneH + safezoneY;
+	w = 0.0744792 * safezoneW;
+	h = 0.0219914 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_TSSetButton: MCC_RscButton {idc = -1;	text = "Set"; x = 0.185546 * safezoneW + safezoneX;
-	y = 0.806014 * safezoneH + safezoneY;
+class MCC_TSSetButton: MCC_RscButton {idc = -1;	text = "Set Time"; 
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.818876 * safezoneH + safezoneY;
 	w = 0.144479 * safezoneW;
 	h = 0.0340016 * safezoneH;
+	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
+};
+class MCC_TSSetWeatherButton: MCC_RscButton
+{
+	idc = -1;
 	onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
+
+	text = "Set Weahter"; //--- ToDo: Localize;
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.65394 * safezoneH + safezoneY;
+	w = 0.144479 * safezoneW;
+	h = 0.0340016 * safezoneH;
 };
 class MCC_stopCapture: MCC_RscButton {idc = MCCSTOPCAPTURE;	text = "Stop Capturing"; x = 0.185546 * safezoneW + safezoneX;
 	y = 0.397995 * safezoneH + safezoneY;
@@ -448,52 +475,71 @@ class MCC_3DEditor: MCC_RscButton {idc = -1; text = "3D Editor"; x = 0.712469 * 
 	tooltip = "Open 3D editor"; 
 	onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");
 };
-class MCC_StartWest: MCC_RscButton {idc = MCCSTARTWEST;	text = "West"; 	x = 0.36402 * safezoneW + safezoneX;
-	y = 0.482999 * safezoneH + safezoneY;
-	w = 0.0509925 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_StartWest: MCC_RscButton {idc = MCCSTARTWEST;	text = "West"; 	
+	x = 0.3625 * safezoneW + safezoneX;
+	y = 0.489004 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	colorText[] = {0,0,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	tooltip = "Set west start location"; 
 	action = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
-class MCC_StartEast: MCC_RscButton {idc = MCCSTARTEAST;	text = "East"; x = 0.423511 * safezoneW + safezoneX;
-	y = 0.482999 * safezoneH + safezoneY;
-	w = 0.0509925 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_StartEast: MCC_RscButton {idc = MCCSTARTEAST;	text = "East"; 
+	x = 0.454167 * safezoneW + safezoneX;
+	y = 0.489004 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	colorText[] = {1,0,0,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	tooltip = "Set east start location"; 
 	action = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
-class MCC_StartGUAR: MCC_RscButton {idc = MCCSTARTGUAR; text = "GUAR"; x = 0.36402 * safezoneW + safezoneX;
-	y = 0.534002 * safezoneH + safezoneY;
-	w = 0.0509925 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_StartGUAR: MCC_RscButton {idc = MCCSTARTGUAR; text = "GUAR"; 
+	x = 0.3625 * safezoneW + safezoneX;
+	y = 0.532987 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	colorText[] = {0,1,0,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	tooltip = "Set GUAR start location"; 
 	action = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
-class MCC_StartCiv: MCC_RscButton {idc = MCCSTARTCIV; text = "Civ"; x = 0.423511 * safezoneW + safezoneX;
-	y = 0.534002 * safezoneH + safezoneY;
-	w = 0.0509925 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_StartCiv: MCC_RscButton {idc = MCCSTARTCIV; text = "Civ";
+	x = 0.454166 * safezoneW + safezoneX;
+	y = 0.532987 * safezoneH + safezoneY;
+	w = 0.0630208 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	colorText[] = {1,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	tooltip = "Set civilans start location"; 
 	action = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
-class MCC_StartDisableRespawn: MCC_RscButton {idc = MCCDISABLERESPAWN; text = "Disable Respawn"; x = 0.36402 * safezoneW + safezoneX;
-	y = 0.585004 * safezoneH + safezoneY;
-	w = 0.110484 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_StartDisableRespawn: MCC_RscButton {idc = MCCDISABLERESPAWN; text = "Disable Respawn"; 
+	x = 0.3625 * safezoneW + safezoneX;
+	y = 0.585107 * safezoneH + safezoneY;
+	w = 0.06875 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	colorText[] = {1,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	tooltip = "Disable respawn to all players"; 
 	action = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
-class MCC_StartLocationsTittle: MCC_RscText {idc = -1; text = "Start Locations:"; x = 0.36402 * safezoneW + safezoneX;
-	y = 0.448998 * safezoneH + safezoneY;
+class MCC_StartEnableCP: MCC_RscButton
+{
+	idc = MCCENABLECP;
+	action = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
+	text = "Role Selection"; //--- ToDo: Localize;
+	x = 0.448437 * safezoneW + safezoneX;
+	y = 0.585107 * safezoneH + safezoneY;
+	w = 0.06875 * safezoneW;
+	h = 0.0329871 * safezoneH;
+	tooltip = "If pressed before a start position to the given side has been set it will open a role selection menu to all players"; 
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+};
+class MCC_StartLocationsTittle: MCC_RscText {idc = -1; text = "Start Locations:"; 
+	x = 0.3625 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	colorText[] = {0,1,1,1};
@@ -506,10 +552,11 @@ class MCC_CSSettings: MCC_RscText {idc = -1; text = "Client Side Settings:"; x =
 	colorText[] = {0,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_EnvironmentTittle: MCC_RscText {idc = -1;	text = "Environment Settings:"; x = 0.194045 * safezoneW + safezoneX;
-	y = 0.568003 * safezoneH + safezoneY;
-	w = 0.127481 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_EnvironmentTittle: MCC_RscText {idc = -1;	text = "Environment Settings:"; 
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.565974 * safezoneH + safezoneY;
+	w = 0.126042 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	colorText[] = {0,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };

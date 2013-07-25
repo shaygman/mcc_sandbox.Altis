@@ -55,6 +55,9 @@ sleep (6 + random 6);
 MCC_bonFire = true; 
 MCC_bonSplash = true; 
 
+publicVariable "MCC_bonFire"; 
+publicVariable "MCC_bonSplash"; 
+
 switch _missiontype do {
 	case "ADJUSTMENT" : {
 		[[netid _requestor, "gridO2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;

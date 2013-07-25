@@ -1,5 +1,5 @@
 private ["_debugplayer", "_idx", "_name", "_unit", "_found", "_i", "_OriginalSide","_vm_refreshNumber"];
-				_debugplayer sidechat format ["Loop# %1 RefreshPlayerList spawn activated",vm_count ];
+				//_debugplayer sidechat format ["Loop# %1 RefreshPlayerList spawn activated",vm_count ];
 				RefreshListReady = false;
 				_vm_refreshNumber = vm_count;
 				// Clear and re-fill targets listbox

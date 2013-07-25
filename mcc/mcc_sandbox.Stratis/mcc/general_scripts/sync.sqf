@@ -30,7 +30,7 @@ switch (_type) do
    case 1:
    {
 		if (!isserver) exitwith {};
-		sleep 5;
+		sleep 1;
 	   _d=[date select 0, date select 1, date select 2, date select 3, date select 4];
 	   [[_d],"MCC_fnc_setTime",true,false] spawn BIS_fnc_MP; 
 	   _cloudLevel = overcast;

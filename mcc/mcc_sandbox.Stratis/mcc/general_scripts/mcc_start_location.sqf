@@ -2,6 +2,7 @@
 #define MCCSTARTEAST 1016
 #define MCCSTARTGUAR 1017
 #define MCCSTARTCIV 1018
+#define MCCENABLECP 1027
 
 private ["_side","_null"];
 
@@ -18,10 +19,12 @@ if (mcc_missionmaker == (name player)) then {
 						onMapSingleClick "	
 								MCC_START_WEST  = _pos;
 								publicVariable ""MCC_START_WEST"";
+								[[_pos, 0, 'west','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_WEST  = %1;
 															publicVariable 'MCC_START_WEST';
+															[[MCC_START_WEST, 0, 'west','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 															""							  
 															,MCC_START_WEST
 															];
@@ -37,10 +40,12 @@ if (mcc_missionmaker == (name player)) then {
 						onMapSingleClick "	
 								MCC_START_EAST  = _pos;
 								publicVariable ""MCC_START_EAST"";
+								[[_pos, 0, 'east','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_EAST  = %1;
 															publicVariable 'MCC_START_EAST';
+															[[_pos, 0, 'east','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 															""							  
 															,MCC_START_EAST
 															];
@@ -56,10 +61,12 @@ if (mcc_missionmaker == (name player)) then {
 						onMapSingleClick "	
 								MCC_START_GUER  = _pos;
 								publicVariable ""MCC_START_GUER"";
+								[[_pos, 0, 'GUAR','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_GUER  = %1;
 															publicVariable 'MCC_START_GUER';
+															[[_pos, 0, 'GUAR','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 															""							  
 															,MCC_START_GUER
 															];
@@ -93,7 +100,6 @@ if (mcc_missionmaker == (name player)) then {
 						MCC_TRAINING = FALSE;
 						publicVariable "MCC_TRAINING";
 						[["Mission started, respawn is off"],'MCC_fnc_globalHint',true,true] spawn BIS_fnc_MP;
-						ctrlEnable [MCCDISABLERESPAWN,false];
 						MCC_enable_respawn=false;
 					};
 					
@@ -131,6 +137,13 @@ if (mcc_missionmaker == (name player)) then {
 							MCC_enable_west=false; 	
 							MCC_enable_LHD=false;						
 						} else {hint "Spawn a LHD first"}; 
+					};
+					
+					case 6:	//Enable CP
+					{ 
+						CP_activated = true;
+						publicVariable "CP_activated";
+						ctrlEnable [MCCENABLECP,false];
 					};
 				};
 			closeDialog 0;

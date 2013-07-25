@@ -32,6 +32,7 @@
 #define SPAWNEMPTY 1024
 #define SPAWNTASK 1025
 #define MCC_ZONE_LOC 1026
+#define MCCENABLECP 1027
 
 private ["_mccdialog","_comboBox","_displayname","_it","_x"];
 disableSerialization;
@@ -41,6 +42,8 @@ ctrlEnable [MENU2,false];
 ctrlEnable [MENU3,false];
 ctrlEnable [MENU4,false];
 ctrlEnable [MENU5,false];
+
+if (CP_activated) then {ctrlenable [MCCENABLECP,false]};
 
 _mccdialog = findDisplay MCC_SANDBOX_IDD;
 

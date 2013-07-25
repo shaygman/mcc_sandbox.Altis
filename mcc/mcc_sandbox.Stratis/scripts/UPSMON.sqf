@@ -82,7 +82,11 @@ waitUntil {KRON_UPS_INIT==1};
 
 // convert argument list to uppercase
 	_UCthis = [];
-	for [{_i=0},{_i<count _this},{_i=_i+1}] do {_e=_this select _i; if (typeName _e=="STRING") then {_e=toUpper(_e)};_UCthis set [_i,_e]};
+	for [{_i=0},{_i<count _this},{_i=_i+1}] do {
+			_e=_this select _i;
+			if (typeName _e=="STRING") then {_e=toUpper(_e)};
+			_UCthis set [_i,_e]
+		};
 
 	if ((count _this)<2) exitWith {
 		if (format["%1",_this]!="INIT") then {hint "UPS: Unit and marker name have to be defined!"};
@@ -172,16 +176,21 @@ _rlastPos = [0,0,0];
 
 // unit that's moving
 _obj = leader (_this select 0); //group or leader
+
+if ( isnil "_obj") exitwith {hint format ["Object: %1",_obj]};
 _npc = _obj;
 
-			
 
+			
+if (isnil "_lastcurrpos") then {_lastcurrpos = [0,0,0]};
 // give this group a unique index
 KRON_UPS_Instances = KRON_UPS_Instances + 1;
 _grpid = KRON_UPS_Instances;
 _grpidx = format["%1",_grpid];
+
 _grpname = format["%1_%2",(side _npc),_grpidx];
 _side = side _npc;
+
 
 
 
@@ -194,6 +203,7 @@ sleep _rnd ;
 
 
 // == set "UPSMON_grpid" to units in the group and EH===============================  
+
 	{
 		_x setVariable ["UPSMON_grpid", _grpid, false];
 		sleep 0.05;
@@ -208,20 +218,23 @@ sleep _rnd ;
 		}
 		else
 		{//civ
-			
-			_x removeAllEventHandlers "firedNear";
-			sleep 0.05;
-			_x AddEventHandler ["firedNear", {nul = _this spawn R_SN_EHFIREDNEAR}];
-			sleep 0.05;
-			
-			_x removeAllEventHandlers "killed";
-			sleep 0.05;
-			_x AddEventHandler ["killed", {nul = _this spawn R_SN_EHKILLEDCIV}];
-			sleep 0.05;
+			if (! isnil "_x") then {
+				_x removeAllEventHandlers "firedNear";
+				sleep 0.05;
+				_x AddEventHandler ["firedNear", {nul = _this spawn R_SN_EHFIREDNEAR}];
+				sleep 0.05;
+				
+				_x removeAllEventHandlers "killed";
+				sleep 0.05;
+				_x AddEventHandler ["killed", {nul = _this spawn R_SN_EHKILLEDCIV}];
+				sleep 0.05;
+			};
 		};
 	} foreach units _npc;
 
-	//if is vehicle will not be in units so must set manually
+
+//if is vehicle will not be in units so must set manually
+
 	if (isnil {_npc getVariable ("UPSMON_grpid")}) then {		
 		_npc setVariable ["UPSMON_grpid", _grpid, false];		
 		sleep 0.05;
@@ -248,6 +261,7 @@ sleep _rnd ;
 			sleep 0.05;
 		}
 	};
+
 	//the index will be _grpid 
 	R_GOTHIT_ARRAY = R_GOTHIT_ARRAY + [0];
 	
@@ -282,6 +296,7 @@ if (KRON_UPS_Debug>0) then {player sidechat format["%1: New instance %2 %3 %4",_
 
 // is anybody alive in the group?
 	_exit = true;
+
 	if (typename _npc=="OBJECT") then {		
 		if (!isnull group _npc) then {
 			_npc = [_npc,units (group _npc)] call MON_getleader;
@@ -296,6 +311,7 @@ if (KRON_UPS_Debug>0) then {player sidechat format["%1: New instance %2 %3 %4",_
 			_npc = [_obj,count _obj] call MON_getleader;			
 		};
 	};
+
 
 	
 	// set the leader in the vehilce
@@ -796,7 +812,7 @@ _noveh = if ("NOVEH" in _UCthis) then {true} else {false};
 		// has the trigger been created already?
 		KRON_TRGFlag=-1;
 		call compile format["%1=false",_flgname];
-		call compile format["KRON_TRGFlag=%1",_trgname];
+		call compile format["KRON_TRGFlag='%1'",_trgname];
 		if (isNil ("KRON_TRGFlag")) then {
 			// trigger doesn't exist yet, so create one (make it a bit bigger than the marker, to catch path finding 'excursions' and flanking moves)
 			call compile format["%1=createTrigger['EmptyDetector',_centerpos]",_trgname];
@@ -849,6 +865,7 @@ while {_loop} do {
 
 
 //if (KRON_UPS_Debug>0) then {player sidechat format["%1: _cycle=%2 _currcycle=%3 _react=%4 _waiting=%5",_grpidx,_cycle,_currcycle,_react,_waiting]}; 
+	if (isnil "_react") then {_react = 0}; 
 	_timeontarget=_timeontarget+_currcycle;
 	_react=_react+_currcycle;	
 	_waiting = _waiting - _currcycle;
@@ -1151,7 +1168,7 @@ while {_loop} do {
 		if (_opfknowval>_lastknown ) then {
 			_react = _react + 20;
 		};	
-	
+		if (isnil "_react") then {_react = 60}; 
 		// if spotted an enemy or got shot, so start pursuit, if in combat and exceed time to react or movecompleted
 		if (_fightmode != "walk" && ((_react >= KRON_UPS_react && _lastreact >=_minreact) || moveToCompleted _npc )) then {			
 			_pursue=true;
@@ -1179,7 +1196,7 @@ while {_loop} do {
 				_dir1 = getDir _npc;
 				_mineposition = [position _npc,_dir1, 25] call MON_GetPos2D;					
 				_roads = _mineposition nearroads KRON_UPS_ambushdist;
-				hint format ["%1", _roads];
+
 				if (count _roads > 0) then {					
 					_mineposition = position (_roads select 0);
 					if (_Mines > 0 && [_npc,_mineposition] call MON_CreateMine) then {_Mines = _Mines -1;};	
@@ -1434,7 +1451,7 @@ while {_loop} do {
 		};	
 		
 		if (_inheli) then {
-			_landing = _heli getVariable "UPSMON_landing";
+			if (! isnil "_heli") then {_landing = _heli getVariable "UPSMON_landing"};
 			if (isnil ("_landing")) then {_landing=false;};
 			if (_landing) then {	
 				_pursue = false;

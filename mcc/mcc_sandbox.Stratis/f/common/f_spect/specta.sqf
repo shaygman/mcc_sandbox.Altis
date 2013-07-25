@@ -94,7 +94,8 @@ VM_CheckOriginalSide =  {
 		_x setVariable ["KEG_OriginalSide",(side _x)];
 		_x addRating -(_RatingDelta);
 	};
-	_OriginalSide
+	_OriginalSide = _x getVariable "KEG_OriginalSide";
+	_OriginalSide;
 };
 
 
@@ -394,6 +395,7 @@ MovementCameraLoop = {
 		{_x camSetFov szoom} foreach KEGs_cameras;		
 	
 		// Static camera, follows unit from behind
+		if (isnil "KEGs_dir") then {KEGs_dir = 0}; 
 		KEGscam_static camSetRelPos[sin(KEGs_dir)*(-(_l*sdistance)), cos(KEGs_dir)*(-(_l*sdistance)), 0.6*abs sdistance];
 
 		

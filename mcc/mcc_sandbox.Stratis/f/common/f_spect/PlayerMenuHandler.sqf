@@ -101,13 +101,14 @@ _cCamera = 55002;
 		};
 		
 		ctrlSetText[_cName, format["%1 %2", _name, _role]];	
-
+/*
 		// Set name color to gray if dropped cam
 		_ccName = _disp displayctrl _cName;
+		if (isnil "_ccName") exitwWith {}; 
 		if(KEGsDroppedCamera) then {
 			_ccName ctrlSetTextColor[0.6, 0.6, 0.6, 1];
 		} else {
 			_ccName ctrlSetTextColor[1, 1, 1, 1];
-		};
+		};*/
 
 KEGsKEGs_lastTgt = KEGs_tgtIdx;		//capture the last target index for the player in focus

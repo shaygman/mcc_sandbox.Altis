@@ -169,6 +169,11 @@ if (MCC_capture_state) then
 						{					
 							_behavior = "Ambush";
 						};
+						
+						default
+						{					
+							_behavior = "Defensive";
+						};
 					};												
 					_diaryrecord = "";
 					// Lets find out what you want and put that in our diary on the right zone

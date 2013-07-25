@@ -39,7 +39,7 @@ R_WHO_IS_CIV_KILLER_INFO = 1;
 
 
 // if you are spotted by AI group, how close the other AI group have to be to You , to be informed about your present position. over this, will lose target
-KRON_UPS_sharedist = 1500;
+KRON_UPS_sharedist = 800;
 
 // If enabled IA communication between them with radio defined sharedist distance, 0/2 
 // (must be set to 2 in order to use reinforcement !R)
@@ -77,7 +77,7 @@ KRON_UPS_GUER_SURRENDER = 0;
 
 // knowsAbout 0.5 1.03 , 1.49 to add this enemy to "target list" (1-4) the higher number the less detect ability (original in 5.0.7 was 0.5)
 // it does not mean the AI will not shoot at you. This means: what must be knowsAbout you to UPSMON adds you to the list of targets (UPSMON list of target) 
-R_knowsAboutEnemy = 1.49;
+R_knowsAboutEnemy = 0.5;
 
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -145,7 +145,7 @@ KRON_UPS_ARTILLERY_GUER_FIRE = true; //set to true for doing resistance to fire
 	KRON_targets2 =[];//resistence	
 	KRON_targetsPos =[];//Posiciones de destino actuales.
 	KRON_NPCs = []; //Lideres de los grupos actuales	
-	KRON_UPS_Instances=0;
+	KRON_UPS_Instances=-1;
 	KRON_UPS_Total=0;
 	KRON_UPS_Exited=0;
 	KRON_UPS_East_Total = 0;
@@ -156,7 +156,7 @@ KRON_UPS_ARTILLERY_GUER_FIRE = true; //set to true for doing resistance to fire
 	KRON_UPS_ARTILLERY_EAST_TARGET = objnull;
 	KRON_UPS_ARTILLERY_GUER_TARGET = objnull;
 	KRON_UPS_TEMPLATES = [];
-	KRON_UPS_MG_WEAPONS = ["MG36","M249","M240","MK_48","PK","PKm","Pecheneg","M249 Para","M249 Para M145","M240G M145","M60","BAF_L110A1_Aim","LMG_Mk200_F","arifle_MX_SW_F"];
+	KRON_UPS_MG_WEAPONS = ["LMG_Mk200_F","arifle_MX_SW_F","LMG_Zafir_F"];
 	
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -415,7 +415,7 @@ KRON_UPS_ARTILLERY_GUER_FIRE = true; //set to true for doing resistance to fire
 					};		
 					
 					_timeout = _arti getVariable ("timeout");
-					
+					if (isnil "_timeout") then {_timeout = 0};
 					if (!isnull (gunner _arti) && canmove (gunner _arti) && (time >= _timeout)) then {
 						_side = side gunner _arti;
 						_fire = call (compile format ["KRON_UPS_ARTILLERY_%1_FIRE",_side]);					

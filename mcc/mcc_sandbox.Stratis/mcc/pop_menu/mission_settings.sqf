@@ -14,6 +14,13 @@ if (mcc_missionmaker == (name player)) then {
 	if (_type==0) then	{
 		_fogLevel = (MCC_fog_array select (lbCurSel MCCFOG)) select 1;		//Set fog
 		MCC_fog_index=lbCurSel MCCFOG;
+		_weather = (MCC_weather_array select (lbCurSel MCCWEATHER)) select 1;	//Set weather
+		_weather set [5, _fogLevel];
+		MCC_weather_index=lbCurSel MCCWEATHER;
+		_nul=[_type, _weather] execVM MCC_path +"mcc\general_scripts\time.sqf";
+	};
+
+	if (_type==3) then	{
 		month = (MCC_months_array select (lbCurSel TSMONTH)) select 1;			//Set time
 		day = (MCC_days_array select (lbCurSel TSDAY));
 		hour = (MCC_hours_array select (lbCurSel TSHOUR)) select 1;
@@ -22,10 +29,7 @@ if (mcc_missionmaker == (name player)) then {
 		MCC_day_index=lbCurSel TSDAY;
 		MCC_hours_index=lbCurSel TSHOUR;
 		MCC_minutes_index=lbCurSel TSMINUTE;
-		_weather = (MCC_weather_array select (lbCurSel MCCWEATHER)) select 1;	//Set weather
-		_weather set [5, _fogLevel];
-		MCC_weather_index=lbCurSel MCCWEATHER;
-		_nul=[_weather] execVM MCC_path +"mcc\general_scripts\time.sqf";
+		_nul=[_type] execVM MCC_path +"mcc\general_scripts\time.sqf";
 	};
 };
 		

@@ -23,7 +23,7 @@ for "_i" from 1 to ((count _mcc_config) - 1) do
     _sidename       = (_mcc_sides select _side);   
     
    //------------------------------------------------------------------- 
-    diag_log format ["factions: [%1] - [%2] - [%3] - [%4] - [%5] - [%6]", _unitCfg, _cfgname, _cfgdisplayname, _side, _sidename, _result];  //DEBUG    
+    diag_log format ["factions: [%1] - [%2] - [%3] - [%4] - [%5] - [%6]", _unitCfg, _cfgname, _cfgdisplayname, _side, _sidename];  //DEBUG    
    //-------------------------------------------------------------------    
     U_FACTIONS set [_mcc_faction_idx,[_cfgdisplayname, _sidename, _cfgname ]];
     _mcc_faction_idx = _mcc_faction_idx + 1;

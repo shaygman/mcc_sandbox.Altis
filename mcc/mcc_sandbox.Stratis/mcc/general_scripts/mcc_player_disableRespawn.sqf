@@ -5,7 +5,7 @@
 
 if (isDedicated) exitWith {}; // not a player machine
 
-private ["_safePos", "_startMarker", "_trainingMode", "_pos","_dummyObject"];
+private ["_safePos", "_startMarker", "_trainingMode", "_pos","_dummyObject","_null"];
 
 while { !alive player } do {sleep 1};
 sleep 3;
@@ -21,12 +21,13 @@ if (_playerSideNr == 1) then
 	if (MCC_teleportAtStart) then
 	{
 		if (surfaceIsWater (MCC_START_WEST)) then {
-			_safePos = [(MCC_START_WEST),1,10,1,2,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(MCC_START_WEST),1,50,1,2,900,0] call BIS_fnc_findSafePos;
 			} else {
-				_safePos = [(MCC_START_WEST),1,10,1,0,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(MCC_START_WEST),1,50,1,0,900,0] call BIS_fnc_findSafePos;
 				};
-		player setPos _safepos;
+		player setPos [_safepos select 0, _safepos select 1, 0];
 	};
+	if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
 	_startMarkerW = createMarkerLocal ["STARTLOCATIONW", (MCC_START_WEST)];
 	_startMarkerW setMarkerShapeLocal "ICON";	
 	_startMarkerW setMarkerTypeLocal  "mil_start";
@@ -45,12 +46,14 @@ if (_playerSideNr == 0) then
 	if (MCC_teleportAtStart) then
 	{
 		if (surfaceIsWater (MCC_START_EAST)) then {
-			_safePos = [(MCC_START_EAST),1,10,1,2,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(MCC_START_EAST),1,50,1,2,900,0] call BIS_fnc_findSafePos;
 			} else {
-				_safePos = [(MCC_START_EAST),1,10,1,0,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(MCC_START_EAST),1,50,1,0,900,0] call BIS_fnc_findSafePos;
 				};
-		player setPos _safepos;
+		player setPos [_safepos select 0, _safepos select 1, 0];;
 	};
+	
+	if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
 	_startMarkerE = createMarkerLocal ["STARTLOCATIONE", ( MCC_START_EAST)];
 	_startMarkerE setMarkerShapeLocal "ICON";	
 	_startMarkerE setMarkerTypeLocal  "mil_start";
@@ -69,12 +72,14 @@ if (_playerSideNr == 2) then
 	if (MCC_teleportAtStart) then
 	{
 		if (surfaceIsWater (MCC_START_GUER)) then {
-			_safePos = [(MCC_START_GUER),1,10,1,2,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(MCC_START_GUER),1,50,1,2,900,0] call BIS_fnc_findSafePos;
 			} else {
-				_safePos = [(MCC_START_GUER),1,10,1,0,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(MCC_START_GUER),1,50,1,0,900,0] call BIS_fnc_findSafePos;
 				};
-		player setPos _safepos;
+		player setPos [_safepos select 0, _safepos select 1, 0];;
 	};
+	
+	if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
 	_startMarkerG = createMarkerLocal ["STARTLOCATIONG", (MCC_START_GUER)];
 	_startMarkerG setMarkerShapeLocal "ICON";	
 	_startMarkerG setMarkerTypeLocal  "mil_start";
@@ -94,11 +99,11 @@ if (_playerSideNr == 3) then
 	if (MCC_teleportAtStart) then
 	{
 		if (surfaceIsWater (MCC_START_CIV)) then {
-			_safePos = [(MCC_START_CIV),1,10,1,2,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(MCC_START_CIV),1,50,1,2,900,0] call BIS_fnc_findSafePos;
 			} else {
-				_safePos = [(MCC_START_CIV),1,10,1,0,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(MCC_START_CIV),1,50,1,0,900,0] call BIS_fnc_findSafePos;
 				};
-		player setPos _safepos;
+		player setPos [_safepos select 0, _safepos select 1, 0];;
 	};
 	_startMarkerG = createMarkerLocal ["STARTLOCATIONG", (MCC_START_CIV)];
 	_startMarkerG setMarkerShapeLocal "ICON";	
@@ -135,6 +140,4 @@ while { true } do
 
 	sleep 2;
 	if (mcc_missionmaker != (name player)) then {titlecut ["You Died...","BLACK OUT", 3];[cameraOn,cameraOn,cameraOn] execVM "f\common\f_spect\specta.sqf";};
-	//[player] execVM "spect\specta.sqf";
-
 };

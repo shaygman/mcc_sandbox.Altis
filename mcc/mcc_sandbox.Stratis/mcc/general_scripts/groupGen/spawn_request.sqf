@@ -16,6 +16,7 @@ private ["_type", "_comboBox", "_mccdialog", "_displayname","_index","_wpType","
 		 "_wpText","_wpTextStatement","_wpTimOut"];
 disableSerialization;
 
+_mccdialog = findDisplay groupGen_IDD;
 _type = _this select 0;
 _dlg = findDisplay groupGen_IDD;
 if !mcc_isloading then	{
@@ -32,7 +33,8 @@ if !mcc_isloading then	{
 										, mcc_hc
 										];
 							[[_pos, MCC_groupGenCurrenGroupArray, MCC_groupGenGroupcount, mcc_hc],'MCC_fnc_groupSpawn',true,false] spawn BIS_fnc_MP;
-							onMapSingleClick """";";	
+							onMapSingleClick """";";
+			_nul=[1,MCC_groupGenGroupStatus] execVM MCC_path + "mcc\general_scripts\groupGen\group_manage.sqf";	//Refresh the group WP
 		};
 		
 	if (_type==1) then	{											//Add WP
@@ -43,7 +45,7 @@ if !mcc_isloading then	{
 			_wpFormation = ["NO CHANGE", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"] select (lbCurSel MCC_GroupGenWPFormation_IDD);
 			_wpSpeed = ["UNCHANGED", "LIMITED", "NORMAL", "FULL"] select (lbCurSel MCC_GroupGenWPSpeed_IDD);
 			_wpBehavior = ["UNCHANGED", "CARELESS", "SAFE", "AWARE", "COMBAT", "STEALTH"] select (lbCurSel MCC_GroupGenWPBehavior_IDD);
-			_wpText = ctrlText (_dlg displayCtrl MCC_GroupGenWPStatement_IDD);
+			_wpText = ctrlText (_dlg displayCtrl MCC_GroupGenWPStatment_IDD);
 			_wpTextStatement = ctrlText (_dlg displayCtrl MCC_GroupGenWPStatment_IDD);
 			_wpTimOut = [0,5,10,15,20,30,60,90,120,180,240,300,360,420,480,540,600,660,720,780,840,900,960,1020,1080,1140,1200] select (lbCurSel MCC_WPTimeout_IDD);
 			MCC_WpGenarray = [_wpType, _wpComabt,_wpFormation,_wpSpeed,_wpBehavior,_wpText,_wpTextStatement,_wpTimOut];
@@ -55,7 +57,8 @@ if !mcc_isloading then	{
 									MCC_WPgenMapClick = true; 	
 									onMapSingleClick """";";	
 			waituntil {MCC_WPgenMapClick}; 
-			_nul=[1,MCC_groupGenGroupStatus] execVM MCC_path + "mcc\general_scripts\groupGen\group_manage.sqf";	//Refresh the group WP
+			sleep 1; 
+			(_mccdialog displayCtrl MCC_GroupGenGroups_IDD) lbSetCurSel MCC_groupGenGroupselectedIndex;		//Sets focuse on the group
 			};
 		};
 		

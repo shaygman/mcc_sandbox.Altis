@@ -115,9 +115,10 @@ waitUntil {(_heli distance _pos) < 500};
 		} foreach _cargo;
 	};
 
-
-_null = [leader (_helocargo), _p_mcc_zone_markername,_p_mcc_zone_behavior,_p_mcc_awareness,"SHOWMARKER","spawned" ] spawn mcc_ups;
-
+if (! isnil "_helocargo") then {
+	_null = [leader (_helocargo), _p_mcc_zone_markername,_p_mcc_zone_behavior,_p_mcc_awareness,"SHOWMARKER","spawned" ] spawn mcc_ups;
+	};
+	
 _heliCrew move _away;
 _heliPilot domove _away;
 waituntil {(_heli distance _away) < 400};

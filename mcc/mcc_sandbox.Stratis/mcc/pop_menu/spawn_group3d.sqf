@@ -249,7 +249,7 @@ if (mcc_missionmaker == (name player)) then {
 		MCC_empty_index = (lbCurSel MCC_SETTING_EMPTY);
 		mcc_hc = (MCC_ZoneLocation select (lbCurSel MCC_ZONE_LOC)) select 1;
 		
-		deletevehicle Object3D;
+		if (! isnil "Object3D") then {deletevehicle Object3D};
 		if (mcc_spawntype == "MINES") then	{
 				Object3D = createMine [mcc_spawnname,[0,0,500], [], 0];
 				Object3D enableSimulation false;

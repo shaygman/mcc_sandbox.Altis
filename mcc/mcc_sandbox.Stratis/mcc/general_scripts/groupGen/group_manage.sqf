@@ -67,27 +67,28 @@ if (_action == 0) then {								//Mark the group
 			"currentUnitSelected" setMarkerColorLocal _markerColor;
 
 			_wpArray = waypoints (group _leader);
-			if (count _wpArray > 1) then {
-				for [{_x=1},{_x < count _wpArray},{_x=_x+1}] do {			//Draw the current WP
-				_wp = (_wpArray select _x);
-				_wPos  = waypointPosition _wp;
-				_wType = waypointType _wp;
-				createMarkerLocal [format["%1", _wp],_wPos];
-				format["%1", _wp] setMarkerTypelocal "waypoint";
-				format["%1", _wp] setMarkerColorlocal "ColorBlue";
-				format["%1", _wp] setMarkerTextLocal (format ["%1 - %2",_wType,group _leader]);
-				MCC_groupGenTempWP set [count MCC_groupGenTempWP, format["%1", _wp]];
-				[MCC_lastPos , _wPos ,format ["%1", _x]] call MCC_fnc_drawLine;	//draw the line
-				MCC_groupGenTempWPLines set [count MCC_groupGenTempWPLines, format["line_%1", _x]];
-				_wpCounter = _wpCounter +1;
-				MCC_lastPos = _wPos; 
+			if (count _wpArray > 0) then {
+				for [{_x=0},{_x < count _wpArray},{_x=_x+1}] do {			//Draw the current WP
+					_wp = (_wpArray select _x);
+					_wPos  = waypointPosition _wp;
+					_wType = waypointType _wp;
+					createMarkerLocal [format["%1", _wp],_wPos];
+					format["%1", _wp] setMarkerTypelocal "waypoint";
+					format["%1", _wp] setMarkerColorlocal "ColorBlue";
+					format["%1", _wp] setMarkerTextLocal (format ["%1 - %2",_wType,group _leader]);
+					MCC_groupGenTempWP set [count MCC_groupGenTempWP, format["%1", _wp]];
+					if (isnil "MCC_lastPos") then {MCC_lastPos = _wPos}; 
+					[MCC_lastPos , _wPos ,format ["%1", _x]] call MCC_fnc_drawLine;	//draw the line
+					MCC_groupGenTempWPLines set [count MCC_groupGenTempWPLines, format["line_%1", _x]];
+					MCC_lastPos = _wPos; 
 				};
 			};
+		if (MCC_groupGenGroupselectedIndex != (lbCurSel MCC_GroupGenGroups_IDD)) then {
+			_control = _mccdialog displayCtrl MCC_MINIMAP;					//Set Map focus
+			_control ctrlMapAnimAdd [1, 0.25, getmarkerpos "currentUnitSelected"];
+			ctrlMapAnimCommit _control;
+		}; 
 		MCC_groupGenGroupselectedIndex = (lbCurSel MCC_GroupGenGroups_IDD);
-		
-		_control = _mccdialog displayCtrl MCC_MINIMAP;					//Set Map focus
-		_control ctrlMapAnimAdd [1, 0.25, getmarkerpos "currentUnitSelected"];
-		ctrlMapAnimCommit _control;
 		};
 	};
 	

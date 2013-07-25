@@ -4,7 +4,7 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_c
 #define ALLGEAR_IDD 8500
 #define BOXGEAR_IDD 8501
 #define GEARCLASS_IDD 8502
-deleteVehicle tempBox;
+if (! isnil "tempBox") then {deleteVehicle tempBox};
 tempBox = "B_supplyCrate_F" createvehicle [0,0,200];
 clearMagazineCargo tempBox;
 clearWeaponCargo tempBox;

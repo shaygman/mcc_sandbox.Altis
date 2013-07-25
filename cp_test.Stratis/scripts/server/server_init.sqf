@@ -311,7 +311,7 @@ CP_riflemanUniformsWest		= call compileFinal str	[
 									[[0,""],[20,"NVGoggles"]],		//NV
 									[[0,"H_HelmetB_plain_mcamo"],[10,"H_HelmetB_light"],[20,"H_HelmetB"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
-									[[0,"V_PlateCarrierGL_rgr"],[10,"V_TacVest_oli"],[20,"V_PlateCarrier2_blk"]],	//Vest
+									[[0,"V_PlateCarrier1_rgr"],[10,"V_PlateCarrierGL_rgr"],[20,"V_TacVest_oli"]],	//Vest
 									[[0,"B_AssaultPack_mcamo"],[10,"B_Kitbag_mcamo"],[20,"B_Bergen_mcamo"]],	//Backpack
 									[[0,"U_B_CombatUniform_mcam"],[10,"U_B_CombatUniform_mcam_tshirt"],[20,"U_B_CombatUniform_mcam_vest"]]	//Uniforms
 								];
@@ -341,7 +341,7 @@ CP_corpsmanUniformsWest		= call compileFinal str	[
 									[[0,""],[20,"NVGoggles"]],		//NV
 									[[0,"H_Booniehat_khk"],[10,"H_Booniehat_mcamo"],[20,"H_Booniehat_ocamo"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
-									[[0,"V_PlateCarrierGL_rgr"],[10,"V_TacVest_oli"],[20,"V_PlateCarrier2_blk"]],	//Vest
+									[[0,"V_PlateCarrier1_rgr"],[10,"V_PlateCarrierGL_rgr"],[20,"V_TacVest_oli"]],	//Vest
 									[[0,"B_AssaultPack_mcamo"],[10,"B_Kitbag_mcamo"],[20,"B_Bergen_mcamo"]],	//Backpack
 									[[0,"U_B_CombatUniform_mcam"],[10,"U_B_CombatUniform_mcam_tshirt"],[20,"U_B_CombatUniform_mcam_vest"]]	//Uniforms
 								];
@@ -385,7 +385,7 @@ CP_marksmanUniformsWest		= call compileFinal str	[
 									[[0,""],[20,"NVGoggles"]],		//NV
 									[[0,"H_HelmetB_light"],[10,"H_Booniehat_khk"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
-									[[0,"V_PlateCarrierGL_rgr"],[10,"V_TacVest_oli"],[20,"V_PlateCarrier2_blk"]],	//Vest
+									[[0,"V_PlateCarrier1_rgr"],[10,"V_PlateCarrierGL_rgr"],[20,"V_TacVest_oli"]],	//Vest
 									[[0,""]],	//Backpack
 									[[0,"U_B_CombatUniform_mcam_tshirt"],[20,"U_B_GhillieSuit"]]	//Uniforms
 								];
@@ -594,7 +594,7 @@ CP_officerUniformsWest	= call compileFinal str	[
 									[[0,""],[20,"NVGoggles"]],		//NV
 									[[0,"H_Cap_brn_SPECOPS"],[10,"H_Cap_blk"],[20,"H_Beret_grn_SF"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
-									[[0,"V_PlateCarrierGL_rgr"],[10,"V_TacVest_oli"],[20,"V_PlateCarrier2_blk"]],	//Vest
+									[[0,"V_PlateCarrier1_rgr"],[10,"V_PlateCarrierGL_rgr"],[20,"V_TacVest_oli"]],	//Vest
 									[[0,"B_AssaultPack_mcamo"],[10,"B_Kitbag_mcamo"],[20,"B_Bergen_mcamo"]],	//Backpack
 									[[0,"U_B_CombatUniform_mcam"],[10,"U_B_CombatUniform_mcam_tshirt"],[20,"U_B_CombatUniform_mcam_vest"]]	//Uniforms
 								];

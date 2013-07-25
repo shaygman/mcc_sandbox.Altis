@@ -190,10 +190,12 @@ _type = _this select 0;
 				_control ctrlMapAnimAdd [1, 0.3, getpos UMName];
 				ctrlMapAnimCommit _control;
 				
-				if (MCC_PIPcam != ObjNull) then {
-					MCC_PIPcam cameraEffect ["TERMINATE", "BACK"];
-					camDestroy MCC_PIPcam;
-					};
+				if (! isnil "MCC_PIPcam") then {
+					if (MCC_PIPcam != ObjNull) then {
+						MCC_PIPcam cameraEffect ["TERMINATE", "BACK"];
+						camDestroy MCC_PIPcam;
+						};
+				};
 					
 				MCC_PIPcam = "camera" camCreate getPos player;
 				waitUntil {MCC_PIPcam != ObjNull};

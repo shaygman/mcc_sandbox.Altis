@@ -275,6 +275,11 @@ my_pv_handler =
 									{					
 										_safepos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,2,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos; 
 									};
+									
+									default 
+									{
+										_safepos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+									};
 								};
 					if (format["%1",_safepos] != "[-500,-500,0]" ) then
 					{
@@ -403,13 +408,13 @@ my_pv_handler =
 										
 										//Depending on faction we spawn for side
 										if (_p_mcc_grouptype=="GUE") then
-										    {_unitspawned=[_safepos, resistance, (call compile _p_mcc_spawnfaction),[],[],[MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
+										    {_unitspawned=[_safepos, resistance, (call compile _p_mcc_spawnfaction),[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
 										if (_p_mcc_grouptype=="WEST") then
-										    {_unitspawned=[_safepos, west, (call compile _p_mcc_spawnfaction),[],[],[MCC_AI_Skill]] call BIS_fnc_spawnGroup;};																				
+										    {_unitspawned=[_safepos, west, (call compile _p_mcc_spawnfaction),[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};																				
 										if (_p_mcc_grouptype=="EAST") then
-										    {_unitspawned=[_safepos, east, (call compile _p_mcc_spawnfaction),[],[],[MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
+										    {_unitspawned=[_safepos, east, (call compile _p_mcc_spawnfaction),[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
 										if (_p_mcc_grouptype=="CIV") then
-										    {_unitspawned=[_safepos, civilian, (call compile _p_mcc_spawnfaction),[],[],[MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
+										    {_unitspawned=[_safepos, civilian, (call compile _p_mcc_spawnfaction),[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
 										
 										{
 											_x setSkill ["aimingspeed", MCC_AI_Aim];

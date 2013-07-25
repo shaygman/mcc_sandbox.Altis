@@ -292,7 +292,7 @@ MON_GetIn_NearestCombat = {
 	}foreach _units;
 	
 	//If suficient units leader will not get in
-	if (!all) then {
+	if (! _all) then {
 		if (count _units > 2 ) then {_units = _units - [leader _npc]};	
 	};
 	
@@ -1016,7 +1016,7 @@ MON_doGetOut = {
 
 	//Wait until vehicle is stopped
 	waituntil {!alive _npc || !canmove _npc || !alive _vehicle || ( (abs(velocity _vehicle select 0)) <= 0.1 && (abs(velocity _vehicle select 1)) <= 0.1 )
-							 || ( _vehicle iskindof "Air" && ((position _vehicle) select 2) <= 1)};	
+							 || ( _vehicle iskindof "Air" && ((position _vehicle) select 2) <= 1.5)};	
 
 	if (!alive _npc || !canmove _npc) exitwith{};	
 	unassignVehicle _npc;	
@@ -1094,8 +1094,9 @@ MON_doParadrop = {
 	};
 	
 	if (!alive _heli || count crew _heli == 0) exitwith{};
+	
 	_crew = crew _heli;
-    
+    /*
 	//Jump
 	if (((position _heli) select 2) >= 90 && !surfaceIsWater position _heli && (!(toupper (behaviour _npc) IN _landonBeh))) then { 	
 		//moving hely for avoiding stuck
@@ -1131,7 +1132,7 @@ MON_doParadrop = {
 		{
 			waituntil {(_x == vehicle _x ) || !alive _x || !canmove _x || isnull _x || time > _timeout};
 			//Fix bug of ACE that sometimes AI gets in stand animation
-			//_x switchMove "AmovPercMsprSlowWrflDf_AmovPpneMstpSrasWrflDnon_2";
+			_x switchMove "AmovPercMstpSrasWrflDnon";
 		} foreach _jumpers;
 		
 
@@ -1157,7 +1158,7 @@ MON_doParadrop = {
 		if (count crew _heli <=1) then {
 			[_heli] spawn MON_landHely;	
 		};
-	} else {
+	} else {*/
 		//land
 		
 		if ( ((position _heli) select 2) >= 60 && !surfaceIsWater _helipos && (!canmove _heli || (toupper (behaviour _npc) IN _landonBeh))) then {			
@@ -1174,8 +1175,8 @@ MON_doParadrop = {
 			};
 		};
 	};	
-};		
-	
+//};		
+
 //Lands hely	
 MON_landHely = {
 	private["_heli","_npc","_crew","_NearestEnemy","_timeout","_landing","_targetpos","_jumpers"];				
@@ -1196,7 +1197,7 @@ MON_landHely = {
 	if (_landing) exitwith {};
 	
 	//Orders to land heli	
-	_heli land "LAND";
+	_heli land "GET OUT";
 	if (KRON_UPS_Debug>0 ) then {player globalchat format["%1 is landing",typeof _heli];};
 	
 	//Puts a mark for knowing hely is landing
@@ -1211,14 +1212,14 @@ MON_landHely = {
 	};		
 	
 	//1rt try-Waits until velocity and heigh are good for getting out
-	_timeout = 60 + time;
-	waituntil {!alive _heli || time > _timeout || ((abs(velocity _heli select 2)) <= 1 && ((position _heli) select 2) <= 0.7)};
+	_timeout = time + 160; 
+	waituntil {!alive _heli || time > _timeout || ((abs(velocity _heli select 2)) <= 1 && ((position _heli) select 2) <= 6)};
 		
 	//2nd try-Waits until velocity and heigh are good for getting out
 	if (((position _heli) select 2) > 2 && ((position _heli) select 2) < 30 && !surfaceiswater position _heli) then { 		
 		_heli land "LAND";
-		_timeout = 30 + time;
-		waituntil {!alive _heli || time > _timeout || ((position _heli) select 2) > 30 || ( (abs(velocity _heli select 2)) <= 1 && ((position _heli) select 2) <= 0.7)};	
+		_timeout = 120 + time;
+		waituntil {!alive _heli || time > _timeout || ( (abs(velocity _heli select 2)) <= 1 && ((position _heli) select 2) <= 0.7)};	
 		
 		//Failed landing doing paradrop
 		if ( ((position _heli) select 2) > 30) exitwith { 
@@ -1234,7 +1235,7 @@ MON_landHely = {
 	
 
 	//If there is pilot and gunner, get out only cargo
-	if ((!isnull gunner _heli)  && (!isnull driver _heli)) then {
+	if ((!isnull gunner _heli)  || (!isnull driver _heli)) then {
 		_jumpers = [_heli] call R_FN_unitsInCargo;	
 	} else {
 		_jumpers = crew _heli;	
@@ -1251,13 +1252,14 @@ MON_landHely = {
 	
 	//Waits until all getout of heli
 	{
-		waituntil {vehicle _x == _x || !canmove _x || !alive _x || movetofailed _x  || time > _timeout }; 	
+		waituntil {vehicle _x == _x || !canmove _x || !alive _x || movetofailed _x  || time > _timeout };
+		_x switchMove "AmovPercMstpSrasWrflDnon";
 	} forEach _jumpers;
 	
 	sleep 1;
 	_heli land "NONE";
 	sleep 1;
-	[_heli,700] spawn MON_domove;
+	[_heli,3000] spawn MON_domove;
 	
 	
 	
@@ -1285,6 +1287,14 @@ MON_landHely = {
 	_heli setVariable ["UPSMON_grpid", 0, false];	
 	_heli setVariable ["UPSMON_cargo", [], false];	
 	_heli setVariable ["UPSMON_landing", false, false];	
+	sleep 60;
+	_heli land "LAND";
+	_timeout = time + 120; 
+	waituntil {!alive _heli || time > _timeout || ((abs(velocity _heli select 2)) <= 1 && ((position _heli) select 2) <= 6)};
+	_crew = crew _heli; 
+	deleteVehicle _heli;
+	{deleteVehicle _x} foreach _crew; 
+
 };
 
 //Controls that heli not stoped flying
@@ -1593,8 +1603,8 @@ MON_GetNearestBuildings = {
 	_posinfo=[];
 
 	//La altura mínima es 2 porque hay muchos edificios q devuelven 2 de altura pero no se puede entrar en ellos.
-	if ( minfloors == 0  ) then {
-		minfloors = 2;
+	if ( _minfloors == 0  ) then {
+		_minfloors = 2;
 	 };	
 	
 	// _posinfo: [0,0]=no house near, [obj,0]=house near, but no roof positions, [obj,pos]=house near, with roof pos
@@ -1915,6 +1925,7 @@ MON_patrolBuilding = {
 MON_CreateMine = {
 	private ["_npc","_rnd","_soldier","_mine","_dir","_position"];
 	_soldier = _this select 0;
+	server sidechat format ["sol: %1",_soldier]; 
 	 if ((count _this) > 1) then {_position = _this select 1;} else {_position = [0,0];};
 		
 	_mine = objnull;
@@ -1946,16 +1957,17 @@ MON_doCreateMine = {
 	 
 	_soldier = _this select 0;
 	if ((count _this) > 1) then {_position = _this select 1;};
-	
+	hint format ["this: %1", _soldier];
 	//If not is Man or dead exit
-	if (!(_x iskindof "Man" ) || _soldier!=vehicle _soldier || !alive _soldier || !canmove _soldier) exitwith {false};		
+	if (!(_soldier iskindof "Man" ) || _soldier!=vehicle _soldier || !alive _soldier || !canmove _soldier) exitwith {false};		
 	
 	_soldier stop false;
 	[_soldier,"AUTO"] spawn MON_setUnitPos;	
 	
 	if ((count _this) > 1) then {
 		_soldier domove _position;
-		waituntil {unitReady _soldier || moveToCompleted _soldier || moveToFailed _soldier || !alive _soldier || !canmove _soldier};
+		if (! isnil "_soldier") then {
+			waituntil {unitReady _soldier || moveToCompleted _soldier || moveToFailed _soldier || !alive _soldier || !canmove _soldier}};
 	};
 
 	if (moveToFailed _soldier || !alive _soldier || _soldier != vehicle _soldier || !canmove _soldier) exitwith {false};	

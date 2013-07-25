@@ -648,21 +648,23 @@ FNC_MAKE_UNITS_ARRAY =	{
 			_shipCount		= 0;
 			_tempVehicles	= [];
 			
-			{
-				if ((vehicle _x) != _x) then {
-					if (!((vehicle _x) in _tempVehicles)) then {
-						_tempVehicles set [count _tempVehicles, vehicle _x];
-						if ((vehicle _x) iskindof "Car") then {_vehicleCount = _vehicleCount + 1};
-						if ((vehicle _x) iskindof "Tank") then {_tankCount = _tankCount + 1};
-						if ((vehicle _x) iskindof "Air") then {_airCount = _airCount + 1};
-						if ((vehicle _x) iskindof "Boat") then {_shipCount = _shipCount + 1};
-						};
-					} else	{
-						_infantryCount = _infantryCount + 1; 
-						};
-			} foreach units _group; 
-			
-			[_infantryCount,_vehicleCount,_tankCount,_airCount,_shipCount];
+			if (! isnil "_group") then {
+				{
+					if ((vehicle _x) != _x) then {
+						if (!((vehicle _x) in _tempVehicles)) then {
+							_tempVehicles set [count _tempVehicles, vehicle _x];
+							if ((vehicle _x) iskindof "Car") then {_vehicleCount = _vehicleCount + 1};
+							if ((vehicle _x) iskindof "Tank") then {_tankCount = _tankCount + 1};
+							if ((vehicle _x) iskindof "Air") then {_airCount = _airCount + 1};
+							if ((vehicle _x) iskindof "Boat") then {_shipCount = _shipCount + 1};
+							};
+						} else	{
+							_infantryCount = _infantryCount + 1; 
+							};
+				} foreach units _group; 
+				
+				[_infantryCount,_vehicleCount,_tankCount,_airCount,_shipCount];
+			};
 		};
 		
 //==================================================================MCC_ARTY_BOMB===============================================================================================
@@ -1007,14 +1009,14 @@ MCC_fnc_setWeather =
 	
 	_weather = _this select 0;
 	0 setOvercast	(_weather select 0);
-	skipTime 1;
-	sleep 2;
-	skipTime -1;
 	0 setWindForce 	(_weather select 1);
 	0 setWaves 		(_weather select 2);
 	0 setRain 		(_weather select 3);
 	0 setLightnings	(_weather select 4);
-	if ((count _weather) > 5) then {0 setFog [(_weather select 5), 0.03,50]};	
+	if ((count _weather) > 5) then {0 setFog [(_weather select 5), 0.03,50]};
+	skipTime 1;
+	sleep 1;
+	skipTime -1;
 	simulWeatherSync;
 };
 
