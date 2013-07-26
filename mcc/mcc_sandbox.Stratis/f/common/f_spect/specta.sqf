@@ -1,4 +1,4 @@
-private ["_player", "_killer", "_seagull", "_debugPlayer", "_markers", "_name", "_setOriginalSide", "_OriginalSide", "_RatingDelta", "_ehVehicles", "_t", "_disp", "_cCamera", "_cTarget", "_cName", "_cCamerasBG", "_cTargetsBG", "_cMap", "_cMapFull", "_cDebug", "_pos", "_foo", "_nNoDialog", "_lastUpdateMarkers", "_lastUpdateMarkerTypes", "_lastUpdateTags", "_allUnits", "_allVehicles", "_newUnits", "_newVehicles", "_fh", "_kh", "_waitUnits", "_m", "_s", "_rate", "_doMarkerTypes", "_mapFull", "_mappos", "_markedVehicles", "_i", "_u", "_type", "_icon", "_map", "_tt", "_bpos", "_bird"];
+private ["_player", "_killer", "_seagull", "_markers", "_name", "_setOriginalSide", "_OriginalSide", "_RatingDelta", "_ehVehicles", "_t", "_disp", "_cCamera", "_cTarget", "_cName", "_cCamerasBG", "_cTargetsBG", "_cMap", "_cMapFull", "_cDebug", "_pos", "_foo", "_nNoDialog", "_lastUpdateMarkers", "_lastUpdateMarkerTypes", "_lastUpdateTags", "_allUnits", "_allVehicles", "_newUnits", "_newVehicles", "_fh", "_kh", "_waitUnits", "_m", "_s", "_rate", "_doMarkerTypes", "_mapFull", "_mappos", "_markedVehicles", "_i", "_u", "_type", "_icon", "_map", "_tt", "_bpos", "_bird"];
 
 //
 // Spectating Script for Armed Assault
@@ -14,11 +14,11 @@ _seagull = _this select 2;
 
 VM_scriptName="specta";
 
-_debugPlayer=objNull;
+MCC_debugPlayer=objNull;
 if ( f_var_debugMode == 1 ) then {
-	_debugPlayer=player;
+	MCC_debugPlayer=player;
 };
-if (mcc_missionmaker == (name player)) exitwith {}; 
+
 StartLoadingScreen ["Initializing Spectator Script..."];
 titleCut["","BLACK OUT", 1.5];
 _seagull = "noWait";
@@ -216,7 +216,7 @@ KEGs_hi = 2;
 // Initialize the arrays and the listboxes.
 CheckNewUnits = {
 			private["_vm_CheckNewUnitsNumber"];
-			_debugplayer sidechat format ["Loop# %1 CheckNewUnits spawn activated",vm_count];
+			if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer sidechat format ["Loop# %1 CheckNewUnits spawn activated",vm_count]};
 			CheckNewUnitsReady = false;
 			RefreshListReady = false;
 			_vm_CheckNewUnitsNumber = vm_count;
@@ -240,7 +240,7 @@ CheckNewUnits = {
 			};			
 			
 			if(count _newUnits > 0) then {
-				_debugPlayer globalchat "*New Units";
+				MCC_debugPlayer globalchat "*New Units";
 				_waitUnits = [];
 				{
 					if ((format["%1", _x getVariable "KEG_SPECT"]) != "true") then
@@ -294,7 +294,7 @@ CheckNewUnits = {
 			RefreshListReady = true;
 			CheckNewUnitsReady = true;	
 			lastCheckNewUnits = time;
-			_debugplayer sidechat format ["Loop# %1 Completed CheckNewUnits", _vm_CheckNewUnitsNumber];
+			MCC_debugPlayer sidechat format ["Loop# %1 Completed CheckNewUnits", _vm_CheckNewUnitsNumber];
 		  };  // End of Spawn CheckNewUnits
 		  
 	
@@ -308,8 +308,8 @@ PlayerMenuHandler = compile preprocessFileLineNumbers "f\common\f_spect\PlayerMe
 
 MovementCameraLoop = {
 
-	private ["_debugPlayer", "_bb", "_foo","_l","_w","_hstr","_hstr", "_d", "_z" ];
-
+	private ["_bb", "_foo","_l","_w","_hstr","_hstr", "_d", "_z","_cMapFull" ];
+	_cMapFull = 55014;
 	vm_MovementCameraLoop_count = 0;
 	While { VM_SpectatorCamerasEnabled  } do {
 
@@ -335,7 +335,7 @@ MovementCameraLoop = {
 						// User changed camera
 						KEGsDroppedCamera = false;
 					};			
-				    _debugPlayer globalchat "Active Drop Camera - Checking for WSAD controls";
+				    MCC_debugPlayer globalchat "Active Drop Camera - Checking for WSAD controls";
 
 					// Adjust speed from buttons held down
 					KEGs_spd = (sdistance max 1)*20;
@@ -435,7 +435,7 @@ MovementCameraLoop = {
 
 		if ( f_var_debugMode == 1 ) then {
 			// vm_MovementCameraLoop_count = vm_MovementCameraLoop_count + 1;
-			// _debugPlayer groupchat format ["MovementCameraLoop %1, Loop# %2", VM_SpectatorCamerasEnabled, vm_MovementCameraLoop_count];
+			// MCC_debugPlayer groupchat format ["MovementCameraLoop %1, Loop# %2", VM_SpectatorCamerasEnabled, vm_MovementCameraLoop_count];
 		};
 	};
 
@@ -469,7 +469,7 @@ call {
 				} foreach _allVehicles;
 			};
 			if(count _newUnits > 0) then {
-				_debugPlayer globalchat "*New Units";
+				if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer globalchat "*New Units"};
 				_waitUnits = [];
 				{
 					if ((format["%1", _x getVariable "KEG_SPECT"]) != "true") then
@@ -531,7 +531,7 @@ call {
 			// KEGscam_free camSetTarget[KEGs_cxpos, KEGs_cypos, KEGs_czpos+(KEGs_hi*0.6)];	
 			// KEGscam_free camCommit 0;
 			
-			if(count deathCam > 0 and !KEG_Spect_Init) then { _debugPlayer groupchat "Spectator Mode Initialized."; KEG_Spect_Init = true; VM_SpectatorCamerasEnabled = true; };
+			if(count deathCam > 0 and !KEG_Spect_Init) then { KEG_Spect_Init = true; VM_SpectatorCamerasEnabled = true; };
 			KEGs_target = deathCam select KEGs_tgtIdx;  // reset camera to the new or current player target
 		   (KEGs_cameras select KEGs_cameraIdx) cameraEffect["internal", "BACK"];
 		   [] spawn MovementCameraLoop; 
@@ -551,7 +551,7 @@ while{ dialog } do {
 	"dynamicBlur" ppEffectCommit 0.0;
 	"dynamicBlur" ppEffectEnable false;
 	
-	_debugplayer globalchat format ["Loop# %1 Check for new units (%2)", vm_count, time - lastCheckNewUnits];
+	if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer globalchat format ["Loop# %1 Check for new units (%2)", vm_count, time - lastCheckNewUnits]};
 	
 
 		// Request listbox update every 20 seconds to update dead units or jip player names (
@@ -561,7 +561,7 @@ while{ dialog } do {
 		};	
 	
 	if(KEGsNeedUpdateLB && RefreshListReady && (CheckNewUnitsReady)) then {
-		_debugPlayer globalchat format ["Loop# %1 Refeshing Player List ", vm_count]; //_debugplayer
+		if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer globalchat format ["Loop# %1 Refeshing Player List ", vm_count]}; //MCC_debugPlayer
 		[] spawn RefreshPlayerList;
 	};
 	
@@ -569,7 +569,7 @@ while{ dialog } do {
 		if((time - lastCheckNewUnits > 20)  && (CheckNewUnitsReady) ) then {
 			lastCheckNewUnits = time;
 			RefreshListReady = false;
-			_debugplayer globalchat format ["Loop# %1 Starting CheckNewUnits", vm_count];
+			if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer globalchat format ["Loop# %1 Starting CheckNewUnits", vm_count]};
 			 [] spawn CheckNewUnits;
 		}; 
 		// End of If statement for Checking New Units
@@ -734,13 +734,13 @@ while{ dialog } do {
 		vm_count = vm_count + 1;
 };
 StartLoadingScreen ["EXITING SPECTATOR MODE..."];
-_debugPlayer groupchat format ["EXITING SPECTATOR MODE", VM_SpectatorCamerasEnabled];
+if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer groupchat format ["EXITING SPECTATOR MODE", VM_SpectatorCamerasEnabled]};
 VM_SpectatorCamerasEnabled = False;
 // Dialog closed with esc key
 titleText["","BLACK IN", 0.5];
 
 // Destroy cameras, markers, particlesources, etc.
-_debugPlayer groupchat format ["Destroying Cameras", VM_SpectatorCamerasEnabled];
+if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer groupchat format ["Destroying Cameras", VM_SpectatorCamerasEnabled]};
 camDestroy KEGscam_target;
 camDestroy KEGscam_missile;
 camDestroy KEGscam_fullmap;
@@ -749,7 +749,7 @@ camDestroy KEGscam_fullmap;
 //deletevehicle KEGscam_fullmap;
 {camDestroy _x} foreach KEGs_cameras;
 {deletemarkerlocal _x} foreach _markers;	 
-_debugPlayer groupchat format ["Cleaning up", VM_SpectatorCamerasEnabled];
+if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer groupchat format ["Cleaning up", VM_SpectatorCamerasEnabled]};
 deletevehicle _t;
 deletevehicle KEGs_dummy;
 // camUseNVG false;
@@ -767,8 +767,9 @@ KEGsTagSources = [];
 } foreach _ehVehicles;
 
 
-_debugPlayer groupchat format ["ENTERING ButterFly Mode", VM_SpectatorCamerasEnabled];
+if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer groupchat format ["ENTERING ButterFly Mode", VM_SpectatorCamerasEnabled]};
 // Create a butterfly for player to fly with
+/*
 _bpos = [(((vehicle KEGs_target)modelToWorld [0,0,0])  select 0)-5+random 10, (((vehicle KEGs_target) modelToWorld [0,0,0])  select 1)-5+random 10, 1];
 // _bird = "ButterFlySpectator"createVehicle _bpos; //custom ButterFly for improved flight.
 _bird = "ButterFly"createVehicle _bpos;
@@ -780,7 +781,7 @@ _bird cameraEffect["terminate","FRONT"];
 _bird camCommand "manual on";
 
 camUseNVG false; setAperture -1; //  Reset NVGs
-EndLoadingScreen;	
+
 KEGsBird = _bird;
 onMapSingleClick "KEGsBird setpos [_pos select 0, _pos select 1, 2];KEGsBird setvelocity[0,0,5];";
 
@@ -788,18 +789,25 @@ cutText["\n\n\n\n\nLand on ground to return to spectating\nClick at map to jump 
 
 // Wait until landed, delete bird & restart script
 waitUntil{(_bird modelToWorld [0,0,0]) select 2 < 0.05 and speed _bird < 1};
-onMapSingleClick "";
+onMapSingleClick "";*/
 
-sleep(0.5);
+
+/*
 if !( f_var_debugMode == 1 ) then {
 	titleText["","BLACK OUT", 0.5];
 	sleep(1);
 };
+*/
 
+EndLoadingScreen;	
 
 _player switchCamera "INTERNAL";
 _player cameraEffect["terminate","FRONT"];
-deletevehicle _bird;
+if (! isnil "_bird") then {deletevehicle _bird};
+
+sleep 2;
+if (mcc_missionmaker == (name player)) exitWith {}; 
+
 if !( f_var_debugMode == 1 ) then {
 	[_player, _killer, "noWait"] execVM ("f\common\f_spect\specta.sqf");
 };

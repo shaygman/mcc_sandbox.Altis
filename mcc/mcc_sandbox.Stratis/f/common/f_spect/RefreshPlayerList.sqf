@@ -1,11 +1,15 @@
-private ["_debugplayer", "_idx", "_name", "_unit", "_found", "_i", "_OriginalSide","_vm_refreshNumber"];
-				//_debugplayer sidechat format ["Loop# %1 RefreshPlayerList spawn activated",vm_count ];
+private [ "_idx", "_name", "_unit", "_found", "_i", "_OriginalSide","_vm_refreshNumber"];
+	MCCMCC_debugPlayer=objNull;
+		if ( f_var_debugMode == 1 ) then {
+			MCCMCC_debugPlayer=player;
+		};
+				if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer sidechat format ["Loop# %1 RefreshPlayerList spawn activated",vm_count ]};
 				RefreshListReady = false;
 				_vm_refreshNumber = vm_count;
 				// Clear and re-fill targets listbox
 				lbClear KEGs_cLBTargets;
 				If (KEGsAIfilter) then { 
-					_debugPlayer sidechat "Filtering out the AI";
+					if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer sidechat "Filtering out the AI"};
 				};			
 				for "_idx" from 0 to ((count deathCam)-1) do {
 					_x = deathCam select _idx;
@@ -99,18 +103,18 @@ private ["_debugplayer", "_idx", "_name", "_unit", "_found", "_i", "_OriginalSid
 									if(_OriginalSide == east) then {lbSetColor[KEGs_cLBTargets, _i, [1,0.8,0.8,1]]};
 									if(_OriginalSide == resistance) then {lbSetColor[KEGs_cLBTargets, _i, [0.8,1,0.8,1]]};
 									if(_OriginalSide == civilian) then {lbSetColor[KEGs_cLBTargets, _i, [1,1,1,1]]};					
-								_debugPlayer groupchat "removing the dead";
+								if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer groupchat "removing the dead"};
 							};
 							// Whoops, unit is dead, change color
 							lbSetColor[KEGs_cLBTargets, _i, [0.5,0.5,0.5,1]];
-							_debugPlayer groupchat "greying out the Dead";
+							if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer groupchat "greying out the Dead"};
 						};
 						
 					};
 				};			
 				KEGsNeedUpdateLB = false;
 				KEGs_lastAutoUpdateLB = time;
-				_debugplayer sidechat format ["Loop# %1 Refeshing List Completed", _vm_refreshNumber];
+				if (! isnil "MCC_debugPlayer") then {MCC_debugPlayer sidechat format ["Loop# %1 Refeshing List Completed", _vm_refreshNumber]};
 				RefreshListReady = true;
 	  
 		

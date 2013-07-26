@@ -10,10 +10,12 @@
 #define SPAWNAWARNESS 1025
 #define MCC_ZONE_LOC 1026
 
-private ["_type","_groupArray","_nul"];
+private ["_type","_groupArray","_nul","_zonePos"];
 disableSerialization;
 if (mcc_missionmaker == (name player)) then {
 	if (count mcc_zone_pos == 0) exitWith {hint "Create a zone first"};	//Failsafe incase we trying to spawn something without making a zone first
+	_zonePos = (mcc_zone_pos select (lbCurSel MCCZONENUMBER)+1);
+	if (isnil "_zonePos") exitWith {hint "Create a zone first"};	//Failsafe incase we trying to spawn something without making a zone first
 	if ((lbCurSel SPAWNTYPE) == 1) then {	//Group
 		_type = lbCurSel SPAWNBRANCH;
 		

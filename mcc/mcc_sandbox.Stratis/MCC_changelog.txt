@@ -1,3 +1,10 @@
+Change log r9 - Beta:
+- Add Chock point interface
+- Fixed UI bugs in Group generator. 
+- Made it availabe for development build
+- Fixed message error when trying to spawn something on undifined zone
+- TODO add spectator key
+
 Change log r8 - Beta:
 - Fixed new Beta classnames and new commandnames.
 - Fixed 3D editor items sometimes spawn underground. 
