@@ -20,19 +20,26 @@ _eib_marker = createMarkerlocal ["traps",_pos];
 
 _fakeIed = _trapkind createVehicle _pos;
 _fakeIed setpos _pos;
-_dummy = "O_TargetSoldier" createVehicle _pos;
-_dummy setpos (getpos _fakeIed);
+_dummy = "Bomb" createVehicle _pos;
 _init = '_this addEventHandler ["handleDamage","_this execVM ""' + MCC_path + 'mcc\general_scripts\traps\ied_hit.sqf"""];';
+[[netid _dummy, _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+
+_init ='_this addaction ["<t color=""#FF9900"">" + "Disarm IED" + "</t>","' + MCC_path + 'mcc\general_scripts\traps\ied_disarm.sqf","",6,false,true,"_target distance _this < 10"];';
 [[netid _fakeIed, _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-[[2,compile format ["(objectFromNetID '%1') hideobject true", netID _dummy]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+_fakeIed setdir _iedDir;
+
+_dummy attachto [_fakeIed,[0,0,0]];
+
+//[[2,compile format ["(objectFromNetID '%1') hideobject true", netID _dummy]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 
 [_fakeIed, _dummy] spawn
 	{
 	private ["_fakeIedS"];
-	_fakeIedS = _this select 0;
+	_fakeIedS 	= _this select 0;
+	_dummy 		= _this select 1;
 	waituntil {!alive _fakeIedS};
 	sleep 1;
-	deletevehicle _dummyS;
+	deletevehicle _dummy;
 	};
 	
 _dummy setvariable ["fakeIed", _fakeIed ,true];
@@ -46,9 +53,7 @@ if (_IEDTriggerType == 1) then {
 	} else {_dummy setvariable ["iedTrigereRadio", false, true]};	//If it is radio IED
 	
 _fakeIed setvariable ["realIed", _dummy ,true];
-_init = '_this addEventHandler ["handleDamage","_this execVM ""' + MCC_path + 'mcc\general_scripts\traps\ied_hit.sqf"""];_this addaction ["<t color=""#FF9900"">" + "Disarm IED" + "</t>","' + MCC_path + 'mcc\general_scripts\traps\ied_disarm.sqf","",6,false,true,"_target distance _this < 10"]';
-[[netid _fakeIed, _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-_fakeIed setdir _iedDir;
+
 
 _ok = [_dummy,_trapvolume,_IEDExplosionType,_IEDJammable,_IEDTriggerType,_trapdistance,_iedside] execVM MCC_path +"mcc\general_scripts\traps\IED.sqf";
 

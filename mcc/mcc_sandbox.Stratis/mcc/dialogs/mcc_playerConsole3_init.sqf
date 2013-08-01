@@ -56,18 +56,18 @@ if (dialog && MCC_ACConsoleUp) then {				//Create the AC
 		ctrlSetText [MCC_CONSOLE_AC_BCKG, ""];
 		_control = _mccdialog displayCtrl MCC_CONSOLE_ACPIP;
 		[_control] call MCC_fnc_pipOpen;
-		ctrlSetText [MCC_CONSOLE_ACPIP, "#(argb,256,256,1)r2t(rendertarget8,1.0);"];
+		ctrlSetText [MCC_CONSOLE_ACPIP, "#(argb,512,512,1)r2t(rendertarget8,1.0);"];
 		// Create fake AC
 		if (isNil "MCC_fakeAC") then {
 			MCC_fakeAC 		= "Camera" camCreate [10,10,10];
-			deletevehicle MCC_fakeACCenter;
+			if (!isnil "MCC_fakeACCenter") then {deletevehicle MCC_fakeACCenter};
 			MCC_fakeACCenter	= "Sign_Sphere10cm_F" createvehicle [MCC_consoleACpos select 0,MCC_consoleACpos select 1, 0];
 			hideobject MCC_fakeACCenter;
 			_rad	=	400;
 			_alt	=	300;
 			MCC_ACAng	= 	0;
 			MCC_fakeAC cameraEffect ["INTERNAL", "BACK", "rendertarget8"];
-			_coords = [MCC_consoleACpos, _rad, _ang] call BIS_fnc_relPos;
+			_coords = [MCC_consoleACpos, _rad, MCC_ACAng] call BIS_fnc_relPos;
 			_coords set [2, _alt];
 			MCC_fakeACFOV = 0.8;
 			MCC_fakeAC camsetTarget MCC_fakeACCenter;

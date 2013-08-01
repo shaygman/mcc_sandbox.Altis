@@ -144,5 +144,5 @@ while { true } do
 	[player] join MCC_deadGroup;
 	
 	sleep 2;
-	[player,player,"noWait"] execVM "f\common\f_spect\specta.sqf";
+	[player,player,"noWait"] execVM MCC_path + "f\common\f_spect\specta.sqf";
 };

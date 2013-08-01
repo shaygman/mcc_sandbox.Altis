@@ -25,6 +25,10 @@ switch (_side) do
 		{ 
 			if (_size == "FOB") then {_building = "Land_Cargo_House_V2_F"} else {_building = "ProtectionZone_Invisible_F"}; 
 		};
+		case "RESISTANCE":	//east
+		{ 
+			if (_size == "FOB") then {_building = "Land_Cargo_House_V1_F"} else {_building = "ProtectionZone_Invisible_F"}; 
+		};
 	};
 	
 _dummy = _building createvehicle _pos;

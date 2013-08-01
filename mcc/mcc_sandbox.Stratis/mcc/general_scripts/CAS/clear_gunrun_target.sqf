@@ -1,12 +1,11 @@
-private ["_target", "_cas_name", "_spawnkind", "_plane1", "_distA", "_distB", "_targetf", "_fakeTarget", "_planeCrew", "_planeType", "_randomDirX", "_randomDirY", "_tPos", "_newPos"];
+private ["_target", "_cas_name", "_spawnkind", "_plane1", "_distA", "_distB", "_fakeTarget", "_planeCrew", "_planeType", "_randomDirX", "_randomDirY", "_tPos", "_newPos"];
 
 _cas_name = _this select 0;
 _target =  _this select 1;
 _spawnkind = _this select 2;
 _plane1 = _this select 3;
 _planeType = _this select 4;
-_targetf = _this select 5;
-_fakeTarget = _this select 6;
+_fakeTarget = _this select 5;
 
 diag_log format ["Array = [%1]", _this];
 
@@ -42,8 +41,6 @@ while { ( _distA > _distB ) && ( alive _plane1 ) } do
 	
 	_newPos = [((_tPos select 0) + _randomDirX), ((_tPos select 1) + _randomDirY), 0];
 	_fakeTarget setPosATL _newPos;
-	
-	if !(IsNil "_targetf") then { _targetf setPosATL _newPos;}; //debugFlagpole
 	
 	//diag_log format ["CLEAR time: [%1] - distance [%2 - %3]", time, _distA, _distB];
 };
@@ -106,8 +103,6 @@ if ( _spawnkind == "Gun-run long" ) then
 		
 		_newPos = [((_tPos select 0) + _randomDirX), ((_tPos select 1) + _randomDirY), 0];
 		_fakeTarget setPosATL _newPos;
-					
-		if !(IsNil "_targetf") then { _targetf setPosATL _newPos;};
 	};
 };
 
@@ -122,7 +117,6 @@ sleep 1.5;
 
 // clear invisible targets
 if (IsNil "_fakeTarget") then {_fakeTarget = objNull}; deleteVehicle _fakeTarget;
-if (IsNil "_targetf") then {_targetf = objNull}; deleteVehicle _targetf;
 
 //while { ( (_plane1 distance _target) < 500 ) && (alive _plane1) } do
 for "_i" from 0 to 5 do

@@ -37,7 +37,6 @@ switch (_case) do
 			Mtype = (MCC_markerarray select (lbCurSel MCC_MARKER_TYPE)) select 2;
 			Mtext = ctrlText (_dlg displayCtrl MCC_MARKER_TEXT);
 			MCC_brush_drawing = true; 
-			Msize = [_sizeX,_sizeY];
 			hint "Left click and drag on the mini-map to create a brush";
 			};
 			

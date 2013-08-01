@@ -22,8 +22,8 @@ class CP_RESPAWNPANEL {
 	  CP_squadPanelButton,
 	  CP_gearPanelButton,
 	  CP_respawnPointsList,
-	  CP_ticketsWestText,
-	  CP_ticketsEastText,
+	  //CP_ticketsWestText,
+	  //CP_ticketsEastText,
 	  CP_deployPanelMiniMap,
 	  CP_deployPanelButton,
 	  CP_respawnPanelRoleTittle,
@@ -167,7 +167,7 @@ class CP_RESPAWNPANEL {
 		class CP_gearPanelPiP: CP_RscPicture
 		{
 			idc = 5;
-			text = "#(argb,512,512,1)r2t(rendertarget10,1.0);";
+			text = "#(argb,512,512,1)r2t(rendertarget7,1.0);";
 			x = 0.614583 * safezoneW + safezoneX;
 			y = 0.291081 * safezoneH + safezoneY;
 			w = 0.275 * safezoneW;

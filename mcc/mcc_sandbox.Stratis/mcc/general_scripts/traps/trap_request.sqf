@@ -84,6 +84,7 @@ if !mcc_isloading then
 				if ((_IEDtype <= 3) || (_IEDtype == 5) || (_IEDtype == 6)) then	//if object
 				{
 					IedName = [format ["ied_%1", MCC_IEDCount]];
+					if ((lbCurSel MCC_TRAPS_OBJECT) == -1) exitWith {}; 
 					trapkind = [(_trapsArray select (lbCurSel MCC_TRAPS_OBJECT)) select 1];
 					hint "click on the map to place the trap"; 
 					if (MCC_capture_state) then
@@ -149,7 +150,7 @@ if !mcc_isloading then
 						} else 
 						{
 							onMapSingleClick format ["_nul=[""%1"",_pos] call MCC_3D_PLACER;closeDialog 0;onMapSingleClick """";",(trapkind select 0)];	
-							deletevehicle Object3D;
+							if (!isnil "Object3D") then {deletevehicle Object3D};
 							Object3D = (trapkind select 0) createvehicle [0,0,0];	
 							Object3D enableSimulation false;
 							Object3D AddEventHandler ["HandleDamage", {False}];
@@ -311,7 +312,7 @@ if !mcc_isloading then
 						} else 
 						{
 							onMapSingleClick format ["_nul=[""%1"",_pos] call MCC_3D_PLACER;closeDialog 0;onMapSingleClick """";",(trapkind select 0)];	
-							deletevehicle Object3D;
+							if (!isnil "Object3D") then {deletevehicle Object3D};
 							Object3D = (trapkind select 0) createvehicle [0,0,0];	
 							Object3D enableSimulation false;
 							Object3D AddEventHandler ["HandleDamage", {False}];

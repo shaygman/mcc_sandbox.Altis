@@ -119,7 +119,7 @@ class CP_ACCESPANEL {
 		class CP_gearPanelPiP: CP_RscPicture
 		{
 			idc = -1;
-			text = "#(argb,512,512,1)r2t(rendertarget10,1.0);";
+			text = "#(argb,512,512,1)r2t(rendertarget7,1.0);";
 			x = 0.74 * safezoneW + safezoneX;
 			y = 0.291081 * safezoneH + safezoneY;
 			w = 0.250521 * safezoneW;

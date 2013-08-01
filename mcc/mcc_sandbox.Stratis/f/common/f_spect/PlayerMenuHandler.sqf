@@ -9,7 +9,7 @@ _debugPlayer groupchat format ["PlayerMenuHandler Source: %1", _Source];
 
 _cName = 55004;
 _cCamera = 55002;
-
+_name = ""; 
 /****************************************   PLAYER MENU HANDLING ***************************************************/
 
 		if(lbCurSel KEGs_cLBTargets > lbSize KEGs_cLBTargets) then {

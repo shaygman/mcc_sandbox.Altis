@@ -74,8 +74,8 @@ if (mcc_missionmaker == (name player)) then
 	if (_shift && _pressed!=1) then //Sync with shift key
 		{
 		MCC_pointB = _ctrl ctrlmapscreentoworld [_posX,_posY];
-		_nearObjectsA = MCC_pointA nearObjects ["O_TargetSoldier",50];
-		_nearObjectsB = MCC_pointB nearObjects ["O_TargetSoldier",50];
+		_nearObjectsA = MCC_pointA nearObjects ["bomb",50];
+		_nearObjectsB = MCC_pointB nearObjects ["bomb",50];
 		if (count _nearObjectsA > 0 && count _nearObjectsB > 0) then
 			{
 			MCC_IEDLineCount = MCC_IEDLineCount +1;

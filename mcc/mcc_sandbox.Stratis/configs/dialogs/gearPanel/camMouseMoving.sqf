@@ -39,6 +39,7 @@ if (_mode == "MouseZChanged") then
 		
 if (_mode == "mousemoving") then
 		{
+		if (isnil "CP_camMouseHolding") exitWith {}; 
 		if (CP_camMouseHolding) then {
 			_posX = _input select 1;
 			if (isnil "CP_camMouseMovingX") then {CP_camMouseMovingX = _posX};

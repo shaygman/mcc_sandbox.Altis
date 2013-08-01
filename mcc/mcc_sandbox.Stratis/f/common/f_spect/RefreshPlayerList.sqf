@@ -1,4 +1,4 @@
-private [ "_idx", "_name", "_unit", "_found", "_i", "_OriginalSide","_vm_refreshNumber"];
+private [ "_idx", "_name", "_found", "_i", "_OriginalSide","_vm_refreshNumber"];
 	MCCMCC_debugPlayer=objNull;
 		if ( f_var_debugMode == 1 ) then {
 			MCCMCC_debugPlayer=player;
@@ -20,12 +20,6 @@ private [ "_idx", "_name", "_unit", "_found", "_i", "_OriginalSide","_vm_refresh
 						KEGs_nameCache set[_idx, _name];					
 						_x setVariable ["KEG_NAME_CACHE", _name];					
 					} else {
-						if (format["%1", _unit getVariable "KEG_NAME_CACHE"] == "<null>") then {
-							_name = "Unknown";
-						} else {
-								_name = _unit getVariable "KEG_NAME_CACHE";
-						};				
-					
 						// Dead unit, use cached name
 						// _name = "(DEAD) " + (KEGs_nameCache select _idx) ;
 						_name = "(DEAD) " + _name;
@@ -80,8 +74,7 @@ private [ "_idx", "_name", "_unit", "_found", "_i", "_OriginalSide","_vm_refresh
 							} ;
 							Case false: { // AI 
 								if (!KEGsAIfilter && alive _x) then {
-								
-									_i = lbAdd[KEGs_cLBTargets, _name];					
+									if (!isnil "_name") then {_i = lbAdd[KEGs_cLBTargets, _name]};
 									lbSetValue[KEGs_cLBTargets, _i, _idx]; // Value used to id unit
 							
 									if(_OriginalSide == west) then {lbSetColor[KEGs_cLBTargets, _i, [0.8,0.8,1,1]]};
@@ -96,7 +89,7 @@ private [ "_idx", "_name", "_unit", "_found", "_i", "_OriginalSide","_vm_refresh
 						
 							if ( !KEGsDeadFilter) then {	
 								//if Not Filtering Dead then 					
-									_i = lbAdd[KEGs_cLBTargets, _name];					
+									if (!isnil "_name") then {_i = lbAdd[KEGs_cLBTargets, _name]};					
 									lbSetValue[KEGs_cLBTargets, _i, _idx]; // Value used to id unit
 							
 									if(_OriginalSide == west) then {lbSetColor[KEGs_cLBTargets, _i, [0.8,0.8,1,1]]};

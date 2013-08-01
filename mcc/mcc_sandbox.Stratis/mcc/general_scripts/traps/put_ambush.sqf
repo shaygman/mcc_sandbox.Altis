@@ -95,7 +95,7 @@ _group setSpeedMode "FULL";
 _group setCombatMode "GREEN";
 _groupLeader = leader _group;
 
-_dummyAmbush = "O_TargetSoldier" createVehicle _pos;
+_dummyAmbush = "bomb" createVehicle _pos;
 _dummyAmbush hideobject true;
 _dummyAmbush setvariable ["iedTrigered", false, true]; 
 

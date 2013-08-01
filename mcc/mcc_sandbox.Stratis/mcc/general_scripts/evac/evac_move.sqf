@@ -1,5 +1,5 @@
 private["_heli", "_route", "_endpos", "_height", "_landing ", "_pilot", "_i", "_j", "_pos", "_dist", "_distold", "_angh", "_dir",
-		"_accel", "_speed", "_steps", "_inipos", "_offset","_nearSmokes","_wp","_distance","_relDirHor","_velocityX","_velocityY"];
+		"_accel", "_speed", "_steps", "_inipos", "_offset","_nearSmokes","_wp","_wp2","_distance","_relDirHor","_velocityX","_velocityY"];
 
 _route         = _this select 0;
 _height        = _this select 1;
@@ -12,11 +12,17 @@ if (_height == 5000) then {								//We got a vehicle
 		{ 
 		if ((getText(configFile >> "CfgVehicles" >> typeOf _heli  >> "simulation")) == "submarinex") then {_heli swimInDepth -4};
 		_pos = _route select _j;
-		_wp = (group _heli) addWaypoint [_pos, 0];
+		_wp = (group driver _heli) addWaypoint [_pos, 0];
 		_wp setWaypointType "MOVE";
 		_wp setWaypointCombatMode "BLUE";
 		_wp setWaypointSpeed "FULL";
 		_wp setWaypointBehaviour "CARELESS";
+		
+		_wp2 = (group gunner _heli) addWaypoint [_pos, 0];
+		_wp2 setWaypointType "MOVE";
+		_wp2 setWaypointCombatMode "YELLOW";
+		_wp2 setWaypointSpeed "FULL";
+		_wp2 setWaypointBehaviour "COMBAT";
 		};
 	if (_landing == 1) then {_wp setWaypointStatements ["true", " driver (vehicle this) action ['ENGINEOFF', (vehicle this)];"]};
 	} else	{
@@ -28,11 +34,17 @@ if (_height == 5000) then {								//We got a vehicle
 	for [{_j = 0},{_j < count _route},{_j = _j + 1}] do
 		{ 
 		_pos = _route select _j;
-		_wp = (group _heli) addWaypoint [_pos, 0];
+		_wp = (group driver _heli) addWaypoint [_pos, 0];
 		_wp setWaypointType "MOVE";
 		_wp setWaypointCombatMode "BLUE";
 		_wp setWaypointSpeed "FULL";
 		_wp setWaypointBehaviour "CARELESS";
+		
+		_wp2 = (group gunner _heli) addWaypoint [_pos, 0];
+		_wp2 setWaypointType "MOVE";
+		_wp2 setWaypointCombatMode "YELLOW";
+		_wp2 setWaypointSpeed "FULL";
+		_wp2 setWaypointBehaviour "COMBAT"
 		};
 	_wp setWaypointStatements ["true", " (vehicle this) setVariable ['wp_complete', true];"];
 	while {!(_heli getVariable "wp_complete")} do {sleep 1};
@@ -69,8 +81,9 @@ if (_height == 5000) then {								//We got a vehicle
 				};
 				_endpos = getpos(_nearSmokes select 0);
 				_distance = [_heli, _endpos] call BIS_fnc_distance2D;
-				hint format ["%1",_distance];
+				//hint format ["%1",_distance];
 				while {_distance>5} do {
+						if (!(alive _pilot) || (damage _heli >= 0.5)) exitWith {};
 						_relDirHor = [getpos _heli, _endpos] call BIS_fnc_DirTo;
 						_heli setDir _relDirHor;
 						_velocityX = ((_endpos select 0) - ((getPosASL _heli) select 0)) / 4;

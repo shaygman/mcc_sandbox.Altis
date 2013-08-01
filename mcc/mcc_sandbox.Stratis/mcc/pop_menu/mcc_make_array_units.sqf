@@ -13,7 +13,7 @@ _u_ammo_idx				= 0;	//VK
 _u_ace_ammo_idx			= 0;	//VK
 
 _faction = mcc_faction;
-
+if (isNil "_faction") exitWith {}; 
 _simTypesUnits 	= ["soldier", "car","carx", "motorcycle", "tank", "helicopter", "airplane", "ship", "parachute","helicopterX","shipx","shipX","tankX","submarinex"];   
 _CfgVehicles 		= configFile >> "CfgVehicles" ;
 

@@ -33,7 +33,7 @@ if !mcc_isloading then
 	MCC_convoyHVTCarIndex = lbCurSel MCC_CONVOY_HVTCAR;
 	
 	hint  "Left click on the map to put start position for the convy";
-
+	click = false; 
 	onMapSingleClick "point1 = _pos;
 	click = true;
 	onMapSingleClick """";" ;

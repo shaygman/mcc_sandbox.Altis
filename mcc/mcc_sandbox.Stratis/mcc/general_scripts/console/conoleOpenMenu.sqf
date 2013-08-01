@@ -1,4 +1,4 @@
-private ["_mccdialog","_comboBox","_message","_messageFinal","_time","_ok","_type","_nul","_stance"];
+private ["_message","_messageFinal","_time","_ok","_type","_nul","_stance"];
 // By: Shay_gman
 // Version: 1.1 (May 2012)
 #define MCC_SANDBOX_IDD 1000
@@ -15,9 +15,6 @@ _type = (_this select 3) select 0; 								//Switch we are opening the console o
 
 closedialog 0; 
 _ok = createDialog "MCC_playerConsoleLoading";
-
-_mccdialog = findDisplay MCC_playerConsoleLoading_IDD;
-_comboBox = _mccdialog displayCtrl MCC_ConsoleLoadingText;		//fill combobox Fly in Hight
 
 _time = time + (3 + random 8);
 
@@ -66,9 +63,17 @@ if (_type == 0) then {											//Opening the conole
 		};
 	};
 
-	if (dialog) then {
+	if (dialog && MCC_ConsoleOperator == "") then {MCC_ConsoleOperator = name player; publicVariable "MCC_ConsoleOperator"};	//First login 
+	
+	if (dialog && MCC_ConsoleOperator ==  name player) then {									//sign in 
 		closedialog 0; 
 		_ok = createDialog "MCC_playerConsole";
+		};
+	
+	if (dialog && MCC_ConsoleOperator !=  name player) then {									//access denied
+		ctrlSetText [9105, format ["Access denied: %1 is signed in",MCC_ConsoleOperator]];
+		sleep 2;
+		closedialog 0; 
 		};
 	};
 

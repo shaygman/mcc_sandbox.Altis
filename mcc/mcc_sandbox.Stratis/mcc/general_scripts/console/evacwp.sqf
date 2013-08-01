@@ -26,6 +26,7 @@ _landing = lbCurSel MCC_ConsoleEvacApproachComboBox_IDD;
 
 hint  "Left click on the map to add one WP";
 
+click = false; 
 onMapSingleClick "point1 = _pos;
 click = true;
 onMapSingleClick """";" ;

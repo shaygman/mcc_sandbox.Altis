@@ -7,7 +7,7 @@ _sides     = [east, west, resistance, civilian];
 _grp_array = [];
 _indexar   = 0;
 
-
+if (isNil "_faction") exitWith {}; 
 dumtel    = 0;
 dumar     = [];
 

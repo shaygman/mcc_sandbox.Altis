@@ -31,7 +31,12 @@ class MCC_Sandbox4 {
 	  MCC_background,
 	  MCC_UMListFrame,
 	  MCC_mapBckg,
-	  MCC_PIPUmFrame
+	  MCC_PIPUmFrame,
+	  MCC_m4f1,
+	  MCC_m4f2,
+	  MCC_m4f3,
+	  MCC_m4f4,
+	  MCC_m4f5
 	  };
 	  
 
@@ -70,23 +75,25 @@ class MCC_Sandbox4 {
 		MCC_UMbroadcast,
 		MCC_UMDelete,
 		MCC_UMJoin,
+		MCC_UMParachute,
 		MCC_UMhint,
 		MCC_PIPUm,
 		MCC_PIPviewMod
 	   };
-class MCC_map: MCC_RscMapControl {idc = MCC_MINIMAP; moving = true; 	text = "";	x = 0.525497 * safezoneW + safezoneX;
+class MCC_map: MCC_RscMapControl {idc = MCC_MINIMAP; moving = true; 	text = "";	
+	x = 0.525552 * safezoneW + safezoneX;
 	y = 0.5 * safezoneH + safezoneY;
-	w = 0.288958 * safezoneW;
-	h = 0.408019 * safezoneH;
+	w = 0.303646 * safezoneW;
+	h = 0.406841 * safezoneH;
 	onMouseButtonDown = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseDown.sqf'");
 	onMouseButtonUp = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseUp.sqf'");
 	onMouseMoving = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseMoving.sqf'");
 };
 class MCC_mapBckg: MCC_RscText {idc = -1; moving = true; 	text = "";	
-	x = 0.525497 * safezoneW + safezoneX;
+	x = 0.525552 * safezoneW + safezoneX;
 	y = 0.5 * safezoneH + safezoneY;
-	w = 0.288958 * safezoneW;
-	h = 0.408019 * safezoneH;
+	w = 0.303646 * safezoneW;
+	h = 0.406841 * safezoneH;
 	colorBackground[] = {1,1,1,1};
 };
 class MCC_Menu1: MCC_RscButtonMenu	{idc = MAIN;text = "Main";	x = 0.355521 * safezoneW + safezoneX;
@@ -372,6 +379,19 @@ class MCC_UMJoin: MCC_RscButton
 	tooltip = "Join group or unit with another group or unit"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
+class MCC_UMParachute: MCC_RscButton
+{
+	idc = -1;
+	onButtonClick = "[9] execVM 'mcc\general_scripts\unitManage\um.sqf'";
+
+	text = "Parachute"; //--- ToDo: Localize;
+	x = 0.5 * safezoneW + safezoneX;
+	y = 0.203116 * safezoneH + safezoneY;
+	w = 0.0525 * safezoneW;
+	h = 0.0280063 * safezoneH;
+	tooltip = "Parachute the current selected units"; //--- ToDo: Localize;
+	sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7) * GUI_GRID_H;
+};
 class MCC_UMListFrame: MCC_RscFrame
 {
 	idc = -1;
@@ -397,7 +417,7 @@ class MCC_PIPUm: MCC_RscPicture
 	text = "#(argb,256,256,1)r2t(rendertarget10,1.0);";
 	x = 0.563021 * safezoneW + safezoneX;
 	y = 0.170129 * safezoneH + safezoneY;
-	w = 0.246354 * safezoneW;
+	w = 0.269271 * safezoneW;
 	h = 0.15394 * safezoneH;
 };
 class MCC_PIPUmFrame: MCC_RscFrame
@@ -405,7 +425,7 @@ class MCC_PIPUmFrame: MCC_RscFrame
 	idc = -1;
 	x = 0.563021 * safezoneW + safezoneX;
 	y = 0.170129 * safezoneH + safezoneY;
-	w = 0.246354 * safezoneW;
+	w = 0.269271 * safezoneW;
 	h = 0.15394 * safezoneH;
 };
 class MCC_PIPviewMod: MCC_RscToolbox
@@ -422,5 +442,47 @@ class MCC_PIPviewMod: MCC_RscToolbox
 	w = 0.2 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+class MCC_m4f1: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.167708 * safezoneW + safezoneX;
+	y = 0.0931586 * safezoneH + safezoneY;
+	w = 0.664583 * safezoneW;
+	h = 0.296884 * safezoneH;
+};
+class MCC_m4f2: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.0931586 * safezoneH + safezoneY;
+	w = 0.48125 * safezoneW;
+	h = 0.07697 * safezoneH;
+};
+class MCC_m4f3: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.494271 * safezoneW + safezoneX;
+	y = 0.390043 * safezoneH + safezoneY;
+	w = 0.338021 * safezoneW;
+	h = 0.109957 * safezoneH;
+};
+class MCC_m4f4: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.167709 * safezoneW + safezoneX;
+	y = 0.390043 * safezoneH + safezoneY;
+	w = 0.326562 * safezoneW;
+	h = 0.109957 * safezoneH;
+};
+class MCC_m4f5: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.0919812 * safezoneH + safezoneY;
+	w = 0.6637 * safezoneW;
+	h = 0.82 * safezoneH;
 };
 };

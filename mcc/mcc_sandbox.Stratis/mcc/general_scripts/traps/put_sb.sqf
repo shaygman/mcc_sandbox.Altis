@@ -24,7 +24,7 @@ _pos= getMarkerPos "traps";
 _group = creategroup civilian;
 _trapkind createunit [_pos, _group,"removeallweapons this;",1];
 _sb = leader _group;
-_sb setposatl pos;
+_sb setposatl _pos;
 _sb setdir (random 360);
 _sb setvariable ["iedTrigered", false, true];
 
@@ -61,19 +61,22 @@ while {alive _sb && _check} do
 					{if(_enemy isKindOf _x && _check) then
 						{
 						_sb setSpeedMode (_sbspeed select (round (random 3)));
+						_sb setskill 1;
+						_sb setskill ["courage",1];
 						_sb domove (getpos _enemy);
 						sleep 5 + random 10;
-						if ((_sb distance _enemy) < 50) then {
-								_sb setspeedmode "FULL";
+						if ((_sb distance _enemy) < 40) then {
+								_sb setspeedmode "FULLSPEED";
 								_sb setBehaviour "CARELESS";
 								_sb setunitpos "UP";
 								_sb disableAI "TARGET";
 								_sb disableAI "AUTOTARGET";
-								_sb setskill 0.1;
 								(group _sb) setCombatMode "BLUE";
 								(group _sb) allowFleeing 0;
 								while {alive _sb} do{
 									sleep 1;
+									_sb setskill 1;
+									_sb setskill ["courage",1];
 									_sb domove (getpos _enemy);
 									_sb domove (getpos _enemy);
 									if (_sound == 1) then {[[netid _sb, "suicide"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;_sound = 0};

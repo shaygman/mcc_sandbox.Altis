@@ -28,10 +28,11 @@ arty_Spread = 0;
 arty_CurrNrShellsTotal = 0;
 arty_xcorrection = 0;
 arty_ycorrection = 0;
-
+if (isnil "arti_already_adjusting") then {arti_already_adjusting = false};  
 _artidialog = findDisplay BON_ARTY_DIALOG;
 
 _shellsleft = Server getVariable format["Arti_%1_shellsleft",playerSide];
+if (isNil "_shellsleft") then {_shellsleft = 0}; 
 ctrlSetText [BON_ARTY_SHELLSLEFT,format["Shells left for this hour: %1",_shellsleft]];
 ctrlSetText [BON_ARTY_XRAY,format["x-ray: %1",round (getPos player select 0)]];
 ctrlSetText [BON_ARTY_YANKEE,format["yankee: %1",round (getPos player select 1)]];

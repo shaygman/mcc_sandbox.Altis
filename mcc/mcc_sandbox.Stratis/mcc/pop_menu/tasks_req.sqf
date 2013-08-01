@@ -38,7 +38,7 @@ _dlg = findDisplay MCC_SANDBOX3_IDD;
 		_comboBox lbSetCurSel 0;
 		};
 		
-	   case 1:	//Set WP
+	   case 1:	//Set WP Cinametic
 	   {
 		if (count MCC_tasks == 0) exitWith {hint "You must create a task first"};
 		stringName = MCC_tasks select (lbCurSel MCC_TASKS_LIST) select 0; 
@@ -159,6 +159,33 @@ _dlg = findDisplay MCC_SANDBOX3_IDD;
 			} else
 			{
 			[[2,{"LOSER" call BIS_fnc_endMission; playMusic "Track07_ActionDark";}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+			};
+		};
+		
+		case 7:	//Set WP No Cinametic
+	   {
+		if (count MCC_tasks == 0) exitWith {hint "You must create a task first"};
+		stringName = MCC_tasks select (lbCurSel MCC_TASKS_LIST) select 0; 
+		stringDescription = lbCurSel MCC_TASKS_LIST;
+		typ = _type;
+		hint "Left click on the map to set a WP for this Task";
+		if (MCC_capture_state) then
+			{
+			onMapSingleClick " 	hint 'Wp captured.'; 
+								MCC_capture_var = MCC_capture_var + FORMAT ['
+								[[%1, ""%2"", %3, %4],""MCC_fnc_makeTaks"",true,false] spawn BIS_fnc_MP;
+								'
+								,typ
+								,stringName
+								,stringDescription
+								,_pos
+								];
+								onMapSingleClick """";";
+			} else 
+			{
+			onMapSingleClick " 	hint 'Wp added.'; 
+								[[typ, stringName, stringDescription, _pos],""MCC_fnc_makeTaks"",true,false] spawn BIS_fnc_MP;
+								onMapSingleClick """";";
 			};
 		};
 	 };

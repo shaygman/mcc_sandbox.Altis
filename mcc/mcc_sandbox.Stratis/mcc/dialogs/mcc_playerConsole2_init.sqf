@@ -56,18 +56,18 @@ if (dialog && MCC_uavConsoleUp && MCC_Console2Open) then {				//Create the UAV
 	ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, ""];
 	_control = _mccdialog displayCtrl MCC_CONSOLE_UAVPIP;
 	[_control] call MCC_fnc_pipOpen;
-	ctrlSetText [MCC_CONSOLE_UAVPIP, "#(argb,256,256,1)r2t(rendertarget9,1.0);"];
+	ctrlSetText [MCC_CONSOLE_UAVPIP, "#(argb,512,512,1)r2t(rendertarget9,1.0);"];
 	// Create fake UAV
 	if (isNil "MCC_fakeUAV") then {
 		MCC_fakeUAV 		= "Camera" camCreate [10,10,10];
-		deletevehicle MCC_fakeUAVCenter;
+		if (!isnil "MCC_fakeUAVCenter") then {deletevehicle MCC_fakeUAVCenter};
 		MCC_fakeUAVCenter	= "Sign_Sphere10cm_F" createvehicle [MCC_consoleUAVpos select 0,MCC_consoleUAVpos select 1, 0];
 		hideobject MCC_fakeUAVCenter;
 		_rad	=	400;
 		_alt	=	500;
 		MCC_UAVAng	= 	180;
 		MCC_fakeUAV cameraEffect ["INTERNAL", "BACK", "rendertarget9"];
-		_coords = [MCC_consoleUAVpos, _rad, _ang] call BIS_fnc_relPos;
+		_coords = [MCC_consoleUAVpos, _rad, MCC_UAVAng] call BIS_fnc_relPos;
 		_coords set [2, _alt];
 		MCC_fakeUAVFOV = 0.6;
 		MCC_fakeUAV camsetTarget MCC_fakeUAVCenter;

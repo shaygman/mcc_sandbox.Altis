@@ -202,13 +202,13 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		colorDisabled[] = {0,0,0,0};
 		colorBackgroundDisabled[] = {0,0,0,0};
 		tooltip = "Close the conosle"; 
-		onButtonClick = "closedialog 0;";
+		onButtonClick = "closedialog 0; MCC_ConsoleOperator =''; publicVariable 'MCC_ConsoleOperator'";
 };
 	//=============================UAV========================================================
 	class MCC_ConsoleACFeed: MCC_RscPicture
 	{
 		idc = MCC_CONSOLE_ACPIP;
-		text = "#(argb,256,256,1)r2t(rendertarget8,1.0);";
+		text = "#(argb,512,512,1)r2t(rendertarget8,1.0);";
 		x = 0.219271 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.561458 * safezoneW;

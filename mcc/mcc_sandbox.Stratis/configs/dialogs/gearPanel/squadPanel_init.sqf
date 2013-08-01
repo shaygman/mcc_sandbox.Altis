@@ -66,11 +66,13 @@ _comboBox lbSetCurSel 0;
 						};
 				
 				//Disable leaving squad 
-				if ((ctrlText CP_squadPanelJoinButton == "Leave Squad") && (CP_activeGroup select 0 != (group player))) then {
-					CP_squadPanelJoinButton ctrlenable false; 
-					} else	{
-							CP_squadPanelJoinButton ctrlenable true; 
-						};
+				if (! isnil "CP_activeGroup") then {
+					if ((ctrlText CP_squadPanelJoinButton == "Leave Squad") && (CP_activeGroup select 0 != (group player))) then {
+						CP_squadPanelJoinButton ctrlenable false; 
+						} else	{
+								CP_squadPanelJoinButton ctrlenable true; 
+							};
+				};
 						
 				//Load active Groups
 				_comboBox = CP_squadPanelSquadList; 
@@ -81,11 +83,14 @@ _comboBox lbSetCurSel 0;
 					} foreach _groups;
 				
 				//Rename Squad
-				if (player == leader (CP_activeGroup select 0)) then {
-					CP_squadPanelCreateSquadButton ctrlSetText "Rename Squad";
-					} else {
-							CP_squadPanelCreateSquadButton ctrlSetText "Create Squad";
-						};
+				if (! isnil "CP_activeGroup") then {
+					if (player == leader (CP_activeGroup select 0)) then {
+						CP_squadPanelCreateSquadButton ctrlSetText "Rename Squad";
+						} else {
+								CP_squadPanelCreateSquadButton ctrlSetText "Create Squad";
+							};
+				}; 
+				
 				sleep 0.1; 
 				};
 		};

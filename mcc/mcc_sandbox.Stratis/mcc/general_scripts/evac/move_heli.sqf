@@ -64,7 +64,7 @@ if !mcc_isloading then	{
 	sleep 0.5;
 		
 	hint "Markers placed";
-	
+	if ((lbCurSel MCC_EVAC_SELECTED) == -1) exitWith {}; 
 	_evac = MCC_evacVehicles select (lbCurSel MCC_EVAC_SELECTED);
 	if (_evac iskindof "helicopter") then	{							//Incase we moving helicopter
 		_flyInHight =  MCC_evacFlyInHight_array select (lbCurSel MCC_EVAC_FLIGHTHIGHT) select 1; 

@@ -47,9 +47,20 @@ class MCC_Sandbox {
 	  controlsBackground[] = 
 	  {
 	  MCC_pic,
+	  MCC_background,
 	  MCC_Title,
 	  MCC_logo,
-	  MCC_mapBckg
+	  MCC_mapBckg,	  
+	  MCC_m1f1,
+	  MCC_m1f2,
+	  MCC_m1f3,
+	  MCC_m1f4,
+	  MCC_m1f5,
+	  MCC_m1f6,
+	  MCC_m1f7,
+	  MCC_m1f8,
+	  MCC_m1f9,
+	  MCC_m1f10
 	  };
 	  
 
@@ -69,6 +80,7 @@ class MCC_Sandbox {
 	  MCC_factioTittle,
 	  MCC_factionCombo,
 	  MCC_ghostMode,
+	  MCC_spectator,
 	  MCC_Teleport,
 	  MCC_spawnType,
 	  MCC_spawnBranch,
@@ -147,19 +159,20 @@ class MCC_Title: MCC_RscText	{idc = -1;text = __EVAL ("MCC Sandbox V"+MCCVersion
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.52)";
 };
 
-class MCC_map: MCC_RscMapControl {idc = -1; moving = true; 	text = "";	x = 0.525497 * safezoneW + safezoneX;
+class MCC_map: MCC_RscMapControl {idc = -1; moving = true; 	text = "";	
+	x = 0.525552 * safezoneW + safezoneX;
 	y = 0.5 * safezoneH + safezoneY;
-	w = 0.288958 * safezoneW;
-	h = 0.408019 * safezoneH;
+	w = 0.303646 * safezoneW;
+	h = 0.406841 * safezoneH;
 	onMouseButtonDown = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseDown.sqf'");
 	onMouseButtonUp = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseUp.sqf'");
 	onMouseMoving = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseMoving.sqf'");
 };
 class MCC_mapBckg: MCC_RscText {idc = -1; moving = true; 	text = "";	
-	x = 0.525497 * safezoneW + safezoneX;
+	x = 0.525552 * safezoneW + safezoneX;
 	y = 0.5 * safezoneH + safezoneY;
-	w = 0.288958 * safezoneW;
-	h = 0.408019 * safezoneH;
+	w = 0.303646 * safezoneW;
+	h = 0.406841 * safezoneH;
 	colorBackground[] = {1,1,1,1};
 };
 class MCC_Menu1: MCC_RscButtonMenu	{idc = MAIN;text = "Main";	x = 0.355521 * safezoneW + safezoneX;
@@ -200,132 +213,167 @@ class MCC_Menu5: MCC_RscButtonMenu	{idc = MENU5;text = "Menu 5";x = 0.729466 * s
 	colorText[] = {1,1,1,1};
 	colorBackground[] = {0,0,0,1};
 }
-class MCC_factioTittle: MCC_RscText	{idc = -1;text = "Faction:";x = 0.355521 * safezoneW + safezoneX;
-	y = 0.176985 * safezoneH + safezoneY;
+class MCC_factioTittle: MCC_RscText	{idc = -1;text = "Faction:";
+	x = 0.3625 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
 	w = 0.06799 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_factionCombo: MCC_RscCombo {idc = FACTIONCOMBO;x = 0.43201 * safezoneW + safezoneX;
-	y = 0.176985 * safezoneH + safezoneY;
+class MCC_factionCombo: MCC_RscCombo {idc = FACTIONCOMBO;
+	x = 0.436979 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
 	w = 0.144479 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\pop_menu\mcc_guiTab1Change.sqf'");
 };
-class MCC_ghostMode: MCC_RscButton {idc = -1;text = "Ghost Mode"; x = 0.627481 * safezoneW + safezoneX;
-	y = 0.176985 * safezoneH + safezoneY;
-	w = 0.0764887 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_ghostMode: MCC_RscButton {idc = -1;text = "Ghost Mode"; 
+	x = 0.597396 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
+	w = 0.06875 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	tooltip = "Make the mission maker invisible to enemies"; 
 	onButtonClick = "if (mcc_missionmaker == (name player)) then{if (captive player) then {player setcaptive false; [['Mission maker is no longer cheating'],'MCC_fnc_globalHint',true,false] call BIS_fnc_MP;} else {player setcaptive true; [['Mission maker is cheating'],'MCC_fnc_globalHint',true,false] spawn BIS_fnc_MP;}} else {player globalchat 'Access Denied'};";
 };
-class MCC_Teleport: MCC_RscButton {idc = -1;text = "Teleport"; x = 0.720967 * safezoneW + safezoneX;
-	y = 0.176985 * safezoneH + safezoneY;
-	w = 0.0764887 * safezoneW;
-	h = 0.0340016 * safezoneH;
+
+class MCC_spectator: MCC_RscButton
+{
+	idc = -1;
+	text = "Spectator"; 
+	x = 0.671875 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
+	w = 0.06875 * safezoneW;
+	h = 0.0329871 * safezoneH;
+	tooltip = "Open spectator camera"; 
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
+};
+
+class MCC_Teleport: MCC_RscButton {idc = -1;text = "Teleport"; 
+	x = 0.746354 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
+	w = 0.06875 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	tooltip = "Teleport the mission maker and any vehicle he is in to a new location"; 
 	onButtonClick = "if (mcc_missionmaker == (name player)) then {hint 'Click on the map';onMapSingleClick 'vehicle player setPos _pos;onMapSingleClick '''';true;'} else {player globalchat 'Access Denied'};";
 };
-class MCC_spawnType: MCC_RscCombo {idc = SPAWNTYPE;	x = 0.36402 * safezoneW + safezoneX;
-	y = 0.261989 * safezoneH + safezoneY;
+class MCC_spawnType: MCC_RscCombo {idc = SPAWNTYPE;	
+	x = 0.3625 * safezoneW + safezoneX;
+	y = 0.258094 * safezoneH + safezoneY;
 	w = 0.0849875 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	onLBSelChanged = __EVAL("[1] execVM '"+MCCPATH+"mcc\pop_menu\mcc_guiTab1Change.sqf'");
 };
-class MCC_spawnBranch: MCC_RscCombo {idc = SPAWNBRANCH;	x = 0.466005 * safezoneW + safezoneX;
-	y = 0.261989 * safezoneH + safezoneY;
+class MCC_spawnBranch: MCC_RscCombo {idc = SPAWNBRANCH;
+	x = 0.465625 * safezoneW + safezoneX;
+	y = 0.258094 * safezoneH + safezoneY;
 	w = 0.118982 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	onLBSelChanged = __EVAL("[2] execVM '"+MCCPATH+"mcc\pop_menu\mcc_guiTab1Change.sqf'");
 };
-class MCC_spawnClass: MCC_RscCombo {idc = SPAWNCLASS; x = 0.601985 * safezoneW + safezoneX;
-	y = 0.261989 * safezoneH + safezoneY;
-	w = 0.212469 * safezoneW;
+class MCC_spawnClass: MCC_RscCombo {idc = SPAWNCLASS; 
+	x = 0.603125 * safezoneW + safezoneX;
+	y = 0.258094 * safezoneH + safezoneY;
+	w = 0.212468 * safezoneW;
 	h = 0.0340016 * safezoneH;
 };
-class MCC_spawnTypeTittle: MCC_RscText {idc = -1;text = "Type:"; x = 0.355521 * safezoneW + safezoneX;
-	y = 0.227987 * safezoneH + safezoneY;
+class MCC_spawnTypeTittle: MCC_RscText {idc = -1;text = "Type:"; 
+	x = 0.3625 * safezoneW + safezoneX;
+	y = 0.225107 * safezoneH + safezoneY;
 	w = 0.06799 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_spawnBranchTittle: MCC_RscText {idc = -1;text = "Branch:"; x = 0.457506 * safezoneW + safezoneX;
-	y = 0.227987 * safezoneH + safezoneY;
+class MCC_spawnBranchTittle: MCC_RscText {idc = -1;text = "Branch:";
+	x = 0.465625 * safezoneW + safezoneX;
+	y = 0.225107 * safezoneH + safezoneY;
 	w = 0.06799 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_spawnClassTittle: MCC_RscText {idc = -1;text = "Class:"; x = 0.593486 * safezoneW + safezoneX;
-	y = 0.227987 * safezoneH + safezoneY;
+class MCC_spawnClassTittle: MCC_RscText {idc = -1;text = "Class:"; 
+	x = 0.603125 * safezoneW + safezoneX;
+	y = 0.225107 * safezoneH + safezoneY;
 	w = 0.06799 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_spawnButton: MCC_RscButton {idc = -1;	text = "Spawn"; x = 0.729466 * safezoneW + safezoneX;
-	y = 0.329992 * safezoneH + safezoneY;
+class MCC_spawnButton: MCC_RscButton {idc = -1;	text = "Spawn"; 
+	x = 0.729167 * safezoneW + safezoneX;
+	y = 0.313073 * safezoneH + safezoneY;
 	w = 0.0849875 * safezoneW;
 	h = 0.0510023 * safezoneH;
 	onButtonClick = __EVAL("[false] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group.sqf'");
 };
-class MCC_spawnEmptyTittle: MCC_RscText {idc = -1;	text = "Empty:"; x = 0.355521 * safezoneW + safezoneX;
-	y = 0.312991 * safezoneH + safezoneY;
+class MCC_spawnEmptyTittle: MCC_RscText {idc = -1;	text = "Empty:";
+	x = 0.3625 * safezoneW + safezoneX;
+	y = 0.302077 * safezoneH + safezoneY;
 	w = 0.0594912 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_spawnEmpty: MCC_RscCombo {idc = SPAWNEMPTY;	x = 0.36402 * safezoneW + safezoneX;
-	y = 0.346993 * safezoneH + safezoneY;
+class MCC_spawnEmpty: MCC_RscCombo {idc = SPAWNEMPTY;	
+	x = 0.3625 * safezoneW + safezoneX;
+	y = 0.335064 * safezoneH + safezoneY;
 	w = 0.0849875 * safezoneW;
 	h = 0.0340016 * safezoneH;
 };
-class MCC_spawnAwareness: MCC_RscCombo {idc = SPAWNAWARNESS;	x = 0.466005 * safezoneW + safezoneX;
-	y = 0.346993 * safezoneH + safezoneY;
+class MCC_spawnAwareness: MCC_RscCombo {idc = SPAWNAWARNESS;	
+	x = 0.465625 * safezoneW + safezoneX;
+	y = 0.335064 * safezoneH + safezoneY;
 	w = 0.118982 * safezoneW;
 	h = 0.0340016 * safezoneH;
 };
-class MCC_spawnAwarenessTittle: MCC_RscText {idc = -1; text = "Awareness:"; x = 0.457506 * safezoneW + safezoneX;
-	y = 0.312991 * safezoneH + safezoneY;
+class MCC_spawnAwarenessTittle: MCC_RscText {idc = -1; text = "Awareness:"; 
+	x = 0.465625 * safezoneW + safezoneX;
+	y = 0.302077 * safezoneH + safezoneY;
 	w = 0.0594912 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_spawnBehavior: MCC_RscCombo {idc = SPAWNBEHAVIOR;	x = 0.601985 * safezoneW + safezoneX;
-	y = 0.346993 * safezoneH + safezoneY;
+class MCC_spawnBehavior: MCC_RscCombo {idc = SPAWNBEHAVIOR;	
+	x = 0.603125 * safezoneW + safezoneX;
+	y = 0.335064 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
 	h = 0.0340016 * safezoneH;
 };
-class MCC_spawnBehaviorTittle: MCC_RscText {idc = -1; text = "Behavior:";x = 0.593486 * safezoneW + safezoneX;
-	y = 0.312991 * safezoneH + safezoneY;
+class MCC_spawnBehaviorTittle: MCC_RscText {idc = -1; text = "Behavior:";
+	x = 0.603125 * safezoneW + safezoneX;
+	y = 0.302077 * safezoneH + safezoneY;
 	w = 0.0764887 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_viewDistanceTittle: MCC_RscText {idc = -1; text = "View:"; x = 0.185546 * safezoneW + safezoneX;
-	y = 0.482999 * safezoneH + safezoneY;
+class MCC_viewDistanceTittle: MCC_RscText {idc = -1; text = "View:"; 
+	x = 0.185583 * safezoneW + safezoneX;
+	y = 0.483067 * safezoneH + safezoneY;
 	w = 0.0594912 * safezoneW;
 	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_grassDensityTittle: MCC_RscText {idc = -1; text = "Grass:"; x = 0.185546 * safezoneW + safezoneX;
-	y = 0.517001 * safezoneH + safezoneY;
+class MCC_grassDensityTittle: MCC_RscText {idc = -1; text = "Grass:"; 
+	x = 0.185583 * safezoneW + safezoneX;
+	y = 0.516933 * safezoneH + safezoneY;
 	w = 0.0594912 * safezoneW;
 	h = 0.0340016 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_viewDistance: MCC_RscCombo {idc = MCCVIEWDISTANCE; x = 0.245038 * safezoneW + safezoneX;
-	y = 0.5 * safezoneH + safezoneY;
-	w = 0.0934862 * safezoneW;
-	h = 0.0170008 * safezoneH;
+class MCC_viewDistance: MCC_RscCombo {idc = MCCVIEWDISTANCE; 
+	x = 0.245052 * safezoneW + safezoneX;
+	y = 0.494942 * safezoneH + safezoneY;
+	w = 0.0802083 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	colorText[] = {1,1,1,1};
 	colorBackground[] = {0,0,0,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	onLBSelChanged =  __EVAL("[2] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
 };
-class MCC_grassDensity: MCC_RscCombo {idc = MCCGRASSDENSITY;x = 0.245038 * safezoneW + safezoneX;
-	y = 0.534002 * safezoneH + safezoneY;
-	w = 0.0934862 * safezoneW;
-	h = 0.0170008 * safezoneH;
+class MCC_grassDensity: MCC_RscCombo {idc = MCCGRASSDENSITY;
+	x = 0.245052 * safezoneW + safezoneX;
+	y = 0.529029 * safezoneH + safezoneY;
+	w = 0.0802083 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	colorText[] = {1,1,1,1};
 	colorBackground[] = {0,0,0,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -339,8 +387,8 @@ class MCC_WeatherTittle: MCC_RscText {idc = -1;	text = "Weather:";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
 class MCC_FogTittle: MCC_RscText {idc = -1;	text = "Fog:"; 
-	x = 0.185583 * safezoneW + safezoneX;
-	y = 0.60204 * safezoneH + safezoneY;
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.598961 * safezoneH + safezoneY;
 	w = 0.0630208 * safezoneW;
 	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
@@ -355,8 +403,8 @@ class MCC_Weather: MCC_RscCombo {idc = MCCWEATHER;
 	colorBackground[] = {0,0,0,1};
 };
 class MCC_Fog: MCC_RscCombo {idc = MCCFOG;
-	x = 0.255594 * safezoneW + safezoneX;
-	y = 0.60204 * safezoneH + safezoneY;
+	x = 0.253646 * safezoneW + safezoneX;
+	y = 0.598961 * safezoneH + safezoneY;
 	w = 0.0744792 * safezoneW;
 	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
@@ -421,9 +469,9 @@ class MCC_TSMinute: MCC_RscCombo {idc = TSMINUTE;
 };
 class MCC_TSSetButton: MCC_RscButton {idc = -1;	text = "Set Time"; 
 	x = 0.184896 * safezoneW + safezoneX;
-	y = 0.818876 * safezoneH + safezoneY;
-	w = 0.144479 * safezoneW;
-	h = 0.0340016 * safezoneH;
+	y = 0.819975 * safezoneH + safezoneY;
+	w = 0.143229 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
 };
 class MCC_TSSetWeatherButton: MCC_RscButton
@@ -437,38 +485,43 @@ class MCC_TSSetWeatherButton: MCC_RscButton
 	w = 0.144479 * safezoneW;
 	h = 0.0340016 * safezoneH;
 };
-class MCC_stopCapture: MCC_RscButton {idc = MCCSTOPCAPTURE;	text = "Stop Capturing"; x = 0.185546 * safezoneW + safezoneX;
-	y = 0.397995 * safezoneH + safezoneY;
-	w = 0.161476 * safezoneW;
+class MCC_stopCapture: MCC_RscButton {idc = MCCSTOPCAPTURE;	text = "Stop Capturing"; 
+	x = 0.185583 * safezoneW + safezoneX;
+	y = 0.39796 * safezoneH + safezoneY;
+	w = 0.161477 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	onButtonClick = "ctrlEnable [1014,false];MCC_capture_state=false;";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_MissionSettings: MCC_RscButton {idc = -1;	text = "Mission Settings";x = 0.36402 * safezoneW + safezoneX;
-	y = 0.397995 * safezoneH + safezoneY;
+class MCC_MissionSettings: MCC_RscButton {idc = -1;	text = "Mission Settings";
+	x = 0.36399 * safezoneW + safezoneX;
+	y = 0.39796 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'missionSettings';} else {player globalchat 'Access Denied'};";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_groupGenerator: MCC_RscButton {idc = -1;	text = "Group Genrator"; x = 0.474504 * safezoneW + safezoneX;
-	y = 0.397995 * safezoneH + safezoneY;
+class MCC_groupGenerator: MCC_RscButton {idc = -1;	text = "Group Genrator"; 
+	x = 0.474448 * safezoneW + safezoneX;
+	y = 0.39796 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	tooltip = "Open Group Generator"; 
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'mcc_groupGen';} else {player globalchat 'Access Denied'};";
 };
-class MCC_boxGenerator: MCC_RscButton {idc = -1;	text = "Box Genrator"; x = 0.601985 * safezoneW + safezoneX;
-	y = 0.397995 * safezoneH + safezoneY;
+class MCC_boxGenerator: MCC_RscButton {idc = -1;	text = "Box Genrator"; 
+	x = 0.601979 * safezoneW + safezoneX;
+	y = 0.39796 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	tooltip = "Open Box Generator"; 
 	onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'boxGen';} else {player globalchat 'Access Denied'};";
 };
-class MCC_3DEditor: MCC_RscButton {idc = -1; text = "3D Editor"; x = 0.712469 * safezoneW + safezoneX;
-	y = 0.397995 * safezoneH + safezoneY;
+class MCC_3DEditor: MCC_RscButton {idc = -1; text = "3D Editor"; 
+	x = 0.712438 * safezoneW + safezoneX;
+	y = 0.39796 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -476,7 +529,7 @@ class MCC_3DEditor: MCC_RscButton {idc = -1; text = "3D Editor"; x = 0.712469 * 
 	onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");
 };
 class MCC_StartWest: MCC_RscButton {idc = MCCSTARTWEST;	text = "West"; 	
-	x = 0.3625 * safezoneW + safezoneX;
+	x = 0.351042 * safezoneW + safezoneX;
 	y = 0.489004 * safezoneH + safezoneY;
 	w = 0.0630208 * safezoneW;
 	h = 0.0329871 * safezoneH;
@@ -486,7 +539,7 @@ class MCC_StartWest: MCC_RscButton {idc = MCCSTARTWEST;	text = "West";
 	action = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
 class MCC_StartEast: MCC_RscButton {idc = MCCSTARTEAST;	text = "East"; 
-	x = 0.454167 * safezoneW + safezoneX;
+	x = 0.442708 * safezoneW + safezoneX;
 	y = 0.489004 * safezoneH + safezoneY;
 	w = 0.0630208 * safezoneW;
 	h = 0.0329871 * safezoneH;
@@ -496,7 +549,7 @@ class MCC_StartEast: MCC_RscButton {idc = MCCSTARTEAST;	text = "East";
 	action = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
 class MCC_StartGUAR: MCC_RscButton {idc = MCCSTARTGUAR; text = "GUAR"; 
-	x = 0.3625 * safezoneW + safezoneX;
+	x = 0.351042 * safezoneW + safezoneX;
 	y = 0.532987 * safezoneH + safezoneY;
 	w = 0.0630208 * safezoneW;
 	h = 0.0329871 * safezoneH;
@@ -506,7 +559,7 @@ class MCC_StartGUAR: MCC_RscButton {idc = MCCSTARTGUAR; text = "GUAR";
 	action = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
 class MCC_StartCiv: MCC_RscButton {idc = MCCSTARTCIV; text = "Civ";
-	x = 0.454166 * safezoneW + safezoneX;
+	x = 0.442708 * safezoneW + safezoneX;
 	y = 0.532987 * safezoneH + safezoneY;
 	w = 0.0630208 * safezoneW;
 	h = 0.0329871 * safezoneH;
@@ -516,9 +569,9 @@ class MCC_StartCiv: MCC_RscButton {idc = MCCSTARTCIV; text = "Civ";
 	action = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
 class MCC_StartDisableRespawn: MCC_RscButton {idc = MCCDISABLERESPAWN; text = "Disable Respawn"; 
-	x = 0.3625 * safezoneW + safezoneX;
-	y = 0.585107 * safezoneH + safezoneY;
-	w = 0.06875 * safezoneW;
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.598961 * safezoneH + safezoneY;
+	w = 0.0744792 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	colorText[] = {1,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -530,27 +583,28 @@ class MCC_StartEnableCP: MCC_RscButton
 	idc = MCCENABLECP;
 	action = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 	text = "Role Selection"; //--- ToDo: Localize;
-	x = 0.448437 * safezoneW + safezoneX;
-	y = 0.585107 * safezoneH + safezoneY;
-	w = 0.06875 * safezoneW;
+	x = 0.43125 * safezoneW + safezoneX;
+	y = 0.598961 * safezoneH + safezoneY;
+	w = 0.0744792 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	tooltip = "If pressed before a start position to the given side has been set it will open a role selection menu to all players"; 
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 class MCC_StartLocationsTittle: MCC_RscText {idc = -1; text = "Start Locations:"; 
-	x = 0.3625 * safezoneW + safezoneX;
+	x = 0.351042 * safezoneW + safezoneX;
 	y = 0.445021 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	colorText[] = {0,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_CSSettings: MCC_RscText {idc = -1; text = "Client Side Settings:"; x = 0.202544 * safezoneW + safezoneX;
-	y = 0.448998 * safezoneH + safezoneY;
+class MCC_CSSettings: MCC_RscText {idc = -1; text = "Client Side Settings:"; 
+	x = 0.184896 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
 	w = 0.127481 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_EnvironmentTittle: MCC_RscText {idc = -1;	text = "Environment Settings:"; 
 	x = 0.184896 * safezoneW + safezoneX;
@@ -558,78 +612,90 @@ class MCC_EnvironmentTittle: MCC_RscText {idc = -1;	text = "Environment Settings
 	w = 0.126042 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_MissionMakerTittle: MCC_RscText {idc = -1; text = "Mission Maker"; x = 0.36402 * safezoneW + safezoneX;
-	y = 0.704009 * safezoneH + safezoneY;
+class MCC_MissionMakerTittle: MCC_RscText {idc = -1; text = "Mission Maker"; 
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.73091 * safezoneH + safezoneY;
 	w = 0.0849875 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_MissionMakerName: MCC_RscText {idc = MCCMISSIONMAKERNAME;	x = 0.449008 * safezoneW + safezoneX;
-	y = 0.704009 * safezoneH + safezoneY;
+class MCC_MissionMakerName: MCC_RscText {idc = MCCMISSIONMAKERNAME;	
+	x = 0.442708 * safezoneW + safezoneX;
+	y = 0.73091 * safezoneH + safezoneY;
 	w = 0.06799 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_clientFPSTittle: MCC_RscText {idc = -1;	text = "Client FPS:"; x = 0.36402 * safezoneW + safezoneX;
-	y = 0.755012 * safezoneH + safezoneY;
+class MCC_clientFPSTittle: MCC_RscText {idc = -1;	text = "Client FPS:"; 
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.774893 * safezoneH + safezoneY;
 	w = 0.0849875 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_ServerFPSTittle: MCC_RscText {idc = -1;	text = "Server FPS:"; x = 0.36402 * safezoneW + safezoneX;
-	y = 0.806014 * safezoneH + safezoneY;
+class MCC_ServerFPSTittle: MCC_RscText {idc = -1;	text = "Server FPS:";
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.818876 * safezoneH + safezoneY;
 	w = 0.0849875 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_clientFPS: MCC_RscText {idc = MCCCLIENTFPS; x = 0.449008 * safezoneW + safezoneX;
-	y = 0.755012 * safezoneH + safezoneY;
+class MCC_clientFPS: MCC_RscText {idc = MCCCLIENTFPS; 
+	x = 0.442708 * safezoneW + safezoneX;
+	y = 0.774893 * safezoneH + safezoneY;
 	w = 0.06799 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_ServerFPS: MCC_RscText {idc = MCCSERVERFPS;x = 0.449008 * safezoneW + safezoneX;
-	y = 0.806014 * safezoneH + safezoneY;
+class MCC_ServerFPS: MCC_RscText {idc = MCCSERVERFPS;
+	x = 0.442708 * safezoneW + safezoneX;
+	y = 0.818876 * safezoneH + safezoneY;
 	w = 0.06799 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
-class MCC_BenchmarkTittle: MCC_RscText {idc = -1; text = "Benchmark Tools:"; x = 0.36402 * safezoneW + safezoneX;
-	y = 0.653007 * safezoneH + safezoneY;
+class MCC_BenchmarkTittle: MCC_RscText {idc = -1; text = "Benchmark Tools:"; 
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.686927 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_zoneTittle: MCC_RscText {idc = -1;	text = "Zone:"; x = 0.525496 * safezoneW + safezoneX;
-	y = 0.427 * safezoneH + safezoneY;
-	w = 0.0594912 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_zoneTittle: MCC_RscText {idc = -1;	text = "Zone:";
+	x = 0.528646 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.0572917 * safezoneW;
+	h = 0.0219914 * safezoneH;
 };
-class MCC_zone: MCC_RscCombo {idc = MCCZONENUMBER;	x = 0.601985 * safezoneW + safezoneX;
-	y = 0.427 * safezoneH + safezoneY;
-	w = 0.101985 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_zone: MCC_RscCombo {idc = MCCZONENUMBER;	
+	x = 0.603125 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.0973958 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	onLBSelChanged = __EVAL("[0,0,0] execVM '"+MCCPATH+"mcc\pop_menu\zones.sqf'");
 };
-class MCC_zoneLocTittle: MCC_RscText {idc = -1;	text = "Location:"; x = 0.525496 * safezoneW + safezoneX;
-	y = 0.465998 * safezoneH + safezoneY;
-	w = 0.0594912 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_zoneLocTittle: MCC_RscText {idc = -1;	text = "Location:"; 
+	x = 0.528646 * safezoneW + safezoneX;
+	y = 0.478009 * safezoneH + safezoneY;
+	w = 0.0572917 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_zoneLoc: MCC_RscCombo {idc = MCC_ZONE_LOC;	x = 0.601985 * safezoneW + safezoneX;
-	y = 0.465998 * safezoneH + safezoneY;
-	w = 0.101985 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_zoneLoc: MCC_RscCombo {idc = MCC_ZONE_LOC;	
+	x = 0.603125 * safezoneW + safezoneX;
+	y = 0.478009 * safezoneH + safezoneY;
+	w = 0.0973958 * safezoneW;
+	h = 0.0219914 * safezoneH;
 };
-class MCC_zoneUpdate: MCC_RscButton {idc = -1;	text = "Update Zone"; x = 0.712469 * safezoneW + safezoneX;
-	y = 0.465998 * safezoneH + safezoneY;
-	w = 0.101985 * safezoneW;
-	h = 0.0340016 * safezoneH;
+class MCC_zoneUpdate: MCC_RscButton {idc = -1;	text = "Update Zone"; 
+	x = 0.717708 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.0973958 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 	tooltip = "Click and drag on the minimap to make a zone"; 
 	onButtonClick = "if (mcc_missionmaker == (name player)) then {MCC_zone_drawing= true;} else {player globalchat 'Access Denied'};";
@@ -657,7 +723,8 @@ class MCC_Close: MCC_RscButtonMenu {idc = -1; text = "Close"; x = 0.440509 * saf
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	onButtonClick = "closeDialog 0";
 };
-class MCC_background: MCC_RscText {idc = -1; text = "";x = 0.168549 * safezoneW + safezoneX;
+class MCC_background: MCC_RscText {idc = -1; text = "";
+	x = 0.168549 * safezoneW + safezoneX;
 	y = 0.0919812 * safezoneH + safezoneY;
 	w = 0.662902 * safezoneW;
 	h = 0.816037 * safezoneH;
@@ -668,4 +735,94 @@ class MCC_pic: MCC_RscPicture {idc = -1; text = __EVAL(MCCPATH +"mcc\dialogs\mcc
 	w = 0.8 * safezoneW;
 	h = 1.01 * safezoneH;
 };
+//---------------------FRAMES---------------------------------------------
+class MCC_m1f1: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.159576 * safezoneW;
+	h = 0.120953 * safezoneH;
+};
+class MCC_m1f2: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.565974 * safezoneH + safezoneY;
+	w = 0.159576 * safezoneW;
+	h = 0.120953 * safezoneH;
+};
+class MCC_m1f3: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.686927 * safezoneH + safezoneY;
+	w = 0.159576 * safezoneW;
+	h = 0.164936 * safezoneH;
+};
+class MCC_m1f4: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.328125 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.194792 * safezoneW;
+	h = 0.241906 * safezoneH;
+};
+class MCC_m1f5: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.328125 * safezoneW + safezoneX;
+	y = 0.686927 * safezoneH + safezoneY;
+	w = 0.194792 * safezoneW;
+	h = 0.164936 * safezoneH;
+};
+
+class MCC_m1f6: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.522917 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.309375 * safezoneW;
+	h = 0.0549786 * safezoneH;
+};
+class MCC_m1f7: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.356771 * safezoneW + safezoneX;
+	y = 0.379047 * safezoneH + safezoneY;
+	w = 0.475521 * safezoneW;
+	h = 0.0659743 * safezoneH;
+};
+class MCC_m1f8: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.356771 * safezoneW + safezoneX;
+	y = 0.214111 * safezoneH + safezoneY;
+	w = 0.475521 * safezoneW;
+	h = 0.164936 * safezoneH;
+};
+class MCC_m1f9: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.356771 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
+	w = 0.475521 * safezoneW;
+	h = 0.0439828 * safezoneH;
+};
+class MCC_m1f10: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.0919812 * safezoneH + safezoneY;
+	w = 0.6637 * safezoneW;
+	h = 0.82 * safezoneH;
+};
+
 };

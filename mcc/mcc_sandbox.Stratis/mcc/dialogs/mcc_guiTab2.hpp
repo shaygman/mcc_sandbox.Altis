@@ -58,7 +58,16 @@ class MCC_Sandbox2 {
 	  MCC_pic,
 	  MCC_background,
 	  MCC_CommandLineTextFrmae,
-	  MCC_mapBckg
+	  MCC_mapBckg,
+	  MCC_m2f1,
+	  MCC_m2f2,
+	  MCC_m2f3,
+	  MCC_m2f4,
+	  MCC_m2f5,
+	  MCC_m2f6,
+	  MCC_m2f7,
+	  MCC_m2f8,
+	  MCC_m2f9
 	  };
 	  
 
@@ -169,21 +178,22 @@ class MCC_Sandbox2 {
 	  MCC_convoySpawn,
 	  MCC_convoyReset,
 	  MCC_convoyStart
-	  
-	   };
-class MCC_map: MCC_RscMapControl {idc = MCC_MINIMAP; moving = true; 	text = "";	x = 0.525497 * safezoneW + safezoneX;
+	};
+	
+class MCC_map: MCC_RscMapControl {idc = MCC_MINIMAP; moving = true; 	text = "";	
+	x = 0.525552 * safezoneW + safezoneX;
 	y = 0.5 * safezoneH + safezoneY;
-	w = 0.288958 * safezoneW;
-	h = 0.408019 * safezoneH;
+	w = 0.303646 * safezoneW;
+	h = 0.406841 * safezoneH;
 	onMouseButtonDown = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseDown.sqf'");
 	onMouseButtonUp = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseUp.sqf'");
 	onMouseMoving = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseMoving.sqf'");
 };
 class MCC_mapBckg: MCC_RscText {idc = -1; moving = true; 	text = "";	
-	x = 0.525497 * safezoneW + safezoneX;
+	x = 0.525552 * safezoneW + safezoneX;
 	y = 0.5 * safezoneH + safezoneY;
-	w = 0.288958 * safezoneW;
-	h = 0.408019 * safezoneH;
+	w = 0.303646 * safezoneW;
+	h = 0.406841 * safezoneH;
 	colorBackground[] = {1,1,1,1};
 };
 class MCC_Menu1: MCC_RscButtonMenu	{idc = MAIN;text = "Main";	x = 0.355521 * safezoneW + safezoneX;
@@ -226,15 +236,15 @@ class MCC_Menu5: MCC_RscButtonMenu	{idc = MENU5;text = "Menu 5";x = 0.729466 * s
 	colorBackground[] = {0,0,0,1};
 }
 class MCC_factioTittle: MCC_RscText	{idc = -1;text = "Faction:";
-	x = 0.355521 * safezoneW + safezoneX;
-	y = 0.176985 * safezoneH + safezoneY;
+	x = 0.356771 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
 	w = 0.06799 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 class MCC_factionCombo: MCC_RscCombo {idc = FACTIONCOMBO;
-	x = 0.43201 * safezoneW + safezoneX;
-	y = 0.176985 * safezoneH + safezoneY;
+	x = 0.43125 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
 	w = 0.144479 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\pop_menu\mcc_guiTab1Change.sqf'");
@@ -250,37 +260,37 @@ class MCC_stopCapture: MCC_RscButton {idc = MCCSTOPCAPTURE;	text = "Stop Capturi
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 class MCC_zoneTittle: MCC_RscText {idc = -1;	text = "Zone:";
-	x = 0.508499 * safezoneW + safezoneX;
-	y = 0.431997 * safezoneH + safezoneY;
-	w = 0.0594912 * safezoneW;
-	h = 0.0170008 * safezoneH;
+	x = 0.54 * safezoneW + safezoneX;
+	y = 0.434026 * safezoneH + safezoneY;
+	w = 0.0515625 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_zone: MCC_RscCombo {idc = MCCZONENUMBER;	
-	x = 0.56799 * safezoneW + safezoneX;
-	y = 0.431997 * safezoneH + safezoneY;
-	w = 0.101985 * safezoneW;
-	h = 0.0170008 * safezoneH;
+	x = 0.603125 * safezoneW + safezoneX;
+	y = 0.434026 * safezoneH + safezoneY;
+	w = 0.0916667 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	onLBSelChanged = __EVAL("[0,0,0] execVM '"+MCCPATH+"mcc\pop_menu\zones.sqf'");
 };
 class MCC_zoneLocTittle: MCC_RscText {idc = -1;	text = "Location:"; 
-	x = 0.508499 * safezoneW + safezoneX;
-	y = 0.465998 * safezoneH + safezoneY;
-	w = 0.0509925 * safezoneW;
-	h = 0.0170008 * safezoneH;
+	x = 0.54 * safezoneW + safezoneX;
+	y = 0.467013 * safezoneH + safezoneY;
+	w = 0.0515625 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_zoneLoc: MCC_RscCombo {idc = MCC_ZONE_LOC;	
-	x = 0.56799 * safezoneW + safezoneX;
-	y = 0.465998 * safezoneH + safezoneY;
-	w = 0.0934862 * safezoneW;
-	h = 0.0170008 * safezoneH;
+	x = 0.603125 * safezoneW + safezoneX;
+	y = 0.467013 * safezoneH + safezoneY;
+	w = 0.0916667 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_zoneUpdate: MCC_RscButton {idc = -1;	text = "Update Zone"; 
-	x = 0.686972 * safezoneW + safezoneX;
-	y = 0.448998 * safezoneH + safezoneY;
+	x = 0.70625 * safezoneW + safezoneX;
+	y = 0.456017 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
@@ -295,7 +305,8 @@ class MCC_Close: MCC_RscButtonMenu {idc = -1; text = "Close";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	onButtonClick = "closeDialog 0";
 };
-class MCC_background: MCC_RscText {idc = -1; text = "";x = 0.168549 * safezoneW + safezoneX;
+class MCC_background: MCC_RscText {idc = -1; text = "";
+	x = 0.168549 * safezoneW + safezoneX;
 	y = 0.0919812 * safezoneH + safezoneY;
 	w = 0.662902 * safezoneW;
 	h = 0.816037 * safezoneH;
@@ -315,7 +326,7 @@ class MCC_missionControlTitle: MCC_RscText
 	w = 0.161476 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_Debug: MCC_RscButton
 {
@@ -428,7 +439,7 @@ class MCC_commandlineGlobal: MCC_RscButton
 class MCC_CASTitle: MCC_RscText
 {
 	idc = -1;
-	text = "Close Air Support"; //--- ToDo: Localize;
+	text = "Close Air Support:"; //--- ToDo: Localize;
 	x = 0.185546 * safezoneW + safezoneX;
 	y = 0.448998 * safezoneH + safezoneY;
 	w = 0.161476 * safezoneW;
@@ -504,13 +515,13 @@ class MCC_CASAdd: MCC_RscButton
 class MCC_artilleryTitle: MCC_RscText
 {
 	idc = -1;
-	text = "Artillery"; //--- ToDo: Localize;
+	text = "Artillery:"; //--- ToDo: Localize;
 	x = 0.185546 * safezoneW + safezoneX;
 	y = 0.585004 * safezoneH + safezoneY;
 	w = 0.161476 * safezoneW;
 	h = 0.0170008 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_artilleryTypeTitle: MCC_RscText
 {
@@ -599,9 +610,9 @@ class MCC_artilleryAdd: MCC_RscButton
 class MCC_trapsTittle: MCC_RscText					
 {
 	idc = -1;
-	text = "IED & Ambush"; //--- ToDo: Localize;
-	x = 0.355521 * safezoneW + safezoneX;
-	y = 0.227987 * safezoneH + safezoneY;
+	text = "IED & Ambush:"; //--- ToDo: Localize;
+	x = 0.356771 * safezoneW + safezoneX;
+	y = 0.214111 * safezoneH + safezoneY;
 	w = 0.0849875 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	colorText[] = {0,1,1,1};
@@ -828,8 +839,8 @@ class MCC_trapsExplainTittle: MCC_RscText
 {
 	idc = -1;
 	text = "*Press Ctrl + left mouse button to trigger an IED or ambushing party";
-	x = 0.449008 * safezoneW + safezoneX;
-	y = 0.217987 * safezoneH + safezoneY;
+	x = 0.448437 * safezoneW + safezoneX;
+	y = 0.214111 * safezoneH + safezoneY;
 	w = 0.356948 * safezoneW;
 	h = 0.0340016 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.55)";
@@ -854,7 +865,7 @@ class MCC_evacTittle: MCC_RscText
 	w = 0.161476 * safezoneW;
 	h = 0.0170008 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_evacTypeTitle: MCC_RscText
 {
@@ -1041,13 +1052,13 @@ class MCC_evacResHeli: MCC_RscButton
 class MCC_ConvoyTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Convoy"; //--- ToDo: Localize;
+	text = "Convoy:"; //--- ToDo: Localize;
 	x = 0.355625 * safezoneW + safezoneX;
 	y = 0.415981 * safezoneH + safezoneY;
 	w = 0.065625 * safezoneW;
 	h = 0.0280062 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_ConvoyCar1Tittle: MCC_RscText
 {
@@ -1224,5 +1235,78 @@ class MCC_convoyStart: MCC_RscButton
 	h = 0.0280062 * safezoneH;
 	tooltip = "Start convoy movement"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+class MCC_m2f1: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.0919812 * safezoneH + safezoneY;
+	w = 0.182493 * safezoneW;
+	h = 0.2980618 * safezoneH;
+};
+class MCC_m2f2: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.182493 * safezoneW;
+	h = 0.131949 * safezoneH;
+};
+class MCC_m2f3: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.57697 * safezoneH + safezoneY;
+	w = 0.182493 * safezoneW;
+	h = 0.131949 * safezoneH;
+};
+class MCC_m2f4: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.708919 * safezoneH + safezoneY;
+	w = 0.182493 * safezoneW;
+	h = 0.2 * safezoneH;
+};
+class MCC_m2f5: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.412034 * safezoneH + safezoneY;
+	w = 0.182493 * safezoneW;
+	h = 0.428833 * safezoneH;
+};
+class MCC_m2f6: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.533535 * safezoneW + safezoneX;
+	y = 0.412034 * safezoneH + safezoneY;
+	w = 0.0.20232 * safezoneW;
+	h = 0.0879657 * safezoneH;
+};
+class MCC_m2f7: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.214111 * safezoneH + safezoneY;
+	w = 0.481 * safezoneW;
+	h = 0.197923 * safezoneH;
+};
+class MCC_m2f8: MCC_RscFrame
+{
+	idc = -1;
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
+	w = 0.481 * safezoneW;
+	h = 0.0439828 * safezoneH;
+};
+class MCC_m2f9: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.0919812 * safezoneH + safezoneY;
+	w = 0.6637 * safezoneW;
+	h = 0.82 * safezoneH;
 };
 };

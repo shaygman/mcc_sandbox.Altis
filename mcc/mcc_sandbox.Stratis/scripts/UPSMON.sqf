@@ -1368,7 +1368,7 @@ while {_loop} do {
 				};
 			};
 		};			
-		
+		if (isnil "_react") then {_react = 0}; 
 		//If there is no objective order is canceled persecution
 		if ((isNull (_target) || !alive _target )) then {
 			_pursue=false;	
@@ -1537,16 +1537,18 @@ while {_loop} do {
 			_i = 0;
 			
 			{			
-				if (_i != _grpid &&  format ["%1", _x] != "[0,0]") then {
-					_dist1 = [_x,_flankPos] call KRON_distancePosSqr;
-					_dist2 = [_x,_flankPos2] call KRON_distancePosSqr;	
-					_dist3 = [_x,_frontPos] call KRON_distancePosSqr;	
-					if (_dist1 <= _flankdist/1.5 || _dist2 <= _flankdist/1.5 || _dist3 <= _flankdist/1.5) then {					
-						if (_dist1 < _dist2 && _dist1 < _dist3) then {_fldest = _fldest + 1;};
-						if (_dist2 < _dist1 && _dist2 < _dist3) then {_fldest2 = _fldest2 + 1;};
-						if (_dist3 < _dist1 && _dist3 < _dist2) then {_fldestfront = _fldestfront + 1;};						
+				if (!isnil "x") then {
+					if (_i != _grpid &&  format ["%1", _x] != "[0,0]") then {
+						_dist1 = [_x,_flankPos] call KRON_distancePosSqr;
+						_dist2 = [_x,_flankPos2] call KRON_distancePosSqr;	
+						_dist3 = [_x,_frontPos] call KRON_distancePosSqr;	
+						if (_dist1 <= _flankdist/1.5 || _dist2 <= _flankdist/1.5 || _dist3 <= _flankdist/1.5) then {					
+							if (_dist1 < _dist2 && _dist1 < _dist3) then {_fldest = _fldest + 1;};
+							if (_dist2 < _dist1 && _dist2 < _dist3) then {_fldest2 = _fldest2 + 1;};
+							if (_dist3 < _dist1 && _dist3 < _dist2) then {_fldestfront = _fldestfront + 1;};						
+						};
 					};
-				};
+				}; 
 				_i = _i + 1;
 			
 			sleep 0.01;

@@ -179,7 +179,7 @@ class CP_SQUADPANEL {
 		class CP_gearPanelPiP: CP_RscPicture
 		{
 			idc = 6;
-			text = "#(argb,512,512,1)r2t(rendertarget10,1.0);";
+			text = "#(argb,512,512,1)r2t(rendertarget7,1.0);";
 			x = 0.614583 * safezoneW + safezoneX;
 			y = 0.291081 * safezoneH + safezoneY;
 			w = 0.275 * safezoneW;

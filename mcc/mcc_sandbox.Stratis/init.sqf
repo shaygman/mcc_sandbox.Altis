@@ -54,7 +54,7 @@ MCC_IEDJammerVehicles = ["M2A3_EP1", "HMMWV_M1151_M2_CZ_DES_EP1", "HMMWV_M1151_M
 
 //------------------------Convoy settings----------------------------------------
 MCC_convoyHVT = [["None","0"],["B.Commander","B_Soldier_lite_F"],["B. Pilot","B_Helipilot_F"],["O. Commander","O_Soldier_lite_F"],["O. Pilot","O_helipilot_F"],["Citizen","C_man_polo_1_F"]];
-MCC_convoyHVTcar = [["Hunter","B_Hunter_F"],["Quadbike","B_Quadbike_F"],["Ifrit","O_Ifrit_F"],["Offroad","c_offroad"]];
+MCC_convoyHVTcar = [["Hunter","B_Hunter_F"],["Quadbike","B_Quadbike_F"],["Ifrit","O_Ifrit_F"],["Offroad","C_Offroad_01_F"]];
 
 //------------------------MCC Console--------------------------------------------
 //AC-130 amo count by array [20mm,40mm,105mm]
@@ -278,6 +278,7 @@ MCC_ConsoleUAVCameraMod = 0;
 MCC_ConsoleUAVmissilesArmed = false; 
 MCC_ConsoleUAVmissiles = 0; 
 MCC_ConsoleUAVvision = "VIDEO"; 
+MCC_ConsoleOperator = ""; 
 
 MCC_ACConsoleUp = false;
 MCC_ConsoleACvision = "VIDEO"; 
@@ -502,7 +503,28 @@ CP_fnc_setVehicleInit	= compileFinal preprocessFileLineNumbers (CP_path + "scrip
 if (isServer || isdedicated) then {
 		_null=[] execVM CP_path + "scripts\server\server_init.sqf";
 	};
+
+//---------------------------------------------
+//		public Variables
+//---------------------------------------------
+"CP_westGroups" addPublicVariableEventHandler {
+		{
+			(_x select 0) setGroupId [(_x select 1),"GroupColor0"];
+		} foreach CP_westGroups;
+	};	
 	
+"CP_eastGroups" addPublicVariableEventHandler {
+		{
+			(_x select 0) setGroupId [(_x select 1),"GroupColor0"];
+		} foreach CP_eastGroups;
+	};
+	
+"CP_guarGroups" addPublicVariableEventHandler {
+		{
+			(_x select 0) setGroupId [(_x select 1),"GroupColor0"];
+		} foreach CP_guarGroups;
+	};
+
 //---------------------------------------------
 //		Global CP Defines
 //---------------------------------------------

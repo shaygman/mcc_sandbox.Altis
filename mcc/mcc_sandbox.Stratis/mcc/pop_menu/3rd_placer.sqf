@@ -144,7 +144,7 @@ BIS_CONTROL_CAM_Handler =
 		//Delete object
 		if (_key in _keydelete) then 
 			{
-			deletevehicle Object3D;
+			if (!isnil "Object3D") then {deletevehicle Object3D};
 			_nearObjects = (getpos dummyObject) nearobjects 5; 
 			if ((count _nearObjects)>1 && ((_nearObjects select 0) != dummyObject)) then {
 				deletevehicle (_nearObjects select 0);
@@ -160,13 +160,13 @@ BIS_CONTROL_CAM_Handler =
 		if (_key < 0) then 
 			{
 			z3DHight =z3DHight + _gain;
-			Object3D setpos [getpos Object3D select 0, getpos Object3D select 1,z3DHight];
+			if (isnil "Object3D") then {Object3D setpos [getpos Object3D select 0, getpos Object3D select 1,z3DHight]};
 			};
 		//Lower	
 		if (_key > 0) then 
 			{
 			z3DHight =z3DHight - _gain;
-			Object3D setpos [getpos Object3D select 0, getpos Object3D select 1,z3DHight];
+			if (isnil "Object3D") then {Object3D setpos [getpos Object3D select 0, getpos Object3D select 1,z3DHight]};
 			};
 		};
 		
@@ -266,6 +266,7 @@ BIS_CONTROL_CAM_Handler =
 		//MCC_mcc_screen=0;
 		//--- Close
 		MCC3DRuning = false; 
+		if (isNil "BIS_CONTROL_CAM") exitWith {}; 
 		BIS_CONTROL_CAM cameraeffect ["terminate","back"];
 		camdestroy BIS_CONTROL_CAM;
 		BIS_CONTROL_CAM = nil;
@@ -274,7 +275,7 @@ BIS_CONTROL_CAM_Handler =
 		player setvariable ["3D_isRuning",nil];
 		hintsilent "";
 		waituntil {isnil "BIS_CONTROL_CAM"};
-		_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
+		if (true) exitWith {_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
 		};
 	//--- Camera no longer exists - terminate and start cleanup	
 	if (isnil "BIS_CONTROL_CAM" || player != DOperator || !alive player) exitwith

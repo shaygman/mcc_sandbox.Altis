@@ -143,11 +143,9 @@ diag_log format ["gun-run: [%1]", _this];
 
 			_target = _fakeTarget;
 			
-			//add flagpole to target area to visiualize tartget area for debug
-			//_targetf = "FlagCarrierWhite_EP1" createVehicle _pos;
 		
 			//Create list of real vehicle targets in 60 m radius of the designated gun-run area
-			_targetList = _pos nearEntities [ ["Tank", "Wheeled_APC", "StaticWeapon", "Truck"], 60];
+			_targetList = _pos nearEntities [ ["Tank", "Wheeled_APC", "StaticWeapon", "Truck"], 100];
 	
 			if ( (count _targetList) > 0 ) then 
 			{ 
@@ -159,8 +157,7 @@ diag_log format ["gun-run: [%1]", _this];
 			waitUntil {sleep 0.5;(_plane1 distance _target) < _distStart};
 			
 			// trigger script to cancel attack and collect garbage after x time
-			[_cas_name, _target, _spawnkind, _plane1, _planeType, _targetf, _fakeTarget] execVM MCC_path + "mcc\general_scripts\cas\clear_gunrun_target.sqf";
-			//[_cas_name, _target, _spawnkind, _plane1, _planeType, _targetf, _fakeTarget] execVM "clear_gunrun_target.sqf";  // development line
+			[_cas_name, _target, _spawnkind, _plane1, _planeType, _fakeTarget] execVM MCC_path + "mcc\general_scripts\cas\clear_gunrun_target.sqf";
 						
 			waitUntil {(_plane1 distance _target) < _distEngage};
 
@@ -187,7 +184,7 @@ diag_log format ["gun-run: [%1]", _this];
 			(gunner _plane1) doFire _target;
 			(_plane1 turretUnit [0]) doFire _target;
 			(_plane1 turretUnit [1]) doFire _target;
-			sleep 0.8;
+			sleep 0.1;
 		};
 
 		//clear_gunrun_target.sqf should have set the damage of target to 1 now

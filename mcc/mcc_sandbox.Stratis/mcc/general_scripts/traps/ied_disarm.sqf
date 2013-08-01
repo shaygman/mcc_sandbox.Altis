@@ -36,7 +36,7 @@ if (_men distance _ied <3) then
 
 		if (_isEngineer==1) then	//If it is a bomb expert ;)
 						{
-							if (_rand > 0.30) then {
+							if (_rand > 0.20) then {
 													hint "disarmed";
 													if (_randsound > 5) then {[[netid _men, "disarm1"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP} else {[[netid _men, "disarm2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP};
 													sleep 1;

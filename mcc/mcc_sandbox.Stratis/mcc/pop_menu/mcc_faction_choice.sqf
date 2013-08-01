@@ -1,5 +1,5 @@
 MCC_faction_choice=true; 
-
+if (isNil "mcc_faction") exitWith {}; 
 // Load all possible groups from the config into the menu array format in arrays above
 GEN_MECHANIZED 		= [mcc_sidename,mcc_faction,"Mechanized","LAND"] call mcc_make_array_grps;
 GEN_MOTORIZED  		= [mcc_sidename,mcc_faction,"Motorized","LAND"]  call mcc_make_array_grps;

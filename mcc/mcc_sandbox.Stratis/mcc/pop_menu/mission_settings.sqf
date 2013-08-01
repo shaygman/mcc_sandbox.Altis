@@ -31,6 +31,10 @@ if (mcc_missionmaker == (name player)) then {
 		MCC_minutes_index=lbCurSel TSMINUTE;
 		_nul=[_type] execVM MCC_path +"mcc\general_scripts\time.sqf";
 	};
+	
+	if (_type==4) then	{													//Spectator script
+		[player,player,"noWait"] execVM MCC_path + "f\common\f_spect\specta.sqf";
+	};
 };
 		
 switch (_type) do

@@ -8,8 +8,8 @@ _loop 			= true;
 
 if (mcc_isloading) then {waitUntil {! mcc_isloading}};
 
-_nearObjectsA 	= _pointA nearObjects ["O_TargetSoldier",50];
-_nearObjectsB 	= _pointB nearObjects ["O_TargetSoldier",50];
+_nearObjectsA 	= _pointA nearObjects ["bomb",50];
+_nearObjectsB 	= _pointB nearObjects ["bomb",50];
 _triggerA	 	= _nearObjectsA select 0;
 _triggerB	 	= _nearObjectsB select 0;
 

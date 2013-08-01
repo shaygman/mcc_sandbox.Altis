@@ -115,6 +115,7 @@ MON_GetPos2D =
 	_dir = _this select 1;
 	_dist = _this select 2;
 			
+			if (isnil "_pos") exitWith {}; 
 			_targetX = _pos select 0; _targetY = _pos select 1; 
 			
 			//Calculamos posición 	
@@ -152,6 +153,7 @@ MON_PosInfo = {
 MON_GetSIN = {
 	private["_dir","_sin","_cos"];	
 	_dir=_this select 0; 
+	if (isnil "_dir") exitWith {}; 
 		 if (_dir<90)  then  
 		 {
 			_sin=1;
@@ -180,6 +182,7 @@ MON_GetSIN = {
 MON_GetCOS = {
 	private["_dir","_cos"];	
 	_dir=_this select 0; 
+	if (isnil "_dir") exitWith {}; 
 		 if (_dir<90)  then  
 		 {
 			_cos=1;
@@ -1498,7 +1501,7 @@ MON_setUnitPos = {
 	private["_pos","_npc"];	
 	_npc = _this select 0;
 	_pos = _this select 1;	
-	
+	if (isnil "_npc") exitWith {}; 
 	sleep 0.5;
 	if (!alive _npc || !canmove _npc || _npc != vehicle _npc || !(_npc iskindof "Man")) exitwith{};
 	_npc setUnitPos _pos;
@@ -1940,6 +1943,7 @@ MON_CreateMine = {
 	
 	//leader only control not work
 	//Si está en un vehiculo ignoramos la orden
+	if (isnil "_soldier") exitWith {};
 	if (!(_soldier iskindof "Man" ) || _soldier == _npc || _soldier!=vehicle _soldier || !alive _soldier || !canmove _soldier) exitwith {false};		
 	
 	//Animación para montar el arma
@@ -1956,6 +1960,7 @@ MON_doCreateMine = {
 	_position = [0,0];
 	 
 	_soldier = _this select 0;
+	if (isnil "_soldier") exitWith {}; 
 	if ((count _this) > 1) then {_position = _this select 1;};
 	hint format ["this: %1", _soldier];
 	//If not is Man or dead exit
@@ -1975,7 +1980,7 @@ MON_doCreateMine = {
 	 //Crouche
 	//_soldier playMovenow "ainvpknlmstpslaywrfldnon_1";
 	sleep 1;
-	
+	if (isnil "_soldier") exitWith {}; 
 	if (!alive _soldier || !canmove _soldier) exitwith{};
 	_dir = getdir _soldier;	
 	_position = [position _soldier,_dir, 0.5] call MON_GetPos2D;	
@@ -1986,6 +1991,7 @@ MON_doCreateMine = {
 	sleep 5;
 	
 	//Return to formation
+	if (isnil "_soldier") exitWith {}; 
 	_soldier domove position ( leader _soldier );
 };
 

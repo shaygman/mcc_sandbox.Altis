@@ -2,15 +2,17 @@ private ["_option", "_clase", "_lastpos", "_lastdir","_evac","_evac_p","_evac_p_
 
 _option			= _this select 0; 
 _evac			= _this select 1; 
+if (isnil "_evac") exitWith {}; 
 _heliType		= typeof _evac;
 _evac_p 		= driver _evac;
 _evac_p_type 	= getText (configFile >> "CfgVehicles" >> _heliType >> "crew");
 
 switch (_option) do
 	{
-   		case 0:
+   		case 0:		//Delete pilot
 		{
-			_evac_p action ["eject", vehicle evac_p];
+			if (isnil "_evac_p") exitWith {}; 
+			_evac_p action ["getOut", vehicle _evac_p];
 			sleep 2;
 			deletegroup (group _evac);	//case we want to delete the pilot
 			deletevehicle _evac_p;

@@ -16,7 +16,7 @@ if !mcc_isloading then
 	deletemarkerlocal "evac_marker3";
 	
 	hint  "Left click on the map to add one WP";
-
+	click = false; 
 	onMapSingleClick "point1 = _pos;
 	click = true;
 	onMapSingleClick """";" ;
@@ -32,6 +32,7 @@ if !mcc_isloading then
 	_point1 =getmarkerpos "evac_marker1";
 	
 	hint "Markers placed";
+	if ((lbCurSel MCC_EVAC_SELECTED) == -1) exitWith {}; 
 	_evac = MCC_evacVehicles select (lbCurSel MCC_EVAC_SELECTED);
 	if (_evac iskindof "helicopter") then	{							//Incase we moving helicopter
 		_flyInHight =  MCC_evacFlyInHight_array select (lbCurSel MCC_EVAC_FLIGHTHIGHT) select 1; 

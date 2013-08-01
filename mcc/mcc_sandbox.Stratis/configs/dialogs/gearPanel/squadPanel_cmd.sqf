@@ -35,15 +35,18 @@ switch (_cmd) do
 		case 1:				//Join/Leave button pressed
 		{ 
 			if ((ctrlText CP_squadPanelJoinButton) == "Join Squad") then {
-				[player] join (CP_activeGroup select 0);
+				if (!isnull (CP_activeGroup select 0)) then {
+					[player] join (CP_activeGroup select 0);
+					(CP_activeGroup select 0) setGroupId [(CP_activeGroup select 1),"GroupColor0"];
+					};
 				} else {
 						if (count (units (group player)) == 1) then {			//Work around for destroying empty groups
 							_groupName 	=  if ((lbCurSel CP_squadPanelSquadList)<3) then {(CP_activeGroup select 1)} else {"--Empty Squad--"}; 
 							[player] join grpNull;
 							_group = creategroup (side player); 
-							if ((side player)== west) then {CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]};
-							if ((side player)== east) then {CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]};
-							if ((side player)== resistance) then {CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]};
+							if ((side player)== west) then {CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]; publicVariable "CP_westGroups"};
+							if ((side player)== east) then {CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]; publicVariable "CP_eastGroups"};
+							if ((side player)== resistance) then {CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]; publicVariable "CP_guarGroups"};
 							} else	{
 									[player] join grpNull;
 								};
@@ -124,6 +127,7 @@ switch (_cmd) do
 							case resistance:	{CP_guarGroups set [count CP_guarGroups,[_group,ctrlText CP_squadPanelCreateSquadText]];
 											publicvariable "CP_guarGroups";};
 						};
+					(CP_activeGroup select 0) setGroupId [(CP_activeGroup select 1),"GroupColor0"];
 					player sidechat format ["Squad %1 Created",ctrlText CP_squadPanelCreateSquadText, _group];
 				};
 		};

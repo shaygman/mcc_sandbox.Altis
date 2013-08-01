@@ -65,6 +65,7 @@ lbClear _comboBox;
 	} foreach CP_classes;
 _comboBox lbSetCurSel CP_classesIndex;
 
+waituntil {! isnil "playerLevel"}; 
 //Add Info sheet data
 _html = "<t color='#8E8B8A' size='1' shadow='1' align='left' underline='true'>" + name player + "Level" + str (playerLevel select 0)
 		+ "</t><br/><br/>";

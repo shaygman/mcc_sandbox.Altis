@@ -29,11 +29,13 @@ if (_IEDTriggerType==2) then	{		//manual detonation
 			while {alive _fakeIed && _loop && _armed && !_triggered} do	{  
 				sleep 3;
 				_triggered = _dummy getvariable "iedTrigered";
+				if (isnil "_triggered") then {_triggered = false}; 
 				_nearObjects = (getPos _fakeIed) nearObjects 150;
 				if(_iedside countSide _nearObjects > 0) then	{
 					while {(alive _fakeIed) && (_loop) && _armed && !_triggered} do	{
 						sleep 1;
 						_triggered = _dummy getvariable "iedTrigered";
+						if (isnil "_triggered") then {_triggered = false};
 						_nearTargets = (getPos _dummy) nearObjects (_trapdistance);
 						_nrsd = [];
 						{if(side _x == _iedside) then {_nrsd = _nrsd + [_x]}} forEach _nearTargets;
@@ -57,15 +59,18 @@ if (_IEDTriggerType==2) then	{		//manual detonation
 							};
 						};
 					_armed = _dummy getvariable "armed";
+					if (isnil "_armed") then {_armed = false}; 
 					};
 				};
 			};
 		};
 _dummyMarker = _dummy getvariable "iedMarkerName"; 
-[[2,compile format ["deletemarkerlocal '%1';",_dummyMarker]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;	//delete IED marker 
+if (!isnil "_dummyMarker") then {[[2,compile format ["deletemarkerlocal '%1';",_dummyMarker]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP};	//delete IED marker 
 _fakeIed removeaction 0;
 _armed = _dummy getvariable "armed";
+if (isnil "_armed") then {_armed = false}; 
 _triggered = _dummy getvariable "iedTrigered";
+if (isnil "_triggered") then {_triggered = false}; 
 
 _pos=[((getposATL _fakeIed) select 0),(getposATL _fakeIed) select 1,((getPosATL _fakeIed) select 2)];	//position of the IED
 
@@ -103,6 +108,7 @@ if (!_armed ) then 	//If IED critical fail while trying to disarm it
 	{	
 		sleep 10; 
 		_triggered = _dummy getvariable "iedTrigered";
+		if (isnil "_triggered") then {_triggered = false};
 		if (_triggered) then {
 						[_pos,_trapvolume] spawn _IedExplosion;
 						_explode = true;

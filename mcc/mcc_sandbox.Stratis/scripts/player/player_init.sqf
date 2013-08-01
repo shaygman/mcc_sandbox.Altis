@@ -44,10 +44,40 @@ if (CP_debug) then {player sidechat format ["crewLevel : %1",crewLevel]};
 waituntil {! isnil "pilotLevel"};
 if (CP_debug) then {player sidechat format ["pilotLevel : %1",pilotLevel]};
 
+//---------------------------------------------
+//		group markers
+//---------------------------------------------
+[] spawn {
+			private ["_groups","_mkr","_mkrArray"]; 
+			_mkrArray = [];
+			while {alive player} do	{
+					_groups	 = switch (side player) do	{
+								case west:			{CP_westGroups};
+								case east:			{CP_eastGroups};
+								case resistance:	{CP_guarGroups};
+								case civilian:		{CP_guarGroups};
+							};
+					{
+						
+						_mkr = createMarkerLocal [(_x select 1),[(getPos leader (_x select 0) select 0),(getPos leader (_x select 0) select 1)]];
+						_mkr setMarkerShapeLocal "ICON";
+						(_x select 1) setMarkerTypeLocal "b_hq";
+						(_x select 1) setMarkerColorLocal "ColorGreen";
+						(_x select 1) setMarkerSizeLocal [0.8, 0.8];
+						(_x select 1) setMarkerTextLocal (_x select 1);
+						_mkrArray set [count _mkrArray ,(_x select 1)];
+					} foreach _groups;
+					sleep 6;
+					{deletemarkerlocal _x} foreach _mkrArray;
+					_mkrArray = [];
+				};
+		  };
+		  
 //******************************************************************************************************************************
 //											Start camera
 //******************************************************************************************************************************
 playerDeploy = false; 
+sleep random 5; 
 //--- Unit pos
 _logicPos = [1000,1000,10000];
 
@@ -74,7 +104,7 @@ player setvariable ["CPCenter", _camLogic];
 setviewdistance 1;
 CP_gearCamFOV = 0.15;
 CP_gearCam = "camera" camcreate position _camLogic;
-CP_gearCam cameraeffect ["internal", "BACK", "rendertarget10"];
+CP_gearCam cameraeffect ["internal", "BACK", "rendertarget7"];
 CP_gearCam campreparefocus [-1,-1];
 CP_gearCam camSetFov CP_gearCamFOV;
 CP_gearCam camcommitprepared 0;
@@ -83,7 +113,7 @@ showcinemaborder false;
 
 //handle NV
 _nvgstate = if (daytime > 19 || daytime < 5.5) then {[1]} else {[3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]]};
-"rendertarget10" setPiPEffect _nvgstate;
+"rendertarget7" setPiPEffect _nvgstate;
 
 //CP_gearCampos = [[0,0,1.5],12,0] call bis_fnc_relpos;
 CP_gearCam attachto [_camLogic,[0.5,12,2.6],""];

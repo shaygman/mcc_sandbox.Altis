@@ -56,7 +56,16 @@ class MCC_Sandbox3 {
 	  MCC_TasksNameFrame,
 	  MCC_TasksDescriptionFrame,
 	  MCC_triggerGenNameFrame,
-	  MCC_mapBckg
+	  MCC_mapBckg,
+	  MCC_m3f1,
+	  MCC_m3f2,
+	  MCC_m3f3,
+	  MCC_m3f4,
+	  MCC_m3f5,
+	  MCC_m3f6,
+	  MCC_m3f7,
+	  MCC_m3f8,
+	  MCC_m3f9
 	  };
 	  
 
@@ -112,6 +121,7 @@ class MCC_Sandbox3 {
 		MCC_Taskslist,
 		MCC_TasksCreate,
 		MCC_TasksWP,
+		MCC_TasksWPCin,
 		MCC_TasksSucceed,
 		MCC_TasksFailed,
 		MCC_TasksCancled,
@@ -149,19 +159,20 @@ class MCC_Sandbox3 {
 		MCC_UAVType,
 		MCC_UAVSpawn
 	   };
-class MCC_map: MCC_RscMapControl {idc = MCC_MINIMAP; moving = true; 	text = "";	x = 0.525497 * safezoneW + safezoneX;
+class MCC_map: MCC_RscMapControl {idc = MCC_MINIMAP; moving = true; 	text = "";	
+	x = 0.525552 * safezoneW + safezoneX;
 	y = 0.5 * safezoneH + safezoneY;
-	w = 0.288958 * safezoneW;
-	h = 0.408019 * safezoneH;
+	w = 0.303646 * safezoneW;
+	h = 0.406841 * safezoneH;
 	onMouseButtonDown = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseDown.sqf'");
 	onMouseButtonUp = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseUp.sqf'");
 	onMouseMoving = __EVAL("[_this] execVM '"+MCCPATH+"mcc\mouseMoving.sqf'");
 };
 class MCC_mapBckg: MCC_RscText {idc = -1; moving = true; 	text = "";	
-	x = 0.525497 * safezoneW + safezoneX;
+	x = 0.525552 * safezoneW + safezoneX;
 	y = 0.5 * safezoneH + safezoneY;
-	w = 0.288958 * safezoneW;
-	h = 0.408019 * safezoneH;
+	w = 0.303646 * safezoneW;
+	h = 0.406841 * safezoneH;
 	colorBackground[] = {1,1,1,1};
 };
 class MCC_Menu1: MCC_RscButtonMenu	{idc = MAIN;text = "Main";	x = 0.355521 * safezoneW + safezoneX;
@@ -228,39 +239,39 @@ class MCC_stopCapture: MCC_RscButton {idc = MCCSTOPCAPTURE;	text = "Stop Capturi
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 class MCC_zoneTittle: MCC_RscText {idc = -1;	text = "Zone:";
-	x = 0.508499 * safezoneW + safezoneX;
-	y = 0.431997 * safezoneH + safezoneY;
-	w = 0.0594912 * safezoneW;
-	h = 0.0170008 * safezoneH;
+	x = 0.545833 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.0572917 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_zone: MCC_RscCombo {idc = MCCZONENUMBER;	
-	x = 0.56799 * safezoneW + safezoneX;
-	y = 0.431997 * safezoneH + safezoneY;
-	w = 0.101985 * safezoneW;
-	h = 0.0170008 * safezoneH;
+	x = 0.614583 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.103125 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	onLBSelChanged = __EVAL("[0,0,0] execVM '"+MCCPATH+"mcc\pop_menu\zones.sqf'");
 };
 class MCC_zoneLocTittle: MCC_RscText {idc = -1;	text = "Location:"; 
-	x = 0.508499 * safezoneW + safezoneX;
-	y = 0.465998 * safezoneH + safezoneY;
-	w = 0.0509925 * safezoneW;
-	h = 0.0170008 * safezoneH;
+	x = 0.545833 * safezoneW + safezoneX;
+	y = 0.472951 * safezoneH + safezoneY;
+	w = 0.0572917 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_zoneLoc: MCC_RscCombo {idc = MCC_ZONE_LOC;	
-	x = 0.56799 * safezoneW + safezoneX;
-	y = 0.465998 * safezoneH + safezoneY;
-	w = 0.0934862 * safezoneW;
-	h = 0.0170008 * safezoneH;
+	x = 0.614583 * safezoneW + safezoneX;
+	y = 0.472951 * safezoneH + safezoneY;
+	w = 0.103125 * safezoneW;
+	h = 0.0219914 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_zoneUpdate: MCC_RscButton {idc = -1;	text = "Update Zone"; 
-	x = 0.686972 * safezoneW + safezoneX;
-	y = 0.448998 * safezoneH + safezoneY;
-	w = 0.101985 * safezoneW;
-	h = 0.0340016 * safezoneH;
+	x = 0.734896 * safezoneW + safezoneX;
+	y = 0.445021 * safezoneH + safezoneY;
+	w = 0.0859375 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 	tooltip = "Click and drag on the minimap to make a zone"; 
 	onButtonClick = "if (mcc_missionmaker == (name player)) then {MCC_zone_drawing= true;} else {player globalchat 'Access Denied'};";
@@ -288,13 +299,13 @@ class MCC_pic: MCC_RscPicture {idc = -1; text = __EVAL(MCCPATH +"mcc\dialogs\mcc
 class MCC_markerGeneratorTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Marker Generator"; //--- ToDo: Localize;
+	text = "Marker Generator:"; //--- ToDo: Localize;
 	x = 0.185 * safezoneW + safezoneX;
 	y = 0.121916 * safezoneH + safezoneY;
 	w = 0.144375 * safezoneW;
 	h = 0.0280062 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_markerColorTittle: MCC_RscText
 {
@@ -446,13 +457,13 @@ class MCC_markerTextFrame: MCC_RscFrame
 class MCC_briefingGeneratorTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Briefing Generator"; //--- ToDo: Localize;
+	text = "Briefing Generator:"; //--- ToDo: Localize;
 	x = 0.355625 * safezoneW + safezoneX;
 	y = 0.219938 * safezoneH + safezoneY;
 	w = 0.13125 * safezoneW;
 	h = 0.0280062 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_briefingtext: MCC_RscText
 {
@@ -548,13 +559,13 @@ class MCC_briefingSupport: MCC_RscButton
 class MCC_TasksGeneratorTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Tasks Generator"; //--- ToDo: Localize;
+	text = "Tasks Generator:"; //--- ToDo: Localize;
 	x = 0.355625 * safezoneW + safezoneX;
 	y = 0.317959 * safezoneH + safezoneY;
 	w = 0.137812 * safezoneW;
 	h = 0.0280062 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_TasksNameTittle: MCC_RscText
 {
@@ -571,10 +582,10 @@ class MCC_TasksDescriptionTittle: MCC_RscText
 {
 	idc = -1;
 	text = "Description:"; //--- ToDo: Localize;
-	x = 0.493437 * safezoneW + safezoneX;
-	y = 0.359969 * safezoneH + safezoneY;
-	w = 0.0590625 * safezoneW;
-	h = 0.0280062 * safezoneH;
+	x = 0.494271 * safezoneW + safezoneX;
+	y = 0.357056 * safezoneH + safezoneY;
+	w = 0.0590626 * safezoneW;
+	h = 0.0280063 * safezoneH;
 	colorText[] = {1,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
@@ -592,10 +603,10 @@ class MCC_TasksDescription: MCC_RscText
 {
 	idc = MCC_TASKS_DESCRIPTION;
 	type = MCCCT_EDIT;
-	x = 0.559062 * safezoneW + safezoneX;
-	y = 0.359969 * safezoneH + safezoneY;
-	w = 0.249375 * safezoneW;
-	h = 0.0560125 * safezoneH;
+	x = 0.588917 * safezoneW + safezoneX;
+	y = 0.357056 * safezoneH + safezoneY;
+	w = 0.217708 * safezoneW;
+	h = 0.0549786 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 }
 class MCC_TasksNameFrame: MCC_RscFrame
@@ -609,19 +620,19 @@ class MCC_TasksNameFrame: MCC_RscFrame
 class MCC_TasksDescriptionFrame: MCC_RscFrame
 {
 	idc = -1;
-	x = 0.559062 * safezoneW + safezoneX;
-	y = 0.359969 * safezoneH + safezoneY;
-	w = 0.249375 * safezoneW;
-	h = 0.0560125 * safezoneH;
+	x = 0.588917 * safezoneW + safezoneX;
+	y = 0.357056 * safezoneH + safezoneY;
+	w = 0.217708 * safezoneW;
+	h = 0.0549786 * safezoneH;
 };
 
 class MCC_Taskslist: MCC_RscCombo
 {
 	idc = MCC_TASKS_LIST;
-	x = 0.353281 * safezoneW + safezoneX;
-	y = 0.351175 * safezoneH + safezoneY;
-	w = 0.13125 * safezoneW;
-	h = 0.0280062 * safezoneH;
+	x = 0.356771 * safezoneW + safezoneX;
+	y = 0.357056 * safezoneH + safezoneY;
+	w = 0.131249 * safezoneW;
+	h = 0.0280063 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_TasksCreate: MCC_RscButton
@@ -639,23 +650,37 @@ class MCC_TasksCreate: MCC_RscButton
 class MCC_TasksWP: MCC_RscButton
 {
 	idc = -1;
-	text = "Add WP"; //--- ToDo: Localize;
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.387975 * safezoneH + safezoneY;
-	w = 0.0590625 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	onButtonClick = __EVAL ("[1] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
+	text = "WP"; //--- ToDo: Localize;
+	x = 0.356771 * safezoneW + safezoneX;
+	y = 0.390043 * safezoneH + safezoneY;
+	w = 0.0401042 * safezoneW;
+	h = 0.0329871 * safezoneH;
+	onButtonClick = __EVAL ("[7] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 	tooltip = "Add Waypoint to the selected task"; //--- ToDo: Localize;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+
+class MCC_TasksWPCin: MCC_RscButton
+{
+	idc = -1;
+	onButtonClick = "[1] execVM 'mcc\pop_menu\tasks_req.sqf'";
+
+	text = "WP (cin)"; //--- ToDo: Localize;
+	x = 0.402604 * safezoneW + safezoneX;
+	y = 0.390043 * safezoneH + safezoneY;
+	w = 0.0401042 * safezoneW;
+	h = 0.0329871 * safezoneH;
+	tooltip = "Add Waypoint to the selected task with an establish shot"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_TasksSucceed: MCC_RscButton
 {
 	idc = -1;
 	text = "Succeed"; //--- ToDo: Localize;
-	x = 0.427812 * safezoneW + safezoneX;
-	y = 0.387975 * safezoneH + safezoneY;
-	w = 0.0590625 * safezoneW;
-	h = 0.0280062 * safezoneH;
+	x = 0.540104 * safezoneW + safezoneX;
+	y = 0.390043 * safezoneH + safezoneY;
+	w = 0.0401042 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	colorText[] = {0,1,0,0.5};
 	onButtonClick = __EVAL ("[2] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 	tooltip = "Mark the selected task as succeed"; //--- ToDo: Localize;
@@ -665,10 +690,10 @@ class MCC_TasksFailed: MCC_RscButton
 {
 	idc = -1;
 	text = "Failed"; //--- ToDo: Localize;
-	x = 0.356406 * safezoneW + safezoneX;
-	y = 0.422494 * safezoneH + safezoneY;
-	w = 0.0590625 * safezoneW;
-	h = 0.0280062 * safezoneH;
+	x = 0.494271 * safezoneW + safezoneX;
+	y = 0.390043 * safezoneH + safezoneY;
+	w = 0.0401042 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	colorText[] = {1,0,0,0.7};
 	onButtonClick = __EVAL ("[3] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 	tooltip = "Mark the selected task as Failed"; //--- ToDo: Localize;
@@ -678,10 +703,10 @@ class MCC_TasksCancled: MCC_RscButton
 {
 	idc = -1;
 	text = "Cancled"; //--- ToDo: Localize;
-	x = 0.427812 * safezoneW + safezoneX;
-	y = 0.422493 * safezoneH + safezoneY;
-	w = 0.0590625 * safezoneW;
-	h = 0.0280062 * safezoneH;
+	x = 0.448438 * safezoneW + safezoneX;
+	y = 0.390043 * safezoneH + safezoneY;
+	w = 0.0401042 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	onButtonClick = __EVAL ("[4] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 	tooltip = "Mark the selected task as cancled"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
@@ -690,13 +715,13 @@ class MCC_TasksCancled: MCC_RscButton
 class MCC_JukeboxTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Juke Box"; //--- ToDo: Localize;
+	text = "Juke Box:"; //--- ToDo: Localize;
 	x = 0.185 * safezoneW + safezoneX;
 	y = 0.443988 * safezoneH + safezoneY;
 	w = 0.0721875 * safezoneW;
 	h = 0.0280062 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_JukeboxMusic: MCC_RscButton
 {
@@ -862,13 +887,13 @@ class MCC_JukeboxStop: MCC_RscButton
 class MCC_triggerGenTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Triggers Generator"; //--- ToDo: Localize;
+	text = "Triggers Generator:"; //--- ToDo: Localize;
 	x = 0.355625 * safezoneW + safezoneX;
 	y = 0.471994 * safezoneH + safezoneY;
 	w = 0.144375 * safezoneW;
 	h = 0.0280062 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_triggerGenActivateTittle: MCC_RscText
 {
@@ -1014,27 +1039,27 @@ class MCC_UAVTittle: MCC_RscText
 	w = 0.0721875 * safezoneW;
 	h = 0.0280062 * safezoneH;
 	colorText[] = {0,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_UAVTypeTittle: MCC_RscText
 {
 	idc = -1;
 
 	text = "UAV Type:"; //--- ToDo: Localize;
-	x = 0.185 * safezoneW + safezoneX;
-	y = 0.752056 * safezoneH + safezoneY;
-	w = 0.0459375 * safezoneW;
-	h = 0.0280062 * safezoneH;
+	x = 0.18501 * safezoneW + safezoneX;
+	y = 0.752022 * safezoneH + safezoneY;
+	w = 0.0458333 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
 class MCC_UAVType: MCC_RscCombo
 {
 	idc = MCC_UAV_TYPE;
 
-	x = 0.244062 * safezoneW + safezoneX;
-	y = 0.752056 * safezoneH + safezoneY;
-	w = 0.111562 * safezoneW;
-	h = 0.0280062 * safezoneH;
+	x = 0.236458 * safezoneW + safezoneX;
+	y = 0.752901 * safezoneH + safezoneY;
+	w = 0.103125 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 class MCC_UAVSpawn: MCC_RscButton
@@ -1042,12 +1067,93 @@ class MCC_UAVSpawn: MCC_RscButton
 	idc = -1;
 
 	text = "Spawn UAV"; //--- ToDo: Localize;
-	x = 0.296562 * safezoneW + safezoneX;
-	y = 0.794066 * safezoneH + safezoneY;
-	w = 0.0590625 * safezoneW;
-	h = 0.0280062 * safezoneH;
+	x = 0.276563 * safezoneW + safezoneX;
+	y = 0.796884 * safezoneH + safezoneY;
+	w = 0.0572917 * safezoneW;
+	h = 0.0329871 * safezoneH;
 	onButtonClick = __EVAL ("[0] execVM '"+MCCPATH+"mcc\general_scripts\uav\uavSpawn.sqf'");
 	tooltip = "Click on the minimap to spawn a UAV "; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+};
+class MCC_m3f1: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.167708 * safezoneW + safezoneX;
+	y = 0.0931586 * safezoneH + safezoneY;
+	w = 0.183333 * safezoneW;
+	h = 0.296884 * safezoneH;
+};
+class MCC_m3f2: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.167708 * safezoneW + safezoneX;
+	y = 0.434026 * safezoneH + safezoneY;
+	w = 0.183333 * safezoneW;
+	h = 0.263897 * safezoneH;
+};
+class MCC_m3f3: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.167708 * safezoneW + safezoneX;
+	y = 0.697923 * safezoneH + safezoneY;
+	w = 0.183333 * safezoneW;
+	h = 0.2135 * safezoneH;
+};
+class MCC_m3f4: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.170129 * safezoneH + safezoneY;
+	w = 0.48125 * safezoneW;
+	h = 0.0439828 * safezoneH;
+};
+class MCC_m3f5: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.214111 * safezoneH + safezoneY;
+	w = 0.48125 * safezoneW;
+	h = 0.0989614 * safezoneH;
+};
+class MCC_m3f6: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.313073 * safezoneH + safezoneY;
+	w = 0.48125 * safezoneW;
+	h = 0.120953 * safezoneH;
+};
+class MCC_m3f7: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.528646 * safezoneW + safezoneX;
+	y = 0.434026 * safezoneH + safezoneY;
+	w = 0.303646 * safezoneW;
+	h = 0.0659743 * safezoneH;
+};
+class MCC_m3f8: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.434026 * safezoneH + safezoneY;
+	w = 0.177604 * safezoneW;
+	h = 0.478 * safezoneH;
+};
+class MCC_m3f9: MCC_RscFrame
+{
+	idc = -1;
+
+	x = 0.168549 * safezoneW + safezoneX;
+	y = 0.0919812 * safezoneH + safezoneY;
+	w = 0.6637 * safezoneW;
+	h = 0.82 * safezoneH;
 };
 };

@@ -9,8 +9,10 @@ _type = _this select 0;
 _pos  = _this select 1;
 _size = _this select 2;
 
+if ((lbCurSel MCCZONENUMBER) == -1) exitWith {}; 
 mcc_zone_number = (MCC_zones_numbers select (lbCurSel MCCZONENUMBER));
-mcc_hc = (MCC_ZoneLocation select (lbCurSel MCC_ZONE_LOC)) select 1;
+if (isNil "mcc_zone_number") exitWith {}; 
+//mcc_hc = (MCC_ZoneLocation select (lbCurSel MCC_ZONE_LOC)) select 1;
 mcc_zone_markername=format ["%1", mcc_zone_number];
 
 if (mcc_active_zone != mcc_zone_number) then	{		//We selected a new zone let's gray the last one

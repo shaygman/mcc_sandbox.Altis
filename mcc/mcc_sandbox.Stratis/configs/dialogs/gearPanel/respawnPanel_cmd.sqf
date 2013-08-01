@@ -59,12 +59,12 @@ switch (_cmd) do
 			if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {player sidechat " No good position found! Try again."};
 			playerDeploy = true;
 			//Remove escape event handlers and reseting menu
-			CP_RESPAWNPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
-			CP_SQUADPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
-			CP_GEARPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
-			CP_WEAPONSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
-			CP_ACCESPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
-			CP_UNIFORMSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc];
+			if (!isnil "CP_RESPAWNPANEL_IDD") then {CP_RESPAWNPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+			if (!isnil "CP_SQUADPANEL_IDD") then {CP_SQUADPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+			if (!isnil "CP_GEARPANEL_IDD") then {CP_GEARPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+			if (!isnil "CP_WEAPONSPANEL_IDD") then {CP_WEAPONSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+			if (!isnil "CP_ACCESPANEL_IDD") then {CP_ACCESPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+			if (!isnil "CP_UNIFORMSPANEL_IDD") then {CP_UNIFORMSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
 			deletemarkerlocal "spawnSelected";
 			CP_respawnPanelOpen = false; 
 			CP_groupPanelOpen	= false; 

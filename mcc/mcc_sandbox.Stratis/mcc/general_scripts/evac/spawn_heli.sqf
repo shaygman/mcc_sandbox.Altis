@@ -3,11 +3,6 @@ private ["_heliType","_pos", "_dummy", "_dir","_gunNum","_type","_entry","_side"
 _heliType 	= _this select 0; 	//Type of heli
 _pos 		= _this select 1;
 
-{deleteVehicle _x} forEach (crew _evac);	//Delete previous _evac chopper
-deletegroup evac_group;	
-deletevehicle _evac;
-deletevehicle _evac_p;
-
 evac_p_type = getText (configFile >> "CfgVehicles" >> _heliType >> "crew");
 _side =  getNumber (configFile >> "CfgVehicles" >> _heliType >> "side");
 switch (_side) do	{
@@ -34,15 +29,7 @@ switch (_side) do	{
 
 _evac = _heliType createVehicle [_pos select 0, _pos select 1, 500]; 				//spawn heli
 _evac setposatl _pos;
-/*
-if ((_pos distance getmarkerpos "pos4")<20) then {									//Spawn oh LHD or on position
-	_evac setposasl [_pos select 0, _pos select 1, 17];
-	if (((getdir deck) + 180) > 360) then {_dir = (getdir deck + 180)- 360;} else {_dir = getdir deck + 180};
-	_evac setdir _dir;
-} else	{_evac setposatl _pos};*/
-	
-clearMagazineCargoGlobal _evac;
-if (ACEIsEnabled) then {_evac addMagazineCargoGlobal ["ACE_Rope_M_120",2]};	//ACE: Adde rope 
+
 evac_group = creategroup _side; 											//Create side for the pilot's group
 _evac_p = evac_group createUnit [evac_p_type, _pos, [], 0, "NONE"];			//spawn pilot
 evac_group setbehaviour "stealth";

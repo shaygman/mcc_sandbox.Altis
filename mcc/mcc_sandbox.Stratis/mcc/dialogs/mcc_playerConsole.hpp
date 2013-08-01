@@ -366,6 +366,6 @@ class mcc_consoleF6: MCC_RscButton
 		colorDisabled[] = {0,0,0,0};
 		colorBackgroundDisabled[] = {0,0,0,0};
 		tooltip = "Close the conosle"; 
-		onButtonClick = "closedialog 0;";
+		onButtonClick = "closedialog 0; MCC_ConsoleOperator =''; publicVariable 'MCC_ConsoleOperator'";
 	};
 };

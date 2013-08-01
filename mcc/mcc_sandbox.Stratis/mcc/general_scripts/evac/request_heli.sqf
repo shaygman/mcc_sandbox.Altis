@@ -31,6 +31,7 @@ if !mcc_isloading then {
 				_evacArray = U_GEN_SHIP;
 			};			
 		};
+		if ((lbCurSel MCC_EVAC_CLASS) == -1) exitWith {}; 
 		MCCEvacHeliType = (_evacArray select (lbCurSel MCC_EVAC_CLASS)) select 1; 
 		
 		if (_option == 0) then {							//Spawn on LHD
