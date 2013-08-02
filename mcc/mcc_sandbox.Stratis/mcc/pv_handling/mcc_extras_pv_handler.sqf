@@ -207,6 +207,17 @@ if (isServer) then
 //==============================================================================================================================================================================	
 	MCC_fnc_garrison = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5)] execVM MCC_path + "mcc\general_scripts\garrison\garrison.sqf"};
 	
+//===================================================================MCC_fnc_paradrop======================================================================================
+// Create a suiside bombers  that will randomly run ove and explode himself on target faction's units
+//Example:[[pos,unitID,halo,hight],"MCC_fnc_paradrop",true,false] call BIS_fnc_MP;
+// Params: 
+// 	pos: array, position of the town to garrison.
+//	unitID: number, unit ID for the jump
+//	halo:  string,"halo" or "parajump"
+//	hight:  number,jump hight
+//==============================================================================================================================================================================	
+	MCC_fnc_paradrop = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3)] execVM MCC_path + "mcc\general_scripts\um\parachute3.sqf"};
+	
 	/*	
 	["uav", {[(_this select 0), (_this select 1), (_this select 2)] spawn uav}] call CBA_fnc_addEventHandler;
 	["gita", {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)] execVM MCC_path + "mcc\general_scripts\gita\gita_server.sqf";}] call CBA_fnc_addEventHandler;

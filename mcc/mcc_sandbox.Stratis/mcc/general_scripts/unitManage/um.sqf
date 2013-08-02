@@ -328,10 +328,21 @@ _type = _this select 0;
 			hint "Left click on the map,hold and drag the cursor to mark the area and direction of the Air Support";
 			MCC_UMParadropRequestMarker = true; 
 			MCC_UMparadropIsHalo = true; 
-			/*
-			onMapSingleClick " 	hint format ['%1 Paradroped', UMName];
-								['paradrop', [_pos, MCC_selectedUnits, MCC_UMUnit, true]] call CBA_fnc_globalEvent;
-								onMapSingleClick """";";*/
+			MCCParaUnits = []; 
+			
+			onMapSingleClick " 	hint format ['%1 Paradroped', MCC_UMunitsNames];
+								MCC_pos = _pos;
+								onMapSingleClick """";";
+								
+			if (MCC_UMUnit==0) then {
+				MCCParaUnits = MCC_selectedUnits;
+					} else {
+							{
+								{
+									MCCParaUnits set [count MCCParaUnits, _x];
+								} foreach units _x;
+							} foreach MCC_selectedUnits;
+						};
 		};
 				
 		case 10:	//ParaDrop
