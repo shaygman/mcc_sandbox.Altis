@@ -14,6 +14,12 @@ CP_guarGroups 		= [];
 CP_maxPlayers		= 100; 
 CP_maxSquads		= 20; 
 
+publicVariable "CP_eastSpawnPoints";
+publicVariable "CP_westSpawnPoints";
+publicVariable "CP_guarSpawnPoints";
+publicVariable "CP_westGroups";
+publicVariable "CP_eastGroups";
+publicVariable "CP_guarGroups";
 publicVariable "CP_maxPlayers";
 publicVariable "CP_maxSquads";
 
@@ -443,7 +449,7 @@ CP_specialistItmes3			= call compileFinal str	[
 publicvariable "CP_specialistItmes3";								
 //------------------------------------------------------------------------------Crew---------------------------------------------------------------------------
 CP_crewUniformsWest		= call compileFinal str	[
-									[[0,"NVGoggles"]],		//NV
+									[[0,""],[10,"NVGoggles"]],		//NV
 									[[0,"H_HelmetCrew_B"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
 									[[0,"V_TacVest_khk"]],	//Vest
@@ -453,7 +459,7 @@ CP_crewUniformsWest		= call compileFinal str	[
 publicvariable "CP_crewUniformsWest";
 								
 CP_crewUniformsEast		= call compileFinal str	[
-									[[0,"NVGoggles"]],		//NV
+									[[0,""],[10,"NVGoggles"]],		//NV
 									[[0,"H_HelmetCrew_O"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
 									[[0,"V_BandollierB_khk"]],	//Vest
@@ -463,7 +469,7 @@ CP_crewUniformsEast		= call compileFinal str	[
 publicvariable "CP_crewUniformsEast";
 
 CP_crewUniformsGuar		= call compileFinal str	[
-									[[0,"NVGoggles"]],		//NV
+									[[0,""],[10,"NVGoggles"]],		//NV
 									[[0,"H_HelmetCrew_I"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
 									[[0,"V_TacVest_khk"]],	//Vest
@@ -474,7 +480,7 @@ publicvariable "CP_crewUniformsGuar";
 
 //------------------------------------------------------------------------------Pilot---------------------------------------------------------------------------
 CP_pilotUniformsWest		= call compileFinal str	[
-									[[0,"NVGoggles"]],		//NV
+									[[0,""],[5,"NVGoggles"]],		//NV
 									[[0,"H_PilotHelmetHeli_B"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
 									[[0,"V_TacVest_khk"]],	//Vest
@@ -484,7 +490,7 @@ CP_pilotUniformsWest		= call compileFinal str	[
 publicvariable "CP_pilotUniformsWest";
 								
 CP_pilotUniformsEast		= call compileFinal str	[
-									[[0,"NVGoggles"]],		//NV
+									[[0,""],[5,"NVGoggles"]],		//NV
 									[[0,"H_PilotHelmetHeli_O"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
 									[[0,"V_BandollierB_khk"]],	//Vest
@@ -494,7 +500,7 @@ CP_pilotUniformsEast		= call compileFinal str	[
 publicvariable "CP_pilotUniformsEast";
 
 CP_pilotUniformsGuar		= call compileFinal str	[
-									[[0,"NVGoggles"]],		//NV
+									[[0,""],[5,"NVGoggles"]],		//NV
 									[[0,"H_CrewHelmetHeli_I"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
 									[[0,"V_TacVest_khk"]],	//Vest
@@ -613,7 +619,7 @@ publicvariable "CP_officerUniformsEast";
 
 CP_officerUniformsGuar	= call compileFinal str	[
 									[[0,""],[20,"NVGoggles"]],		//NV
-									[[0,"H_Cap_brn_SERO"],[10,"H_Cap_blk"],[20,"H_Beret_grn_SF"]],	//Head
+									[[0,"H_Cap_grn"],[10,"H_Cap_blk"],[20,"H_Beret_grn_SF"]],	//Head
 									[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
 									[[0,"V_PlateCarrier1_rgr"],[10,"V_PlateCarrierSpec_rgr"],[20,"V_TacVest_oli"]],	//Vest
 									[[0,"B_AssaultPack_mcamo"],[10,"B_Kitbag_mcamo"],[20,"B_Bergen_mcamo"]],	//Backpack

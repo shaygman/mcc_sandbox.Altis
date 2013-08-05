@@ -122,6 +122,9 @@ class MCC_Sandbox {
 	  MCC_StartCiv,
 	  MCC_StartDisableRespawn,
 	  MCC_StartEnableCP,
+	  MCC_FOBWest,
+	  MCC_FOBEast,
+	  MCC_FOBGuar,
 	  MCC_StartLocationsTittle,
 	  MCC_CSSettings,
 	  MCC_EnvironmentTittle,
@@ -570,7 +573,7 @@ class MCC_StartCiv: MCC_RscButton {idc = MCCSTARTCIV; text = "Civ";
 };
 class MCC_StartDisableRespawn: MCC_RscButton {idc = MCCDISABLERESPAWN; text = "Disable Respawn"; 
 	x = 0.351042 * safezoneW + safezoneX;
-	y = 0.598961 * safezoneH + safezoneY;
+	y = 0.57697 * safezoneH + safezoneY;
 	w = 0.0744792 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	colorText[] = {1,1,1,1};
@@ -584,7 +587,7 @@ class MCC_StartEnableCP: MCC_RscButton
 	action = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 	text = "Role Selection"; //--- ToDo: Localize;
 	x = 0.43125 * safezoneW + safezoneX;
-	y = 0.598961 * safezoneH + safezoneY;
+	y = 0.57697 * safezoneH + safezoneY;
 	w = 0.0744792 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	tooltip = "If pressed before a start position to the given side has been set it will open a role selection menu to all players"; 
@@ -734,6 +737,49 @@ class MCC_pic: MCC_RscPicture {idc = -1; text = __EVAL(MCCPATH +"mcc\dialogs\mcc
 	y = 0.005 * safezoneH + safezoneY;
 	w = 0.8 * safezoneW;
 	h = 1.01 * safezoneH;
+};
+//---------------------FOB------------------------------------------------
+class MCC_FOBWest: MCC_RscButton
+{
+	idc = -1;
+	action = "[7] execVM 'mcc\general_scripts\mcc_start_location.sqf'";
+
+	text = "FOB"; //--- ToDo: Localize;
+	x = 0.351042 * safezoneW + safezoneX;
+	y = 0.620953 * safezoneH + safezoneY;
+	w = 0.0458333 * safezoneW;
+	h = 0.0329871 * safezoneH;
+	colorText[] = {0,0,1,1};
+	tooltip = "Set west FOB"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+};
+class MCC_FOBEast: MCC_RscButton
+{
+	idc = -1;
+	action = "[8] execVM 'mcc\general_scripts\mcc_start_location.sqf'";
+
+	text = "FOB"; //--- ToDo: Localize;
+	x = 0.404762 * safezoneW + safezoneX;
+	y = 0.620953 * safezoneH + safezoneY;
+	w = 0.0458333 * safezoneW;
+	h = 0.0329871 * safezoneH;
+	colorText[] = {1,0,0,1};
+	tooltip = "Set east FOB"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+};
+class MCC_FOBGuar: MCC_RscButton
+{
+	idc = -1;
+	action = "[9] execVM 'mcc\general_scripts\mcc_start_location.sqf'";
+
+	text = "FOB"; //--- ToDo: Localize;
+	x = 0.459896 * safezoneW + safezoneX;
+	y = 0.620953 * safezoneH + safezoneY;
+	w = 0.0458333 * safezoneW;
+	h = 0.0329871 * safezoneH;
+	colorText[] = {0,1,0,1};
+	tooltip = "Set resistance FOB"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
 //---------------------FRAMES---------------------------------------------
 class MCC_m1f1: MCC_RscFrame

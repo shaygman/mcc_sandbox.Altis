@@ -37,7 +37,7 @@ switch (_role) do
 			CP_currentItmes3 	= CP_riflemanItmes3;
 			
 			//Set playr level
-			CP_currentLevel = commanderLevel select 0;
+			CP_currentLevel = officerLevel select 0;
 			
 			//Set Role
 			_role = "Officer"; 
@@ -326,7 +326,9 @@ if (isnil "CP_currentItems3") then {
 	CP_currentItems3Index = 0; 
 	};
 
-	
+//Set player role
+player setvariable ["CP_role", _role, true]; 
+
 //Open subMenu if needed
 if (_select == 1) then {[4] execVM CP_path+"configs\dialogs\switchDialog.sqf"};			//open weapon menu	
 if (_select == 2) then {[5] execVM CP_path+"configs\dialogs\switchDialog.sqf"};			//open uniform menu

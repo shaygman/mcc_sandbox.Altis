@@ -61,12 +61,12 @@ if (mcc_missionmaker == (name player)) then {
 						onMapSingleClick "	
 								MCC_START_GUER  = _pos;
 								publicVariable ""MCC_START_GUER"";
-								[[_pos, 0, 'GUAR','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+								[[_pos, 0, 'RESISTANCE','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_GUER  = %1;
 															publicVariable 'MCC_START_GUER';
-															[[_pos, 0, 'GUAR','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+															[[_pos, 0, 'RESISTANCE','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 															""							  
 															,MCC_START_GUER
 															];
@@ -144,6 +144,52 @@ if (mcc_missionmaker == (name player)) then {
 						CP_activated = true;
 						publicVariable "CP_activated";
 						ctrlEnable [MCCENABLECP,false];
+						mcc_safe=mcc_safe + 'CP_activated = true; publicVariable "CP_activated";';
+					};
+					
+					case 7:	//FOB West
+					{ 
+						hint "click on map inorder to place the FOB"; 
+						onMapSingleClick "	
+								[[_pos, 0, 'west' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+								onMapSingleClick """";
+								mcc_safe=mcc_safe + FORMAT [""
+															[[%1, 0, 'west' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+															""							  
+															,_pos
+															];
+								hint ""FOB placed.""
+							";
+					};
+					
+					case 8:	//FOB East
+					{ 
+						hint "click on map inorder to place the FOB"; 
+						onMapSingleClick "	
+								[[_pos, 0, 'east' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+								onMapSingleClick """";
+								mcc_safe=mcc_safe + FORMAT [""
+															[[%1, 0, 'east' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+															""							  
+															,_pos
+															];
+								hint ""FOB placed.""
+							";
+					};
+					
+					case 9:	//FOB RESISTANCE
+					{ 
+						hint "click on map inorder to place the FOB"; 
+						onMapSingleClick "	
+								[[_pos, 0, 'RESISTANCE' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+								onMapSingleClick """";
+								mcc_safe=mcc_safe + FORMAT [""
+															[[%1, 0, 'RESISTANCE' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+															""							  
+															,_pos
+															];
+								hint ""FOB placed.""
+							";
 					};
 				};
 			closeDialog 0;

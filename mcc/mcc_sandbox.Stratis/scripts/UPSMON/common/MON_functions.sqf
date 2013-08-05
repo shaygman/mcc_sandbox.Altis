@@ -1047,7 +1047,7 @@ MON_doGetOut = {
 //	<- 	_atdist:  distance for doing paradrop or landing
 MON_doParadrop = {
 	if (KRON_UPS_Debug>0 ) then { player globalchat format["Mon_doParadrop started"];};
-	private["_heli","_npc","_getout" ,"_gunner","_targetpos","_helipos","_dist","_index","_grp","_wp","_targetPosWp","_targetP","_units","_crew","_timeout","_jumpers"];				
+	private["_heli","_startpos""_npc","_getout" ,"_gunner","_targetpos","_helipos","_dist","_index","_grp","_wp","_targetPosWp","_targetP","_units","_crew","_timeout","_jumpers"];				
 	_heli = _this select 0;
 	_targetPos = [0,0];
 	_atdist = 250;
@@ -1055,6 +1055,7 @@ MON_doParadrop = {
 	_landonBeh = ["CARELESS","SAFE","AWARE","COMBAT"];
 	_timeout=0;
 	
+	_startpos = getpos _heli; 
 	//Gets optional parameters
 	if ((count _this) > 1) then {_targetPos = _this select 1;};
 	if ((count _this) > 2) then {_atdist = _this select 2;};
@@ -1165,7 +1166,7 @@ MON_doParadrop = {
 		//land
 		
 		if ( ((position _heli) select 2) >= 60 && !surfaceIsWater _helipos && (!canmove _heli || (toupper (behaviour _npc) IN _landonBeh))) then {			
-		    [_heli] spawn MON_landHely;				
+		    [_heli,_startpos] spawn MON_landHely;				
 		
 		} 
 		else {				
@@ -1182,8 +1183,9 @@ MON_doParadrop = {
 
 //Lands hely	
 MON_landHely = {
-	private["_heli","_npc","_crew","_NearestEnemy","_timeout","_landing","_targetpos","_jumpers"];				
+	private["_heli","_npc","_crew","_NearestEnemy","_timeout","_landing","_targetpos","_jumpers","_startpos"];				
 	_heli = _this select 0;
+	if ((count _this) > 1) then {_startpos = _this select 1};
 	_crew =[];
 	_targetpos=[0,0];
 	_timeout = 0;
@@ -1220,9 +1222,9 @@ MON_landHely = {
 		
 	//2nd try-Waits until velocity and heigh are good for getting out
 	if (((position _heli) select 2) > 2 && ((position _heli) select 2) < 30 && !surfaceiswater position _heli) then { 		
-		_heli land "LAND";
+		_heli land "GET OUT";
 		_timeout = 120 + time;
-		waituntil {!alive _heli || time > _timeout || ( (abs(velocity _heli select 2)) <= 1 && ((position _heli) select 2) <= 0.7)};	
+		waituntil {!alive _heli || time > _timeout || ( (abs(velocity _heli select 2)) <= 1 && ((position _heli) select 2) <= 6)};	
 		
 		//Failed landing doing paradrop
 		if ( ((position _heli) select 2) > 30) exitwith { 
@@ -1262,7 +1264,8 @@ MON_landHely = {
 	sleep 1;
 	_heli land "NONE";
 	sleep 1;
-	[_heli,3000] spawn MON_domove;
+	[(driver _heli)] join grpNull; 
+	_heli doMove _startpos; 
 	
 	
 	
@@ -1290,14 +1293,15 @@ MON_landHely = {
 	_heli setVariable ["UPSMON_grpid", 0, false];	
 	_heli setVariable ["UPSMON_cargo", [], false];	
 	_heli setVariable ["UPSMON_landing", false, false];	
-	sleep 60;
+	
+	_timeout = time + 600; 
+	waituntil {!alive _heli || time > _timeout || ((_heli distance _startpos) < 100)};
 	_heli land "LAND";
-	_timeout = time + 120; 
-	waituntil {!alive _heli || time > _timeout || ((abs(velocity _heli select 2)) <= 1 && ((position _heli) select 2) <= 6)};
-	_crew = crew _heli; 
-	deleteVehicle _heli;
-	{deleteVehicle _x} foreach _crew; 
-
+	_timeout = 120 + time;
+	waituntil {!alive _heli || time > _timeout || ( (abs(velocity _heli select 2)) <= 1 && ((position _heli) select 2) <= 1)};
+	(driver _heli) action ["getOut",_heli];
+	sleep 1;
+	deletevehicle (driver _heli);
 };
 
 //Controls that heli not stoped flying

@@ -103,9 +103,6 @@ mccPresets = [
 		,['Set Locked', '_this setVehicleLock "LOCKED";']
 		,['Set Renegade', '_this addrating -2001;']
 		,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
-		,['Create West FOB', ' [[getpos _this, getdir _this, "west" ,"FOB",true], "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP; deletevehicle _this']
-		,['Create East FOB', ' [[getpos _this, getdir _this, "east" ,"FOB",true], "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP; deletevehicle _this']
-		,['Create Resistance FOB', ' [[getpos _this, getdir _this, "GUAR" ,"FOB",true], "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP; deletevehicle _this']
 	];
 
 
@@ -496,6 +493,8 @@ CP_fnc_assignGear		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\
 CP_fnc_addWeapon		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_addWeapon.sqf");
 CP_fnc_addItem			= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_addItem.sqf");
 CP_fnc_setVehicleInit	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setVehicleInit.sqf");
+CP_fnc_setVariable		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setVariable.sqf");
+CP_fnc_allowedDrivers	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_allowedDrivers.sqf");
 
 //---------------------------------------------
 //		Server Init
@@ -544,16 +543,19 @@ CP_classesPic = [	CP_path +"configs\data\Officer.paa",
 //Indexs
 CP_respawnPointsIndex 	= 0;
 CP_squadListIndex		= 0;
-CP_classesIndex = 0; 
-CP_NVIndex 			= 0;
-CP_headgearIndex 	= 0;
-CP_gogglesIndex 	= 0;
-CP_vestIndex 		= 0;
-CP_backpackIndex 	= 0;
-CP_uniformsIndex 	= 0;
-CP_currentItems1Index = 0;
-CP_currentItems2Index = 0;
-CP_currentItems3Index = 0;
+CP_classesIndex 		= 0; 
+CP_NVIndex 				= 0;
+CP_headgearIndex 		= 0;
+CP_gogglesIndex 		= 0;
+CP_vestIndex 			= 0;
+CP_backpackIndex 		= 0;
+CP_uniformsIndex 		= 0;
+CP_currentItems1Index 	= 0;
+CP_currentItems2Index 	= 0;
+CP_currentItems3Index 	= 0;
+CP_opticsIndex			= 0;
+CP_barrelIndex			= 0;
+CP_attachsIndex			= 0;
 
 CP_dialogInitDone = true; 				//define if dialog is been initialize
 CP_weaponAttachments = ["","",""];	
@@ -596,6 +598,8 @@ if (!isServer || ! isdedicated) then {
 					MCC_save_primaryWeaponItems = primaryWeaponItems player;
 					MCC_save_secondaryWeaponItems = secondaryWeaponItems player;
 					MCC_save_handgunitems = handgunItems player;
+					CP_rating = rating player;
+					if (CP_activated) then {[] call CP_fnc_allowedDrivers}; 
 					};
 				sleep 5;
 				};

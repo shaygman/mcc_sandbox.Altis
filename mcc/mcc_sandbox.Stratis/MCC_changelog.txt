@@ -2,23 +2,27 @@ Change log r9 - Beta:
 - Added: Role selections and players levels progression (Saved on the hosted server even when the mission is done). 
 - Added: Gear and uniforms selection is defined by the player on each role. (admins can set players levels)
 - Added: Select spawn location - Base, FOB - FOB spawn location can be destroyed by a satchel charge only. 
+- Added: Players gain exp and levels by in game rating. They can use the exp to get new gear and uniforms. 
 - Added: FOB spawn points presets in the 3D init
 - Added: Safe zone on side start location. 
-- Added: spectator button for Mission makers.
+- Added: spectator button for Mission maker.
 - Added: IED handle damage, you can detonate IED with satchels or demo charges if you don't want risking disarming it. 
+- Added: HALO and Parachute jump using the Unit Managmnet.
+- Added: AI that have to move more then 700 meters will use empty helicopters. The pilot will drop the troops and go back to it's start location - UPSMON.
+- Added: Triggers Conditions and Timeout for triggers.
 
-- Fixed: All "undifined variable" errors on development build
+- Fixed: "undifined variable" errors on development build
 - Fixed: Group generator's markers don't refresh. 
-- Fixed: When trying  to spawn something on undifined zone an error message pop
+- Fixed: When trying to spawn something on undifined zone an error message pop
 - Fixed: Evac vehicles got stuck on WP. 
 - Fixed: Disabled attemps for multiple connections to the MCC console
 - Fixed: MCC console PiP resolution improved
 - Fixed: Tweaked suicide bombers to keep on chasing players and not lying down. 
 
-- Added: HALO for SF - TODO
-- Added: UPSMON helicopter reinforcment will go back to it's LZ - TODO
+
+
 - Added: Town generator - TODO
-- Added: Triggers Conditions and Timeout for triggers. - TODO
+- Start as HALO/para - TODO
 
 Change log r8 - Beta:
 - Fixed new Beta classnames and new commandnames.

@@ -325,35 +325,50 @@ _type = _this select 0;
 		
 		case 9:	//HALO
 		{
-			hint "Left click on the map,hold and drag the cursor to mark the area and direction of the Air Support";
-			MCC_UMParadropRequestMarker = true; 
-			MCC_UMparadropIsHalo = true; 
-			MCCParaUnits = []; 
-			
+			hint "click on the map to start the Parachute";
+			MCC_click = false; 
 			onMapSingleClick " 	hint format ['%1 Paradroped', MCC_UMunitsNames];
 								MCC_pos = _pos;
+								MCC_click = true; 
 								onMapSingleClick """";";
-								
+			waituntil {MCC_click}; 					
 			if (MCC_UMUnit==0) then {
-				MCCParaUnits = MCC_selectedUnits;
+				{
+					[[MCC_pos,netId _x,true,8000,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
+					sleep 0.5; 
+				} foreach MCC_selectedUnits;
 					} else {
 							{
 								{
-									MCCParaUnits set [count MCCParaUnits, _x];
+									[[MCC_pos,netId _x,true,8000,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
+									sleep 0.5; 
 								} foreach units _x;
 							} foreach MCC_selectedUnits;
 						};
 		};
 				
-		case 10:	//ParaDrop
+		case 10:	//Parachute
 		{
-			hint "Left click on the map,hold and drag the cursor to mark the area and direction of the Air Support";
-			MCC_UMParadropRequestMarker = true; 
-			MCC_UMparadropIsHalo = false; 
-			/*
-			onMapSingleClick " 	hint format ['%1 Paradroped', UMName];
-								['paradrop', [_pos, MCC_selectedUnits, MCC_UMUnit, false]] call CBA_fnc_globalEvent;
-								onMapSingleClick """";";*/
+			hint "click on the map to start the Parachute";
+			MCC_click = false; 
+			onMapSingleClick " 	hint format ['%1 Paradroped', MCC_UMunitsNames];
+								MCC_pos = _pos;
+								MCC_click = true; 
+								onMapSingleClick """";";
+			waituntil {MCC_click}; 					
+			if (MCC_UMUnit==0) then {
+				{
+					[[MCC_pos,netId _x,false,800,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
+					sleep 0.5; 
+				} foreach MCC_selectedUnits;
+					} else {
+							{
+								{
+									[[MCC_pos,netId _x,false,800,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
+									sleep 0.5; 
+								} foreach units _x;
+							} foreach MCC_selectedUnits;
+						};
 		};
 		
 		case 11:	//Broadcast

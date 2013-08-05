@@ -25,6 +25,7 @@ private ["_str_f_var_units","_str_f_var_units_BLU","_str_f_var_units_RES","_str_
 f_var_units = allUnits + vehicles;
 f_var_units = f_var_units - [F2_Precompile_WEST,F2_Precompile_EAST];
 
+waituntil {!isnil "f_var_debugMode"}; 
 // DEBUG
 if (f_var_debugMode == 1) then
 {

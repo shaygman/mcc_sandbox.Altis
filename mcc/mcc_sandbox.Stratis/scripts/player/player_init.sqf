@@ -8,9 +8,9 @@ cutText ["","BLACK",0.1];
 //******************************************************************************************************************************
 waituntil {alive player};
 
-[["commanderLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
-waituntil {! isnil "commanderLevel"};
-if (CP_debug) then {player sidechat format ["commanderLevel : %1",commanderLevel]};
+[["officerLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+waituntil {! isnil "officerLevel"};
+if (CP_debug) then {player sidechat format ["officerLevel : %1",officerLevel]};
 
 [["arLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "arLevel"};
@@ -151,5 +151,7 @@ setviewdistance 2500;
 closedialog 0; 
 waituntil {!dialog};
 //Respawning
-player addrating 100000; 
+								
+						
+if(rating player < 0) then {player addrating abs(rating player)} else {player addrating (rating player)*-1}; 	//Sets unit rating to zero
 cutText ["Deploying ....","BLACK IN",5];

@@ -330,13 +330,16 @@ class CfgSounds	{
 	sound[] = {"\mcc_sandbox_mod\sounds\missile.ogg", 1, 1};
 	titles[] = {};
 	};
+};
+
+class CfgMusic {
 	class ac130
 	{
-	name = "ac130";
-	sound[] = {"\mcc_sandbox_mod\sounds\ac130.ogg", 1, 1};
-	titles[] = {};
+		name = "ac130";
+		sound[] = {"\mcc_sandbox_mod\sounds\ac130.ogg", 1, 1};
+		titles[] = {};
 	};
-};
+}; 
 
 class cfgWeapons
 {

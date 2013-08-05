@@ -35,12 +35,12 @@ CP_gearPanelOpen	= true;
 //Disable Esc while respawn is on
 CP_disableEsc = CP_GEARPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"]; 
 
-CP_gearPanelCommander ctrlsettext format ["Officer lvl-%1",commanderLevel select 0];
-CP_gearPanelAR ctrlsettext format ["Automatic Rifleman lvl-%1",arLevel select 0];
-CP_gearPanelRifleman ctrlsettext format ["Rifleman lvl-%1",riflemanLevel select 0];
-CP_gearPanelAntitank ctrlsettext format ["Anti-Tank lvl-%1",ATLevel select 0];
-CP_gearPanelCorpsman ctrlsettext format ["Corpsman lvl-%1",corpsmanLevel select 0];
-CP_gearPanelMarksman ctrlsettext format ["Marksman lvl-%1",marksmanLevel select 0];
-CP_gearPanelSpecialist ctrlsettext format ["Specialist lvl-%1",specialistLevel select 0];
-CP_gearPanelCrewman ctrlsettext format ["Crewman lvl-%1",crewLevel select 0];
-CP_gearPanelPilot ctrlsettext format ["Pilot lvl-%1",pilotLevel select 0];
+CP_gearPanelCommander ctrlsettext format ["Officer Level: %1 Exp: %2",OfficerLevel select 0,OfficerLevel select 1];
+CP_gearPanelAR ctrlsettext format ["Automatic Rifleman Level: %1 Exp: %2",arLevel select 0,arLevel select 1];
+CP_gearPanelRifleman ctrlsettext format ["Rifleman Level: %1 Exp: %2",riflemanLevel select 0,riflemanLevel select 1];
+CP_gearPanelAntitank ctrlsettext format ["Anti-Tank Level: %1 Exp: %2",ATLevel select 0,ATLevel select 1];
+CP_gearPanelCorpsman ctrlsettext format ["Corpsman Level: %1 Exp: %2",corpsmanLevel select 0,corpsmanLevel select 1];
+CP_gearPanelMarksman ctrlsettext format ["Marksman Level: %1 Exp: %2",marksmanLevel select 0,marksmanLevel select 1];
+CP_gearPanelSpecialist ctrlsettext format ["Specialist Level: %1 Exp: %2",specialistLevel select 0,specialistLevel select 1];
+CP_gearPanelCrewman ctrlsettext format ["Crewman Level: %1 Exp: %2",crewLevel select 0,crewLevel select 1];
+CP_gearPanelPilot ctrlsettext format ["Pilot Level: %1 Exp: %2",pilotLevel select 0,pilotLevel select 1];

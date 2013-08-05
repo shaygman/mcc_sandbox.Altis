@@ -75,6 +75,7 @@ class MCC_Sandbox4 {
 		MCC_UMbroadcast,
 		MCC_UMDelete,
 		MCC_UMJoin,
+		MCC_UMHALO,
 		MCC_UMParachute,
 		MCC_UMhint,
 		MCC_PIPUm,
@@ -379,18 +380,32 @@ class MCC_UMJoin: MCC_RscButton
 	tooltip = "Join group or unit with another group or unit"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_UMParachute: MCC_RscButton
+class MCC_UMHALO: MCC_RscButton
 {
 	idc = -1;
 	onButtonClick = "[9] execVM 'mcc\general_scripts\unitManage\um.sqf'";
 
-	text = "Parachute"; //--- ToDo: Localize;
+	text = "H.A.L.O"; //--- ToDo: Localize;
 	x = 0.5 * safezoneW + safezoneX;
 	y = 0.203116 * safezoneH + safezoneY;
 	w = 0.0525 * safezoneW;
 	h = 0.0280063 * safezoneH;
+	tooltip = "HALO the current selected units"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+
+class MCC_UMParachute: MCC_RscButton
+{
+	idc = -1;
+	onButtonClick = "[10] execVM 'mcc\general_scripts\unitManage\um.sqf'";
+
+	text = "Parachute"; //--- ToDo: Localize;
+	x = 0.5 * safezoneW + safezoneX;
+	y = 0.236103 * safezoneH + safezoneY;
+	w = 0.0525 * safezoneW;
+	h = 0.0280063 * safezoneH;
 	tooltip = "Parachute the current selected units"; //--- ToDo: Localize;
-	sizeEx = (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7) * GUI_GRID_H;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 class MCC_UMListFrame: MCC_RscFrame
 {

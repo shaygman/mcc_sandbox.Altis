@@ -7,6 +7,7 @@ switch (_type) do
    case 0:
 	{	
 		if (isserver) exitwith {};
+		waituntil {! isnil "BIS_AdvHints_createCountdownLine"}; 
 		mcc_sync_status = false; 
 		[[1,{[1] execVM MCC_path + "mcc\general_scripts\sync.sqf"}],"MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 		_loop = 20; 

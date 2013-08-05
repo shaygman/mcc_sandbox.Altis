@@ -1,5 +1,5 @@
 private ["_unit","_goggles","_handgunitems","_primaryWeaponItems", "_headgear","_uniform","_uniformItems","_vest","_magazines","_primMag","_secmMag","_handMag",
-         "_vestItems","_secondaryWeaponItems","_handgunWeapon","_backpack","_backpackthings","_primaryWeapon","_secondaryWeapon","_null"];
+         "_vestItems","_secondaryWeaponItems","_handgunWeapon","_backpack","_backpackthings","_primaryWeapon","_secondaryWeapon","_null","_rating","_role","_exp","_level"];
 
 _unit = _this;
 _goggles = goggles _unit; 			//Can't  save gear after killed EH
@@ -11,7 +11,9 @@ _backpack = backpack _unit;
 _primMag = primaryWeaponMagazine _unit;
 _secmMag = secondaryWeaponMagazine  _unit;
 _handMag = handgunMagazine _unit;
+//_rating = rating player;
 
+if (CP_debug) then {player sidechat format ["rating add: %1", CP_rating]};
 //_primaryWeaponItems = primaryWeaponItems _unit;
 //_secondaryWeaponItems = secondaryWeaponItems _unit;
 //_handgunitems = handgunItems _unit; 
@@ -95,4 +97,16 @@ _muzzles = getArray(configFile>>"cfgWeapons" >> _primaryWeapon >> "muzzles");
 player selectWeapon (_muzzles select 0);
 mcc_actionInedx = player addaction ["> Mission generator", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 _null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
-if (CP_activated) exitWith {_null=[] execVM CP_path + "scripts\player\player_init.sqf"}; 
+if (CP_activated) exitWith {
+	_role = player getvariable "CP_role";							//Get player's role
+	_exp = call compile format  ["%1Level select 1",_role]; 		//Get role exp
+	if (!isnil "_exp") then {
+		if (CP_debug) then {player sidechat format ["rating: %1", _exp]};
+		_exp = (_exp + CP_rating);
+		if (_exp < 0) then {_exp = 0}; 
+		_level = call compile format ["[%1,%2]",floor (_exp/5000)+1 ,_exp];
+		if (CP_debug) then {player sidechat format ["level: %1",_level]};
+		[[format ["%1Level",_role],getplayeruID player,_level], "CP_fnc_setVariable", false, false] spawn BIS_fnc_MP;
+		};
+	_null=[] execVM CP_path + "scripts\player\player_init.sqf";
+	}; 

@@ -82,7 +82,7 @@ _wepItems = primaryWeaponItems player;
 		};
 } foreach _wepItems;
 {
-	player addPrimaryWeaponItem _x;
+	if (! isnil "_x") then {player addPrimaryWeaponItem _x};
 } foreach CP_weaponAttachments;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

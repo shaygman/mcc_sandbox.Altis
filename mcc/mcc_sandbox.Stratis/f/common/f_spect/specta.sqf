@@ -762,7 +762,7 @@ KEGsTagSources = [];
 {
 	_fh = _x getVariable "KEGsEHfired";
 	//_kh = _x getVariable "KEGsEHkilled";
-	if(typeName _fh == "SCALAR") then {_x removeEventHandler["fired", _fh]};
+	if (! isnil "_fh") then {if(typeName _fh == "SCALAR") then {_x removeEventHandler["fired", _fh]}};
 	//if(typeName _kh == "SCALAR") then {_x removeEventHandler["killed", _kh]};
 } foreach _ehVehicles;
 
