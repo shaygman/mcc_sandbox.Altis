@@ -11,8 +11,8 @@ _intanse		= _this select 3;
 _faction		= _this select 4;
 _side			= _this select 5;
 
-_unitsArray 	= [_faction,"soldier","men"] call FNC_MAKE_UNITS_ARRAY;	//Let's build the faction unit's array
-_vehiclesArray	= [_faction,"carx","car"] call FNC_MAKE_UNITS_ARRAY;		//Let's build the faction vehicles's array
+_unitsArray 	= [_faction,"soldier"] call MCC_fnc_makeUnitsArray;	//Let's build the faction unit's array
+_vehiclesArray	= [_faction,"carx"] call MCC_fnc_makeUnitsArray;		//Let's build the faction vehicles's array
 _buildingsArray	= nearestObjects  [_center,["House","Ruins","Church","FuelStation"],_radius];	//Let's find the buildings in the area
 
 _unitsCount		= count _unitsArray;
@@ -29,7 +29,7 @@ switch (toLower _side) do	{
 if (_action == 0 || _action == 1) then	{	//Garisson
 	if (_buildingscount < 1) exitwith {hint "No buildings found"};	//No available buildings? stop the script!
 	{
-		_buildingPos = _x call FNC_BUILDING_POS_COUNT;
+		_buildingPos = _x call MCC_fnc_buildingPosCount;
 		if (_buildingPos > 0) then	{	//If the building have an interrior positions
 			for [{_i=0},{_i<_buildingPos},{_i=_i+1}] do {
 				_spawnPos	= _x buildingPos _i; 

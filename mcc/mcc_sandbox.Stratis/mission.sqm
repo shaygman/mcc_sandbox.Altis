@@ -8,7 +8,8 @@ class Mission
 		"A3_Characters_F_OPFOR",
 		"A3_Characters_F_Civil",
 		"a3_characters_f_beta",
-		"A3_Characters_F_INDEP"
+		"A3_Characters_F_INDEP",
+		"a3_characters_f_gamma"
 	};
 	addOnsAuto[]=
 	{
@@ -16,16 +17,17 @@ class Mission
 		"A3_Characters_F_OPFOR",
 		"a3_characters_f_beta",
 		"A3_Characters_F_Civil",
+		"a3_characters_f_gamma",
 		"A3_Characters_F_INDEP",
 		"a3_map_stratis"
 	};
 	randomSeed=11823142;
 	class Intel
 	{
-		briefingName="COOP - MCC Sandbox";
-		startWeather=0;
+		briefingName="Stratis COOP: MCC Sandbox";
+		startWeather=0.1;
 		startWind=0;
-		forecastWeather=1;
+		forecastWeather=0.1;
 		forecastWind=0;
 		forecastWaves=0;
 		year=2035;
@@ -38,7 +40,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=56;
+		items=55;
 		class Item0
 		{
 			side="WEST";
@@ -2439,41 +2441,6 @@ class Mission
 					text="UnitIGR_SN1_SP";
 					init="GrpGR_SN1 = group this; nul = [""sp"",this] call f_fnc_assignGear";
 					description="Green Sniper Team 1 Spotter";
-				};
-			};
-		};
-		class Item55
-		{
-			side="GUER";
-			class Vehicles
-			{
-				items=2;
-				class Item0
-				{
-					position[]={1808.3345,5.5,5943.1924};
-					id=149;
-					side="GUER";
-					vehicle="I_Sniper_F";
-					player="PLAY CDG";
-					leader=1;
-					rank="SERGEANT";
-					skill=0.60000002;
-					text="UnitIGR_SN2_SN";
-					init="GrpGR_SN2 = group this; nul = [""sn"",this] call f_fnc_assignGear";
-					description="Green Sniper Team 2 Sniper";
-				};
-				class Item1
-				{
-					position[]={1809.5219,5.5,5942.9766};
-					id=150;
-					side="GUER";
-					vehicle="I_Sniper_F";
-					player="PLAY CDG";
-					rank="CORPORAL";
-					skill=0.60000002;
-					text="UnitIGR_SN2_SP";
-					init="GrpGR_SN2 = group this; nul = [""sp"",this] call f_fnc_assignGear";
-					description="Green Sniper Team 2 Spotter";
 				};
 			};
 		};
