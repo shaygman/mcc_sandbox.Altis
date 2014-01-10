@@ -26,6 +26,7 @@
 #define MCC_MWCQBIDC 6015
 #define MCC_MWRoadBlocksIDC 6016
 #define MCC_MWWeatherComboIDC 6017
+#define MCC_MCC_MWAreaComboIDC 6018
 
 private ["_mccdialog","_comboBox","_displayname"];
 disableSerialization;
@@ -178,6 +179,15 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["Change","Don't change"];
+_comboBox lbSetCurSel 0;
+
+_comboBox = _mccdialog displayCtrl MCC_MCC_MWAreaComboIDC;		
+
+lbClear _comboBox;
+{
+	_displayname = _x;
+	_comboBox lbAdd _displayname;
+} foreach ["Whole map","Current zone"];
 _comboBox lbSetCurSel 0;
 
 ctrlEnable [MAIN,true]; //Enable switching menus

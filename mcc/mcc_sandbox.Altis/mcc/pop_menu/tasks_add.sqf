@@ -134,6 +134,23 @@ switch (_type) do
 	_markerstr setMarkerShape "mil_objective";
 	_stringName setMarkerType "Warning";
 	['TaskAssigned',[_stringName,_stringName]] call bis_fnc_showNotification;
+	MCC_sync=MCC_sync + FORMAT ['
+								_stringName="%1";
+								_stringDescription="%2";
+								_pos = %3;
+								_exe = player createSimpleTask [_stringName];
+								_exe setSimpleTaskDescription [_stringDescription, _stringName, _stringName];
+								MCC_tasks set [count MCC_tasks,[_stringName,_exe]];
+								_exe setSimpleTaskDestination _pos;
+								_markerstr = createMarker[_stringName,_pos];
+								_markerstr setMarkerShape "mil_objective";
+								_stringName setMarkerType "Warning";
+								["TaskAssigned",[_stringName,_stringName]] call bis_fnc_showNotification;
+								sleep 1;'								 
+								,_stringName
+								,_stringDescription
+								,_pos
+							   ];
   };
  };
- publicVariable "MCC_sync"; 
+ if (isServer) then {publicVariable "MCC_sync"}; 

@@ -703,7 +703,7 @@ class MCC_TasksSucceed: MCC_RscButton
 	h = 0.0329871 * safezoneH;
 	colorText[] = {0,1,0,0.5};
 	onButtonClick = __EVAL ("[2] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
-	tooltip = "Mark the selected task as succeed"; //--- ToDo: Localize;
+	tooltip = "Mark the selected task as succeeded"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
 };
 class MCC_TasksFailed: MCC_RscButton
@@ -722,13 +722,13 @@ class MCC_TasksFailed: MCC_RscButton
 class MCC_TasksCancled: MCC_RscButton
 {
 	idc = -1;
-	text = "Cancled"; //--- ToDo: Localize;
+	text = "Cancel"; //--- ToDo: Localize;
 	x = 0.448438 * safezoneW + safezoneX;
 	y = 0.390043 * safezoneH + safezoneY;
 	w = 0.0401042 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	onButtonClick = __EVAL ("[4] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
-	tooltip = "Mark the selected task as cancled"; //--- ToDo: Localize;
+	tooltip = "Mark the selected task as cancelled"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
 };
 //=========================== Jukebox =====================================================

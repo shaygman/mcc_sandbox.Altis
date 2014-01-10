@@ -41,7 +41,7 @@ if (!isMultiplayer && !MCC_isMode) then {						//Delete all units on SP mission
 //--------------------- Who can access MCC leave "all" for everbody --------------------------------
 //Should be MCC_allowedPlayers = ["12321","1321123"]; 
 //Host or server admin will always have access
-if (isnil "MCC_allowedPlayers") then {MCC_allowedPlayers = []};
+if (isnil "MCC_allowedPlayers") then {MCC_allowedPlayers = ["all"]};
 
 //----------------------General settings---------------------------------------
 //Default side that detect undercover units 0 -East, 1 - West
@@ -135,6 +135,7 @@ mccPresets = [
 		,['======= Vehicles =======','']
 		,['Set Empty (Fuel)', '_this setfuel 0;']
 		,['Set Empty (Ammo)', '_this setvehicleammo 0;']
+		,['Set Empty (Cargo)', 'clearMagazineCargoGlobal _this; clearWeaponCargoGlobal _this; clearItemCargoGlobal _this;']
 		,['Set Locked', '_this setVehicleLock "LOCKED";']
 		,['Add Crew (UAV)','createVehicleCrew _this;group _this setvariable ["MCC_canbecontrolled",true,true];']
 		,['ECM - can jamm IED','if (isServer) then {_this setvariable ["MCC_ECM",true,true]};']
@@ -267,7 +268,7 @@ MCC_spawn_behavior = [
 					  ["BIS Defence","bisd","AI sit down some will patrol around"],
 					  ["BIS Patrol","bisp","AI will patrol around"]
 					  ];
-MCC_spawn_awereness = [["Default", "default"],["Aware","Aware"],["Combat", "Combat"],["stealth","stealth"],["Careless","Careless"]];
+MCC_spawn_awereness = [["Default", "default"],["Aware","Aware"],["Combat", "Combat"],["Stealth","stealth"],["Careless","Careless"]];
 MCC_spawn_track = [["Off", false],["On",true]];
 MCC_empty_index = 0;
 MCC_behavior_index = 0;
@@ -294,7 +295,7 @@ MCC_minutes_index=0;
 MCC_weather_index=0;
 MCC_fog_index=0;
 
-MCC_grass_array = [["No grass",50],["Meduim grass",25], ["High grass",12.5]];
+MCC_grass_array = [["No grass",50],["Medium grass",25], ["High grass",12.5]];
 MCC_view_array = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000];
 MCC_grass_index = 2;
 
@@ -425,7 +426,7 @@ MCC_saveIndex = 0;
 // Mission Wizard
 MCC_MWmaxPlayers = 100;
 MCC_MWDifficulty = ["Easy","Medium","Hard"];
-MCC_MWMissionType = ["None","Random","Secure HVT","Kill HVT","Destory Object","Pick Intel","Clear Area","Disarm IED"];
+MCC_MWMissionType = ["None","Random","Secure HVT","Kill HVT","Destroy Object","Aquire Intel","Clear Area","Disarm IED"];
 MCC_MWObjectiveMarkers = []; 
 MCC_MWmissionsCenter = []; 
 MCC_MWHVT = ["B_officer_F","O_officer_F","I_officer_F","C_Nikos"]; 

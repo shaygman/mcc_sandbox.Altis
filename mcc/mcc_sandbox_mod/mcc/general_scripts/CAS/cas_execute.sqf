@@ -37,7 +37,7 @@ if (_planeType=="I_Heli_Transport_02_F") then 		//If it's an airdrop
 		{
 		_planepos = getpos _plane1;
 		[_planepos, _spawnkind select _x, _pilot1] spawn MCC_fnc_CreateAmmoDrop;
-		sleep 3;
+		sleep 3 + random 3;
 		};
 	
 }	

@@ -121,7 +121,6 @@ class RscSlider;
 class RscText;
 class RscTextSmall;
 class RscTitle;
-class RscPicture;
 class RscActiveText;
 class RscStructuredText;
 class RscListBox;

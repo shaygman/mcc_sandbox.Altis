@@ -1,3 +1,23 @@
+Change log r15:
+Fixed: CAS didn't work on the MCC Console. 
+Fixed: Spectator was broken in the mod version. 
+Fixed: Player stuck after using the MCC's Console.
+Fixed: Mission Wizard: added some code changes for preventing getting stuck on the "Building A Mission" screen if there is an error. 
+Fixed: Role Selection's FOB buttons doesn't work on mod version. 
+Fixed: High Command on menu4 buttons doesn't work on mod version. 
+Fixed: Garrison function didn't work on some addons. 
+Fixed: Mission wizard destroy vehicles objectives (AA,Artillery exc) can be destroyed by other weapons but satchel charges.
+Fixed: Alot of misspelling and typos corrected with the help of Apollo from 3CB - big thanks. 
+Fixed: Lower a bit the difficulty in MCC Mission Wizard. 
+Fixed: Mission Wizards tasks will now synced for JIP players. 
+Fixed: Group Gen and M-Tac (mcc console) didn't show correct markers for addons' units. 
+
+Added: New parameter for the Mission Wizard: Area:
+                                          Whole map - the mission will be generated randomly iside the map's borders. 
+										  Current Zone - the mission will be generated inside the given zone (work around for addon map without MapSize param - make a zone big enough and pick the Current Zone option). 
+Added: 3D preset "Set Empty (Cargo)" clear all weapons, magazines and items from the vehicle's cargo. 
+		
+
 Change log r14:
 
 --- New feature: Missions Wizard ---

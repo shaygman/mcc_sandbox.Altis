@@ -9,7 +9,7 @@
 // Return - pos
 //========================================================================================================================================================================================
 private ["_missionCenter","_isCQB","_minObjectivesDistance","_positionFound","_maxObjectivesDistance","_newPos","_buildingsArray",
-		 "_farEnough","_range","_flatPos","_buildingsArraySorted","_building","_isBuilding","_objFirstTime"];
+		 "_farEnough","_range","_flatPos","_buildingsArraySorted","_building","_isBuilding","_objFirstTime","_time"];
 
 _missionCenter 			= _this select 0;
 _isCQB 					= _this select 1;
@@ -21,7 +21,8 @@ _positionFound = false;
 _farEnough = false; 
 
 //Lets find a pice of land
-while {!_positionFound} do
+_time = time + 30; 
+while {!_positionFound && time < _time} do
 {
 	//if it is the first time then find objective close to the center
 	if !(_objFirstTime) then
@@ -74,6 +75,13 @@ while {!_positionFound} do
 	};
 }; 
 
+if (time >= _time) then
+	{
+		diag_log "MCC: Mission Wizard Error: No mission objective's postion found, make a bigger zone"; 
+		MCC_MWisGenerating = false;
+		["MCC: Mission Wizard Error: No mission objective's postion found, make a bigger zone"] call bis_fnc_halt;
+	};
+	
 _newPos;
 
 /*

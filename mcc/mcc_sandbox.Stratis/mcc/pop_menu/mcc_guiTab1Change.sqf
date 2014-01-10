@@ -38,7 +38,7 @@ if ((_task ==1)&& (MCC_type_index != lbCurSel SPAWNTYPE)) then																	/
 			{
 				_displayname =  _x;
 				_index = _comboBox lbAdd _displayname;
-			} foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "D.O.C", "Ammo", "Fortifications", "Dead Bodies", "Furnitures", 
+			} foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "D.O.C", "Ammo", "Fortifications", "Dead Bodies", "Furniture", 
 						"Market", "Misc", "Signs", "Warfare", "Wrecks", "Buildings", "Ruins","Garbage","Lamps","Container","Small Items","Structures","Helpers","Training"];
 			_comboBox lbSetCurSel 0; //MCC_class_index;	
 			};

@@ -1,5 +1,5 @@
 //======================================================MCC_fnc_ObjectiveDestroy=========================================================================================================
-// Create a destory objective
+// Create a Destroy objective
 // Example:[_objPos,_isCQB,_side,_faction] call MCC_fnc_ObjectiveDestroy; 
 // _objPos = position, objectice position
 //_isCQB = Boolean, true - for CQB areay false if it doesn't matters. 
@@ -196,9 +196,12 @@ _object setpos _spawnPos;
 _object setdir _spawndir;
 
 //destroy only with satchel 
-_init = '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];' + '_this setVehicleLock "LOCKED";'; 
-if (_objType =="artillery") then {_init = _init + format ['createVehicleCrew _this;[0,_this] execVM "%1mcc\general_scripts\ambient\amb_art.sqf";',MCC_path]}; 
-[[[netID _object,_object], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+if !(_objType in ["tanks","aa","artillery","air"]) then
+{
+	_init = '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];' + '_this setVehicleLock "LOCKED";'; 
+	if (_objType =="artillery") then {_init = _init + format ['createVehicleCrew _this;[0,_this] execVM "%1mcc\general_scripts\ambient\amb_art.sqf";',MCC_path]}; 
+	[[[netID _object,_object], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+};
 
 //Start Briefings
 switch _objType do	

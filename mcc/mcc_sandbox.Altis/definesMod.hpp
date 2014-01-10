@@ -20,7 +20,6 @@
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCC_playerConsole3.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_playerConsoleLoading.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_missionSettings.hpp"
-#include "\mcc_sandbox_mod\hcam\hcam.hpp"
 
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCCMW_briefingMap.hpp"
 
@@ -39,7 +38,10 @@
 //--------------------------Others----------------------------------------------------
 #include "\mcc_sandbox_mod\bon_artillery\dialog\Artillery.hpp"
 #include "\mcc_sandbox_mod\VAS\menu.hpp"
+#include "\mcc_sandbox_mod\f\common\f_spect\spectating.hpp"
+#include "\mcc_sandbox_mod\hcam\hcam.hpp"
 //---------------------------Functions------------------------------------------------
+
 class CfgFunctions
 {
 	class MCC
@@ -361,7 +363,7 @@ class CfgFunctions
 			
 			class MWObjectiveDestroy
 			{
-				description = "Create a destory objective";
+				description = "Create a Destroy objective";
 			};
 			
 			class MWObjectiveIntel

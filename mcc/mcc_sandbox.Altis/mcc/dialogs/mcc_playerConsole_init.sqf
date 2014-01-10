@@ -154,7 +154,11 @@ onGroupIconClick
 };
 
 //Add - Ctrl + number group selections handlers
-MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown", "_this execVM '"+MCC_path+"mcc\general_scripts\console\groupNumbersSelectionEH.sqf';true"];
+if (isnil "MCC_consoleGroupSelectionEH") then
+	{
+		MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown", format ["_this execVM '%1mcc\general_scripts\console\groupNumbersSelectionEH.sqf';true",MCC_path]];
+	};
+	
 [] call 
 	{
 		private ["_markerSupport","_markerAutonomous","_markerNaval","_markerRecon"]; 
@@ -222,6 +226,7 @@ MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown
 						_haveGPS =  ("ItemGPS" in (assignedItems _leader) || "B_UavTerminal" in (assignedItems _leader) || "MCC_Console" in (assignedItems _leader));
 						_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
 						_unitsSize = 0;
+						_markerType = nil; 
 						if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
 						if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
 						if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
@@ -230,6 +235,16 @@ MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown
 						if (_unitsCount select 5 > 0) then {_markerType = _markerRecon; _unitsSize = _unitsSize + (1*(_unitsCount select 5))};
 						if (_unitsCount select 6 > 0) then {_markerType = _markerSupport; _unitsSize = _unitsSize + (3*(_unitsCount select 6))};
 						if (_unitsCount select 7 > 0) then {_markerType = _markerAutonomous; _unitsSize = _unitsSize + (1*(_unitsCount select 7))};
+						
+						if (isnil "_markerType") then
+						{
+							_unitsCount = [group _leader] call MCC_fnc_countGroup;
+							if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
+							if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
+							if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
+							if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
+							if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
+						};
 						
 						//How big is the squad
 						_unitsSize = floor (_unitsSize/4); 
@@ -268,6 +283,16 @@ MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown
 							if (_unitsCount select 5 > 0) then {_unitsSize = _unitsSize + (1*(_unitsCount select 5))};
 							if (_unitsCount select 6 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 6))};
 							if (_unitsCount select 7 > 0) then {_unitsSize = _unitsSize + (1*(_unitsCount select 7))};
+							
+							if (_unitsSize == 0) then
+							{
+								_unitsCount = [group _leader] call MCC_fnc_countGroup;
+								if (_unitsCount select 0 > 0) then { _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
+								if (_unitsCount select 1 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
+								if (_unitsCount select 2 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
+								if (_unitsCount select 3 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
+								if (_unitsCount select 4 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
+							};
 							
 							//How big is the squad
 							_unitsSize = floor (_unitsSize/4); 
@@ -343,5 +368,9 @@ MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown
 		ctrlShow [MCC_MINIMAP,true];
 		
 		//Add - Ctrl + remove EH
-		(findDisplay 46) displayRemoveEventHandler ["KeyDown",MCC_consoleGroupSelectionEH]
+		if (!isnil "MCC_consoleGroupSelectionEH") then
+		{
+			(findDisplay 46) displayRemoveEventHandler ["KeyDown",MCC_consoleGroupSelectionEH];
+			MCC_consoleGroupSelectionEH = nil; 
+		};
 	};

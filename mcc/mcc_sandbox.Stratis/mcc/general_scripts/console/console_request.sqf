@@ -9,7 +9,7 @@
 #define MCC_ConsoleAirdropAvailableTextBox_IDD 9104
 
 disableSerialization;
-private ["_type","_mccdialog","_comboBox","_counter","_displayname","_index"];
+private ["_type","_mccdialog","_comboBox","_counter","_displayname","_index","_indecator"];
 _type = _this select 0;
 _mccdialog = findDisplay mcc_playerConsole_IDD;
 
@@ -46,7 +46,17 @@ switch (_type) do
 		{
 			if (count MCC_CASConsoleArray > 0) then {
 				MCC_spawnkind	= [((MCC_CASConsoleArray select (lbCurSel MCC_ConsoleCASAvailableTextBox_IDD)) select 0) select 0];
-				MCC_planeType	= [((MCC_CASConsoleArray select (lbCurSel MCC_ConsoleCASAvailableTextBox_IDD)) select 1) select 0];
+				_indecator		= lbCurSel MCC_ConsoleCASAvailableTextBox_IDD;
+
+				MCC_planeType 	= if (_indecator <= (count (U_GEN_AIRPLANE)-1)) then 
+									{
+										[(U_GEN_AIRPLANE select _indecator) select 1];
+									}
+									else 
+									{
+										_indecator = _indecator - (count U_GEN_AIRPLANE);
+										[(U_GEN_HELICOPTER select _indecator) select 1];
+									};
 				
 				MCC_CASConsoleArray set  [lbCurSel MCC_ConsoleCASAvailableTextBox_IDD,-1];					//Remove the action we just used
 				MCC_CASConsoleArray = MCC_CASConsoleArray - [-1];

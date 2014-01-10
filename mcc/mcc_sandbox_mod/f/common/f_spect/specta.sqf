@@ -14,6 +14,7 @@ _seagull = _this select 2;
 
 VM_scriptName="specta";
 
+if (isNil "f_var_debugMode") then {f_var_debugMode = 0};
 MCC_debugPlayer=objNull;
 if ( f_var_debugMode == 1 ) then {
 	MCC_debugPlayer=player;
@@ -27,7 +28,7 @@ _seagull = "noWait";
 vm_count = 0; //Debug loop counter
 debugX = [];
 NORRN_noMarkersUpdates = true; //Added for no marker update - NORRN
-spectate_events = compile preprocessFileLineNumbers ("f\common\f_spect\specta_events.sqf");
+spectate_events = compile preprocessFileLineNumbers (FORMAT ["%1f\common\f_spect\specta_events.sqf",MCC_path]);
 If (isNil "OldNVGMethod") then { OldNVGMethod = false };
 If (isNil "VM_CommitDelay") then { VM_CommitDelay = 0 };
 VM_CurrentCameraView = "";
@@ -809,5 +810,5 @@ sleep 2;
 if (mcc_missionmaker == (name player)) exitWith {}; 
 
 if !( f_var_debugMode == 1 ) then {
-	[_player, _killer, "noWait"] execVM ("f\common\f_spect\specta.sqf");
+	[_player, _killer, "noWait"] execVM (MCC_path + "f\common\f_spect\specta.sqf");
 };

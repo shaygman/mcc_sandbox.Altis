@@ -26,7 +26,7 @@ lbClear _comboBox;
 {
 	_displayname =  _x;
 	_index = _comboBox lbAdd _displayname;
-} foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "D.O.C", "Ammo", "Objects (Fortifications)", "Objects (Dead Bodies)", "Objects (Furnitures)", 
+} foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "D.O.C", "Ammo", "Objects (Fortifications)", "Objects (Dead Bodies)", "Objects (Furniture)", 
 			"Objects (Market)", "Objects (Construction)", "Objects (Signs)", "Objects (Flags)", "Objects (Military)","Objects (Small)", "Objects (Wrecks)", "Objects (Submerged)", "Objects (Tents)","Objects (Garbage)","Objects (Lamps)",
 			"Objects (Container)","Objects (Structures)","Objects (Helpers)","Objects (Training)","Mines","Animals"];
 _comboBox lbSetCurSel MCC_class_index;

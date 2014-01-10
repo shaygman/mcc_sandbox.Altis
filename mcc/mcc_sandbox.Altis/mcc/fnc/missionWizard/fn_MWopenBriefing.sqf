@@ -223,10 +223,10 @@ MCC_fnc_MWMapOpen_draw = {
 		_mapposX = _mappos select 0;
 		_mapposY = _mappos select 1;
 
-		_borderLeft = 0.253646 * safezoneW + safezoneX;
-		_borderRight = (0.253646 * safezoneW + safezoneX) + (0.498438 * safezoneW);
-		_borderTop = 0.203116 * safezoneH + safezoneY;
-		_borderBottom = (0.203116 * safezoneH + safezoneY) + (0.406841 * safezoneH);
+		_borderLeft = 0.219271 * safezoneW + safezoneX;
+		_borderRight = (0.219271 * safezoneW + safezoneX) + (0.532813 * safezoneW);
+		_borderTop = 0.412034 * safezoneH + safezoneY;
+		_borderBottom = (0.412034 * safezoneH + safezoneY) + (0.505803 * safezoneH);
 
 		if (
 			_mapposX < _borderLeft || _mapposX > _borderRight
@@ -234,11 +234,11 @@ MCC_fnc_MWMapOpen_draw = {
 			_mapposY < _borderTop || _mapposY > _borderBottom
 		) then {
 			_texture = gettext (configfile >> "CfgInGameUI" >> "Cursor" >> "outArrow");
-			_mapposX = _mapposX max safezoneX min (safezoneX + safezoneW);
-			_mapposY = _mapposY max safezoneY min (safezoneY + safezoneH);
+			_mapposX = _mapposX max (0.219271 * safezoneW + safezoneX) min ((0.219271 * safezoneW + safezoneX) + safezoneW);
+			_mapposY = _mapposY max (0.412034 * safezoneH + safezoneY) min ((0.412034 * safezoneH + safezoneY) + safezoneH);
 			_title = "";
 
-			_offset = (_size / 1200);
+			_offset = (_size / 600);
 			_offsetDefX = _offset;
 			_offsetDefY = _offset * 4/3;
 			_offsetX = 0;

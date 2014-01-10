@@ -1,6 +1,6 @@
-//==================================================================MCC_fnc_countGroup===============================================================================================
+//==================================================================MCC_fnc_countGroupHC===============================================================================================
 // Count the number of infantry, vehicles, tank, air, ships in a group expand
-// Example: [_group1] call MCC_fnc_countGroup;
+// Example: [_group1] call MCC_fnc_countGroupHC;
 // _group1 = group, the group name
 //===========================================================================================================================================================================	
 private ["_group","_infantryCount","_vehicleCount","_tankCount","_airCount","_shipCount","_vehiclePic",

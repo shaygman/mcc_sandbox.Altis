@@ -11,7 +11,7 @@
 #define groupGen_IDD 2994
 #define MCC_GroupGenInfoText_IDC 9013
 
-private ["_mccdialog","_group","_button","_posX","_posY","_shift","_ctrl","_alt","_html","_info","_rank","_icon","_groupSize"];
+private ["_mccdialog","_group","_button","_posX","_posY","_shift","_ctrl","_alt","_html","_info","_rank","_icon","_groupSize","_properCfg"];
 disableSerialization;
 
 _mccdialog = findDisplay groupGen_IDD;
@@ -23,6 +23,7 @@ _posY = (_this select 2) select 1;
 _shift = _this select 3;
 _ctrl = _this select 4;
 _alt = _this select 5;
+_properCfg = 8; 		//if the cfg file is good then take from array number 8  else false - count on sim not vehicleClass take from array 5
 
 if (isnil "MCC_GroupGenGroupSelected") then {MCC_GroupGenGroupSelected = []}; 
 
@@ -62,7 +63,13 @@ if (_button == 1) then 											//Right click - get info
 					
 		_groupSize	= gettext (configfile >> "CfgMarkers" >> ((_group getvariable "MCCgroupIconSize") select 1) >> "name"); 		
 		_html = "<t color='#818960' size='1' shadow='1' align='left' underline='true'>" +groupID _group + " - " + toupper _groupSize +"</t><br/>";
+		
 		_info = [_group] call MCC_fnc_countGroupHC;
+		if (_info select 0 == 0 && _info select 1 == 0 && _info select 2 == 0 && _info select 3 == 0 && _info select 4 == 0 && _info select 5 == 0 && _info select 6 == 0 && _info select 5 == 0) then
+		{
+			_info = [_group] call MCC_fnc_countGroup;
+			_properCfg = 5; 
+		};
 		
 		_html = _html + "<t font='puristaMedium' color='#fefefe' size='0.9' shadow='1' align='left' underline='false'>" + _rank + " " + name leader _group + " - " + behaviour leader _group + " </t><br/>";
 		
@@ -78,44 +85,46 @@ if (_button == 1) then 											//Right click - get info
 		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Motorized: " + str (_info select 1) + " </t>";
 			{
 				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select 8) select 0); 
+			} foreach ((_info select _properCfg) select 0); 
 		_html = _html +	"<br/>";
 		
 		//Armor
 		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Armored: " + str (_info select 2) + " </t>";
 			{
 				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select 8) select 1); 
+			} foreach ((_info select _properCfg) select 1); 
 		_html = _html +	"<br/>";
 		
 		//Air
 		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Air: " + str (_info select 3) + " </t>";
 			{
 				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select 8) select 2); 
+			} foreach ((_info select _properCfg) select 2); 
 		_html = _html +	"<br/>";
 		
 		//Naval
 		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Naval: " + str (_info select 4) + " </t>";
 			{
 				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select 8) select 3); 
+			} foreach ((_info select _properCfg) select 3); 
 		_html = _html +	"<br/>";
 		
-		//Support
-		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Support: " + str (_info select 4) + " </t>";
-			{
-				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select 8) select 4); 
-		_html = _html +	"<br/>";
-		
-		//autonomous
-		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Autonomous: " + str (_info select 4) + " </t>";
-			{
-				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select 8) select 5); 
-		_html = _html +	"<br/>";
-
+		if (_properCfg > 5) then
+		{
+			//Support
+			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Support: " + str (_info select 4) + " </t>";
+				{
+					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
+				} foreach ((_info select _properCfg) select 4); 
+			_html = _html +	"<br/>";
+			
+			//autonomous
+			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Autonomous: " + str (_info select 4) + " </t>";
+				{
+					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
+				} foreach ((_info select _properCfg) select 5); 
+			_html = _html +	"<br/>";
+		};
 		
 		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlSetStructuredText parseText _html;
 	};

@@ -192,7 +192,7 @@ lbClear _comboBox;
 	_displayname = format ["%1",_x select 3];
 	_index = _comboBox lbAdd _displayname;
 } foreach GEN_INFANTRY;
-_index = _comboBox lbAdd "Spotter - Civilan";
+_index = _comboBox lbAdd "Spotter - Civilian";
 _comboBox lbSetCurSel 0;
 
 //--------------------------------------------------------EVAC Settings---------------------------------------------------------

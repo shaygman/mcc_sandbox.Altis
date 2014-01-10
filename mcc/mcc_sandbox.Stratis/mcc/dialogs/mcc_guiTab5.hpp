@@ -33,7 +33,7 @@
 #define MCC_MWCQBIDC 6015
 #define MCC_MWRoadBlocksIDC 6016
 #define MCC_MWWeatherComboIDC 6017
-
+#define MCC_MCC_MWAreaComboIDC 6018
 
 
 class MCC_Sandbox5 {
@@ -106,6 +106,8 @@ class MCC_Sandbox5 {
 		MCC_MWCQBCombo,
 		MCC_MWWeatherText,
 		MCC_MWWeatherCombo,
+		MCC_MWAreaText,
+		MCC_MWAreaCombo,
 		MCC_MWGenerate
 	 };
 	   
@@ -614,6 +616,28 @@ class MCC_Sandbox5 {
 
 		x = 0.626042 * safezoneW + safezoneX;
 		y = 0.34606 * safezoneH + safezoneY;
+		w = 0.0859375 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	
+	class MCC_MWAreaText: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Area:"; //--- ToDo: Localize;
+		x = 0.551563 * safezoneW + safezoneX;
+		y = 0.379047 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	class MCC_MWAreaCombo: MCC_RscCombo
+	{
+		idc = MCC_MCC_MWAreaComboIDC;
+
+		x = 0.626042 * safezoneW + safezoneX;
+		y = 0.379047 * safezoneH + safezoneY;
 		w = 0.0859375 * safezoneW;
 		h = 0.0219914 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";

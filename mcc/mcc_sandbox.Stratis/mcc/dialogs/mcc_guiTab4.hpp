@@ -246,7 +246,7 @@ class MCC_Sandbox4 {
 	class MCC_UMTittle: MCC_RscText
 	{
 		idc = -1;
-		text = "Units Managment"; //--- ToDo: Localize;
+		text = "Units Management"; //--- ToDo: Localize;
 		x = 0.179167 * safezoneW + safezoneX;
 		y = 0.126146 * safezoneH + safezoneY;
 		w = 0.164062 * safezoneW;
@@ -290,7 +290,7 @@ class MCC_Sandbox4 {
 		w = 0.039375 * safezoneW;
 		h = 0.0280063 * safezoneH;
 		onButtonClick = __EVAL ("[0] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\side_change.sqf'");
-		tooltip = "Show only controlled by players units "; //--- ToDo: Localize;
+		tooltip = "Show only player controlled units "; //--- ToDo: Localize;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 	class MCC_UMwest: MCC_RscButton
@@ -322,14 +322,14 @@ class MCC_Sandbox4 {
 	class MCC_UMGuar: MCC_RscButton
 	{
 		idc = -1;
-		text = "GUAR"; //--- ToDo: Localize;
+		text = "Ind"; //--- ToDo: Localize;
 		x = 0.373958 * safezoneW + safezoneX;
 		y = 0.324069 * safezoneH + safezoneY;
 		w = 0.039375 * safezoneW;
 		h = 0.0280063 * safezoneH;
 		colorText[] = {0,1,0,0.5};
 		onButtonClick = __EVAL ("[3] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\side_change.sqf'");
-		tooltip = "Show only GUAR units "; //--- ToDo: Localize;
+		tooltip = "Show only independents' units "; //--- ToDo: Localize;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 	class MCC_UMTeleport: MCC_RscButton
@@ -347,7 +347,7 @@ class MCC_Sandbox4 {
 	class MCC_UMHijak: MCC_RscButton
 	{
 		idc = -1;
-		text = "Hijak"; //--- ToDo: Localize;
+		text = "Hijack"; //--- ToDo: Localize;
 		x = 0.43125 * safezoneW + safezoneX;
 		y = 0.203116 * safezoneH + safezoneY;
 		w = 0.0525 * safezoneW;
@@ -429,46 +429,46 @@ class MCC_Sandbox4 {
 		y = 0.203116 * safezoneH + safezoneY;
 		w = 0.0525 * safezoneW;
 		h = 0.0280063 * safezoneH;
-		tooltip = "Parachute the current selected units"; //--- ToDo: Localize;
+		tooltip = "Parachute the currently selected units"; //--- ToDo: Localize;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 	class MCC_UMHCgeneral: MCC_RscButton
 	{
 		idc = -1;
-		onButtonClick = "[5] execVM 'mcc\general_scripts\unitManage\um.sqf'";
+		onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 		text = "HC: General"; //--- ToDo: Localize;
 		x = 0.5 * safezoneW + safezoneX;
 		y = 0.236103 * safezoneH + safezoneY;
 		w = 0.0525 * safezoneW;
 		h = 0.0280063 * safezoneH;
-		tooltip = "Creat a general who can command other AI groups from the same side"; //--- ToDo: Localize;
+		tooltip = "Create a General who can command other AI groups on the same side"; //--- ToDo: Localize;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 	class MCC_UMHCaddGroup: MCC_RscButton
 	{
 		idc = -1;
-		onButtonClick = "[7] execVM 'mcc\general_scripts\unitManage\um.sqf'";
+		onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 		text = "HC: Add group"; //--- ToDo: Localize;
 		x = 0.5 * safezoneW + safezoneX;
 		y = 0.26909 * safezoneH + safezoneY;
 		w = 0.0525 * safezoneW;
 		h = 0.0280063 * safezoneH;
-		tooltip = "Add the selected group to it's appropriate side general cotrol"; //--- ToDo: Localize;
+		tooltip = "Add the selected group to it's appropriate side general control"; //--- ToDo: Localize;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 	class MCC_UMHCclear: MCC_RscButton
 	{
 		idc = -1;
-		onButtonClick = "[6] execVM 'mcc\general_scripts\unitManage\um.sqf'";
+		onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 		text = "HC: Clear"; //--- ToDo: Localize;
 		x = 0.5 * safezoneW + safezoneX;
 		y = 0.302077 * safezoneH + safezoneY;
 		w = 0.0525 * safezoneW;
 		h = 0.0280063 * safezoneH;
-		tooltip = "Remove all controled AI groups from the selected commander control"; //--- ToDo: Localize;
+		tooltip = "Remove all AI groups from the control of the selected commander"; //--- ToDo: Localize;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 	class MCC_UMListFrame: MCC_RscFrame

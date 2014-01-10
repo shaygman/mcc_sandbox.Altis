@@ -8,7 +8,7 @@
 //_isBasedLocations 	= Boolean, true if the map support locations
 // Return - pos
 //========================================================================================================================================================================================
-private ["_pos","_minRadius","_centerFound","_buildingsArray","_newPos","_name","_type","_isBasedLocations","_locations","_location"];
+private ["_pos","_minRadius","_centerFound","_buildingsArray","_newPos","_name","_type","_isBasedLocations","_locations","_location","_time"];
 
 _pos 				= _this select 0;
 _minRadius 			= _this select 1;
@@ -35,7 +35,8 @@ if (_isBasedLocations) then
 else
 {
 	//Lets find a pice of land
-	while {!_centerFound} do
+	_time = time + 30;
+	while {!_centerFound && time < _time} do
 		{
 			_newPos = [[hsim_worldArea],["water","out"],{(_this distance _pos > _minRadius)}] call BIS_fnc_randomPos; //first is whitelist second is blacklist, third is condition
 			
@@ -53,6 +54,13 @@ else
 					if (!surfaceIsWater _newPos) then {_centerFound = true};
 				};
 		}; 
+		
+	if (time >= _time) then
+	{
+		diag_log "MCC: Mission Wizard Error: No mission center postion found, make a bigger zone"; 
+		MCC_MWisGenerating = false;
+		["MCC: Mission Wizard Error: No mission center found, make a bigger zone"] call bis_fnc_halt;
+	};
 };
 if (isnil "_location") then {_location = [0,""]}; 	
 [_newPos,(_location select 1)];

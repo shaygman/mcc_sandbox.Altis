@@ -1,4 +1,4 @@
-class RscPicture;
+
 class RscTitles {
 
 	class RscHcamDialog {

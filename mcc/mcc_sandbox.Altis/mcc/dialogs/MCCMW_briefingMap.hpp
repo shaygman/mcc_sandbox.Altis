@@ -40,7 +40,7 @@ class MCCMW_briefingMap {
 		x = 0.219271 * safezoneW + safezoneX;
 		y = 0.412034 * safezoneH + safezoneY;
 		w = 0.532813 * safezoneW;
-		h = 0.395846 * safezoneH;
+		h = 0.505803 * safezoneH;
 		maxSatelliteAlpha = "uinamespace getvariable ['RscDisplayStrategicMap_maxSatelliteAlpha',1]";
 		scaleDefault = "uinamespace getvariable ['MCC_MWMap_scale',0.3]";
 		scaleMax = "(uinamespace getvariable ['MCC_MWMap_scale',0.3])*2.5";
@@ -54,7 +54,7 @@ class MCCMW_briefingMap {
 		x = 0.219271 * safezoneW + safezoneX;
 		y = 0.412034 * safezoneH + safezoneY;
 		w = 0.532813 * safezoneW;
-		h = 0.395846 * safezoneH;
+		h = 0.505803 * safezoneH;
 		colorBackground[] = {1,1,1,1};
 	};
 	class MCC_mapCover: MCC_RscPicture
@@ -64,17 +64,17 @@ class MCCMW_briefingMap {
 		x = 0.219271 * safezoneW + safezoneX;
 		y = 0.412034 * safezoneH + safezoneY;
 		w = 0.532813 * safezoneW;
-		h = 0.395846 * safezoneH;
+		h = 0.505803 * safezoneH;
 		colorBackground[] = {1,1,1,1};
 	};
 	class MCC_background: MCC_RscText
 	{
 		idc = -1;
 		text = "";
-		x = 0.184896 * safezoneW + safezoneX;
+		x = 0.190625 * safezoneW + safezoneX;
 		y = 0.137141 * safezoneH + safezoneY;
-		w = 0.595833 * safezoneW;
-		h = 0.703726 * safezoneH
+		w = 0.601563 * safezoneW;
+		h = 0.802687 * safezoneH;
 		colorBackground[] = {0,0,0,1};
 	};
 	
@@ -82,10 +82,10 @@ class MCCMW_briefingMap {
 	{
 		idc = -1;
 		text = "";
-		x = 0.184896 * safezoneW + safezoneX;
+		x = 0.190625 * safezoneW + safezoneX;
 		y = 0.137141 * safezoneH + safezoneY;
-		w = 0.595833 * safezoneW;
-		h = 0.703726 * safezoneH
+		w = 0.601563 * safezoneW;
+		h = 0.802687 * safezoneH;
 		colorBackground[] = {1,1,1,1};
 	};
 	

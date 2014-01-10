@@ -26,7 +26,16 @@ _side			= _this select 5;
 _groupUnits 	= if (count _this >6) then {true} else {false};
 
 _unitsArray 	= [_faction,"soldier","men"] call MCC_fnc_makeUnitsArray;		//Let's build the faction unit's array
+if(count _unitsArray < 4) then 
+{
+	_unitsArray = [_faction,"soldier"] call MCC_fnc_makeUnitsArray;
+}; 
+
 _vehiclesArray	= [_faction,"carx","car"] call MCC_fnc_makeUnitsArray;		//Let's build the faction vehicles's array
+if(count _vehiclesArray < 4) then 
+{
+	_vehiclesArray = [_faction,"carx"] call MCC_fnc_makeUnitsArray;
+}; 
 _buildingsArray	= nearestObjects  [_center,["House","Ruins","Church","FuelStation","Strategic"],_radius];	//Let's find the buildings in the area
 
 _unitsCount		= count _unitsArray;

@@ -35,7 +35,18 @@ switch (_type) do
 		 case 2:	//CAS Add		
 		{
 			MCC_spawnkind		= [MCC_CASBombs select (lbCurSel MCC_CASTYPE)];
-			MCC_planeType		= [(MCC_CASPlanes select (lbCurSel MCC_CASPLANETYPE)) select 1];
+			
+			_indecator 		= (lbCurSel MCC_CASPLANETYPE); 
+			MCC_planeType 	= if (_indecator <= (count (U_GEN_AIRPLANE)-1)) then 
+								{
+									[(U_GEN_AIRPLANE select _indecator) select 1];
+								}
+								else 
+								{
+									_indecator = _indecator - (count U_GEN_AIRPLANE);
+									[(U_GEN_HELICOPTER select _indecator) select 1];
+								};
+								
 			if (MCC_capture_state) then	{
 				MCC_capture_var = MCC_capture_var + FORMAT ['MCC_CASConsoleArray set [count MCC_CASConsoleArray,[%1, %2]];
 					publicVariable "MCC_CASConsoleArray";

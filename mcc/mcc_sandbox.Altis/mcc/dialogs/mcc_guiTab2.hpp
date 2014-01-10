@@ -1007,7 +1007,7 @@ class MCC_evacDelHeli: MCC_RscButton
 class MCC_evacFlightHightTitle: MCC_RscText
 {
 	idc = -1;
-	text = "F. Hight:"; //--- ToDo: Localize;
+	text = "F. Height:"; //--- ToDo: Localize;
 	x = 0.184961 * safezoneW + safezoneX;
 	y = 0.892033 * safezoneH + safezoneY;
 	w = 0.0509924 * safezoneW;

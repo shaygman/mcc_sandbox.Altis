@@ -8,7 +8,7 @@ private ["_group", "_static","_buildingsArray","_buildingscount","_buildingPos",
 _group					 = _this select 0; 
 _static 			     = _this select 1; 
 
-sleep (random 360);
+sleep (random 240);
 if (isnil "_group") exitWith {};
 
 _leader = leader _group;

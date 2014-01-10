@@ -487,7 +487,7 @@ class MCC_TSSetWeatherButton: MCC_RscButton
 	idc = -1;
 	onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
 
-	text = "Set Weahter"; //--- ToDo: Localize;
+	text = "Set Weather"; //--- ToDo: Localize;
 	x = 0.184896 * safezoneW + safezoneX;
 	y = 0.65394 * safezoneH + safezoneY;
 	w = 0.144479 * safezoneW;
@@ -509,7 +509,7 @@ class MCC_MissionSettings: MCC_RscButton {idc = -1;	text = "Mission Settings";
 	onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'missionSettings';} else {player globalchat 'Access Denied'};";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_groupGenerator: MCC_RscButton {idc = -1;	text = "Group Genrator"; 
+class MCC_groupGenerator: MCC_RscButton {idc = -1;	text = "Group Generator"; 
 	x = 0.474448 * safezoneW + safezoneX;
 	y = 0.39796 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
@@ -518,7 +518,7 @@ class MCC_groupGenerator: MCC_RscButton {idc = -1;	text = "Group Genrator";
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'mcc_groupGen';} else {player globalchat 'Access Denied'};";
 };
-class MCC_boxGenerator: MCC_RscButton {idc = -1;	text = "Box Genrator"; 
+class MCC_boxGenerator: MCC_RscButton {idc = -1;	text = "Box Generator"; 
 	x = 0.601979 * safezoneW + safezoneX;
 	y = 0.39796 * safezoneH + safezoneY;
 	w = 0.101985 * safezoneW;
@@ -556,7 +556,7 @@ class MCC_StartEast: MCC_RscButton {idc = MCCSTARTEAST;	text = "East";
 	tooltip = "Set east start location"; 
 	action = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
-class MCC_StartGUAR: MCC_RscButton {idc = MCCSTARTGUAR; text = "GUAR"; 
+class MCC_StartGUAR: MCC_RscButton {idc = MCCSTARTGUAR; text = "Independent"; 
 	x = 0.351042 * safezoneW + safezoneX;
 	y = 0.532987 * safezoneH + safezoneY;
 	w = 0.0630208 * safezoneW;
@@ -573,7 +573,7 @@ class MCC_StartCiv: MCC_RscButton {idc = MCCSTARTCIV; text = "Civ";
 	h = 0.0329871 * safezoneH;
 	colorText[] = {1,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	tooltip = "Set civilans start location"; 
+	tooltip = "Set civilians start location"; 
 	action = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 };
 class MCC_StartDisableRespawn: MCC_RscButton {idc = MCCDISABLERESPAWN; text = "Disable Respawn"; 
@@ -747,7 +747,7 @@ class MCC_pic: MCC_RscPicture {idc = -1; text = __EVAL(MCCPATH +"mcc\dialogs\mcc
 class MCC_FOBWest: MCC_RscButton
 {
 	idc = -1;
-	action = "[7] execVM 'mcc\general_scripts\mcc_start_location.sqf'";
+	onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 
 	text = "FOB"; //--- ToDo: Localize;
 	x = 0.351042 * safezoneW + safezoneX;
@@ -761,7 +761,7 @@ class MCC_FOBWest: MCC_RscButton
 class MCC_FOBEast: MCC_RscButton
 {
 	idc = -1;
-	action = "[8] execVM 'mcc\general_scripts\mcc_start_location.sqf'";
+	onButtonClick = __EVAL("[8] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 
 	text = "FOB"; //--- ToDo: Localize;
 	x = 0.404762 * safezoneW + safezoneX;
@@ -775,7 +775,7 @@ class MCC_FOBEast: MCC_RscButton
 class MCC_FOBGuar: MCC_RscButton
 {
 	idc = -1;
-	action = "[9] execVM 'mcc\general_scripts\mcc_start_location.sqf'";
+	onButtonClick = __EVAL("[9] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 
 	text = "FOB"; //--- ToDo: Localize;
 	x = 0.459896 * safezoneW + safezoneX;

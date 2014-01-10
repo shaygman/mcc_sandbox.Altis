@@ -85,7 +85,7 @@ _groups				= _this select 3;
 							_group = _x;
 							//Find nearest group
 							{
-								if (((leader _x distance _wpLoc) < 50) &&(_x != _group) && (side _x == side _group))exitWith {_wpObject = _x};
+								if (((leader _x distance _wpLoc) < 50) &&(_x != _group) && (side _x == side _group) && !isPlayer leader _x)exitWith {_wpObject = _x};
 							} foreach allGroups;
 
 							if (isnil "_wpObject") exitWith 				//Exit - no group found

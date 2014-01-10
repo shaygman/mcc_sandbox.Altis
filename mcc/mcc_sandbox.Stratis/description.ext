@@ -114,12 +114,6 @@ class Params
 
 };
 
-// ============================================================================================
-
-// F3 - Kegetys Spectator Script
-// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
-
-#include "f\common\f_spect\spectating.hpp"
 
 // ============================================================================================
 
