@@ -100,7 +100,7 @@ _medkit = "Medikit";
 // Backpacks
 _bagmedium = "B_AssaultPack_khk";  			// used by most roles		
 _baglarge =  "B_Kitbag_mcamo"; 	   			// used by medic and engineers
-_bagmediumdiver =  "B_AssaultPack_blk";		// used by divers
+_bagmediumdiver =  if ((paramsArray select 2) in [0,2]) then {"B_AssaultPack_khk"} else {"B_AssaultPack_blk"};		// used by divers
 
 // ====================================================================================
 
@@ -143,22 +143,22 @@ _APmine2 = "ClaymoreDirectionalMine_Remote_Mag";
 
 // =============================================== SF====================================
 // Rifle with GL and HE grenades (CO, DC, FTLs)
-_SFglrifle = "arifle_MX_GL_F"; 
+_SFglrifle = if ((paramsArray select 2) in [0,2]) then {"arifle_MX_GL_F"} else {"arifle_MX_GL_Black_F"}; 
 _SFglriflemag = "30Rnd_65x39_caseless_mag";
 _SFglriflemag_tr = "30Rnd_65x39_caseless_mag_Tracer"; 
 _SFglmag = "1Rnd_HE_Grenade_shell";														
-_SFglrifle_attach = ["acc_pointer_IR","optic_Hamr","muzzle_snds_H"];
+_SFglrifle_attach = if ((paramsArray select 2) in [0,2]) then {["acc_pointer_IR","optic_Hamr","muzzle_snds_H"]} else {["acc_pointer_IR","optic_Nightstalker","muzzle_snds_H"]}; 
 
 // Medium MG
 _SFMMG = "LMG_Mk200_pointer_F"; 
 _SFMMGmag = "200Rnd_65x39_cased_Box";
 _SFMMGmag_tr = "200Rnd_65x39_cased_Box_Tracer";																								
-_SFMMG_attach = ["acc_pointer_IR","optic_MRCO","muzzle_snds_H_MG"];
+_SFMMG_attach = if ((paramsArray select 2) in [0,2]) then {["acc_pointer_IR","optic_MRCO","muzzle_snds_H_MG"]} else {["acc_pointer_IR","optic_Nightstalker","muzzle_snds_H_MG"]}; 
 
 // Marksman
-_SFMrkrifle = "arifle_MXM_Hamr_pointer_F"; 
+_SFMrkrifle = if ((paramsArray select 2) in [0,2]) then {"arifle_MXM_Hamr_pointer_F"} else {"arifle_MXM_Black_F"}; 
 _SFMrkriflemag = "30Rnd_65x39_caseless_mag";			
-_SFMarkrifle_attach = ["acc_pointer_IR","optic_Arco","muzzle_snds_H"];
+_SFMarkrifle_attach = if ((paramsArray select 2) in [0,2]) then {["acc_pointer_IR","optic_Arco","muzzle_snds_H"]} else {["acc_pointer_IR","optic_Nightstalker","muzzle_snds_H"]}; 
 
 // Sniper
 _sniperRifle = "srifle_LRR_F"; 
@@ -166,10 +166,10 @@ _sniperRiflemag = "7Rnd_408_Mag";
 _sniperRifle_attach = ["optic_SOS"];
 
 // Rifle 
-_SFrifle = "arifle_MX_F"; 
+_SFrifle = if ((paramsArray select 2) in [0,2]) then {"arifle_MX_F"} else {"arifle_MXC_Black_F"};  
 _SFriflemag = "30Rnd_65x39_caseless_mag";
 _SFriflemag_tr = "30Rnd_65x39_caseless_mag_Tracer"; 				
-_SFrifle_attach = ["acc_pointer_IR","optic_Hamr","muzzle_snds_H"];
+_SFrifle_attach = if ((paramsArray select 2) in [0,2]) then {["acc_pointer_IR","optic_Hamr","muzzle_snds_H"]} else {["acc_pointer_IR","optic_Nightstalker","muzzle_snds_H"]}; 
 
 //SF-AT
 _SFAT = "launch_NLAW_F"; 
@@ -188,6 +188,13 @@ _lightRig = "V_PlateCarrier1_rgr"; // co,dc,ftl,medic,rat,matag,mmgag
 _heavyRig = "V_PlateCarrierGL_rgr"; // ar,eng
 
 //Sf - GhillieSuit
+_SFbaseUniform = if ((paramsArray select 2) in [0,2]) then { "U_B_CombatUniform_mcam"} else {"U_I_G_Story_Protagonist_F"}; 
+_SFlightUniform = if ((paramsArray select 2) in [0,2]) then { "U_B_CombatUniform_mcam_tshirt"} else {"U_I_G_Story_Protagonist_F"}; 
+_SFbaseHelmet = if ((paramsArray select 2) in [0,2]) then { "H_HelmetB_light_grass"} else {"H_HelmetB_light_black"}; 
+_SFlightHelmet = if ((paramsArray select 2) in [0,2]) then { "H_Booniehat_khk_hs"} else {"H_HelmetB_light_black"}; 
+_SFlightRig = if ((paramsArray select 2) in [0,2]) then { "V_PlateCarrier1_rgr"} else {"V_TacVest_blk"}; 
+_SFheavyRig = if ((paramsArray select 2) in [0,2]) then { "V_PlateCarrierGL_rgr"} else {"V_PlateCarrier1_blk"}; 
+
 _sfUniform = "U_B_GhillieSuit";
 _sfHelmet = "";
 _sfRig = "V_PlateCarrier1_rgr";
@@ -586,14 +593,14 @@ _backpack = {
 			if (paramsArray select 1 == 1) then {
 				_unit addBackpack _bagmediumdiver;
 				clearMagazineCargoGlobal (unitBackpack _unit);
-				(unitBackpack _unit) addMagazineCargoGlobal [_SFMMGmag_tr, 1];
+				(unitBackpack _unit) addMagazineCargoGlobal [_SFMMGmag_tr, 2];
 			};
 			// BACKPACK: HEAVY
 			if (paramsArray select 1 == 2) then {
 				_unit addBackpack _bagmediumdiver;
 				clearMagazineCargoGlobal (unitBackpack _unit);
 				(unitBackpack _unit) addMagazineCargoGlobal [_SFMMGmag, 1];
-				(unitBackpack _unit) addMagazineCargoGlobal [_SFMMGmag_tr, 1];
+				(unitBackpack _unit) addMagazineCargoGlobal [_SFMMGmag_tr, 2];
 			};
 		};
 		// BACKPACK: SF RIFLEMAN (R)

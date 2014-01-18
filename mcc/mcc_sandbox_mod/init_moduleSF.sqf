@@ -24,7 +24,7 @@ if (player in _synced)then {
 				};
 				
 	hcam_units = synchronizedobjects _logic;			//Units watching the live feed
-	while { !alive player && isnil "MCC_path"} do {sleep 1}; 
+	while { !alive player || isnil "MCC_path"} do {sleep 1}; 
 	_null = [] execVM MCC_path + "hcam\hcam_init.sqf";
 	player setVariable ["mcc_sf",true,true];
 	sleep 1; 

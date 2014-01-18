@@ -50,7 +50,7 @@ if (mcc_missionmaker == (name player)) then
 					_eib_marker setMarkerTextlocal (IedName select 0);
 					_eib_marker setMarkerdirlocal IEDDir-90;
 					mcc_safe=mcc_safe + FORMAT ["
-					[[%1 , '%2' , '%3', %4, %5, %6, %7, %8],'MCC_fnc_ambushSingle',true,false] call BIS_fnc_MP;
+					[[%1 , '%2' , '%3', %4, %5, %6, %7, %8],'MCC_fnc_ambushSingle',false,false] call BIS_fnc_MP;
 					sleep 1;
 					_eib_marker = createMarkerlocal [%4 select 0 ,%1];
 					_eib_marker setMarkerTypelocal 'mil_ambush';
@@ -67,7 +67,7 @@ if (mcc_missionmaker == (name player)) then
 					, MCC_IEDisSpotter
 					, iedside
 					];
-				[[MCC_pointA , IEDAmbushspawnname,mcc_sidename, IedName, IEDDir, MCC_pointB, MCC_IEDisSpotter, iedside],"MCC_fnc_ambushSingle",true,false] call BIS_fnc_MP;
+				[[MCC_pointA , IEDAmbushspawnname,mcc_sidename, IedName, IEDDir, MCC_pointB, MCC_IEDisSpotter, iedside],"MCC_fnc_ambushSingle",false,false] call BIS_fnc_MP;
 				};
 			MCC_ambushPlacing = false; 							
 		};

@@ -14,7 +14,7 @@ _objPos = _this select 0;
 _isCQB = _this select 1;
 _side = _this select 2;
 _faction = _this select 3;
-_preciseMarkers = true; 
+_preciseMarkers = _this select 4;
 
 _objType = MCC_MWIntelObjects call BIS_fnc_selectRandom;
 
@@ -39,6 +39,7 @@ if (_isCQB) then
 			_object = _objType createvehicle _spawnPos;
 			_object setPos (_dummyObject modelToWorld [0,0,0.43]); 
 			_object setdir (getdir _dummyObject);
+			_object enablesimulation false;
 			_unitPlaced = true; 
 			
 			//Lets spawn some body guards
@@ -72,23 +73,7 @@ else		//Not CQB
 	_object = _objType createvehicle _spawnPos;
 	_object setPos (_dummyObject modelToWorld [0,0,0.43]); 
 	_object setdir _spawndir;
-	
-	/*
-	//Lets spawn some body guards
-	_unitsArray = [_faction ,"soldier"] call MCC_fnc_makeUnitsArray;		//Let's build the faction unit's array
-
-	_group = creategroup _side; 
-	_unit = _object;
-	for [{_i=0},{_i<4},{_i=_i+1}] do 
-	{
-		_type = _unitsArray select round (random 4); 	
-		_spawnPos = (getpos _unit) findEmptyPosition [10,200,(_type select 0)]; 
-		_unit = _group createUnit [_type select 0,_spawnPos,[],0.5,"NONE"];
-		waituntil {alive _unit}; 
-	};
-
-	[_group, _spawnPos] call bis_fnc_taskDefend;
-	*/
+	_object enablesimulation false;
 };
 
 //Pick Item 

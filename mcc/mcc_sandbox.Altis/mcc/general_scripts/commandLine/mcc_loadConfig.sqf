@@ -91,6 +91,16 @@ if (mcc_missionmaker == (name player)) then {
 			//_command = "mcc_isloading=true;" + _string + "mcc_isloading=false;"; 
 			[] spawn compile _command;
 		};
+		
+		case 5: //Save to SQM
+		{
+			[] call MCC_fnc_saveToSQM;
+		};
+		
+		case 6: //Save to COMP
+		{
+			[position player] call MCC_fnc_saveToComp;
+		};
 	};
 
 } else {player globalchat "Access Denied";}

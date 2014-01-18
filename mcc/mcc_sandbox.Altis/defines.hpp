@@ -183,6 +183,16 @@ class CfgFunctions
 			{
 				description = "Populate soldiers inside empty houses";
 			};
+			
+			class saveToSQM
+			{
+				description = "Save MCC's 3D editor placments in SQM file format and copy it to clipboard";
+			};
+			
+			class saveToComp
+			{
+				description = "Save MCC's 3D editor placments in composition format";
+			};
 		};
 		
 		class ui
@@ -1017,5 +1027,18 @@ class CfgSounds	{
 	name = "missileLunch";
 	sound[] = {"sounds\missile.ogg", 1, 1};
 	titles[] = {};
+	};
+};
+
+class CfgNotifications
+{
+	class MCCNotifications
+	{
+		description = "%1";
+		iconPicture = "%2";
+		iconText = "%3";
+		priority = 4;
+		sound = "communicationMenuItemAdded";
+		title = "NEW SUPPORT AVAILABLE";
 	};
 };

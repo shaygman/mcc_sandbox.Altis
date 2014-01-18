@@ -189,6 +189,13 @@ _lightRig = "V_PlateCarrierIA2_dgtl"; // co,dc,ftl,medic,rat,matag,mmgag
 _heavyRig = "V_PlateCarrierIAGL_dgtl"; // ar,eng
 
 //Sf - GhillieSuit
+_SFbaseUniform = "U_I_CombatUniform";
+_SFlightUniform = "U_I_CombatUniform_shortsleeve";
+_SFbaseHelmet = "H_HelmetIA_net";
+_SFlightHelmet = "H_HelmetIA_camo";
+_SFlightRig = "V_PlateCarrierIA2_dgtl"; // co,dc,ftl,medic,rat,matag,mmgag
+_SFheavyRig = "V_PlateCarrierIAGL_dgtl"; // ar,eng
+
 _sfUniform = "U_I_GhillieSuit";
 _sfHelmet = "";
 _sfRig = "V_PlateCarrierIA2_dgtl";

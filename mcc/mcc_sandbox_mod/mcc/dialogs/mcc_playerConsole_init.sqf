@@ -156,7 +156,7 @@ onGroupIconClick
 //Add - Ctrl + number group selections handlers
 if (isnil "MCC_consoleGroupSelectionEH") then
 	{
-		MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown", format ["_this execVM '%1mcc\general_scripts\console\groupNumbersSelectionEH.sqf';true",MCC_path]];
+		MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown", format ["nul = _this execVM '%1mcc\general_scripts\console\groupNumbersSelectionEH.sqf';",MCC_path]];
 	};
 	
 [] call 
@@ -366,11 +366,4 @@ if (isnil "MCC_consoleGroupSelectionEH") then
 		setGroupIconsVisible [false,false];
 		setGroupIconsSelectable false;
 		ctrlShow [MCC_MINIMAP,true];
-		
-		//Add - Ctrl + remove EH
-		if (!isnil "MCC_consoleGroupSelectionEH") then
-		{
-			(findDisplay 46) displayRemoveEventHandler ["KeyDown",MCC_consoleGroupSelectionEH];
-			MCC_consoleGroupSelectionEH = nil; 
-		};
 	};

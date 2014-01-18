@@ -127,6 +127,7 @@ class MCC_RscButton
   colorBorder[] = {0,0,0,1};
   colorDisabled[] = {0.4,0.4,0.4,1};
   colorFocused[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])",1};
+  colorBackgroundFocused[] = {1,1,1,1};
   colorShadow[] = {0,0,0,1};
   colorText[] = {1,1,1,1};
   font = "PuristaMedium";
@@ -149,7 +150,7 @@ class MCC_RscButton
   y = 0;
 };
 
-class MCC_RscButtonMenu
+class MCC_RscButtonMenu : MCC_RscButton
 {
   action = "";
   animTextureDefault = "#(argb,8,8,3)color(1,1,1,1)";

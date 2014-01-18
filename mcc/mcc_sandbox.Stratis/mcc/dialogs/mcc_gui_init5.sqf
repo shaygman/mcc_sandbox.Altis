@@ -27,6 +27,8 @@
 #define MCC_MWRoadBlocksIDC 6016
 #define MCC_MWWeatherComboIDC 6017
 #define MCC_MCC_MWAreaComboIDC 6018
+#define MCC_MWDebugComboIDC 6019
+#define MCC_MWPreciseMarkersComboIDC 6020
 
 private ["_mccdialog","_comboBox","_displayname"];
 disableSerialization;
@@ -73,6 +75,14 @@ lbClear _comboBox;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes"];
 _comboBox lbSetCurSel 0;
+
+_comboBox = _mccdialog displayCtrl MCC_MWPreciseMarkersComboIDC;		
+lbClear _comboBox;
+{
+	_displayname = _x;
+	_comboBox lbAdd _displayname;
+} foreach ["No","Yes"];
+_comboBox lbSetCurSel 1;
 
 /*
 _comboBox = _mccdialog displayCtrl MCC_MWReinforcementIDC;		
@@ -132,6 +142,14 @@ lbClear _comboBox;
 } foreach ["No","Yes"];
 _comboBox lbSetCurSel 0;
 
+_comboBox = _mccdialog displayCtrl MCC_MWDebugComboIDC;		
+lbClear _comboBox;
+{
+	_displayname = _x;
+	_comboBox lbAdd _displayname;
+} foreach ["No","Yes"];
+_comboBox lbSetCurSel 0;
+
 _comboBox = _mccdialog displayCtrl MCC_MWIEDIDC;		
 lbClear _comboBox;
 {
@@ -179,7 +197,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["Change","Don't change"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 1;
 
 _comboBox = _mccdialog displayCtrl MCC_MCC_MWAreaComboIDC;		
 

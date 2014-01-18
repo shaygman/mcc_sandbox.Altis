@@ -1,4 +1,37 @@
+Change log r16:
+Changed: Mission Wizard weather is set to default off. 
+
+Added: 3D editor deleted objects will not load out after loading an MCC's saved mission.
+Added: 3D editor save to sqm file option. Will save everything you spawned in 3D editor as mission.sqm file (mission file) including init added with the 3d editor. 
+Added: 3D editor save to composition option. Will only save 3D editor placements objects (not units) as BIS composition's format. 
+
+Fixed: MCC Console keys stucks, yes again. 
+Fixed: Invisible walls in the 3D editor. 
+Fixed: Mission Wizard: No objective complete after destroying building's objective. 
+Fixes: Time for JIP players was -1 than the  server. 
+Fixed: Group Gen wapoints description - you got is Jester :).
+
+MCC:
+- fix group gen wp (unload, evac chopper). 
+- fix mod template.
+- check ambush.
+- Add 3D presets as setVariable "vehicleInit"
+- Add save to SQM 3D will save MCC_save in a trigger need to find a workaround to not loading MCC 3D again.
+- Add no explosion IED.
+- Add MW no markers option.
+- Fix console CAS not matching the CAS added.
+- Fix addons CAS crashing down.
+- Add Assault objective
+- Add MCC icon on loadout
+- Fastrope? Nuke?
+
 Change log r15:
+
+Added: New parameter for the Mission Wizard: Area:
+                                          Whole map - the mission will be generated randomly iside the map's borders. 
+										  Current Zone - the mission will be generated inside the given zone (work around for addon map without MapSize param - make a zone big enough and pick the Current Zone option). 
+Added: 3D preset "Set Empty (Cargo)" clear all weapons, magazines and items from the vehicle's cargo. 
+
 Fixed: CAS didn't work on the MCC Console. 
 Fixed: Spectator was broken in the mod version. 
 Fixed: Player stuck after using the MCC's Console.
@@ -6,16 +39,12 @@ Fixed: Mission Wizard: added some code changes for preventing getting stuck on t
 Fixed: Role Selection's FOB buttons doesn't work on mod version. 
 Fixed: High Command on menu4 buttons doesn't work on mod version. 
 Fixed: Garrison function didn't work on some addons. 
-Fixed: Mission wizard destroy vehicles objectives (AA,Artillery exc) can be destroyed by other weapons but satchel charges.
-Fixed: Alot of misspelling and typos corrected with the help of Apollo from 3CB - big thanks. 
+Fixed: Mission wizard destroy vehicles objectives (AA,Artillery exc) can be destroyed by other weapons than satchel charges.
+Fixed: Alot of misspelling and typos corrected by the help of Apollo from 3CB - big thanks. 
 Fixed: Lower a bit the difficulty in MCC Mission Wizard. 
 Fixed: Mission Wizards tasks will now synced for JIP players. 
 Fixed: Group Gen and M-Tac (mcc console) didn't show correct markers for addons' units. 
 
-Added: New parameter for the Mission Wizard: Area:
-                                          Whole map - the mission will be generated randomly iside the map's borders. 
-										  Current Zone - the mission will be generated inside the given zone (work around for addon map without MapSize param - make a zone big enough and pick the Current Zone option). 
-Added: 3D preset "Set Empty (Cargo)" clear all weapons, magazines and items from the vehicle's cargo. 
 		
 
 Change log r14:

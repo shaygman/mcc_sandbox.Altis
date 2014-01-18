@@ -20,15 +20,15 @@ if (_type == 0) then
 					MCC_ACConsoleUp = true;
 					publicVariable "MCC_ACConsoleUp"; 
 					publicVariable "MCC_consoleACpos"; 
-					[[2,{["CommunicationMenuItemAdded",["AC-130 Entered the scene","%2data\AC130_icon.paa",""]] call bis_fnc_showNotification;}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+					[[2,{["MCCNotifications",["AC-130 Entered the scene","%2data\AC130_icon.paa",""]] call bis_fnc_showNotification;}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 					'
 					,MCC_consoleACpos
 					,MCC_path
 					];
 			hint "AC-130 Captured";
 			} else {
-				[[2,compile format ['["CommunicationMenuItemAdded",["AC-130 Entered the scene","%1data\AC130_icon.paa",""]] call bis_fnc_showNotification;',MCC_path]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-				//["CommunicationMenuItemAdded",["AC-130 Entered the scene",format ["%1data\AC130_icon.paa",MCC_path],""]] call bis_fnc_showNotification;
+				[[2,compile format ['["MCCNotifications",["AC-130 Entered the scene","%1data\AC130_icon.paa",""]] call bis_fnc_showNotification;',MCC_path]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+				//["MCCNotifications",["AC-130 Entered the scene",format ["%1data\AC130_icon.paa",MCC_path],""]] call bis_fnc_showNotification;
 				hint "AC-130 Spooky is airborn";
 				MCC_ACConsoleUp = true;
 				publicVariable "MCC_ACConsoleUp";

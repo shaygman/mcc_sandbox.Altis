@@ -14,7 +14,7 @@ _objPos = _this select 0;
 _isCQB = _this select 1;
 _side = _this select 2;
 _faction = _this select 3;
-_preciseMarkers = true; 
+_preciseMarkers = _this select 4; 
 
 _objType = ["fuel","radio","tanks","aa","artillery","air","cache","radar"] call BIS_fnc_selectRandom;
 
@@ -196,12 +196,15 @@ _object setpos _spawnPos;
 _object setdir _spawndir;
 
 //destroy only with satchel 
-if !(_objType in ["tanks","aa","artillery","air"]) then
+if (_objType in ["tanks","aa","artillery","air"]) then
 {
-	_init = '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];' + '_this setVehicleLock "LOCKED";'; 
+	//_init = '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];' + '_this setVehicleLock "LOCKED";'; 
+	_init = '_this setVehicleLock "LOCKED";'; 
 	if (_objType =="artillery") then {_init = _init + format ['createVehicleCrew _this;[0,_this] execVM "%1mcc\general_scripts\ambient\amb_art.sqf";',MCC_path]}; 
 	[[[netID _object,_object], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 };
+
+
 
 //Start Briefings
 switch _objType do	

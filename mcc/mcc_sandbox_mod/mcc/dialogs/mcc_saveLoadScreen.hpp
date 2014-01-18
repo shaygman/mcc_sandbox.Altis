@@ -45,7 +45,9 @@ class MCC_SaveLoadScreen
 		MCC_saveName,
 		MCC_saveNameTittle,
 		MCC_saveUIButton,
-		MCC_loadUIButton
+		MCC_loadUIButton,
+		MCC3DSaveToSQM
+		//MCC3DSaveToComp 
 	};
   
  //========================================= Background ========================================
@@ -176,9 +178,9 @@ class MCC_SaveLoadScreen
 	{
 		idc = MCC_SAVE_NAME;
 		sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		x = 0.3625 * safezoneW + safezoneX;
+		x = 0.342604 * safezoneW + safezoneX;
 		y = 0.675931 * safezoneH + safezoneY;
-		w = 0.131771 * safezoneW;
+		w = 0.103125 * safezoneW;
 		h = 0.0329871 * safezoneH;
 		text = "";
 		type = MCCCT_EDIT;
@@ -224,6 +226,31 @@ class MCC_SaveLoadScreen
 		w = 0.0973958 * safezoneW;
 		h = 0.0329871 * safezoneH;
 	};
-		
+	
+	class MCC3DSaveToSQM: MCC_RscButton
+	{
+		idc = -1;
+		colorDisabled[] = {1,0.4,0.3,0.8};
+		onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+		tooltip = "Save MCC's 3D editor placments in SQM file format and copy it to clipboard."; //--- ToDo: Localize;
+		text = "Save SQM"; //--- ToDo: Localize;
+		x = 0.288021 * safezoneW + safezoneX;
+		y = 0.719914 * safezoneH + safezoneY;
+		w = 0.103125 * safezoneW;
+		h = 0.0329871 * safezoneH;
+	};
+	
+	class MCC3DSaveToComp: MCC_RscButton
+	{
+		idc = -1;
+		colorDisabled[] = {1,0.4,0.3,0.8};
+		onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+		tooltip = "Save MCC's 3D editor placments in a composition's format to clipboard and RPT file"; //--- ToDo: Localize;
+		text = "Save Comp"; //--- ToDo: Localize;
+		x = 0.402604 * safezoneW + safezoneX;
+		y = 0.719914 * safezoneH + safezoneY;
+		w = 0.103125 * safezoneW;
+		h = 0.0329871 * safezoneH;
+	};
 	//========================================= End Controls ========================================
 };

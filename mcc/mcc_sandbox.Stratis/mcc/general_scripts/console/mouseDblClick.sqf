@@ -69,7 +69,7 @@ if ((_button == 0) && (count MCC_ConsoleGroupSelected > 0))  then 								//Clos
 			_displayname =  _x;
 			_index = _comboBox lbAdd _displayname;
 		} foreach ["Move", "Destroy", "Get In", "Search & Destroy", "Join Group", "Join Group As Leader", "Get Out", "Cycle Waypoints", "Load", "Unload", "Troops Unload", "Hold", "Senetry"
-				   ,"Guard","Support","Get In Nearest","Dismiss"];
+				   ,"Guard","Support","Get In Nearest","Dismiss","Land","Land - Get in"];
 		_comboBox lbSetCurSel 0;
 		
 		//Reveal WP  Formation Combo

@@ -97,6 +97,11 @@ switch (_IEDExplosionType) do
 			{ 
 			   _IedExplosion = MCC_fnc_IedFakeExplosion;
 			};
+			
+			case 3:	
+			{ 
+			   _IedExplosion = {};
+			};
 		};
 		
 if (_armed && _triggered) then	//If triger epxplosion
@@ -123,11 +128,18 @@ if (!_armed ) then 	//If IED critical fail while trying to disarm it
 	};
 
 sleep 0.5;
-if (_explode) then {
-	if (_fakeIed isKindOf "Car") then	{	//If IED is a car lets make it burn
+if (_explode) then 
+{
+	//If IED is a car lets make it burn
+	if (_fakeIed isKindOf "Car") then	
+	{	
 		_fakeIed setdamage 1;
 		_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _fakeIed); _effect attachto [_fakeIed,[0,0,0]];
-	} else {deletevehicle _fakeIed};
+	} 
+	else 
+	{
+		if (str _IedExplosion != str {}) then {deletevehicle _fakeIed};
+	};
 };
 sleep 10;	//fail safe give the game enough time to read the variable from it before deleting it.
 

@@ -17,12 +17,15 @@
 #define MCC_MWRoadBlocksIDC 6016
 #define MCC_MWWeatherComboIDC 6017
 #define MCC_MCC_MWAreaComboIDC 6018
+#define MCC_MWDebugComboIDC 6019
+#define MCC_MWPreciseMarkersComboIDC 6020
 
 #define FACTIONCOMBO 1001
 
 private ["_missionCenter","_missionCenterTrigger","_playersNumber","_difficulty","_totalEnemyUnits","_isCQB","_objType","_objArray","_check","_objFirstTime",
          "_minObjectivesDistance","_objPos","_timeStart","_side","_faction","_sidePlayer","_factionPlayer","_obj1","_obj2","_obj3","_pos","_center","_wholeMap",
-		 "_armor","_vehicles","_stealth","_roadPositions","_script_handler","_isIED","_isAS","_spawnbehavior","_isRoadblocks","_objectives","_isCiv","_weatherChange"];
+		 "_armor","_vehicles","_stealth","_roadPositions","_script_handler","_isIED","_isAS","_spawnbehavior","_isRoadblocks","_objectives","_isCiv","_weatherChange",
+		 "_preciseMarkers"];
 
 if (isnil "MCC_MWisGenerating") then {MCC_MWisGenerating = false}; 
 if (MCC_MWisGenerating) exitWith {player sideChat "MCC is now generating a mission please try again later"}; 
@@ -40,6 +43,8 @@ _armor 				= if ((lbCurSel MCC_MWArmorIDC)==0) then {false} else {true};
 _vehicles 			= if ((lbCurSel MCC_MWVehiclesIDC)==0) then {false} else {true};
 _weatherChange		= if ((lbCurSel MCC_MWWeatherComboIDC)==0) then {true} else {false};
 _wholeMap			= if ((lbCurSel MCC_MCC_MWAreaComboIDC)==0) then {true} else {false};
+MW_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
+_preciseMarkers		= if ((lbCurSel MCC_MWPreciseMarkersComboIDC)==0) then {true} else {false};
 
 //CQB
 switch (lbCurSel MCC_MWCQBIDC) do	
@@ -297,32 +302,32 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 				if ((random 1)>0.5) then {_factionPlayer = faction player; _sidePlayer = side player} else {_factionPlayer = "CIV_F"; _sidePlayer = civilian};
 				
 				//Spawn a hostage on the server
-				[[_objPos, _isCQB, true, _side, _faction, _sidePlayer, _factionPlayer], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB, true, _side, _faction, _sidePlayer, _factionPlayer,_preciseMarkers], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
 			};
 			
 		  case "Kill HVT":		
 			{
-				[[_objPos, _isCQB, false, _side, _faction, _sidePlayer, faction player], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB, false, _side, _faction, _sidePlayer, faction player,_preciseMarkers], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
 			};
 			
 		  case "Destroy Object":		
 			{
-				[[_objPos, _isCQB, _side, _faction], "MCC_fnc_MWObjectiveDestroy", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB, _side, _faction,_preciseMarkers], "MCC_fnc_MWObjectiveDestroy", false, false] call BIS_fnc_MP;
 			};
 			
 		  case "Aquire Intel":		
 			{
-				[[_objPos, _isCQB, _side, _faction], "MCC_fnc_MWObjectiveIntel", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB, _side, _faction,_preciseMarkers], "MCC_fnc_MWObjectiveIntel", false, false] call BIS_fnc_MP;
 			};
 			
 		 case "Clear Area":		
 			{
-				[[_objPos, _isCQB,_side, _faction,_sidePlayer], "MCC_fnc_MWObjectiveClear", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB,_side, _faction,_sidePlayer,_preciseMarkers], "MCC_fnc_MWObjectiveClear", false, false] call BIS_fnc_MP;
 			};
 			
 		 case "Disarm IED":		
 			{
-				[[_objPos, _isCQB,_side, _faction,_sidePlayer], "MCC_fnc_MWObjectiveDisable", false, false] call BIS_fnc_MP;
+				[[_objPos, _isCQB,_side, _faction,_sidePlayer,_preciseMarkers], "MCC_fnc_MWObjectiveDisable", false, false] call BIS_fnc_MP;
 			};
 		};
 		

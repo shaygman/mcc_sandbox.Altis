@@ -46,8 +46,8 @@ else
 	if ( ( _spawnkind == "Gun-run short" || _spawnkind == "Gun-run long") ) then
 	{
 	
-diag_log format ["gun-run: [%1]", _this];
-	
+		diag_log format ["gun-run: [%1]", _this];
+		
 		if ( _planeType isKindOf "Plane" ) then 
 		{
 			_distStart = 1900;
@@ -276,11 +276,11 @@ diag_log format ["gun-run: [%1]", _this];
 	else		
 	{
 		//Lets Spawn a plane
-		_plane1 			= [_planeType, _spawn, _pos, 100, false] call MCC_fnc_createPlane;		//Spawn plane 1 
+		_plane1 			= [_planeType, _spawn, _pos, 150, false] call MCC_fnc_createPlane;		//Spawn plane 1 
 		_pilotGroup1		= group _plane1;
 		_pilot1				= driver _plane1;
 
-		_plane2 			= [_planeType, _spawn, _pos, 100, false] call MCC_fnc_createPlane;		//Spawn plane 2 
+		_plane2 			= [_planeType, _spawn, _pos, 150, false] call MCC_fnc_createPlane;		//Spawn plane 2 
 		_pilotGroup2		= group _plane2;
 		_pilot2				= driver _plane2;
 

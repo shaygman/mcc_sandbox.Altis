@@ -55,8 +55,8 @@ class Params
 		 class f_param_divers
         {
                 title = "SF Uniform";
-                values[] = {0,1,2};
-                texts[] = {"Normal","Divers","Ghillie Suit"};
+                values[] = {0,1,2,3};
+                texts[] = {"Recon","Divers","Ghillie Suit","Night Ops"};
                 default = 0;
                 code = "f_param_divers = %1";
         }; 

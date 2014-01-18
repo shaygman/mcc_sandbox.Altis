@@ -13,7 +13,7 @@
 
 private ["_center","_radius","_action","_intanse","_faction","_unitsArray","_vehiclesArray","_SpawnUnit","_SpawnVehicle","_group",
 		"_unitsCount","_vehiclesCount","_buildingsArray","_buildingscount","_side","_spawnBuilding","_spawnPos","_unit","_type",
-		"_vehiclesNumber","_roads","_road","_vehicle","_vehicleClass","_groupUnits","_static"];
+		"_vehiclesNumber","_roads","_road","_vehicle","_vehicleClass","_groupUnits","_static","_dir"];
 
 disableSerialization;
 
@@ -77,13 +77,16 @@ if (_action == 0 || _action == 1) then	//Garisson
 						_group setBehaviour "SAFE";
 						_group setSpeedMode "LIMITED";
 						
+						_dir = round(random 360); 
+						
 						//Make them stand
 						{
 							_x setUnitPos "UP";
+							_x setdir _dir;
 						} foreach units _group;
 						
 						//Look somewhere randomly
-						_group setFormDir (round(random 360));
+						_group setFormDir _dir;
 						
 						_static = if (random 1 > 0.1) then {true} else {false};
 						[_group, _static] spawn MCC_fnc_garrisonBehavior

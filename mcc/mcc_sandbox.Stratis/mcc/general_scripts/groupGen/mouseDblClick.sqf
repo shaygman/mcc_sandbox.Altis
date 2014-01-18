@@ -60,7 +60,7 @@ if ((_button == 0) && (count MCC_GroupGenGroupSelected > 0))  then 								//Clo
 			_displayname =  _x;
 			_index = _comboBox lbAdd _displayname;
 		} foreach ["Move", "Destroy", "Get In", "Search & Destroy", "Join Group", "Join Group As Leader", "Get Out", "Cycle Waypoints", "Load", "Unload", "Troops Unload", "Hold", "Senetry"
-				   ,"Guard","Support","Get In Nearest","Dismiss"];
+				   ,"Guard","Support","Get In Nearest","Dismiss","Land","Land - Get in"];
 		_comboBox lbSetCurSel 0;
 		
 		//Reveal WP  Formation Combo
@@ -77,7 +77,7 @@ if ((_button == 0) && (count MCC_GroupGenGroupSelected > 0))  then 								//Clo
 		{
 			_displayname =  _x;
 			_index = _comboBox lbAdd _displayname;
-		} foreach ["NO CHANGE", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"];
+		} foreach ["FORMATION: UNCHANGED", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"];
 		_comboBox lbSetCurSel 0;
 		
 		//Reveal WP  Speed Combo
@@ -94,7 +94,7 @@ if ((_button == 0) && (count MCC_GroupGenGroupSelected > 0))  then 								//Clo
 		{
 			_displayname =  _x;
 			_index = _comboBox lbAdd _displayname;
-		} foreach  ["UNCHANGED", "LIMITED", "NORMAL", "FULL"];
+		} foreach  ["SPEED: UNCHANGED", "LIMITED", "NORMAL", "FULL"];
 		_comboBox lbSetCurSel 0;
 		
 		//Reveal WP  Behavior Combo
@@ -111,7 +111,7 @@ if ((_button == 0) && (count MCC_GroupGenGroupSelected > 0))  then 								//Clo
 		{
 			_displayname =  _x;
 			_index = _comboBox lbAdd _displayname;
-		} foreach   ["UNCHANGED", "CARELESS", "SAFE", "AWARE", "COMBAT", "STEALTH"];
+		} foreach   ["BEHAVIOR: UNCHANGED", "CARELESS", "SAFE", "AWARE", "COMBAT", "STEALTH"];
 		_comboBox lbSetCurSel 0;
 		
 		//Reveal WP  Button - ADD

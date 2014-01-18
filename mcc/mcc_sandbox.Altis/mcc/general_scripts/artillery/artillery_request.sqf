@@ -46,7 +46,7 @@ if !mcc_isloading then
 						publicVariable "HW_arti_types";
 						HW_arti_number_shells_per_hour = HW_arti_number_shells_per_hour + %3;
 						publicVariable "HW_arti_number_shells_per_hour";
-						[[2,{["CommunicationMenuItemAdded",["%1 %3 shells added","%4data\ammo_icon.paa",""]] call bis_fnc_showNotification;}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+						[[2,{["MCCNotifications",["%1 %3 shells added","%4data\ammo_icon.paa",""]] call bis_fnc_showNotification;}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 						'
 						,_shellName
 						,shelltype
@@ -71,8 +71,8 @@ if !mcc_isloading then
 						Server setVariable ["Arti_EAST_shellsleft",HW_arti_number_shells_per_hour,true];
 						Server setVariable ["Arti_GUER_shellsleft",HW_arti_number_shells_per_hour,true];
 						Server setVariable ["Arti_CIV_shellsleft",HW_arti_number_shells_per_hour,true];
-						[[2,compile format ['["CommunicationMenuItemAdded",["%2 %1 shells added","%3data\ammo_icon.paa",""]] call bis_fnc_showNotification;',nshell,_shellName,MCC_path]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-						//["CommunicationMenuItemAdded",[format ["%2 %1 shells added",nshell,_shellName],format ["%1data\ammo_icon.paa",MCC_path],""]] call bis_fnc_showNotification;
+						[[2,compile format ['["MCCNotifications",["%2 %1 shells added","%3data\ammo_icon.paa",""]] call bis_fnc_showNotification;',nshell,_shellName,MCC_path]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+						//["MCCNotifications",[format ["%2 %1 shells added",nshell,_shellName],format ["%1data\ammo_icon.paa",MCC_path],""]] call bis_fnc_showNotification;
 						};
 				hint format ["%1 Artillery enabled. \nAdded %2 artillery rounds",_shellName,nshell];
 			};

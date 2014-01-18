@@ -19,6 +19,7 @@ _shift = _this select 2;
 _ctrlKey = _this select 3;
 _alt = _this select 4;
 
+if !(_pressed in [2,3,4,5,6,7,8,9,10,11]) exitWith {};
 //hint str _this; 
 
 //assign group to a number

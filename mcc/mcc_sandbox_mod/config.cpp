@@ -24,6 +24,21 @@ class CfgMissions {
 		{
 			directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Altis";		
 		};
+		
+		class MP_COOP_MCC_SANDBOX_Chernarus 
+		{
+			directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Chernarus";		
+		};
+		
+		class MP_COOP_MCC_SANDBOX_Takistan 
+		{
+			directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Takistan";		
+		};
+		
+		class MP_COOP_MCC_SANDBOX_Zargabad
+		{
+			directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Zargabad";		
+		};
 	};
 };
 

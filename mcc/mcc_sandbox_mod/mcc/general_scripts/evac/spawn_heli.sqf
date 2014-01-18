@@ -37,6 +37,7 @@ evac_group setcombatmode "yellow";
 _evac_p assignAsDriver _evac; 												//Move the pilot in
 _evac_p moveindriver _evac;
 group _evac setBehaviour "CARELESS";
+
 _gunnersGroup = creategroup _side;											 //Create gunners group
 _gunnersGroup setbehaviour "combat";										//Make the gunners aggresive
 _gunnersGroup setcombatmode "yellow";

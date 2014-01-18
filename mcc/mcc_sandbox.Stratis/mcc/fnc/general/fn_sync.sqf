@@ -23,3 +23,5 @@ if (!isnil "MCC_sync") then
 	};
 mcc_sync_status = true; 
 skipTime -1;
+sleep 1; 
+skipTime +1;

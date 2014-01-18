@@ -123,51 +123,51 @@ switch (_typeofUnit) do
 		//===========================SF========================================
 		case "sftl":
 		{
-			if(!isnil "_lightUniform" && _lightUniform != "") then
+			if(!isnil "_SFlightUniform" && _SFlightUniform != "") then
 			{
-			_unit adduniform _lightUniform;
+			_unit adduniform _SFlightUniform;
 			};
-			if(!isnil "_lightHelmet" ) then
+			if(!isnil "_SFlightHelmet" ) then
 			{
-			_unit addheadgear "H_Cap_tan_specops_US" ;
+			_unit addheadgear _SFlightHelmet ;
 			};
-			if(!isnil "_heavyRig" && _heavyRig != "") then
+			if(!isnil "_SFheavyRig" && _SFheavyRig != "") then
 			{
-			_unit addvest _heavyRig;
+			_unit addvest _SFheavyRig;
 			};
 			removeGoggles _unit;
 			_unit addGoggles "G_Tactical_Clear";
 		};
 		case "smrk":
 		{
-			if(!isnil "_lightUniform" && _lightUniform != "") then
+			if(!isnil "_SFlightUniform" && _SFlightUniform != "") then
 			{
-			_unit adduniform "U_B_CombatUniform_mcam_vest";
+			_unit adduniform _SFlightUniform;
 			};
 			if(!isnil "_lightHelmet" ) then
 			{
 			_unit addheadgear "H_Shemag_olive" ;
 			};
-			if(!isnil "_heavyRig" && _heavyRig != "") then
+			if(!isnil "_SFlightRig" && _SFlightRig != "") then
 			{
-			_unit addvest _heavyRig;
+			_unit addvest _SFlightRig;
 			};
 			removeGoggles _unit;
 			_unit addGoggles "G_Tactical_Clear";
 		};
 		case "smmgg":
 		{
-			if(!isnil "_baseUniform" && _baseUniform != "") then
+			if(!isnil "_SFlightUniform" && _SFlightUniform != "") then
 			{
-			_unit adduniform _lightUniform;
+			_unit adduniform _SFlightUniform;
 			};
-			if(!isnil "_lightHelmet" ) then
+			if(!isnil "_SFbaseHelmet" ) then
 			{
-			_unit addheadgear "H_Booniehat_indp" ;
+			_unit addheadgear _SFbaseHelmet ;
 			};
-			if(!isnil "_heavyRig" && _heavyRig != "") then
+			if(!isnil "_SFheavyRig" && _SFheavyRig != "") then
 			{
-			_unit addvest _heavyRig;
+			_unit addvest _SFheavyRig;
 			};
 			removeGoggles _unit;
 			_unit addGoggles "G_Tactical_Clear";
@@ -175,17 +175,17 @@ switch (_typeofUnit) do
 		
 		case "sr":
 		{
-			if(!isnil "_baseUniform" && _baseUniform != "") then
+			if(!isnil "_SFbaseUniform" && _SFbaseUniform != "") then
 			{
-			_unit adduniform _lightUniform;
+			_unit adduniform _SFbaseUniform;
 			};
-			if(!isnil "_lightHelmet" ) then
+			if(!isnil "_SFbaseHelmet" ) then
 			{
-			_unit addheadgear _lightHelmet ;
+			_unit addheadgear _SFbaseHelmet ;
 			};
-			if(!isnil "_heavyRig" && _heavyRig != "") then
+			if(!isnil "_SFlightRig" && _SFlightRig != "") then
 			{
-			_unit addvest _heavyRig;
+			_unit addvest _SFlightRig;
 			};
 			removeGoggles _unit;
 			_unit addGoggles "G_Tactical_Clear";
@@ -193,17 +193,17 @@ switch (_typeofUnit) do
 		
 		case "sexp":
 		{
-			if(!isnil "_lightUniform" && _lightUniform != "") then
+			if(!isnil "_SFbaseUniform" && _SFbaseUniform != "") then
 			{
-			_unit adduniform "U_B_CombatUniform_mcam_vest";
+			_unit adduniform _SFbaseUniform;
 			};
 			if(!isnil "_lightHelmet" ) then
 			{
 			_unit addheadgear "H_Watchcap_khk" ;
 			};
-			if(!isnil "_heavyRig" && _heavyRig != "") then
+			if(!isnil "_SFheavyRig" && _SFheavyRig != "") then
 			{
-			_unit addvest _heavyRig;
+			_unit addvest _SFheavyRig;
 			};
 			removeGoggles _unit;
 			_unit addGoggles "G_Tactical_Clear";
@@ -211,17 +211,17 @@ switch (_typeofUnit) do
 		
 		case "smed":
 		{
-			if(!isnil "_lightUniform" && _lightUniform != "") then
+			if(!isnil "_SFlightUniform" && _SFlightUniform != "") then
 			{
-			_unit adduniform _lightUniform;
+			_unit adduniform _SFlightUniform;
 			};
-			if(!isnil "_lightHelmet" ) then
+			if(!isnil "_SFbaseHelmet" ) then
 			{
-			_unit addheadgear _lightHelmet ;
+			_unit addheadgear _SFbaseHelmet ;
 			};
-			if(!isnil "_heavyRig" && _heavyRig != "") then
+			if(!isnil "_SFlightRig" && _SFlightRig != "") then
 			{
-			_unit addvest _heavyRig;
+			_unit addvest _SFlightRig;
 			};
 			removeGoggles _unit;
 			_unit addGoggles "G_Tactical_Clear";

@@ -8,9 +8,25 @@
 #define MCC_SETTING_EMPTY 8006
 #define MCC_ZONE_LOC 8007
 
-private ["_mccdialog","_comboBox","_displayname","_x"];
-disableSerialization;
+#define MCC3DOpenCompIDC 8010
+#define MCC_3DCompssaveListIDC 8011
+#define MCC_3DCompssaveDescriptionIDC 8012
+#define MCC_3DCsaveNameIDC 8013
+#define MCC_3DCompsaveNameTittleIDC 8014
+#define MCC_3DCompsaveUIButtonIDC 8015
+#define MCC_3DComploadUIButtonIDC 8016
+#define MCC_3DComploadBcgIDC 8017
 
+ctrlShow [MCC_3DCompssaveListIDC,false];
+ctrlShow [MCC_3DCompssaveDescriptionIDC,false];
+ctrlShow [MCC_3DCsaveNameIDC,false];
+ctrlShow [MCC_3DCompsaveNameTittleIDC,false];
+ctrlShow [MCC_3DCompsaveUIButtonIDC,false];
+ctrlShow [MCC_3DComploadUIButtonIDC,false];
+ctrlShow [MCC_3DComploadBcgIDC,false];
+
+disableSerialization;
+private ["_mccdialog","_comboBox","_displayname","_x"];
 _mccdialog = findDisplay MCC3D_IDD;
 
 _comboBox = _mccdialog displayCtrl MCC_FACTION;		//fill combobox CFG factions

@@ -15,7 +15,7 @@ _isCQB = _this select 1;
 _side = _this select 2;
 _faction = _this select 3;
 _sidePlayer = _this select 4;
-_preciseMarkers = true; 
+_preciseMarkers = _this select 5;
 
 //find a location on road
 _time = time + 3; 

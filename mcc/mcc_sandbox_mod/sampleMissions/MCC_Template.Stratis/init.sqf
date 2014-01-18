@@ -1,7 +1,5 @@
 enableSaving [false, false];
 
-waituntil {!isnil "f_var_BTCRevive"};
-if ((f_var_BTCRevive == 1)) then {call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf"};
 // ====================================================================================
 
 // F3 - Process ParamsArray
@@ -184,7 +182,7 @@ f_script_setLocalVars = [] execVM "f\common\f_setLocalVars.sqf";
 // F3 - ORBAT Notes
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 
-[] execVM "f\common\f_orbatNotes.sqf";
+//[] execVM "f\common\f_orbatNotes.sqf";
 
 // ====================================================================================
 
@@ -200,3 +198,5 @@ f_script_setLocalVars = [] execVM "f\common\f_setLocalVars.sqf";
 
 [false] execVM "f\common\f_groupJoinAddOption.sqf";
 
+waituntil {!isnil "f_var_BTCRevive"};
+if ((f_var_BTCRevive == 1)) then {call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf"};

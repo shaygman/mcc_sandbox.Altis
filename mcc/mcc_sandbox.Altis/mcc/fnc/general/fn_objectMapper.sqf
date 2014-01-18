@@ -27,7 +27,17 @@ _script = _this select 2;
 if (!isserver) exitWith {};  
 
 _objs = [];
-_objs = call (compile (preprocessFileLineNumbers format ["%1mcc\general_scripts\docobject\%2.sqf",MCC_path,_script]));
+
+//DOC sqf or Comp Array?
+if (typeName _script == "ARRAY") then 
+{
+	_objs = _script;
+} 
+else 
+{
+	_objs = call (compile (preprocessFileLineNumbers format ["%1mcc\general_scripts\docobject\%2.sqf",MCC_path,_script]));
+};
+
 private ["_posX", "_posY"];
 _posX = _pos select 0;
 _posY = _pos select 1;
