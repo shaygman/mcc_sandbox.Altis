@@ -1,0 +1,19 @@
+#include "defines.hpp"
+
+author = Shay_gman;
+overviewPicture = "";
+overviewText = "";
+onLoadName = Chock Point;
+loadScreen = "";
+onLoadMission = CHock point is a tactical PvP buit in ArmA;
+
+respawn      = "BASE";
+respawndelay = 4;
+disabledAI   = 1;
+
+class Header
+{
+	gameType = Coop;
+	minPlayers = 1;
+	maxPlayers = 1;
+};

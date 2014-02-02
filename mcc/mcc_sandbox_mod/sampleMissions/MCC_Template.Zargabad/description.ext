@@ -1,0 +1,115 @@
+author = Shay_gman;
+overviewPicture = "data\mcc_loadingScreen.paa";
+overviewText = "Inspired by VBS and it's in game real time editor we tried to create something similar that will let any player as the role of an instructor or as we call him the mission maker, to create different real life scenarios and put them to the test. Then he can alter and change the mission progress as he see fit in order to give the other players a more divert and intense experience.";
+onLoadName = MCC Sandbox;
+loadScreen = "data\mcc_loadingScreen.paa";
+onLoadMission = MCC Sandbox is a dynamic mission environment when one can set missions and play them on the fly;
+
+respawn      = "BASE";
+respawndelay = 4;
+disabledAI   = 0;
+
+class Header
+{
+	gameType = Coop;
+	minPlayers = 1;
+	maxPlayers = 149;
+};
+
+#include "=BTC=_revive\=BTC=_respawn.h"
+
+//================================================================F3=======================================================================
+class Params
+{
+
+// ============================================================================================
+
+// F3 - Debug Mode
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+// WARNING: DO NOT DISABLE THIS COMPONENT OR PLACE ANY OTHER PARAMETERS BEFORE OR AFTER IT
+
+        class f_param_debugMode
+        {
+                title = "$STR_f_param_debugMode";
+                values[] = {0,1};
+                texts[] = {"Off","On"};
+                default = 0;
+                code = "f_var_debugMode = %1";
+        }; 
+
+// ============================================================================================
+
+// F3 - Folk Assign Gear Script
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+// WARNING: DO NOT DISABLE THIS COMPONENT OR PLACE ANY OTHER PARAMETERS BEFORE OR AFTER IT
+
+        class f_param_backpacks
+        {
+                title = "$STR_f_param_backpacks";
+                values[] = {0,1,2};
+                texts[] = {"Off","Light","Heavy"};
+                default = 1;
+                code = "f_param_backpacks = %1";
+        }; 
+		
+		 class f_param_divers
+        {
+                title = "SF Uniform";
+                values[] = {0,1,2,3};
+                texts[] = {"Recon","Divers","Ghillie Suit","Night Ops"};
+                default = 0;
+                code = "f_param_divers = %1";
+        }; 
+		
+		class f_param_nightvision
+        {
+                title = "Night Vision";
+                values[] = {0,1};
+                texts[] = {"Off","On"};
+                default = 1;
+                code = "f_param_nightvision = %1";
+        }; 
+
+// ============================================================================================
+
+// F3 - Mission Conditions Selector
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+        class f_param_timeOfDay
+        {
+                title = "$STR_f_param_timeOfDay";
+                values[] = {0,1,2,3,4,5,6,7};
+                texts[] = {$STR_f_param_timeOfDay_Option0,$STR_f_param_timeOfDay_Option1,$STR_f_param_timeOfDay_Option2,$STR_f_param_timeOfDay_Option3,$STR_f_param_timeOfDay_Option4,$STR_f_param_timeOfDay_Option5,$STR_f_param_timeOfDay_Option6,$STR_f_param_timeOfDay_Option7};
+                default = 3;
+                code = "f_param_timeOfDay = %1";
+        };   
+		
+// ==================================BTC===========================================
+		class f_param_BTCRevive
+        {
+                title = "BTC Revive";
+                values[] = {0,1};
+                texts[] = {"Off","On"};
+                default = 1;
+                code = "f_var_BTCRevive = %1";
+        }; 
+		
+		class f_param_BTCwoundingSystem
+        {
+                title = "BTC Wounding (requires BTC Revive ON";
+                values[] = {0,1};
+                texts[] = {"Off","On"};
+                default = 0;
+                code = "f_var_BTCwoundingSystem = %1";
+        }; 
+		
+		class f_param_BTCLifes
+        {
+                title = "BTC Lifes (requires BTC Revive ON";
+                values[] = {5,4,3,2,1};
+                texts[] = {"5","4","3","2","1"};
+                default = 3;
+                code = "f_var_BTCLifes = %1";
+        };
+
+};
