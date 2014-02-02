@@ -77,31 +77,31 @@ if (CP_debug) then {player sidechat format ["pilotLevel : %1",pilotLevel]};
 //											Start camera
 //******************************************************************************************************************************
 playerDeploy = false; 
-
+sleep random 2; 
 //--- Unit pos
 _logicPos = [(random 1000) + 1000,(random 1000) + 1000,(random 1000) + 10000];
 
 _logicEmpty = false;
 while {!_logicEmpty} do {																//Check if can spawn a dummy unit
 		_nearObjects = _logicPos nearObjects ["Man",50];
-		if ((count _nearObjects) == 0) then {_logicEmpty = true} else {_logicPos = [_logicPos select 0,_logicPos select 1, (_logicPos select 2)-30]};
+		if ((count _nearObjects) == 0) then {_logicEmpty = true} else {_logicPos = [_logicPos select 0,_logicPos select 1, (_logicPos select 2)-51]};
+		sleep 0.5;
 	};
-
 if (CP_debug) then {player sidechat format ["position: %1",_logicPos]};
 _camLogic = createagent ["Logic",_logicPos,[],0,"none"];
 _camLogic setpos _logicPos;
 _camLogic setdir 180;
-_camBuildings = "Land_u_Addon_01_V1_F" createvehiclelocal _logicPos; 
+_camBuildings = "Land_u_Addon_01_V1_F" createvehicle _logicPos; 
 _camBuildings attachto [_camLogic,[3.5,4.5,0]];
 _camBuildings setdir (getdir _camLogic);
-_camLight = "FirePlace_burning_F" createvehiclelocal _logicPos; 
+_camLight = "FirePlace_burning_F" createvehicle _logicPos; 
 _camLight attachto [_camLogic,[1,2,0]];
 //_camLight setpos [(_logicPos select 0) - 2, (_logicPos select 1) - 3,(_logicPos select 2)]; 
 player attachto [_camLogic,[0,4,0]];
 player setvariable ["CPCenter", _camLogic]; 
 
 //--- Camera
-setviewdistance 3;
+setviewdistance 1;
 CP_gearCamFOV = 0.15;
 CP_gearCam = "camera" camcreate position _camLogic;
 CP_gearCam cameraeffect ["internal", "BACK", "rendertarget7"];

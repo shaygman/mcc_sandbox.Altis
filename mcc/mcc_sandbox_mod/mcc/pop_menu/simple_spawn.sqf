@@ -105,11 +105,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_unitspawned =[ _pos, _dir, _class] call MCC_fnc_objectMapper;	
 				};
 			};
-	if (!isnil "_dummy") then 
-	{
-		MCC_lastSpawn set [count MCC_lastSpawn,_dummy];
-		publicVariable "MCC_lastSpawn";
-	}; 
+	if (!isnil "_dummy") then {MCC_lastSpawn = MCC_lastSpawn + [_dummy]}; 
 };
 
 MCC_mccFunctionDone = true;

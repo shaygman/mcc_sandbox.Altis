@@ -51,7 +51,7 @@ if (isnil "BIS_CONTROL_CAM") then {
 	cameraEffectEnableHUD true;
 	_camera setdir direction player;
 	[_camera,-30,0] call BIS_fnc_setPitchBank;
-	_camera camConstuctionSetParams ([position _logic]+[200000,500]);
+	_camera camConstuctionSetParams ([position _logic]+[20000,500]);
 };
 
 //_camera camConstructionSetParams [[position player select 0,position player select 1,(position player select 2)+15],5000, 300];
@@ -146,72 +146,10 @@ BIS_CONTROL_CAM_Handler =
 		//Delete object
 		if (_key in _keydelete) then 
 			{
-				if (!isnil "Object3D") then {deletevehicle Object3D};
-				_nearObjects = (getpos MCC_dummyObject) nearobjects 5; 
-				
-				if ((count _nearObjects)>1 && ((_nearObjects select 0) != MCC_dummyObject)) then 
-				{
-					_nearObjects = [_nearObjects, [], {(getpos MCC_dummyObject) distance _x }, "descend"] call BIS_fnc_sortBy;
-					private ["_deletedObj","_index"];
-					_deletedObj = (_nearObjects select 0);
-					_inArray = false;
-					
-					{
-						if (typeName _x == "ARRAY") then
-						{
-							if (_deletedObj == _x select 0) exitWith 
-							{
-								_index = _forEachIndex;
-							};
-							
-						}
-						else
-						{
-							if (_deletedObj == _x) then 
-							{
-								_index = _forEachIndex;
-							}
-						}
-					} foreach MCC_lastSpawn; 
-					
-					if (!isnil "_index") then 
-					{
-						if (typeName (MCC_lastSpawn select _index) == "ARRAY") then
-						{
-							mcc_safe = mcc_safe + FORMAT ["
-						                                    deleteVehicle ((MCC_lastSpawn select %1) select 0);
-							                                {deleteVehicle _x} forEach ((MCC_lastSpawn select %1) select 1);
-								                          "
-								                          , _index
-								                          ];
-							deleteVehicle ((MCC_lastSpawn select _index) select 0);
-							{deleteVehicle _x} forEach ((MCC_lastSpawn select _index) select 1);
-						}	
-						else	
-						{
-							mcc_safe = mcc_safe + FORMAT ["
-						                                    deleteVehicle (MCC_lastSpawn select %1);
-								                          "
-								                          , _index
-								                          ];
-							deleteVehicle (MCC_lastSpawn select _index);
-						};
-						
-						mcc_safe = mcc_safe + FORMAT ["
-						                                    MCC_lastSpawn set [%1, -1];
-								                            MCC_lastSpawn = MCC_lastSpawn - [-1];
-															publicVariable 'MCC_lastSpawn';
-								                      "
-								                      , _index
-								                      ];
-						MCC_lastSpawn set [_index, -1];
-						MCC_lastSpawn = MCC_lastSpawn - [-1];
-						publicVariable "MCC_lastSpawn";
-					}
-					else
-					{
-						deletevehicle _deletedObj;
-					}
+			if (!isnil "Object3D") then {deletevehicle Object3D};
+			_nearObjects = (getpos MCC_dummyObject) nearobjects 5; 
+			if ((count _nearObjects)>1 && ((_nearObjects select 0) != MCC_dummyObject)) then {
+				deletevehicle (_nearObjects select 0);
 				}; 
 			};
 		};
@@ -291,11 +229,10 @@ BIS_CONTROL_CAM_Handler =
 			};
 		//open menu
 		if (_key in _keysUpObj && !(dialog) && !(_ctrlKey)) then {_ok = createDialog "MCC3D_Dialog";};
-		
 		//Undo
 		if ((_key in _keysUpObj) && _ctrlKey) then 
 			{
-				_null = [1] execVM MCC_path +"mcc\general_scripts\delete\undo.sqf";
+			_null = [1] execVM MCC_path +"mcc\general_scripts\delete\undo.sqf";
 			};
 		if (_key in BIS_CONTROL_CAM_keys) then {BIS_CONTROL_CAM_keys = BIS_CONTROL_CAM_keys - [_key]};
 		};

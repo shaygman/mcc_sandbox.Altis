@@ -20,7 +20,7 @@ _convoyArray = [_car1, _car2, _car3 , _car4, _car5];
 			_unitsArray	= [faction _x,"soldier"] call MCC_fnc_makeUnitsArray;	//Let's build the faction unit's array
 			_group = creategroup side _x;
 			for [{_i=1},{_i<=_fillSlots},{_i=_i+1}] do {
-				_type = _unitsArray select round (random 4); 
+				_type = _unitsArray select round (random (count _unitsArray-1)); 
 				_unit = _group createUnit [_type select 0,_locGr,[],0.5,"NONE"];
 				sleep 0.3;
 			};
@@ -37,9 +37,9 @@ for "_i" from 0 to ((count _markerArray) -1) do
 			{
 				_activewp = (_markerArray select _i);
 				_wp = (group _car1) addWaypoint [ _activewp, 30];
-				_wp setWaypointType "MOVE";
-				_wp setWaypointCompletionRadius 100;
-				_wp setwaypointCombatMode "YELLOW";
-				_wp setWaypointFormation "COLUMN";
-				_wp setWaypointBehaviour "SAFE";
+				[(group _car1),_i] setWaypointType "MOVE";
+				[(group _car1),_i] setWaypointCompletionRadius 100;
+				[(group _car1),_i] setwaypointCombatMode "YELLOW";
+				[(group _car1),_i] setWaypointFormation "COLUMN";
+				[(group _car1),_i] setWaypointBehaviour "SAFE";
 			};

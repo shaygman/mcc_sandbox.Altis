@@ -14,7 +14,7 @@ _isCQB = _this select 1;
 _side = _this select 2;
 _faction = _this select 3;
 _sidePlayer = _this select 4;
-_preciseMarkers = _this select 5;
+_preciseMarkers = true; 
 
 _name = format ["%1", ["MCCMWClearObjective_",1] call bis_fnc_counter]; 
 

@@ -5,14 +5,9 @@
 //	_unit: object, vehicle we want to set its init. 
 //	_init: string, the new init command (use _this instead of this)
 //==============================================================================================================================================================================	
-private ["_unit","_unitinit","_newString"];
+private ["_unit","_unitinit"];
 
 _unit = if (((_this select 0) select 0) == "") then {(_this select 0) select 1} else {objectFromNetID ((_this select 0) select 0)};
 _unitinit = _this select 1;
-
-//Set variable for sqm save
-_newString = [format ["%1",_unitinit], "_this", "this"] call CBA_fnc_replace;
-_newString = [_newString, '"', "'"] call CBA_fnc_replace;
-_unit setVariable ["vehicleinit",_newString,true];
-
+//server sidechat format ["%1", _unitinit];
 _unit call compile format ["%1",_unitinit];

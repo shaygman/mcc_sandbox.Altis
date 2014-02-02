@@ -7,7 +7,7 @@ onLoadMission = MCC Sandbox is a dynamic mission environment when one can set mi
 
 respawn      = "BASE";
 respawndelay = 4;
-disabledAI   = 0;
+disabledAI   = 1;
 
 class Header
 {
@@ -15,8 +15,6 @@ class Header
 	minPlayers = 1;
 	maxPlayers = 149;
 };
-
-#include "=BTC=_revive\=BTC=_respawn.h"
 
 //================================================================F3=======================================================================
 class Params
@@ -55,8 +53,8 @@ class Params
 		 class f_param_divers
         {
                 title = "SF Uniform";
-                values[] = {0,1,2,3};
-                texts[] = {"Recon","Divers","Ghillie Suit","Night Ops"};
+                values[] = {0,1,2};
+                texts[] = {"Normal","Divers","Ghillie Suit"};
                 default = 0;
                 code = "f_param_divers = %1";
         }; 

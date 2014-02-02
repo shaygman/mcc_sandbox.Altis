@@ -1,5 +1,7 @@
 enableSaving [false, false];
 
+waituntil {!isnil "f_var_BTCRevive"};
+if ((f_var_BTCRevive == 1)) then {call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf"};
 // ====================================================================================
 
 // F3 - Process ParamsArray
@@ -198,5 +200,3 @@ f_script_setLocalVars = [] execVM "f\common\f_setLocalVars.sqf";
 
 [false] execVM "f\common\f_groupJoinAddOption.sqf";
 
-waituntil {!isnil "f_var_BTCRevive"};
-if ((f_var_BTCRevive == 1)) then {call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf"};

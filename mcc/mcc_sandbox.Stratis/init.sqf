@@ -533,9 +533,6 @@ U_EXPLOSIVE				= [];
 U_UNIFORM				= [];
 U_GLASSES				= [];
 
-MCC_3Dobjects			= [];		//Place holder for 3D objects
-MCC_3DobjectsCounter	= -1;
-
 _nul=[] execVM MCC_path + "mcc\pop_menu\mcc_make_array_obj.sqf";
 if (ACEIsEnabled) then {
 	_nul=[] execVM MCC_path + "mcc\pop_menu\mcc_make_array_weapons.sqf";
@@ -857,19 +854,6 @@ MCC_saveFiles = profileNamespace getVariable "MCC_saveFiles";
 if (isnil "MCC_saveFiles") then {	
 MCC_saveFiles = [["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""],["",""]];
 	profileNamespace setVariable ["MCC_saveFiles", MCC_saveFiles];
-		};
-
-MCC_3DCompSaveNames = profileNamespace getVariable "MCC_3DCompSaveNames";
-if (isnil "MCC_3DCompSaveNames") then {
-	MCC_3DCompSaveNames = ["Comp 1","Comp 2","Comp 3","Comp 4","Comp 5","Comp 6","Comp 7","Comp 8","Comp 9","Comp 10",
-				   "Comp 11","Comp 12","Comp 13","Comp 14","Comp 15","Comp 16","Comp 17","Comp 18","Comp 19","Comp 20"];
-	profileNamespace setVariable ["MCC_3DCompSaveNames", MCC_3DCompSaveNames];
-	};
-	
-MCC_3DCompSaveFiles = profileNamespace getVariable "MCC_3DCompSaveFiles";
-if (isnil "MCC_3DCompSaveFiles") then {	
-MCC_3DCompSaveFiles = ["","","","","","","","","","","","","","","","","","","",""];
-	profileNamespace setVariable ["MCC_3DCompSaveFiles", MCC_3DCompSaveFiles];
 		};
 		
 //============ engineer data ========================

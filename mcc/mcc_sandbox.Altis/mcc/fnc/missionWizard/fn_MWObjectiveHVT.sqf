@@ -16,7 +16,7 @@ _side = _this select 3;
 _faction = _this select 4;
 _sidePlayer = _this select 5;
 _factionPlayer = _this select 6;
-_preciseMarkers = _this select 7;
+_preciseMarkers = true; 
 
 MCC_MWcreateHostage =
 	{

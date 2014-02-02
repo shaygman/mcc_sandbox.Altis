@@ -1,7 +1,3 @@
-enableSaving [false, false];
-
-waituntil {!isnil "f_var_BTCRevive"};
-if ((f_var_BTCRevive == 1)) then {call compile preprocessFile "=BTC=_revive\=BTC=_revive_init.sqf"};
 // ====================================================================================
 
 // F3 - Process ParamsArray

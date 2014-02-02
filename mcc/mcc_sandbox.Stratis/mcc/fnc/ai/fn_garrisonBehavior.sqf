@@ -1,5 +1,5 @@
 //==================================================================MCC_fnc_garrisonBehavior===============================================================================================
-//Make garrison units patroling from house to house
+// Create artillery strike with sounds on given spot
 // Example: [_group, static] spawn MCC_fnc_garrisonBehavior;
 // _group = object. unit
 //static = boolean. true if it should be static false if not

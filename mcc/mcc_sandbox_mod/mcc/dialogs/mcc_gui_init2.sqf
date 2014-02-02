@@ -159,7 +159,7 @@ lbClear _comboBox;
 {
 	_displayname = _x;
 	_index = _comboBox lbAdd _displayname;
-} foreach ["Deadly", "Disabling", "Fake", "No Explosion"];
+} foreach ["Deadly", "Disabling", "Fake"];
 _comboBox lbSetCurSel 0;
 
 _comboBox = _mccdialog displayCtrl MCC_TRAPS_DISARM;		//fill combobox IED Disarm time

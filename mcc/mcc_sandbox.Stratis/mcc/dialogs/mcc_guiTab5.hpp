@@ -34,8 +34,6 @@
 #define MCC_MWRoadBlocksIDC 6016
 #define MCC_MWWeatherComboIDC 6017
 #define MCC_MCC_MWAreaComboIDC 6018
-#define MCC_MWDebugComboIDC 6019
-#define MCC_MWPreciseMarkersComboIDC 6020
 
 
 class MCC_Sandbox5 {
@@ -81,16 +79,12 @@ class MCC_Sandbox5 {
 		MCC_MWRivalFactionTittle,
 		MCC_MWRoadBlockCombo,
 		MCC_MWStealthCombo,
-		MCC_MWPreciseMarkersText,
-		MCC_MWPreciseMarkersCombo,
 		//MCC_MWReinforcementCombo,
 		MCC_MWObjective1Tittle,
 		MCC_MWObjective2Tittle,
 		MCC_MWObjective3Tittle,
 		MCC_MWVehiclesTittle,
 		MCC_MWArmorTittle,
-		MCC_MWDebugText,
-		MCC_MWDebugCombo,
 		MCC_MWDifficultyTittle,
 		MCC_MWDifficultyCombo,
 		MCC_MWObjective1Combo,
@@ -343,30 +337,6 @@ class MCC_Sandbox5 {
 		h = 0.0219914 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
-	
-	class MCC_MWPreciseMarkersText: MCC_RscText
-	{
-		idc = -1;
-
-		text = "Precise Locations:"; //--- ToDo: Localize;
-		x = 0.184896 * safezoneW + safezoneX;
-		y = 0.379047 * safezoneH + safezoneY;
-		w = 0.06875 * safezoneW;
-		h = 0.0219914 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
-	};
-	
-	class MCC_MWPreciseMarkersCombo: MCC_RscCombo
-	{
-		idc = MCC_MWPreciseMarkersComboIDC;
-
-		x = 0.259375 * safezoneW + safezoneX;
-		y = 0.379047 * safezoneH + safezoneY;
-		w = 0.0859375 * safezoneW;
-		h = 0.0219914 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
-	
 	class MCC_MWReinforcementCombo: MCC_RscCombo
 	{
 		idc = MCC_MWReinforcementIDC;
@@ -502,30 +472,6 @@ class MCC_Sandbox5 {
 		h = 0.0219914 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
-	
-	class MCC_MWDebugText: MCC_RscText
-	{
-		idc = -1;
-
-		text = "Show Markers:"; //--- ToDo: Localize;
-		x = 0.368229 * safezoneW + safezoneX;
-		y = 0.379047 * safezoneH + safezoneY;
-		w = 0.06875 * safezoneW;
-		h = 0.0219914 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
-	
-	class MCC_MWDebugCombo: MCC_RscCombo
-	{
-		idc = MCC_MWDebugComboIDC;
-
-		x = 0.442708 * safezoneW + safezoneX;
-		y = 0.379047 * safezoneH + safezoneY;
-		w = 0.0859375 * safezoneW;
-		h = 0.0219914 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
-	
 	class MCC_MWIEDTittle: MCC_RscText
 	{
 		idc = -1;

@@ -1,0 +1,4 @@
+Users\shay\Documents\Arma 3 Alpha - Other Profiles\shay_gman\MPMissions\mcc_sandbox_mod
+prefix=Users\shay\Documents\Arma 3 Alpha - Other Profiles\shay_gman\MPMissions\mcc_sandbox_mod
+Mikero=DePbo.dll
+Pbo Type is: Arma
