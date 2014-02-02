@@ -1,0 +1,488 @@
+Change log r17:
+
+Engine:
+	- Added: on tab 4 it's possible to select players, AI or a mixture to parachute or HALO by group or individual
+	- Added: Detection if divers are spawned and if so allow zone to be land or water
+	- Added: Start Locations can be updated multiple times. 
+	- Fixed: Saving triggers to MCC save and reloading was bugged - it should be ok now please report if you find some more bugs. 
+	- Fixed: MCC will no longer change the factions aggressiveness to each other. 
+	- Fixed: Save unit's init to SQM file was depended on CBA functions.
+	- Fixed: Missing Rsc classes in the latest game update.
+	- Fixed: Spamming factions in combo box with empty factions for addons (A3MP). 
+	- Optimized: Code for more performance. 
+	
+Mission Wizard:	
+	- Added: Stealth mission's alarm will be generated from a loudspeakers near the objective and not from the objective itself. 
+	- Added: Reinforcement option (motorized, aerial or random) when enough enemy units have been killed a some reinforcements' groups will be sent to the area
+			 either by motorized convoy or by helicopters drop off, parachute or fast ropes. Once in the mission area the enemy's reinforcement will activelly look for
+			 the players. reinforcement may occur more then once per mission. 
+	- Added: Artillery option (Mortars, Self Propelled  Artillery, Random) spawn artillery on strategic places such as mountains and provide artillery support for the enemy forces. 
+	- Fixed: Mission Wizard - precise markers Yes or no were vice-versa. 	
+	- Optimized: Spawning of objectives in open spaces and static weapons in strategic places. 
+	- Changed: Clear area objective will not show icons on HUD. 
+
+3D Editor:
+	- Added: 3D editor preset "Can be controled using MCC Console". Enable control over the unit to the player who holds the MCC Conosle.
+	- Added: 3D editor anti-collision vehicle will only spawn after you'll move the cursor away from the spawn location. 
+	- Changed: Helicopters and planes placed using 3D editor will now spawn on the ground instead of flying.
+	- Changed: 3D editor compositions menu's animation faze changed to instant. 
+	- Fixed: 3D editor presets' background is no longer transparent.	
+
+Artillery:
+	- Added: Artillery delay combo box. 
+	- Fixed: MCC Console Artillery Forward observer UI has been improved. 
+	- Fixed: AI artillery that was added with 3D editor didn't shoot on AI targets. 
+
+CAS & Airdrops:
+	- Fixed: Airdrop airplane is set to civilian side and will have different colors depends on the faction he belongs. 
+
+Misc:
+	- Added: Command line - broadcast small text or big text. Visable on all clients. 
+	- Added: 999 lives for 3CB template. 
+	- Added: Updated to Ollem's spectator script
+	- Added: Delete Markers brush - menu 4. 
+	- Added: Delete Tasks option - menu 3.
+	- Added: Mission Settings option: Disable Artillery Computer. 
+	- Changed: MCC zone markers are less intrusive.	
+  
+Reinforcement (previously paratroopers):
+	- Added: Multiple options for paratroopers (thanks to Ollem):
+		- small, medium, large - each different chopper and if available small and medium will use 'recon' groups based units
+		- besides parachuting also drop-off and fast-rope option for each chopper (based on zealot111 fastrope script: http://forums.bistudio.com/showthread.php?170545-Helicopter-fastrope-script)
+		- for Large chopper all factions use the Independent faction chopper, but it will change colour and side dependent on paratrooper faction
+		- opening/closing doors and ramps when available
+		- paratroopers will have "AWARE" status by default when "DEFAULT" (SAFE) is used (while paratroopers arer not default)
+		- When default group layouts are available (like for BIS units) these will be used. For Custom factions a random selection of available units will used (only first 5 while these are usually infantry type units and otherwise divers and pilots may also be part of the custom group)
+	
+	- Added: Multiple options for motorized reinforcement
+		- Small, medium or large motorized reinforcement.
+		- Will spawn vehicles pack with infantry outside the zone and move it into the zone while maintaining a column formation. 
+		- Once in the zone will disembark infantry that will start patrolling the zone. 
+		- Armed vehicles in the convoy will break away from it and start patrolling the zone. 
+
+Convoy (thanks to Ollem):
+	- Added: At the last waypoint cargo units will disembark automatically.
+	- Fixed: Convoy avoid divers/pilots and infantry mix in trucks
+	
+
+- TODO Save groups to profileSpace
+- TODO Save all MCC to 2D editor
+- TODO Save WP
+- TODO different Consoles
+- TODO CAS call
+
+
+Change log r16:
+Changed: Mission Wizard weather is set to default off. 
+
+Mission Saving and 3D editor:
+- Added: 3D editor deleted objects will not load out after loading an MCC's saved mission.
+- Added: 3D editor save to sqm file option. Will save everything you spawned in 3D editor as mission.sqm file (mission file) including init added with the 3d editor. 
+- Added: 3D editor save to composition option. Will only save 3D editor placements objects (not units) as BIS composition's format. 
+
+Mission & Template:
+- Added: SF - Night Ops gear preset for the mission version and templates.
+- Added: MCC Mod's templates for Chernarus, Takistan, Zargabad.
+- Fixed: Mod's template missions didn't have revive and markers. 
+
+Mission Wizard:
+- Added: "show markers" option. You can choose if you want to see the objective markers or not. 
+- Added: "Precise Locations" option. Define if the task marker will be generated on the exact task location or will show the location roughly. 
+- Fixed: No objective complete after destroying building's objective. 
+- Fixed: Acquire intel - objects will not fall below the desk. 
+
+Group Generator:
+- Added: Group Generator and MCC Console "Land" and "Land Get in" waypoints for helicopters. 
+- Fixed: Group Gen wapoints description - you got is Jester :).
+
+IED:
+- Added: No Explosion IED - for triggering ambushes without making a real IED. 
+- Fixed: Ambush and IED had some bugs on dedicated server while using the mod version. 
+
+CAS:
+- Fixed: MCC's Console CAS did not match the CAS plane requested.
+- Fixed: Addons planes keept on crashing down.
+
+Engine:
+- Fixed: Invisible walls in the 3D editor. 
+- Fixed: MCC Console keys stucks, yes again. 
+- Fixes: Time for JIP players was -1 than the  server.
+
+MCC:
+- fix group gen wp (unload, evac chopper). 
+- Add save to SQM 3D will save MCC_save in a trigger need to find a workaround to not loading MCC 3D again.
+- Add Assault objective
+- Add MCC icon on loadout
+- Fastrope? Nuke?
+
+Change log r15:
+
+Added: New parameter for the Mission Wizard: Area:
+                                          Whole map - the mission will be generated randomly iside the map's borders. 
+										  Current Zone - the mission will be generated inside the given zone (work around for addon map without MapSize param - make a zone big enough and pick the Current Zone option). 
+Added: 3D preset "Set Empty (Cargo)" clear all weapons, magazines and items from the vehicle's cargo. 
+
+Fixed: CAS didn't work on the MCC Console. 
+Fixed: Spectator was broken in the mod version. 
+Fixed: Player stuck after using the MCC's Console.
+Fixed: Mission Wizard: added some code changes for preventing getting stuck on the "Building A Mission" screen if there is an error. 
+Fixed: Role Selection's FOB buttons doesn't work on mod version. 
+Fixed: High Command on menu4 buttons doesn't work on mod version. 
+Fixed: Garrison function didn't work on some addons. 
+Fixed: Mission wizard destroy vehicles objectives (AA,Artillery exc) can be destroyed by other weapons than satchel charges.
+Fixed: Alot of misspelling and typos corrected by the help of Apollo from 3CB - big thanks. 
+Fixed: Lower a bit the difficulty in MCC Mission Wizard. 
+Fixed: Mission Wizards tasks will now synced for JIP players. 
+Fixed: Group Gen and M-Tac (mcc console) didn't show correct markers for addons' units. 
+
+		
+
+Change log r14:
+
+--- New feature: Missions Wizard ---
+
+	Mission Wizard (MW) is a quick one press missions generator for MCC. It is in MCC's menu 5. 
+	The mission wizard will read any map and scan its' locations to find the best location for the mission. 
+	Each mission is called operation and can have up to three different objectives. 
+	The MW will handle BIS default factions and any addon faction or island. 
+	It will spawn units, groups, vehicles and static weapons with different behaviors, it will automatically create zones and populate them.
+	It will automatically create tasks and triggers. 
+	It will change the weather, date and time of day to fit the mission. 
+	It will even generate custom briefings on a new custom stratigic map.
+	
+	The mission maker should define a few parameters before pressing "Generate Mission":
+		- Rival faction: who are we fighting? 
+		- # players: The ammount of players the mission is built for (more players equal more enemy's units and greater distance between objectives). 
+		- Difficulty: The higher the difficulty the more enemy's units the player should expect. 
+		- CQB: 	No - The mission will not be inside a residential area.
+				Yes Without Civilians - The mission will be in a city or a village you can expect enemy forces garrison the area but no civilians.  
+				Yes with Civilians -  The mission will be in a city or a village you can expect enemy forces garrison the area and civilians' units and vehicles in the area.  
+		- Stealth: If stealth is on the mission will be a night op and incase the players get detected they should expect alarms going off and reinforcement comming in. 
+		- Objectives 1 to 3: Up to 3 objectives per operation:
+				- Random: will randomly select an objective type. 
+				- Secure HVT: Rescue mission. Save a hostage from the enemy hands. 
+				- Kill HVT: Assassinate one of the enemy's high ranks officer. 
+				- Destroy Object: Sabotage the enemy war efforts by destroying objects ranging from: fuel dumps, ammo cash, radar, prototype vehicles and plans, artillery, AA and many more. 
+				- Pick Intel: Snatch an important information out of the enemy's hand it can be hidden in suitcases, folders exc. 
+				- Clear Area: Capture an enemy's strong point, clear it and defend against might be counter attacks. 
+				- Disarm IED: Disarm a massive IED placed by the enemy. 
+		- Vehicles: Should there be enemy's vehicles on scene. 
+		- Armor: Should there be enemy's armor on scene. 		
+		- IEDs: If turned on MW will place IEDs and ambushes on roads leading to the objectives.
+		- Suicide Bombers: If turned on MW will place suicide bombers around the objectives.
+		- Armed Civilians: If turned on MW will place armed civilians around the objectives.
+		- Roadblocks: If turned on MW will place roadblock on the roads leading to the objectives.
+		
+--- Group Generator ---
+Totally reworked Group gen:
+- Changed: 	Get total control on the AI with a new RTS like interface and functionality:
+ 
+			Groups will have NATO symbols to represents group's size and type. They will change color to indicate they are in combat. 
+			Choosing groups will be done by clicking on their icon or by drawing a box around them or by holding Ctrl for multi-selection.
+			Right clicking on a group icon will show additional details as:
+				- Group leader's name.
+				- Group infantry count.
+				- Group vehicles.
+				- Group behavior.
+			To issue waypoints choose one or more groups and double click anywhere on the minimap to issue WP.
+			Group Gen support all sides and can address waypoints that are will not work with BIS high command such as: get in, load, join exc. 
+			Mission maker will stop UPSMON if issuing custom WP to an UPSMON controlled group.
+ 
+--- Garrison ----
+- Added: Garrison units will patrol between nearby buildings. 
+- Fixed: Garrison will now work on bunkers. 
+- Fixed: Garrison will not spawn snipers/aa/at and such. 
+- Fixed: Garrison unit's density reduced by half. 
+- Fixed: Vehicles in garrison will no longer explode and the vehicles will be spawned on the roads' shoulders.  
+
+--- VAS ---
+- Fixed: Updated to latest VAS version. 
+- Fixed: MCC VAS will not overwrite missions' VAS and will not collide with existing mission's VAS if present.
+
+--- UI --- 
+- Added: Name tags - you can turn name tags on and off from mission settings. Name tags will show name and rank of nearby friendly units and while in vehicle it will 
+		 show the names of the crew. 
+- Added: A number of units per group indecator while spawning groups.
+- Added: Info to how to disable IED when choosing to be an EOD or engineer class. 
+- Fixed: Map Alpha has been reduced to show map markers. 
+- Fixed: Unit Managment (Menu 4) will display the vehicles' display name rather then the class name. 
+- Fixed: MCC changes terrain grid sometimes (Floating rocks problem). 
+- Fixed: Time on map and actual time were different. 
+
+--- Misc ---
+- Fixed: Disbanding hostage will not make you leave your group. 
+- Fixed: Some triggers didn't saved correctly. 
+- Added: Mod's mission now have BTC.
+
+--- Commander Console --- 
+- Fixed: By default players won't be able to see WP assigned to them unless defined by Mission Settings.
+
+--- 3D Editor ---
+- Fixed: 3D preset - destroy by satchel only wasn't working
+- Fixed: When spawning vehicles in 3D editor the turret will look the same direction the vehicle is pointing
+
+--- Engine ---
+- Changed: Mod version is no longer requires CBA. 
+- Changed: CAS airplanes are read from configs instead of premade list - you can call CAS with your favorite addon's plane. 
+- Changed: Groups placed with Ambush behavior will look further away for roads to place mines. 
+- Added: In mission version MCC_allowedPlayers variable for controling who will have MCC access. Host or server's admin can always access MCC. Leave "all" for free access
+- Added: MCC will delete empty groups.
+- Added: Admin or server host can kick out mission maker.
+- Added: If the mission maker DC he will leave MCC.
+
+
+- TODO: JIP briefings
+- TODO: 3D editor save to sqf
+- TODO: Satmap button
+- TODO: ai spawn in buildings
+- Players: more players will make the mission's objectives to scatter around wider area and to have more resistance. 
+
+
+startloadingscreen ["","RscDisplayLoadingBlack"];
+endloadingscreen;
+startloadingscreen ["","RscDisplayLoadMission"];
+startloadingscreen ["","RscDisplayLocWeaponInfo"];
+sleep 3; 
+endloadingscreen;
+
+
+Change log r13:
+- Fixed: Loading issues from clipboard.
+- Fixed: Reading units from mods such as Hellenic Armed Forces.
+- Changed: Delete objects All will delete all objects (dead bodys, buildings exc) delete objects All Units will delete all unit's type (vehicles, infanry, armor exc). 
+
+Change log r12:
+- Changed: Removed the video effect while opening MCC.
+
+- Fixed: Access module didn't restrict players access to MCC after respawn. 
+- Fixed: Some more undifined variables in UPSMON.
+- Fixed: BTC revive gear script colide with MCC 
+- Fixed: Some errors while loading a saved mission.
+- Fixed: Calling AI paratroops crush the game or cause unexpected behavior.
+- Fixed: Armed civilians undefined variables errors. 
+
+- Added: Airdrop module. 
+- Added: Handle MCC access by player UID for mission version. 
+- Added: New Civ DOC - Vila. 
+- Added: 3D presets (rearanged that):
+				- Stances: Stand up, Kneel, prone.
+				- Effects: Sandstorm, flies, smoke and fire. 
+				- IED: Electronic Counter Measures Vehicle - This vehicle can jamm radio operated IEDs in it's proximity. 
+- Added: Disabling IED will now cause vehiclesto burst in flames. 
+- Added: Parachuting units will have their backpack attached to their chests while parachuting. - Thanks to Cobra.
+
+- Fixed: Multiple cinametic tasks while log in. - TODO
+- Fixed: VAS errors on addon version - TODO
+
+
+
+Change log r11:
+- Added: MCC will read user made addons groups. 
+- Added: Virtual Ammobox System (VAS) - under 3D presets - Big thanks to Tonic for this great tool.
+- Added: Rearenged the objects drop down menu to fit the BIS editor menu (military, constructions, tents exc...)
+- Added: You can now spawn animals.
+- Added: Fixed wing CAS (Bombing-run, LGB, JDAM)
+- Added: Preset: Pickable item - Items put through 3D editor can be picked. Once the item picked a hint regarding the unit that picked the object will be broadcast globaly
+					and a variable named (MCC_pickItem), will turn "true". 
+- Added: Delete Brush
+- Added: New units and vehicles to convoy's HVT
+- Added: Dynamic Object Compositions (D.O.C) presets (FOB, sites, exc...) If you have some nice template send them over and i'll add them to MCC.
+
+- Reworked the MCC Tactical Commander Console:
+	- Get a new High Commander experiance with detailed information about the group under your control:
+		- Group Type
+		- Group Commander. 
+		- Group size.
+		- Vehicles in possession of the group
+		- Group Behaviour.
+	- Group's color change to indicate a group in combat. 
+	- See all other groups waypoints and markers. 
+	- Take control of any AI groups from the same side as you (can be changed in mission settings or init file).
+	- Drag and drop selecting tool frame for easy selecting multiple groups or hold Ctrl and selectively pick one by one. 
+	- Use Ctrl + number to create cluster group's shortcut button and press on the number key buttonto select the cluster again - just like old RTS. 
+	- Easily double click on map waypoint creation. 
+	- Create custom waypoints that usually don't work in default HC like - get in vehicle, join, troops unload exc. 
+	- Plan your attack with other players controled groups. The players will only see the waypoints assigned to them by the commander(can be turned off from init or mission settings).
+	- Mark all friendly groups in map.
+	- Ruler kit: Get precise artillery fire missions with this as you can measure the distance and direction to the enemies.
+	- Take control of any other group's leaders helmet or vehicle cameras (support N/V and thermal). 
+	- Take control on any UAV or UGV from your side either with the remote control (control hight, camera, turret and add WP to move around) or actually handle it (BIS Style). 
+	- Removed the virtual UAV since you can now have real ones. 
+
+- Fixed: MCC deleting all 2D editor units on mod version. 
+- Fixed: Waypoints functionality as described above will work for Group Gen also. 
+- Fixed: Sync time and weather reworked - will only run on JIP players without changing and reseting time and weather for all - should fix the time diffrent between players. 
+- Fixed: Error synchronizing tasks and markers for JIP. 
+- Fixed: Multiple Hostage rescue action. 
+- Fixed: WP cinametic wasn't working on mod version.
+- Fixed: Red dot indecator in 3D editor is now local. 
+- Fixed: Artillery fire mission sounds missing in mod version. 
+- Fixed: Helmet cams in SF module sometimes didn't start.
+- Fixed: MCC will now spawn UAV and UGV correctly and controllable.
+- Fixed: Remove the "no picture heal found" error - gave up waiting for BIS.
+- Fixed: Console Artillery stopped working for some reason.
+- Fixed: Dead artillery who is connected to the Console Artillery will not be counted as available artillery piece.
+- Fixed: Error while trying to create a brush for the first time. 
+
+Change log r10 - Beta:
+- Added: Support for Single Player. 
+- Added: Altis mission and Altis template on mod version. 
+- Added: MCC is now available in Steam Workshop.
+- Added: High command module via Unit managment: set a unit as a commander for its side and he can controll any AI group from the same side. 
+- Added: Visual effect when opening MCC or changing role in Role Selection. 
+- Added: Role Selection: officer gain experiance over time equal to the amount of players under his command.
+- Added: Role Selection: Pilots and crewman gain experiance over time equal to the ammount of players that are set as cargo in their vehicle while the vehicle is moving.  
+- Added: Role Selection: Destroying a target that is destroyable by satchels only reward experiance. 
+- Added: Role Selection: Medics get experiance for healing players. 
+- Added: Preset in 3D editor "Add Crew (UAV)" use it to spawn a controllable UAV.
+- Added: New small items to IED list. 
+- Added: MCC functions added to the functions libary (debug dialog)
+
+- Fixed: 3D editor mouse wheel wasn't working. 
+- Fixed: Iran AA team gear used old config
+- Fixed: Parachute not working on mod version. 
+- Fixed: Save gear isn't saving assigned items. 
+- Fixed: Artillery's that didn't worked. 
+
+- Changed: in mission version player need to have a UAV Terminal inorder to access MCC console. 
+- Changed: Updated minefields to minefields signs. 
+
+
+- TODO: Add pick item preset
+- TODO: weapon switch numpad
+- TODO: UAV actuall 
+
+PR change
+- fn_scheduleToExecute - throw undefied variable if no params were sent - fixed. 
+- fn_scheduleDeleteBody - had some undefined _body varaiable in it - fixed. 
+- kitsList.hpp - US_squadLeader had a minimum requirment of 3 more players. 
+- TODO - fix refresh dialog after respawn
+
+Change log r9 - Beta:
+- Added: Role selections and players levels progression (Saved on the hosted server even when the mission is done). 
+- Added: Gear and uniforms selection is defined by the player on each role. (admins can set players levels)
+- Added: Select spawn location - Base, FOB - FOB spawn location can be destroyed by a satchel charge only. 
+- Added: Players gain exp and levels by in game rating. They can use the exp to get new gear and uniforms. 
+- Added: If role selection is turned on, only pilots can drive or use helicopters/jets and only crewman can operate APC or heavy vehicles. 
+- Added: If role selection is turned on players must be in a group in order to get in the game. 
+- Added: In role selection player can pick kits limited by the size of the squad and the ammount of available kits. 
+- Added: FOB spawn points can only be destroyed by C4 or Demo charges. 
+- Added: Safe zone on start locations. 
+- Added: spectator button for Mission maker.
+- Added: IED handle damage, you can detonate IED with satchels or demo charges if you don't want risking disarming it. 
+- Added: HALO and Parachute jump for players and AI.
+- Added: AI that have to move more then 700 meters will use empty helicopters. The pilot will drop the troops and go back to it's start location - UPSMON.
+- Added: Triggers Conditions and Timeout for triggers.
+- Added: 3D Editor preset: Destroyable by satchels only. Place an object that can only be destroyed by satchel or demo charge. 
+
+- Fixed: Tasks status doesn't broadcast to all clients. 
+- Fixed: Task create can't be captured using trigger. 
+- Fixed: Unavailable picture while adding artillery rounds to console
+- Fixed: MCC sync weather and time only for the new JIP and not to all players on the server. 
+- Fixed: "undifined variable" errors on development build
+- Fixed: Group generator's markers don't refresh. 
+- Fixed: When trying to spawn something on undifined zone an error message pop
+- Fixed: Evac vehicles got stuck on WP. 
+- Fixed: Disabled attemps for multiple connections to the MCC console
+- Fixed: MCC console PiP resolution improved
+- Fixed: Tweaked suicide bombers to keep on chasing players and not lying down. 
+
+- Added: Town generator - TODO
+- Start as HALO/para - TODO
+
+Change log r8 - Beta:
+- Fixed new Beta classnames and new commandnames.
+- Fixed 3D editor items sometimes spawn underground. 
+- Fixed placing vehicles sometimes make them explode. 
+- Fixed synching tasks to a new JIP end up in error message. 
+- Changed end mission to new BIS_fnc_endMission.
+- Added SDV.
+- Added Green army and green army gear to MCC.
+- Revised gear scripts, added mortar, AA and MG teams. 
+
+Mission Settings
+- Added mission settings menu.
+- Define green army hostility. 
+- Define AI skills.
+- Reduced AI aimming and spotting skills. - no more killer AI
+
+EVAC
+- Added submarines to evac
+- Submarines will try to stay submerged in EVAC missions. 
+- Added precise smoke signal landing for EVAC helicopters. 
+
+Save & Load
+- Added saving missions in profile namespaces.
+
+IED 
+- Fixed synched IEDs won't work after loading a mission. 
+- Fixed Disarm script
+- Added new beta items to IEDS
+
+Save Gear & respawn
+- Fixed while respawn is off dead units will not have drowning effects while in spectator mod. 
+- Fixed Save gears script now fully work again.
+- Fixed body deleted after respawn. 
+
+SF moudle
+- unit synced with SF module don't need to wear a specific helmet to get a live feed.
+
+Box Gen
+- Fixed gearbox showing unavailable weapons and duplicated weapons. 
+- Added subclasses: uniforms, machineguns, sniper rifles, magazines, grenades, explosives, underbarrel grenades. 
+- Added Goggles to BoxGen - so far there is no command to actually put them in a box :(
+
+Paradrop
+- Renabled the paradrop spawn option - still at the current Beta state sometimes the jumping troops collides with the aricraft
+	and sometimes the game crush. 
+
+Garrison
+- Added a garrison function to group spawn that will automaticlly populate buildings in the given zone. 
+
+- TODO DOC
+- TODO Spectator
+- TODO HALO
+- TODO fog settings
+- TODO gearscript
+
+
+http://forums.bistudio.com/showthread.php?148577-GET-SET-Loadout-(saves-and-loads-pretty-much-everything)
+
+Change log rc8b V0.7:
+- Added notification for spawning UAV/AC-130/adding artillery and CAS.
+- Added trigger capture for UAV/AC-130
+- Added unit tracking with menu 4 is toggled on and off instead of 15 seconds interval. 
+- Fixed Access Rights module is now working again.
+- Fixed Access Rigts depends on Player's UId nor names - logic should have something like this in it's init: this setvariable ["names",["76561198007956840","1","232421"],true];
+- Fixed 3D editor can be closed with Tab key.
+- Fixed got rid of the cfgWeapon error.
+- Fixed 3Wp Evac button now shows the right description. 
+- Fixed when dying in 3D editor you no longer stuck in it.
+- Fixed time for NV to start working in 3D editor is before 05:30 and after 18:30. 
+- Fixed try spawning something without defining a zone first will be aborted and hint the mission maker that he should create a zone first.
+- Fixed trying to set a WP without creating a task first. 
+
+
+Change log r7:
+- Added: Bon Forward Artillery Observer script and dialog to menu 4 in the MCC Console. 
+- Added: Real AI artillery will adjust fire, fire and broadcast a live feed once Bon Forward Artillery is used. 
+- Added: Mini-map to the UAV and AC-130 dialogs.
+- Added: 3D compass to the UAV and AC-130 dialogs - thanks to Feint for the idea.
+- Added: Placing an IED from the 3D menu
+- Added: Use Shift key to switch between smooth or normal gain for the mousewheel Z elevation while placing objects using the 3D editor. 
+- Added: Place minefields by drawing a box on the mini-map
+
+
+- Fixed AC-130 turret rotation is limited to the left side as in real life.
+- Fixed AC-130 showing 20mm guns instead of 25mm.
+- Fixed AC-130 turret rotation was too fast. 
+- Fixed UAV is spawned by the mission maker only and will circle specefic zone, the conosle handler won't be able to move it across the map. 
+- Fixed AC-130 GAU-12 and Bufors 40 l/60 fire rate adjust to real life fire rate and muzzle velocity
+- Fixed space between mines in minefields doubled. 
+- Fixed Fog over created on MCC sync. 
+- Fixed 3D editor sometimes break when pressing apply
+
+To do:
+0 ctursc "RscSpectator"
+0 cutRsc ["RscSpectator","Plain",2];
+cutRsc ["binocular","PLAIN"]
