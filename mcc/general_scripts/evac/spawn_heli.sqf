@@ -28,7 +28,14 @@ switch (_side) do	{
 	};
 
 _evac = _heliType createVehicle [_pos select 0, _pos select 1, 500]; 				//spawn heli
-_evac setposatl _pos;
+if (surfaceIsWater _pos) then
+{
+	_evac setposasl _pos;
+}
+else
+{
+	_evac setposatl _pos;
+};
 
 evac_group = creategroup _side; 											//Create side for the pilot's group
 _evac_p = evac_group createUnit [evac_p_type, _pos, [], 0, "NONE"];			//spawn pilot

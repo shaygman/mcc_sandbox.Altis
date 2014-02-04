@@ -1,3 +1,6 @@
+Change log r18:
+- Fixed: Mission Wizard hostage task. 
+
 Change log r17:
 
 Engine:

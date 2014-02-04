@@ -77,11 +77,11 @@ switch (_task) do
       //Fail - not alive
       _capturVar = FORMAT ['[[3, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
       _stateCond = FORMAT ['!alive %1', _name];
-      [0, getpos _unit, [1,1], "NONE", "PRESENT", "RECTANGLE", name _unit, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
       
       //Succeed - not hostage
       _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
-      _stateCond = FORMAT ['(!captive %1) && (alive %1)', _name];
+      _stateCond = FORMAT ['(isPlayer leader %1) && (alive %1)', _name];
       [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
 
