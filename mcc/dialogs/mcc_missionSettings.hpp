@@ -13,6 +13,7 @@
 #define MCC_MSCONSOLECOMMANDAI 8409
 #define MCC_IDCNAMETAGS 8410
 #define mcc_artilleryTitleIDC 8411
+#define mcc_saveGearComboIDC 8412
 
 //-----------------------------------------------------------------------------
 // Main dialog
@@ -58,6 +59,8 @@ class missionSettings {
 	mcc_nameTagsCombo,
 	mcc_artilleryTitle,
 	mcc_artilleryCombo,
+	mcc_saveGearTitle,
+	mcc_saveGearCombo,
 	confirmButton,
 	CancelButton	
   };
@@ -69,8 +72,8 @@ class missionSettings {
 		moving = true;
 		x = 0.286417 * safezoneW + safezoneX;
 		y = 0.26909 * safezoneH + safezoneY;
-		w = 0.366667 * safezoneW;
-		h = 0.483811 * safezoneH;
+		w = 0.360938 * safezoneW;
+		h = 0.549786 * safezoneH;
 		text = "";
 		colorBackground[] = { 0, 0, 0, 0.6 };
 	};
@@ -201,28 +204,7 @@ class missionSettings {
 		w = 0.06875 * safezoneW;
 		h = 0.0219914 * safezoneH;
 	};
-	class confirmButton: MCC_RscButton
-	{
-		idc = -1;
-		action = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\mission_settings_change.sqf'");
 
-		text = "Confirm"; //--- ToDo: Localize;
-		x = 0.505729 * safezoneW + safezoneX;
-		y = 0.686927 * safezoneH + safezoneY;
-		w = 0.120313 * safezoneW;
-		h = 0.0439828 * safezoneH;
-	};
-	class CancelButton: MCC_RscButton
-	{
-		idc = -1;
-		action = "closeDialog 0";
-
-		text = "Cancel"; //--- ToDo: Localize;
-		x = 0.301656 * safezoneW + safezoneX;
-		y = 0.689346 * safezoneH + safezoneY;
-		w = 0.120313 * safezoneW;
-		h = 0.0439828 * safezoneH;
-	};
 	class ConsoleGPSTittle: MCC_RscText
 	{
 		idc = -1;
@@ -319,5 +301,50 @@ class missionSettings {
 		y = 0.653940 * safezoneH + safezoneY;
 		w = 0.06875 * safezoneW;
 		h = 0.0219914 * safezoneH;
+	};
+	
+	class mcc_saveGearTitle: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Save Gear:"; //--- ToDo: Localize;
+		x = 0.305208 * safezoneW + safezoneX;
+		y = 0.686927 * safezoneH + safezoneY;
+		w = 0.25 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
+	class mcc_saveGearCombo: MCC_RscCombo
+	{
+		idc = mcc_saveGearComboIDC;
+
+		x = 0.557292 * safezoneW + safezoneX;
+		y = 0.686927 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	}
+	
+	class confirmButton: MCC_RscButton
+	{
+		idc = -1;
+		action = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\mission_settings_change.sqf'");
+
+		text = "Confirm"; //--- ToDo: Localize;
+		x = 0.511458 * safezoneW + safezoneX;
+		y = 0.752901 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0439828 * safezoneH;
+	};
+	
+	class CancelButton: MCC_RscButton
+	{
+		idc = -1;
+		action = "closeDialog 0";
+
+		text = "Cancel"; //--- ToDo: Localize;
+		x = 0.299479 * safezoneW + safezoneX;
+		y = 0.752901 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0439828 * safezoneH;
 	};
  };

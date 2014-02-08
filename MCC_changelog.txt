@@ -1,5 +1,18 @@
 Change log r18:
-- Fixed: Mission Wizard hostage task. 
+- Added: Save Gear option in mission settings - by default MCC save gear is off so it won't collide with other medical systems (respawning without primary weapon bug after revive in BTC)
+- Fixed: Major lags when using the 3D editor. 
+- Fixed: Mission Wizard hostage task completed instantly. 
+- Fixed: Console evac didn't work
+- Fixed: Console Airdrop didn't work. 
+
+- pre init check.
+- vehicle init check. 
+- seperate init?
+- TODO Save groups to profileSpace
+- TODO Save all MCC to 2D editor
+- TODO Save WP
+- TODO different Consoles
+- TODO CAS call
 
 Change log r17:
 
@@ -66,14 +79,6 @@ Reinforcement (previously paratroopers):
 Convoy (thanks to Ollem):
 	- Added: At the last waypoint cargo units will disembark automatically.
 	- Fixed: Convoy avoid divers/pilots and infantry mix in trucks
-	
-
-- TODO Save groups to profileSpace
-- TODO Save all MCC to 2D editor
-- TODO Save WP
-- TODO different Consoles
-- TODO CAS call
-
 
 Change log r16:
 Changed: Mission Wizard weather is set to default off. 

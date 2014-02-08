@@ -11,6 +11,7 @@
 #define MCC_MSCONSOLECOMMANDAI 8409
 #define MCC_IDCNAMETAGS 8410
 #define mcc_artilleryTitleIDC 8411
+#define mcc_saveGearComboIDC 8412
 
 private ["_mccdialog","_comboBox","_displayname"];
 disableSerialization;
@@ -103,3 +104,12 @@ _comboBox = _mccdialog displayCtrl mcc_artilleryTitleIDC; //Artillery Computer
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
 _comboBox lbSetCurSel 1;
+
+_comboBox = _mccdialog displayCtrl mcc_saveGearComboIDC; //Save Gear
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Disabled","Enabled"];
+_comboBox lbSetCurSel 0;
+

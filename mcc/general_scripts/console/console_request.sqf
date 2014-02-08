@@ -19,7 +19,7 @@ switch (_type) do
 		{
 			if (count MCC_ConsoleAirdropArray > 0) then {
 				MCC_spawnkind = [((MCC_ConsoleAirdropArray select (lbCurSel MCC_ConsoleAirdropAvailableTextBox_IDD)) select 0) select 0];
-				MCC_planeType = ["I_Heli_Transport_02_F"];
+				MCC_planeType = [str (side player)];
 				
 				MCC_ConsoleAirdropArray set  [lbCurSel MCC_ConsoleAirdropAvailableTextBox_IDD,-1];	//Remove the action we just used
 				MCC_ConsoleAirdropArray = MCC_ConsoleAirdropArray - [-1];

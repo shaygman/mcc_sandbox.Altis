@@ -18,7 +18,7 @@ BTC_revive_time_max = 600;
 BTC_who_can_revive  = ["Man"];
 BTC_loop_check      = 0;
 BTC_disable_respawn = 0;
-BTC_respawn_gear    = 0;
+BTC_respawn_gear    = 1;
 BTC_active_lifes    = 1;
 BTC_lifes           = f_var_BTCLifes;
 BTC_spectating      = 2;//0 = disable; 1 = units group; 2 = side units; 3 = all units

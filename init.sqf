@@ -52,6 +52,9 @@ if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5};
 // Show friendly name tags and vhicles' crew info - default - off
 if (isnil "MCC_nameTags") then {MCC_nameTags = false}; 
 
+//-------------------- Save Gear --------------------------------------------------
+if (isnil "MCC_saveGear") then {MCC_saveGear = false};
+
 //-----------------------BTC Revive - --------------------------------------------
 //disable this line if you don't want it in the mission version - will not work on the mod version by default
 if (!MCC_isMode) then

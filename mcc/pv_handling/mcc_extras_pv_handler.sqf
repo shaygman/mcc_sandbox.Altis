@@ -70,10 +70,12 @@ if (isServer) then
 //	insertion: number, for vehicles: 0 - engine on, 1 - engine off. For helicopters: 0 - engine on, 1 - engine off, 2 - hover, 3 - Helocasting
 //	vehicle: object, the evac vehicle
 //==============================================================================================================================================================================
-	MCC_fnc_evacMove = {
+	MCC_fnc_evacMove = 
+	{
 		private "_dummy";
-		[(_this select 0), (_this select 1),(_this select 2),(_this select 3)] execVM MCC_path + "mcc\general_scripts\evac\evac_move.sqf";
-		};
+		_dummy = if (((_this select 3) select 0)=="") then {(_this select 3) select 1} else {objectFromNetId ((_this select 3) select 0)};
+		[(_this select 0), (_this select 1),(_this select 2),_dummy] execVM MCC_path + "mcc\general_scripts\evac\evac_move.sqf";
+	};
 	
 //===================================================================MCC_fnc_evacDelete======================================================================================
 // Delete the given vehicle or it's driver

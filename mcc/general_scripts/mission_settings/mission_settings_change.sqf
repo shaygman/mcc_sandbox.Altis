@@ -12,11 +12,13 @@
 #define MCC_MSCONSOLECOMMANDAI 8409
 #define MCC_IDCNAMETAGS 8410
 #define mcc_artilleryTitleIDC 8411
+#define mcc_saveGearComboIDC 8412
 
 private ["_string", "_resistanceHostile", "_AiSkill","_value","_ACEReviveTime","_ACESpectator","_t2t","_code"];
 disableSerialization;
 
-if !mcc_isloading then	{
+if !mcc_isloading then	
+{
 	_string = "";
 	_resistanceHostile = lbCurSel RESISTANCE_HOSTILE;	//Reistance relations
 	MCC_resistanceHostileIndex = lbCurSel RESISTANCE_HOSTILE;
@@ -78,20 +80,23 @@ if !mcc_isloading then	{
 	MCC_AI_Command = _AiSkill; 
 	publicvariable "MCC_AI_Command"; 
 	
-	MCC_ConsoleOnlyShowUnitsWithGPS = if ((lbCurSel MCC_MSCONSOLEGPS) == 0) then {true} else {false};	//CONSOLE
+	MCC_ConsoleOnlyShowUnitsWithGPS = if ((lbCurSel MCC_MSCONSOLEGPS) == 0) then {true} else {false};				//CONSOLE
 	publicvariable "MCC_AI_Command";
 	
-	MCC_ConsoleDrawWP = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};		//CONSOLE
+	MCC_ConsoleDrawWP = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};						//CONSOLE
 	publicvariable "MCC_AI_Command";
 	
 	MCC_ConsolePlayersCanSeeWPonMap = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};		//CONSOLE
 	publicvariable "MCC_ConsolePlayersCanSeeWPonMap";
 	
-	MCC_ConsoleCanCommandAI = if ((lbCurSel MCC_MSCONSOLECOMMANDAI) == 0) then {true} else {false};	//CONSOLE
+	MCC_ConsoleCanCommandAI = if ((lbCurSel MCC_MSCONSOLECOMMANDAI) == 0) then {true} else {false};					//CONSOLE
 	publicvariable "MCC_AI_Command";
 	
-	MCC_nameTags = if ((lbCurSel MCC_IDCNAMETAGS) == 0) then {false} else {true};	//NameTags
+	MCC_nameTags = if ((lbCurSel MCC_IDCNAMETAGS) == 0) then {false} else {true};									//NameTags
 	publicvariable "MCC_nameTags";
+	
+	MCC_saveGear = if ((lbCurSel mcc_saveGearComboIDC) == 0) then {false} else {true};								//Save gear EH
+	publicvariable "MCC_saveGear";
 	
 	if ((lbCurSel mcc_artilleryTitleIDC) == 0) then 
 	{
@@ -102,44 +107,9 @@ if !mcc_isloading then	{
 		[[2,compile format ["enableEngineArtillery true"]], "MCC_fnc_globalExecute", true, true] spawn BIS_fnc_MP;
 	};
 	
-	/*
-	MCC_AI_Command = _AiSkill; 
-	publicvariable "MCC_AI_Command"; 
-	_string = _string + format ["
-		MCC_AI_Skill 	= %1;
-		MCC_AI_Aim 		= %2;
-		MCC_AI_Spot 	= %3;
-		MCC_AI_Command 	= %4;
-		"
-		,MCC_AI_Skill
-		,MCC_AI_Aim
-		,MCC_AI_Spot
-		,MCC_AI_Command
-		];
-	*/
+	
+	
 	
 	Hint "Mission Settings Saved";
     closedialog 0;
-	/*
-	MCC_sync = MCC_sync + _string; 
-	publicvariable "MCC_sync"; 
-	mcc_safe = mcc_safe + _string; //Safe it 
-	_code = compile _string;
-	[[2,_code], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;	//Broadcast to all clients
-	
-	_code = {	{
-					if (! isplayer _x) then {
-						_x setSkill ["aimingspeed", MCC_AI_Aim];
-						_x setSkill ["spotdistance", MCC_AI_Spot];
-						_x setSkill ["aimingaccuracy", MCC_AI_Aim];
-						_x setSkill ["aimingshake", MCC_AI_Aim];
-						_x setSkill ["spottime", MCC_AI_Spot];
-						_x setSkill ["commanding", MCC_AI_Command];
-						_x setSkill ["general", MCC_AI_Skill];
-						};
-				} forEach allUnits;
-			};
-	[[1,_code], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;	//Broadcast to all clients
-	
-*/
 };

@@ -6,7 +6,7 @@
 // Returns:
 //     <Nothing>
 //==============================================================================================================================================================================	
- private ["_arrayGroups","_arrayVehicles","_mission","_br","_object","_side","_array","_pos","_count","_seed"];
+ private ["_arrayGroups","_arrayVehicles","_mission","_br","_object","_side","_array","_pos","_count","_seed","_newString","_finalString"];
     
 _br = toString [0x0D, 0x0A];
 
@@ -68,8 +68,12 @@ _count = 0;
 			 
 	if (!isnil {_object getvariable "vehicleinit"}) then 
 	{
+		//Set variable for sqm save
+		_newString = [(_object getvariable "vehicleinit"), "_this", "this"] call MCC_fnc_replaceString;
+		_finalString = [_newString, '"', "'"] call MCC_fnc_replaceString;
+		
 		_mission = _mission 
-           	 + format ["                       init=%1;", str (_object getvariable "vehicleinit")] + _br;
+			+ format ["                       init=""%1"";", _finalString] + _br;
 	};
 	
 	_mission = _mission 
@@ -88,7 +92,8 @@ _mission = _mission
             + "    class Vehicles" + _br
 		    + "    {" + _br
 		    + format ["        items= %1;", count _arrayVehicles] + _br;
- //Vehicles
+			
+
 _count = 0;
 {
 	_object = _x select 0;
@@ -108,8 +113,11 @@ _count = 0;
 			 
 	if (!isnil {_object getvariable "vehicleinit"}) then 
 	{
-	_mission = _mission 
-           	 + format ["             init=""%1"";", _object getvariable "vehicleinit"] + _br;
+		_newString = [(_object getvariable "vehicleinit"), "_this", "this"] call MCC_fnc_replaceString;
+		_finalString = [_newString, '"', "'"] call MCC_fnc_replaceString;
+		
+		_mission = _mission 
+			 + format ["             init=""%1"";",_finalString] + _br;
 	};
 	
 	_mission = _mission 
