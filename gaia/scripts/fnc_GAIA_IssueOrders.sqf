@@ -251,10 +251,10 @@ _StartTimeIssueOrders = time;
 				if (count(_x getVariable  ["GAIA_zone_intend",[]])>1) then
 				{
 					_CanDoAttack = (	
-													(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="ATTACK")
+													(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="MOVE")
 												 	or
 												 	(
-												 		(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="DEFEND")
+												 		(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="NOFOLLOW")
 												 		and
 												 		([_SelectCA,((_x getVariable  ["GAIA_zone_intend",[]]) select 0)] call fnc_PosIsInMarker)
 												 	)

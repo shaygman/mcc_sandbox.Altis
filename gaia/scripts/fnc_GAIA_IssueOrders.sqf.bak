@@ -513,7 +513,7 @@ _StartTimeIssueOrders = time;
 		   	 then
 		   	 {
 		   	 	
-		   	 		player globalchat format ["Mortar ready to fire:%1",_grp];
+		   	 		
 		   	 		_MortarFired = false;
 		   	 		{
 		   	 			_SelectCA = _x;
