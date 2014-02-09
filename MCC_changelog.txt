@@ -1,3 +1,5 @@
+Change log r19:
+- Fixed: Reading addon's configs groups such as aggressors. 
 Change log r18:
 - Added: Save Gear option in mission settings - by default MCC save gear is off so it won't collide with other medical systems (respawning without primary weapon bug after revive in BTC)
 - Fixed: Major lags when using the 3D editor. 

@@ -33,7 +33,7 @@ if (isClass(_cfgside)) then
 		if (isClass(_cfgfaction)) then
 			{
 			_CfgfactionName	= getText (_cfgfaction >> "name");
-			if (_CfgfactionName == _factionDisplayName) then 
+			if ((_CfgfactionName == _factionDisplayName) || (configname(configFile >> "CfgFactionClasses" >> MCC_faction) == configname(_cfgfaction))) then 
 				{
 				for "_k" from 0 to ((count _Cfgfaction) - 1) do
 					{
