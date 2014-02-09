@@ -25,7 +25,7 @@ class Mission
 	randomSeed=11823142;
 	class Intel
 	{
-		briefingName="Altis COOP: MCC Sandbox";
+		briefingName="Altis COOP: MCC Sandbox - DEV";
 		startWeather=0.1;
 		startWind=0;
 		forecastWeather=0.1;
