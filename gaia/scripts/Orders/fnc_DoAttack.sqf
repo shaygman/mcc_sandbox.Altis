@@ -42,6 +42,8 @@ then
 								{ _dummy= [_group,_TargetPos] call fnc_DoAttackMotorRecon;};										
 							case "Helicopter": 
 								{ _dummy= [_group,_TargetPos] call fnc_DoAttackHelicopter;};										
+							case "Ship": 
+								{ _dummy= [_group,_TargetPos] call fnc_DoAttackShip;};										
 						
 					};
 					

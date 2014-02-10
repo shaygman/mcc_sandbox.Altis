@@ -47,6 +47,9 @@ fnc_DoPatrolCar											= compile preprocessfilelinenumbers (GAIA_scripts + "o
 fnc_DoPatrolMotorRecon							= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMotorRecon.sqf");
 fnc_DoPatrolMechInf									= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMechInf.sqf");
 fnc_DoPatrolMotorInf								= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMotorInf.sqf");
+fnc_DoPatrolShip										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolShip.sqf");
+
+
 
 //fnc_DoPatrolMotorizedRecon					= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMotorizedRecon.sqf");
 fnc_DoAttackRecon										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackRecon.sqf");
@@ -57,6 +60,7 @@ fnc_DoAttackMotorInf								= compile preprocessfilelinenumbers (GAIA_scripts + 
 fnc_DoAttack												= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttack.sqf");
 fnc_DoAttackMechInf									= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackMechInf.sqf");
 fnc_DoAttackTank										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackTank.sqf");
+fnc_DoAttackShip										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackShip.sqf");
 
 
 
@@ -114,7 +118,7 @@ fnc_GetTurretsWeapons						 	= compile preprocessfilelinenumbers (GAIA_scripts 	
 
 
 //GAIA Public (local) variables
-MCC_GAIA_DEBUG						= FALSE;
+MCC_GAIA_DEBUG						= TRUE;
 MCC_GAIA_CA_DEBUG					= [];
 
 // dont CHANGE without knowledge 
@@ -128,7 +132,7 @@ MCC_GAIA_MAX_SLOW_SPEED_RANGE  = 600;
 MCC_GAIA_MAX_MEDIUM_SPEED_RANGE= 2500;
 MCC_GAIA_MAX_FAST_SPEED_RANGE  = 8000;
 // The seconds of rest a transporter takes after STARTING his last order
-MCC_GAIA_TRANSPORT_RESTTIME		= 1;
+MCC_GAIA_TRANSPORT_RESTTIME		= 60;
 //If an order is older then 10 minutes, cancel it. There is probbaly something wrong. 
 MCC_GAIA_MAX_ORDER_AGE				 = 1000;
 MCC_GAIA_MORTAR_TIMEOUT				 = 120;

@@ -37,7 +37,7 @@ then
 							case "MechanizedInfantry": 
 								{ _dummy= [_group,_TargetPos] call fnc_DoAttackMechInf;};		
 							case "MotorizedInfantry": 
-								{ _dummy= [_group,_zone] call fnc_DoAttackMotorInf;};															
+								{ _dummy= [_group,_TargetPos] call fnc_DoAttackMotorInf;};		
 							case "Tank": 
 								{ _dummy= [_group,_TargetPos] call fnc_DoAttackMotorRecon;};										
 							case "Helicopter": 

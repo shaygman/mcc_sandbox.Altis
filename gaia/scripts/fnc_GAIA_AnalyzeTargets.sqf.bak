@@ -107,7 +107,7 @@ _NewTargetInfo	= [];
       			_Target setVariable ["GAIA_TargetInfo", [time,_Target_Pos,_Target_posAcc], false];
  
       		};	      	
-      }foreach (_unit neartargets 1500);
+      }foreach (_unit neartargets ["AllVehicles",1500]);
    };
 } forEach AllGroups;
 

@@ -21,12 +21,14 @@ if (!IsNil("_class") and !Isnil("_zone")) then
 					{ _dummy= [_group,_zone] call fnc_DoPatrolRecon;};	
 				case "MechanizedInfantry": 
 					{ _dummy= [_group,_zone] call fnc_DoPatrolMechInf;};								
-				case "MechanizedInfantry": 
+				case "MotorizedInfantry": 
 					{ _dummy= [_group,_zone] call fnc_DoPatrolMotorInf;};								
 				case "Car": 
 					{ _dummy= [_group,_zone] call fnc_DoPatrolCar;};		
 				case "MotorizedRecon": 
-					{ _dummy= [_group,_zone] call fnc_DoPatrolMotorRecon;};							
+					{ _dummy= [_group,_zone] call fnc_DoPatrolMotorRecon;};			
+				case "Ship": 
+					{ _dummy= [_group,_zone] call fnc_DoPatrolShip;};												
 			
 		};
 		//Lets set the current Order.
