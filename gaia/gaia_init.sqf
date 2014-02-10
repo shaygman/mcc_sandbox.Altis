@@ -118,7 +118,7 @@ fnc_GetTurretsWeapons						 	= compile preprocessfilelinenumbers (GAIA_scripts 	
 
 
 //GAIA Public (local) variables
-MCC_GAIA_DEBUG						= TRUE;
+MCC_GAIA_DEBUG						= FALSE;
 MCC_GAIA_CA_DEBUG					= [];
 
 // dont CHANGE without knowledge 

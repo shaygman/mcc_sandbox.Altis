@@ -141,7 +141,7 @@ _StartTimeIssueOrders = time;
 			//Cancel orders when the class has changed			
 			
 			if ((_x getVariable ["GAIA_class","None"])!=(_x getVariable ["GAIA_PreviousClass","None"])) 
-			then {[_x] call fnc_RemoveWayPoints; player globalchat "class change";};			
+			then {[_x] call fnc_RemoveWayPoints; };			
 			
 
 	
@@ -251,10 +251,10 @@ _StartTimeIssueOrders = time;
 				if (count(_x getVariable  ["GAIA_zone_intend",[]])>1) then
 				{
 					_CanDoAttack = (	
-													(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="ATTACK")
+													(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="MOVE")
 												 	or
 												 	(
-												 		(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="DEFEND")
+												 		(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="NOFOLLOW")
 												 		and
 												 		([_SelectCA,((_x getVariable  ["GAIA_zone_intend",[]]) select 0)] call fnc_PosIsInMarker)
 												 	)
@@ -275,19 +275,19 @@ _StartTimeIssueOrders = time;
 					_CanDoAttack =
 					(
 					 (
-					 	((_x getVariable  ["GAIA_speed",0])=="SLOW" and ((leader _x) distance _SelectCA)<MCC_GAIA_MAX_SLOW_SPEED_RANGE)
+					 	((_x getVariable  ["GAIA_speed",""])=="SLOW" and ((leader _x) distance _SelectCA)<MCC_GAIA_MAX_SLOW_SPEED_RANGE)
 					 	or 
 					 	([_SelectCA,((_x getVariable  ["GAIA_zone_intend",[]]) select 0)] call fnc_PosIsInMarker)
 					 )
 					 or 
 					 (
-					 	((_x getVariable  ["GAIA_speed",0])=="MEDIUM" and ((leader _x) distance _SelectCA)<MCC_GAIA_MAX_MEDIUM_SPEED_RANGE)
+					 	((_x getVariable  ["GAIA_speed",""])=="MEDIUM" and ((leader _x) distance _SelectCA)<MCC_GAIA_MAX_MEDIUM_SPEED_RANGE)
 					 	or 
 					 	([_SelectCA,((_x getVariable  ["GAIA_zone_intend",[]]) select 0)] call fnc_PosIsInMarker)
 					 )			
 					 or
 					 (
-					 	((_x getVariable  ["GAIA_speed",0])=="FAST" and ((leader _x) distance _SelectCA)<MCC_GAIA_MAX_FAST_SPEED_RANGE)
+					 	((_x getVariable  ["GAIA_speed",""])=="FAST" and ((leader _x) distance _SelectCA)<MCC_GAIA_MAX_FAST_SPEED_RANGE)
 					 	or 
 					 	([_SelectCA,((_x getVariable  ["GAIA_zone_intend",[]]) select 0)] call fnc_PosIsInMarker)
 					 )								 	 
@@ -401,7 +401,7 @@ _StartTimeIssueOrders = time;
 	}forEach 	([AllGroups,[],{_SelectCA distance (leader _x)},"ASCEND",{alive (leader _x)}] call fnc_SortGroupsByCA); 
 	
 
-	player globalchat format["Ca %1 cost: %2, Send: %3, nrofgroups: %4",_SelectCA,_CaPoints, _PointsSpend,_NrGrpsSend];
+	//player globalchat format["Ca %1 cost: %2, Send: %3, nrofgroups: %4",_SelectCA,_CaPoints, _PointsSpend,_NrGrpsSend];
 	//We boot through all Conflict Area's in already pre-sorted order of priority
 } forEach _CA;
 
@@ -535,7 +535,7 @@ _StartTimeIssueOrders = time;
 		   	 				{
 		   	 						
 		   	 				   
-		   	 				   player globalchat format ["Mortar fired:%1",_grp];		
+		   	 				   //player globalchat format ["Mortar fired:%1",_grp];		
 		   	 					_MortarFired = [_grp,_SelectCA] call fnc_domortar;		   	 					
 		   	 				}
 		   	 			else
@@ -704,7 +704,7 @@ _StartTimeIssueOrders = time;
 					   			//if (((((_x getVariable ["GAIA_PreviousPoints",1])-(_x getVariable ["GAIA_points",1]))/(_x getVariable ["GAIA_PreviousPoints",1]))*100)>20) then
 					   				{ 
 					   					
-					   						"SmokeShell" createVehicle (position leader _x);
+					   						if (alive leader _x) then {"SmokeShell" createVehicle (position leader _x);};
 					   				};
 					   		};
 					   		
