@@ -197,6 +197,10 @@ _StartTimeIssueOrders = time;
 	};
 }forEach AllGroups;
 
+
+
+
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   
 //									ORGANISE ATTACKS ON Conflict Area's (CA's)
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
@@ -303,9 +307,9 @@ _StartTimeIssueOrders = time;
 																					 ("DoAttack" in (_x getVariable  ["GAIA_Portfolio",[]])) 
 																					 and
 																					 ( 
-																							(((_x getVariable ["GAIA_class",[]]) in ["Ship","Submarine"]) and (surfaceIsWater(_SelectCA)))
+																							(((_x getVariable ["GAIA_class",""]) in ["Ship","Submarine"]) and (surfaceIsWater(_SelectCA)))
 																							or
-																							!(((_x getVariable ["GAIA_class",[]]) in ["Ship","Submarine"]) and !(surfaceIsWater(_SelectCA)))
+																							!(((_x getVariable ["GAIA_class",""]) in ["Ship","Submarine"]) and !(surfaceIsWater(_SelectCA)))
 																					 )
 																					);
 				
@@ -320,7 +324,7 @@ _StartTimeIssueOrders = time;
 				_CaHoldsValidTargets			= !((([_HQ_side,_SelectCA] call fnc_GetCAPoints)select 0) in ["Helicopter","Autonomous"]);
 				
 				//What is the cost in points of the current group?
-				_Grpcost 									= _x getVariable ["GAIA_points",[]];				
+				_Grpcost 									= _x getVariable ["GAIA_points",0];				
 				
 				
 				//Did we already give this group an order or was it last round?
@@ -576,7 +580,10 @@ _StartTimeIssueOrders = time;
 		   			)
 		   	 then
 		   	 		{
-		   	 			 
+		   	 			 //backward compatible fortify command
+		   	 			 if (((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="FORTIFY") then
+		   	 			 	{[leader _x ,200,true,[60,3],false,false] spawn gaia_garrison_script;_x setVariable ["GAIA_ZONE_INTEND",[], false];};
+		   	 			 	
 		   	 			 if (count (waypoints _x ) == (currentWaypoint _x)) then
 		   	 			 	{	
 		   	 			 			 		

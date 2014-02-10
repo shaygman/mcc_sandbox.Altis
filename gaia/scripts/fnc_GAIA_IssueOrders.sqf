@@ -197,6 +197,10 @@ _StartTimeIssueOrders = time;
 	};
 }forEach AllGroups;
 
+
+
+
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   
 //									ORGANISE ATTACKS ON Conflict Area's (CA's)
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
@@ -571,12 +575,16 @@ _StartTimeIssueOrders = time;
 					   	(alive (leader _x))
 					   	and
 					   	(count(_x getVariable  ["GAIA_Portfolio",[]])>0)
-
+							and
+							(count(_x getVariable  ["GAIA_zone_intend",[]])>1)
 
 		   			)
 		   	 then
 		   	 		{
-		   	 			 
+		   	 			 //backward compatible fortify command
+		   	 			 if (((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="FORTIFY") then
+		   	 			 	{[leader _x ,200,true,[60,3],false,false] spawn gaia_garrison_script;_x setVariable ["GAIA_ZONE_INTEND",[], false];};
+		   	 			 	
 		   	 			 if (count (waypoints _x ) == (currentWaypoint _x)) then
 		   	 			 	{	
 		   	 			 			 		
