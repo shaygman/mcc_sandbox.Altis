@@ -172,9 +172,12 @@ _StartTimeIssueOrders = time;
 			
 			// Cancel orders when unit is in combat and not doing a DoAttack
 			//But DONT do that if it holds the air boyx
+			//And not when he is in fortify
 			if (
 						 ((_x getVariable  ["GAIA_Order",""]) != "DoAttack")
 						 and
+						  ((_x getVariable  ["GAIA_Order",""]) != "DoFortify")	 
+						  and
 						 (behaviour(leader _x)=="COMBAT")			
 						 and						 
 						 !((([_HQ_side,([_CA,leader _x] call BIS_fnc_nearestPosition)] call fnc_GetCAPoints) select 0 )in ["Helicopter","Autonomous"])
@@ -182,8 +185,11 @@ _StartTimeIssueOrders = time;
 			then {[_x] call fnc_RemoveWayPoints;};
 			
 			// This order is so old, Cancel it. No clue wtf he is doing.
+			//Except when fortify
 			if (
-						 ((time - (_x getVariable  ["GAIA_OrderTime",0])) > MCC_GAIA_MAX_ORDER_AGE)					 
+						 ((time - (_x getVariable  ["GAIA_OrderTime",0])) > MCC_GAIA_MAX_ORDER_AGE)			
+						 and
+						 ((_x getVariable  ["GAIA_Order",""]) != "DoFortify")	 
 					)
 			then {[_x] call fnc_RemoveWayPoints;};
 			
@@ -197,7 +203,29 @@ _StartTimeIssueOrders = time;
 	};
 }forEach AllGroups;
 
-
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   
+//									ORGANISE DEFENSIVE ORDERS (FOR NOW FORTIFY)
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+{
+	 if (
+			   			//Seems like allgroups opens up with all sorts of empty groups, better check it
+			   			((side _x) == _HQ_side)
+			   			and
+			   			(count(units _x)>0)
+			   			and
+			   			(alive (leader _x))
+			   			and
+			   			(count(_x getVariable  ["GAIA_zone_intend",[]])>1)			  
+			   			and
+			   			((_x getVariable  ["GAIA_Order",""]) != "DoFortify")
+		  )
+	then			
+	{
+		if (((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="FORTIFY") then
+			{_dummy=[_x,(position leader _x)] call fnc_DoFortify;};
+	};
+		  
+}forEach AllGroups;
 
 
 
@@ -577,13 +605,15 @@ _StartTimeIssueOrders = time;
 					   	(count(_x getVariable  ["GAIA_Portfolio",[]])>0)
 							and
 							(count(_x getVariable  ["GAIA_zone_intend",[]])>1)
+							and
+							//He is not fortifying
+							((_x getVariable  ["GAIA_Order",""]) != "DoFortify")
 
 		   			)
 		   	 then
 		   	 		{
 		   	 			 //backward compatible fortify command
-		   	 			 if (((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="FORTIFY") then
-		   	 			 	{[leader _x ,200,true,[60,3],false,false] spawn gaia_garrison_script;_x setVariable ["GAIA_ZONE_INTEND",[], false];};
+
 		   	 			 	
 		   	 			 if (count (waypoints _x ) == (currentWaypoint _x)) then
 		   	 			 	{	
@@ -680,7 +710,9 @@ _StartTimeIssueOrders = time;
 					   	(alive (leader _x))
 					   	and
 					   	//There must be something to do in your portfolio
-					   	(count(_x getVariable  ["GAIA_Portfolio",[]])>0)						   	
+					   	(count(_x getVariable  ["GAIA_Portfolio",[]])>0)				
+					   	and
+					   	((_x getVariable  ["GAIA_Order",""]) != "DoFortify")		   	
 		   			)
 		   		
 		   	 then  

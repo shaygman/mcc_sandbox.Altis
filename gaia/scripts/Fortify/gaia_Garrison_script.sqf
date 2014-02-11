@@ -40,7 +40,7 @@ _group setvariable ["defending",_stationary];
 _groupUnits = units _group;
 
 nul = [_group,_groupUnits] spawn leaving_check; // leaving check;
-player globalchat "hoi";
+
 {
 	if (isPlayer _x) then
 	{
@@ -236,13 +236,13 @@ if ((count _objectslist) >= 1) then
 
 						};
 
-						if (_staying) then {
+					//	if (_staying) then {
 							//_group setCombatMode "GREEN";
-							_unit disableAI "TARGET";
-							_unit disableAI "AUTOTARGET";
-							_unit disableAI "FSM";
-							_unit allowfleeing 0;
-						};
+							//_unit disableAI "TARGET";
+							//_unit disableAI "AUTOTARGET";
+							//_unit disableAI "FSM";
+							//_unit allowfleeing 0;
+						//};
 						// make them randomly look around and move within the building.
 						nul = [_unit] spawn gaia_fnc_smartlook;
 
@@ -394,7 +394,7 @@ if ((count _objectslist) >= 1) then
 									_unit setvariable ["forcedspeed",0];
 								};
 
-								if (_staying) then 
+				/*				if (_staying) then 
 								{
 									//_group setCombatMode "GREEN";
 									_unit disableAI "TARGET";
@@ -402,6 +402,7 @@ if ((count _objectslist) >= 1) then
 									_unit disableAI "FSM";
 									_unit allowfleeing 0;
 								};
+			*/
 
 								nul = [_unit] spawn gaia_fnc_smartlook;
 							};	

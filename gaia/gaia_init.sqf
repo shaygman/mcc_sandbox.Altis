@@ -48,6 +48,7 @@ fnc_DoPatrolMotorRecon							= compile preprocessfilelinenumbers (GAIA_scripts +
 fnc_DoPatrolMechInf									= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMechInf.sqf");
 fnc_DoPatrolMotorInf								= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMotorInf.sqf");
 fnc_DoPatrolShip										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolShip.sqf");
+fnc_DoFortify												= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoFortify.sqf");
 
 
 

@@ -15,7 +15,7 @@ _nearunits = (getposATL _unit) nearentities [["man","car"],100];
 		
 		_eyedv = eyedirection _unit;  
 		_eyed = ((_eyedv select 0) atan2 (_eyedv select 1));   
-		_dirto = ([_sel,_unit] call bis_gaia_fnc_dirto);
+		_dirto = ([_sel,_unit] call bis_fnc_dirto);
 		_eDir = getDir _sel;
 		_eDirMinDir = abs(_dirto - _eDir);
 		_ang = abs (_dirto - _eyed); 

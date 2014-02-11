@@ -48,6 +48,7 @@ fnc_DoPatrolMotorRecon							= compile preprocessfilelinenumbers (GAIA_scripts +
 fnc_DoPatrolMechInf									= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMechInf.sqf");
 fnc_DoPatrolMotorInf								= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMotorInf.sqf");
 fnc_DoPatrolShip										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolShip.sqf");
+fnc_DoFortiy												= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoFortiy.sqf");
 
 
 
@@ -207,7 +208,7 @@ if (isnil("CQC_AI")) then {
 };
 if (isnil("gaia_Garrison_script")) then {
 	// [_unit]
-	CQC_AI = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\gaia_Garrison_script.sqf");
+	gaia_Garrison_script = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\gaia_Garrison_script.sqf");
 	
 	//hint "CQC_AI compiled";
 };

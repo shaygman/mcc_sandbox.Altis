@@ -15,7 +15,7 @@ _nearunits = (getposATL _unit) nearentities [["man","car"],100];
 		
 		_eyedv = eyedirection _unit;  
 		_eyed = ((_eyedv select 0) atan2 (_eyedv select 1));   
-		_dirto = ([_sel,_unit] call bis_fnc_dirto);
+		_dirto = ([_sel,_unit] call bis_gaia_fnc_dirto);
 		_eDir = getDir _sel;
 		_eDirMinDir = abs(_dirto - _eDir);
 		_ang = abs (_dirto - _eyed); 
@@ -88,7 +88,7 @@ _nearunits = (getposATL _unit) nearentities [["man","car"],100];
 						
 						if ((count _lights) > 1) then
 						{
-							_light = ([_sel,1,_lights] call fnc_Find_Closest) select 0;
+							_light = ([_sel,1,_lights] call gaia_fnc_Find_Closest) select 0;
 						};
 					};
 				};
@@ -117,7 +117,7 @@ _nearunits = (getposATL _unit) nearentities [["man","car"],100];
 	if (_cansee > 0) exitwith  
 	//IF VISIBLE ENEMY
 	{ 
-		[_unit,(getPosATL _sel)] call fnc_cqc_target;
+		[_unit,(getPosATL _sel)] call gaia_fnc_cqc_target;
 /*		
 _posATL = getPosATL _unit;
 _target = getPosATL _sel;

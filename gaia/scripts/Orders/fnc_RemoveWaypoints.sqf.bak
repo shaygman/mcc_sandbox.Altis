@@ -71,9 +71,6 @@ if (!isnull(_group getVariable  ["GAIA_CombinedOrder",grpNull])) then
 _group setVariable ["GAIA_Order"							, "None", false];
 _group setVariable ["GAIA_CombinedOrder"			, grpNull, false];
 
-//Clear fortify specific if needed.
-_group setVariable ["Garrisoning",false];  
-
 switch (side _group) do
 		{
 		  case west				: {MCC_GAIA_WPPOS_WEST	=_TempArray ; };
