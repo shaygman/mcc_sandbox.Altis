@@ -85,7 +85,11 @@ _NewTargetInfo	= [];
       	if 	(
       				_Target_Side!= _HQ_side
       			 	and
-      			 	((_Target_Side getFriend _HQ_side)<0.6) 		
+      			 	((_Target_Side getFriend _HQ_side)<0.6) 	
+      			 	and
+      			 	alive(leader(group _Target))
+      			 	and
+      			 	!captive(_target)
 	     			 	and	      			 
       			 	//How sure are we? For now accuracy of 18 seems to work ok
       			 	_Target_PosAcc < 18

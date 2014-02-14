@@ -85,7 +85,9 @@ _NewTargetInfo	= [];
       	if 	(
       				_Target_Side!= _HQ_side
       			 	and
-      			 	((_Target_Side getFriend _HQ_side)<0.6) 		
+      			 	((_Target_Side getFriend _HQ_side)<0.6) 	
+      			 	and
+      			 	alive(leader(group _Target))
 	     			 	and	      			 
       			 	//How sure are we? For now accuracy of 18 seems to work ok
       			 	_Target_PosAcc < 18
@@ -107,7 +109,7 @@ _NewTargetInfo	= [];
       			_Target setVariable ["GAIA_TargetInfo", [time,_Target_Pos,_Target_posAcc], false];
  
       		};	      	
-      }foreach (_unit neartargets ["AllVehicles",1500]);
+      }foreach (_unit neartargets 1500);
    };
 } forEach AllGroups;
 

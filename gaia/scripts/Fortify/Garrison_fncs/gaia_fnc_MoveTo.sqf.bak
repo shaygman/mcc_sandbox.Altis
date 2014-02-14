@@ -70,7 +70,7 @@ if (_reached) then
 
 	};
 
-	(group _unit) setCombatMode "YELLOW";
+	_group setCombatMode "YELLOW";
 	
 	if (_indoors) then {
 		_unit setvariable ["indoors",true];
