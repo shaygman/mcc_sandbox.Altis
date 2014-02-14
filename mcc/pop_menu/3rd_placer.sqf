@@ -12,7 +12,7 @@
 	Returned value(s):
 		position/direction
 */
-private ["_logic", "_camera","_logicGrp","_logicASL","_nvgstate","_preview","_pos"];
+private ["_logic", "_camera","_logicGrp","_logicASL","_nvgstate","_preview","_pos","_GUIstate"];
 
 MCC_3Dterminate = false; 
 preview3DClass 	= _this select 0;
@@ -79,9 +79,12 @@ if (isnil "BIS_CONTROL_CAM_ASL") then {
 
 _logic setvariable ["MCC_3D_menu","#USER:BIS_Coin_categories_0"];
 
-_nvgstate = if (daytime > 18.5 || daytime < 5.5) then {true} else {false};
-camusenvg _nvgstate;
+_nvgstate = if (daytime > 18.5 || daytime < 5.5) then {2} else {3};
+if (_nvgstate == 2) then {camusenvg true};
 _logic setvariable ["MCC_3D_nvg",_nvgstate];
+
+_GUIstate = true; 
+_logic setvariable ["MCC_3D_GUI",_GUIstate];
 
 MCC_dummyObject =  "Sign_Sphere25cm_F" createvehiclelocal (screentoworld [0.5,0.5]);
 MCC_dummyObject addEventHandler ["handleDamage",""];
@@ -94,7 +97,7 @@ if !(isnil "BIS_CONTROL_CAM_Handler") exitwith {hint "BIS_CONTROL_CAM_Handler is
 BIS_CONTROL_CAM_Handler =
 	{
 	private ["_mode", "_input", "_camera", "_logic", "_terminate", "_keysCancel", "_keysUpObj", "_keysDownObj", "_keysUp", "_keysDown" ,"_keysShift","_key","_keydelete"
-			,"_keysBanned", "_keyNightVision","_finished", "_keyplace","_objectPos","_objectDir","_keyalt","_nearObjects", "_vehicleclass","_html","_ctrlKey","_gain"];
+			,"_keysBanned", "_keyNightVision","_finished", "_keyplace","_objectPos","_objectDir","_keyalt","_nearObjects", "_vehicleclass","_html","_ctrlKey","_gain","_keyGUI"];
 			
 	_mode = _this select 0;
 	_input = _this select 1;
@@ -114,6 +117,7 @@ BIS_CONTROL_CAM_Handler =
 	_keyplace 		= [57];
 	_keyalt 		= [56];
 	_keydelete 		= [211];
+	_keyGUI			= [35]; 
 		
 	//--- Mouse Moving/Holding
 	if (_mode in ["mousemoving", "mouseholding"]) then 
@@ -134,15 +138,45 @@ BIS_CONTROL_CAM_Handler =
 	if (_mode == "keydown") then
 		{
 		_key = _input select 1;
+		
 		//--- Terminate 
 		if (_key in _keysBanned) then {_terminate = true};
+		
 		//--- Start NVG
 		if (_key in _keyNightVision) then 
-			{
-			_NVGstate = !(_logic getvariable "MCC_3D_nvg");
+		{
+			_NVGstate = ((_logic getvariable "MCC_3D_nvg")+1) mod 4;
 			_logic setvariable ["MCC_3D_nvg",_NVGstate];
-			camusenvg _NVGstate;
+			
+			switch (_NVGstate) do	
+			{			
+				case 2:		//NV			
+					{ 
+						false setCamUseTi _NVGstate; 
+						camusenvg true;
+					}; 
+					
+				case 3:		//Normal			
+					{ 
+						false setCamUseTi _NVGstate; 
+						camusenvg false;
+					};
+					
+				default 
+					{
+						true setCamUseTi _NVGstate; 
+					};
 			};
+		};
+		
+		//--- Hide GUI
+		if (_key in _keyGUI) then 
+		{
+			_GUIstate = !(_logic getvariable "MCC_3D_GUI");
+			_logic setvariable ["MCC_3D_GUI",_GUIstate];
+			MCC_dummyObject hideObject !(_GUIstate); 
+		};
+		
 		//Delete object
 		if (_key in _keydelete) then 
 			{
@@ -236,30 +270,33 @@ BIS_CONTROL_CAM_Handler =
 		
 	//--- Key UP
 	if (_mode == "keyup") then 
-		{
+	{
 		_key = _input select 1;
 		_ctrlKey = _input select 3;
 		if (_key in _keyplace) then 
 			{
-			_objectPos = [getpos Object3D select 0, getpos Object3D select 1, z3DHight] ;
-			_objectDir = getdir Object3D;
-			deletevehicle Object3D;
-			sleep 1; 
-			MCC3DgotValue = true; 
-			MCC3DValue = [_objectPos,_objectDir];
-			hint "Object placed";
-			deletevehicle Object3D;
+				_objectPos = [getpos Object3D select 0, getpos Object3D select 1, z3DHight] ;
+				_objectDir = getdir Object3D;
+				deletevehicle Object3D;
+				sleep 1; 
+				MCC3DgotValue = true; 
+				MCC3DValue = [_objectPos,_objectDir];
+				hint "Object placed";
+				deletevehicle Object3D;
 
-			if (mcc_spawntype == "MINES") then	{
-				Object3D = createMine [mcc_spawnname,[0,0,500], [], 0];
-				Object3D enableSimulation false;
-				Object3D AddEventHandler ["HandleDamage", {False}];
-				} else	{
-					deletevehicle Object3D;
-					sleep 0.01;
-					Object3D = mcc_spawnname createvehicle [0,0,500];	
-					Object3D enableSimulation false;
-					Object3D AddEventHandler ["HandleDamage", {False}];
+				if (mcc_spawntype == "MINES") then	
+					{
+						Object3D = createMine [mcc_spawnname,[0,0,500], [], 0];
+						Object3D enableSimulation false;
+						Object3D AddEventHandler ["HandleDamage", {False}];
+					}
+					else	
+					{
+						deletevehicle Object3D;
+						sleep 0.01;
+						Object3D = mcc_spawnname createvehiclelocal [0,0,500];	
+						Object3D enableSimulation false;
+						Object3D AddEventHandler ["HandleDamage", {False}];
 					};
 			};
 		if (_key in _keyalt) then 		//Align
@@ -367,6 +404,7 @@ BIS_CONTROL_CAM_Handler =
 		_logic setvariable ["BIS_COIN_fundsOld",nil];
 		_logic setvariable ["MCC_3D_restart",nil];
 		_logic setvariable ["MCC_3D_nvg",nil];
+		_logic setvariable ["MCC_3D_GUI",nil];
 		showcommandingmenu "";
 		
 		//Remove the event handlers
@@ -405,10 +443,18 @@ BIS_CONTROL_CAM_Handler =
 			"Hold Ctrl:  Rotate object" + "<br/>" +
 			"Alt:        Terrain alignment" + "<br/>" +
 			"Shift:      Toggle smoothness" + "<br/>" +
-			"N:          Toggle night vision" + "<br/>" + "<br/>" + 
+			"N:          Toggle vision" + "<br/>" + 
+			"H:          Toggle GUI state" + "<br/>" + "<br/>" + 
 			"Alighn to terrain: " + MCC_align3DText + "<br/>" +
 			"Smooth placing: " + MCC_smooth3DText + "</t>";
-		
-	hintsilent parseText(_html);
+			
+	if (_logic getvariable "MCC_3D_GUI") then
+	{	
+		hintsilent parseText(_html);
+	}
+	else
+	{
+		hintsilent ""; 
 	};
+};
 endLoadingScreen;

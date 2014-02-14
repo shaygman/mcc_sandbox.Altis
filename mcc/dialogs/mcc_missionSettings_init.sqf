@@ -70,24 +70,24 @@ _comboBox = _mccdialog displayCtrl MCC_MSCONSOLEGPS; //Console GPS
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["True","False"];
-_comboBox lbSetCurSel 0;
+	} foreach ["Enabled","Disabled"];
+_comboBox lbSetCurSel MCC_consoleGPSIndex;
 
 _comboBox = _mccdialog displayCtrl MCC_MSCONSOLESHOWFRIENDS; //Console Show Friendly
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["True","False"];
-_comboBox lbSetCurSel 0;
+	} foreach ["Enabled","Disabled"];
+_comboBox lbSetCurSel MCC_consoleShowFriendsIndex;
 
 _comboBox = _mccdialog displayCtrl MCC_MSCONSOLECOMMANDAI; //Console Command AI
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["True","False"];
-_comboBox lbSetCurSel 0;
+	} foreach ["Enabled","Disabled"];
+_comboBox lbSetCurSel MCC_consoleCommandAIIndex;
 
 _comboBox = _mccdialog displayCtrl MCC_IDCNAMETAGS; //Show name tags
 	lbClear _comboBox;
@@ -95,7 +95,7 @@ _comboBox = _mccdialog displayCtrl MCC_IDCNAMETAGS; //Show name tags
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel MCC_nameTagsIndex;
 
 _comboBox = _mccdialog displayCtrl mcc_artilleryTitleIDC; //Artillery Computer
 	lbClear _comboBox;
@@ -103,7 +103,7 @@ _comboBox = _mccdialog displayCtrl mcc_artilleryTitleIDC; //Artillery Computer
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel 1;
+_comboBox lbSetCurSel MCC_artilleryComputerIndex;
 
 _comboBox = _mccdialog displayCtrl mcc_saveGearComboIDC; //Save Gear
 	lbClear _comboBox;
@@ -111,5 +111,5 @@ _comboBox = _mccdialog displayCtrl mcc_saveGearComboIDC; //Save Gear
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel MCC_saveGearIndex;
 

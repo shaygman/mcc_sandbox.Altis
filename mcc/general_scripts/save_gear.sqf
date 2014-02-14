@@ -1,4 +1,4 @@
-private ["_unit","_goggles","_handgunitems","_primaryWeaponItems", "_headgear","_uniform","_uniformItems","_vest","_magazines","_primMag","_secmMag","_handMag",
+private ["_unit","_goggles","_handgunitems","_primaryWeaponItems", "_headgear","_uniform","_uniformItems","_vest","_magazines","_primMag","_secmMag","_handMag","_assigneditems",
          "_vestItems","_secondaryWeaponItems","_handgunWeapon","_backpack","_backpackthings","_primaryWeapon","_secondaryWeapon","_null","_rating","_role","_exp","_level"];
 
 
@@ -101,36 +101,50 @@ if (MCC_saveGear) then
 	{
 		{
 			switch (true) do
-				{
-					case (isClass (configFile >> "CfgMagazines" >> _x)) : {(unitBackpack player) addMagazineCargoGlobal [_x,1]};
-					case (isClass (configFile >> "CfgWeapons" >> _x)) : {(unitBackpack player) addItemCargoGlobal [_x,1]};
-					case (isClass (configFile >> "CfgGlasses" >> _x)) : {(unitBackpack player) addItemCargoGlobal [_x,1]};
-				}; 
+			{
+				case (isClass (configFile >> "CfgMagazines" >> _x)) : {(unitBackpack player) addMagazineCargo [_x,1]};
+				case (isClass (configFile >> "CfgWeapons" >> _x)) : {(unitBackpack player) addItemCargo [_x,1]};
+				case (isClass (configFile >> "CfgGlasses" >> _x)) : {(unitBackpack player) addItemCargo [_x,1]};
+			}; 
 		} foreach MCC_save_Backpack;
 	};
 	
-	player addWeaponGlobal  _primaryWeapon;
-	{player addPrimaryWeaponItem _x} foreach MCC_save_primaryWeaponItems;
-	player addWeaponGlobal  _secondaryWeapon;
-	{player addSecondaryWeaponItem _x} foreach MCC_save_secondaryWeaponItems;
-	player addWeaponGlobal  _handgunWeapon;
-	{player addHandgunItem _x} foreach MCC_save_handgunitems;
-
+	if (!isnil "_primaryWeapon") then 
 	{
-		if (_x != "") then {player addmagazine _x};
-	} foreach _primMag;
-
+		player addWeaponGlobal  _primaryWeapon;
+		{player addPrimaryWeaponItem _x} foreach MCC_save_primaryWeaponItems;
+		
+		{
+			if (_x != "") then {player addmagazine _x};
+		} foreach _primMag;
+	};
+	
+	if (!isnil "_secondaryWeapon") then 
 	{
-		if (_x != "") then {player addmagazine _x};
-	} foreach _secmMag;
-
+		player addWeaponGlobal  _secondaryWeapon;
+		{player addSecondaryWeaponItem _x} foreach MCC_save_secondaryWeaponItems;
+		
+		{
+			if (_x != "") then {player addmagazine _x};
+		} foreach _secmMag;
+	};
+	
+	if (!isnil "_handgunWeapon") then 
 	{
-		if (_x != "") then {player addmagazine _x};
-	} foreach _handMag;
+		player addWeaponGlobal  _handgunWeapon;
+		{player addHandgunItem _x} foreach MCC_save_handgunitems;
+		
+			{
+				if (_x != "") then {player addmagazine _x};
+			} foreach _handMag;
+	};
 
-	player selectWeapon _primaryWeapon;
-	_muzzles = getArray(configFile>>"cfgWeapons" >> _primaryWeapon >> "muzzles");
-	player selectWeapon (_muzzles select 0);
+	if (!isnil "_primaryWeapon") then
+	{
+		player selectWeapon _primaryWeapon;
+		_muzzles = getArray(configFile>>"cfgWeapons" >> _primaryWeapon >> "muzzles");
+		player selectWeapon (_muzzles select 0);
+	}; 
 };
 	
 if (player getvariable ["MCC_allowed",false]) then 

@@ -103,6 +103,7 @@ class missionSettings {
 	class resistanceHostileCombo: MCC_RscCombo
 	{
 		idc = RESISTANCE_HOSTILE;
+		Tooltip = "Change only once before placing any units"; 
 
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.324069 * safezoneH + safezoneY;
@@ -122,7 +123,8 @@ class missionSettings {
 	class t2tCombo: MCC_RscCombo
 	{
 		idc = T2T_AD;
-
+		Tooltip = "Enable/Disable Teleport to team for all player"; 
+		
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.357056 * safezoneH + safezoneY;
 		w = 0.0687499 * safezoneW;
@@ -218,6 +220,7 @@ class missionSettings {
 	class ConsoleGPS: MCC_RscCombo
 	{
 		idc = MCC_MSCONSOLEGPS;
+		Tooltip = "If disabled groups without GPS will not be shown in the Player's Console"; 
 
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.521991 * safezoneH + safezoneY;
@@ -227,7 +230,7 @@ class missionSettings {
 	class ConsoleShowFriendlyWPTittle: MCC_RscText
 	{
 		idc = -1;
-
+		
 		text = "Console - Show Freindly WP:"; //--- ToDo: Localize;
 		x = 0.305208 * safezoneW + safezoneX;
 		y = 0.554979 * safezoneH + safezoneY;
@@ -237,7 +240,8 @@ class missionSettings {
 	class ConsoleShowFriendlyWP: MCC_RscCombo
 	{
 		idc = MCC_MSCONSOLESHOWFRIENDS;
-
+		Tooltip = "If enabled friendly AI and players' WP will be shown in the Player's Console"; 
+		
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.554979 * safezoneH + safezoneY;
 		w = 0.06875 * safezoneW;
@@ -246,7 +250,8 @@ class missionSettings {
 	class ConsoleCanCommandAI: MCC_RscCombo
 	{
 		idc = MCC_MSCONSOLECOMMANDAI;
-
+		Tooltip = "If enabled players can use the handheld console to control AI groups spawned with default BIS behavior."; 
+		
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.587966 * safezoneH + safezoneY;
 		w = 0.06875 * safezoneW;
@@ -255,7 +260,7 @@ class missionSettings {
 	class ConsoleCanCommandAITittle: MCC_RscText
 	{
 		idc = -1;
-
+				
 		text = "Console - Can Command AI"; //--- ToDo: Localize;
 		x = 0.305208 * safezoneW + safezoneX;
 		y = 0.587966 * safezoneH + safezoneY;
@@ -276,6 +281,7 @@ class missionSettings {
 	class mcc_nameTagsCombo: MCC_RscCombo
 	{
 		idc = MCC_IDCNAMETAGS;
+		Tooltip = "Disable/Enable name tags for all players."; 
 
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.620953 * safezoneH + safezoneY;
@@ -296,7 +302,8 @@ class missionSettings {
 	class mcc_artilleryCombo: MCC_RscCombo
 	{
 		idc = mcc_artilleryTitleIDC;
-
+		Tooltip = "Disable/Enable the artillery computer to all players"; 
+		
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.653940 * safezoneH + safezoneY;
 		w = 0.06875 * safezoneW;
@@ -317,7 +324,8 @@ class missionSettings {
 	class mcc_saveGearCombo: MCC_RscCombo
 	{
 		idc = mcc_saveGearComboIDC;
-
+		Tooltip = "Disable/Enable MCC save gear (keep it disabled if you are using any medical system"; 
+		
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.686927 * safezoneH + safezoneY;
 		w = 0.06875 * safezoneW;

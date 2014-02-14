@@ -7,6 +7,7 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_c
 #define MCC_FACTION 8008
 #define UNIT_TYPE 3010
 #define UNIT_CLASS 3011
+#define MCC_GGUNIT_TYPE 3012
 #define MCC_GroupGenCurrentGroup_IDD 9003
 
 #define MCC_GroupGenInfoText_IDC 9013
@@ -50,6 +51,13 @@ lbClear _comboBox;
 } foreach ["Infantry", "Vehicles", "Tracked", "Motorcycle", "Helicopter", "Fixed-wing", "Ship"];
 _comboBox lbSetCurSel MCC_class_index;
 
+_comboBox = _mccdialog displayCtrl MCC_GGUNIT_TYPE;		
+lbClear _comboBox;
+{
+	_displayname =  _x;
+	_index = _comboBox lbAdd _displayname;
+} foreach ["Units", "Groups"];
+_comboBox lbSetCurSel 0;
 //----------------------------------------------------------- GROUPs ----------------------------------------------------------------------------
 	
 [] call MCC_fnc_groupGenRefresh; 	

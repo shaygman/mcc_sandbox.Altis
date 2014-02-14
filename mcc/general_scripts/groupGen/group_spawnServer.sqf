@@ -40,7 +40,8 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 
 	_group = creategroup _side;			//Make the group
 	_name = format ["MCC_customGroup%1",_counter];	
-	for [{_x=0},{_x < (count _unitsArray)},{_x=_x+1}] do {	
+	for [{_x=0},{_x < (count _unitsArray)},{_x=_x+1}] do 
+	{	
 		_unitClass = (_unitsArray select _x) select 0;
 		_unitType = (_unitsArray select _x) select 1;
 		
@@ -61,7 +62,17 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_unit = [[_safepos select 0,_safepos select 1,300], 0, _unitClass, _group] call BIS_fnc_spawnVehicle;
 				};
 			};
-		};
+	};
+	
+	{
+		_x setSkill ["aimingspeed", MCC_AI_Aim];
+		_x setSkill ["spotdistance", MCC_AI_Spot];
+		_x setSkill ["aimingaccuracy", MCC_AI_Aim];
+		_x setSkill ["aimingshake", MCC_AI_Aim];
+		_x setSkill ["spottime", MCC_AI_Spot];
+		_x setSkill ["commanding", MCC_AI_Command];
+		_x setSkill ["general", MCC_AI_Skill];
+	} foreach units _group;
 		
 	_leader = leader _group; 
 	call compile (_name + " = _leader"); 

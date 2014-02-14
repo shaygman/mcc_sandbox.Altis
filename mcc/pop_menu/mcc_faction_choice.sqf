@@ -248,6 +248,7 @@ publicVariableServer "MCC_MWGroupArrayStatic";
 //Add this two for general stuff
 MCC_groupTypes set [count MCC_groupTypes, ["Reinforcement","Reinforcement"]]; 
 MCC_groupTypes set [count MCC_groupTypes, ["Garrison","Garrison"]]; 
+MCC_groupTypes set [count MCC_groupTypes, ["Custom","Custom"]];
 
 GEN_INFANTRY   		= [mcc_sidename,mcc_faction,(MCC_groupTypes select 0) select 0,"LAND"]   call mcc_make_array_grps;
 

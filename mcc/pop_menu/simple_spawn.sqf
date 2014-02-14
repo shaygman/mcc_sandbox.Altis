@@ -26,7 +26,18 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setdir _dir;
 					sleep 0.01;
 					if (!MCC_align3D) then {_dummy setpos _pos};
+					
+					//setskill
 					_unitspawned setformdir _dir; 
+					
+					_dummy setSkill ["aimingspeed", MCC_AI_Aim];
+					_dummy setSkill ["spotdistance", MCC_AI_Spot];
+					_dummy setSkill ["aimingaccuracy", MCC_AI_Aim];
+					_dummy setSkill ["aimingshake", MCC_AI_Aim];
+					_dummy setSkill ["spottime", MCC_AI_Spot];
+					_dummy setSkill ["commanding", MCC_AI_Command];
+					_dummy setSkill ["general", MCC_AI_Skill];
+					
 					if (_name != "") then {
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 						};
@@ -67,10 +78,19 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 							_grp = createGroup _side;
 							_crew = [_veh, _grp] call BIS_fnc_spawnCrew;
 							_dummy = [_veh,_crew,_grp]; 
-		
-							if (_name != "") then {
+							
+							(_dummy select 0) setSkill ["aimingspeed", MCC_AI_Aim];
+							(_dummy select 0) setSkill ["spotdistance", MCC_AI_Spot];
+							(_dummy select 0) setSkill ["aimingaccuracy", MCC_AI_Aim];
+							(_dummy select 0) setSkill ["aimingshake", MCC_AI_Aim];
+							(_dummy select 0) setSkill ["spottime", MCC_AI_Spot];
+							(_dummy select 0) setSkill ["commanding", MCC_AI_Command];
+							(_dummy select 0) setSkill ["general", MCC_AI_Skill];
+					
+							if (_name != "") then 
+							{
 								[[[netid (_dummy select 0),(_dummy select 0)], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
-								};
+							};
 							_init= _init +	FORMAT ["group _this setFormDir %1",_dir];
 							[[[netid (_dummy select 0),(_dummy select 0)], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 						} else

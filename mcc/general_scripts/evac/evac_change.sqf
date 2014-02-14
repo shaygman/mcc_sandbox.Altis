@@ -16,7 +16,7 @@ switch (_type) do		//Which evac do we want
 		case 0:			//Choppers
 			{
 				_evacArray = U_GEN_HELICOPTER;
-				_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal"];
+				_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
 				ctrlShow [MCC_EVAC_FLIGHTHIGHT,true];
 			};
 		case 1:			//Vehicles

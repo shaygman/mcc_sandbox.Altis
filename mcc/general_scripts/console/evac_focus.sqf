@@ -20,9 +20,12 @@ if (MCC_evacVehicles_index !=_index && (count MCC_evacVehicles > 0)) then {
 	_markerType = "b_inf";
 	if (_type iskindof "Car") then {_markerType = "b_mech_inf";};
 	if (_type iskindof "Tank") then {_markerType = "b_armor";};
-	if (_type iskindof "helicopter") then {									//Case we choose aircrft
+	
+	//Case we choose aircrft
+	if (_type iskindof "helicopter") then 
+	{									
 		_markerType = "b_air";
-		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)"];
+		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
 		ctrlShow [MCC_ConsoleEvacFlyHightComboBox_IDD,true];
 		_comboBox = _mccdialog displayCtrl MCC_ConsoleEvacFlyHightComboBox_IDD;		//fill combobox Fly in Hight
 		lbClear _comboBox;

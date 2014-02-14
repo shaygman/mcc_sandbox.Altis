@@ -152,7 +152,7 @@ _comboBox = _mccdialog displayCtrl SPAWNTYPE;		//fill combobox CFG group
 	{
 		_displayname = _x;
 		_index = _comboBox lbAdd _displayname;
-	} foreach ["Singles", "Groups"];
+	} foreach ["Units", "Groups"];
 _comboBox lbSetCurSel MCC_type_index;
 
 if ((lbCurSel SPAWNTYPE) == 1) then {

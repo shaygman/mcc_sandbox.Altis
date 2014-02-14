@@ -239,23 +239,28 @@ lbClear _comboBox;
 } foreach MCC_evacVehicles;
 _comboBox lbSetCurSel MCC_evacVehicles_index;
 
-if (count MCC_evacVehicles > 0) then {										//Change evac type by vehicle class
+//Change evac type by vehicle class
+if (count MCC_evacVehicles > 0) then 
+{										
 	private ["_insetionArray","_type"];
 	_insetionArray = ["Move (engine on)","Move (engine off)"];
 	ctrlShow [MCC_EVAC_FLIGHTHIGHT,false];
 	_type = MCC_evacVehicles select MCC_evacVehicles_index;
-	if (_type iskindof "helicopter") then {									//Case we choose aircrft
-			_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)"];
-			ctrlShow [MCC_EVAC_FLIGHTHIGHT,true];
-			};
+	
+	//Case we choose aircrft
+	if (_type iskindof "helicopter") then 
+	{									
+		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
+		ctrlShow [MCC_EVAC_FLIGHTHIGHT,true];
+	};
 
 	_comboBox = _mccdialog displayCtrl MCC_EVAC_INSERTION;					//Adjust insertion type by evac type
-		lbClear _comboBox;
-		{
-			_displayname = _x;
-			_index = _comboBox lbAdd _displayname;
-		} foreach _insetionArray;
-		_comboBox lbSetCurSel 0;
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_index = _comboBox lbAdd _displayname;
+	} foreach _insetionArray;
+	_comboBox lbSetCurSel 0;
 };
 
 //------------------------------------------Convoy Generator--------------------------------------------------------

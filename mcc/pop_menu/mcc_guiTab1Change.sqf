@@ -102,8 +102,8 @@ if (_task ==2) then 											//Change Branch Units
 			switch (lbCurSel SPAWNBRANCH) do		//Which unit do we want
 				{
 					case 7:	//DOC
-					{
-						_comboBox = _mccdialog displayCtrl SPAWNCLASS;		
+					{_comboBox = _mccdialog displayCtrl SPAWNCLASS;	
+							
 						lbClear _comboBox;
 							{
 								_displayname = format ["%1",_x select 3];
@@ -363,6 +363,26 @@ if (_task ==2) then 											//Change Branch Units
 					_comboBox lbSetCurSel 0;
 					}; 
 				
+				//Custom
+				if (((MCC_groupTypes select (lbCurSel SPAWNBRANCH) select 0)) =="Custom") exitWith 				//Custom
+					{
+					_comboBox = _mccdialog displayCtrl SPAWNCLASS;
+					lbClear _comboBox;
+					private "_counter";
+					_counter = 0;
+						{
+							if (MCC_faction == (_x select 0)) then
+							{
+								_displayname =  format ["%1 (%2 Units)",_x select 3,_x select 4]; 
+								_comboBox lbAdd _displayname;
+								_comboBox lbSetData [_counter, str _foreachIndex];
+								_counter = _counter + 1;
+							};
+						} foreach MCC_customGroupsSave;
+					_comboBox lbSetCurSel 0;
+					};
+					
+				//Default	
 				_comboBox = _mccdialog displayCtrl SPAWNCLASS;		
 				lbClear _comboBox;
 					{

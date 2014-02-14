@@ -1,20 +1,37 @@
 Change log r19:
-- Fixed: Reading addon's configs groups such as aggressors. 
+- Fixed: MCC will now read addon's configs groups such as aggressors. 
+- Fixed: IEDs will explode even if moved (car bomb) make sure to set the IED on radio activation so the explosion won't relay on the target's speed. 
+- Added: MCC AI's settings will effect units spawned via 3D editor or Group Gen. 
+- Added: Toggle thermal visions (WH/BH/NV/Noraml) in 3D editor - N key. 
+- Added: Hide/show 3D editor HUD with H key - for filming exc. 
+- Changed: 3D editor safe distnace reduced to 5 meters and also added a timeout of 3 seconds if the cursor haven't been moved the vehicle will spawn anyway. 
+- Added: Tooltips and indecators for Mission Settings
+- Fixed: Save Gear didn't saved assigned items. 
+- Added: Fast rope to evac. 
+- Added: Evac helicopters will return to their spawn location automaticlly after they have completed their drop. 
+- Fixed: Removed missing weapon config error message after respawn. 
+
+- TODO Save groups to profileSpace
+- TODO: Tooltip missionWizard.
+- TODO Save all MCC to 2D editor
+- TODO Save WP
+- TODO: Manual.
+
+- pre init check.
+- vehicle init check. 
+- seperate init?
+
+
+
+- TODO different Consoles
+- TODO CAS call
+
 Change log r18:
 - Added: Save Gear option in mission settings - by default MCC save gear is off so it won't collide with other medical systems (respawning without primary weapon bug after revive in BTC)
 - Fixed: Major lags when using the 3D editor. 
 - Fixed: Mission Wizard hostage task completed instantly. 
 - Fixed: Console evac didn't work
 - Fixed: Console Airdrop didn't work. 
-
-- pre init check.
-- vehicle init check. 
-- seperate init?
-- TODO Save groups to profileSpace
-- TODO Save all MCC to 2D editor
-- TODO Save WP
-- TODO different Consoles
-- TODO CAS call
 
 Change log r17:
 

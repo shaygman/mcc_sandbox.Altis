@@ -23,7 +23,7 @@ if (count MCC_evacVehicles > 0) then {
 	if (_type iskindof "Tank") then {_markerType = "b_armor";};
 	if (_type iskindof "helicopter") then {									//Case we choose aircrft
 		_markerType = "b_air";
-		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal"];
+		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
 		ctrlShow [MCC_EVAC_FLIGHTHIGHT,true];
 		};
 

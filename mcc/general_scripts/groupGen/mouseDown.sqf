@@ -82,7 +82,7 @@ if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked) then //Box drawing s
 			{
 				_groupControl = nil; 
 				_leader = (leader _x);
-				if ((side _leader == MCC_groupGenGroupStatus) && alive _leader && count (units _x)>0) then
+				if ((side _leader in MCC_groupGenGroupStatus) && alive _leader && count (units _x)>0) then
 					{
 						_group = _x;
 

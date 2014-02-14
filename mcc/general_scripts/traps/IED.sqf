@@ -30,7 +30,7 @@ if (_IEDTriggerType==2) then	{		//manual detonation
 				sleep 3;
 				_triggered = _dummy getvariable "iedTrigered";
 				if (isnil "_triggered") then {_triggered = false}; 
-				_nearObjects = (getPos _fakeIed) nearObjects 150;
+				_nearObjects = (getPos _dummy) nearObjects 150;
 				if(_iedside countSide _nearObjects > 0) then	{
 					while {(alive _fakeIed) && (_loop) && _armed && !_triggered} do	{
 						sleep 1;

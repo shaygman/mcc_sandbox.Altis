@@ -27,71 +27,72 @@ onGroupIconClick
 
 MCC_groupGenRefreshLoop = true; 
 MCC_groupGenRefreshTerminate = false; 
-switch (MCC_groupGenGroupStatus) do 	
-	{
-		case east: //East
-			{
-			_side			= east;
-			_markerColor 	= [1,0,0,0.7];
-			_markerInf		= "o_inf";
-			_markerRecon	= "o_recon";
-			_markerSupport	= "o_support";
-			_markerAutonomous = "o_uav";
-			_markerMech		= "o_mech_inf";
-			_markerArmor	= "o_armor";
-			_markerAir		= "o_air";
-			_markerNaval	= "o_naval";
-			}; 
-			
-		case west: //West
-			{
-			_side			= west;
-			_markerColor 	= [0,0,1,1];
-			_markerInf		= "b_inf";
-			_markerRecon	= "b_recon";
-			_markerSupport	= "b_support";
-			_markerAutonomous = "b_uav";
-			_markerMech		= "b_mech_inf";
-			_markerArmor	= "b_armor";
-			_markerAir		= "b_air";
-			_markerNaval	= "b_naval";
-			};
-			
-		case resistance: //Resistance
-			{
-			_side			= resistance;
-			_markerColor 	= [0,1,0,0.7];
-			_markerInf		= "n_inf";
-			_markerRecon	= "n_recon";
-			_markerSupport	= "n_support";
-			_markerAutonomous = "n_uav";
-			_markerMech		= "n_mech_inf";
-			_markerArmor	= "n_armor";
-			_markerAir		= "n_air";
-			_markerNaval	= "n_naval";
-			};
-		case civilian: //Resistance
-			{
-			_side			= civilian;
-			_markerColor 	= [1,1,1,0.7];
-			_markerInf		= "n_inf";
-			_markerRecon	= "n_recon";
-			_markerSupport	= "n_support";
-			_markerAutonomous = "n_uav";
-			_markerMech		= "n_mech_inf";
-			_markerArmor	= "n_armor";
-			_markerAir		= "n_air";
-			_markerNaval	= "n_naval";
-			};
-	};
 
 setGroupIconsVisible [true,false];	
 setGroupIconsSelectable true;
 	{
 		_leader = (leader _x);
 		 
-		if ((side _leader == _side) && alive _leader && count (units _x)>0 ) then
+		if ((side _leader in MCC_groupGenGroupStatus) && alive _leader && count (units _x)>0 ) then
 			{
+				switch (side _leader) do 	
+				{
+					case east: //East
+						{
+						_side			= east;
+						_markerColor 	= [1,0,0,0.7];
+						_markerInf		= "o_inf";
+						_markerRecon	= "o_recon";
+						_markerSupport	= "o_support";
+						_markerAutonomous = "o_uav";
+						_markerMech		= "o_mech_inf";
+						_markerArmor	= "o_armor";
+						_markerAir		= "o_air";
+						_markerNaval	= "o_naval";
+						}; 
+						
+					case west: //West
+						{
+						_side			= west;
+						_markerColor 	= [0,0,1,1];
+						_markerInf		= "b_inf";
+						_markerRecon	= "b_recon";
+						_markerSupport	= "b_support";
+						_markerAutonomous = "b_uav";
+						_markerMech		= "b_mech_inf";
+						_markerArmor	= "b_armor";
+						_markerAir		= "b_air";
+						_markerNaval	= "b_naval";
+						};
+						
+					case resistance: //Resistance
+						{
+						_side			= resistance;
+						_markerColor 	= [0,1,0,0.7];
+						_markerInf		= "n_inf";
+						_markerRecon	= "n_recon";
+						_markerSupport	= "n_support";
+						_markerAutonomous = "n_uav";
+						_markerMech		= "n_mech_inf";
+						_markerArmor	= "n_armor";
+						_markerAir		= "n_air";
+						_markerNaval	= "n_naval";
+						};
+					case civilian: //Resistance
+						{
+						_side			= civilian;
+						_markerColor 	= [1,1,1,0.7];
+						_markerInf		= "n_inf";
+						_markerRecon	= "n_recon";
+						_markerSupport	= "n_support";
+						_markerAutonomous = "n_uav";
+						_markerMech		= "n_mech_inf";
+						_markerArmor	= "n_armor";
+						_markerAir		= "n_air";
+						_markerNaval	= "n_naval";
+						};
+				};
+				
 				_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
 				_unitsSize = 0;
 				_markerType = nil; 
@@ -127,7 +128,7 @@ setGroupIconsSelectable true;
 				_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
 			}; 
 	} foreach allgroups; 
-_sideIndecator = MCC_groupGenGroupStatus; 	
+
 while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupGenRefreshTerminate} do 		//Draw WP
 	{
 		{
@@ -135,8 +136,65 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 			_groupStatus = _x getvariable "MCC_support";
 			_wpArray = waypoints (group _leader);
 			_behaviour = behaviour _leader;
-			if ((side _leader == _side) && alive _leader) then
+			if ((side _leader in MCC_groupGenGroupStatus) && alive _leader) then
 				{
+					switch (side _leader) do 	
+					{
+						case east: //East
+							{
+							_side			= east;
+							_markerColor 	= [1,0,0,0.7];
+							_markerInf		= "o_inf";
+							_markerRecon	= "o_recon";
+							_markerSupport	= "o_support";
+							_markerAutonomous = "o_uav";
+							_markerMech		= "o_mech_inf";
+							_markerArmor	= "o_armor";
+							_markerAir		= "o_air";
+							_markerNaval	= "o_naval";
+							}; 
+							
+						case west: //West
+							{
+							_side			= west;
+							_markerColor 	= [0,0,1,1];
+							_markerInf		= "b_inf";
+							_markerRecon	= "b_recon";
+							_markerSupport	= "b_support";
+							_markerAutonomous = "b_uav";
+							_markerMech		= "b_mech_inf";
+							_markerArmor	= "b_armor";
+							_markerAir		= "b_air";
+							_markerNaval	= "b_naval";
+							};
+							
+						case resistance: //Resistance
+							{
+							_side			= resistance;
+							_markerColor 	= [0,1,0,0.7];
+							_markerInf		= "n_inf";
+							_markerRecon	= "n_recon";
+							_markerSupport	= "n_support";
+							_markerAutonomous = "n_uav";
+							_markerMech		= "n_mech_inf";
+							_markerArmor	= "n_armor";
+							_markerAir		= "n_air";
+							_markerNaval	= "n_naval";
+							};
+						case civilian: //Resistance
+							{
+							_side			= civilian;
+							_markerColor 	= [1,1,1,0.7];
+							_markerInf		= "n_inf";
+							_markerRecon	= "n_recon";
+							_markerSupport	= "n_support";
+							_markerAutonomous = "n_uav";
+							_markerMech		= "n_mech_inf";
+							_markerArmor	= "n_armor";
+							_markerAir		= "n_air";
+							_markerNaval	= "n_naval";
+							};
+					};
 					_x setGroupIconParams [_markerColor,groupID _x,1,true];
 					_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
 					_unitsSize = 0;
@@ -223,7 +281,7 @@ MCC_groupGenTempWP = [];
 MCC_groupGenTempWPLines = []; 
 {
 	_leader = (leader _x); 
-	if ((side _leader == _side) && alive _leader) then
+	if (!(side _leader in MCC_groupGenGroupStatus) && alive _leader) then
 		{
 			clearGroupIcons _x; 
 		}; 

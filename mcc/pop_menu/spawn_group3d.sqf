@@ -56,7 +56,12 @@ if (mcc_missionmaker == (name player)) then {
 										,mcc_hc
 										];
 						_pos = MCC3DValue select 0; 
-						if (!isnil "Object3D" && (mcc_spawntype=="VEHICLE")) then {waitUntil {_pos distance Object3D > 15}};
+						if (!isnil "Object3D" && (mcc_spawntype=="VEHICLE")) then 
+						{
+							private "_time"; 
+							_time = time + 3; 
+							waitUntil {(_pos distance Object3D > 5) || (time >_time)};
+						};
 						[[MCC3DValue select 0, MCC3DValue select 1, mcc_spawnname, mcc_spawntype, mcc_spawnfaction, mcc_spawnwithcrew,MCC_unitInit,MCC_unitName,mcc_hc],"MCC_fnc_simpleSpawn",true,false] spawn BIS_fnc_MP;		
 						};
 				};
@@ -264,17 +269,20 @@ if (mcc_missionmaker == (name player)) then {
 		mcc_hc = (MCC_ZoneLocation select (lbCurSel MCC_ZONE_LOC)) select 1;
 		
 		if (! isnil "Object3D") then {deletevehicle Object3D};
-		if (mcc_spawntype == "MINES") then	{
+		if (mcc_spawntype == "MINES") then	
+		{
 				Object3D = createMine [mcc_spawnname,[0,0,500], [], 0];
 				Object3D enableSimulation false;
 				Object3D AddEventHandler ["HandleDamage", {False}];
-				} else	{
-					Object3D = mcc_spawnname createvehicle [0,0,500];	
-					if (isnull Object3D) then {Object3D = "Sign_Arrow_Direction_F" createvehicle [0,0,500]}; 
-					Object3D enableSimulation false;
-					Object3D AddEventHandler ["HandleDamage", {False}];
-					};
+		}
+		else	
+		{
+			Object3D = mcc_spawnname createvehicleLocal [0,0,500];	
+			if (isnull Object3D) then {Object3D = "Sign_Arrow_Direction_F" createvehicle [0,0,500]}; 
+			Object3D enableSimulation false;
+			Object3D AddEventHandler ["HandleDamage", {False}];
 		};
+	};
 		
 	if (_3d == 2) then //Case we adding presets
 		{	

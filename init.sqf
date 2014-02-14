@@ -404,7 +404,15 @@ MCC_aiAimIndex							= 0;
 MCC_aiSpotIndex							= 3;
 MCC_aiCommandIndex						= 5;
 MCC_t2tIndex							= 1;
+MCC_consoleGPSIndex						= 0;
+MCC_consoleShowFriendsIndex				= 0;
+MCC_consoleCommandAIIndex				= 0;
+MCC_nameTagsIndex						= 0;
+MCC_artilleryComputerIndex				= 1;
+MCC_saveGearIndex						= 0;
 
+
+//Group Gen
 MCC_groupGenCurrenGroupArray = []; 
 MCC_groupGenGroupArray = []; 
 	
@@ -739,7 +747,7 @@ CP_classesPic = [	CP_path +"configs\data\Officer.paa",
 //=============================Sync with server when JIP======================
 waituntil {alive player};
 
-MCC_groupGenGroupStatus = side player; 	
+MCC_groupGenGroupStatus = [west,east,resistance,civilian]; 	
 
 if (!isServer && !(MCC_isLocalHC)) then
 	{
@@ -757,6 +765,8 @@ if (!isServer && !(MCC_isLocalHC)) then
 			_html = "<t color='#818960' size='1.2' shadow='0' align='left' underline='true'>" + "Synchronizing with server" + "</t><br/><br/>";
 			//add _text
 			_html = _html + "<t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left'>" + "Wait a moment, Synchronizing with the server" + "</t>";
+			_html = _html + "<br/><t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left'>" + "Use Alt+T to teleport to your team" + "</t>";
+			
 			//add _footer
 			_html = _html + "<br/><br/><t color='#818960' size='0.85' shadow='0' align='right'>" + _footer + "</t>";
 			hintsilent parseText(_html);
@@ -853,7 +863,14 @@ if (isnil "MCC_3DCompSaveFiles") then {
 MCC_3DCompSaveFiles = ["","","","","","","","","","","","","","","","","","","",""];
 	profileNamespace setVariable ["MCC_3DCompSaveFiles", MCC_3DCompSaveFiles];
 		};
-		
+
+	
+MCC_customGroupsSave = profileNamespace getVariable "MCC_customGroupsSave";
+if (isnil "MCC_customGroupsSave") then {	
+MCC_customGroupsSave = [["BLU_F","LAND",["B_Soldier_F","B_Soldier_F","B_Soldier_F"],"Custom 1",3]];
+	profileNamespace setVariable ["MCC_customGroupsSave", MCC_customGroupsSave];
+		};
+	
 //============ engineer data ========================
 if (getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMines") == 1) then	//Check if is engineer
 {	

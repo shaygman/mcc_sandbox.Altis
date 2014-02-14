@@ -88,7 +88,7 @@ if (count MCC_evacVehicles > 0) then	{
 	
 	if (_type iskindof "helicopter") then {									//Case we choose aircrft
 		ctrlShow [MCC_ConsoleEvacFlyHightComboBox_IDD,true];
-		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal"];
+		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
 		_comboBox = _mccdialog displayCtrl MCC_ConsoleEvacFlyHightComboBox_IDD;		//fill combobox Fly in Hight
 		lbClear _comboBox;
 		{

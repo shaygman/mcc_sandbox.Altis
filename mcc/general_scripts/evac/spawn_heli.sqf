@@ -54,6 +54,7 @@ _turrets = [_entry >> "turrets"] call BIS_fnc_returnVehicleTurrets;			//All turr
 _path = [];
 private ["_i"];
 _i = 0;
+
 while {_i < (count _turrets)} do
 {
 	private ["_turretIndex", "_thisTurret"];
@@ -67,5 +68,6 @@ while {_i < (count _turrets)} do
 	_i = _i + 2;
 };
 
+_evac setVariable ["MCC_evacStartPos", getposATL _evac, true];
 MCC_evacVehicles set [count MCC_evacVehicles, _evac];
 publicvariable "MCC_evacVehicles"; 

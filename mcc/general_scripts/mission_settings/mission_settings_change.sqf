@@ -80,24 +80,30 @@ if !mcc_isloading then
 	MCC_AI_Command = _AiSkill; 
 	publicvariable "MCC_AI_Command"; 
 	
+	MCC_consoleGPSIndex = lbCurSel MCC_MSCONSOLEGPS;
 	MCC_ConsoleOnlyShowUnitsWithGPS = if ((lbCurSel MCC_MSCONSOLEGPS) == 0) then {true} else {false};				//CONSOLE
 	publicvariable "MCC_AI_Command";
 	
+	MCC_consoleShowFriendsIndex = lbCurSel MCC_MSCONSOLESHOWFRIENDS;
 	MCC_ConsoleDrawWP = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};						//CONSOLE
 	publicvariable "MCC_AI_Command";
 	
 	MCC_ConsolePlayersCanSeeWPonMap = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};		//CONSOLE
 	publicvariable "MCC_ConsolePlayersCanSeeWPonMap";
 	
+	MCC_consoleCommandAIIndex = lbCurSel MCC_MSCONSOLECOMMANDAI;
 	MCC_ConsoleCanCommandAI = if ((lbCurSel MCC_MSCONSOLECOMMANDAI) == 0) then {true} else {false};					//CONSOLE
 	publicvariable "MCC_AI_Command";
 	
+	MCC_nameTagsIndex = lbCurSel MCC_IDCNAMETAGS;
 	MCC_nameTags = if ((lbCurSel MCC_IDCNAMETAGS) == 0) then {false} else {true};									//NameTags
 	publicvariable "MCC_nameTags";
 	
+	MCC_saveGearIndex = lbCurSel mcc_saveGearComboIDC;
 	MCC_saveGear = if ((lbCurSel mcc_saveGearComboIDC) == 0) then {false} else {true};								//Save gear EH
 	publicvariable "MCC_saveGear";
 	
+	MCC_artilleryComputerIndex = lbCurSel mcc_artilleryTitleIDC;
 	if ((lbCurSel mcc_artilleryTitleIDC) == 0) then 
 	{
 		[[2,compile format ["enableEngineArtillery false"]], "MCC_fnc_globalExecute", true, true] spawn BIS_fnc_MP;

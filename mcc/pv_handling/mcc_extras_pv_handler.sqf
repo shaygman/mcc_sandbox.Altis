@@ -67,7 +67,7 @@ if (isServer) then
 // Params: 
 // 	[wp1,wp2,wp3]: array, waypoint positions
 // 	flyInHight: number, if evac is a chopper flight hight, set to 5000 for land or sea vehicle
-//	insertion: number, for vehicles: 0 - engine on, 1 - engine off. For helicopters: 0 - engine on, 1 - engine off, 2 - hover, 3 - Helocasting
+//	insertion: number, for vehicles: 0 - engine on, 1 - engine off. For helicopters: 0 - engine on, 1 - engine off, 2 - hover, 3 - Helocasting, 4 - Smoke, 5 - Fast Rope
 //	vehicle: object, the evac vehicle
 //==============================================================================================================================================================================
 	MCC_fnc_evacMove = 
