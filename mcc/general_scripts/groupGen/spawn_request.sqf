@@ -19,26 +19,33 @@ disableSerialization;
 _mccdialog = findDisplay groupGen_IDD;
 _type = _this select 0;
 _dlg = findDisplay groupGen_IDD;
-if !mcc_isloading then	{
-	if (_type==0) then	{										//Spawn Group
-			MCC_groupGenGroupcount = MCC_groupGenGroupcount +1;
-			hint "click on the map"; 
-			onMapSingleClick " 	hint ""Group Spawned."";
-							mcc_safe = mcc_safe + FORMAT ['
-										[[%1 , %2, %3, %4],""MCC_fnc_groupSpawn"",true,false] spawn BIS_fnc_MP;
-										sleep 1;'								 
-										, _pos
-										, MCC_groupGenCurrenGroupArray
-										, MCC_groupGenGroupcount
-										, mcc_hc
-										];
-							[[_pos, MCC_groupGenCurrenGroupArray, MCC_groupGenGroupcount, mcc_hc],'MCC_fnc_groupSpawn',true,false] spawn BIS_fnc_MP;
-							onMapSingleClick """";";
-			_nul=[MCC_groupGenGroupStatus] execVM MCC_path + "mcc\general_scripts\groupGen\group_manage.sqf";	//Refresh the group WP
-		};
-		
-	if (_type==1) then	{											//Add WP
-		if (count MCC_groupGenGroupArray > 0) then {				//Fali safe if no group selected
+if !mcc_isloading then	
+{
+	//Spawn Group
+	if (_type==0) then	
+	{										
+		MCC_groupGenGroupcount = MCC_groupGenGroupcount +1;
+		hint "click on the map"; 
+		onMapSingleClick " 	hint ""Group Spawned."";
+						mcc_safe = mcc_safe + FORMAT ['
+									[[%1 , %2, %3, %4],""MCC_fnc_groupSpawn"",true,false] spawn BIS_fnc_MP;
+									sleep 1;'								 
+									, _pos
+									, MCC_groupGenCurrenGroupArray
+									, MCC_groupGenGroupcount
+									, mcc_hc
+									];
+						[[_pos, MCC_groupGenCurrenGroupArray, MCC_groupGenGroupcount, mcc_hc],'MCC_fnc_groupSpawn',true,false] spawn BIS_fnc_MP;
+						onMapSingleClick """";";
+		_nul=[MCC_groupGenGroupStatus] execVM MCC_path + "mcc\general_scripts\groupGen\group_manage.sqf";	//Refresh the group WP
+	};
+	
+	//Add WP	
+	if (_type==1) then	
+	{			
+		//Fali safe if no group selected
+		if (count MCC_groupGenGroupArray > 0) then 
+		{				
 			_wpType = lbCurSel MCC_GroupGenWPType_IDD;
 			_wpComabt = ["NO CHANGE", "BLUE", "GREEN", "WHITE", "YELLOW", "RED"] select (lbCurSel MCC_GroupGenWPConbatMode_IDD);
 			_wpFormation = ["NO CHANGE", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"] select (lbCurSel MCC_GroupGenWPFormation_IDD);
@@ -58,18 +65,21 @@ if !mcc_isloading then	{
 			waituntil {MCC_WPgenMapClick}; 
 			sleep 1; 
 			(_mccdialog displayCtrl MCC_GroupGenGroups_IDD) lbSetCurSel MCC_groupGenGroupselectedIndex;		//Sets focuse on the group
-			};
 		};
-		
-	if (_type==2) then	{										//ClearWP
-		if (count MCC_groupGenGroupArray > 0) then {
+	};
+	
+	//ClearWP	
+	if (_type==2) then	
+	{										
+		if (count MCC_groupGenGroupArray > 0) then 
+		{
 			MCC_groupGenGroupWP = MCC_groupGenGroupArray select (lbCurSel MCC_GroupGenGroups_IDD);
 			
 			hint "WP Cleared";
 			[[2,[],[],[MCC_groupGenGroupWP]],'MCC_fnc_manageWp',true,false] call BIS_fnc_MP;
 			sleep 1; 
 			_nul=[MCC_groupGenGroupStatus] execVM MCC_path + "mcc\general_scripts\groupGen\group_manage.sqf";	//Refresh the group WP
-			};
 		};
 	};
+};
 	

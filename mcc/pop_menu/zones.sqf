@@ -19,7 +19,7 @@ if (mcc_active_zone != mcc_zone_number) then	{		//We selected a new zone let's g
 	_previusZone = format ["%1", mcc_active_zone];
 	_previusZone setMarkerColorLocal "colorBlack";
 	_previusZone setMarkerBrushLocal "Solid";
-	_previusZone setMarkerAlpha 0.4; 
+	_previusZone setMarkerAlphalocal 0.4; 
 	MCC_zone_index = (lbCurSel MCCZONENUMBER);
 	};
 	
@@ -34,6 +34,6 @@ if (_type == 1) then {						//Updating zone? Set zone properties
 if (_type == 0) then {						//Selecting zone
 	mcc_zone_markername	setMarkerColorLocal "colorYellow";
 	mcc_zone_markername setMarkerBrushLocal "Solid";
-	mcc_zone_markername setMarkerAlpha 0.4;
+	mcc_zone_markername setMarkerAlphalocal 0.4;
 	mcc_active_zone = mcc_zone_number;
 	};

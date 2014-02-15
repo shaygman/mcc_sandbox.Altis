@@ -1,22 +1,32 @@
 //Made by Shay_Gman (c) 09.10
 #define groupGen_IDD 2994
+#define MCC_MINIMAP 9000
 
+#define MCC_FACTION 8008
 #define UNIT_TYPE 3010
 #define UNIT_CLASS 3011
 #define MCC_GGUNIT_TYPE 3012
-
+#define MCC_GGUNIT_BEHAVIOR 3030
 #define MCC_GroupGenCurrentGroup_IDD 9003
-#define MCC_GroupGenWPType_IDD 9004
-#define MCC_GroupGenWPConbatMode_IDD 9005
-#define MCC_GroupGenWPFormation_IDD 9006
-#define MCC_GroupGenWPSpeed_IDD 9007
-#define MCC_GroupGenWPBehavior_IDD 9008
-#define MCC_GroupGenWPStatement_IDD 9009
-#define MCC_GroupGenGroups_IDD 9010
+	
+#define MCC_GroupGenInfoText_IDC 9013
+#define MCC_GroupGenWPBckgr_IDC 9014
+#define MCC_GroupGenWPCombo_IDC 9015
+#define MCC_GroupGenWPformationCombo_IDC 9016
+#define MCC_GroupGenWPspeedCombo_IDC 9017
+#define MCC_GroupGenWPbehaviorCombo_IDC 9018
+#define MCC_GroupGenWPAdd_IDC 9019
+#define MCC_GroupGenWPReplace_IDC 9020
+#define MCC_GroupGenWPClear_IDC 9021
 
 #define MCC_GGListBoxIDC 3013
 #define MCC_GGADDIDC 3014
 #define MCC_GGCLEARIDC 3015
+#define MCC_GGUNIT_EMPTY 3016
+#define MCC_GGUNIT_EMPTYTITLE 3017
+#define mcc_groupGen_CurrentgroupNameTittle_IDC 3018
+#define mcc_groupGen_CurrentgroupNameText_IDC 3019
+#define MCC_GGSAVE_GROUPIDC 3020
 
 private ["_action", "_type", "_comboBox", "_mccdialog", "_groupArray","_displayname","_index","_unitType","_side","_group","_unit","_show"];
 disableSerialization;
@@ -26,15 +36,21 @@ _mccdialog = findDisplay groupGen_IDD;
 
 _show = if ((lbCurSel MCC_GGUNIT_TYPE)==0) then {true} else {false}; 
 
-for "_x" from 3013 to 3015 step 1 do 
+//Hide buttons
+for "_x" from 3013 to 3020 step 1 do 
 {
 	ctrlShow [_x,_show];
 };
+ctrlShow [MCC_GroupGenCurrentGroup_IDD,_show];
 
- ctrlShow [MCC_GroupGenCurrentGroup_IDD, _show]; 
+if (_show) then 
+{
+	(_mccdialog displayCtrl MCC_GGSAVE_GROUPIDC) ctrlSetTooltip "Save the group as a custom group";
+	ctrlSetText [MCC_GGSAVE_GROUPIDC, "Save as Custom"]; 
+}; 
 
 //Changing the group type
-if (_action == 0) then 
+if (_action == 0) exitWIth 
 {		
 	//Groups
 	if ((lbCurSel MCC_GGUNIT_TYPE) == 1) then 
@@ -70,6 +86,11 @@ if (_action == 0) then
 		//Custom
 		if (((MCC_groupTypes select (lbCurSel UNIT_TYPE) select 0)) =="Custom") exitWith 				//Custom
 		{
+			//Show the control
+			ctrlShow [MCC_GGSAVE_GROUPIDC, true];
+			ctrlSetText [MCC_GGSAVE_GROUPIDC, "Delete Group"]; 
+			(_mccdialog displayCtrl MCC_GGSAVE_GROUPIDC) ctrlSetTooltip "Delete the group from the custom groups"; 
+			
 			_comboBox = _mccdialog displayCtrl UNIT_CLASS;
 			lbClear _comboBox;
 			private "_counter";
@@ -148,8 +169,10 @@ if (_action == 0) then
 			_comboBox lbSetCurSel 0;
 		};
 };
-	
-if (_action == 1) then {			//Building the array
+
+//Building the array	
+if (_action == 1) then 
+{			
 	_type = lbCurSel UNIT_TYPE;
 	switch (_type) do		//Which unit do we want
 		{
@@ -197,14 +220,16 @@ if (_action == 1) then {			//Building the array
 		};
 	_dummy = (_groupArray select (lbCurSel UNIT_CLASS)) select 1;
 	MCC_groupGenCurrenGroupArray set[count MCC_groupGenCurrenGroupArray , [_dummy,_unitType]];
-	};
-	
-if (_action == 2) then {			//Clear the array
+};
+
+//Clear the array	
+if (_action == 2) then 
+{			
 	MCC_groupGenCurrenGroupArray = [];
-	};
+};
 
 //Units/Groups
-if ((_action ==3)&& (MCC_type_index != lbCurSel MCC_GGUNIT_TYPE)) then																	//Change Type
+if ((_action ==3)&& (MCC_type_index != lbCurSel MCC_GGUNIT_TYPE)) exitWIth																	//Change Type
 {
 	MCC_type_index = lbCurSel MCC_GGUNIT_TYPE;
 	
@@ -232,14 +257,58 @@ if ((_action ==3)&& (MCC_type_index != lbCurSel MCC_GGUNIT_TYPE)) then										
 		_comboBox lbSetCurSel 0; //MCC_class_index;	
 	};
 };	
+
+//Save/Delete  custom 
+if (_action ==4) exitWIth
+{
+	private ["_groupArray","_groupToSave","_name","_nul"];
+	
+	//Delete
+	if (ctrlText MCC_GGSAVE_GROUPIDC == "Delete Group") then
+	{
+		_comboBox = _mccdialog displayCtrl UNIT_CLASS;	
+		if ((call compile (_comboBox lbData (lbCurSel UNIT_CLASS))) != -1) then
+		{
+			MCC_customGroupsSave set [(call compile (_comboBox lbData (lbCurSel UNIT_CLASS))),-1];
+			MCC_customGroupsSave = MCC_customGroupsSave - [-1];
+			profileNamespace setVariable ["MCC_customGroupsSave", MCC_customGroupsSave];
+		};
+		
+		_nul = [0] execVM format ["%1mcc\general_scripts\groupGen\group_change.sqf",MCC_path];
+	}
+	else	//Save
+	{
+		_name = ctrlText mcc_groupGen_CurrentgroupNameText_IDC; 
+		if (_name !="") then
+		{
+			_groupArray = []; 
+			{
+				_groupArray set [count _groupArray, _x select 0]; 
+			} foreach MCC_groupGenCurrenGroupArray;
+			
+			if (count _groupArray > 0) then
+			{
+				_groupToSave = [mcc_faction, "LAND", _groupArray , _name, count _groupArray];
+				MCC_customGroupsSave set [count MCC_customGroupsSave, _groupToSave];
+				profileNamespace setVariable ["MCC_customGroupsSave", MCC_customGroupsSave];
+				
+				player sideChat "Custom group saved successfully"; 
+			}; 
+		}
+		else 
+		{
+			player sideChat "Give a name to your custom group first"; 
+		};
+	};
+};
 	
 _comboBox = _mccdialog displayCtrl MCC_GroupGenCurrentGroup_IDD;		//Update units
 lbClear _comboBox;
-	{
-		_displayname = getText (configFile >> "cfgVehicles" >> (_x select 0) >> "displayName");
-		_index = _comboBox lbAdd _displayname;
-	} foreach MCC_groupGenCurrenGroupArray;
-	_comboBox lbSetCurSel 0;
+{
+	_displayname = getText (configFile >> "cfgVehicles" >> (_x select 0) >> "displayName");
+	_index = _comboBox lbAdd _displayname;
+} foreach MCC_groupGenCurrenGroupArray;
+_comboBox lbSetCurSel 0;
 	
 
 	

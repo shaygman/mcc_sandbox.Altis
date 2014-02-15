@@ -289,7 +289,53 @@ class MCC_RscListbox
 			width = 0;
 		};
 	};
-	
+
+
+class MCC_RscTree 
+{
+	access = 0;
+	borderSize = 0;
+	colorArrow[] = {1,1,1,1};
+	colorBackground[] = {0,0,0,0};
+	colorBorder[] = {0,0,0,0};
+	colorDisabled[] = {1,1,1,0.25};
+	colorMarked[] = {0.2,0.3,0.7,1};
+	colorMarkedSelected[] = {0,0.5,0.5,1};
+	colorMarkedText[] = {0,0,0,1};
+	colorSelect[] = {1,1,1,0.7};
+	colorSelectBackground[] = {0,0,0,0.5};
+	colorSelectText[] = {0,0,0,1};
+	colorText[] = {1,1,1,1};
+	expandedTexture = "A3\ui_f\data\gui\rsccommon\rsctree\expandedTexture_ca.paa";
+	expandOnDoubleclick = 1;
+	font = "PuristaMedium";
+	hiddenTexture = "A3\ui_f\data\gui\rsccommon\rsctree\hiddenTexture_ca.paa";
+	maxHistoryDelay = 1;
+	multiselectEnabled = 0;
+	rowHeight = 0.0439091;
+	shadow = 0;
+	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	style = 0;
+	type = 12;
+	class ScrollBar
+		{
+			arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+			arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+			autoScrollDelay = 5;
+			autoScrollEnabled = 0;
+			autoScrollRewind = 0;
+			autoScrollSpeed = -1;
+			border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+			color[] = {1,1,1,0.6};
+			colorActive[] = {1,1,1,1};
+			colorDisabled[] = {1,1,1,0.3};
+			height = 0;
+			scrollSpeed = 0.06;
+			shadow = 0;
+			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+			width = 0;
+		};
+};	
 class MCC_RscCombo 
 	{
 	access = 0;

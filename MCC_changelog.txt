@@ -10,6 +10,8 @@ Change log r19:
 - Added: Fast rope to evac. 
 - Added: Evac helicopters will return to their spawn location automaticlly after they have completed their drop. 
 - Fixed: Removed missing weapon config error message after respawn. 
+- Fixed: MCC zones visable on some clients
+- Fixed: Group Genrator will not draw Waypoints leading [0,0,0]; 
 
 - TODO Save groups to profileSpace
 - TODO: Tooltip missionWizard.
