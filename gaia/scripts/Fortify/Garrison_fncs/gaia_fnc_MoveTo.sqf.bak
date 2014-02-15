@@ -70,7 +70,7 @@ if (_reached) then
 
 	};
 
-	_group setCombatMode "YELLOW";
+	(group _unit) setCombatMode "YELLOW";
 	
 	if (_indoors) then {
 		_unit setvariable ["indoors",true];
@@ -83,7 +83,7 @@ if (_reached) then
 	};
 
 //	if (_staying) then {
-		//_group setCombatMode "GREEN";
+		(group _unit) setCombatMode "YELLOW";
 		//_unit disableAI "TARGET";
 		//_unit disableAI "AUTOTARGET";
 		//_unit disableAI "FSM";

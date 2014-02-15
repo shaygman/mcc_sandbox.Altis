@@ -26,7 +26,7 @@ _unit setVariable ["forcedspeed",0];
 
 while {alive _unit && ((group _unit) getVariable ["Garrisoning",false])} do 
 {
-	player globalchat "wastart smart";
+	//player globalchat "wastart smart";
 	//if !((_unit getVariable ["forcedspeed",-1]) >= 0) exitWith {hint (str(_unit getVariable ["forcedspeed",-1]))};
 	call _sleep_check;
 	call _sleep_check;

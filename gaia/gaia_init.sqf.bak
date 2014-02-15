@@ -49,6 +49,7 @@ fnc_DoPatrolMechInf									= compile preprocessfilelinenumbers (GAIA_scripts + 
 fnc_DoPatrolMotorInf								= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMotorInf.sqf");
 fnc_DoPatrolShip										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolShip.sqf");
 fnc_DoFortify												= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoFortify.sqf");
+fnc_DoWait													= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoWait.sqf");
 
 
 
@@ -120,86 +121,19 @@ fnc_GetTurretsWeapons						 	= compile preprocessfilelinenumbers (GAIA_scripts 	
 //define functions hint
 
 
-if (isnil("gaia_fnc_vision_check")) then {
-	gaia_fnc_vision_check = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_vision_check.sqf");
-	//hint "gaia_fnc_vision_check compiled";
-};
 
-if (isnil("leaving_check")) then {
-	leaving_check = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\leaving_check.sqf");
-	//hint "gaia_fnc_vision_check compiled";
-};
-
-
-if (isnil("gaia_fnc_MoveTo")) then {
-	// [_unit,_pos];
-	gaia_fnc_MoveTo = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_MoveTo.sqf");
-};
-
-if (isnil("gaia_fnc_Patrol")) then {
-	// [_leader,_patrolCenter,_patrolRadius,_bRepeating (after contact)];
-	gaia_fnc_Patrol = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\patrol.sqf");
-};
-
-if (isnil("gaia_fnc_Prone_Limit")) then {
-	// [_leader,_patrolCenter,_patrolRadius,_bRepeating (after contact)];
-	gaia_fnc_Prone_Limit = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_Prone_Limit.sqf");
-};
-
-if (isnil("gaia_fnc_smartlook")) then {
-	gaia_fnc_smartlook = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_smartlook.sqf");
-	//hint "smartlook compiled";
-};
-
-if (isnil("gaia_fnc_seek")) then {
-	gaia_fnc_seek= compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_seek.sqf");
-	//hint "seek compiled";
-};
-
-if (isnil("gaia_fnc_get_angle")) then {
-	gaia_fnc_get_angle = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_get_angle.sqf");
-	//hint "get_angle compiled";
-};
-
-if (isnil("gaia_fnc_cansee")) then {
-	gaia_fnc_cansee = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_cansee.sqf");
-	//hint "cansee compiled";
-};
-
-if (isnil("gaia_fnc_get_DoorPositions")) then {
-	// [_house]; returns doorpositionsin model coords;
-	gaia_fnc_get_DoorPositions = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_get_DoorPositions.sqf");
-};
-
-// rework due to redundant code
-
-
-if (isnil("gaia_fnc_willsee")) then {
-	gaia_fnc_willsee = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_willsee.sqf");
-	//hint "willsee compiled";
-};
-
-
-if (isnil("gaia_fnc_willwalk")) then {
-	gaia_fnc_willwalk = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_willwalk.sqf");
-	//hint "willwalk compiled";
-};
-
-if (isnil("gaia_fnc_indoors")) then {
-	gaia_fnc_indoors = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_indoors.sqf");
-	//hint "indoors compiled";
-};
-
-if (isnil("gaia_fnc_sillybuild_check")) then {
-	gaia_fnc_sillybuild_check = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_sillybuild_check.sqf");
-	//hint "sillybuild check compiled";
-};
-/*
-if (isnil("gaia_fnc_cqc_target")) then {
-	gaia_fnc_cqc_target = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_cqc_target.sqf";
-	//hint "cqc target compiled";
-};
-*/
+gaia_fnc_vision_check = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_vision_check.sqf");
+gaia_fnc_MoveTo = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_MoveTo.sqf");
+gaia_fnc_Prone_Limit = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_Prone_Limit.sqf");
+gaia_fnc_smartlook = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_smartlook.sqf");
+gaia_fnc_seek= compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_seek.sqf");
+gaia_fnc_get_angle = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_get_angle.sqf");
+gaia_fnc_cansee = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_cansee.sqf");
+gaia_fnc_get_DoorPositions = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_get_DoorPositions.sqf");
+gaia_fnc_willsee = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_willsee.sqf");
+gaia_fnc_willwalk = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_willwalk.sqf");
+gaia_fnc_indoors = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_indoors.sqf");
+gaia_fnc_sillybuild_check = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_sillybuild_check.sqf");
 
 
 

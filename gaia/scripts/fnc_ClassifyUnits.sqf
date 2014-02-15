@@ -53,6 +53,7 @@ _DoCAS				= ['DoCAS'];
 _DoSupport		= ['DoSupport'];
 _DoGuard			=	['DoGuard'];
 _DoPark				= ['DoPark'];
+_DoWait				= ['DoWait'];
 
 
 _portfolio		= [];
@@ -233,20 +234,20 @@ switch(true)do
 			{
 				_class = "Helicopter";
 				_speed													= "FAST";
-				//_portfolio = _portfolio					+ _DoPatrol;
+				_portfolio = _portfolio					+ _DoWait;
 				
 				//No guns but do hold space? We are a transporter
 				if (!_VehicleHasGuns and _EnoughCargo ) then
 				{
-				_portfolio = _portfolio					+ _DoPatrol;
-				//_portfolio = _portfolio					+ _DoTransport;				
+				
+				_portfolio = _portfolio					+ _DoTransport;				
 				};
 				
 				//Please, for the love of god check if we have guns before we charge in.
 				if (_VehicleHasGuns) then
 				{
 				_portfolio = _portfolio					+ _DoAttack;
-				_portfolio = _portfolio					+ _DoWait;
+				
 				
 				};
 			};

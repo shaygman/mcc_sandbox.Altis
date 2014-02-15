@@ -8,11 +8,11 @@ private ["_group","_TargetPos","_pos","_Degree","_NrOfBuildingWp"];
 _group 			= _this select 0; 
 _TargetPos	=	_this select 1;
 
-
-
-
-
-
+_Pos 			= (position leader _group);
+_CoverPos	= [];
+_NrOfBuildingWp = 0;
+_Degree = 0;
+_angle  = [42,0,-42] call BIS_fnc_selectRandom;
 
 
 [_group] call fnc_RemoveWayPoints;

@@ -132,6 +132,7 @@ _StartTimeIssueOrders = time;
 						(_x getVariable ["GAIA_MortarRound",0]>0)
 					)
 			then {
+							player globalchat "1";
 							[_x] call fnc_RemoveWayPoints; 
 							
 							_x setVariable ["GAIA_MortarRound"					, 0, false];
@@ -141,7 +142,7 @@ _StartTimeIssueOrders = time;
 			//Cancel orders when the class has changed			
 			
 			if ((_x getVariable ["GAIA_class","None"])!=(_x getVariable ["GAIA_PreviousClass","None"])) 
-			then {[_x] call fnc_RemoveWayPoints; };			
+			then {[_x] call fnc_RemoveWayPoints;player globalchat "2"; };			
 			
 
 	
@@ -154,6 +155,7 @@ _StartTimeIssueOrders = time;
 					)
 			then {
 							[_x] call fnc_RemoveWayPoints;
+							player globalchat "3";
 					 };
       
       					 
@@ -165,7 +167,7 @@ _StartTimeIssueOrders = time;
 					)
 			then {
 							if ((((_x getVariable  ["GAIA_CombinedOrder",grpNull]))getVariable  ["GAIA_CombinedOrder",grpNull])!=_x)
-						  then {[_x] call fnc_RemoveWayPoints;};
+						  then {[_x] call fnc_RemoveWayPoints;player globalchat "4";};
 					 };
 					 
 		
@@ -182,7 +184,7 @@ _StartTimeIssueOrders = time;
 						 and						 
 						 !((([_HQ_side,([_CA,leader _x] call BIS_fnc_nearestPosition)] call fnc_GetCAPoints) select 0 )in ["Helicopter","Autonomous"])
 					)
-			then {[_x] call fnc_RemoveWayPoints;};
+			then {[_x] call fnc_RemoveWayPoints;player globalchat "5"+(_x getVariable  ["GAIA_Order",""]);};
 			
 			// This order is so old, Cancel it. No clue wtf he is doing.
 			//Except when fortify
@@ -191,7 +193,7 @@ _StartTimeIssueOrders = time;
 						 and
 						 ((_x getVariable  ["GAIA_Order",""]) != "DoFortify")	 
 					)
-			then {[_x] call fnc_RemoveWayPoints;};
+			then {[_x] call fnc_RemoveWayPoints;player globalchat "Timeout6";};
 			
 			//Candel DoAttack order that attacks a no longer existing CA
 			if (
@@ -199,7 +201,7 @@ _StartTimeIssueOrders = time;
 						and
 						((_x getVariable  ["GAIA_Order",""]) == "DoAttack")
 					) 
-			then	{[_x] call fnc_RemoveWayPoints;};
+			then	{[_x] call fnc_RemoveWayPoints;player globalchat "7";};
 	};
 }forEach AllGroups;
 
@@ -627,6 +629,13 @@ _StartTimeIssueOrders = time;
   					 														//We do not count him into the attack
   					 														_dummy=[_x] call fnc_DoPatrol;								  					 														
   															};
+					  						//Group needs to wait (heli's)
+								  			case ("DoWait" in (_x getVariable  ["GAIA_Portfolio",[]]))	: 
+								  							{	
+  					 														//Clear the dude till he clears his mind.
+  					 														//We do not count him into the attack
+  					 														_dummy=[_x] call fnc_DoWait;								  					 														
+  															};  															
   															
 					  						//Lets give the support guys something to do.
 								  			case ("DoSupport" in (_x getVariable  ["GAIA_Portfolio",[]]))	: 

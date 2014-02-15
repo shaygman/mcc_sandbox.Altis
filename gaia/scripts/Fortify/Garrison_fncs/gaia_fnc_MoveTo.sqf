@@ -83,8 +83,8 @@ if (_reached) then
 	};
 
 //	if (_staying) then {
-		//_group setCombatMode "GREEN";
-		//_unit disableAI "TARGET";
+		(group _unit) setCombatMode "YELLOW";
+		_unit disableAI "TARGET";
 		//_unit disableAI "AUTOTARGET";
 		//_unit disableAI "FSM";
 		//_unit allowfleeing 0;

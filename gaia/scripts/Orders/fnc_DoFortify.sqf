@@ -28,7 +28,7 @@ _BuildingPos	 = [];
 			 )
 		then 
 		{
-			player globalchat "found one";
+			
 			_buildingslist set [count _buildingslist,_x];
 		}; 
 	} foreach _objectslist;

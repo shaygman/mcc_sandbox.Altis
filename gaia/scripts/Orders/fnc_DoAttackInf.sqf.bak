@@ -23,7 +23,7 @@ if !(surfaceiswater _TargetPos ) then
 			
 		while {(_Pos distance _TargetPos)>200} do
 		{
-			sleep 1;
+			sleep 0.1;
 			//Determine our compass heading from group leader to _TargetPos
 			_Degree=[_Pos, _TargetPos] call BIS_fnc_dirTo;
 			//With a -30 to + 30 degree difference do move 100 to TargetPos
@@ -46,8 +46,8 @@ if !(surfaceiswater _TargetPos ) then
 		};	
 		
 		
-
-		_dummy	=[_group,_TargetPos, "SAD"] call fnc_AddAttackWaypoint;
+		_dummy	=[_group,_TargetPos] call fnc_CreateBuildingWP;
+		//_dummy	=[_group,_TargetPos, "SAD"] call fnc_AddAttackWaypoint;
 		//_NrOfBuildingWp 	 = [_group]call fnc_CreateBuildingWP;
 		
 	};

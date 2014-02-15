@@ -49,6 +49,7 @@ fnc_DoPatrolMechInf									= compile preprocessfilelinenumbers (GAIA_scripts + 
 fnc_DoPatrolMotorInf								= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolMotorInf.sqf");
 fnc_DoPatrolShip										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoPatrolShip.sqf");
 fnc_DoFortify												= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoFortify.sqf");
+fnc_DoWait													= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoWait.sqf");
 
 
 
@@ -62,6 +63,7 @@ fnc_DoAttack												= compile preprocessfilelinenumbers (GAIA_scripts + "ord
 fnc_DoAttackMechInf									= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackMechInf.sqf");
 fnc_DoAttackTank										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackTank.sqf");
 fnc_DoAttackShip										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackShip.sqf");
+fnc_DoAttackHeli										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackHeli.sqf");
 
 
 
