@@ -18,7 +18,7 @@ if (count _arrayUnits > 0) then
 	while {_unitPlaced < (_totalEnemyUnits)} do
 	{
 		//Behavior
-		_spawnbehavior	= ["ONROADO","ONROADD"] call BIS_fnc_selectRandom; 
+		_spawnbehavior	= ["MOVE","NOFOLLOW"] call BIS_fnc_selectRandom; 
 		
 		//Group or units
 		if (random 1 < 0.5 && ((count _arrayGroup)>0)) then
