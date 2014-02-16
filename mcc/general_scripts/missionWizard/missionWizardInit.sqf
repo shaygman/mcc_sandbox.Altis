@@ -48,6 +48,7 @@ MW_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
 _preciseMarkers		= if ((lbCurSel MCC_MWPreciseMarkersComboIDC)==0) then {true} else {false};
 _reinforcement		= (lbCurSel MCC_MWReinforcementIDC);
 _artillery			= (lbCurSel MCC_MWArtilleryIDC);
+
 //CQB
 switch (lbCurSel MCC_MWCQBIDC) do	
 	{
@@ -524,7 +525,7 @@ if (_vehicles && (random 1 > 0.5)) then
 //Artillery
 if (_artillery != 0) then
 {
-	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,5,10,_side,_artillery],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
+	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,5,10,_side,_artillery,_zoneNumber],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
 	if (MW_debug) then {diag_log "Enemy's Artillery Spawned in main zone"};
 };
 

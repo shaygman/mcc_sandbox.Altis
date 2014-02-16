@@ -3,7 +3,7 @@
 // Example:[_totalEnemyUnits,_missionCenter,_radius,_arrayUnits,_priceGroup,_priceUnit,_side,_artillery] call MCC_fnc_MWSpawnStatic; 
 // Return - handler
 //========================================================================================================================================================================================
-private ["_side","_unitPlaced","_totalEnemyUnits","_radius","_arrayUnits","_group","_init","_perSpawn","_spawnPos",
+private ["_side","_unitPlaced","_totalEnemyUnits","_radius","_arrayUnits","_group","_init","_perSpawn","_spawnPos","_zone",
          "_priceGroup","_priceUnit","_price","_artillery","_pos","_missionCenter","_availablePos","_vehicleClass","_vehicle"];
 _totalEnemyUnits	= _this select 0;
 _missionCenter		= _this select 1;
@@ -13,6 +13,7 @@ _priceGroup			= _this select 4;
 _priceUnit			= _this select 5;
 _side				= _this select 6;
 _artillery			= _this select 7;	///0 - none, 1 - mortar, 2 - self propelled artillery, 3 - Random, 999 - not artillery piece
+_zone				= _this select 8;
 
 _unitPlaced = 0;
 
