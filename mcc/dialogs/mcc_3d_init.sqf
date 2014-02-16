@@ -16,6 +16,7 @@
 #define MCC_3DCompsaveUIButtonIDC 8015
 #define MCC_3DComploadUIButtonIDC 8016
 #define MCC_3DComploadBcgIDC 8017
+#define MCC_3DMapIDC 8018
 
 ctrlShow [MCC_3DCompssaveListIDC,false];
 ctrlShow [MCC_3DCompssaveDescriptionIDC,false];
@@ -27,7 +28,13 @@ ctrlShow [MCC_3DComploadBcgIDC,false];
 
 disableSerialization;
 private ["_mccdialog","_comboBox","_displayname","_x"];
+
 _mccdialog = findDisplay MCC3D_IDD;
+
+uiNamespace setVariable ["MCC3D_Dialog", _this select 0];
+
+_comboBox = _mccdialog displayCtrl MCC_3DMapIDC;	
+_comboBox ctrlMapAnimAdd [0, 0.15, getpos BIS_CONTROL_CAM];
 
 _comboBox = _mccdialog displayCtrl MCC_FACTION;		//fill combobox CFG factions
 	lbClear _comboBox;
@@ -44,7 +51,8 @@ lbClear _comboBox;
 	_index = _comboBox lbAdd _displayname;
 } foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "D.O.C", "Ammo", "Objects (Fortifications)", "Objects (Dead Bodies)", "Objects (Furniture)", 
 			"Objects (Market)", "Objects (Construction)", "Objects (Signs)", "Objects (Flags)", "Objects (Military)","Objects (Small)", "Objects (Wrecks)", "Objects (Submerged)", "Objects (Tents)","Objects (Garbage)","Objects (Lamps)",
-			"Objects (Container)","Objects (Structures)","Objects (Helpers)","Objects (Training)","Mines","Animals"];
+			"Objects (Container)","Objects (Helpers)","Objects (Training)","Mines","Animals","Structures (Airport)","Structures (Military)","Structures (Cultural)","Structures (Walls)","Structures (Infrastructure)","Structures (commercial)",
+			"Structures (Industrial)","Structures (Town)","Structures (Village)","Structures (Fences)"];
 _comboBox lbSetCurSel MCC_class_index;
 
 _comboBox = _mccdialog displayCtrl MCC_SETTING_EMPTY;		//fill combobox Empty on/off

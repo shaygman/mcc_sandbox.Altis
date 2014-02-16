@@ -227,35 +227,90 @@ if (mcc_missionmaker == (name player)) then {
 					mcc_spawntype="AMMO";
 				};
 				
-				case 24:	//structures
-				{
-					_groupArray = U_STRUCTERS;
-					mcc_spawntype="AMMO";
-				};
-				
-				case 25:	//helpers
+				case 24:	//helpers
 				{
 					_groupArray = U_HELPERS;
 					mcc_spawntype="AMMO";
 				};
 				
-				case 26:	//training
+				case 25:	//training
 				{
 					_groupArray = U_TRAINING;
 					mcc_spawntype="AMMO";
 				};
 				
-				case 27:	//Mines
+				case 26:	//Mines
 				{
 					_groupArray = U_MINES;
 					mcc_spawntype="MINES";
 				};
 				
-				case 28:	//Animals
+				case 27:	//Animals
 				{
 					_groupArray = U_ANIMALS;
 					mcc_spawntype="ANIMAL";
 				};
+				
+				case 28:	//S - Airport
+				{
+					_groupArray = S_AIRPORT;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 29:	//S - Military 
+				{
+					_groupArray = S_MILITARY;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 30:	//S - Cultural 
+				{
+					_groupArray = S_CULTURAL;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 31:	//S - Walls 
+				{
+					_groupArray = S_WALLS;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 32:	//S - Infrasructures 
+				{
+					_groupArray = S_INFRAS;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 33:	//S - commercial 
+				{
+					_groupArray = S_COMMERSIAL;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 34:	//S - industrial 
+				{
+					_groupArray = S_INDUSTRIAL;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 35:	//S - TOWN 
+				{
+					_groupArray = S_TOWN;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 36:	//S - Village 
+				{
+					_groupArray = S_VILLAGE;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 37:	//S - Fences 
+				{
+					_groupArray = S_FENCES;
+					mcc_spawntype="AMMO";
+				};
+				
 			};
 		mcc_classtype = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 0;
 		mcc_spawnname = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 1;

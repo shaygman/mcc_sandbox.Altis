@@ -589,7 +589,8 @@ class mcc_groupGen {
 	class mcc_groupGen_AllButton: MCC_RscButton
 	{
 		idc = -1;
-		onButtonClick = "[west,east,resistance,civilian] execVM 'mcc\general_scripts\groupGen\group_manage.sqf'";
+		
+		onButtonClick = __EVAL("[west,east,resistance,civilian] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
 
 		text = "All"; //--- ToDo: Localize;
 		x = 0.614583 * safezoneW + safezoneX;

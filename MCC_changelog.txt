@@ -12,6 +12,10 @@ Change log r19:
 - Fixed: Removed missing weapon config error message after respawn. 
 - Fixed: MCC zones visable on some clients
 - Fixed: Group Genrator will not draw Waypoints leading [0,0,0]; 
+- Added: Compass to 3D editor
+- Reworkded: 3D editor interface. 
+- Added: New structures classes to 3D editor
+- Added: Save custom groups in Group Generator and spawn units in group gen. 
 
 - TODO Save groups to profileSpace
 - TODO: Tooltip missionWizard.

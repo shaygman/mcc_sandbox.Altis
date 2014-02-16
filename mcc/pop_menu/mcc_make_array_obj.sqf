@@ -151,6 +151,7 @@ for "_i" from 1 to (count _CfgVehicles - 1) do
 				U_HELPERS set[_u_helpers_idx,[_type,_cfgclass,_faction,_vehicleDisplayName]];
 				_u_helpers_idx = _u_helpers_idx+1;
 			};
+
 		if (toLower(_vehicleclass) == "training")then
 			{
 				_type="LAND";
@@ -173,8 +174,68 @@ for "_i" from 1 to (count _CfgVehicles - 1) do
 				U_ANIMALS set[_u_animals_idx,[_type,_cfgclass,_faction,_vehicleDisplayName]];
 				_u_animals_idx = _u_animals_idx + 1;
 			};
+		
+		if (toLower(_vehicleclass) == "structures_transport")then 
+			{
+				_type="LAND";
+				S_AIRPORT set[count S_AIRPORT,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};	
+		
+		if (toLower(_vehicleclass) == "structures_military")then 
+			{
+				_type="LAND";
+				S_MILITARY set[count S_MILITARY,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};	
 			
-			//For separate menu for ACE stuff, problems with the length when combined into single menu, I think.
+		if (toLower(_vehicleclass) == "structures_cultural")then 
+			{
+				_type="LAND";
+				S_CULTURAL set[count S_CULTURAL,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};			
+		
+		if (toLower(_vehicleclass) == "structures_walls")then 
+			{
+				_type="LAND";
+				S_WALLS set[count S_WALLS,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};
+		
+		if (toLower(_vehicleclass) == "structures_infrastructure")then 
+			{
+				_type="LAND";
+				S_INFRAS set[count S_INFRAS,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};
+		
+		if (toLower(_vehicleclass) == "structures_commercial")then 
+			{
+				_type="LAND";
+				S_COMMERSIAL set[count S_COMMERSIAL,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};
+			
+		if (toLower(_vehicleclass) == "structures_industrial")then 
+			{
+				_type="LAND";
+				S_INDUSTRIAL set[count S_INDUSTRIAL,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};
+		
+		if (toLower(_vehicleclass) == "structures_town")then 
+			{
+				_type="LAND";
+				S_TOWN set[count S_TOWN,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};
+		
+		if (toLower(_vehicleclass) == "structures_village")then 
+			{
+				_type="LAND";
+				S_VILLAGE set[count S_VILLAGE,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};
+		
+		if (toLower(_vehicleclass) == "structures_fences")then 
+			{
+				_type="LAND";
+				S_FENCES set[count S_FENCES,[_type,_cfgclass,_faction,_vehicleDisplayName]];
+			};
+
+		//For separate menu for ACE stuff, problems with the length when combined into single menu, I think.
 		if (toLower(_vehicleclass) == "ace_ammunition" || toLower(_vehicleclass) == "ace_ammunitiontransportus" || toLower(_vehicleclass) == "ace_ammunitiontransportru"
 			|| toLower(_vehicleclass) == "ace_ammunition_rope" || toLower(_vehicleclass) == "ace_objects" ||  toLower(_vehicleclass) == "ace_ammunition_csw" 
 			||  toLower(_vehicleclass) == "ace_ammunitiontransportcsw" ||  toLower(_vehicleclass) == "ace_ammunition_rope" ||  toLower(_vehicleclass) == "ace_arty_ammunition"

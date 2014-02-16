@@ -108,13 +108,13 @@ if (mcc_missionmaker == (name player)) then
 			
 		mcc_spawntype="GROUP";
 		
+		//Custom 
 		if (((MCC_groupTypes select (lbCurSel SPAWNBRANCH) select 0)) =="Custom") then 
 		{	
 			private "_group";
 			_mccdialog = findDisplay MCC_SANDBOX_IDD;	
 			_comboBox = _mccdialog displayCtrl SPAWNCLASS;	
 			_group = MCC_customGroupsSave select (call compile (_comboBox lbData (lbCurSel SPAWNCLASS)));
-			player sidechat str _group;
 			mcc_classtype = _group select 1;
 			mcc_spawnname = _group select 3;
 			mcc_spawnfaction = _group select 2;

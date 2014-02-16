@@ -40,7 +40,7 @@ DOperator setvariable ["MCC_3D_logic",_logic];
 //////////////////////////////////////////////////
 startLoadingScreen ["3D Placing","RscDisplayLoadMission"];
 //////////////////////////////////////////////////
-
+(["MCC_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_compass", "PLAIN"];
 _camera = BIS_CONTROL_CAM;
 if (isnil "BIS_CONTROL_CAM") then {
 	_camera = "camconstruct" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
@@ -79,8 +79,16 @@ if (isnil "BIS_CONTROL_CAM_ASL") then {
 
 _logic setvariable ["MCC_3D_menu","#USER:BIS_Coin_categories_0"];
 
-_nvgstate = if (daytime > 18.5 || daytime < 5.5) then {2} else {3};
-if (_nvgstate == 2) then {camusenvg true};
+_nvgstate = if (daytime > 18.5 || daytime < 5.5) then {3} else {4};
+if (_nvgstate == 2) then 
+{
+	camusenvg true;
+	((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "N/V";
+}
+else
+{
+	((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "Normal";
+}; 
 _logic setvariable ["MCC_3D_nvg",_nvgstate];
 
 _GUIstate = true; 
@@ -92,11 +100,19 @@ MCC_dummyObject addEventHandler ["handleDamage",""];
 z3DHight = (getpos MCC_dummyObject) select 2;
 if (z3DHight < 0) then {z3DHight = 0};
 
+//Create camera marker
+
+MCC_3DeditorMarker = createmarkerLocal ["MCC_3DeditorMarker", [getpos BIS_CONTROL_CAM select 0,getpos BIS_CONTROL_CAM select 1]];
+MCC_3DeditorMarker setMarkerTypeLocal "loc_ViewTower";
+MCC_3DeditorMarker setMarkerColorLocal "ColorBlue";
+MCC_3DeditorMarker setMarkerDirLocal getdir BIS_CONTROL_CAM;
+MCC_3DeditorMarker setMarkerSizeLocal [1, 1];
+
 
 if !(isnil "BIS_CONTROL_CAM_Handler") exitwith {hint "BIS_CONTROL_CAM_Handler is nill";endLoadingScreen};
 BIS_CONTROL_CAM_Handler =
 	{
-	private ["_mode", "_input", "_camera", "_logic", "_terminate", "_keysCancel", "_keysUpObj", "_keysDownObj", "_keysUp", "_keysDown" ,"_keysShift","_key","_keydelete"
+	private ["_mode", "_input", "_camera", "_logic", "_terminate", "_keysCancel", "_keysUpObj", "_keysDownObj", "_keysUp", "_keysDown" ,"_keysShift","_key","_keydelete","_offSet","_compassdDir","_compassdPos"
 			,"_keysBanned", "_keyNightVision","_finished", "_keyplace","_objectPos","_objectDir","_keyalt","_nearObjects", "_vehicleclass","_html","_ctrlKey","_gain","_keyGUI"];
 			
 	_mode = _this select 0;
@@ -121,18 +137,37 @@ BIS_CONTROL_CAM_Handler =
 		
 	//--- Mouse Moving/Holding
 	if (_mode in ["mousemoving", "mouseholding"]) then 
-		{
+	{
 		_key = _input select 1;
-		if (! isnil "BIS_CONTROL_CAM") then {
+		if (! isnil "BIS_CONTROL_CAM") then 
+		{
 			BIS_CONTROL_CAM camsettarget MCC_dummyObject;
 			BIS_CONTROL_CAM camcommit 0;
+			
+			//Compass
+			for [{_i = 0;_j = 0},{_i < 360;_j < 4},{_i = _i + 90;_j = _j + 1}] do 
+			{
+				_x = (0.476 + sin(_i - (getdir BIS_CONTROL_CAM))*(SafeZoneW/8 - SafeZoneW/200));
+				_y = (0.42 - cos(_i - (getdir BIS_CONTROL_CAM))*(SafeZoneH/8 - SafeZoneH/200));
+				
+				((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlSetPosition  [_x,_y];
+				((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlCommit 0;
 			};
-		if (! isnil "Object3D") then {
+			
+			//Anim Map
+			((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrlMapAnimAdd [0, 0.08, getpos BIS_CONTROL_CAM];
+			ctrlMapAnimCommit ((uiNamespace getVariable "MCC_compass") displayCtrl 5);
+			MCC_3DeditorMarker setMarkerDirLocal getdir BIS_CONTROL_CAM;
+			MCC_3DeditorMarker setMarkerPoslocal [getpos BIS_CONTROL_CAM select 0,getpos BIS_CONTROL_CAM select 1];
+		};
+		
+		if (! isnil "Object3D") then 
+		{
 			Object3D setpos [getpos MCC_dummyObject select 0, getpos MCC_dummyObject select 1, z3DHight];
 			Object3D setpos [getpos MCC_dummyObject select 0, getpos MCC_dummyObject select 1, z3DHight];
 			Object3D setdir (getdir MCC_dummyObject);
-			};
 		};
+	};
 
 	//--- Key DOWN
 	if (_mode == "keydown") then
@@ -145,26 +180,46 @@ BIS_CONTROL_CAM_Handler =
 		//--- Start NVG
 		if (_key in _keyNightVision) then 
 		{
-			_NVGstate = ((_logic getvariable "MCC_3D_nvg")+1) mod 4;
+			_NVGstate = ((_logic getvariable "MCC_3D_nvg")+1) mod 5;
 			_logic setvariable ["MCC_3D_nvg",_NVGstate];
 			
 			switch (_NVGstate) do	
-			{			
-				case 2:		//NV			
-					{ 
-						false setCamUseTi _NVGstate; 
-						camusenvg true;
-					}; 
-					
-				case 3:		//Normal			
-					{ 
-						false setCamUseTi _NVGstate; 
-						camusenvg false;
+			{	
+				case 0:		//WHOT
+					{
+						playSound "nvSound";
+						true setCamUseTi _NVGstate; 
+						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "WHOT";
+					};
+				
+				case 1:		//BHOT
+					{
+						playSound "nvSound";
+						true setCamUseTi _NVGstate; 
+						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "BHOT";
+					};	
+				
+				case 2:		//RHOT
+					{
+						playSound "nvSound";
+						true setCamUseTi 7; 
+						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "THERMAL";
 					};
 					
-				default 
-					{
-						true setCamUseTi _NVGstate; 
+				case 3:		//NV			
+					{ 
+						playSound "nvSound";
+						false setCamUseTi _NVGstate; 
+						camusenvg true;
+						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "N/V";
+					}; 
+					
+				case 4:		//Normal			
+					{ 
+						playSound "nvSound";
+						false setCamUseTi _NVGstate; 
+						camusenvg false;
+						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "Normal";
 					};
 			};
 		};
@@ -175,6 +230,14 @@ BIS_CONTROL_CAM_Handler =
 			_GUIstate = !(_logic getvariable "MCC_3D_GUI");
 			_logic setvariable ["MCC_3D_GUI",_GUIstate];
 			MCC_dummyObject hideObject !(_GUIstate); 
+			if (_GUIstate) then
+			{
+				(["MCC_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_compass", "PLAIN"];
+			}
+			else
+			{
+				(["MCC_compass"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
+			};
 		};
 		
 		//Delete object
@@ -419,6 +482,8 @@ BIS_CONTROL_CAM_Handler =
 		missionnamespace setvariable ["BIS_COIN_border",nil];
 		
 		//Clean 3D placer
+		(["MCC_compass"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
+		deleteMarkerLocal MCC_3DeditorMarker; 
 		MCC_mcc_screen=0;
 		MCC3DRuning = false; 
 		if (! isnil "Object3D") then {deletevehicle Object3D};

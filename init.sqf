@@ -415,8 +415,7 @@ MCC_saveGearIndex						= 0;
 //Group Gen
 MCC_groupGenCurrenGroupArray = []; 
 MCC_groupGenGroupArray = []; 
-	
-MCC_groupGenGroupcount = 0; 		//group spawned
+
 MCC_groupGenGroupselectedIndex = 0;
 MCC_groupGenTempWP = [];
 MCC_groupGenTempWPLines = [];
@@ -520,6 +519,17 @@ U_HELPERS				= [];
 U_TRAINING				= [];
 U_MINES					= [];
 U_ANIMALS				= [];
+
+S_AIRPORT				= [];
+S_MILITARY				= [];
+S_CULTURAL				= [];
+S_WALLS					= [];
+S_INFRAS				= [];
+S_COMMERSIAL			= [];
+S_INDUSTRIAL			= [];
+S_TOWN					= [];
+S_VILLAGE				= [];
+S_FENCES				= [];
 
 //Weapons
 W_AR					= [];
@@ -867,7 +877,7 @@ MCC_3DCompSaveFiles = ["","","","","","","","","","","","","","","","","","","",
 	
 MCC_customGroupsSave = profileNamespace getVariable "MCC_customGroupsSave";
 if (isnil "MCC_customGroupsSave") then {	
-MCC_customGroupsSave = [["BLU_F","LAND",["B_Soldier_F","B_Soldier_F","B_Soldier_F"],"Custom 1",3]];
+MCC_customGroupsSave = [];
 	profileNamespace setVariable ["MCC_customGroupsSave", MCC_customGroupsSave];
 		};
 	

@@ -23,6 +23,7 @@
 
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCCMW_briefingMap.hpp"
 
+#include "\mcc_sandbox_mod\mcc\Dialogs\compass.hpp"
 //--------------------------------CP------------------------------------------------
 
 #define CPPATH "\mcc_sandbox_mod\"
@@ -42,6 +43,10 @@
 #include "\mcc_sandbox_mod\hcam\hcam.hpp"
 //---------------------------Functions------------------------------------------------
 
+class RscTitles
+{
+	#include "mcc\dialogs\compass.hpp"
+};
 class CfgFunctions
 {
 	class MCC
@@ -348,6 +353,11 @@ class CfgFunctions
 			class groupGenRefresh
 			{
 				description = "Refresh the group gen markers";
+			};
+			
+			class groupSpawn
+			{
+				description = "Create a group on the server";
 			};
 		};
 		
@@ -1024,6 +1034,13 @@ class CfgSounds	{
 	name = "missileLunch";
 	sound[] = {"\mcc_sandbox_mod\sounds\missile.ogg", 1, 1};
 	titles[] = {};
+	};
+	
+	class nvSound
+	{
+		name = "nvSound";
+		sound[] = {"\mcc_sandbox_mod\sounds\nvSound.ogg", 1, 1};
+		titles[] = {};
 	};
 };
 

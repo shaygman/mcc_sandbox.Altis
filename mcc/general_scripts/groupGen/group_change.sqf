@@ -28,7 +28,7 @@
 #define mcc_groupGen_CurrentgroupNameText_IDC 3019
 #define MCC_GGSAVE_GROUPIDC 3020
 
-private ["_action", "_type", "_comboBox", "_mccdialog", "_groupArray","_displayname","_index","_unitType","_side","_group","_unit","_show"];
+private ["_action", "_type", "_comboBox", "_mccdialog", "_groupArray","_displayname","_index","_side","_group","_unit","_show"];
 disableSerialization;
 
 _action =_this select 0;	//What are we doing
@@ -37,7 +37,12 @@ _mccdialog = findDisplay groupGen_IDD;
 _show = if ((lbCurSel MCC_GGUNIT_TYPE)==0) then {true} else {false}; 
 
 //Hide buttons
-for "_x" from 3013 to 3020 step 1 do 
+for "_x" from 3013 to 3015 step 1 do 
+{
+	ctrlShow [_x,_show];
+};
+
+for "_x" from 3018 to 3020 step 1 do 
 {
 	ctrlShow [_x,_show];
 };
@@ -121,41 +126,56 @@ if (_action == 0) exitWIth
 		//Units
 		_type = lbCurSel UNIT_TYPE;
 		MCC_class_index = lbCurSel UNIT_TYPE;
+		
 		switch (_type) do		//Which unit do we want
 			{
 			   case 0:	//Infantry
 				{
 					_groupArray = U_GEN_SOLDIER;
+					ctrlShow [MCC_GGUNIT_EMPTY,false];
+					ctrlShow [MCC_GGUNIT_EMPTYTITLE,false];
 				};
 				
 				case 1:	//Car
 				{
 					_groupArray = U_GEN_CAR;
+					ctrlShow [MCC_GGUNIT_EMPTY,true];
+					ctrlShow [MCC_GGUNIT_EMPTYTITLE,true];
 				};
 				
 				case 2:	//Tank
 				{
 					_groupArray = U_GEN_TANK;
+					ctrlShow [MCC_GGUNIT_EMPTY,true];
+					ctrlShow [MCC_GGUNIT_EMPTYTITLE,true];
 				};
 				
 				case 3:	//Motorcycle
 				{
 					_groupArray = U_GEN_MOTORCYCLE;
+					ctrlShow [MCC_GGUNIT_EMPTY,true];
+					ctrlShow [MCC_GGUNIT_EMPTYTITLE,true];
 				};
 				
 				case 4:	//Helicopter
 				{
 					_groupArray = U_GEN_HELICOPTER;
+					ctrlShow [MCC_GGUNIT_EMPTY,true];
+					ctrlShow [MCC_GGUNIT_EMPTYTITLE,true];
 				};
 				
 				case 5:	//Aircraft
 				{
 					_groupArray = U_GEN_AIRPLANE;
+					ctrlShow [MCC_GGUNIT_EMPTY,true];
+					ctrlShow [MCC_GGUNIT_EMPTYTITLE,true];
 				};
 				
 				case 6:	//Ship
 				{
 					_groupArray = U_GEN_SHIP;
+					ctrlShow [MCC_GGUNIT_EMPTY,true];
+					ctrlShow [MCC_GGUNIT_EMPTYTITLE,true];
 				};
 			};
 
@@ -179,47 +199,44 @@ if (_action == 1) then
 		   case 0:	//Infantry
 				{
 					_groupArray = U_GEN_SOLDIER;
-					_unitType = 0;	//Man
 				};
 				
 				case 1:	//Car
 				{
 					_groupArray = U_GEN_CAR;
-					_unitType = 1;	//Vehicle
 				};
 				
 				case 2:	//Tank
 				{
 					_groupArray = U_GEN_TANK;
-					_unitType = 1;	//Vehicle
 				};
 				
 				case 3:	//Motorcycle
 				{
 					_groupArray = U_GEN_MOTORCYCLE;
-					_unitType = 1;	//Vehicle
 				};
 				
 				case 4:	//Helicopter
 				{
 					_groupArray = U_GEN_HELICOPTER;
-					_unitType = 2;	//Vehicle
 				};
 				
 				case 5:	//Aircraft
 				{
 					_groupArray = U_GEN_AIRPLANE;
-					_unitType = 2;	//Vehicle
 				};
 				
 				case 6:	//Ship
 				{
 					_groupArray = U_GEN_SHIP;
-					_unitType = 1;	//Vehicle
 				};
 		};
 	_dummy = (_groupArray select (lbCurSel UNIT_CLASS)) select 1;
-	MCC_groupGenCurrenGroupArray set[count MCC_groupGenCurrenGroupArray , [_dummy,_unitType]];
+	
+	//Reset MCC_groupGenCurrenGroupArray if it is not an array
+	if (TypeName MCC_groupGenCurrenGroupArray != "ARRAY") then {MCC_groupGenCurrenGroupArray = []};
+	
+	MCC_groupGenCurrenGroupArray set[count MCC_groupGenCurrenGroupArray , _dummy];
 };
 
 //Clear the array	
@@ -283,7 +300,7 @@ if (_action ==4) exitWIth
 		{
 			_groupArray = []; 
 			{
-				_groupArray set [count _groupArray, _x select 0]; 
+				_groupArray set [count _groupArray, _x]; 
 			} foreach MCC_groupGenCurrenGroupArray;
 			
 			if (count _groupArray > 0) then
@@ -305,7 +322,7 @@ if (_action ==4) exitWIth
 _comboBox = _mccdialog displayCtrl MCC_GroupGenCurrentGroup_IDD;		//Update units
 lbClear _comboBox;
 {
-	_displayname = getText (configFile >> "cfgVehicles" >> (_x select 0) >> "displayName");
+	_displayname = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
 	_index = _comboBox lbAdd _displayname;
 } foreach MCC_groupGenCurrenGroupArray;
 _comboBox lbSetCurSel 0;

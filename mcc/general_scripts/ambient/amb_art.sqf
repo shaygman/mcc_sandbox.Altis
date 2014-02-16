@@ -23,7 +23,7 @@ switch (_type) do
 	{
 		case 0:	//Set Cannon
 		{ 
-		while {alive (gunner _arti) || alive _arti} do
+		while {alive (gunner _arti) && alive _arti} do
 			{
 			_arti fire (weapons _arti select 0);
 			sleep ((random 5)+5);
@@ -34,7 +34,7 @@ switch (_type) do
 		
 		case 1:	//Set Rockets
 		{ 
-		while {alive (gunner _arti) || alive _arti} do
+		while {alive (gunner _arti) && alive _arti} do
 			{
 			for [{_i=0}, {_i<12}, {_i=_i+1}] do 
 				{ 
@@ -50,26 +50,27 @@ switch (_type) do
 		case 2:	//Set AA
 		{ 
 		_arti removeAllEventHandlers "fired";
-		while {alive (gunner _arti) || alive _arti} do
+		while {alive (gunner _arti) && alive _arti} do
 			{
-			for [{_i=0}, {_i<12}, {_i=_i+1}] do 
+				for [{_i=0}, {_i<20}, {_i=_i+1}] do 
 				{ 
-				_arti fire (weapons _arti select 0);
-				_arti fire (weapons _arti select 0);
-				sleep 0.5;
+					_arti fire (weapons _arti select 0);
+					waituntil {canfire _arti || !alive (gunner _arti) || !alive _arti};
+					sleep 0.3; 
 				};
-			_arti setVehicleAmmo 1;
-			sleep ((random 10)+10);
-			_dummypos = [getpos _arti, 50, ((getdir _arti)+ 180 - (random 90)) ] call R_relPos3D;
-			sleep 1; 
-			(gunner _arti) lookAt [_dummypos select 0, _dummypos select 1,(_dummypos select 2)+100];
+				
+				_arti setVehicleAmmo 1;
+				sleep ((random 10)+10);
+				_dummypos = [getpos _arti, 50, ((getdir _arti)+ 180 - (random 90)) ] call R_relPos3D;
+				sleep 1; 
+				(gunner _arti) lookAt [_dummypos select 0, _dummypos select 1,(_dummypos select 2)+100];
 			};
 		};
 		
 		case 3:	//Set search light AA
 		{ 
 		_arti removeAllEventHandlers "fired";
-		while {alive (gunner _arti) || alive _arti} do
+		while {alive (gunner _arti) && alive _arti} do
 			{
 			_dummypos = [(((getpos _arti) select 0) + 100 - (random 200)), (((getpos _arti) select 1) + 100 - (random 200)), (((getpos _arti) select 2) + 100)];
 			(gunner _arti) lookAt [_dummypos select 0, _dummypos select 1,(_dummypos select 2)+100];

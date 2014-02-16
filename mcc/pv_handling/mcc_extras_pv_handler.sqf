@@ -17,7 +17,6 @@ if ( (isServer) || (MCC_isLocalHC) ) then
 {
 	//mcc_patrol_switch = compile preProcessFileLineNumbers format["%1mcc\pop_menu\patrol_switch.sqf",MCC_path];
 	mcc_fps_running = false;
-	MCC_fnc_groupSpawn	= {[(_this select 0), (_this select 1), (_this select 2), (_this select 3)] execVM MCC_path + "mcc\general_scripts\groupGen\group_spawnServer.sqf"};
 	MCC_fnc_simpleSpawn = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7), (_this select 8)] execVM MCC_path + "mcc\pop_menu\simple_spawn.sqf"};
 	MCC_fnc_FPS = {[(_this select 0)] execVM MCC_path + "mcc\pop_menu\fps_benchmark.sqf";};
 	MCC_fnc_airDrop = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5)] execVM MCC_path + "mcc\general_scripts\cas\cas_execute.sqf"};

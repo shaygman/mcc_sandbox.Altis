@@ -44,6 +44,7 @@
 #include "spectator\spectating.hpp"
 
 //---------------------------Functions------------------------------------------------
+
 class CfgFunctions
 {
 	class MCC
@@ -334,6 +335,11 @@ class CfgFunctions
 			class groupGenRefresh
 			{
 				description = "Refresh the group gen markers";
+			};
+			
+			class groupSpawn
+			{
+				description = "Create a group on the server";
 			};
 		};
 		
@@ -775,7 +781,7 @@ class CfgObjectCompositions
 class RscTitles
 {
 	titles[]={"img"};
-
+	
 	class img
 	{
 		idd=-1;
@@ -797,6 +803,8 @@ class RscTitles
             h=0.4;
         };
 	};
+	
+	#include "mcc\dialogs\compass.hpp"
 };
 
 class CfgMusic {
@@ -1062,6 +1070,13 @@ class CfgSounds	{
 	name = "missileLunch";
 	sound[] = {"sounds\missile.ogg", 1, 1};
 	titles[] = {};
+	};
+	
+	class nvSound
+	{
+		name = "nvSound";
+		sound[] = {"sounds\nvSound.ogg", 1, 1};
+		titles[] = {};
 	};
 };
 
