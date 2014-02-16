@@ -63,6 +63,7 @@ fnc_DoAttack												= compile preprocessfilelinenumbers (GAIA_scripts + "ord
 fnc_DoAttackMechInf									= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackMechInf.sqf");
 fnc_DoAttackTank										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackTank.sqf");
 fnc_DoAttackShip										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackShip.sqf");
+fnc_DoAttackHeli										= compile preprocessfilelinenumbers (GAIA_scripts + "orders\fnc_DoAttackHeli.sqf");
 
 
 

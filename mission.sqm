@@ -570,7 +570,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_MMG1_G";
-					init="GrpNO_MMG1 = group this; nul = [""mmgg"",this] call f_fnc_assignGear;      ";
+					init="GrpNO_MMG1 = group this; nul = [""mmgg"",this] call f_fnc_assignGear; ";
 					description="NATO Medium MG Team 1 Gunner";
 				};
 				class Item1
@@ -913,7 +913,7 @@ class Mission
 					skill=0.60000002;
 					text="UnitIR_AH1_P";
 					init="GrpIR_AH1 = group this; nul = [""p"",this] call f_fnc_assignGear; ";
-					description="Iran  Wing 2 Pilot";
+					description="Iran Wing 2 Pilot";
 				};
 				class Item1
 				{
@@ -1448,7 +1448,7 @@ class Mission
 					skill=0.60000002;
 					text="UnitNO_SF2_SR";
 					init="GrpNO_SF2 = group this; nul = [""sr"",this] call f_fnc_assignGear";
-					description="NATO Special Forces Team 2  JTAC-AT";
+					description="NATO Special Forces Team 2 JTAC-AT";
 				};
 				class Item4
 				{
@@ -1991,7 +1991,7 @@ class Mission
 					skill=0.60000002;
 					text="UnitIR_SF2_SR";
 					init="GrpIR_SF2 = group this; nul = [""sr"",this] call f_fnc_assignGear";
-					description="Iran  Special Forces Team 1 JTAC-AT";
+					description="Iran Special Forces Team 1 JTAC-AT";
 				};
 				class Item4
 				{
@@ -2038,7 +2038,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_MMG1_G";
-					init="GrpGR_MMG1 = group this; nul = [""mmgg"",this] call f_fnc_assignGear;   ";
+					init="GrpGR_MMG1 = group this; nul = [""mmgg"",this] call f_fnc_assignGear; ";
 					description="Green Medium MG Team 1 Gunner";
 				};
 				class Item1
@@ -2051,7 +2051,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_MMG1_AG";
-					init="GrpGR_MMG1 = group this; nul = [""mmgag"",this] call f_fnc_assignGear;   ";
+					init="GrpGR_MMG1 = group this; nul = [""mmgag"",this] call f_fnc_assignGear; ";
 					description="Green Medium MG Team 1 Assistant Gunner";
 				};
 			};

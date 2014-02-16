@@ -154,7 +154,7 @@ MCC_GAIA_MAX_SLOW_SPEED_RANGE  = 600;
 MCC_GAIA_MAX_MEDIUM_SPEED_RANGE= 2500;
 MCC_GAIA_MAX_FAST_SPEED_RANGE  = 8000;
 // The seconds of rest a transporter takes after STARTING his last order
-MCC_GAIA_TRANSPORT_RESTTIME		= 60;
+MCC_GAIA_TRANSPORT_RESTTIME		= 5;
 //If an order is older then 10 minutes, cancel it. There is probbaly something wrong. 
 MCC_GAIA_MAX_ORDER_AGE				 = 1000;
 MCC_GAIA_MORTAR_TIMEOUT				 = 120;
