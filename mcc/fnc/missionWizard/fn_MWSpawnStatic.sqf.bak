@@ -49,12 +49,12 @@ if (count _arrayUnits > 0) then
 		//Spawn the static pieces
 		for "_x" from 1 to _perSpawn step 1 do 
 		{ 
-			_radius = 40;
-			_spawnPos = _pos findEmptyPosition [20,_radius,_vehicleClass]; 
+			_radius = 20;
+			_spawnPos = _pos findEmptyPosition [10,_radius,_vehicleClass]; 
 			while {count _spawnPos == 0} do 
 			{
-				_radius = _radius +40;
-				_spawnPos = _pos findEmptyPosition [20,_radius,_vehicleClass]; 
+				_radius = _radius +20;
+				_spawnPos = _pos findEmptyPosition [10,_radius,_vehicleClass]; 
 				sleep 0.1; 
 			};
 			
