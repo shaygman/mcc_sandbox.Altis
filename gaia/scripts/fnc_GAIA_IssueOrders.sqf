@@ -671,6 +671,7 @@ _StartTimeIssueOrders = time;
 //									TRANSPORTATION SUPPORT PHASE
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
 {
+				 
 				 if (
 			   			//The the one asking transport must be on our side
 			   			((side _x) == _HQ_side)
@@ -687,15 +688,21 @@ _StartTimeIssueOrders = time;
 					   	//There must be something to do in your portfolio
 					   	(count(_x getVariable  ["GAIA_Portfolio",[]])>0)
 					   	and
-					   	//Your current order is patrolling
-					   	((_x getVariable  ["GAIA_Order",""]) == "DoPatrol")
+					   	//The dude must be either attacking or he is outside of the zone. In that case he is allowed to request transportation
+					   	((_x getVariable  ["GAIA_Order",""]) == "DoAttack")
+					   	or
+					   	(
+					   		((_x getVariable  ["GAIA_Order",""]) == "DoPatrol")
+					   		and
+					   		!([(position leader _x),((_x getVariable  ["GAIA_zone_intend",["",[0,0,0]]]) select 0)] call fnc_PosIsInMarker)
+					   	)
 					   	and
 					   	//You belong to a footmobile class or you wont be able to getin
 					   	((_x getVariable  ["GAIA_class",""]) in ["Infantry","ReconInfantry"])
 					   	
 		   			)
 		   		//If that is all the case, then go check if somebody can transport you and if you are allowed to be transported based on transport specific rule bases
-		   	 then  { _dummy= [_x] call fnc_DoOrganizeTransportation};
+		   	 then  { PLAYER GLOBALCHAT "JAHOOR, EEN BELLER!";_dummy= [_x] call fnc_DoOrganizeTransportation};
 
 }  forEach allgroups;
 
