@@ -10,7 +10,8 @@ class Mission
 		"a3_characters_f_beta",
 		"A3_Characters_F_INDEP",
 		"a3_characters_f_gamma",
-		"a3_map_altis"
+		"a3_map_altis",
+		"A3_Structures_F_Mil_Flags"
 	};
 	addOnsAuto[]=
 	{
@@ -20,6 +21,7 @@ class Mission
 		"A3_Characters_F_Civil",
 		"a3_characters_f_gamma",
 		"A3_Characters_F_INDEP",
+		"A3_Structures_F_Mil_Flags",
 		"a3_map_altis"
 	};
 	randomSeed=11823142;
@@ -2479,6 +2481,19 @@ class Mission
 					description="Green Sniper Team 2 Spotter";
 				};
 			};
+		};
+	};
+	class Vehicles
+	{
+		items=1;
+		class Item0
+		{
+			position[]={17107.016,0.056574937,480.73645};
+			id=151;
+			side="EMPTY";
+			vehicle="FlagPole_F";
+			skill=0.60000002;
+			text="vlag";
 		};
 	};
 };

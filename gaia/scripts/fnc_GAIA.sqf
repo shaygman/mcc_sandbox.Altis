@@ -57,7 +57,8 @@ while {true} do
 						
 		while { ( {side _x == _HQ_side } count allunits > 0 ) } do
 		{
-				
+				MCC_GAIA_CYCLE = MCC_GAIA_CYCLE + 1;
+				vlag setvariable ['gaia_cycle',MCC_GAIA_CYCLE,true];
 				
 				
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   

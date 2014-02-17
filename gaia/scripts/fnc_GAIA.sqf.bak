@@ -28,7 +28,7 @@ while {true} do
 		
 		// This code checks if GAIA units are there (the code sucs as it was produced fast)
 		_gaiaunitsfound = false;
-		player globalchat "gaan met die banaan";
+		
 		while {!_gaiaunitsfound} 
 		do {
 					{
@@ -57,8 +57,11 @@ while {true} do
 						
 		while { ( {side _x == _HQ_side } count allunits > 0 ) } do
 		{
-				
-				
+				if (MCC_GAIA_DEBUG) then 
+				{
+						MCC_GAIA_CYCLE = MCC_GAIA_CYCLE + 1;
+						vlag setvariable ['gaia_cycle',MCC_GAIA_CYCLE,true];
+				};
 				
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   
 				//									Phase: Analyze Enemy
