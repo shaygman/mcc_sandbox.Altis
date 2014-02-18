@@ -3,7 +3,7 @@
  	 	
 */ 
 
-GAIA_INIT = TRUE;
+GAIA_INIT = FALSE;
 
 GAIA_scripts = "gaia\scripts\";
 GAIA_fsm 		 = "gaia\fsm\";
