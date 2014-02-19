@@ -240,7 +240,7 @@ switch(true)do
 				if (!_VehicleHasGuns and _EnoughCargo ) then
 				{
 				
-				_portfolio = _portfolio					+ _DoTransport;				
+				_portfolio = _portfolio					+ _DoPatrol;				
 				};
 				
 				//Please, for the love of god check if we have guns before we charge in.

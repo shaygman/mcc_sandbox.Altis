@@ -29,7 +29,7 @@ if !(isnil("_Zone")) then
 			{_landpos = (position leader _group);}
 		else
 			{_landpos =  [([_zone,"ARM_HILLS_FLAT",(side _group)] call  fnc_GetPosition), 0,100, 12, 0, 60 * (pi / 180), 0] call BIS_fnc_findSafePos;};
-		player globalchat format ["%1",_landpos];
+		
 		_group setVariable ["GAIA_LandingSpot"							, ("Land_HelipadEmpty_F" createvehicle _landpos)  , false]; 
 	};
 	

@@ -23,7 +23,7 @@ if ( _wppos distance [0,0,0]>0) then
 		{
 			{
 				
-				PLAYER GLOBALCHAT "EERSTE FASE";
+				
 				//Now we go see if we hold a valid transporter
 				_TransportGrp						= _x;
 				_TransportClass					= (_TransportGrp getVariable  ["GAIA_class",""]);
@@ -33,7 +33,7 @@ if ( _wppos distance [0,0,0]>0) then
 				if (_TransportClass in ["Car","Tank"]) then {_TransportRange = MCC_GAIA_MAX_MEDIUM_SPEED_RANGE;};
 				if (_TransportClass in ["Helicopter"]) then {_TransportRange = MCC_GAIA_MAX_FAST_SPEED_RANGE;};
 				
-				PLAYER GLOBALCHAT FORMAT["%1,%2,%3 TRANSPORT",_TransportRange,_dist,_wpPos];
+				
 				
 				if (
 				   			//Seems like allgroups opens up with all sorts of empty groups, better check it
@@ -59,27 +59,15 @@ if ( _wppos distance [0,0,0]>0) then
 				   			and
 				   			//The vehicle cannot be so far out from the requesting group that it even exeeds its own max range based on medium speed
 				   			(((leader _group) distance (leader _TransportGrp))< _TransportRange)	
-				   			and
+				   			//and
 				   			//The distance to transport must exceed the distance to the transport by 2 times.
-				   			((_dist*2) >  ((leader _group) distance (leader _TransportGrp)))
-				   			and
+				   			//((_dist*2) >  ((leader _group) distance (leader _TransportGrp)))
+				   			//and
 				   			//A transporter takes atleast MCC_GAIA_TRANSPORT_RESTTIME seconds of breaktime before getting a new order
 				   		//	((time-(_TransportGrp getVariable  ["GAIA_Ordertime",0]))>MCC_GAIA_TRANSPORT_RESTTIME)
 				   			//and
-				   			//Cars only support patrols that are out of zone, they refure combat (until bis pays them more)			   		
-				   			(	
-				   				(
-				   					((_group getVariable  ["GAIA_Order",""]) == "DoAttack")
-				   					and
-				   					_TransportClass in ["Helicopter","Tank"]
-				   				)
-				   				or
-				   				(
-				   					((_group getVariable  ["GAIA_Order",""]) == "DoPatrol")
-				   					and
-				   					_TransportClass in ["Car","Tank"]
-				   				)
-				   			)
+				   			//Cars only support patrols that are out of zone, they refure combat (until bis pays them more)		   		
+	
 				   			
 			  		)
 			   then
@@ -88,7 +76,7 @@ if ( _wppos distance [0,0,0]>0) then
 					{
 						
 							//Infantry
-							player globalchat "we hebben een vertrekker mensen!";
+							
 							case "Car": 
 								{ _dummy= [_group,_TransportGrp] call fnc_DoTransportCar;};									
 							case "Tank": 

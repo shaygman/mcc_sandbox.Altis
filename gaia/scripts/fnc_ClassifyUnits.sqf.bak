@@ -53,7 +53,7 @@ _DoCAS				= ['DoCAS'];
 _DoSupport		= ['DoSupport'];
 _DoGuard			=	['DoGuard'];
 _DoPark				= ['DoPark'];
-_DoWait				= ['_DoWait'];
+_DoWait				= ['DoWait'];
 
 
 _portfolio		= [];

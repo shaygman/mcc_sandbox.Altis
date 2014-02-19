@@ -18,7 +18,7 @@ Author:
 _group 								= _this select 0;
 _trnsprtgrp						= _this select 1;
 
-player globalchat format ["%1 instappper, %2 vervoer",_group,_trnsprtgrp];
+
 
 _PosCloseRoadStart = [];
 _PosCloseRoadEnd	 = [];
@@ -36,7 +36,7 @@ if ((_group getVariable  ["GAIA_Order",""]) == "DoPatrol") then
 	{_road = (([_nearRoad,[],{leader _group distance _x},"ASCEND"] call BIS_fnc_sortBy )   select 0);
 			
 	 _roadConnectedTo = roadsConnectedTo _road;
-	 	player globalchat format ["%1 roadconnectedto",_roadConnectedTo];
+	 	
 	 	if (count(_roadConnectedTo)>0) then
 	 	{
 	 			_connectedRoad = _roadConnectedTo select 0;
@@ -65,11 +65,12 @@ if ((_group getVariable  ["GAIA_Order",""]) == "DoPatrol") then
 	  // Get in
 	 _wpGroup = _group addWaypoint [_PosCloseRoadStart, 0];
 	 _wpGroup	setWaypointType "GETIN";
-	 _wpGroup	setWaypointCompletionRadius 20;
+	 _wpGroup	setWaypointCompletionRadius 90;
+	  _wpGroup	setWaypointSpeed "FULL";
 	 
 	 _wpTransporter	= _trnsprtgrp addWaypoint [_PosCloseRoadStart, 0];
 	 _wpTransporter	setWaypointType "LOAD";
-	 _wpTransporter	setWaypointCompletionRadius 20;
+	 _wpTransporter	setWaypointCompletionRadius 90;
 	 _wpTransporter	setWaypointSpeed "FULL";
 	 
 	 //Synchronize them

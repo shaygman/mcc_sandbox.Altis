@@ -1314,7 +1314,7 @@ class Mission
 				items=6;
 				class Item0
 				{
-					position[]={14724.463,17.83,16311.764};
+					position[]={14728.192,17.847542,16329.541};
 					id=77;
 					side="WEST";
 					vehicle="B_recon_TL_F";

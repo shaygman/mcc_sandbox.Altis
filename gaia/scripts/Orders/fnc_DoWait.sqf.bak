@@ -23,13 +23,14 @@ if !(isnil("_Zone")) then
 {
 	
 	//Check if the dude already has a 'home'. All helicopters need position where they land and go home to.
+	//If the zone is moved, then we need a new home
 	if isnull((_group) getVariable ["GAIA_LandingSpot",objNull]) then	
 	{ 
 		if (isTouchingGround (vehicle leader _group)) then
 			{_landpos = (position leader _group);}
 		else
 			{_landpos =  [([_zone,"ARM_HILLS_FLAT",(side _group)] call  fnc_GetPosition), 0,100, 12, 0, 60 * (pi / 180), 0] call BIS_fnc_findSafePos;};
-		player globalchat format ["%1",_landpos];
+		
 		_group setVariable ["GAIA_LandingSpot"							, ("Land_HelipadEmpty_F" createvehicle _landpos)  , false]; 
 	};
 	
@@ -40,6 +41,8 @@ if !(isnil("_Zone")) then
 	_wp setWaypointCompletionRadius 200;
 	_wp setWaypointSpeed "LIMITED";					
 	_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
+	
+	_dummy 	=  [_group,position((_group) getVariable ["GAIA_LandingSpot",objNull]),"SENTRY"] call fnc_addWaypoint;
 	
 	/*
 	_wp setWaypointStatements ["true", "player globalchat 'hoi hoi';(vehicle  leader _group) land 'LAND';"];

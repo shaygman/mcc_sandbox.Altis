@@ -36,9 +36,12 @@ if (count(_nearroad)>0) then
 		
  _roadConnectedTo = roadsConnectedTo _road;
  	player globalchat format ["%1 roadconnectedto",_roadConnectedTo];
- _connectedRoad = _roadConnectedTo select 0;
- _direction = [_road, _connectedRoad] call BIS_fnc_DirTo;			   	 		
- _PosCloseRoadStart = [(position _road), 7, (_direction - 45)] call BIS_fnc_relPos;
+ 	if (count(_roadConnectedTo)>0) then
+ 	{
+ 			_connectedRoad = _roadConnectedTo select 0;
+ 			_direction = [_road, _connectedRoad] call BIS_fnc_DirTo;			   	 		
+ 			_PosCloseRoadStart = [(position _road), 7, (_direction - 45)] call BIS_fnc_relPos;
+ 	};
 };
 
 
