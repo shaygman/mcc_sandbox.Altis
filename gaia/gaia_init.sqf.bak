@@ -3,7 +3,7 @@
  	 	
 */ 
 
-GAIA_INIT = TRUE;
+GAIA_INIT = FALSE;
 
 GAIA_scripts = "gaia\scripts\";
 GAIA_fsm 		 = "gaia\fsm\";
@@ -142,7 +142,7 @@ gaia_fnc_sillybuild_check = compile preProcessFileLineNumbers (GAIA_scripts + "F
 
 
 //GAIA Public (local) variables
-MCC_GAIA_DEBUG						= TRUE;
+MCC_GAIA_DEBUG						= false;
 MCC_GAIA_CA_DEBUG					= [];
 
 // dont CHANGE without knowledge 

@@ -132,7 +132,7 @@ _StartTimeIssueOrders = time;
 						(_x getVariable ["GAIA_MortarRound",0]>0)
 					)
 			then {
-							player globalchat "1";
+							/*player globalchat "1";*/
 							[_x] call fnc_RemoveWayPoints; 
 							
 							_x setVariable ["GAIA_MortarRound"					, 0, false];
@@ -142,7 +142,7 @@ _StartTimeIssueOrders = time;
 			//Cancel orders when the class has changed			
 			
 			if ((_x getVariable ["GAIA_class","None"])!=(_x getVariable ["GAIA_PreviousClass","None"])) 
-			then {[_x] call fnc_RemoveWayPoints;player globalchat "2"; };			
+			then {[_x] call fnc_RemoveWayPoints;/*player globalchat "2"; */};			
 			
 
 	
@@ -155,7 +155,7 @@ _StartTimeIssueOrders = time;
 					)
 			then {
 							[_x] call fnc_RemoveWayPoints;
-							player globalchat "3";
+							/*player globalchat "3";*/
 					 };
       
       					 
@@ -167,7 +167,7 @@ _StartTimeIssueOrders = time;
 					)
 			then {
 							if ((((_x getVariable  ["GAIA_CombinedOrder",grpNull]))getVariable  ["GAIA_CombinedOrder",grpNull])!=_x)
-						  then {[_x] call fnc_RemoveWayPoints;player globalchat "4";};
+						  then {[_x] call fnc_RemoveWayPoints;/*player globalchat "4";*/};
 					 };
 					 
 		
@@ -184,7 +184,7 @@ _StartTimeIssueOrders = time;
 						 and						 
 						 !((([_HQ_side,([_CA,leader _x] call BIS_fnc_nearestPosition)] call fnc_GetCAPoints) select 0 )in ["Helicopter","Autonomous"])
 					)
-			then {[_x] call fnc_RemoveWayPoints;player globalchat "5"+(_x getVariable  ["GAIA_Order",""]);};
+			then {[_x] call fnc_RemoveWayPoints;/*player globalchat "5"+(_x getVariable  ["GAIA_Order",""]);*/};
 			
 			// This order is so old, Cancel it. No clue wtf he is doing.
 			//Except when fortify
@@ -193,7 +193,7 @@ _StartTimeIssueOrders = time;
 						 and
 						 ((_x getVariable  ["GAIA_Order",""]) != "DoFortify")	 
 					)
-			then {[_x] call fnc_RemoveWayPoints;player globalchat "Timeout6";};
+			then {[_x] call fnc_RemoveWayPoints;/*player globalchat "Timeout6";*/};
 			
 			//Candel DoAttack order that attacks a no longer existing CA
 			if (
@@ -201,7 +201,7 @@ _StartTimeIssueOrders = time;
 						and
 						((_x getVariable  ["GAIA_Order",""]) == "DoAttack")
 					) 
-			then	{[_x] call fnc_RemoveWayPoints;player globalchat "7";};
+			then	{[_x] call fnc_RemoveWayPoints;/*player globalchat "7";*/};
 	};
 }forEach AllGroups;
 
@@ -298,8 +298,14 @@ _StartTimeIssueOrders = time;
 				}
 				else
 				{
-					//The unit is not known to GAIA. It can attack,trust me (keep fingers crost here)
-					_CanDoAttack = MCC_GAIA_ATTACKS_FOR_NONGAIA;
+					_grp = _x;
+					_CanDoAttack = false;
+					
+					//Non GAIA controlled units will be send into the attack if they are inside a zone
+					{
+						if ([(position leader _grp ),_x] call fnc_PosIsInMarker) exitwith {_CanDoAttack=true};
+					}foreach _zns;
+					
 				};
 				
 				//Check the range of our dude. If however the CA is in our zone, then we dont care about the range

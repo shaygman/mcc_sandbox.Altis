@@ -53,7 +53,7 @@ _NewTargetInfo	= [];
    then
    {
       _unit = leader _x;
-      
+      player globalchat format ["%1",_x];
       //sleep 2;
       //player globalchat format ["%1, %2, %3",(position _unit),_unit,_x];
       
@@ -88,6 +88,8 @@ _NewTargetInfo	= [];
       			 	((_Target_Side getFriend _HQ_side)<0.6) 	
       			 	and
       			 	alive(leader(group _Target))
+      			 	and
+      			 	!captive(_target)
 	     			 	and	      			 
       			 	//How sure are we? For now accuracy of 18 seems to work ok
       			 	_Target_PosAcc < 18

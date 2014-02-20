@@ -298,8 +298,14 @@ _StartTimeIssueOrders = time;
 				}
 				else
 				{
-					//The unit is not known to GAIA. It can attack,trust me (keep fingers crost here)
-					_CanDoAttack = MCC_GAIA_ATTACKS_FOR_NONGAIA;
+					_grp = _x;
+					_CanDoAttack = false;
+					
+					//Non GAIA controlled units will be send into the attack if they are inside a zone
+					{
+						if ([(position leader _grp ),_x] call fnc_PosIsInMarker) exitwith {_CanDoAttack=true};
+					}foreach _zns;
+					
 				};
 				
 				//Check the range of our dude. If however the CA is in our zone, then we dont care about the range
@@ -700,7 +706,7 @@ _StartTimeIssueOrders = time;
 					   	
 		   			)
 		   		//If that is all the case, then go check if somebody can transport you and if you are allowed to be transported based on transport specific rule bases
-		   	 then  { PLAYER GLOBALCHAT "JAHOOR, EEN BELLER!";_dummy= [_x] call fnc_DoOrganizeTransportation};
+		   	 then  { _dummy= [_x] call fnc_DoOrganizeTransportation};
 
 }  forEach allgroups;
 

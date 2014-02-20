@@ -1317,7 +1317,7 @@ class Mission
 					id=77;
 					side="WEST";
 					vehicle="B_recon_TL_F";
-					player="PLAYER COMMANDER";
+					player="PLAY CDG";
 					leader=1;
 					rank="SERGEANT";
 					skill=0.60000002;
