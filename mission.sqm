@@ -4,14 +4,13 @@ class Mission
 	addOns[]=
 	{
 		"A3_Characters_F_BLUFOR",
-		"a3_map_stratis",
 		"A3_Characters_F_OPFOR",
-		"A3_Characters_F_Civil",
 		"a3_characters_f_beta",
-		"A3_Characters_F_INDEP",
+		"A3_Characters_F_Civil",
 		"a3_characters_f_gamma",
-		"a3_map_altis",
-		"A3_Structures_F_Mil_Flags"
+		"A3_Characters_F_INDEP",
+		"A3_Structures_F_Mil_Flags",
+		"a3_map_altis"
 	};
 	addOnsAuto[]=
 	{
