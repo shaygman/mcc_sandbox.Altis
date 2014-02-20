@@ -38,6 +38,7 @@ private ["_side"
 				,"_CanDoAttack"
 				,"_MortarFired"
 				,"_CaHoldsValidTargets"
+				,"_IsGaiaControlled"
 				,"_Spot"];
 
 _side 										= _this select 0;
@@ -51,6 +52,7 @@ _SelectCA									= [];
 _GrpIsInCombat						= false;
 _SelectCAisClosesttoGroup = false;
 _GroupBusy								= false;
+_IsGaiaControlled					= false;
 _CanDoClear								= false;
 _Grpcost									= 0;
 _PointsSpend							= 0;
@@ -132,7 +134,7 @@ _StartTimeIssueOrders = time;
 						(_x getVariable ["GAIA_MortarRound",0]>0)
 					)
 			then {
-							player globalchat "1";
+							/*player globalchat "1";*/
 							[_x] call fnc_RemoveWayPoints; 
 							
 							_x setVariable ["GAIA_MortarRound"					, 0, false];
@@ -142,7 +144,7 @@ _StartTimeIssueOrders = time;
 			//Cancel orders when the class has changed			
 			
 			if ((_x getVariable ["GAIA_class","None"])!=(_x getVariable ["GAIA_PreviousClass","None"])) 
-			then {[_x] call fnc_RemoveWayPoints;player globalchat "2"; };			
+			then {[_x] call fnc_RemoveWayPoints;/*player globalchat "2"; */};			
 			
 
 	
@@ -155,7 +157,7 @@ _StartTimeIssueOrders = time;
 					)
 			then {
 							[_x] call fnc_RemoveWayPoints;
-							player globalchat "3";
+							/*player globalchat "3";*/
 					 };
       
       					 
@@ -167,7 +169,7 @@ _StartTimeIssueOrders = time;
 					)
 			then {
 							if ((((_x getVariable  ["GAIA_CombinedOrder",grpNull]))getVariable  ["GAIA_CombinedOrder",grpNull])!=_x)
-						  then {[_x] call fnc_RemoveWayPoints;player globalchat "4";};
+						  then {[_x] call fnc_RemoveWayPoints;/*player globalchat "4";*/};
 					 };
 					 
 		
@@ -184,7 +186,7 @@ _StartTimeIssueOrders = time;
 						 and						 
 						 !((([_HQ_side,([_CA,leader _x] call BIS_fnc_nearestPosition)] call fnc_GetCAPoints) select 0 )in ["Helicopter","Autonomous"])
 					)
-			then {[_x] call fnc_RemoveWayPoints;player globalchat "5"+(_x getVariable  ["GAIA_Order",""]);};
+			then {[_x] call fnc_RemoveWayPoints;/*player globalchat "5"+(_x getVariable  ["GAIA_Order",""]);*/};
 			
 			// This order is so old, Cancel it. No clue wtf he is doing.
 			//Except when fortify
@@ -193,7 +195,7 @@ _StartTimeIssueOrders = time;
 						 and
 						 ((_x getVariable  ["GAIA_Order",""]) != "DoFortify")	 
 					)
-			then {[_x] call fnc_RemoveWayPoints;player globalchat "Timeout6";};
+			then {[_x] call fnc_RemoveWayPoints;/*player globalchat "Timeout6";*/};
 			
 			//Candel DoAttack order that attacks a no longer existing CA
 			if (
@@ -201,7 +203,7 @@ _StartTimeIssueOrders = time;
 						and
 						((_x getVariable  ["GAIA_Order",""]) == "DoAttack")
 					) 
-			then	{[_x] call fnc_RemoveWayPoints;player globalchat "7";};
+			then	{[_x] call fnc_RemoveWayPoints;/*player globalchat "7";*/};
 	};
 }forEach AllGroups;
 
@@ -255,7 +257,7 @@ _StartTimeIssueOrders = time;
   		_MinimumResponse = missionNamespace getVariable [_CAvar,1];
    	};
    
-	
+	_IsGaiaControlled = (count(_x getVariable  ["GAIA_zone_intend",[]])>1);
 	
 	//Determine Points of current CA (with how much do we need to attack this? (already taking multipier in effect)).
 	_CaPoints = ([_side,_SelectCA] call fnc_GetCAPoints) select 2;
@@ -298,14 +300,15 @@ _StartTimeIssueOrders = time;
 				}
 				else
 				{
-					_grp = _x;
-					_CanDoAttack = false;
 					
+					_CanDoAttack = false;
+					/*
+					_grp = _x;
 					//Non GAIA controlled units will be send into the attack if they are inside a zone
 					{
 						if ([(position leader _grp ),_x] call fnc_PosIsInMarker) exitwith {_CanDoAttack=true};
 					}foreach _zns;
-					
+					*/
 				};
 				
 				//Check the range of our dude. If however the CA is in our zone, then we dont care about the range
@@ -398,6 +401,8 @@ _StartTimeIssueOrders = time;
 					  							_GrpIsInCombat 
 					  							and 	
 					  							_CanDoAttack 
+					  							and
+					  							_IsGaiaControlled
 					  							and 
 					  							_SelectCAisClosesttoGroup
 					  							and
@@ -418,7 +423,9 @@ _StartTimeIssueOrders = time;
 					  							and
 					  							!_GrpIsInCombat 
 					  							and 	
-					  							_CanDoAttack 					  							
+					  							_CanDoAttack 			
+					  							and
+					  							_IsGaiaControlled		  							
 					  							and
 					  							!_GroupHasOrdersThisRound
 					  							and

@@ -38,6 +38,7 @@ private ["_side"
 				,"_CanDoAttack"
 				,"_MortarFired"
 				,"_CaHoldsValidTargets"
+				,"_IsGaiaControlled"
 				,"_Spot"];
 
 _side 										= _this select 0;
@@ -51,6 +52,7 @@ _SelectCA									= [];
 _GrpIsInCombat						= false;
 _SelectCAisClosesttoGroup = false;
 _GroupBusy								= false;
+_IsGaiaControlled					= false;
 _CanDoClear								= false;
 _Grpcost									= 0;
 _PointsSpend							= 0;
@@ -298,14 +300,15 @@ _StartTimeIssueOrders = time;
 				}
 				else
 				{
-					_grp = _x;
-					_CanDoAttack = false;
 					
+					_CanDoAttack = false;
+					/*
+					_grp = _x;
 					//Non GAIA controlled units will be send into the attack if they are inside a zone
 					{
 						if ([(position leader _grp ),_x] call fnc_PosIsInMarker) exitwith {_CanDoAttack=true};
 					}foreach _zns;
-					
+					*/
 				};
 				
 				//Check the range of our dude. If however the CA is in our zone, then we dont care about the range
@@ -356,6 +359,9 @@ _StartTimeIssueOrders = time;
 				//Is the selected Conflict Area the most close to the current group?
 				_SelectCAisClosesttoGroup	= ((([_CA,leader _x] call BIS_fnc_nearestPosition) distance _SelectCA)==0);
 				
+				//Are we under control of gaia
+				_IsGaiaControlled = (count(_x getVariable  ["GAIA_zone_intend",[]])>1);
+				
 				
 				_CaHoldsValidTargets			= !((([_HQ_side,_SelectCA] call fnc_GetCAPoints)select 0) in ["Helicopter","Autonomous"]);
 				
@@ -398,6 +404,8 @@ _StartTimeIssueOrders = time;
 					  							_GrpIsInCombat 
 					  							and 	
 					  							_CanDoAttack 
+					  							and
+					  							_IsGaiaControlled
 					  							and 
 					  							_SelectCAisClosesttoGroup
 					  							and
@@ -418,7 +426,9 @@ _StartTimeIssueOrders = time;
 					  							and
 					  							!_GrpIsInCombat 
 					  							and 	
-					  							_CanDoAttack 					  							
+					  							_CanDoAttack 			
+					  							and
+					  							_IsGaiaControlled		  							
 					  							and
 					  							!_GroupHasOrdersThisRound
 					  							and

@@ -25,7 +25,7 @@ _isInRange 				= (_pos inRangeOfArtillery [[(leader _group)],_ammo  ]) or (_Mort
 
 		
 // First Shot
-if (_isInRange) then
+if ((_isInRange) and !Isnil("_ammo")) then
 {
 		switch(true)do
 		{

@@ -18,14 +18,14 @@ _MortarRound		  = _group getVariable ["GAIA_MortarRound",0];
 _ammo 						= (getArtilleryAmmo [(assignedVehicle (leader _group))] select 0);
 
 //If we were busy somewhere, finish it
-if (_MortarRound>0) then {_pos = _group getVariable ["GAIA_MortarTarget",0];};
+if (_MortarRound>0) then {_pos = _group getVariable ["GAIA_MortarTarget",[0,0,0]];};
 
 //If this is the second round, we dont check for all sorts of stuff. Finish what you started
 _isInRange 				= (_pos inRangeOfArtillery [[(leader _group)],_ammo  ]) or (_MortarRound>0) ;
 
 		
 // First Shot
-if (_isInRange) then
+if ((_isInRange) and Isnil("_ammo")) then
 {
 		switch(true)do
 		{
@@ -65,7 +65,7 @@ if (_isInRange) then
 			{
 					//Specific Mortar information
 					_group setVariable ["GAIA_MortarRound"					, 0, false];
-					_group setVariable ["GAIA_MortarTarget"					, [], false];		
+					_group setVariable ["GAIA_MortarTarget"					, [0,0,0], false];		
 			}
 		else
 			{
