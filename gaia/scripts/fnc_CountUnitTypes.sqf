@@ -53,18 +53,18 @@ if (! isnil "_units") then {
 			{
 			
 					
-					_vehicleClass = tolower (gettext (configFile >> "CfgVehicles" >> typeof (vehicle _x) >> "vehicleClass")); 
-					if ((vehicle _x) != _x) then 
+					_vehicleClass = tolower (gettext (configFile >> "CfgVehicles" >> typeof (assignedVehicle _x) >> "vehicleClass")); 
+					if ((assignedVehicle _x) != _x) then 
 					{
-						if (!((vehicle _x) in _tempVehicles) and !(_x in (assignedCargo vehicle _x))) then {
+						if (!((assignedVehicle _x) in _tempVehicles) and !(_x in (assignedCargo vehicle _x))) then {
 							
 							_tempVehicles set [count _tempVehicles, vehicle _x];
-							_SoldierCargo  = getNumber  (configFile >> "CfgVehicles" >> typeof (vehicle _x) >> "transportSoldier"); 
+							_SoldierCargo  = getNumber  (configFile >> "CfgVehicles" >> typeof (assignedVehicle _x) >> "transportSoldier"); 
 							_CargoCount 	 = _CargoCount + _SoldierCargo;
-							_TurretWeapons = (typeof (vehicle _x)) call fnc_GetTurretsWeapons;
+							_TurretWeapons = (typeof (assignedVehicle _x)) call fnc_GetTurretsWeapons;
 							
 							_at		=false;_aa		=false;_art  =false;
-							_UnitAssets = [vehicle _x] call fnc_AnalyseUnit;
+							_UnitAssets = [assignedVehicle _x] call fnc_AnalyseUnit;
 							if (_UnitAssets select 0) then {_at 	= true};
 							if (_UnitAssets select 2) then {_aa 	= true};
 							if (_UnitAssets select 3) then {_art 	= true};
@@ -72,26 +72,26 @@ if (! isnil "_units") then {
 							if (_vehicleClass == "car") then 
 								{
 									_CarCount = _CarCount + 1;
-									_CarClass set [count _CarClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+									_CarClass set [count _CarClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 								};
 							if (_vehicleClass == "armored") then 
 								{
 									if (_art) then
 									{
 										_artilleryCount = _artilleryCount + 1;
-										_artilleryClass set [count _artilleryClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+										_artilleryClass set [count _artilleryClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 									}
 									else
 									{
 									if (_aa) then
 										{
 										_AACount = _AACount + 1;
-										_AAClass set [count _AAClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+										_AAClass set [count _AAClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 										}	
 									else	
 										{
 										_tankCount = _tankCount + 1;
-										_tankClass set [count _tankClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+										_tankClass set [count _tankClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 										};
 									};
 								};
@@ -99,40 +99,40 @@ if (! isnil "_units") then {
 							if (_vehicleClass == "support" ) then 									//support
 								{
 									_supportCount = _supportCount + 1;
-									_supportClass set [count _supportClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+									_supportClass set [count _supportClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 								};
 								
 							if (_vehicleClass == "static" and !_art ) then 									//support
 								{
 									_staticCount = _staticCount + 1;
-									_staticClass set [count _staticClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+									_staticClass set [count _staticClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 								};
 								
 						 if (_vehicleClass == "static" and _art ) then 									//support
 								{
 									_MortarCount = _staticCount + 1;
-									_MortarClass set [count _MortarClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+									_MortarClass set [count _MortarClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 								};
 			
 							if (_vehicleClass == "air") then 
 								{
 									_airCount = _airCount + 1;
-									_airClass set [count _airClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+									_airClass set [count _airClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 								};
 							if (_vehicleClass == "ship") then
 								{
 									_shipCount = _shipCount + 1;
-									_boatClass set [count _boatClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+									_boatClass set [count _boatClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 								};
 							if (_vehicleClass == "submarine") then
 								{
 									_submarineCount = _submarineCount + 1;
-									_submarineClass set [count _submarineClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]];
+									_submarineClass set [count _submarineClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]];
 								};
 							if (_vehicleClass == "autonomous") then 											//atunomos
 								{
 									_autonomousCount = _autonomousCount + 1;
-									_autonomousClass set [count _autonomousClass,[typeof(vehicle _x),_SoldierCargo,count(_TurretWeapons)]]; 
+									_autonomousClass set [count _autonomousClass,[typeof(assignedVehicle _x),_SoldierCargo,count(_TurretWeapons)]]; 
 								};
 							};
 						}; 
