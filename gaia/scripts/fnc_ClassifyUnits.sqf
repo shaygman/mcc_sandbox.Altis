@@ -236,6 +236,7 @@ switch(true)do
 				_speed													= "FAST";
 				_portfolio = _portfolio					+ _DoWait;
 				
+				
 				//No guns but do hold space? We are a transporter
 				if (!_VehicleHasGuns and _EnoughCargo ) then
 				{
