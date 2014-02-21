@@ -76,9 +76,9 @@ if !(isnil("_Zone")) then
 		_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
 	};
 	
-	if (round(random(8))==1) then
+	if ((round(random(8))==1)and (count (waypoints _group) != (currentWaypoint _group))) then
 	{
-		_rounds =round(random(9));
+		_rounds =round(random(40));
 		
 		for "_x" from 1 to _rounds do
 		{
