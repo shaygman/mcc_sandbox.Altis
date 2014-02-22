@@ -749,7 +749,7 @@ _StartTimeIssueOrders = time;
 		   	 {
 		   	 		 
 		   	 		 _IsNight			= (((selectBestPlaces [position (leader _x),2, "night", 1, 1]) select 0 select 1)>0.8);
-		   	 		 _LetsDoSome	= ((round(random(5)))==1);
+		   	 		 _LetsDoSome	= ((round(random(20)))==1);
 		   	 		 _ClosestCA		= ([_CA,leader _x] call BIS_fnc_nearestPosition);
 		   	 		 _PosLead			= position leader _x;
 		   	 		 
@@ -762,7 +762,7 @@ _StartTimeIssueOrders = time;
 					   		if (_IsNight and count(_ca)>0 and ((_ClosestCA distance (leader _x))<400) and _LetsDoSome and (((leader _x) findNearestEnemy _PosLead) distance _PosLead >100)  ) then
 					   			{ 		
 					   				
-					   				[[(_ClosestCA select 0),(_ClosestCA select 1),random (100)],[(_PosLead select 0),(_PosLead select 1),random(40)],50,30,"F_40mm_Green"] call fnc_fireflare;
+					   				[[(_ClosestCA select 0),(_ClosestCA select 1),100],[(_PosLead select 0),(_PosLead select 1),40],50,30,"F_40mm_Green"] call fnc_fireflare;
 					   			};
 					   			
 					   		//Check if this unit needs some smoke for cover. Make sure to check if previous points is bigger then 0, we dont like devide by zero
