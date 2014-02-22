@@ -26,6 +26,7 @@ _group 			= _this select 0;
 _landpos  = [];
 _zns			= [];
 _rounds		= 0 ;
+_initial 	= false;
 
 //Clear what ever orders we had before.
 [_group] call fnc_RemoveWayPoints;
@@ -74,9 +75,11 @@ if !(isnil("_Zone")) then
 		_wp setWaypointCompletionRadius 200;
 		_wp setWaypointSpeed "LIMITED";					
 		_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
+		
+		_initial = true;
 	};
 	
-	if ((round(random(20))==1)and (count (waypoints _group) != (currentWaypoint _group))) then
+	if ((round(random(20))==1)and (count (waypoints _group) == (currentWaypoint _group)) and !_initial) then
 	{
 		_rounds =round(random(9));
 		
