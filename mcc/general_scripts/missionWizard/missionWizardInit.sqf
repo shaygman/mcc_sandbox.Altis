@@ -48,6 +48,7 @@ MW_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
 _preciseMarkers		= if ((lbCurSel MCC_MWPreciseMarkersComboIDC)==0) then {true} else {false};
 _reinforcement		= (lbCurSel MCC_MWReinforcementIDC);
 _artillery			= (lbCurSel MCC_MWArtilleryIDC);
+
 //CQB
 switch (lbCurSel MCC_MWCQBIDC) do	
 	{
@@ -104,10 +105,21 @@ if (isnil "_faction") exitWith
 	["MCC: Mission Wizard Error: Faction doesn't have any units in it"] call bis_fnc_halt;
 };
 
-//Build the faction's unitsArrays. 
+//Build the faction's unitsArrays and send it to the server. 
 _check = [] call MCC_fnc_MWCreateUnitsArray;
 waituntil {_check};	
-	
+
+//Send user custom groups to the server
+MCC_customGroupsSaveMW = [];
+{
+	if (_faction == (_x select 0)) then
+	{
+		MCC_customGroupsSaveMW set [count MCC_customGroupsSaveMW, [_x select 3,_x select 4,_x select 2]]; 
+	};
+} foreach MCC_customGroupsSave;	
+
+publicVariableServer "MCC_customGroupsSaveMW";
+
 if (MW_debug) then {player sidechat format ["Total enemy's units: %1", _totalEnemyUnits]};
 diag_log format ["MCC Mission Wizard total enemy Count = %1", _totalEnemyUnits];
 
@@ -787,6 +799,11 @@ if (_reinforcement in [1,2,3] || _stealth) then
 	private "_text";
 	_text = switch (_reinforcement) do
 			{
+				case 0: 	
+				{ 
+					""
+				};
+				
 				case 1: 	
 				{ 
 					" aerial "

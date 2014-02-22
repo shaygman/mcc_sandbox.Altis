@@ -177,16 +177,30 @@ if (_action == 0) exitWIth
 					ctrlShow [MCC_GGUNIT_EMPTY,true];
 					ctrlShow [MCC_GGUNIT_EMPTYTITLE,true];
 				};
-			};
+				
+				case 7:	//DOC
+				{
+					_groupArray = GEN_DOC1;
+					ctrlShow [MCC_GGUNIT_EMPTY,false];
+					ctrlShow [MCC_GGUNIT_EMPTYTITLE,false];
+				};
+				
+				case 8:	//AMMO
+				{
+					_groupArray = U_AMMO;
+					ctrlShow [MCC_GGUNIT_EMPTY,false];
+					ctrlShow [MCC_GGUNIT_EMPTYTITLE,false];
+				};
+		};
 
 		_comboBox = _mccdialog displayCtrl UNIT_CLASS;		
-			lbClear _comboBox;
-				{
-					_displayname = format ["%1",(_x select 3) select 0];
-					_index = _comboBox lbAdd _displayname;
-					if (_type != 0) then {_comboBox lbsetpicture [_index, (_x select 3) select 1]};
-				} foreach _groupArray;
-			_comboBox lbSetCurSel 0;
+		lbClear _comboBox;
+		{
+			_displayname = if (_type == 7) then {format ["%1",(_x select 3)]} else {format ["%1",(_x select 3) select 0]};
+			_index = _comboBox lbAdd _displayname;
+			if !(_type in [0,7,8]) then {_comboBox lbsetpicture [_index, (_x select 3) select 1]};
+		} foreach _groupArray;
+		_comboBox lbSetCurSel 0;
 		};
 };
 
@@ -194,6 +208,9 @@ if (_action == 0) exitWIth
 if (_action == 1) then 
 {			
 	_type = lbCurSel UNIT_TYPE;
+	
+	if (_type in [7,8]) exitWith {hint "Cannot add static object to a group"};
+	
 	switch (_type) do		//Which unit do we want
 		{
 		   case 0:	//Infantry

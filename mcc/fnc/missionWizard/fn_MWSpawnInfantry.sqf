@@ -3,7 +3,7 @@
 // Example:[_totalEnemyUnits,_zoneNumber] call MCC_fnc_MWSpawnInfantry; 
 // Return - handler
 //========================================================================================================================================================================================
-private ["_menArraySpecial","_unitPlaced","_totalEnemyUnits","_script_handler","_spawnbehavior","_group"];
+private ["_menArraySpecial","_unitPlaced","_totalEnemyUnits","_script_handler","_spawnbehavior","_group","_unitsArray"];
 _totalEnemyUnits	= _this select 0;
 _zoneNumber			= _this select 1;
 _spawnbehavior		= _this select 2;
@@ -15,7 +15,8 @@ if ((count MCC_MWGroupArrayMenSupport)>0) then {_menArraySpecial = _menArraySpec
 	
 _unitPlaced = 0;
 
-if (count MCC_MWGroupArrayMen > 0) then 
+_unitsArray = MCC_MWGroupArrayMen + MCC_customGroupsSaveMW;
+if (count _unitsArray > 0) then 
 {
 	//Infantry
 	while {_unitPlaced < _totalEnemyUnits} do
@@ -27,7 +28,7 @@ if (count MCC_MWGroupArrayMen > 0) then
 		}
 		else
 		{
-			_group = MCC_MWGroupArrayMen call BIS_fnc_selectRandom;
+			_group = _unitsArray call BIS_fnc_selectRandom;
 		};
 		
 		//count units

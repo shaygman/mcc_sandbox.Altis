@@ -20,6 +20,7 @@ _wpBehavior = ["UNCHANGED", "CARELESS", "SAFE", "AWARE", "COMBAT", "STEALTH"] se
 {
 	_groups set [count _groups, _x];
 	_x setVariable ["MCC_disableUPSMON",true,true];
+	_x setVariable ["GAIA_ZONE_INTEND",[], false];
 } foreach MCC_GroupGenGroupSelected;
 
 //Call the server to handle WP

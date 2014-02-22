@@ -16,7 +16,6 @@
 #define MCC_3DCompsaveUIButtonIDC 8015
 #define MCC_3DComploadUIButtonIDC 8016
 #define MCC_3DComploadBcgIDC 8017
-#define MCC_3DMapIDC 8018
 
 ctrlShow [MCC_3DCompssaveListIDC,false];
 ctrlShow [MCC_3DCompssaveDescriptionIDC,false];
@@ -29,12 +28,14 @@ ctrlShow [MCC_3DComploadBcgIDC,false];
 disableSerialization;
 private ["_mccdialog","_comboBox","_displayname","_x"];
 
-_mccdialog = findDisplay MCC3D_IDD;
+MCC3DInitDone = false; 
 
+_mccdialog = findDisplay MCC3D_IDD;
 uiNamespace setVariable ["MCC3D_Dialog", _this select 0];
 
-_comboBox = _mccdialog displayCtrl MCC_3DMapIDC;	
-_comboBox ctrlMapAnimAdd [0, 0.15, getpos BIS_CONTROL_CAM];
+
+((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0) ctrlMapAnimAdd [0, uiNamespace getVariable "MCC3D_DialogMapScale", getpos BIS_CONTROL_CAM];
+ctrlMapAnimCommit ((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0);
 
 _comboBox = _mccdialog displayCtrl MCC_FACTION;		//fill combobox CFG factions
 	lbClear _comboBox;
@@ -78,3 +79,6 @@ lbClear _comboBox;
 	_comboBox lbAdd _displayname;
 } foreach MCC_ZoneLocation;
 _comboBox lbSetCurSel mcc_hc;	//MCC_ZoneLocation_index;	
+
+sleep 1; 
+MCC3DInitDone = true;

@@ -167,6 +167,76 @@ class MCC_RscControlsGroupNoScrollbars
 	};
 };
 
+class MCC_RscControlsGroup
+{ 
+	h = 1;
+	idc = -1;
+	shadow = 0;
+	style = 16;
+	type = 15;
+	w = 1;
+	x = 0;
+	y = 0;
+	
+	class Controls;
+	class HScrollbar
+	{
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 0;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+		color[] = {1,1,1,1};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+	};
+	
+	class VScrollbar
+	{
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 1;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+		color[] = {1,1,1,1};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+	};
+	
+	class ScrollBar
+	{
+        arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 0;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+		color[] = {1,1,1,1};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+	};
+};
+
 class MCC_RscButton 
 {
   access = 0;
@@ -188,10 +258,10 @@ class MCC_RscButton
   offsetY = 0.003;
   shadow = 2;
   sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-  soundClick[] = {"\A3\ui_f\data\sound\onclick",0.07,1};
-  soundEnter[] = {"\A3\ui_f\data\sound\onover",0.09,1};
-  soundEscape[] = {"\A3\ui_f\data\sound\onescape",0.09,1};
-  soundPush[] = {"\A3\ui_f\data\sound\new1",0,0};
+  soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.07,1};
+  soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1};
+  soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1};
+  soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1};
   style = 2;
   text = "";
   type = 1;

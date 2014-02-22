@@ -68,18 +68,6 @@ _type = _this select 0;
 				MCC_backToplayerIndex = _targetUnit addaction ["Back to player", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 				mcc_actionInedx = player addaction ["> Mission generator", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 				_ok = _targetUnit addEventHandler ["Killed", "[_this select 0] joinSilent (Prev_Group);selectPlayer Prev_Player;"];
-				/*
-				[player] joinSilent grpNull;
-				[player] joinSilent _group;
-				[_targetUnit] joinSilent _group;
-				_group selectLeader player;
-				_null = _targetUnit addaction ["Back to player", "\mcc_sandbox_mod\mcc\general_scripts\unitManage\backToPlayer.sqf"];
-				[_oldUnit] joinSilent grpNull; 
-				setPlayable _targetUnit;
-				selectPlayer _targetUnit;	//Make the switch
-				removeSwitchableUnit _oldUnit;
-				_oldUnit setcaptive true; 
-				_ok = _targetUnit addEventHandler ["Killed", "[_this select 0] joinSilent (Prev_Group);selectPlayer Prev_Player;"];*/
 			}
 			else
 			{hint "Can only hijak units not groups"};
@@ -155,15 +143,16 @@ _type = _this select 0;
 											};
 									} foreach (units _x); 
 										
-						} count allGroups;
+						} foreach allGroups;
 						
 						sleep 3; 
 						{
 						deletemarkerlocal _x;
-						} count _tempMarkers;
+						} foreach _tempMarkers;
+						
 						{
 							deletemarkerlocal _x;
-						} count _tempLines;
+						} foreach _tempLines;
 				};
 					//Incase we came down here let's clean up
 					{
@@ -172,9 +161,11 @@ _type = _this select 0;
 					{
 						deletemarkerlocal _x;
 					} count _tempLines;
-			} else {
+			} 
+			else 
+			{
 				MCC_trackMarker = false; 
-				};
+			};
 		};
 		
 		case 4:	//Indevidual Marker

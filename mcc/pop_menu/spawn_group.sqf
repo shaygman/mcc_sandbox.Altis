@@ -311,7 +311,7 @@ if (mcc_missionmaker == (name player)) then
 	mcc_spawnwithcrew = (MCC_spawn_empty select (lbCurSel SPAWNEMPTY)) select 1;	//let's add the behavior/awerness
 	MCC_empty_index = (lbCurSel SPAWNEMPTY);
 
-	mcc_spawnbehavior = (MCC_spawn_behavior select (lbCurSel SPAWNBEHAVIOR)) select 1;
+	mcc_spawnbehavior = (MCC_spawn_behaviors select (lbCurSel SPAWNBEHAVIOR)) select 1;
 	MCC_behavior_index = (lbCurSel SPAWNBEHAVIOR);
 
 	mcc_awareness = (MCC_spawn_awereness select (lbCurSel SPAWNAWARNESS)) select 1;

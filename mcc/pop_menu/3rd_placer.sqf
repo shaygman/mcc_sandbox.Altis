@@ -79,6 +79,7 @@ if (isnil "BIS_CONTROL_CAM_ASL") then {
 
 _logic setvariable ["MCC_3D_menu","#USER:BIS_Coin_categories_0"];
 
+//NV State
 _nvgstate = if (daytime > 18.5 || daytime < 5.5) then {3} else {4};
 if (_nvgstate == 2) then 
 {
@@ -94,6 +95,7 @@ _logic setvariable ["MCC_3D_nvg",_nvgstate];
 _GUIstate = true; 
 _logic setvariable ["MCC_3D_GUI",_GUIstate];
 
+//Create the placeholder
 MCC_dummyObject =  "Sign_Sphere25cm_F" createvehiclelocal (screentoworld [0.5,0.5]);
 MCC_dummyObject addEventHandler ["handleDamage",""];
  
@@ -101,19 +103,23 @@ z3DHight = (getpos MCC_dummyObject) select 2;
 if (z3DHight < 0) then {z3DHight = 0};
 
 //Create camera marker
-
 MCC_3DeditorMarker = createmarkerLocal ["MCC_3DeditorMarker", [getpos BIS_CONTROL_CAM select 0,getpos BIS_CONTROL_CAM select 1]];
 MCC_3DeditorMarker setMarkerTypeLocal "loc_ViewTower";
 MCC_3DeditorMarker setMarkerColorLocal "ColorBlue";
 MCC_3DeditorMarker setMarkerDirLocal getdir BIS_CONTROL_CAM;
 MCC_3DeditorMarker setMarkerSizeLocal [1, 1];
 
-
+//Start tracking units
+if !(MCC_trackMarker) then
+{
+_null = [3] execVM  MCC_path +"mcc\general_scripts\unitManage\um.sqf";
+};
+				
 if !(isnil "BIS_CONTROL_CAM_Handler") exitwith {hint "BIS_CONTROL_CAM_Handler is nill";endLoadingScreen};
 BIS_CONTROL_CAM_Handler =
 	{
 	private ["_mode", "_input", "_camera", "_logic", "_terminate", "_keysCancel", "_keysUpObj", "_keysDownObj", "_keysUp", "_keysDown" ,"_keysShift","_key","_keydelete","_offSet","_compassdDir","_compassdPos"
-			,"_keysBanned", "_keyNightVision","_finished", "_keyplace","_objectPos","_objectDir","_keyalt","_nearObjects", "_vehicleclass","_html","_ctrlKey","_gain","_keyGUI"];
+			,"_keysBanned", "_keyNightVision","_finished", "_keyplace","_objectPos","_objectDir","_keyalt","_nearObjects", "_vehicleclass","_html","_ctrlKey","_gain","_keyGUI","_mapScale"];
 			
 	_mode = _this select 0;
 	_input = _this select 1;
@@ -155,8 +161,24 @@ BIS_CONTROL_CAM_Handler =
 			};
 			
 			//Anim Map
-			((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrlMapAnimAdd [0, 0.08, getpos BIS_CONTROL_CAM];
+			_mapScale = (ctrlMapScale ((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0));
+			if (isnil "_mapScale") then 
+			{
+				_mapScale = 0.15; uiNamespace setVariable ["MCC3D_DialogMapScale",0.15];
+			}
+			else
+			{
+				if (_mapScale > 0) then
+					{
+						uiNamespace setVariable ["MCC3D_DialogMapScale",  (ctrlMapScale ((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0))];
+					};
+			};
+			
+			_mapScale = uiNamespace getVariable "MCC3D_DialogMapScale";		
+			
+			((uiNamespace getVariable "MCC_compass") displayCtrl 5)  ctrlMapAnimAdd [0,_mapScale, getpos BIS_CONTROL_CAM];
 			ctrlMapAnimCommit ((uiNamespace getVariable "MCC_compass") displayCtrl 5);
+			
 			MCC_3DeditorMarker setMarkerDirLocal getdir BIS_CONTROL_CAM;
 			MCC_3DeditorMarker setMarkerPoslocal [getpos BIS_CONTROL_CAM select 0,getpos BIS_CONTROL_CAM select 1];
 		};
@@ -341,7 +363,7 @@ BIS_CONTROL_CAM_Handler =
 				_objectPos = [getpos Object3D select 0, getpos Object3D select 1, z3DHight] ;
 				_objectDir = getdir Object3D;
 				deletevehicle Object3D;
-				sleep 1; 
+				sleep 0.2; 
 				MCC3DgotValue = true; 
 				MCC3DValue = [_objectPos,_objectDir];
 				hint "Object placed";
@@ -390,7 +412,17 @@ BIS_CONTROL_CAM_Handler =
 					};		
 			};
 		//open menu
-		if (_key in _keysUpObj && !(dialog) && !(_ctrlKey)) then {_ok = createDialog "MCC3D_Dialog"};
+		if (_key in _keysUpObj && !(_ctrlKey)) then 
+		{
+			if (!dialog) then 
+			{
+				_ok = createDialog "MCC3D_Dialog";
+			}
+			else
+			{
+				closeDialog 0;
+			};
+		};
 		
 		//Undo
 		if ((_key in _keysUpObj) && _ctrlKey) then 
@@ -403,44 +435,44 @@ BIS_CONTROL_CAM_Handler =
 	//Mouse down
 	if (_mode == "mousedown") then 
 		{
-		_key = _input select 1;
-		if ((_key ==1) && ! isnil "Object3D") then {deletevehicle Object3D;};
+			_key = _input select 1;
+			if ((_key ==1) && ! isnil "Object3D") then {deletevehicle Object3D};
 		};
 
 	//--- Deselect or CloseTerminate 
 	if (_terminate) then 
 		{
-		MCC_mcc_screen=0;
-		//--- Close
-		MCC3DRuning = false; 
-		if (! isnil "BIS_CONTROL_CAM") then {
-			BIS_CONTROL_CAM cameraeffect ["terminate","back"];
-			camdestroy BIS_CONTROL_CAM;
-			BIS_CONTROL_CAM = nil;
-		};		
-		if (! isnil "Object3D") then {deletevehicle Object3D};
-		if (! isnil "MCC_dummyObject") then {deletevehicle MCC_dummyObject};
-		player setvariable ["3D_isRuning",nil];
-		hintsilent "";
-		waituntil {isnil "BIS_CONTROL_CAM"};
-		_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
+			MCC_mcc_screen=5;
+			//--- Close
+			MCC3DRuning = false; 
+			if (! isnil "BIS_CONTROL_CAM") then {
+				BIS_CONTROL_CAM cameraeffect ["terminate","back"];
+				camdestroy BIS_CONTROL_CAM;
+				BIS_CONTROL_CAM = nil;
+			};		
+			if (! isnil "Object3D") then {deletevehicle Object3D};
+			if (! isnil "MCC_dummyObject") then {deletevehicle MCC_dummyObject};
+			player setvariable ["3D_isRuning",nil];
+			hintsilent "";
+			waituntil {isnil "BIS_CONTROL_CAM"};
+			_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
 		};
 	
 	if (MCC_3Dterminate) then 
 		{
-		//MCC_mcc_screen=0;
-		//--- Close
-		MCC3DRuning = false; 
-		if (isNil "BIS_CONTROL_CAM") exitWith {}; 
-		BIS_CONTROL_CAM cameraeffect ["terminate","back"];
-		camdestroy BIS_CONTROL_CAM;
-		BIS_CONTROL_CAM = nil;
-		deletevehicle Object3D;
-		deletevehicle MCC_dummyObject;
-		player setvariable ["3D_isRuning",nil];
-		hintsilent "";
-		waituntil {isnil "BIS_CONTROL_CAM"};
-		if (true) exitWith {_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
+			//MCC_mcc_screen=0;
+			//--- Close
+			MCC3DRuning = false; 
+			if (isNil "BIS_CONTROL_CAM") exitWith {}; 
+			BIS_CONTROL_CAM cameraeffect ["terminate","back"];
+			camdestroy BIS_CONTROL_CAM;
+			BIS_CONTROL_CAM = nil;
+			deletevehicle Object3D;
+			deletevehicle MCC_dummyObject;
+			player setvariable ["3D_isRuning",nil];
+			hintsilent "";
+			waituntil {isnil "BIS_CONTROL_CAM"};
+			if (true) exitWith {_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
 		};
 	//--- Camera no longer exists - terminate and start cleanup	
 	if (isnil "BIS_CONTROL_CAM" || player != DOperator || !alive player) exitwith
@@ -484,7 +516,14 @@ BIS_CONTROL_CAM_Handler =
 		//Clean 3D placer
 		(["MCC_compass"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
 		deleteMarkerLocal MCC_3DeditorMarker; 
-		MCC_mcc_screen=0;
+		
+		//Remove tracking units
+		if (MCC_trackMarker) then
+		{
+			MCC_trackMarker = false; 
+		};
+		
+		MCC_mcc_screen=5;
 		MCC3DRuning = false; 
 		if (! isnil "Object3D") then {deletevehicle Object3D};
 		if (! isnil "MCC_dummyObject") then {deletevehicle MCC_dummyObject};
@@ -509,7 +548,8 @@ BIS_CONTROL_CAM_Handler =
 			"Alt:        Terrain alignment" + "<br/>" +
 			"Shift:      Toggle smoothness" + "<br/>" +
 			"N:          Toggle vision" + "<br/>" + 
-			"H:          Toggle GUI state" + "<br/>" + "<br/>" + 
+			"H:          Hide/Show GUI" + "<br/>" + "<br/>" + 
+			"Double click(map): move camera" + "<br/>" +
 			"Alighn to terrain: " + MCC_align3DText + "<br/>" +
 			"Smooth placing: " + MCC_smooth3DText + "</t>";
 			

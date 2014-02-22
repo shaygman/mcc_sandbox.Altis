@@ -11,20 +11,27 @@ private ["_type","_groupArray","_3d", "_dlg","_tempText","_presetText","_pos"];
 disableSerialization;
 _3d = _this select 0;
 
-if (mcc_missionmaker == (name player)) then {
+if (mcc_missionmaker == (name player)) then 
+{
 	if (_3d == 0) then //Case we are opening the 3D
-		{
-		hint "click on map"; 
-		onMapSingleClick "_nul=["""",_pos] call MCC_3D_PLACER;closeDialog 0;onMapSingleClick """";";	
+	{
+		hint "click on map";
+		
+		click = false;
 		MCC3DRuning = true;
+		onMapSingleClick "click = true;_nul=["""",_pos] call MCC_3D_PLACER;onMapSingleClick """";";	
+		waitUntil {click};
+		while {dialog} do {closeDialog 0; sleep 0.2};
+		
+		
 		while {MCC3DRuning && (alive player)} do
-			{
+		{
 			MCC3DgotValue = false; 
 			while {!MCC3DgotValue && MCC3DRuning} do {sleep 0.2};
 			if (MCC3DRuning) then 
-				{
+			{
 				if (MCC_capture_state) then
-					{
+				{
 					 MCC_capture_var = MCC_capture_var + FORMAT ["
 										[[%1, %2, '%3', '%4', '%5', %6, '%7', '%8', %9],'MCC_fnc_simpleSpawn',true,false] spawn BIS_fnc_MP;		
 										"
@@ -38,35 +45,39 @@ if (mcc_missionmaker == (name player)) then {
 										,MCC_unitName
 										,mcc_hc
 										];
-					}	else
-						{
-						 mcc_safe = mcc_safe + FORMAT ["
-										[[%1, %2, '%3', '%4', '%5', %6, '%7', '%8', %9],'MCC_fnc_simpleSpawn',true,false] spawn BIS_fnc_MP;		
-										MCC_mccFunctionDone = false; 
-										waitUntil {MCC_mccFunctionDone};
-										"
-										,MCC3DValue select 0
-										,MCC3DValue select 1
-										,mcc_spawnname
-										,mcc_spawntype
-										,mcc_spawnfaction
-										,mcc_spawnwithcrew
-										,MCC_unitInit
-										,MCC_unitName
-										,mcc_hc
-										];
-						_pos = MCC3DValue select 0; 
-						if (!isnil "Object3D" && (mcc_spawntype=="VEHICLE")) then 
-						{
-							private "_time"; 
-							_time = time + 3; 
-							waitUntil {(_pos distance Object3D > 5) || (time >_time)};
-						};
-						[[MCC3DValue select 0, MCC3DValue select 1, mcc_spawnname, mcc_spawntype, mcc_spawnfaction, mcc_spawnwithcrew,MCC_unitInit,MCC_unitName,mcc_hc],"MCC_fnc_simpleSpawn",true,false] spawn BIS_fnc_MP;		
-						};
+				}	
+				else
+				{
+					 mcc_safe = mcc_safe + FORMAT ["
+									[[%1, %2, '%3', '%4', '%5', %6, '%7', '%8', %9],'MCC_fnc_simpleSpawn',true,false] spawn BIS_fnc_MP;		
+									MCC_mccFunctionDone = false; 
+									waitUntil {MCC_mccFunctionDone};
+									"
+									,MCC3DValue select 0
+									,MCC3DValue select 1
+									,mcc_spawnname
+									,mcc_spawntype
+									,mcc_spawnfaction
+									,mcc_spawnwithcrew
+									,MCC_unitInit
+									,MCC_unitName
+									,mcc_hc
+									];
+					_pos = MCC3DValue select 0; 
+					
+					if (!isnil "Object3D" && (mcc_spawntype=="VEHICLE")) then 
+					{
+						private "_time"; 
+						_time = time + 7; 
+						waitUntil {(_pos distance Object3D > 8) || (time >_time)};
+					};
+					
+					[[MCC3DValue select 0, MCC3DValue select 1, mcc_spawnname, mcc_spawntype, mcc_spawnfaction, mcc_spawnwithcrew,MCC_unitInit,MCC_unitName,mcc_hc],"MCC_fnc_simpleSpawn",true,false] spawn BIS_fnc_MP;		
 				};
-			sleep 0.1;
 			};
+			sleep 0.1;
+		};
+		
 		mcc_isnewzone = false;	//reset stuff
 		mcc_grouptype = "";
 		mcc_spawntype = "";
@@ -76,10 +87,12 @@ if (mcc_missionmaker == (name player)) then {
 		mcc_resetmissionmaker = false;
 		MCC_unitInit = "";
 		MCC_unitName = "";
-		};
+	};
 		
 	if (_3d == 1) then //Case we are changing the object
-		{		
+	{
+		if (!MCC3DInitDone) exitWith {};
+		
 		_type = lbCurSel MCC_UNIT_TYPE;
 		switch (_type) do	
 			{
@@ -312,12 +325,16 @@ if (mcc_missionmaker == (name player)) then {
 				};
 				
 			};
-		mcc_classtype = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 0;
-		mcc_spawnname = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 1;
-		mcc_spawnfaction = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 2;
-		mcc_spawndisplayname = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 3;
-		MCC_unitInit = ctrlText MCC_INITBOX;
-		MCC_unitName = ctrlText MCC_NAMEBOX;
+			
+		if ((lbCurSel MCC_UNIT_CLASS) != -1) then
+		{
+			mcc_classtype = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 0;
+			mcc_spawnname = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 1;
+			mcc_spawnfaction = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 2;
+			mcc_spawndisplayname = (_groupArray select (lbCurSel MCC_UNIT_CLASS)) select 3;
+			MCC_unitInit = ctrlText MCC_INITBOX;
+			MCC_unitName = ctrlText MCC_NAMEBOX;
+		};
 		
 		mcc_spawnwithcrew = (MCC_spawn_empty select (lbCurSel MCC_SETTING_EMPTY)) select 1;	//let's add the behavior/awerness
 		MCC_empty_index = (lbCurSel MCC_SETTING_EMPTY);
@@ -340,12 +357,17 @@ if (mcc_missionmaker == (name player)) then {
 	};
 		
 	if (_3d == 2) then //Case we adding presets
-		{	
+	{	
 		_tempText = ctrlText MCC_INITBOX;
 		_presetText = (mccPresets select(lbCurSel MCC_PRESETS)) select 1; 
 		ctrlSetText [MCC_INITBOX,format ["%1 %2",_tempText,_presetText]];
-		};
-} else {player globalchat "Access Denied"};	
+		_null = [1] execVM format["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
+	};
+} 
+else 
+{
+	player globalchat "Access Denied";
+};	
 	
 	
 

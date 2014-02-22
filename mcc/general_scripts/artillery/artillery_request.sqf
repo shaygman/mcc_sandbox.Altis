@@ -1,26 +1,22 @@
-#define MCC_SANDBOX2_IDD 2000
-#define MCC_ARTYTYPE 2004
-#define MCC_ARTYSPREAD 2005
-#define MCC_ARTYNUMBER 2006
-#define MCC_artilleryDelayIDC 2037
-
 private ["_type"];
+disableSerialization;
+
 _type = _this select 0;
 if !mcc_isloading then 
 	{
 	if (mcc_missionmaker == (name player)) then
 	{
-		shelltype 		= (MCC_artilleryTypeArray select (lbCurSel MCC_ARTYTYPE)) select 1;
-		MCCSimulate		= (MCC_artilleryTypeArray select (lbCurSel MCC_ARTYTYPE)) select 2;
-		_shellName		= (MCC_artilleryTypeArray select (lbCurSel MCC_ARTYTYPE)) select 0;
-		nshell 			= MCC_artilleryNumberArray select (lbCurSel MCC_ARTYNUMBER);
-		MCC_artyDelay 	=(lbCurSel MCC_artilleryDelayIDC)*20;
+		shelltype 		= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 1;
+		MCCSimulate		= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 2;
+		_shellName		= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 0;
+		nshell 			= MCC_artilleryNumberArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 32));
+		MCC_artyDelay 	=(lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 33))*20;
 		
 		switch (_type) do
 		{
 		   case 0:		//Request
 			{
-				shellspread = (MCC_artillerySpreadArray select (lbCurSel MCC_ARTYSPREAD)) select 1;
+				shellspread = (MCC_artillerySpreadArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 31))) select 1;
 				if (MCC_capture_state) then
 				{
 				hint "click on map where you want to send artillery"; 

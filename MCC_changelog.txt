@@ -1,23 +1,38 @@
 Change log r19:
-- Fixed: MCC will now read addon's configs groups such as aggressors. 
-- Fixed: IEDs will explode even if moved (car bomb) make sure to set the IED on radio activation so the explosion won't relay on the target's speed. 
+Enging:
+- Added: Tooltips and indicators for Mission Settings.
 - Added: MCC AI's settings will effect units spawned via 3D editor or Group Gen. 
-- Added: Toggle thermal visions (WH/BH/NV/Noraml) in 3D editor - N key. 
-- Added: Hide/show 3D editor HUD with H key - for filming exc. 
-- Changed: 3D editor safe distnace reduced to 5 meters and also added a timeout of 3 seconds if the cursor haven't been moved the vehicle will spawn anyway. 
-- Added: Tooltips and indecators for Mission Settings
-- Fixed: Save Gear didn't saved assigned items. 
-- Added: Fast rope to evac. 
-- Added: Evac helicopters will return to their spawn location automaticlly after they have completed their drop. 
+- Fixed: MCC will now read addon's groups configs such as Aggressors. 
 - Fixed: Removed missing weapon config error message after respawn. 
 - Fixed: MCC zones visable on some clients
-- Fixed: Group Genrator will not draw Waypoints leading [0,0,0]; 
-- Added: Compass to 3D editor
-- Reworkded: 3D editor interface. 
-- Added: New structures classes to 3D editor
-- Added: Save custom groups in Group Generator and spawn units in group gen. 
+- Fixed: Group Genrator will no longer draw waypoints leading [0,0,0]; 
+- Fixed: Save Gear didn't saved assigned items. 
+- Fixed: Removed explosion sounds from flares. 
 
-- TODO Save groups to profileSpace
+IED:
+- Fixed: IEDs will explode even if moved (car bomb) make sure to set the IED on radio activation so the explosion won't relay on the target's speed. 
+
+3D editor:
+- Reworkded: Total new look to the 3D editor interface. 
+- Added: Toggle thermal visions (WHot/BHot/NV/Thermal/Noraml) in 3D editor. 
+- Added: Hide/show 3D editor HUD with H key - for filming exc. 
+- Added: Compass to 3D editor
+- Added: Minimap to 3D editor.
+- Added: New structures classes to 3D editor
+- Changed: 3D editor safe distnace reduced to 10 meters and also added a timeout of 7 seconds if the cursor haven't been moved the vehicle will spawn anyway.
+
+Evac:
+- Added: Fast rope to evac. 
+- Added: Evac helicopters will return to their spawn location automaticlly after they have completed their drop. 
+
+Group Generator:
+- Reworked: Group Generator interface.
+- Added: Create zones, spawn units, exc from the Group Gen - in time it will replace menu 1 in MCC and a lot of functions will be called from there. 
+- Added: Create and save your own custom groups to profileNameSpace. Spawn or use them in the Mission Wizard. 
+
+- Fix group gen spawns and bugs free
+- complete merging menu 1 and group gen
+- TODO 3D icons?!
 - TODO: Tooltip missionWizard.
 - TODO Save all MCC to 2D editor
 - TODO Save WP

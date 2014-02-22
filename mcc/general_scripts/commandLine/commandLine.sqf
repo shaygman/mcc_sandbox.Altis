@@ -1,10 +1,9 @@
-#define MCC_CLTEXT 2001
 disableSerialization;
 private ["_type", "_string", "_command","_str"];
 
 if (mcc_missionmaker == (name player)) then {
 	_type = _this select 0;
-	_string = ctrlText MCC_CLTEXT;
+	_string = ctrlText ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 24);
 	
 	switch (_type) do
 	{

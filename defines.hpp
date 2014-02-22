@@ -1,5 +1,5 @@
 #define MCCPATH ""
-#define MCCVersion "0.7"
+#define MCCVersion "0.97"
 
 #include "mcc\dialogs\mcc_dialogs.hpp"
 #include "mcc\dialogs\mcc_guiTab1.hpp"
@@ -23,6 +23,8 @@
 
 #include "mcc\Dialogs\MCCMW_briefingMap.hpp"
 
+//---- test I should delete it at the end
+#include "mcc\dialogs\test.hpp"
 //--------------------------------CP------------------------------------------------
 
 #define CPPATH ""
@@ -1078,6 +1080,14 @@ class CfgSounds	{
 		sound[] = {"sounds\nvSound.ogg", 1, 1};
 		titles[] = {};
 	};
+	
+	class MCC_button
+	{
+		name = "MCC_button";
+		sound[] = {"sounds\MCC_button.ogg", 1, 1};
+		titles[] = {};
+	};
+
 };
 
 class CfgNotifications

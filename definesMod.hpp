@@ -1042,6 +1042,13 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\nvSound.ogg", 1, 1};
 		titles[] = {};
 	};
+	
+	class MCC_button
+	{
+		name = "MCC_button";
+		sound[] = {"sounds\MCC_button.ogg", 1, 1};
+		titles[] = {};
+	};
 };
 
 class CfgMusic {

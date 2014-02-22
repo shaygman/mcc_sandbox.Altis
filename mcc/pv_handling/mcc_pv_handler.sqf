@@ -165,13 +165,11 @@ my_pv_handler =
 				case 0:	//regular
 				{
 					_zoneLogType = "MCC REGULAR";
-					//_mmcZoneTypeNr = MCC_ZoneType_nr1;
 					_specialUpsNr = "";
 				};
 				
 				case 1:	//repawn
 				{
-					//_mmcZoneTypeNr = MCC_ZoneType_nr2;
 					_zoneLogType = "MCC RESPAWN";
 					if ( _p_mcc_zonetypenr == 0 ) then
 					{
@@ -190,7 +188,6 @@ my_pv_handler =
 				case 2:	//patrol
 				{
 					_zoneLogType = "MCC PATROL";
-					//_mmcZoneTypeNr = MCC_ZoneType_nr3;
 					_specialUps = "NOWAIT";
 					_specialUpsNr = "";
 				};	
@@ -199,7 +196,6 @@ my_pv_handler =
 				{
 					_zoneLogType = "MCC REINFORCEMENT";
 					_specialUpsNr = "";
-					//_mmcZoneTypeNr = MCC_ZoneType_nr4;
 				};																					
 			};
 								

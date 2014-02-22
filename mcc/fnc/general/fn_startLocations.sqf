@@ -1,16 +1,24 @@
 //===================================================================MCC_fnc_startLocations=========================================================================================
 // Teleport the player when start location has been found
 // Example: []  call MCC_fnc_startLocations; 
-// <IN>	Nothing
+// <IN>	side : integer - side number to take effect
 //<OUT>	Nothing
 //==============================================================================================================================================================================	
-private ["_playerClass","_playerSideNr","_safePos","_null"];
+private ["_playerClass","_playerSideNr","_safePos","_null","_side"];
+_side = _this select 0;
 
 waituntil {alive player}; 
-sleep 3;
+sleep 1;
 
 _playerClass = typeOf player;
 _playerSideNr =  getNumber (configFile >> "CfgVehicles" >> _playerClass >> "side");
+
+if (isnil "_side") then 
+{
+	_side = _playerSideNr;
+}; 
+
+if (_side !=  _playerSideNr) exitWith {};
 
 if (_playerSideNr == 1) then 
 { 

@@ -1,6 +1,4 @@
-#define MCC_SANDBOX_IDD 1000
 #define MCCZONENUMBER 1023
-#define MCC_ZONE_LOC 1026
 
 private ["_pos", "_size","_nul","_previusZone"];
 disableSerialization;

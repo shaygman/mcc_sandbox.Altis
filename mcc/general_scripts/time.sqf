@@ -1,11 +1,12 @@
-private ["_weather","_type"];
+private ["_weather","_type","_month","_day","_year","_hour","_minute"];
 _type 		= _this select 0;	
-_weather 	= if ((count _this) == 2) then {_this select 1};					
 
 switch (_type) do
 	{		
 		case 0:	//Set weather
 		{
+			_weather 	= if ((count _this) == 2) then {_this select 1};	
+			
 			mcc_safe=mcc_safe + FORMAT ["													
 			  script_handler = [%1, %2] execVM '%3mcc\general_scripts\time.sqf';
 		      waitUntil {scriptDone script_handler};
@@ -32,23 +33,26 @@ switch (_type) do
 	
 	    case 3:	//Set time
 		{
+			_month = _this select 1; 
+			_day = _this select 2; 
+			_year = _this select 3; 
+			_hour = _this select 4; 
+			_minute = _this select 5; 
+			
 			mcc_safe=mcc_safe + FORMAT ["													
-				  month=%1;
-				  day=%2;
-				  hour=%3;
-				  minute=%4;
-				  script_handler = [%5] execVM '%6mcc\general_scripts\time.sqf';
+				  script_handler = [%6,%1,%2,%3,%4,%5] execVM '%7mcc\general_scripts\time.sqf';
 				  waitUntil {scriptDone script_handler};
 				  "	
-				  , month
-				  , day
-				  , hour
-				  , minute
+				  , _month
+				  , _day
+				  , _year
+				  , _hour
+				  , _minute
 				  , _type
 				  , MCC_path
 				  ];
-			MCC_date=date;
-			MCC_date=[MCC_date select 0, month, day, hour, minute];
+				  
+			MCC_date=[_year, _month, _day, _hour, _minute];
 			publicVariable "MCC_date";
 			[[MCC_date],"MCC_fnc_setTime",true,false] spawn BIS_fnc_MP;
 		};

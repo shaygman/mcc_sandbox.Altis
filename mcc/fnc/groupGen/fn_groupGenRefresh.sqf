@@ -3,7 +3,7 @@
 // Example:[] call MCC_fnc_groupGenRefresh
 //==============================================================================================================================================================================	
 private ["_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_side","_unitsCount","_markerType","_markerColor","_leader","_markerInf",
-		         "_markerMech","_markerArmor","_markerAir","_icon","_wpArray","_behaviour","_unitsSize","_unitsSizeMarker"];
+		         "_markerMech","_markerArmor","_markerAir","_icon","_wpArray","_behaviour","_unitsSize","_unitsSizeMarker","_IsGaiaControlled"];
 #define groupGen_IDD 2994
 
 //Group info while clicked
@@ -121,8 +121,9 @@ setGroupIconsSelectable true;
 				_unitsSizeMarker = format ["group_%1",_unitsSize];
 				
 				//Set markers
+				_IsGaiaControlled = if ((count(_x getVariable  ["GAIA_zone_intend",[]])>1)) then {"(G)"} else {""};
 				_icon = _x addGroupIcon [_markerType,[0,0]];
-				_x setGroupIconParams [_markerColor,groupID _x,1,true];
+				_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
 				_x setvariable ["MCCgroupIconData",_icon,false];
 				_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
 				_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
@@ -195,7 +196,8 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 						_markerNaval	= "n_naval";
 						};
 				};
-				_x setGroupIconParams [_markerColor,groupID _x,1,true];
+				_IsGaiaControlled = if ((count(_x getVariable  ["GAIA_zone_intend",[]])>1)) then {"(G)"} else {""};
+				_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
 				_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
 				_unitsSize = 0;
 				if (_unitsCount select 0 > 0) then {_unitsSize = _unitsSize + (1*(_unitsCount select 0))};
@@ -253,20 +255,22 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 					private ["_time","_status"];
 					_time 		= _groupStatus select 1; 
 					_status 	= _groupStatus select 0; 
+					_IsGaiaControlled = if ((count(_x getVariable  ["GAIA_zone_intend",[]])>1)) then {"(G)"} else {""};
 					
 					if (abs (time - _time) < 180) then
 						{
-							_x setGroupIconParams [_markerColor,format ["%1%2",groupID _x,_status],1,true];
+						
+							_x setGroupIconParams [_markerColor,format ["%1%2%3",_IsGaiaControlled,groupID _x,_status],1,true];
 						}
 						else
 						{
-							_x setGroupIconParams [_markerColor,groupID _x,1,true];
+							_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
 						};
 				};
 					
 				if (_behaviour == "COMBAT") then				//Show in combat
 				{
-					_x setGroupIconParams [[1,1,1,1],groupID _x,1,true];
+					_x setGroupIconParams [[1,1,1,1],format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
 				};
 			};
 		} foreach allgroups; 

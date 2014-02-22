@@ -22,214 +22,220 @@
 #define MCC_3DCompsaveUIButtonIDC 8015
 #define MCC_3DComploadUIButtonIDC 8016
 #define MCC_3DComploadBcgIDC 8017
-
-#define MCC_3DMapIDC 8018
 //-----------------------------------------------------------------------------
 // Main dialog
 //-----------------------------------------------------------------------------
 class MCC3D_Dialog 
 {
-  idd = MCC3D_IDD;
-  movingEnable = false;
-  onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\mcc_3d_init.sqf'");
-  
-  controlsBackground[] = 
-  {
-	MCC_Bckgrnd,		//mcc background
-	nameBackground,
-	initBackground,
-	MCC_3DComploadBcg
-  };
-  
+	idd = MCC3D_IDD;
+	movingEnable = false;
+	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\mcc_3d_init.sqf'");
 
-  //---------------------------------------------
-  objects[] = 
-  { 
-  };
-  
-  controls[] = 
-  {
-	faction,
-	factionTittle,
-	mcc3DTitle,
-	unit_type,
-	unit_Class,
-	UnitTitle,
-	UnitTypeTitle,
-	setting_Empty,
-	EmptyTitle,
-	change,
-	Close_dialog,
-	unitNameTitle,
-	nameBox,
-	initTitle,
-	initBox,
-	presetsTitle,
-	presetsCombo,
-	addPresetButton,
-	Zone_Loc, // New
-	Zone_LocTitle,
-	MCC3DOpenComp,
-	MCC_3DCompssaveList,
-	MCC_3DCompssaveDescription,
-	MCC_3DCsaveName,
-	MCC_3DCompsaveNameTittle,
-	MCC_3DCompsaveUIButton,
-	MCC_3DComploadUIButton,
-	MCC_ConsoleCompassMapBackground,
-	MCC_ConsoleCompassMap
-  };
-  
- //========================================= Background======================================
-class MCC_Bckgrnd : MCC_RscText {idc = -1; 
-	x = -0.00416669 * safezoneW + safezoneX;
-	y = -0.00580276 * safezoneH + safezoneY;
-	w = 0.194792 * safezoneW;
-	h = 1.01161 * safezoneH;
-	text = "";colorBackground[] = {0,0,0,0.7};};
-class nameBackground : MCC_RscText {idc = -1;moving = true;colorBackground[] = { 0, 0, 0, 0.6 };colorText[] = { 1, 1, 1, 0 };
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.225107 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0549786 * safezoneH;
-	sizeEx = 0.028;text = "";};
-class initBackground : nameBackground {idc = -1;
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.225107 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0549786 * safezoneH;
-	sizeEx = 0.028;text = "";};
- //========================================= Controls========================================
- 
-//-------------------------------------------ComboBox----------------------------------------
-class faction : MCC_RscCombo {idc=MCC_FACTION; style=MCCST_LEFT; colorText[]={1,1,1,1};colorSelect[]={1.0,0.35,0.3,1};colorBackground[]={0,0,0,0.6};
-							colorSelectBackground[]={0,0,0,1}; sizeEx=0.028;
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.0491758 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	onLBSelChanged = __EVAL("[4] execVM '"+MCCPATH+"mcc\pop_menu\faction.sqf'");};
-class unit_type : faction {idc=MCC_UNIT_TYPE; 
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.0821629 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	sizeEx=0.028; onLBSelChanged=__EVAL ("[0] execVM '"+MCCPATH+"mcc\pop_menu\group_change3d.sqf'");};
-class unit_Class : faction {idc=MCC_UNIT_CLASS;
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.11515 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	sizeEx=0.028;};
-class setting_Empty : faction {idc=MCC_SETTING_EMPTY; 
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.148137 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0219914 * safezoneH;
+	controlsBackground[] = 
+	{
+		MCC_Bckgrnd,		//mcc background
+		nameBackground,
+		initBackground,
+		MCC_3DComploadBcg
 	};
-class nameBox : MCC_RscText {idc = MCC_NAMEBOX;type = MCCCT_EDIT;style = MCCST_MULTI;colorBackground[] = {0,0,0,0};colorText[] = {1,1,1,1};colorSelection[] = {1,1,1,1};colorBorder[] = { 1, 1, 1, 1 };
-		BorderSize = 0.01;autocomplete = true;
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.181124 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	sizeEx = 0.028;text = "";};
-class initBox : nameBox {idc = MCC_INITBOX;
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.225107 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0549786 * safezoneH;
-	sizeEx = 0.028;text = "";};
-class presetsCombo : faction {idc=MCC_PRESETS;
-	colorBackground[] = {0,0,0,1};
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.291081 * safezoneH + safezoneY;
-	w = 0.0916667 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	};
-//-------------------------------------------Titels-----------------------------------------
-class factionTittle : MCC_RscText {idc = -1; style=MCCST_LEFT; colorBackground[]={1,1,1,0}; colorText[]={1,1,1,1};
-	x = 0.00156247 * safezoneW + safezoneX;
-	y = 0.0491758 * safezoneH + safezoneY;
-	w = 0.0458333 * safezoneW;
-	h = 0.0219914 * safezoneH;	
-	sizeEx=0.03; text = "Faction:";};
-class mcc3DTitle : factionTittle {colorText[]={0,1,1,1};
-	x = 0.00729163 * safezoneW + safezoneX;
-	y = 0.00519296 * safezoneH + safezoneY;
-	w = 0.0859375 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	text="MCC 3D Editor:";};							
-class UnitTitle : factionTittle {	
-	x = 0.00156247 * safezoneW + safezoneX;
-	y = 0.0821629 * safezoneH + safezoneY;
-	w = 0.0458333 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	text="Type:";};
-class UnitTypeTitle : UnitTitle {
-	x = 0.00156247 * safezoneW + safezoneX;
-	y = 0.11515 * safezoneH + safezoneY;
-	w = 0.0458333 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	text="Class:";};
-class EmptyTitle : UnitTitle {
-	x = 0.00156247 * safezoneW + safezoneX;
-	y = 0.148137 * safezoneH + safezoneY;
-	w = 0.0458333 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	text="Empty:";};
-class unitNameTitle : UnitTitle {
-	x = 0.00156247 * safezoneW + safezoneX;
-	y = 0.181124 * safezoneH + safezoneY;
-	w = 0.0458333 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	text="Name:";};
-class initTitle : UnitTitle {
-	x = 0.00156247 * safezoneW + safezoneX;
-	y = 0.225107 * safezoneH + safezoneY;
-	w = 0.0401042 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	text="Init:";};
-class presetsTitle : UnitTitle {
-	x = 0.00156247 * safezoneW + safezoneX;
-	y = 0.291081 * safezoneH + safezoneY;
-	w = 0.0458333 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	text="Presets:";};
-class Zone_LocTitle : UnitTitle {
-	x = 0.00156247 * safezoneW + safezoneX;
-	y = 0.324069 * safezoneH + safezoneY;
-	w = 0.0458333 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	text="Spawn:";}; // New
 
-//-------------------------------------------Buttons----------------------------------------
-class Zone_Loc : faction {idc=MCC_ZONE_LOC;
-	x = 0.053125 * safezoneW + safezoneX;
-	y = 0.324069 * safezoneH + safezoneY;
-	w = 0.108854 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	}; // New
-class change : MCC_RscButton {idc=-1; colorDisabled[]={1,0.4,0.3,0.8};
-	x = 0.00156247 * safezoneW + safezoneX;
-	y = 0.357056 * safezoneH + safezoneY;
-	w = 0.0572917 * safezoneW;
-	h = 0.0329871 * safezoneH;
-	text="Apply"; onButtonClick=__EVAL ("[1] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");};
-class Close_dialog : MCC_RscButton {idc=-1; colorDisabled[]={1,0.4,0.3,0.8};
-	x = 0.127604 * safezoneW + safezoneX;
-	y = 0.950824 * safezoneH + safezoneY;
-	w = 0.0572917 * safezoneW;
-	h = 0.0329871 * safezoneH;
-	text="Close"; onButtonClick="closeDialog 0";};
-class addPresetButton : MCC_RscButton {idc=-1; colorDisabled[]={1,0.4,0.3,0.8};
-	x = 0.150521 * safezoneW + safezoneX;
-	y = 0.291081 * safezoneH + safezoneY;
-	w = 0.0286458 * safezoneW;
-	h = 0.0219914 * safezoneH;
-	size=0.02; sizeEx=0.02; text="Add"; onButtonClick=__EVAL("[2] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");
+
+	//---------------------------------------------
+	objects[] = 
+	{ 
+	};
+
+	controls[] = 
+	{
+		faction,
+		unit_type,
+		unit_Class,
+		setting_Empty,
+		nameBox,
+		initBox,
+		presetsCombo,
+		factionTittle,
+		mcc3DTitle,
+		UnitTitle,
+		UnitTypeTitle,
+		EmptyTitle,
+		unitNameTitle,
+		initTitle,
+		presetsTitle,
+		Zone_LocTitle,
+		Zone_Loc,
+		addPresetButton,
+		MCC3DOpenComp,
+		MCC_3DCompssaveList,
+		MCC_3DCompssaveDescription,
+		MCC_3DCsaveName,
+		MCC_3DCompsaveNameTittle,
+		MCC_3DCompsaveUIButton,
+		MCC_3DComploadUIButton,
+		MCC_ConsoleCompassMapBackground,
+		MCC_ConsoleCompassMap
 	};
 	
+	 //========================================= Background======================================
+	class MCC_Bckgrnd : MCC_RscText {idc = -1; 
+		x = -0.00416669 * safezoneW + safezoneX;
+		y = -0.00580276 * safezoneH + safezoneY;
+		w = 0.194792 * safezoneW;
+		h = 1.01161 * safezoneH;
+		text = "";colorBackground[] = {0,0,0,0.7};};
+	class nameBackground : MCC_RscText {idc = -1;moving = true;colorBackground[] = { 0, 0, 0, 0.6 };colorText[] = { 1, 1, 1, 0 };
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.225107 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0549786 * safezoneH;
+		sizeEx = 0.028;text = "";};
+	class initBackground : nameBackground {idc = -1;
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.225107 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0549786 * safezoneH;
+		sizeEx = 0.028;text = "";};
+	 //========================================= Controls========================================
+	 
+	//-------------------------------------------ComboBox----------------------------------------
+	class faction : MCC_RscCombo {idc=MCC_FACTION; style=MCCST_LEFT; colorText[]={1,1,1,1};colorSelect[]={1.0,0.35,0.3,1};colorBackground[]={0,0,0,0.6};
+								colorSelectBackground[]={0,0,0,1}; sizeEx=0.028;
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.0491758 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		onLBSelChanged = __EVAL("[4] execVM '"+MCCPATH+"mcc\pop_menu\faction.sqf'");};
+		
+	class unit_type : faction 
+	{	idc=MCC_UNIT_TYPE; 
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.0821629 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx=0.028; 
+		onLBSelChanged=__EVAL ("[0] execVM '"+MCCPATH+"mcc\pop_menu\group_change3d.sqf'");
+	};
+		
+	class unit_Class : faction 
+	{
+		idc=MCC_UNIT_CLASS;
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.11515 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx=0.028;
+		onLBSelChanged=__EVAL ("[1] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");
+	};
+	
+	class setting_Empty : faction {idc=MCC_SETTING_EMPTY; 
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.148137 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		};
+		
+	class nameBox : MCC_RscText {idc = MCC_NAMEBOX;type = MCCCT_EDIT;style = MCCST_MULTI;colorBackground[] = {0,0,0,0};colorText[] = {1,1,1,1};colorSelection[] = {1,1,1,1};colorBorder[] = { 1, 1, 1, 1 };
+			BorderSize = 0.01;autocomplete = true;
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.181124 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = 0.028;text = "";};
+		
+	class initBox : nameBox {idc = MCC_INITBOX;
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.225107 * safezoneH + safezoneY;
+		w = 0.120313 * safezoneW;
+		h = 0.0549786 * safezoneH;
+		sizeEx = 0.028;text = "";};
+		
+	class presetsCombo : faction {idc=MCC_PRESETS;
+		colorBackground[] = {0,0,0,1};
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.291081 * safezoneH + safezoneY;
+		w = 0.0916667 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		};
+	//-------------------------------------------Titels-----------------------------------------
+	class factionTittle : MCC_RscText {idc = -1; style=MCCST_LEFT; colorBackground[]={1,1,1,0}; colorText[]={1,1,1,1};
+		x = 0.00156247 * safezoneW + safezoneX;
+		y = 0.0491758 * safezoneH + safezoneY;
+		w = 0.0458333 * safezoneW;
+		h = 0.0219914 * safezoneH;	
+		sizeEx=0.03; text = "Faction:";};
+	class mcc3DTitle : factionTittle {colorText[]={0,1,1,1};
+		x = 0.00729163 * safezoneW + safezoneX;
+		y = 0.00519296 * safezoneH + safezoneY;
+		w = 0.0859375 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		text="MCC 3D Editor:";};							
+	class UnitTitle : factionTittle {	
+		x = 0.00156247 * safezoneW + safezoneX;
+		y = 0.0821629 * safezoneH + safezoneY;
+		w = 0.0458333 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		text="Type:";};
+	class UnitTypeTitle : UnitTitle {
+		x = 0.00156247 * safezoneW + safezoneX;
+		y = 0.11515 * safezoneH + safezoneY;
+		w = 0.0458333 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		text="Class:";};
+	class EmptyTitle : UnitTitle {
+		x = 0.00156247 * safezoneW + safezoneX;
+		y = 0.148137 * safezoneH + safezoneY;
+		w = 0.0458333 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		text="Empty:";};
+	class unitNameTitle : UnitTitle {
+		x = 0.00156247 * safezoneW + safezoneX;
+		y = 0.181124 * safezoneH + safezoneY;
+		w = 0.0458333 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		text="Name:";};
+	class initTitle : UnitTitle {
+		x = 0.00156247 * safezoneW + safezoneX;
+		y = 0.225107 * safezoneH + safezoneY;
+		w = 0.0401042 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		text="Init:";};
+	class presetsTitle : UnitTitle {
+		x = 0.00156247 * safezoneW + safezoneX;
+		y = 0.291081 * safezoneH + safezoneY;
+		w = 0.0458333 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		text="Presets:";};
+	class Zone_LocTitle : UnitTitle {
+		x = 0.00156247 * safezoneW + safezoneX;
+		y = 0.324069 * safezoneH + safezoneY;
+		w = 0.0458333 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		text="Spawn:";}; // New
+
+	//-------------------------------------------Buttons----------------------------------------
+	class Zone_Loc : faction 
+	{
+		idc=MCC_ZONE_LOC;
+		x = 0.053125 * safezoneW + safezoneX;
+		y = 0.324069 * safezoneH + safezoneY;
+		w = 0.108854 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	}; // New
+
+	class addPresetButton : MCC_RscButton 
+	{
+		idc=-1; colorDisabled[]={1,0.4,0.3,0.8};
+		x = 0.150521 * safezoneW + safezoneX;
+		y = 0.291081 * safezoneH + safezoneY;
+		w = 0.0286458 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		
+		size=0.02; 
+		sizeEx=0.02; 
+		text="Add"; 
+		onButtonClick=__EVAL("[2] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");
+	};
+		
 	class MCC3DOpenComp: MCC_RscButton
 	{
 		idc = MCC3DOpenCompIDC;
@@ -352,7 +358,7 @@ class addPresetButton : MCC_RscButton {idc=-1; colorDisabled[]={1,0.4,0.3,0.8};
 	
 	class MCC_ConsoleCompassMap: MCC_RscMapControl
 	{
-		idc = MCC_3DMapIDC;
+		idc = 0;
 		onMouseButtonDown =__EVAL("[_this,0] execVM '"+MCCPATH+"mcc\general_scripts\3Deditor\mouseDown.sqf'");
 		onMouseButtonDblClick =  __EVAL("[_this,1] execVM '"+MCCPATH+"mcc\general_scripts\3Deditor\mouseDown.sqf'");
 		onMouseButtonUp = __EVAL("[_this,1] execVM '"+MCCPATH+"mcc\general_scripts\3Deditor\mouseUp.sqf'");

@@ -1,12 +1,11 @@
-#define MCCSTARTWEST 1015
-#define MCCSTARTEAST 1016
-#define MCCSTARTGUAR 1017
-#define MCCSTARTCIV 1018
 #define MCCENABLECP 1027
-
 private ["_side","_null"];
+disableSerialization;
 
 _side = _this select 0;
+if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21)==1) then {_side = _side + 7};
+MCC_teleportAtStart = if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 20)==1) then {false} else {true};
+publicVariable "MCC_teleportAtStart";
 
 if (mcc_missionmaker == (name player)) then {
 	if !mcc_isloading then 
@@ -22,7 +21,7 @@ if (mcc_missionmaker == (name player)) then {
 								[[_pos, 0, 'west','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
 								
-								[[], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
+								[[1], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_WEST  = %1;
 															publicVariable 'MCC_START_WEST';
@@ -43,7 +42,7 @@ if (mcc_missionmaker == (name player)) then {
 								[[_pos, 0, 'east','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
 								
-								[[], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
+								[[0], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_EAST  = %1;
 															publicVariable 'MCC_START_EAST';
@@ -64,7 +63,7 @@ if (mcc_missionmaker == (name player)) then {
 								[[_pos, 0, 'RESISTANCE','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 								onMapSingleClick """";
 								
-								[[], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
+								[[2], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_GUER  = %1;
 															publicVariable 'MCC_START_GUER';
@@ -84,7 +83,7 @@ if (mcc_missionmaker == (name player)) then {
 								publicVariable ""MCC_START_CIV"";
 								onMapSingleClick """";
 								
-								[[], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
+								[[3], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_CIV  = %1;
 															publicVariable 'MCC_START_GUER';
@@ -159,9 +158,22 @@ if (mcc_missionmaker == (name player)) then {
 								hint ""FOB placed.""
 							";
 					};
+					
+					case 10:	//FOB Civilian
+					{ 
+						hint "click on map inorder to place the FOB"; 
+						onMapSingleClick "	
+								[[_pos, 0, 'CIV' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+								onMapSingleClick """";
+								mcc_safe=mcc_safe + FORMAT [""
+															[[%1, 0, 'CIV' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+															""							  
+															,_pos
+															];
+								hint ""FOB placed.""
+							";
+					};
 				};
-			closeDialog 0;
-			_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
 		};
 } else {player globalchat "Access Denied"};
 		
