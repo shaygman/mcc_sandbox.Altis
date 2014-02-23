@@ -1,0 +1,15 @@
+//==================================================================fnc_DoInfPatrol===============================================================================================
+// Generate some stuff to do for our awesome patrol
+// Example: [_group,_zone] call fnc_DoFortify
+// spirit 11-2-2014
+//===========================================================================================================================================================================	
+private ["_group","_TargetPos"];
+
+_group 			= _this select 0; 
+_TargetPos	=	_this select 1;
+
+[leader _group ,200,true,[60,3],false,false] spawn gaia_garrison_script;
+
+true
+
+

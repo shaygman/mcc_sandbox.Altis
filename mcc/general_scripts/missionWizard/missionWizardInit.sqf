@@ -536,7 +536,7 @@ if (_vehicles && (random 1 > 0.5)) then
 //Artillery
 if (_artillery != 0) then
 {
-	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,5,10,_side,_artillery],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
+	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,5,10,_side,_artillery,_zoneNumber],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
 	if (MW_debug) then {diag_log "Enemy's Artillery Spawned in main zone"};
 };
 

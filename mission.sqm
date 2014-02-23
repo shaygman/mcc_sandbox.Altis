@@ -4,12 +4,12 @@ class Mission
 	addOns[]=
 	{
 		"A3_Characters_F_BLUFOR",
-		"a3_map_stratis",
 		"A3_Characters_F_OPFOR",
-		"A3_Characters_F_Civil",
 		"a3_characters_f_beta",
-		"A3_Characters_F_INDEP",
+		"A3_Characters_F_Civil",
 		"a3_characters_f_gamma",
+		"A3_Characters_F_INDEP",
+		"A3_Structures_F_Mil_Flags",
 		"a3_map_altis"
 	};
 	addOnsAuto[]=
@@ -20,6 +20,7 @@ class Mission
 		"A3_Characters_F_Civil",
 		"a3_characters_f_gamma",
 		"A3_Characters_F_INDEP",
+		"A3_Structures_F_Mil_Flags",
 		"a3_map_altis"
 	};
 	randomSeed=11823142;
@@ -570,7 +571,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_MMG1_G";
-					init="GrpNO_MMG1 = group this; nul = [""mmgg"",this] call f_fnc_assignGear;      ";
+					init="GrpNO_MMG1 = group this; nul = [""mmgg"",this] call f_fnc_assignGear; ";
 					description="NATO Medium MG Team 1 Gunner";
 				};
 				class Item1
@@ -913,7 +914,7 @@ class Mission
 					skill=0.60000002;
 					text="UnitIR_AH1_P";
 					init="GrpIR_AH1 = group this; nul = [""p"",this] call f_fnc_assignGear; ";
-					description="Iran  Wing 2 Pilot";
+					description="Iran Wing 2 Pilot";
 				};
 				class Item1
 				{
@@ -1312,11 +1313,11 @@ class Mission
 				items=6;
 				class Item0
 				{
-					position[]={14724.463,17.83,16311.764};
+					position[]={14728.192,17.847542,16329.541};
 					id=77;
 					side="WEST";
 					vehicle="B_recon_TL_F";
-					player="PLAYER COMMANDER";
+					player="PLAY CDG";
 					leader=1;
 					rank="SERGEANT";
 					skill=0.60000002;
@@ -1448,7 +1449,7 @@ class Mission
 					skill=0.60000002;
 					text="UnitNO_SF2_SR";
 					init="GrpNO_SF2 = group this; nul = [""sr"",this] call f_fnc_assignGear";
-					description="NATO Special Forces Team 2  JTAC-AT";
+					description="NATO Special Forces Team 2 JTAC-AT";
 				};
 				class Item4
 				{
@@ -1991,7 +1992,7 @@ class Mission
 					skill=0.60000002;
 					text="UnitIR_SF2_SR";
 					init="GrpIR_SF2 = group this; nul = [""sr"",this] call f_fnc_assignGear";
-					description="Iran  Special Forces Team 1 JTAC-AT";
+					description="Iran Special Forces Team 1 JTAC-AT";
 				};
 				class Item4
 				{
@@ -2038,7 +2039,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_MMG1_G";
-					init="GrpGR_MMG1 = group this; nul = [""mmgg"",this] call f_fnc_assignGear;   ";
+					init="GrpGR_MMG1 = group this; nul = [""mmgg"",this] call f_fnc_assignGear; ";
 					description="Green Medium MG Team 1 Gunner";
 				};
 				class Item1
@@ -2051,7 +2052,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_MMG1_AG";
-					init="GrpGR_MMG1 = group this; nul = [""mmgag"",this] call f_fnc_assignGear;   ";
+					init="GrpGR_MMG1 = group this; nul = [""mmgag"",this] call f_fnc_assignGear; ";
 					description="Green Medium MG Team 1 Assistant Gunner";
 				};
 			};
@@ -2479,6 +2480,19 @@ class Mission
 					description="Green Sniper Team 2 Spotter";
 				};
 			};
+		};
+	};
+	class Vehicles
+	{
+		items=1;
+		class Item0
+		{
+			position[]={17107.016,0.056574937,480.73645};
+			id=151;
+			side="EMPTY";
+			vehicle="FlagPole_F";
+			skill=0.60000002;
+			text="vlag";
 		};
 	};
 };
