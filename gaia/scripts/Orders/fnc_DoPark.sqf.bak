@@ -26,12 +26,9 @@ if !(isnil("_Zone")) then
 			   	 	//Arrange a pickup on the side of the street, else we gonna have ai crazyness going on
 			   	 	{_road = (([_nearRoad,[],{leader _group distance _x},"ASCEND"] call BIS_fnc_sortBy )   select 0);
 						 _roadConnectedTo = roadsConnectedTo _road;
-						if (count(_roadConnectedTo)>0) then
- 							{
-							 _connectedRoad = _roadConnectedTo select 0;
-						 	_direction = [_road, _connectedRoad] call BIS_fnc_DirTo;			   	 		
-			   	 	 	_pos = [(position _road), 7, (_direction - 45)] call BIS_fnc_relPos;
-			   	 		};
+						 _connectedRoad = _roadConnectedTo select 0;
+						 _direction = [_road, _connectedRoad] call BIS_fnc_DirTo;			   	 		
+			   	 	 _pos = [(position _road), 7, (_direction - 45)] call BIS_fnc_relPos;
 			   	 	};
 				
 				//Sentry has the nice habit to end the waypoint ones they seen enemy. That is good as they will "hide" again then.
