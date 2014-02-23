@@ -17,140 +17,193 @@ class mcc_test
 	class controls 
 	{
 	
-class MCC_artilleryDialogFrame: MCC_RscText
+//=====================Convoy=================================================================
+class MCC_ConvoyTittle: MCC_RscText
 {
-	idc = 78;
-	colorBackground[] = {0,0,0,0.9};
-	
-	x = 0.385417 * safezoneW + safezoneX;
-	y = 0.214111 * safezoneH + safezoneY;
-	w = 0.20625 * safezoneW;
-	h = 0.274893 * safezoneH;
-};
-
-class MCC_artilleryTitle: MCC_RscText
-{
-	idc = 66;
-	text = "Artillery:"; //--- ToDo: Localize;
+	idc = -1;
+	text = "Convoy:"; //--- ToDo: Localize;
+	x = 0.355625 * safezoneW + safezoneX;
+	y = 0.415981 * safezoneH + safezoneY;
+	w = 0.065625 * safezoneW;
+	h = 0.0280062 * safezoneH;
 	colorText[] = {0,1,1,1};
-	
-	x = 0.45 * safezoneW + safezoneX;
-	y = 0.225107 * safezoneH + safezoneY;
-	w = 0.154688 * safezoneW;
-	h = 0.0329871 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artilleryTypeTitle: MCC_RscText
+class MCC_ConvoyCar1Tittle: MCC_RscText
 {
-	idc = 67;
-
-	text = "Type:"; //--- ToDo: Localize;
-	x = 0.391146 * safezoneW + safezoneX;
-	y = 0.26909 * safezoneH + safezoneY;
-	w = 0.06875 * safezoneW;
-	h = 0.0219914 * safezoneH;
+	idc = -1;
+	text = "Car1:"; //--- ToDo: Localize;
+	x = 0.355625 * safezoneW + safezoneX;
+	y = 0.457991 * safezoneH + safezoneY;
+	w = 0.039375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	colorText[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artillerySpreadTitle: MCC_RscText
+class MCC_ConvoyCar2Tittle: MCC_RscText
 {
-	idc = 68;
-
-	text = "Spread:"; //--- ToDo: Localize;
-	x = 0.391146 * safezoneW + safezoneX;
-	y = 0.302077 * safezoneH + safezoneY;
-	w = 0.06875 * safezoneW;
-	h = 0.0219914 * safezoneH;
+	idc = -1;
+	text = "Car2:"; //--- ToDo: Localize;
+	x = 0.355625 * safezoneW + safezoneX;
+	y = 0.5 * safezoneH + safezoneY;
+	w = 0.039375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	colorText[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artilleryNumberTitle: MCC_RscText
+class MCC_ConvoyCar3Tittle: MCC_RscText
 {
-	idc = 69;
-
-	text = "N. of Shells:"; //--- ToDo: Localize;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	
-	x = 0.391146 * safezoneW + safezoneX;
-	y = 0.335064 * safezoneH + safezoneY;
-	w = 0.06875 * safezoneW;
-	h = 0.0219914 * safezoneH;
+	idc = -1;
+	text = "Car3:"; //--- ToDo: Localize;
+	x = 0.355625 * safezoneW + safezoneX;
+	y = 0.542009 * safezoneH + safezoneY;
+	w = 0.039375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	colorText[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artilleryType: MCC_RscCombo
+class MCC_ConvoyCar4Tittle: MCC_RscText
 {
-	idc = 70;
-
-	x = 0.465625 * safezoneW + safezoneX;
-	y = 0.26909 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0219914 * safezoneH;
+	idc = -1;
+	text = "Car4:"; //--- ToDo: Localize;
+	x = 0.355625 * safezoneW + safezoneX;
+	y = 0.584019 * safezoneH + safezoneY;
+	w = 0.039375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	colorText[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artillerySpread: MCC_RscCombo
+class MCC_ConvoyCar5Tittle: MCC_RscText
 {
-	idc = 71;
-
-	x = 0.465625 * safezoneW + safezoneX;
-	y = 0.302077 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0219914 * safezoneH;
+	idc = -1;
+	text = "Car5:"; //--- ToDo: Localize;
+	x = 0.355625 * safezoneW + safezoneX;
+	y = 0.626028 * safezoneH + safezoneY;
+	w = 0.039375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	colorText[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artilleryNumber: MCC_RscCombo
+class MCC_ConvoyCar1: MCC_RscCombo
 {
-	idc = 72;
-
-	x = 0.465625 * safezoneW + safezoneX;
-	y = 0.335064 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0219914 * safezoneH;
+	idc = MCC_CONVOY_CAR1;
+	x = 0.408125 * safezoneW + safezoneX;
+	y = 0.457991 * safezoneH + safezoneY;
+	w = 0.091875 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artilleryDelayText: MCC_RscText
+class MCC_ConvoyCar2: MCC_RscCombo
 {
-	idc = 73;
-
-	text = "Delay:"; //--- ToDo: Localize;
-	x = 0.391146 * safezoneW + safezoneX;
-	y = 0.368051 * safezoneH + safezoneY;
-	w = 0.06875 * safezoneW;
-	h = 0.0219914 * safezoneH;
+	idc = MCC_CONVOY_CAR2;
+	x = 0.408125 * safezoneW + safezoneX;
+	y = 0.5 * safezoneH + safezoneY;
+	w = 0.091875 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artilleryDelayCombo: MCC_RscCombo
+class MCC_ConvoyCar3: MCC_RscCombo
 {
-	idc = 74;
-
-	x = 0.465625 * safezoneW + safezoneX;
-	y = 0.368051 * safezoneH + safezoneY;
-	w = 0.120313 * safezoneW;
-	h = 0.0219914 * safezoneH;
+	idc = MCC_CONVOY_CAR3;
+	x = 0.408125 * safezoneW + safezoneX;
+	y = 0.542009 * safezoneH + safezoneY;
+	w = 0.091875 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artilleryCall: MCC_RscButton
+class MCC_ConvoyCar4: MCC_RscCombo
 {
-	idc = 75;
-	onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\artillery\artillery_request.sqf'");
-
-	text = "Call"; //--- ToDo: Localize;
-	x = 0.391146 * safezoneW + safezoneX;
-	y = 0.401039 * safezoneH + safezoneY;
-	w = 0.0859375 * safezoneW;
-	h = 0.0329871 * safezoneH;
-	tooltip = "Call Artillery on map position"; //--- ToDo: Localize;
+	idc = MCC_CONVOY_CAR4;
+	x = 0.408125 * safezoneW + safezoneX;
+	y = 0.584019 * safezoneH + safezoneY;
+	w = 0.091875 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artilleryAdd: MCC_RscButton
+class MCC_ConvoyCar5: MCC_RscCombo
 {
-	idc = 76;
-	onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\artillery\artillery_request.sqf'");
-
-	text = "Add"; //--- ToDo: Localize;
-	x = 0.5 * safezoneW + safezoneX;
-	y = 0.401039 * safezoneH + safezoneY;
-	w = 0.0859375 * safezoneW;
-	h = 0.0329871 * safezoneH;
-	tooltip = "Add artillery to MCC Console "; //--- ToDo: Localize;
+	idc = MCC_CONVOY_CAR5;
+	x = 0.408125 * safezoneW + safezoneX;
+	y = 0.626028 * safezoneH + safezoneY;
+	w = 0.091875 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_artilleryDialogClose: MCC_RscButton
+class MCC_ConvoyHVTTittle: MCC_RscText
 {
-	idc = 77;
-	onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
-
-	text = "Close"; //--- ToDo: Localize;
-	x = 0.448438 * safezoneW + safezoneX;
-	y = 0.445021 * safezoneH + safezoneY;
-	w = 0.0859375 * safezoneW;
-	h = 0.0329871 * safezoneH;
+	idc = -1;
+	text = "HVT:"; //--- ToDo: Localize;
+	x = 0.355625 * safezoneW + safezoneX;
+	y = 0.668037 * safezoneH + safezoneY;
+	w = 0.039375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	colorText[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+class MCC_ConvoyHVTCarTittle: MCC_RscText
+{
+	idc = -1;
+	text = "HVT Car:"; //--- ToDo: Localize;
+	x = 0.355625 * safezoneW + safezoneX;
+	y = 0.710047 * safezoneH + safezoneY;
+	w = 0.0459375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	colorText[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.65)";
+};
+class MCC_ConvoyHVT: MCC_RscCombo
+{
+	idc = MCC_CONVOY_HVT;
+	x = 0.408125 * safezoneW + safezoneX;
+	y = 0.668037 * safezoneH + safezoneY;
+	w = 0.091875 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+class MCC_ConvoyHVTCar: MCC_RscCombo
+{
+	idc = MCC_CONVOY_HVTCAR;
+	x = 0.408125 * safezoneW + safezoneX;
+	y = 0.710047 * safezoneH + safezoneY;
+	w = 0.091875 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+class MCC_convoySpawn: MCC_RscButton
+{
+	idc = -1;
+	text = "Spawn"; //--- ToDo: Localize;
+	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\convoy\make_convoy_WP.sqf'");
+	x = 0.355625 * safezoneW + safezoneX;
+	y = 0.752056 * safezoneH + safezoneY;
+	w = 0.0459375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	tooltip = "Spawn convoy and set WP"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+class MCC_convoyReset: MCC_RscButton
+{
+	idc = -1;
+	text = "Reset"; //--- ToDo: Localize;
+	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\convoy\reset_convoy_WP.sqf'");
+	x = 0.408125 * safezoneW + safezoneX;
+	y = 0.752056 * safezoneH + safezoneY;
+	w = 0.0459375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	tooltip = "Reset convoy's waypoints"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+class MCC_convoyStart: MCC_RscButton
+{
+	idc = -1;
+	text = "Start"; //--- ToDo: Localize;
+	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\convoy\start_convoy.sqf'");
+	x = 0.460625 * safezoneW + safezoneX;
+	y = 0.752056 * safezoneH + safezoneY;
+	w = 0.0459375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	tooltip = "Start convoy movement"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
 	};
 };

@@ -2,7 +2,7 @@ class MCC_CASDialogControls:MCC_RscControlsGroup
 {
 	idc = 500;
 	x = 0.186 * safezoneW + safezoneX;
-	y = 0.095 * safezoneH + safezoneY;
+	y = 0.12 * safezoneH + safezoneY;
 	w = 0.24 * safezoneW;
 	h = 0.219914 * safezoneH;
 

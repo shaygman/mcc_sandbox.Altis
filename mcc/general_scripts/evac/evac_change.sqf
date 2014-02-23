@@ -1,13 +1,13 @@
-#define MCC_SANDBOX2_IDD 2000
-#define MCC_EVAC_TYPE 2020
-#define MCC_EVAC_CLASS 2021
-#define MCC_EVAC_SELECTED 2022
-#define MCC_EVAC_INSERTION 2023
-#define MCC_EVAC_FLIGHTHIGHT 2024
+#define MCC_SANDBOX2_IDD (uiNamespace getVariable "MCC_groupGen_Dialog")
+#define MCC_EVAC_TYPE 40
+#define MCC_EVAC_CLASS 41
+#define MCC_EVAC_SELECTED 42
+#define MCC_EVAC_INSERTION 43
+#define MCC_EVAC_FLIGHTHIGHT 44
 
 disableSerialization;
 private ["_evacArray","_insetionArray","_mccdialog","_type"];
-_mccdialog = findDisplay MCC_SANDBOX2_IDD;	
+_mccdialog = MCC_SANDBOX2_IDD;	
 
 _type = lbCurSel MCC_EVAC_TYPE;
 

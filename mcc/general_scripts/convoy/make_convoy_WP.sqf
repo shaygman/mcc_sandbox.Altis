@@ -1,10 +1,10 @@
-#define MCC_CONVOY_CAR1 2030
-#define MCC_CONVOY_CAR2 2031
-#define MCC_CONVOY_CAR3 2032
-#define MCC_CONVOY_CAR4 2033
-#define MCC_CONVOY_CAR5 2034
-#define MCC_CONVOY_HVT 2035
-#define MCC_CONVOY_HVTCAR 2036
+#define MCC_CONVOY_CAR1 50
+#define MCC_CONVOY_CAR2 51
+#define MCC_CONVOY_CAR3 52
+#define MCC_CONVOY_CAR4 53
+#define MCC_CONVOY_CAR5 54
+#define MCC_CONVOY_HVT 55
+#define MCC_CONVOY_HVTCAR 56
  private ["_convoy_wp1","_point1","_convoy_wp2","_point2","_convoy_wp3","_point3","_convoy_wp4","_point4","_convoy_wp5","_point5"];
 if !mcc_isloading then 
 	{

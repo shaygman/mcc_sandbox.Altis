@@ -1,8 +1,9 @@
-#define MCC_EVAC_TYPE 2020
-#define MCC_EVAC_CLASS 2021
-#define MCC_EVAC_SELECTED 2022
-#define MCC_EVAC_INSERTION 2023
-#define MCC_EVAC_FLIGHTHIGHT 2024
+#define MCC_SANDBOX2_IDD (uiNamespace getVariable "MCC_groupGen_Dialog")
+#define MCC_EVAC_TYPE 40
+#define MCC_EVAC_CLASS 41
+#define MCC_EVAC_SELECTED 42
+#define MCC_EVAC_INSERTION 43
+#define MCC_EVAC_FLIGHTHIGHT 44
 
 private ["_point1", "_point2", "_point3","_convoy_wp1","_convoy_wp2","_convoy_wp3","_flyInHight","_landing","_evac"];
 

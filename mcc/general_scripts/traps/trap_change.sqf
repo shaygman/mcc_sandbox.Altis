@@ -1,6 +1,4 @@
 //Made by Shay_Gman (c) 03.13
-#define MCC_SANDBOX2_IDD 2000
-
 #define MCC_TRAPS_TYPE 2007
 #define MCC_TRAPS_OBJECT 2008
 #define MCC_TRAPS_EXPLOSIN_SIZE 2009
@@ -16,7 +14,7 @@ private ["_type", "_comboBox", "_mccdialog", "_trapsArray"];
 
 
 disableSerialization;
-_mccdialog = findDisplay MCC_SANDBOX2_IDD;	
+_mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");	
 
 _type = lbCurSel MCC_TRAPS_TYPE;
 
@@ -145,7 +143,7 @@ if (_type<5) then	//if object
 		{
 			_displayname = format ["%1",(_x select 3)select 0];	
 			_index = _comboBox lbAdd _displayname;
-			if (_type!=6) then {_comboBox lbsetpicture [_index, (_x select 3) select 1];};	//No pic for ammoboxes
+			if !(_type in [7,8]) then {_comboBox lbsetpicture [_index, (_x select 3) select 1];};	//No pic for ammoboxes
 		} foreach _trapsArray;
 	};
 	

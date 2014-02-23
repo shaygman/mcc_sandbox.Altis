@@ -1,11 +1,14 @@
-#define MCC_SANDBOX2_IDD 2000
-#define MCC_EVAC_TYPE 2020
-#define MCC_EVAC_CLASS 2021
-#define MCC_EVAC_SELECTED 2022
+#define MCC_SANDBOX2_IDD (uiNamespace getVariable "MCC_groupGen_Dialog")
+#define MCC_EVAC_TYPE 40
+#define MCC_EVAC_CLASS 41
+#define MCC_EVAC_SELECTED 42
+#define MCC_EVAC_INSERTION 43
+#define MCC_EVAC_FLIGHTHIGHT 44
+
 disableSerialization;
 private ["_evacArray","_insetionArray","_mccdialog","_option","_type","_class","_comboBox",
 		 "_vehicleDisplayName","_displayname","_index","_countVehicles"];
-_mccdialog = findDisplay MCC_SANDBOX2_IDD;	
+_mccdialog = MCC_SANDBOX2_IDD;	
 
 
 if !mcc_isloading then 

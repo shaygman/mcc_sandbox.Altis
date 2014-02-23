@@ -46,7 +46,7 @@ if (mcc_missionmaker == (name player)) then
 	};		
 
 	if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked && !MCC_zone_drawing && !MCC3DRuning && !MCC_CASrequestMarker && !MCC_brush_drawing && !MCC_drawTriggers
-	    && !MCC_drawMinefield && !MCC_delete_drawing && !MCC_ambushPlacing && !MCC_UMParadropRequestMarker) then //Box drawing select
+	    && !MCC_drawMinefield && !MCC_delete_drawing && !MCC_ambushPlacing && !MCC_UMParadropRequestMarker && !_shift) then //Box drawing select
 	{
 		private ["_marker","_markersize","_markerpos","_null","_markerposX","_markerposY","_markersize","_markersizeX","_markersizeY",
 					 "_borderXleft","_borderXright","_borderYdown","_borderYtop","_group","_groupX","_groupY","_leader","_icon","_groupControl"];

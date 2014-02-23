@@ -1,8 +1,22 @@
+class MCC_groupGenSpawnButton: MCC_RscButton 
+{
+	idc = -1; 
+	text = "Spawn"; 
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	tooltip = "Spawn units or groups"; 
+	onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+	
+	x = 0.110417 * safezoneW + safezoneX;
+	y = 0.0931586 * safezoneH + safezoneY;
+	w = 0.06875 * safezoneW;
+	h = 0.0329871 * safezoneH;
+};
+
 class MCC_3DEditor: MCC_RscButton 
 {
 	idc = -1; text = "3D Editor"; 
 	x = 0.110417 * safezoneW + safezoneX;
-	y = 0.0931586 * safezoneH + safezoneY;
+	y = 0.137141 * safezoneH + safezoneY;
 	w = 0.06875 * safezoneW;
 	h = 0.0329871 * safezoneH;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -19,7 +33,7 @@ class MCC_boxGenerator: MCC_RscButton
 	onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'boxGen';} else {player globalchat 'Access Denied'};";
 	
 	x = 0.110417 * safezoneW + safezoneX;
-	y = 0.137141 * safezoneH + safezoneY;	//0.0439824
+	y = 0.1811234 * safezoneH + safezoneY;	//0.0439824
 	w = 0.06875 * safezoneW;
 	h = 0.0329871 * safezoneH;
 };
@@ -33,7 +47,7 @@ class MCC_callCASButton: MCC_RscButton
 	onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 	
 	x = 0.110417 * safezoneW + safezoneX;
-	y = 0.1811234 * safezoneH + safezoneY;
+	y = 0.2251058 * safezoneH + safezoneY;
 	w = 0.06875 * safezoneW;
 	h = 0.0329871 * safezoneH;
 };
@@ -47,7 +61,7 @@ class MCC_callArtilleryButton: MCC_RscButton
 	onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 	
 	x = 0.110417 * safezoneW + safezoneX;
-	y = 0.2251058 * safezoneH + safezoneY;
+	y = 0.2690882 * safezoneH + safezoneY;
 	w = 0.06875 * safezoneW;
 	h = 0.0329871 * safezoneH;
 };
@@ -58,10 +72,38 @@ class MCC_callEvacButton: MCC_RscButton
 	text = "Evac"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	tooltip = "Open Evac Generator"; 
-	onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+	onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 	
 	x = 0.110417 * safezoneW + safezoneX;
-	y = 0.2690882 * safezoneH + safezoneY;
+	y = 0.3130706 * safezoneH + safezoneY;
+	w = 0.06875 * safezoneW;
+	h = 0.0329871 * safezoneH;
+};
+
+class MCC_callIEDButton: MCC_RscButton
+{
+	idc = -1;
+	text = "IED"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	tooltip = "Open IEDs Generator"; 
+	onButtonClick = __EVAL("[8] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+	
+	x = 0.110417 * safezoneW + safezoneX;
+	y = 0.357053 * safezoneH + safezoneY;
+	w = 0.06875 * safezoneW;
+	h = 0.0329871 * safezoneH;
+};
+
+class MCC_callConvoyButton: MCC_RscButton
+{
+	idc = -1;
+	text = "Convoy"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	tooltip = "Open Convoy Generator"; 
+	onButtonClick = __EVAL("[9] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+	
+	x = 0.110417 * safezoneW + safezoneX;
+	y = 0.4010354 * safezoneH + safezoneY;
 	w = 0.06875 * safezoneW;
 	h = 0.0329871 * safezoneH;
 };
