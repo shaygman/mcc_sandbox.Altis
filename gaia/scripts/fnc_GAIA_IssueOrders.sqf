@@ -687,8 +687,9 @@ _StartTimeIssueOrders = time;
 //									TRANSPORTATION SUPPORT PHASE
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
 {
-				 
-				 if (
+			if (count(_x getVariable  ["GAIA_zone_intend",[]])>1)		then
+			{
+			 if (
 			   			//The the one asking transport must be on our side
 			   			((side _x) == _HQ_side)
 			   			and
@@ -717,6 +718,7 @@ _StartTimeIssueOrders = time;
 		   			)
 		   		//If that is all the case, then go check if somebody can transport you and if you are allowed to be transported based on transport specific rule bases
 		   	 then  { _dummy= [_x] call fnc_DoOrganizeTransportation};
+		  };
 
 }  forEach allgroups;
 

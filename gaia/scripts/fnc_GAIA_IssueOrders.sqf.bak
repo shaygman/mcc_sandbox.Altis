@@ -707,8 +707,8 @@ _StartTimeIssueOrders = time;
 					   	
 					   	(
 					   		((_x getVariable  ["GAIA_Order",""]) == "DoPatrol")
-					   		and
-					   		!([(position leader _x),((_x getVariable  ["GAIA_zone_intend",["",[0,0,0]]]) select 0)] call fnc_PosIsInMarker)
+					   		//and
+					   		//!([(position leader _x),((_x getVariable  ["GAIA_zone_intend",["",[0,0,0]]]) select 0)] call fnc_PosIsInMarker)
 					   	)
 					   	and
 					   	//You belong to a footmobile class or you wont be able to getin
@@ -749,7 +749,7 @@ _StartTimeIssueOrders = time;
 		   	 {
 		   	 		 
 		   	 		 _IsNight			= (((selectBestPlaces [position (leader _x),2, "night", 1, 1]) select 0 select 1)>0.8);
-		   	 		 _LetsDoSome	= ((round(random(1)))==1);
+		   	 		 _LetsDoSome	= ((round(random(20)))==1);
 		   	 		 _ClosestCA		= ([_CA,leader _x] call BIS_fnc_nearestPosition);
 		   	 		 _PosLead			= position leader _x;
 		   	 		 
