@@ -56,7 +56,7 @@ if (! isnil "_units") then {
 					_vehicleClass = tolower (gettext (configFile >> "CfgVehicles" >> typeof (assignedVehicle _x) >> "vehicleClass")); 
 					if ((assignedVehicle _x) != _x) then 
 					{
-						if (!((assignedVehicle _x) in _tempVehicles) and !(_x in (assignedCargo vehicle _x))) then {
+						if (!((assignedVehicle _x) in _tempVehicles) and !(_x in (assignedCargo assignedVehicle _x))) then {
 							
 							_tempVehicles set [count _tempVehicles, vehicle _x];
 							_SoldierCargo  = getNumber  (configFile >> "CfgVehicles" >> typeof (assignedVehicle _x) >> "transportSoldier"); 
