@@ -25,6 +25,7 @@ if (mcc_missionmaker == (name player)) then
 	if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then 								//Close Group info control
 	{
 		ctrlShow [510,false];
+		ctrlShow [9013,false];
 		hintsilent "";
 	};		
 
@@ -36,6 +37,7 @@ if (mcc_missionmaker == (name player)) then
 		
 		//Close WP dialog and hints
 		ctrlShow [510,false];
+		ctrlShow [9013,false];
 		hintsilent "";
 		
 		//Start creating the box

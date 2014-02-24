@@ -1,6 +1,3 @@
-#define MCC_SANDBOX3_IDD 3000
-#define MCCSTOPCAPTURE 1014
-
 #define MCC_TRIGGERS_ACTIVATE 3064
 #define MCC_TRIGGERS_CONDITION 3065
 #define MCC_TRIGGERS_SHAPE 3066
@@ -16,7 +13,7 @@
 disableSerialization;
 private ["_dlg","_type","_size","_zoneY","_activate","_cond","_angle","_shape","_text","_pos","_nul","_triggerSelected","_timeMin","_timeMax","_stateCond","_stateDiac"];
 
-_dlg = findDisplay MCC_SANDBOX3_IDD;
+_dlg = (uiNamespace getVariable "MCC_groupGen_Dialog");
 _type = _this select 0;
 
 switch (_type) do
@@ -64,17 +61,17 @@ switch (_type) do
 							,MCC_path
 							];
 		[0, _pos, _size, _activate, _cond, Mshape, _text, toArray MCC_capture_var,_timeMin,_timeMax,_stateCond,_stateDiac] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
-		closedialog 3000;
-		waituntil {!dialog};
-		_ok = createDialog "MCC_Sandbox3";
+
+		while {dialog} do {closedialog 0};
+		_ok = createDialog "mcc_groupGen";
 	};
 	   
    case 2:	//Mapclick Move trigger
 	{
 		hint "Left click on the map to move a trigger";
-			onMapSingleClick " 	hint 'Trigger moved.'; 
-								nul=[3,_pos] execVM '"+MCCPATH+"mcc\general_scripts\triggers\triggers.sqf';
-								onMapSingleClick """";";
+			onMapSingleClick  format[" 	hint 'Trigger moved.'; 
+								_nul=[3,_pos] execVM '%1mcc\general_scripts\triggers\triggers.sqf';
+								onMapSingleClick """";",MCC_path];
 	};
 	
    case 3:	// Move trigger

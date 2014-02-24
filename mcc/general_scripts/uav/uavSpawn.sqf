@@ -1,10 +1,6 @@
-#define MCC_SANDBOX3_IDD 3000
-#define MCC_UAV_TYPE 3069
-disableSerialization;
-private ["_dlg","_type","_size","_zoneY","_activate","_cond","_angle","_shape","_text","_pos","_nul","_triggerSelected"];
+private ["_type","_size","_zoneY","_activate","_cond","_angle","_shape","_text","_pos","_nul","_triggerSelected"];
 
-_dlg = findDisplay MCC_SANDBOX3_IDD;
-_type = (MCC_uavSiteArray select (lbCurSel MCC_UAV_TYPE)) select 1;
+_type = 0;
 
 if (_type == 0) then
 	{

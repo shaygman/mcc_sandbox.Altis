@@ -8,6 +8,7 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_c
 #define MCCMISSIONMAKERNAME 1020
 #define MCCCLIENTFPS 1021
 #define MCCSERVERFPS 1022
+#define MCC_GroupGenInfoText_IDC 9013
 
 #define MCCSTOPCAPTURE 1014
 
@@ -18,6 +19,7 @@ uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
 
 //Hide GroupWP
 ctrlShow [510,false];
+ctrlShow [9013,false];
 
 for "_i" from 500 to 520 step 1 do 
 {

@@ -8,6 +8,7 @@
 #define MCCMISSIONMAKERNAME 1020
 #define MCCCLIENTFPS 1021
 #define MCCSERVERFPS 1022
+#define MCC_GroupGenInfoText_IDC 9013
 
 #define MCCSTOPCAPTURE 1014
 
@@ -72,7 +73,7 @@ class mcc_groupGen
 			text = "Close";
 			action = "MCC_mcc_screen=0; closeDialog 0; {deletemarkerlocal _x;} foreach MCC_groupGenTempWP;{deletemarkerlocal _x;} foreach MCC_groupGenTempWPLines;";
 			
-			x = 0.752083 * safezoneW + safezoneX;
+			x = 0.84375 * safezoneW + safezoneX;
 			y = 0.796884 * safezoneH + safezoneY;
 			w = 0.0916667 * safezoneW;
 			h = 0.0329871 * safezoneH;
@@ -298,7 +299,7 @@ class mcc_groupGen
 		{
 			idc = MCCSTOPCAPTURE;
 			text = "Stop Capturing"; 
-			x = 0.700521 * safezoneW + safezoneX;
+			x = 0.746354 * safezoneW + safezoneX;
 			y = 0.0491758 * safezoneH + safezoneY;
 			w = 0.108854 * safezoneW;
 			h = 0.0329871 * safezoneH;
@@ -310,7 +311,7 @@ class mcc_groupGen
 		{
 			idc = -1; 
 			text = "Save/Load"; 
-			x = 0.654688 * safezoneW + safezoneX;
+			x = 0.746354 * safezoneW + safezoneX;
 			y = 0.796884 * safezoneH + safezoneY;
 			w = 0.0916667 * safezoneW;
 			h = 0.0329871 * safezoneH;
@@ -322,7 +323,7 @@ class mcc_groupGen
 		{
 			idc = -1; 
 			text = "Login/Logout"; 
-			x = 0.557292 * safezoneW + safezoneX;
+			x = 0.648958 * safezoneW + safezoneX;
 			y = 0.796884 * safezoneH + safezoneY;
 			w = 0.0916667 * safezoneW;
 			h = 0.0329871 * safezoneH;
@@ -339,9 +340,9 @@ class mcc_groupGen
 			tooltip = "Make the mission maker invisible to enemies"; 
 			onButtonClick = "if (mcc_missionmaker == (name player)) then{if (captive player) then {player setcaptive false; [['Mission maker is no longer cheating'],'MCC_fnc_globalHint',true,false] call BIS_fnc_MP;} else {player setcaptive true; [['Mission maker is cheating'],'MCC_fnc_globalHint',true,false] spawn BIS_fnc_MP;}} else {player globalchat 'Access Denied'};";
 			
-			x = 0.408333 * safezoneW + safezoneX;
+			x = 0.448438 * safezoneW + safezoneX;
 			y = 0.0491758 * safezoneH + safezoneY;
-			w = 0.06875 * safezoneW;
+			w = 0.0515625 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
 
@@ -353,9 +354,9 @@ class mcc_groupGen
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
 			
-			x = 0.482813 * safezoneW + safezoneX;
+			x = 0.505729 * safezoneW + safezoneX;
 			y = 0.0491758 * safezoneH + safezoneY;
-			w = 0.06875 * safezoneW;
+			w = 0.0515625 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
 
@@ -366,12 +367,52 @@ class mcc_groupGen
 			tooltip = "Teleport the mission maker and any vehicle he is in to a new location"; 
 			onButtonClick = "if (mcc_missionmaker == (name player)) then {hint 'Click on the map';onMapSingleClick 'vehicle player setPos _pos;onMapSingleClick '''';true;'} else {player globalchat 'Access Denied'};";
 			
-			x = 0.557292 * safezoneW + safezoneX;
+			x = 0.563021 * safezoneW + safezoneX;
 			y = 0.0491758 * safezoneH + safezoneY;
-			w = 0.06875 * safezoneW;
+			w = 0.0515625 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
 		
+		class MCC_MissionWIn: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
+			text = "Mission Won"; //--- ToDo: Localize;
+			colorText[] = {0,1,0,0.8};
+			tooltip = "End mission with - Mission Accomplished"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+			x = 0.3625 * safezoneW + safezoneX;
+			y = 0.0491758 * safezoneH + safezoneY;
+			w = 0.0630208 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
+		class MCC_MissionLost: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
+			text = "Mission Failed"; //--- ToDo: Localize;
+			colorText[] = {1,0,0,0.8};
+			tooltip = "End mission with - Mission Failed"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+			x = 0.6375 * safezoneW + safezoneX;
+			y = 0.0491758 * safezoneH + safezoneY;
+			w = 0.0630208 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		//---------------------- For group ID ---------------------
+		class MCC_GroupGenInfoText: MCC_RscStructuredText
+		{
+			idc = MCC_GroupGenInfoText_IDC;
+			x = 0.1 * safezoneW + safezoneX;
+			y = 0.1 * safezoneH + safezoneY;
+			w = 0.1 * safezoneW;
+			h = 0.1 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
+			colorBackground[] = {0,0,0,0.9};
+		};
 		//Left		
 		#include "mcc_groupGenLeftButtons.hpp"
 		#include "mcc_groupGenSpawn.hpp"
@@ -392,7 +433,9 @@ class mcc_groupGen
 		#include "mcc_groupGenMarkers.hpp"
 		#include "mcc_groupGenBriefings.hpp"
 		#include "mcc_groupGenTasks.hpp"
-		#include "mcc_groupGenJukebox.hpp"		
+		#include "mcc_groupGenJukebox.hpp"	
+		#include "mcc_groupGenTriggers.hpp"	
+		#include "mcc_groupGenCS.hpp"			
 		
 		#include "mcc_groupGenWaypoints.hpp"
 

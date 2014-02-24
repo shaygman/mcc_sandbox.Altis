@@ -5,7 +5,7 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 	x = 0.866667 * safezoneW + safezoneX;
 	y = 0.0931586 * safezoneH + safezoneY;	//0.0439824
 	w = 0.06875 * safezoneW;
-	h = 0.472816 * safezoneH;	
+	h = 0.52 * safezoneH;	
 
 	class Controls
 	{	
@@ -125,7 +125,20 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
-
+		
+		class MCC_triggersCallButton: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = __EVAL("[14] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			text = "Triggers"; //--- ToDo: Localize;
+			tooltip = "Open Triggers Menu"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			
+			y = MCC_buttonsSpace * 9;
+			w = 0.06875 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
 		class MCC_jukeBoxCallButton: MCC_RscButton
 		{
 			idc = -1;
@@ -134,9 +147,23 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Jukebox Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			y = MCC_buttonsSpace * 9;
+			y = MCC_buttonsSpace * 10;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
+		
+		class MCC_clientSideCallButton: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = __EVAL("[15] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			text = "Client Side"; //--- ToDo: Localize;
+			tooltip = "Open Client Side Menu"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			
+			y = MCC_buttonsSpace * 11;
+			w = 0.06875 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
 	};
 };

@@ -19,7 +19,7 @@ private ["_action","_control","_show","_mccdialog","_comboBox","_displayname","_
 disableSerialization;
 
 _action = _this select 0;
-
+_mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 //-------------------------------------------------------------------------------------Weather----------------------------------------------------------------------------------------------
 if (_action == 0) exitWith
 {
@@ -210,7 +210,6 @@ if (_action == 6) exitWith
 	
 	if (_show) then
 	{
-		_mccdialog = findDisplay groupGen_IDD;
 		MCC_groupGenCurrenGroupArray = []; 		//Reset the current group
 
 		_comboBox = _mccdialog displayCtrl UNIT_TYPE;		//fill combobox CFG unit
@@ -342,7 +341,6 @@ if (_action == 8) exitWith
 	if (_show) then
 	{
 		//--------------------------------------------------------TRAPS Settings---------------------------------------------------------
-		_mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 		_comboBox = _mccdialog displayCtrl MCC_TRAPS_PROXIMITY;		//fill combobox IED Prox
 		lbClear _comboBox;
 		{
@@ -587,7 +585,6 @@ if (_action == 13) exitWith
 		#define MCC_JUKEBOX_CONDITION 3062
 		#define MCC_JUKEBOX_ZONE 3063
 		
-		_mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 		if (MCC_jukeboxMusic) then
 		{
 			_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_TRACK; //fill combobox music tracks
@@ -635,5 +632,94 @@ if (_action == 13) exitWith
 
 		sliderSetRange [MCC_JUKEBOX_VOLUME, 0, 1];
 		sliderSetPosition [MCC_JUKEBOX_VOLUME, (1 - musicVolume)];
+	};
+};
+
+//-------------------------------------------------------------------------------------JUKEBOX----------------------------------------------------------------------------------------------
+if (_action == 14) exitWith
+{
+	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 515);
+	_show = if (ctrlShown _control) then {false} else {true}; 
+	_control ctrlShow _show;
+	
+	if (_show) then
+	{
+		//--------------------------------------------------TRIGGERS---------------------------------------------------------------------------
+		#define MCC_TRIGGERS_ACTIVATE 3064
+		#define MCC_TRIGGERS_CONDITION 3065
+		#define MCC_TRIGGERS_SHAPE 3066
+		#define MCC_TRIGGERS_LIST 3067
+		#define MCC_TRIGGERS_NAME 3068 
+		#define MCC_TRIGGERS_TIME_MIN 3071
+		#define MCC_TRIGGERS_TIME_MAX 3072
+		#define MCC_TRIGGERS_STAT_COND 3073
+		#define MCC_TRIGGERS_STAT_DEACTIVE 3075
+		
+		//--------------------------------------------------Triggers---------------------------------------------------------------------------
+		_comboBox = _mccdialog displayCtrl MCC_TRIGGERS_ACTIVATE; //fill combobox Activate by
+
+		lbClear _comboBox;
+		{
+			_displayname = _x;
+			_comboBox lbAdd _displayname;
+		} foreach MCC_musicActivateby_array;
+		_comboBox lbSetCurSel 0;
+
+		_comboBox = _mccdialog displayCtrl MCC_TRIGGERS_CONDITION; //fill combobox Condition
+
+		lbClear _comboBox;
+		{
+			_displayname =_x;
+			_comboBox lbAdd _displayname;
+		} foreach MCC_musicCond_array;
+		_comboBox lbSetCurSel 0;
+
+		_comboBox = _mccdialog displayCtrl MCC_TRIGGERS_SHAPE;		//fill combobox Trigger Shape 
+		lbClear _comboBox;
+		{
+			_displayname = _x;
+			_comboBox lbAdd _displayname;
+		} foreach MCC_shapeMarker;
+		_comboBox lbSetCurSel 0;
+
+		_comboBox = _mccdialog displayCtrl MCC_TRIGGERS_LIST;		//fill combobox Active triggers 
+		lbClear _comboBox;
+		{
+			_displayname = _x select 0;
+			_comboBox lbAdd _displayname;
+		} foreach MCC_triggers;
+		_comboBox lbSetCurSel 0;
+	};
+};
+
+//-------------------------------------------------------------------------------------CLIENT SIDE----------------------------------------------------------------------------------------------
+if (_action == 15) exitWith
+{
+	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 516);
+	_show = if (ctrlShown _control) then {false} else {true}; 
+	_control ctrlShow _show;
+	
+	if (_show) then
+	{
+		#define MCCVIEWDISTANCE 1006
+		#define MCCGRASSDENSITY 1007
+		
+		//----------------------------------------------------------Client Side settings----------------------------------------------------------------------------
+
+		_comboBox = _mccdialog displayCtrl MCCGRASSDENSITY;		//fill combobox Grass
+		lbClear _comboBox;
+		{
+			_displayname = format ["%1",_x select 0];
+			_comboBox lbAdd _displayname;
+		} foreach MCC_grass_array;
+		_comboBox lbSetCurSel MCC_grass_index;
+
+		_comboBox = _mccdialog displayCtrl MCCVIEWDISTANCE;		//fill combobox View distance
+		lbClear _comboBox;
+		{
+			_displayname = format ["%1",_x];
+			_comboBox lbAdd _displayname;
+		} foreach MCC_view_array;
+		_comboBox lbSetCurSel ((round ((viewdistance)/1000)) - 1); // set viewdistance index to current vd
 	};
 };

@@ -111,5 +111,18 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
+		
+		class MCC_AC130ConvoyButton: MCC_RscButton
+		{
+			idc = -1;
+			text = "AC-130"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			tooltip = "Spawn AC-130 (use MCC console to control it)"; 
+			onButtonClick = __EVAL ("[0] execVM '"+MCCPATH+"mcc\general_scripts\uav\uavSpawn.sqf'");
+			
+			y = MCC_buttonsSpace * 8;
+			w = 0.06875 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
 	};
 };
