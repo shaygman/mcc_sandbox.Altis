@@ -1,4 +1,3 @@
-#define MCC_SANDBOX3_IDD 3000
 #define MCC_BRIEFING_TEXT 3055
 disableSerialization;
 private ["_type","_dlg","_string"];
@@ -6,7 +5,7 @@ hint "Diary updated";
 
 _type = _this select 0;
 
-_dlg = findDisplay MCC_SANDBOX3_IDD;
+_dlg = (uiNamespace getVariable "MCC_groupGen_Dialog");
 _string = ctrlText (_dlg displayCtrl MCC_BRIEFING_TEXT);
 
 mcc_safe=mcc_safe + FORMAT ["_string='%1';

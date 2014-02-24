@@ -43,17 +43,6 @@ class MCC_respawnDialogControls:MCC_RscControlsGroup
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
-		class MCC_respawnDialogClose: MCC_RscButton
-		{
-			idc = -1;
-			onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
-
-			text = "Close"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
-			w = 0.0630208 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
 		class MCC_respawnSideTittle: MCC_RscText
 		{
 			idc = -1;
@@ -115,6 +104,18 @@ class MCC_respawnDialogControls:MCC_RscControlsGroup
 			w = 0.0916667 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "If role selection is on then the position can be set as FOB (Optional respawn location)"; //--- ToDo: Localize;
+		};
+		
+		class MCC_respawnDialogClose: MCC_RscButtonMenu
+		{
+			idc = -1;
+			onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+
+			text = "Close"; //--- ToDo: Localize;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.412034 * safezoneH + safezoneY;
+			w = 0.0630208 * safezoneW;
+			h = 0.0329871 * safezoneH;
 		};
 	};
 };

@@ -15,7 +15,7 @@
 #define mcc_groupGen_CurrentgroupNameText_IDC 3019
 #define MCC_GGSAVE_GROUPIDC 3020
 
-private ["_action","_control","_show","_mccdialog","_comboBox","_displayname"];
+private ["_action","_control","_show","_mccdialog","_comboBox","_displayname","_pic"];
 disableSerialization;
 
 _action = _this select 0;
@@ -492,5 +492,148 @@ if (_action == 9) exitWith
 			_index = _comboBox lbAdd _displayname;
 		} foreach MCC_convoyHVTcar;
 		_comboBox lbSetCurSel MCC_convoyHVTCarIndex;
+	};
+};
+
+//-------------------------------------------------------------------------------------Markers----------------------------------------------------------------------------------------------
+if (_action == 10) exitWith
+{
+	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 511);
+	_show = if (ctrlShown _control) then {false} else {true}; 
+	_control ctrlShow _show;
+	
+	if (_show) then
+	{
+		//------------------------------------------------Markers-------------------------------------------------------
+		_comboBox =((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3051);		//fill Markers Colors 1
+		lbClear _comboBox;
+		{
+			_displayname = format ["%1",_x select 0];
+			_comboBox lbAdd _displayname;
+		} foreach MCC_colorsarray;
+		_comboBox lbSetCurSel 0;
+
+		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3053);		//fill Markers Shape
+		lbClear _comboBox;
+		{
+			_displayname = _x;
+			_comboBox lbAdd _displayname;
+		} foreach MCC_shapeMarker;
+		_comboBox lbSetCurSel 0;
+
+		_comboBox =((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3054);		//fill Markers Brush
+		lbClear _comboBox;
+		{
+			_displayname = format ["%1",_x select 0];
+			_index = _comboBox lbAdd _displayname;
+			_pic = (_x select 1); 
+			if (!isnil "_pic") then {_comboBox lbsetpicture [_index, _x select 1]};
+		} foreach MCC_brushesarray;
+		_comboBox lbSetCurSel 0;
+
+		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3052);		//fill Markers Type
+		lbClear _comboBox;
+		{
+			_displayname = format ["%1",_x select 0];
+			_index = _comboBox lbAdd _displayname;
+			_pic = (_x select 1); 
+			if (!isnil "_pic") then {_comboBox lbsetpicture [_index, _x select 1]};
+		} foreach MCC_markerarray;
+		_comboBox lbSetCurSel 0;
+	};
+};
+
+//-------------------------------------------------------------------------------------Briefing----------------------------------------------------------------------------------------------
+if (_action == 11) exitWith
+{
+	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 512);
+	_show = if (ctrlShown _control) then {false} else {true}; 
+	_control ctrlShow _show;
+};
+
+//-------------------------------------------------------------------------------------TASKS----------------------------------------------------------------------------------------------
+if (_action == 12) exitWith
+{
+	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 513);
+	_show = if (ctrlShown _control) then {false} else {true}; 
+	_control ctrlShow _show;
+	
+	if (_show) then
+	{
+		//---------------------------------------------------Taskss--------------------------------------------------------
+		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3058);		//fill Tasks
+		lbClear _comboBox;
+		{
+			_displayname = format ["%1",_x select 0];
+			_comboBox lbAdd _displayname;
+		} foreach MCC_tasks;
+		_comboBox lbSetCurSel 0;
+	};
+};
+
+//-------------------------------------------------------------------------------------JUKEBOX----------------------------------------------------------------------------------------------
+if (_action == 13) exitWith
+{
+	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 514);
+	_show = if (ctrlShown _control) then {false} else {true}; 
+	_control ctrlShow _show;
+	
+	if (_show) then
+	{
+		//--------------------------------------------------Jukebox---------------------------------------------------------------------------
+		#define MCC_JUKEBOX_VOLUME 3059
+		#define MCC_JUKEBOX_TRACK 3060
+		#define MCC_JUKEBOX_ACTIVATE 3061
+		#define MCC_JUKEBOX_CONDITION 3062
+		#define MCC_JUKEBOX_ZONE 3063
+		
+		_mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
+		if (MCC_jukeboxMusic) then
+		{
+			_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_TRACK; //fill combobox music tracks
+			lbClear _comboBox;
+			{
+				_displayname = format ["%1",_x  select 0];
+				_comboBox lbAdd _displayname;
+			} foreach MCC_musicTracks_array;
+			_comboBox lbSetCurSel MCC_musicTracks_index;
+		} else
+		{
+			_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_TRACK; //fill combobox sound tracks
+			lbClear _comboBox;
+			{
+				_displayname = format ["%1",_x  select 0];
+				_comboBox lbAdd _displayname;
+			} foreach MCC_soundTracks_array;
+			_comboBox lbSetCurSel MCC_musicTracks_index;
+		};
+
+		_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_ACTIVATE; //fill combobox Activate by
+
+		lbClear _comboBox;
+		{
+			_displayname = _x;
+			_comboBox lbAdd _displayname;
+		} foreach MCC_musicActivateby_array;
+		_comboBox lbSetCurSel 0;
+
+		_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_CONDITION; //fill combobox Condition
+		lbClear _comboBox;
+		{
+			_displayname =_x;
+			_comboBox lbAdd _displayname;
+		} foreach MCC_musicCond_array;
+		_comboBox lbSetCurSel 0;
+
+		_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_ZONE; //fill combobox zone's numbers
+		lbClear _comboBox;
+		{
+			_displayname = format ["%1",_x];
+			_comboBox lbAdd _displayname;
+		} foreach MCC_zones_numbers;
+		_comboBox lbSetCurSel MCC_zone_index;
+
+		sliderSetRange [MCC_JUKEBOX_VOLUME, 0, 1];
+		sliderSetPosition [MCC_JUKEBOX_VOLUME, (1 - musicVolume)];
 	};
 };

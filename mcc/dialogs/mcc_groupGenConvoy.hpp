@@ -215,7 +215,7 @@ class MCC_convoyDialogControls:MCC_RscControlsGroup
 			tooltip = "Start convoy movement"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		class MCC_convoyClose: MCC_RscButton
+		class MCC_convoyClose: MCC_RscButtonMenu
 		{
 			idc = -1;
 			onButtonClick = __EVAL("[9] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");

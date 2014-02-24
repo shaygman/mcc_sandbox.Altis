@@ -300,7 +300,7 @@ class MCC_IEDDialogControls:MCC_RscControlsGroup
 			h = 0.0329871 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.58)";
 		};
-		class MCC_trapsCloseButton: MCC_RscButton
+		class MCC_trapsCloseButton: MCC_RscButtonMenu
 		{
 			idc = -1;
 			onButtonClick = __EVAL("[8] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");

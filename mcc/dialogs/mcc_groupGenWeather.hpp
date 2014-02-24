@@ -91,7 +91,7 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			w = 0.148958 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
-		class MCC_weatherDialogClose: MCC_RscButton
+		class MCC_weatherDialogClose: MCC_RscButtonMenu
 		{
 			idc = -1;
 			text = "Close"; //--- ToDo: Localize;

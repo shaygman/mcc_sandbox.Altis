@@ -282,7 +282,7 @@ class MCC_RscButtonMenu : MCC_RscButton
   color2[] = {1,1,1,1};
   color[] = {1,1,1,1};
   colorBackground2[] = {1,1,1,0.5};
-  colorBackground[] = {0,0,0,0.8};
+  colorBackground[] = {0.219, 0.147, 0.112,1};
   colorDisabled[] = {1,1,1,0.25};
   colorText[] = {1,1,1,1};
   default = 0;

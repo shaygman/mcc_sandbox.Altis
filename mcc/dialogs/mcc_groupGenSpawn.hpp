@@ -270,7 +270,7 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
 
-		class mcc_groupGen_spawnCloseButton: MCC_RscButton
+		class mcc_groupGen_spawnCloseButton: MCC_RscButtonMenu
 		{
 			idc = -1;
 			onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");

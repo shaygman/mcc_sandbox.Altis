@@ -138,7 +138,7 @@ class MCC_debugDialogControls:MCC_RscControlsGroup
 			tooltip = "Execute the command line fraze on all clients and sever"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 		};
-		class MCC_commandlineCloseButton: MCC_RscButton
+		class MCC_commandlineCloseButton: MCC_RscButtonMenu
 		{
 			idc = -1;
 			onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");

@@ -94,7 +94,7 @@ class MCC_CASDialogControls:MCC_RscControlsGroup
 			tooltip = "Add CAS to MCC Console"; //--- ToDo: Localize;
 		};
 
-		class MCC_CASClose: MCC_RscButton
+		class MCC_CASClose: MCC_RscButtonMenu
 		{
 			idc = -1;
 			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");

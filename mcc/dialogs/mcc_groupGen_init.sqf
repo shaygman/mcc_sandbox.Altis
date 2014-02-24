@@ -5,16 +5,6 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_c
 #define MCC_MINIMAP 9000
 #define MCC_FACTION 8008
 
-#define MCC_GroupGenInfoText_IDC 9013
-#define MCC_GroupGenWPBckgr_IDC 9014
-#define MCC_GroupGenWPCombo_IDC 9015
-#define MCC_GroupGenWPformationCombo_IDC 9016
-#define MCC_GroupGenWPspeedCombo_IDC 9017
-#define MCC_GroupGenWPbehaviorCombo_IDC 9018
-#define MCC_GroupGenWPAdd_IDC 9019
-#define MCC_GroupGenWPReplace_IDC 9020
-#define MCC_GroupGenWPClear_IDC 9021
-
 #define MCCMISSIONMAKERNAME 1020
 #define MCCCLIENTFPS 1021
 #define MCCSERVERFPS 1022
@@ -26,17 +16,10 @@ MCC_mcc_screen = 5;	//Group gen for poping up the same menu again
 
 uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
 
-ctrlShow [MCC_GroupGenInfoText_IDC,false];
-ctrlShow [MCC_GroupGenWPBckgr_IDC,false];
-ctrlShow [MCC_GroupGenWPCombo_IDC,false];
-ctrlShow [MCC_GroupGenWPformationCombo_IDC,false];
-ctrlShow [MCC_GroupGenWPspeedCombo_IDC,false];
-ctrlShow [MCC_GroupGenWPbehaviorCombo_IDC,false];
-ctrlShow [MCC_GroupGenWPAdd_IDC,false];
-ctrlShow [MCC_GroupGenWPReplace_IDC,false];
-ctrlShow [MCC_GroupGenWPClear_IDC,false];
+//Hide GroupWP
+ctrlShow [510,false];
 
-for "_i" from 500 to 509 step 1 do 
+for "_i" from 500 to 520 step 1 do 
 {
 	((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl _i) ctrlShow false;		
 };

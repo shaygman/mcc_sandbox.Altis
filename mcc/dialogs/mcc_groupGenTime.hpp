@@ -51,7 +51,7 @@ class MCC_TimeDialogControls:MCC_RscControlsGroup
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
-		class MCC_timeDialogClose: MCC_RscButton
+		class MCC_timeDialogClose: MCC_RscButtonMenu
 		{
 			idc = -1;
 			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");

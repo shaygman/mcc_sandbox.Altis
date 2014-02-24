@@ -219,7 +219,7 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			tooltip = "Revive the evac driver"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
-		class MCC_evacClose: MCC_RscButton
+		class MCC_evacClose: MCC_RscButtonMenu
 		{
 			idc = -1;
 			onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");

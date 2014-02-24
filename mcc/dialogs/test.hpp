@@ -16,194 +16,178 @@ class mcc_test
 
 	class controls 
 	{
-	
-//=====================Convoy=================================================================
-class MCC_ConvoyTittle: MCC_RscText
+//=========================== Jukebox =====================================================
+class MCC_JukeboxTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Convoy:"; //--- ToDo: Localize;
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.415981 * safezoneH + safezoneY;
-	w = 0.065625 * safezoneW;
+	text = "Juke Box:"; //--- ToDo: Localize;
+	x = 0.185 * safezoneW + safezoneX;
+	y = 0.443988 * safezoneH + safezoneY;
+	w = 0.0721875 * safezoneW;
 	h = 0.0280062 * safezoneH;
 	colorText[] = {0,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_ConvoyCar1Tittle: MCC_RscText
+class MCC_JukeboxMusic: MCC_RscButton
 {
 	idc = -1;
-	text = "Car1:"; //--- ToDo: Localize;
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.457991 * safezoneH + safezoneY;
+	text = "Music"; //--- ToDo: Localize;
+	x = 0.26375 * safezoneW + safezoneX;
+	y = 0.443988 * safezoneH + safezoneY;
 	w = 0.039375 * safezoneW;
 	h = 0.0280062 * safezoneH;
-	colorText[] = {1,1,1,1};
+	onButtonClick = __EVAL ("[6] execVM '"+MCCPATH+"mcc\general_scripts\jukebox\jukebox.sqf'");
+	tooltip = "Switch to music tracks"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_ConvoyCar2Tittle: MCC_RscText
+class MCC_JukeboxSound: MCC_RscButton
 {
 	idc = -1;
-	text = "Car2:"; //--- ToDo: Localize;
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.5 * safezoneH + safezoneY;
+	text = "Sound"; //--- ToDo: Localize;
+	x = 0.309687 * safezoneW + safezoneX;
+	y = 0.443988 * safezoneH + safezoneY;
 	w = 0.039375 * safezoneW;
 	h = 0.0280062 * safezoneH;
-	colorText[] = {1,1,1,1};
+	onButtonClick = __EVAL ("[7] execVM '"+MCCPATH+"mcc\general_scripts\jukebox\jukebox.sqf'");
+	tooltip = "Switch to sound tracks"; //--- ToDo: Localize;
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_ConvoyCar3Tittle: MCC_RscText
+class MCC_JukeboxTrackTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Car3:"; //--- ToDo: Localize;
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.542009 * safezoneH + safezoneY;
-	w = 0.039375 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	colorText[] = {1,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyCar4Tittle: MCC_RscText
-{
-	idc = -1;
-	text = "Car4:"; //--- ToDo: Localize;
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.584019 * safezoneH + safezoneY;
-	w = 0.039375 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	colorText[] = {1,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyCar5Tittle: MCC_RscText
-{
-	idc = -1;
-	text = "Car5:"; //--- ToDo: Localize;
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.626028 * safezoneH + safezoneY;
-	w = 0.039375 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	colorText[] = {1,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyCar1: MCC_RscCombo
-{
-	idc = MCC_CONVOY_CAR1;
-	x = 0.408125 * safezoneW + safezoneX;
-	y = 0.457991 * safezoneH + safezoneY;
-	w = 0.091875 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyCar2: MCC_RscCombo
-{
-	idc = MCC_CONVOY_CAR2;
-	x = 0.408125 * safezoneW + safezoneX;
-	y = 0.5 * safezoneH + safezoneY;
-	w = 0.091875 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyCar3: MCC_RscCombo
-{
-	idc = MCC_CONVOY_CAR3;
-	x = 0.408125 * safezoneW + safezoneX;
-	y = 0.542009 * safezoneH + safezoneY;
-	w = 0.091875 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyCar4: MCC_RscCombo
-{
-	idc = MCC_CONVOY_CAR4;
-	x = 0.408125 * safezoneW + safezoneX;
-	y = 0.584019 * safezoneH + safezoneY;
-	w = 0.091875 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyCar5: MCC_RscCombo
-{
-	idc = MCC_CONVOY_CAR5;
-	x = 0.408125 * safezoneW + safezoneX;
-	y = 0.626028 * safezoneH + safezoneY;
-	w = 0.091875 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyHVTTittle: MCC_RscText
-{
-	idc = -1;
-	text = "HVT:"; //--- ToDo: Localize;
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.668037 * safezoneH + safezoneY;
-	w = 0.039375 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	colorText[] = {1,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyHVTCarTittle: MCC_RscText
-{
-	idc = -1;
-	text = "HVT Car:"; //--- ToDo: Localize;
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.710047 * safezoneH + safezoneY;
+	text = "Track:"; //--- ToDo: Localize;
+	x = 0.185 * safezoneW + safezoneX;
+	y = 0.485997 * safezoneH + safezoneY;
 	w = 0.0459375 * safezoneW;
 	h = 0.0280062 * safezoneH;
 	colorText[] = {1,1,1,1};
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.65)";
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_ConvoyHVT: MCC_RscCombo
-{
-	idc = MCC_CONVOY_HVT;
-	x = 0.408125 * safezoneW + safezoneX;
-	y = 0.668037 * safezoneH + safezoneY;
-	w = 0.091875 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_ConvoyHVTCar: MCC_RscCombo
-{
-	idc = MCC_CONVOY_HVTCAR;
-	x = 0.408125 * safezoneW + safezoneX;
-	y = 0.710047 * safezoneH + safezoneY;
-	w = 0.091875 * safezoneW;
-	h = 0.0280062 * safezoneH;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-};
-class MCC_convoySpawn: MCC_RscButton
+class MCC_JukeboxVolumeTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Spawn"; //--- ToDo: Localize;
-	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\convoy\make_convoy_WP.sqf'");
-	x = 0.355625 * safezoneW + safezoneX;
-	y = 0.752056 * safezoneH + safezoneY;
+	text = "Volume:"; //--- ToDo: Localize;
+	x = 0.185 * safezoneW + safezoneX;
+	y = 0.528006 * safezoneH + safezoneY;
 	w = 0.0459375 * safezoneW;
 	h = 0.0280062 * safezoneH;
-	tooltip = "Spawn convoy and set WP"; //--- ToDo: Localize;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	colorText[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 };
-class MCC_convoyReset: MCC_RscButton
+class MCC_JukeboxActivateTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Reset"; //--- ToDo: Localize;
-	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\convoy\reset_convoy_WP.sqf'");
-	x = 0.408125 * safezoneW + safezoneX;
-	y = 0.752056 * safezoneH + safezoneY;
+	text = "Activate:"; //--- ToDo: Localize;
+	x = 0.185 * safezoneW + safezoneX;
+	y = 0.570016 * safezoneH + safezoneY;
 	w = 0.0459375 * safezoneW;
 	h = 0.0280062 * safezoneH;
-	tooltip = "Reset convoy's waypoints"; //--- ToDo: Localize;
+	colorText[] = {1,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
-class MCC_convoyStart: MCC_RscButton
+class MCC_JukeboxConditionTittle: MCC_RscText
 {
 	idc = -1;
-	text = "Start"; //--- ToDo: Localize;
-	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\convoy\start_convoy.sqf'");
-	x = 0.460625 * safezoneW + safezoneX;
-	y = 0.752056 * safezoneH + safezoneY;
+	text = "Condition:"; //--- ToDo: Localize;
+	x = 0.185 * safezoneW + safezoneX;
+	y = 0.612025 * safezoneH + safezoneY;
 	w = 0.0459375 * safezoneW;
 	h = 0.0280062 * safezoneH;
-	tooltip = "Start convoy movement"; //--- ToDo: Localize;
+	colorText[] = {1,1,1,1};
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+};
+class MCC_JukeboxZoneTittle: MCC_RscText
+{
+	idc = -1;
+	text = "Zone:"; //--- ToDo: Localize;
+	x = 0.185 * safezoneW + safezoneX;
+	y = 0.654034 * safezoneH + safezoneY;
+	w = 0.0459375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	colorText[] = {1,1,1,1};
 	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 };
+class MCC_JukeboxLink: MCC_RscButton
+{
+	idc = -1;
+	text = "Link"; //--- ToDo: Localize;
+	x = 0.309687 * safezoneW + safezoneX;
+	y = 0.654034 * safezoneH + safezoneY;
+	w = 0.039375 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	onButtonClick = __EVAL ("[5] execVM '"+MCCPATH+"mcc\general_scripts\jukebox\jukebox.sqf'");
+	tooltip = "Link the sound or music to the selected zone"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+class MCC_JukeboxVolume: MCC_RscSlider
+{
+	idc = MCC_JUKEBOX_VOLUME;
+	x = 0.2375 * safezoneW + safezoneX;
+	y = 0.528006 * safezoneH + safezoneY;
+	w = 0.0590625 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	onSliderPosChanged = __EVAL ("[4] execVM '"+MCCPATH+"mcc\general_scripts\jukebox\jukebox.sqf'");
+};
+class MCC_JukeboxTrack: MCC_RscCombo
+{
+	idc = MCC_JUKEBOX_TRACK;
+	x = 0.2375 * safezoneW + safezoneX;
+	y = 0.485997 * safezoneH + safezoneY;
+	w = 0.111562 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+};
+class MCC_JukeboxActivate: MCC_RscCombo
+{
+	idc = MCC_JUKEBOX_ACTIVATE;
+	x = 0.2375 * safezoneW + safezoneX;
+	y = 0.570016 * safezoneH + safezoneY;
+	w = 0.111562 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+};
+class MCC_JukeboxCondition: MCC_RscCombo
+{
+	idc = MCC_JUKEBOX_CONDITION;
+	x = 0.2375 * safezoneW + safezoneX;
+	y = 0.612025 * safezoneH + safezoneY;
+	w = 0.111562 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+};
+class MCC_JukeboxZone: MCC_RscCombo
+{
+	idc = MCC_JUKEBOX_ZONE;
+	x = 0.2375 * safezoneW + safezoneX;
+	y = 0.654034 * safezoneH + safezoneY;
+	w = 0.0590625 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+};
+class MCC_JukeboxPlay: MCC_RscButton
+{
+	idc = -1;
+	text = ">"; //--- ToDo: Localize;
+	x = 0.303125 * safezoneW + safezoneX;
+	y = 0.528006 * safezoneH + safezoneY;
+	w = 0.0196875 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	onButtonClick = __EVAL ("[1] execVM '"+MCCPATH+"mcc\general_scripts\jukebox\jukebox.sqf'");
+	tooltip = "Play track"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+class MCC_JukeboxStop: MCC_RscButton
+{
+	idc = -1;
+	text = "[]"; //--- ToDo: Localize;
+	x = 0.329376 * safezoneW + safezoneX;
+	y = 0.528006 * safezoneH + safezoneY;
+	w = 0.0196875 * safezoneW;
+	h = 0.0280062 * safezoneH;
+	onButtonClick = __EVAL ("[3] execVM '"+MCCPATH+"mcc\general_scripts\jukebox\jukebox.sqf'");
+	tooltip = "Stop track"; //--- ToDo: Localize;
+	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+};
+
 	};
 };

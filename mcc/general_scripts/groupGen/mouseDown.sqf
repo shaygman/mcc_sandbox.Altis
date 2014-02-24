@@ -1,16 +1,6 @@
 //Returns the control, the pressed button, the x and y coordinates and the state of Shift, Ctrl and Alt.
 private ["_params","_ctrl","_pressed","_posX","_posY","_shift","_ctrlKey","_alt","_marker","_markerPos","_markerDir","_spawn","_away","_ammount","_dir","_nearObjects"];
 
-#define MCC_GroupGenInfoText_IDC 9013
-#define MCC_GroupGenWPBckgr_IDC 9014
-#define MCC_GroupGenWPCombo_IDC 9015
-#define MCC_GroupGenWPformationCombo_IDC 9016
-#define MCC_GroupGenWPspeedCombo_IDC 9017
-#define MCC_GroupGenWPbehaviorCombo_IDC 9018
-#define MCC_GroupGenWPAdd_IDC 9019
-#define MCC_GroupGenWPReplace_IDC 9020
-#define MCC_GroupGenWPClear_IDC 9021
-
 #define MCCDELETEBRUSH 1030
 
 disableSerialization;
@@ -34,15 +24,8 @@ if (mcc_missionmaker == (name player)) then
 
 	if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then 								//Close Group info control
 	{
-		ctrlShow [MCC_GroupGenInfoText_IDC,false];
-		ctrlShow [MCC_GroupGenWPBckgr_IDC,false];
-		ctrlShow [MCC_GroupGenWPCombo_IDC,false];
-		ctrlShow [MCC_GroupGenWPformationCombo_IDC,false];
-		ctrlShow [MCC_GroupGenWPspeedCombo_IDC,false];
-		ctrlShow [MCC_GroupGenWPbehaviorCombo_IDC,false];
-		ctrlShow [MCC_GroupGenWPAdd_IDC,false];
-		ctrlShow [MCC_GroupGenWPReplace_IDC,false];
-		ctrlShow [MCC_GroupGenWPClear_IDC,false];
+		ctrlShow [510,false];
+		hintsilent "";
 	};		
 
 	if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked && !MCC_zone_drawing && !MCC3DRuning && !MCC_CASrequestMarker && !MCC_brush_drawing && !MCC_drawTriggers
@@ -51,12 +34,9 @@ if (mcc_missionmaker == (name player)) then
 		private ["_marker","_markersize","_markerpos","_null","_markerposX","_markerposY","_markersize","_markersizeX","_markersizeY",
 					 "_borderXleft","_borderXright","_borderYdown","_borderYtop","_group","_groupX","_groupY","_leader","_icon","_groupControl"];
 		
-		//Close WP dialog
-		ctrlShow [MCC_GroupGenWPBckgr_IDC,false];
-		ctrlShow [MCC_GroupGenWPCombo_IDC,false];
-		ctrlShow [MCC_GroupGenWPAdd_IDC,false];
-		ctrlShow [MCC_GroupGenWPReplace_IDC,false];
-		ctrlShow [MCC_GroupGenWPClear_IDC,false];
+		//Close WP dialog and hints
+		ctrlShow [510,false];
+		hintsilent "";
 		
 		//Start creating the box
 		MCC_pointA = _ctrl ctrlmapscreentoworld [_posX,_posY];									//Base of the arrow

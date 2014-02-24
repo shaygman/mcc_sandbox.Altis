@@ -133,7 +133,7 @@ class MCC_artilleryDialogControls:MCC_RscControlsGroup
 			h = 0.0329871 * safezoneH;
 			tooltip = "Add artillery to MCC Console "; //--- ToDo: Localize;
 		};
-		class MCC_artilleryDialogClose: MCC_RscButton
+		class MCC_artilleryDialogClose: MCC_RscButtonMenu
 		{
 			idc = -1;
 			onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");

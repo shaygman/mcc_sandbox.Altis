@@ -1,4 +1,3 @@
-#define MCC_SANDBOX3_IDD 3000
 #define MCC_TASKS_NAME 3056
 #define MCC_TASKS_DESCRIPTION 3057
 #define MCC_TASKS_LIST 3058
@@ -7,7 +6,7 @@ disableSerialization;
 private ["_type", "_dlg", "_stringName", "_stringDescription", "_ok", "_comboBox","_tasks"];
 _type = _this select 0;
 
-_dlg = findDisplay MCC_SANDBOX3_IDD;
+_dlg = (uiNamespace getVariable "MCC_groupGen_Dialog");
 
 	if (mcc_missionmaker == (name player)) then {
 	switch (_type) do
@@ -39,7 +38,7 @@ _dlg = findDisplay MCC_SANDBOX3_IDD;
 				hint "Task updated";
 				[[_type, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;
 				sleep 1;
-				_comboBox = (findDisplay MCC_SANDBOX3_IDD) displayCtrl MCC_TASKS_LIST; //fill Tasks
+				_comboBox = _dlg displayCtrl MCC_TASKS_LIST; //fill Tasks
 				lbClear _comboBox;
 				{
 					_comboBox lbAdd format ["%1",_x select 0];
@@ -235,7 +234,7 @@ _dlg = findDisplay MCC_SANDBOX3_IDD;
 				waituntil {_tasks != str MCC_tasks};
 				sleep 1;
 				//Refresh the tasks list
-				_comboBox = (findDisplay MCC_SANDBOX3_IDD) displayCtrl MCC_TASKS_LIST; 
+				_comboBox = _dlg displayCtrl MCC_TASKS_LIST; 
 				lbClear _comboBox;
 				{
 					_comboBox lbAdd format ["%1",_x select 0];

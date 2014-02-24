@@ -1,4 +1,3 @@
-#define MCC_SANDBOX3_IDD 3000
 #define MCC_JUKEBOX_VOLUME 3059
 #define MCC_JUKEBOX_TRACK 3060
 #define MCC_JUKEBOX_ACTIVATE 3061
@@ -8,7 +7,7 @@
 disableSerialization;
 private ["_type","_track","_trigger","_zone","_zoneX","_zoneY","_activate","_cond","_mccdialog","_markerName"];
 
-_mccdialog = findDisplay MCC_SANDBOX3_IDD;
+_mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 _type = _this select 0;
 
 switch (_type) do
@@ -83,6 +82,7 @@ switch (_type) do
    case 5:	//Link to zone
 	{
 		_zone = MCC_zones_numbers select (lbCurSel MCC_JUKEBOX_ZONE);
+		if (count mcc_zone_pos < _zone) exitWith {hint "Invalid zone slected"}; 
 		_zonePos = mcc_zone_pos select _zone;
 		_zoneX = mcc_zone_size select (_zone) select 0;
 		_zoneY = mcc_zone_size select (_zone) select 1;

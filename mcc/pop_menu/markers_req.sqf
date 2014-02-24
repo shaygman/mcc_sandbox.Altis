@@ -1,4 +1,4 @@
-#define MCC_SANDBOX3_IDD 3000
+
 #define MCC_MARKER_TEXT 3050
 #define MCC_MARKER_COLOR 3051
 #define MCC_MARKER_TYPE 3052
@@ -9,7 +9,7 @@ disableSerialization;
 
 private ["_case","_dlg","_pos"];
 _case = _this select 0;
-_dlg = findDisplay MCC_SANDBOX3_IDD;
+_dlg = (uiNamespace getVariable "MCC_groupGen_Dialog");
 
 switch (_case) do
 	{
