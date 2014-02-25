@@ -78,7 +78,8 @@ if !(isnil("_Zone")) then
 		
 		_initial = true;
 	};
-	player globalchat format ["%1",_group];
+	
+	// In case we are sitting and waiting
 	if ((round(random(20))==1)and (count (waypoints _group) == (currentWaypoint _group)) and !_initial) then
 	{
 		_rounds =round(random(9));
@@ -97,12 +98,20 @@ if !(isnil("_Zone")) then
 		_wp setWaypointCompletionRadius 200;
 		_wp setWaypointSpeed "LIMITED";					
 		_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
-
-		
-		
-		
 	
 	};	
+	
+	//In case we somehow end up in the air without waypoins or anything to do, bring the baby down
+	if (!(isTouchingGround (vehicle leader _group)) and (count (waypoints _group) == (currentWaypoint _group)) and and !_initial) then
+	{
+		_wp = _group addWaypoint [position((_group) getVariable ["GAIA_LandingSpot",objNull]), 0];
+		_wp setWaypointType "MOVE";
+		_wp setWaypointCompletionRadius 200;
+		_wp setWaypointSpeed "LIMITED";					
+		_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
+	};
+	
+	
 };
 
 
