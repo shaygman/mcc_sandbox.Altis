@@ -94,14 +94,8 @@ _NewTargetInfo	= [];
       			 	//How sure are we? For now accuracy of 18 seems to work ok
       			 	_Target_PosAcc < 18
       			 	and
-      			 	//Somehow the artillery dudes spawn this and the ai thinks it is an enemy. (and then they cant find it).
-      			 	// (	
-      			 	 		(_Target iskindof "AllVehicles")
-      			 	 		//or
-      			 	 		//(_Target iskindof "CAManBase")
-      			 	 //)
-      			 	 		
-      			 	//or
+      			 	(_Target iskindof "AllVehicles")
+      			 	//and      			 	
       			 	//If the lead has a clear LOS to a unit, that is valid enough (might expand later to check on all members)
       			 	//([_unit,_Target,1500] call fnc_HasLOS)
       			 	     			 	

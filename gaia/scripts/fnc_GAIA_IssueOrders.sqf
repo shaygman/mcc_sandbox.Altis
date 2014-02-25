@@ -66,6 +66,7 @@ _Spot											= [];
 _CanAttackCA							= false;
 _CaHoldsValidTargets			= false;
 _CanDoAttack							= false;
+_mpos											= [];
 
 	
 //Get the right side arrays in
@@ -146,7 +147,26 @@ _StartTimeIssueOrders = time;
 			if ((_x getVariable ["GAIA_class","None"])!=(_x getVariable ["GAIA_PreviousClass","None"])) 
 			then {[_x] call fnc_RemoveWayPoints;/*player globalchat "2"; */};			
 			
-
+			
+			//Chancel orders when the zone is moved, except when attacking, fortifying or in combat (combat cancel orders are later)
+		  if  (
+			  		(count(_x getVariable  ["GAIA_zone_intend",[]])>1)
+			  		and
+			   		((_x getVariable  ["GAIA_Order",""]) != "DoAttack")
+						and
+						((_x getVariable  ["GAIA_Order",""]) != "DoFortify")	 
+						and
+						(behaviour(leader _x)!="COMBAT")				
+					)
+			then
+		  	{
+		  		//Check if the trigger detector for changed zone is active (zee analzye forces)
+		  		if (missionNamespace getVariable [ "gaia_zone_changed_"+((_x getVariable  ["GAIA_zone_intend",[]])select 0),false]) then
+		  			{
+		  				[_x] call fnc_RemoveWayPoints; 
+		  			};
+	  		};
+		
 	
 			
 			//On combined order, the group that is combined must be on same order 

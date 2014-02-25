@@ -73,6 +73,7 @@ _group setVariable ["GAIA_CombinedOrder"			, grpNull, false];
 
 //Clear fortify specific if needed.
 _group setVariable ["Garrisoning",false];  
+_group setVariable ["GAIA_OriginalDestination", [], false];
 
 switch (side _group) do
 		{

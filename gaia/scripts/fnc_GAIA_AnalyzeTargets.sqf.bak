@@ -53,7 +53,7 @@ _NewTargetInfo	= [];
    then
    {
       _unit = leader _x;
-      player globalchat format ["%1",_x];
+      
       //sleep 2;
       //player globalchat format ["%1, %2, %3",(position _unit),_unit,_x];
       

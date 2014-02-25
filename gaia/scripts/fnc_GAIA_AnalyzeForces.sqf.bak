@@ -82,10 +82,10 @@ switch (_side) do
 							_var2 = "gaia_zone_changed_" + _zone; 	
 							if (((missionNamespace getVariable [ _var,[0,0,0]]) distance [0,0,0])>0) then 
 							{
-								
+								player globalchat "found mission name space";
 								if ( ( (getmarkerpos _zone ) distance (missionNamespace getVariable [ _var,[0,0,0]]) )>0) then
 									{
-								
+										player globalchat "moved zone";
 										missionNamespace setVariable [_var2, true ];
 									}
 							 	else
