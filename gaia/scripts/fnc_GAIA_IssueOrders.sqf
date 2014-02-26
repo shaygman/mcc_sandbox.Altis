@@ -546,6 +546,8 @@ _StartTimeIssueOrders = time;
 
 }forEach _tbc;
 
+
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   
 //									MORTAR & ARTILLERY ORDERS
 //									REMARK: Version 1 of GAIA has same functionality for artillery as for mortar
@@ -565,6 +567,8 @@ _StartTimeIssueOrders = time;
 					   	(alive (leader _x))
 					   	and
 					   	(count(_x getVariable  ["GAIA_Portfolio",[]])>0)
+					   	and
+					   	(count(_x getVariable  ["GAIA_zone_intend",[]])>1)
 					   	and
 					   	(	
 					   		("DoMortar" in (_x getVariable  ["GAIA_Portfolio",[]])) 					   			   	
@@ -600,6 +604,16 @@ _StartTimeIssueOrders = time;
 			   	 					and
 			   	 					//Dont fire on something we already fire on
 			   	 					!(({(side _x == (_HQ_side)) and alive (leader _x) and (( _x getVariable ["GAIA_MortarTarget",[0,0,0]] distance _SelectCA )==0)} count (allgroups-[_grp]))>0)
+			   	 					and
+			   	 					(	
+													(((_grp getVariable  ["GAIA_zone_intend",[]]) select 1)=="MOVE")
+												 	or
+												 	(
+												 		(((_grp getVariable  ["GAIA_zone_intend",[]]) select 1)=="NOFOLLOW")
+												 		and
+												 		([_SelectCA,((_grp getVariable  ["GAIA_zone_intend",[]]) select 0)] call fnc_PosIsInMarker)
+												 	)
+										)
 		   	 					)
 		   	 			then
 		   	 				{
