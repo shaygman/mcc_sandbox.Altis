@@ -273,7 +273,7 @@ _StartTimeIssueOrders = time;
 	 _MinimumResponse = missionNamespace getVariable [_CAvar,0];
 	 if (_MinimumResponse==0) then	 
    	{
-  		missionNamespace setVariable [_CAvar, (round(random(3))) ];
+  		missionNamespace setVariable [_CAvar, (round(random(2))) ];
   		_MinimumResponse = missionNamespace getVariable [_CAvar,1];
    	};
    
@@ -473,7 +473,7 @@ _StartTimeIssueOrders = time;
 	}forEach 	([AllGroups,[],{_SelectCA distance (leader _x)},"ASCEND",{alive (leader _x)}] call fnc_SortGroupsByCA); 
 	
 
-	//player globalchat format["Ca %1 cost: %2, Send: %3, nrofgroups: %4",_SelectCA,_CaPoints, _PointsSpend,_NrGrpsSend];
+
 	//We boot through all Conflict Area's in already pre-sorted order of priority
 } forEach _CA;
 
