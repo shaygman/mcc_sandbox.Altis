@@ -161,7 +161,7 @@ MCC_GAIA_MAX_FAST_SPEED_RANGE  = 80000;
 MCC_GAIA_TRANSPORT_RESTTIME		= 40;
 //If an order is older then 10 minutes, cancel it. There is probbaly something wrong. 
 MCC_GAIA_MAX_ORDER_AGE				 = 5000;
-MCC_GAIA_MORTAR_TIMEOUT				 = 20;
+MCC_GAIA_MORTAR_TIMEOUT				 = 300;
 //This switch makes it possible for GAIA to send units into the attack she does not initialy control
 MCC_GAIA_ATTACKS_FOR_NONGAIA	 = false;
 

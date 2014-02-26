@@ -606,12 +606,12 @@ _StartTimeIssueOrders = time;
 			   	 					!(({(side _x == (_HQ_side)) and alive (leader _x) and (( _x getVariable ["GAIA_MortarTarget",[0,0,0]] distance _SelectCA )==0)} count (allgroups-[_grp]))>0)
 			   	 					and
 			   	 					(	
-													(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="MOVE")
+													(((_grp getVariable  ["GAIA_zone_intend",[]]) select 1)=="MOVE")
 												 	or
 												 	(
-												 		(((_x getVariable  ["GAIA_zone_intend",[]]) select 1)=="NOFOLLOW")
+												 		(((_grp getVariable  ["GAIA_zone_intend",[]]) select 1)=="NOFOLLOW")
 												 		and
-												 		([_SelectCA,((_x getVariable  ["GAIA_zone_intend",[]]) select 0)] call fnc_PosIsInMarker)
+												 		([_SelectCA,((_grp getVariable  ["GAIA_zone_intend",[]]) select 0)] call fnc_PosIsInMarker)
 												 	)
 										)
 		   	 					)

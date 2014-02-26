@@ -299,6 +299,8 @@ _StartTimeIssueOrders = time;
 			   			(count(units _x)>0)
 			   			and
 			   			(alive (leader _x))
+			   			and
+			   			(count(_x getVariable  ["GAIA_zone_intend",[]])>1)
 		   			)
 		 then
 		 {				
