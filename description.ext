@@ -1,11 +1,11 @@
 #include "defines.hpp"
 
-author = Shay_gman;
+author = Shay_gman & Spirit;
 overviewPicture = "data\mcc_loadingScreen.paa";
 overviewText = "Inspired by VBS and it's in game real time editor we tried to create something similar that will let any player as the role of an instructor or as we call him the mission maker, to create different real life scenarios and put them to the test. Then he can alter and change the mission progress as he see fit in order to give the other players a more divert and intense experience.";
 onLoadName = MCC Sandbox;
 loadScreen = "data\mcc_loadingScreen.paa";
-onLoadMission = MCC Sandbox is a dynamic mission environment when one can set missions and play them on the fly;
+onLoadMission = MCC Sandbox stands for Mission Control Centre. With it you can create mission (on the fly) and generate missions (on the fly).;
 
 respawn      = "BASE";
 respawndelay = 4;

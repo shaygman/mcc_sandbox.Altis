@@ -63,7 +63,7 @@ if !(isnil("_Zone")) then
 	//Check if the dude already has a 'home'. All helicopters need position where they land and go home to.
 	if isnull((_group) getVariable ["GAIA_LandingSpot",objNull]) then	
 	{ 
-		if (isTouchingGround (vehicle leader _group)) then
+		if (isTouchingGround (assignedvehicle leader _group)) then
 			{_landpos = (position leader _group);}
 		else
 			{_landpos =  [([_zone,"ARM_HILLS_FLAT",(side _group)] call  fnc_GetPosition), 0,100, 12, 0, 60 * (pi / 180), 0] call BIS_fnc_findSafePos;};
