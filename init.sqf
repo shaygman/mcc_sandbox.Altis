@@ -258,16 +258,18 @@ MCC_colorsarray = [["Black","ColorBlack"],["White","ColorWhite"],["Red","ColorRe
 MCC_spawn_empty =[["No",true],["Yes",false]];
 mcc_spawnbehavior = ""; 
 MCC_spawn_behaviors = [
-                      ["Agressive", "MOVE","AI will patrol the zone and pursuit known enemies outside the zone"],
+                      ["aggressive", "MOVE","AI will patrol the zone and pursuit known enemies outside the zone"],
 					  ["Defensive","NOFOLLOW","AI will patrol the zone but will not pursuit known enemies outside the zone"],
-					  ["Passive", "NOMOVE","AI will not patrol the zone but after being engaged he will acquire agressive behavior"],
 					  ["Fortify","FORTIFY","AI will look for empty building and static weapons and dig inside"],
-					  ["Ambush","AMBUSH","AI will look for roads, place mines and wait in ambush position"],
-					  ["On-Road Offensive","ONROADO","Like Offensive but most likely AI will stay on road"],
-					  ["On-Road Defensive","ONROADD","Like Defensive but most likely AI will stay on road"],
 					  ["BIS Default","bis","Regular ArmA AI behavior"],
 					  ["BIS Defence","bisd","AI sit down some will patrol around"],
 					  ["BIS Patrol","bisp","AI will patrol around"]
+					  ];
+
+MCC_GAIA_spawn_behaviors = [
+                      ["aggressive", "MOVE","AI will patrol the zone and pursuit known enemies outside the zone"],
+					  ["Defensive","NOFOLLOW","AI will patrol the zone but will not pursuit known enemies outside the zone"],
+					  ["Fortify","FORTIFY","AI will look for empty building and static weapons and dig inside"]				
 					  ];
 MCC_spawn_awereness = [["Default", "default"],["Aware","Aware"],["Combat", "Combat"],["Stealth","stealth"],["Careless","Careless"]];
 MCC_empty_index = 0;

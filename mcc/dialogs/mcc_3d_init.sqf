@@ -34,7 +34,7 @@ _mccdialog = findDisplay MCC3D_IDD;
 uiNamespace setVariable ["MCC3D_Dialog", _this select 0];
 
 
-((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0) ctrlMapAnimAdd [0, uiNamespace getVariable "MCC3D_DialogMapScale", getpos BIS_CONTROL_CAM];
+((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0) ctrlMapAnimAdd [0, uiNamespace getVariable "MCC3D_DialogMapScale", getpos MCC_3D_CAM];
 ctrlMapAnimCommit ((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0);
 
 _comboBox = _mccdialog displayCtrl MCC_FACTION;		//fill combobox CFG factions

@@ -135,6 +135,19 @@ class mcc_groupGen
 			h = 0.0329871 * safezoneH;
 		};
 		
+		class mcc_groupGen_PlayersButton: MCC_RscButton
+		{
+			idc = -1;
+			tooltip = "Show players only"; 
+			onButtonClick = __EVAL("[west,east,resistance,civilian,'players'] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
+
+			text = "Players"; //--- ToDo: Localize;
+			x = 0.603125 * safezoneW + safezoneX;
+			y = 0.565974 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
+		
 		class mcc_groupGen_AllButton: MCC_RscButton
 		{
 			idc = -1;
@@ -142,11 +155,13 @@ class mcc_groupGen
 			onButtonClick = __EVAL("[west,east,resistance,civilian] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
 
 			text = "All"; //--- ToDo: Localize;
-			x = 0.603125 * safezoneW + safezoneX;
+			x = 0.551562 * safezoneW + safezoneX;
 			y = 0.565974 * safezoneH + safezoneY;
 			w = 0.0458333 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
+		
+		
 		
 	//---------------------- ZONES --------------------------------	
 		class MCC_zoneTittle: MCC_RscText 
@@ -177,13 +192,13 @@ class mcc_groupGen
 		{
 			idc = -1;	
 			text = "Update Zone"; 
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			tooltip = "Click and drag on the minimap to make a zone"; 
 			onButtonClick = "if (mcc_missionmaker == (name player)) then {MCC_zone_drawing= true;} else {player globalchat 'Access Denied'};";
 			
 			x = 0.299479 * safezoneW + safezoneX;
 			y = 0.57697 * safezoneH + safezoneY;
-			w = 0.0572917 * safezoneW;
+			w = 0.120313 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
 		
@@ -222,7 +237,21 @@ class mcc_groupGen
 			w = 0.0572917 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Give the selected groups to GAIA control with the selected zone and behavior"; //--- ToDo: Localize;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		class MCC_giveToPlayer: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = "if (!isnil 'MCC_GroupGenGroupSelected') then {if (count MCC_GroupGenGroupSelected > 0) then {{_x setVariable ['MCC_canbecontrolled',true,true]; _x setVariable ['GAIA_ZONE_INTEND',[],true]}foreach MCC_GroupGenGroupSelected}};";
+
+			text = "Give to Player"; //--- ToDo: Localize;
+			x = 0.3625 * safezoneW + safezoneX;
+			y = 0.609957 * safezoneH + safezoneY;
+			w = 0.0572917 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			tooltip = "Give the selected groups to player's control via the M-Tac MCC handheld console"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
 		//---------------------------------------- BENCHMARK ----------------------------------------
 		class MCC_MissionMakerTittle: MCC_RscText 
@@ -402,6 +431,7 @@ class mcc_groupGen
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
+
 		//---------------------- For group ID ---------------------
 		class MCC_GroupGenInfoText: MCC_RscStructuredText
 		{
@@ -421,8 +451,8 @@ class mcc_groupGen
 		#include "mcc_groupGenEvac.hpp"
 		#include "mcc_groupGenIED.hpp"
 		#include "mcc_groupGenConvoy.hpp"
-		
-		
+		#include "mcc_groupGenAirdrop.hpp"
+		#include "mcc_groupGenDelete.hpp"
 		
 		//Right
 		#include "mcc_groupGenRightButtons.hpp"

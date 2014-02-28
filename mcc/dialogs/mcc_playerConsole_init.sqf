@@ -1,4 +1,4 @@
-private ["_mccdialog","_comboBox","_displayname","_pic", "_index","_planeName","_counter","_type","_group",
+private ["_mccdialog","_comboBox","_displayname","_pic", "_index","_planeName","_counter","_type","_group","_groupControl",
 		 "_insetionArray","_control","_unitsCount","_markerType","_markerColor","_leader","_markerInf","_markerMech","_markerArmor","_markerAir",
 		"_markerName","_icon","_wpArray","_haveGPS","_behaviour","_unitsSize","_unitsSizeMarker"];
 // By: Shay_gman
@@ -150,158 +150,131 @@ onGroupIconClick
     _alt = _this select 8;
     
 	[_group,_button,[_posx,_posy],_shift,_ctrl,_alt] execVm format ["%1mcc\fnc\console\fn_consoleClickGroupIcon.sqf",MCC_path];
-	//[_group,_button,[_posx,_posy],_shift,_ctrl,_alt] call MCC_fnc_consoleClickGroupIcon;
 };
 
 //Add - Ctrl + number group selections handlers
 if (isnil "MCC_consoleGroupSelectionEH") then
-	{
-		MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown", format ["nul = _this execVM '%1mcc\general_scripts\console\groupNumbersSelectionEH.sqf';",MCC_path]];
-	};
+{
+	MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown", format ["nul = _this execVM '%1mcc\general_scripts\console\groupNumbersSelectionEH.sqf';",MCC_path]];
+};
 	
 [] call 
 	{
-		private ["_markerSupport","_markerAutonomous","_markerNaval","_markerRecon"]; 
-		switch (format ["%1", playerside]) do 	
-			{
-				case "EAST": //East
-					{
-					_markerColor 	= [1,0,0,0.7];
-					_markerInf		= "o_inf";
-					_markerRecon	= "o_recon";
-					_markerSupport	= "o_support";
-					_markerAutonomous = "o_uav";
-					_markerMech		= "o_mech_inf";
-					_markerArmor	= "o_armor";
-					_markerAir		= "o_air";
-					_markerNaval	= "o_naval";
-					}; 
-					
-				case "WEST": //West
-					{
-					_markerColor 	= [0,0,1,1];
-					_markerInf		= "b_inf";
-					_markerRecon	= "b_recon";
-					_markerSupport	= "b_support";
-					_markerAutonomous = "b_uav";
-					_markerMech		= "b_mech_inf";
-					_markerArmor	= "b_armor";
-					_markerAir		= "b_air";
-					_markerNaval	= "b_naval";
-					};
-					
-				case "GUER": //Resistance
-					{
-					_markerColor 	= [0,1,0,0.7];
-					_markerInf		= "n_inf";
-					_markerRecon	= "n_recon";
-					_markerSupport	= "n_support";
-					_markerAutonomous = "n_uav";
-					_markerMech		= "n_mech_inf";
-					_markerArmor	= "n_armor";
-					_markerAir		= "n_air";
-					_markerNaval	= "n_naval";
-					};
-				case "CIV": //Resistance
-					{
-					_markerColor 	= [1,1,1,0.7];
-					_markerInf		= "n_inf";
-					_markerRecon	= "n_recon";
-					_markerSupport	= "n_support";
-					_markerAutonomous = "n_uav";
-					_markerMech		= "n_mech_inf";
-					_markerArmor	= "n_armor";
-					_markerAir		= "n_air";
-					_markerNaval	= "n_naval";
-					};
-			};
-		
+		private ["_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_haveGPS","_leader","_groupStatus","_wpArray","_behaviour","_groupControl","_haveGPS"]; 
+
 		setGroupIconsVisible [true,false];	
 		setGroupIconsSelectable true;
-			{
-				_leader = (leader _x);
-				 
-				if ((side _leader == side player) && alive _leader && count (units _x)>0 ) then
-					{
-						_haveGPS =  ("ItemGPS" in (assignedItems _leader) || "B_UavTerminal" in (assignedItems _leader) || "MCC_Console" in (assignedItems _leader));
-						_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
-						_unitsSize = 0;
-						_markerType = nil; 
-						if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
-						if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
-						if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
-						if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
-						if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
-						if (_unitsCount select 5 > 0) then {_markerType = _markerRecon; _unitsSize = _unitsSize + (1*(_unitsCount select 5))};
-						if (_unitsCount select 6 > 0) then {_markerType = _markerSupport; _unitsSize = _unitsSize + (3*(_unitsCount select 6))};
-						if (_unitsCount select 7 > 0) then {_markerType = _markerAutonomous; _unitsSize = _unitsSize + (1*(_unitsCount select 7))};
-						
-						if (isnil "_markerType") then
-						{
-							_unitsCount = [group _leader] call MCC_fnc_countGroup;
-							if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
-							if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
-							if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
-							if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
-							if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
-						};
-						
-						//How big is the squad
-						_unitsSize = floor (_unitsSize/4); 
-						if (_unitsSize > 10) then {_unitsSize = 10};
-						_unitsSizeMarker = format ["group_%1",_unitsSize];
-						
-						//Set markers
-						if ((MCC_ConsoleOnlyShowUnitsWithGPS && (_haveGPS || vehicle _leader != _leader)) || !MCC_ConsoleOnlyShowUnitsWithGPS) then
-							{
-								_icon = _x addGroupIcon [_markerType,[0,0]];
-								_x setGroupIconParams [_markerColor,groupID _x,1,true];
-								_x setvariable ["MCCgroupIconData",_icon,false];
-								_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
-								_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
-							}
-					}; 
-			} foreach allgroups; 
-			
-		while {MCC_Console1Open && dialog} do 		//Draw WP
+		
+		while {MCC_Console1Open && (str (finddisplay mcc_playerConsole_IDD) != "no display")} do 		//Draw WP
 			{
 				{
 					_leader = (leader _x);
 					_groupStatus = _x getvariable "MCC_support";
 					_wpArray = waypoints (group _leader);
 					_behaviour = behaviour _leader;
-					if ((side _leader == side player) && alive _leader) then
+					_groupControl = if (isplayer _leader) then {true} else {_x getvariable ["MCC_canbecontrolled",false]};	//Can we control this group
+					_haveGPS =  if ((vehicle _leader != _leader) || !isPlayer _leader) then {true} else {("ItemGPS" in (assignedItems _leader) || "B_UavTerminal" in (assignedItems _leader) || "MCC_Console" in (assignedItems _leader))};
+					if (isnil "_haveGPS") then {_haveGPS = false};
+					if ((side _leader == side player) && alive _leader && _groupControl && ((MCC_ConsoleOnlyShowUnitsWithGPS && _haveGPS) || !MCC_ConsoleOnlyShowUnitsWithGPS)) then
 						{
+							switch (side _leader) do 	
+							{
+								case east: //East
+									{
+									_side			= east;
+									_markerColor 	= [1,0,0,0.7];
+									_markerInf		= "o_inf";
+									_markerRecon	= "o_recon";
+									_markerSupport	= "o_support";
+									_markerAutonomous = "o_uav";
+									_markerMech		= "o_mech_inf";
+									_markerArmor	= "o_armor";
+									_markerAir		= "o_air";
+									_markerNaval	= "o_naval";
+									}; 
+									
+								case west: //West
+									{
+									_side			= west;
+									_markerColor 	= [0,0,1,1];
+									_markerInf		= "b_inf";
+									_markerRecon	= "b_recon";
+									_markerSupport	= "b_support";
+									_markerAutonomous = "b_uav";
+									_markerMech		= "b_mech_inf";
+									_markerArmor	= "b_armor";
+									_markerAir		= "b_air";
+									_markerNaval	= "b_naval";
+									};
+									
+								case resistance: //Resistance
+									{
+									_side			= resistance;
+									_markerColor 	= [0,1,0,0.7];
+									_markerInf		= "n_inf";
+									_markerRecon	= "n_recon";
+									_markerSupport	= "n_support";
+									_markerAutonomous = "n_uav";
+									_markerMech		= "n_mech_inf";
+									_markerArmor	= "n_armor";
+									_markerAir		= "n_air";
+									_markerNaval	= "n_naval";
+									};
+								case civilian: //Resistance
+									{
+									_side			= civilian;
+									_markerColor 	= [1,1,1,0.7];
+									_markerInf		= "n_inf";
+									_markerRecon	= "n_recon";
+									_markerSupport	= "n_support";
+									_markerAutonomous = "n_uav";
+									_markerMech		= "n_mech_inf";
+									_markerArmor	= "n_armor";
+									_markerAir		= "n_air";
+									_markerNaval	= "n_naval";
+									};
+							};
 							_x setGroupIconParams [_markerColor,groupID _x,1,true];
 							_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
 							_unitsSize = 0;
-							if (_unitsCount select 0 > 0) then {_unitsSize = _unitsSize + (1*(_unitsCount select 0))};
-							if (_unitsCount select 1 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 1))};
-							if (_unitsCount select 2 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 2))};
-							if (_unitsCount select 3 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 3))};
-							if (_unitsCount select 4 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 4))};
-							if (_unitsCount select 5 > 0) then {_unitsSize = _unitsSize + (1*(_unitsCount select 5))};
-							if (_unitsCount select 6 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 6))};
-							if (_unitsCount select 7 > 0) then {_unitsSize = _unitsSize + (1*(_unitsCount select 7))};
+							_markerType = nil; 
+							if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
+							if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
+							if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
+							if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
+							if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
+							if (_unitsCount select 5 > 0) then {_markerType = _markerRecon; _unitsSize = _unitsSize + (1*(_unitsCount select 5))};
+							if (_unitsCount select 6 > 0) then {_markerType = _markerSupport; _unitsSize = _unitsSize + (3*(_unitsCount select 6))};
+							if (_unitsCount select 7 > 0) then {_markerType = _markerAutonomous; _unitsSize = _unitsSize + (1*(_unitsCount select 7))};
 							
-							if (_unitsSize == 0) then
+							if (isnil "_markerType") then
 							{
 								_unitsCount = [group _leader] call MCC_fnc_countGroup;
-								if (_unitsCount select 0 > 0) then { _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
-								if (_unitsCount select 1 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
-								if (_unitsCount select 2 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
-								if (_unitsCount select 3 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
-								if (_unitsCount select 4 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
+								if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
+								if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
+								if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
+								if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
+								if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
 							};
 							
 							//How big is the squad
 							_unitsSize = floor (_unitsSize/4); 
 							if (_unitsSize > 10) then {_unitsSize = 10};
 							_unitsSizeMarker = format ["group_%1",_unitsSize];
-							_x removeGroupIcon ((_x getvariable "MCCgroupIconSize") select 0);
+							
+							//Set markers
+							_icon = (_x getvariable "MCCgroupIconData"); 
+							if (!isnil "_icon") then {_x removeGroupIcon _icon};
+							_icon = _x addGroupIcon [_markerType,[0,0]];
+							_x setGroupIconParams [_markerColor,format ["%1",(groupID _x)],1,true];
+							_x setvariable ["MCCgroupIconData",_icon,false];
+							
+							_icon = (_x getvariable "MCCgroupIconSize") select 0; 
+							if (!isnil "_icon") then {_x removeGroupIcon _icon};
 							_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
 							_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
-								
+				
+							
 							if ((count _wpArray > 0) && MCC_ConsoleDrawWP )then
 								{
 									private ["_wp","_wPos","_wType"];
@@ -351,6 +324,7 @@ if (isnil "MCC_consoleGroupSelectionEH") then
 				{deletemarkerlocal _x} foreach MCC_groupGenTempWPLines;
 				MCC_groupGenTempWPLines = []; 
 			}; 
+			
 		//Clear stuff after exiting
 		{deletemarkerlocal _x} foreach MCC_groupGenTempWP;
 		MCC_groupGenTempWP = []; 

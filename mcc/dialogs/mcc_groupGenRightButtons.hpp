@@ -14,7 +14,7 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			idc = -1;
 			text = "Mission Settings";
 			tooltip = "Open Mission Settings Menu"; //--- ToDo: Localize;
-			onButtonClick = "if (mcc_missionmaker == (name player)) then {MCC_button createDialog 'missionSettings';} else {player globalchat 'Access Denied'};";
+			onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'missionSettings';} else {player globalchat 'Access Denied'};";
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
 			w = 0.06875 * safezoneW;

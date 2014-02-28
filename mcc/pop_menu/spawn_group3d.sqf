@@ -15,19 +15,16 @@ if (mcc_missionmaker == (name player)) then
 {
 	if (_3d == 0) then //Case we are opening the 3D
 	{
-		hint "click on map";
-		
-		click = false;
 		MCC3DRuning = true;
-		onMapSingleClick "click = true;_nul=["""",_pos] call MCC_3D_PLACER;onMapSingleClick """";";	
-		waitUntil {click};
+		_pos = _this select 1;
+		
 		while {dialog} do {closeDialog 0; sleep 0.2};
+		_nul=["",_pos] call MCC_3D_PLACER;	
 		
-		
-		while {MCC3DRuning && (alive player)} do
+		while {MCC3DRuning && (alive player) && !isNil "MCC_3D_CAM"} do
 		{
 			MCC3DgotValue = false; 
-			while {!MCC3DgotValue && MCC3DRuning} do {sleep 0.2};
+			while {!MCC3DgotValue && MCC3DRuning && (alive player) && !isNil "MCC_3D_CAM"} do {sleep 0.1};
 			if (MCC3DRuning) then 
 			{
 				if (MCC_capture_state) then

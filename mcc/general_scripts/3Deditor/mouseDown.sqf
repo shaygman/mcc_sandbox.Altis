@@ -20,10 +20,10 @@ MCC_mouseButtonUp = false;
 
 if (_click == 1) exitWith 
 {
-	if (isnil "BIS_CONTROL_CAM") exitWith {}; 
+	if (isnil "MCC_3D_CAM") exitWith {}; 
 	_mapPos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
-	BIS_CONTROL_CAM setposATL [_mapPos select 0, _mapPos select 1, 15];  
-	_ctrl ctrlMapAnimAdd [0, 0.15, getpos BIS_CONTROL_CAM];
+	MCC_3D_CAM setposATL [_mapPos select 0, _mapPos select 1, 15];  
+	_ctrl ctrlMapAnimAdd [0, 0.15, getpos MCC_3D_CAM];
 };
 
 if (_ctrlKey && _pressed!=1) then //Manually detonate IED

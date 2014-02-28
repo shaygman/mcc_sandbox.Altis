@@ -127,12 +127,15 @@ class MCC3D_Dialog
 		onLBSelChanged=__EVAL ("[1] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");
 	};
 	
-	class setting_Empty : faction {idc=MCC_SETTING_EMPTY; 
+	class setting_Empty : faction 
+	{	
+		idc=MCC_SETTING_EMPTY; 
 		x = 0.053125 * safezoneW + safezoneX;
 		y = 0.148137 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
 		h = 0.0219914 * safezoneH;
-		};
+		onLBSelChanged=__EVAL ("[1] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");
+	};
 		
 	class nameBox : MCC_RscText {idc = MCC_NAMEBOX;type = MCCCT_EDIT;style = MCCST_MULTI;colorBackground[] = {0,0,0,0};colorText[] = {1,1,1,1};colorSelection[] = {1,1,1,1};colorBorder[] = { 1, 1, 1, 1 };
 			BorderSize = 0.01;autocomplete = true;

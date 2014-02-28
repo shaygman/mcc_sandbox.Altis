@@ -21,60 +21,68 @@ _alt = _params select 6;
 
 //Define which control
 _mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
-
+if (isnil "MCC_GroupGenGroupSelected") then {MCC_GroupGenGroupSelected = []};
 if ((_button == 0) && (count MCC_GroupGenGroupSelected > 0))  then 								//Close Group info control
+{
+	//worldPos
+	MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
+	ctrlShow [510,false];
+	
+	//Reveal WP  Bckgr
+	(_mccdialog displayctrl 510) ctrlSetPosition [_posX,_posY,0,0];	
+	ctrlShow [510,true];
+	(_mccdialog displayctrl 510) ctrlCommit 0;
+	(_mccdialog displayctrl 510) ctrlSetPosition [_posX, _posY,0.189063 * safezoneW,0.219914 * safezoneH];
+	(_mccdialog displayctrl 510) ctrlCommit 0.1;
+	waituntil {ctrlCommitted (_mccdialog displayctrl 510)};
+	
+	//Fill WP types
+	_comboBox = _mccdialog displayCtrl MCC_GroupGenWPCombo_IDC;		
+	lbClear _comboBox;
 	{
-		//worldPos
-		MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
-		ctrlShow [510,false];
-		
-		//Reveal WP  Bckgr
-		(_mccdialog displayctrl 510) ctrlSetPosition [_posX,_posY,0,0];	
-		ctrlShow [510,true];
-		(_mccdialog displayctrl 510) ctrlCommit 0;
-		(_mccdialog displayctrl 510) ctrlSetPosition [_posX, _posY,0.189063 * safezoneW,0.219914 * safezoneH];
-		(_mccdialog displayctrl 510) ctrlCommit 0.1;
-		waituntil {ctrlCommitted (_mccdialog displayctrl 510)};
-		
-		//Fill WP types
-		_comboBox = _mccdialog displayCtrl MCC_GroupGenWPCombo_IDC;		
-		lbClear _comboBox;
-		{
-			_displayname =  _x;
-			_index = _comboBox lbAdd _displayname;
-		} foreach ["Move", "Destroy", "Get In", "Search & Destroy", "Join Group", "Join Group As Leader", "Get Out", "Cycle Waypoints", "Load", "Unload", "Troops Unload", "Hold", "Senetry"
-				   ,"Guard","Support","Get In Nearest","Dismiss","Land","Land - Get in"];
-		_comboBox lbSetCurSel 0;
-		
-				
-		//Fill WP  Formation
-		_comboBox = _mccdialog displayCtrl MCC_GroupGenWPformationCombo_IDC;		
-		lbClear _comboBox;
-		{
-			_displayname =  _x;
-			_index = _comboBox lbAdd _displayname;
-		} foreach ["UNCHANGED", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"];
-		_comboBox lbSetCurSel 0;
-		
-		
-		//Fill WP  Speed
-		_comboBox = _mccdialog displayCtrl MCC_GroupGenWPspeedCombo_IDC;		
-		lbClear _comboBox;
-		{
-			_displayname =  _x;
-			_index = _comboBox lbAdd _displayname;
-		} foreach  ["UNCHANGED", "LIMITED", "NORMAL", "FULL"];
-		_comboBox lbSetCurSel 0;
-		
+		_displayname =  _x;
+		_index = _comboBox lbAdd _displayname;
+	} foreach ["Move", "Destroy", "Get In", "Search & Destroy", "Join Group", "Join Group As Leader", "Get Out", "Cycle Waypoints", "Load", "Unload", "Troops Unload", "Hold", "Senetry"
+			   ,"Guard","Support","Get In Nearest","Dismiss","Land","Land - Get in"];
+	_comboBox lbSetCurSel 0;
+	
 			
-		//Fill WP  Behavior
-		_comboBox = _mccdialog displayCtrl MCC_GroupGenWPbehaviorCombo_IDC;		
-		lbClear _comboBox;
-		{
-			_displayname =  _x;
-			_index = _comboBox lbAdd _displayname;
-		} foreach   ["UNCHANGED", "CARELESS", "SAFE", "AWARE", "COMBAT", "STEALTH"];
-		_comboBox lbSetCurSel 0;
-	};	
+	//Fill WP  Formation
+	_comboBox = _mccdialog displayCtrl MCC_GroupGenWPformationCombo_IDC;		
+	lbClear _comboBox;
+	{
+		_displayname =  _x;
+		_index = _comboBox lbAdd _displayname;
+	} foreach ["UNCHANGED", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"];
+	_comboBox lbSetCurSel 0;
+	
+	
+	//Fill WP  Speed
+	_comboBox = _mccdialog displayCtrl MCC_GroupGenWPspeedCombo_IDC;		
+	lbClear _comboBox;
+	{
+		_displayname =  _x;
+		_index = _comboBox lbAdd _displayname;
+	} foreach  ["UNCHANGED", "LIMITED", "NORMAL", "FULL"];
+	_comboBox lbSetCurSel 0;
+	
+		
+	//Fill WP  Behavior
+	_comboBox = _mccdialog displayCtrl MCC_GroupGenWPbehaviorCombo_IDC;		
+	lbClear _comboBox;
+	{
+		_displayname =  _x;
+		_index = _comboBox lbAdd _displayname;
+	} foreach   ["UNCHANGED", "CARELESS", "SAFE", "AWARE", "COMBAT", "STEALTH"];
+	_comboBox lbSetCurSel 0;
+};	
+
+if ((_button == 0) && (count MCC_GroupGenGroupSelected == 0))  then 								//Open 3D
+{
+	//worldPos
+	MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
+	
+	[0,MCC_ConsoleWPpos] execVM format ["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
+};	
 
 MCC_doubleClicked = false;				

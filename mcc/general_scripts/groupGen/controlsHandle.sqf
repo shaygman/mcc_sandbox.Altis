@@ -723,3 +723,57 @@ if (_action == 15) exitWith
 		_comboBox lbSetCurSel ((round ((viewdistance)/1000)) - 1); // set viewdistance index to current vd
 	};
 };
+
+//-------------------------------------------------------------------------------------AIRDROP----------------------------------------------------------------------------------------------
+if (_action == 16) exitWith
+{
+	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 517);
+	_show = if (ctrlShown _control) then {false} else {true}; 
+	_control ctrlShow _show;
+	
+	if (_show) then
+	{
+		#define MCC_AIRDROPTYPE 1031
+		#define MCC_airdropArray 1033
+		
+		_comboBox = _mccdialog displayCtrl MCC_AIRDROPTYPE;		//Airdrop Type
+		lbClear _comboBox;
+		{
+			_displayname = _x;
+			_comboBox lbAdd _displayname;
+		} foreach ["Vehicles", "Tracked", "Motorcycles", "Ships", "Ammo"];
+		_comboBox lbSetCurSel 0;
+
+		_comboBox = _mccdialog displayCtrl MCC_airdropArray;		//Airdrop Current Airdrop
+		lbClear _comboBox;
+		{
+			if (!isnil "_x") then
+			{
+				_displayname = getText(configFile >> "CfgVehicles" >> _x >> "displayname") ;
+				_comboBox lbAdd _displayname;
+			};
+		} foreach MCC_airDropArray;
+		_comboBox lbSetCurSel 0;
+	};
+};
+
+//-------------------------------------------------------------------------------------DELETE----------------------------------------------------------------------------------------------
+if (_action == 17) exitWith
+{
+	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 518);
+	_show = if (ctrlShown _control) then {false} else {true}; 
+	_control ctrlShow _show;
+	
+	if (_show) then
+	{
+		#define MCCDELETEBRUSH 1030
+		
+		_comboBox = _mccdialog displayCtrl MCCDELETEBRUSH;		//Delete Brush
+		lbClear _comboBox;
+		{
+			_displayname = _x;
+			_comboBox lbAdd _displayname;
+		} foreach ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers"];
+		_comboBox lbSetCurSel 0;
+	};
+};

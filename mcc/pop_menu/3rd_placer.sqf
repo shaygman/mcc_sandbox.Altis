@@ -41,8 +41,8 @@ DOperator setvariable ["MCC_3D_logic",_logic];
 startLoadingScreen ["3D Placing","RscDisplayLoadMission"];
 //////////////////////////////////////////////////
 (["MCC_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_compass", "PLAIN"];
-_camera = BIS_CONTROL_CAM;
-if (isnil "BIS_CONTROL_CAM") then {
+
+if (isnil "MCC_3D_CAM") then {
 	_camera = "camconstruct" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
 	_camera cameraeffect ["internal","back"];
 	_camera camPrepareFOV 0.900;
@@ -55,26 +55,26 @@ if (isnil "BIS_CONTROL_CAM") then {
 };
 
 //_camera camConstructionSetParams [[position player select 0,position player select 1,(position player select 2)+15],5000, 300];
-BIS_CONTROL_CAM = _camera;
-BIS_CONTROL_CAM_LMB = false;
-BIS_CONTROL_CAM_RMB = false;
+MCC_3D_CAM = _camera;
+MCC_3D_CAM_LMB = false;
+MCC_3D_CAM_RMB = false;
 showcinemaborder false;
 
-MCC3DKeyDown			=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["KeyDown",		"if !(isnil 'BIS_CONTROL_CAM_Handler') then {BIS_temp = ['keydown',_this,commandingmenu] spawn BIS_CONTROL_CAM_Handler; BIS_temp = nil;}"];
-MCC3DKeyUp				=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["KeyUp",		"if !(isnil 'BIS_CONTROL_CAM_Handler') then {BIS_temp = ['keyup',_this] spawn BIS_CONTROL_CAM_Handler; BIS_temp = nil;}"];
-MCC3DMouseButtonDown	=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["MouseButtonDown",	"if !(isnil 'BIS_CONTROL_CAM_Handler') then {BIS_temp = ['mousedown',_this,commandingmenu] spawn BIS_CONTROL_CAM_Handler; BIS_temp = nil; BIS_CONTROL_CAM_onMouseButtonDown = _this; if (_this select 1 == 1) then {BIS_CONTROL_CAM_RMB = true}; if (_this select 1 == 0) then {BIS_CONTROL_CAM_LMB = true};}"];
-MCC3DMouseButtonUp		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["MouseButtonUp",	"if !(isnil 'BIS_CONTROL_CAM_Handler') then {BIS_CONTROL_CAM_RMB = false; BIS_CONTROL_CAM_LMB = false;}"];
-MCC3Dmousemoving		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["mousemoving",	"if !(isnil 'BIS_CONTROL_CAM_Handler') then {BIS_temp = ['mousemoving',_this,commandingmenu] spawn BIS_CONTROL_CAM_Handler; BIS_temp = nil;}"];
-MCC3Dmouseholding		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["mouseholding",	"if !(isnil 'BIS_CONTROL_CAM_Handler') then {BIS_temp = ['mouseholding',_this,commandingmenu] spawn BIS_CONTROL_CAM_Handler; BIS_temp = nil;}"];
-MCC3DMouseZChanged		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["MouseZChanged",	"if !(isnil 'BIS_CONTROL_CAM_Handler') then {BIS_temp = ['MouseZChanged',_this,commandingmenu] spawn BIS_CONTROL_CAM_Handler; BIS_temp = nil;}"];
+MCC3DKeyDown			=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["KeyDown",		"if !(isnil 'MCC_3D_CAM_Handler') then {BIS_temp = ['keydown',_this,commandingmenu] spawn MCC_3D_CAM_Handler; BIS_temp = nil;}"];
+MCC3DKeyUp				=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["KeyUp",		"if !(isnil 'MCC_3D_CAM_Handler') then {BIS_temp = ['keyup',_this] spawn MCC_3D_CAM_Handler; BIS_temp = nil;}"];
+MCC3DMouseButtonDown	=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["MouseButtonDown",	"if !(isnil 'MCC_3D_CAM_Handler') then {BIS_temp = ['mousedown',_this,commandingmenu] spawn MCC_3D_CAM_Handler; BIS_temp = nil; MCC_3D_CAM_onMouseButtonDown = _this; if (_this select 1 == 1) then {MCC_3D_CAM_RMB = true}; if (_this select 1 == 0) then {MCC_3D_CAM_LMB = true};}"];
+MCC3DMouseButtonUp		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["MouseButtonUp",	"if !(isnil 'MCC_3D_CAM_Handler') then {MCC_3D_CAM_RMB = false; MCC_3D_CAM_LMB = false;}"];
+MCC3Dmousemoving		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["mousemoving",	"if !(isnil 'MCC_3D_CAM_Handler') then {BIS_temp = ['mousemoving',_this,commandingmenu] spawn MCC_3D_CAM_Handler; BIS_temp = nil;}"];
+MCC3Dmouseholding		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["mouseholding",	"if !(isnil 'MCC_3D_CAM_Handler') then {BIS_temp = ['mouseholding',_this,commandingmenu] spawn MCC_3D_CAM_Handler; BIS_temp = nil;}"];
+MCC3DMouseZChanged		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddEventHandler  ["MouseZChanged",	"if !(isnil 'MCC_3D_CAM_Handler') then {BIS_temp = ['MouseZChanged',_this,commandingmenu] spawn MCC_3D_CAM_Handler; BIS_temp = nil;}"];
 
-BIS_CONTROL_CAM_keys = [];
+MCC_3D_CAM_keys = [];
 
-if (isnil "BIS_CONTROL_CAM_ASL") then {
+if (isnil "MCC_3D_CAM_ASL") then {
 	createcenter sidelogic;
 	_logicGrp = creategroup sidelogic;
 	_logicASL = _logicGrp createunit ["Logic",position player,[],0,"none"];
-	BIS_CONTROL_CAM_ASL = _logicASL;
+	MCC_3D_CAM_ASL = _logicASL;
 };
 
 _logic setvariable ["MCC_3D_menu","#USER:BIS_Coin_categories_0"];
@@ -103,10 +103,10 @@ z3DHight = (getpos MCC_dummyObject) select 2;
 if (z3DHight < 0) then {z3DHight = 0};
 
 //Create camera marker
-MCC_3DeditorMarker = createmarkerLocal ["MCC_3DeditorMarker", [getpos BIS_CONTROL_CAM select 0,getpos BIS_CONTROL_CAM select 1]];
+MCC_3DeditorMarker = createmarkerLocal ["MCC_3DeditorMarker", [getpos MCC_3D_CAM select 0,getpos MCC_3D_CAM select 1]];
 MCC_3DeditorMarker setMarkerTypeLocal "loc_ViewTower";
 MCC_3DeditorMarker setMarkerColorLocal "ColorBlue";
-MCC_3DeditorMarker setMarkerDirLocal getdir BIS_CONTROL_CAM;
+MCC_3DeditorMarker setMarkerDirLocal getdir MCC_3D_CAM;
 MCC_3DeditorMarker setMarkerSizeLocal [1, 1];
 
 //Start tracking units
@@ -115,15 +115,15 @@ if !(MCC_trackMarker) then
 _null = [3] execVM  MCC_path +"mcc\general_scripts\unitManage\um.sqf";
 };
 				
-if !(isnil "BIS_CONTROL_CAM_Handler") exitwith {hint "BIS_CONTROL_CAM_Handler is nill";endLoadingScreen};
-BIS_CONTROL_CAM_Handler =
+if !(isnil "MCC_3D_CAM_Handler") exitwith {hint "MCC_3D_CAM_Handler is nill";endLoadingScreen};
+MCC_3D_CAM_Handler =
 	{
 	private ["_mode", "_input", "_camera", "_logic", "_terminate", "_keysCancel", "_keysUpObj", "_keysDownObj", "_keysUp", "_keysDown" ,"_keysShift","_key","_keydelete","_offSet","_compassdDir","_compassdPos"
 			,"_keysBanned", "_keyNightVision","_finished", "_keyplace","_objectPos","_objectDir","_keyalt","_nearObjects", "_vehicleclass","_html","_ctrlKey","_gain","_keyGUI","_mapScale"];
 			
 	_mode = _this select 0;
 	_input = _this select 1;
-	if (! isnil "BIS_CONTROL_CAM") then {_camera = BIS_CONTROL_CAM};
+	if (! isnil "MCC_3D_CAM") then {_camera = MCC_3D_CAM};
 	_logic = DOperator getvariable "MCC_3D_logic";
 	_terminate = false;
 	if (isnil "_logic") exitwith {};
@@ -145,16 +145,16 @@ BIS_CONTROL_CAM_Handler =
 	if (_mode in ["mousemoving", "mouseholding"]) then 
 	{
 		_key = _input select 1;
-		if (! isnil "BIS_CONTROL_CAM") then 
+		if (! isnil "MCC_3D_CAM") then 
 		{
-			BIS_CONTROL_CAM camsettarget MCC_dummyObject;
-			BIS_CONTROL_CAM camcommit 0;
+			MCC_3D_CAM camsettarget MCC_dummyObject;
+			MCC_3D_CAM camcommit 0;
 			
 			//Compass
 			for [{_i = 0;_j = 0},{_i < 360;_j < 4},{_i = _i + 90;_j = _j + 1}] do 
 			{
-				_x = (0.476 + sin(_i - (getdir BIS_CONTROL_CAM))*(SafeZoneW/8 - SafeZoneW/200));
-				_y = (0.42 - cos(_i - (getdir BIS_CONTROL_CAM))*(SafeZoneH/8 - SafeZoneH/200));
+				_x = (0.476 + sin(_i - (getdir MCC_3D_CAM))*(SafeZoneW/8 - SafeZoneW/200));
+				_y = (0.42 - cos(_i - (getdir MCC_3D_CAM))*(SafeZoneH/8 - SafeZoneH/200));
 				
 				((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlSetPosition  [_x,_y];
 				((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlCommit 0;
@@ -176,11 +176,11 @@ BIS_CONTROL_CAM_Handler =
 			
 			_mapScale = uiNamespace getVariable "MCC3D_DialogMapScale";		
 			
-			((uiNamespace getVariable "MCC_compass") displayCtrl 5)  ctrlMapAnimAdd [0,_mapScale, getpos BIS_CONTROL_CAM];
+			((uiNamespace getVariable "MCC_compass") displayCtrl 5)  ctrlMapAnimAdd [0,_mapScale, getpos MCC_3D_CAM];
 			ctrlMapAnimCommit ((uiNamespace getVariable "MCC_compass") displayCtrl 5);
 			
-			MCC_3DeditorMarker setMarkerDirLocal getdir BIS_CONTROL_CAM;
-			MCC_3DeditorMarker setMarkerPoslocal [getpos BIS_CONTROL_CAM select 0,getpos BIS_CONTROL_CAM select 1];
+			MCC_3DeditorMarker setMarkerDirLocal getdir MCC_3D_CAM;
+			MCC_3DeditorMarker setMarkerPoslocal [getpos MCC_3D_CAM select 0,getpos MCC_3D_CAM select 1];
 		};
 		
 		if (! isnil "Object3D") then 
@@ -429,7 +429,7 @@ BIS_CONTROL_CAM_Handler =
 			{
 				_null = [1] execVM MCC_path +"mcc\general_scripts\delete\undo.sqf";
 			};
-		if (_key in BIS_CONTROL_CAM_keys) then {BIS_CONTROL_CAM_keys = BIS_CONTROL_CAM_keys - [_key]};
+		if (_key in MCC_3D_CAM_keys) then {MCC_3D_CAM_keys = MCC_3D_CAM_keys - [_key]};
 		};
 	
 	//Mouse down
@@ -445,16 +445,16 @@ BIS_CONTROL_CAM_Handler =
 			MCC_mcc_screen=5;
 			//--- Close
 			MCC3DRuning = false; 
-			if (! isnil "BIS_CONTROL_CAM") then {
-				BIS_CONTROL_CAM cameraeffect ["terminate","back"];
-				camdestroy BIS_CONTROL_CAM;
-				BIS_CONTROL_CAM = nil;
+			if (! isnil "MCC_3D_CAM") then {
+				MCC_3D_CAM cameraeffect ["terminate","back"];
+				camdestroy MCC_3D_CAM;
+				MCC_3D_CAM = nil;
 			};		
 			if (! isnil "Object3D") then {deletevehicle Object3D};
 			if (! isnil "MCC_dummyObject") then {deletevehicle MCC_dummyObject};
 			player setvariable ["3D_isRuning",nil];
 			hintsilent "";
-			waituntil {isnil "BIS_CONTROL_CAM"};
+			waituntil {isnil "MCC_3D_CAM"};
 			_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
 		};
 	
@@ -463,27 +463,27 @@ BIS_CONTROL_CAM_Handler =
 			//MCC_mcc_screen=0;
 			//--- Close
 			MCC3DRuning = false; 
-			if (isNil "BIS_CONTROL_CAM") exitWith {}; 
-			BIS_CONTROL_CAM cameraeffect ["terminate","back"];
-			camdestroy BIS_CONTROL_CAM;
-			BIS_CONTROL_CAM = nil;
+			if (isNil "MCC_3D_CAM") exitWith {}; 
+			MCC_3D_CAM cameraeffect ["terminate","back"];
+			camdestroy MCC_3D_CAM;
+			MCC_3D_CAM = nil;
 			deletevehicle Object3D;
 			deletevehicle MCC_dummyObject;
 			player setvariable ["3D_isRuning",nil];
 			hintsilent "";
-			waituntil {isnil "BIS_CONTROL_CAM"};
+			waituntil {isnil "MCC_3D_CAM"};
 			if (true) exitWith {_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
 		};
 	//--- Camera no longer exists - terminate and start cleanup	
-	if (isnil "BIS_CONTROL_CAM" || player != DOperator || !alive player) exitwith
+	if (isnil "MCC_3D_CAM" || player != DOperator || !alive player) exitwith
 		{
 		//////////////////////////////////////////////////
 		startLoadingScreen ["MCC 3D","RscDisplayLoadMission"];
 		//////////////////////////////////////////////////
 
-		if !(isnil "BIS_CONTROL_CAM") then {BIS_CONTROL_CAM cameraeffect ["terminate","back"];camdestroy BIS_CONTROL_CAM;};
-		BIS_CONTROL_CAM = nil;
-		BIS_CONTROL_CAM_Handler = nil;
+		if !(isnil "MCC_3D_CAM") then {MCC_3D_CAM cameraeffect ["terminate","back"];camdestroy MCC_3D_CAM;};
+		MCC_3D_CAM = nil;
+		MCC_3D_CAM_Handler = nil;
 		1122 cuttext ["","plain"];
 		_player = DOperator;
 		_player setvariable ["MCC_3D_logic",nil];

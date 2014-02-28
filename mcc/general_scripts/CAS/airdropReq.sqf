@@ -1,6 +1,4 @@
 //Made by Shay_Gman (c) 10.13
-#define MCC_SANDBOX4_IDD 4000
-
 #define MCC_AIRDROPTYPECONTROL 1031
 #define MCC_AIRDROPCLASSCONTROL 1032
 #define MCC_AIRDROPARRAYCONTROL 1033
@@ -9,7 +7,7 @@ private ["_action", "_type", "_comboBox", "_mccdialog", "_groupArray","_displayn
 disableSerialization;
 
 _action =_this select 0;
-_mccdialog = findDisplay MCC_SANDBOX4_IDD;	
+_mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");	
 
 if (_action==0) then 		//Refresh list
 	{

@@ -3,7 +3,7 @@
 // Example:[] call MCC_fnc_groupGenRefresh
 //==============================================================================================================================================================================	
 private ["_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_side","_unitsCount","_markerType","_markerColor","_leader","_markerInf",
-		         "_markerMech","_markerArmor","_markerAir","_icon","_wpArray","_behaviour","_unitsSize","_unitsSizeMarker","_IsGaiaControlled"];
+		         "_markerMech","_markerArmor","_markerAir","_icon","_wpArray","_behaviour","_unitsSize","_unitsSizeMarker","_IsGaiaControlled","_players"];
 #define groupGen_IDD 2994
 
 //Group info while clicked
@@ -30,257 +30,183 @@ MCC_groupGenRefreshTerminate = false;
 
 setGroupIconsVisible [true,false];	
 setGroupIconsSelectable true;
+
+while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupGenRefreshTerminate} do 		//Draw WP
+{
 	{
 		_leader = (leader _x);
-		 
-		if ((side _leader in MCC_groupGenGroupStatus) && alive _leader && count (units _x)>0 ) then
+		_groupStatus = _x getvariable "MCC_support";
+		_wpArray = waypoints (group _leader);
+		_behaviour = behaviour _leader;
+		_players = if ("players" in MCC_groupGenGroupStatus) then {alive _leader && isPlayer _leader} else {alive _leader}; 
+
+		if ((side _leader in MCC_groupGenGroupStatus) && _players) then
+		{
+			switch (side _leader) do 	
 			{
-				switch (side _leader) do 	
+				case east: //East
+					{
+					_side			= east;
+					_markerColor 	= [1,0,0,0.7];
+					_markerInf		= "o_inf";
+					_markerRecon	= "o_recon";
+					_markerSupport	= "o_support";
+					_markerAutonomous = "o_uav";
+					_markerMech		= "o_mech_inf";
+					_markerArmor	= "o_armor";
+					_markerAir		= "o_air";
+					_markerNaval	= "o_naval";
+					}; 
+					
+				case west: //West
+					{
+					_side			= west;
+					_markerColor 	= [0,0,1,1];
+					_markerInf		= "b_inf";
+					_markerRecon	= "b_recon";
+					_markerSupport	= "b_support";
+					_markerAutonomous = "b_uav";
+					_markerMech		= "b_mech_inf";
+					_markerArmor	= "b_armor";
+					_markerAir		= "b_air";
+					_markerNaval	= "b_naval";
+					};
+					
+				case resistance: //Resistance
+					{
+					_side			= resistance;
+					_markerColor 	= [0,1,0,0.7];
+					_markerInf		= "n_inf";
+					_markerRecon	= "n_recon";
+					_markerSupport	= "n_support";
+					_markerAutonomous = "n_uav";
+					_markerMech		= "n_mech_inf";
+					_markerArmor	= "n_armor";
+					_markerAir		= "n_air";
+					_markerNaval	= "n_naval";
+					};
+				case civilian: //Resistance
+					{
+					_side			= civilian;
+					_markerColor 	= [1,1,1,0.7];
+					_markerInf		= "n_inf";
+					_markerRecon	= "n_recon";
+					_markerSupport	= "n_support";
+					_markerAutonomous = "n_uav";
+					_markerMech		= "n_mech_inf";
+					_markerArmor	= "n_armor";
+					_markerAir		= "n_air";
+					_markerNaval	= "n_naval";
+					};
+			};
+			
+			if (isPlayer _leader) then {_markerColor = [0,0.5,1,1]}; 
+			_IsGaiaControlled = if ((count(_x getVariable  ["GAIA_zone_intend",[]])>1)) then {"(G)"} else 
 				{
-					case east: //East
-						{
-						_side			= east;
-						_markerColor 	= [1,0,0,0.7];
-						_markerInf		= "o_inf";
-						_markerRecon	= "o_recon";
-						_markerSupport	= "o_support";
-						_markerAutonomous = "o_uav";
-						_markerMech		= "o_mech_inf";
-						_markerArmor	= "o_armor";
-						_markerAir		= "o_air";
-						_markerNaval	= "o_naval";
-						}; 
-						
-					case west: //West
-						{
-						_side			= west;
-						_markerColor 	= [0,0,1,1];
-						_markerInf		= "b_inf";
-						_markerRecon	= "b_recon";
-						_markerSupport	= "b_support";
-						_markerAutonomous = "b_uav";
-						_markerMech		= "b_mech_inf";
-						_markerArmor	= "b_armor";
-						_markerAir		= "b_air";
-						_markerNaval	= "b_naval";
-						};
-						
-					case resistance: //Resistance
-						{
-						_side			= resistance;
-						_markerColor 	= [0,1,0,0.7];
-						_markerInf		= "n_inf";
-						_markerRecon	= "n_recon";
-						_markerSupport	= "n_support";
-						_markerAutonomous = "n_uav";
-						_markerMech		= "n_mech_inf";
-						_markerArmor	= "n_armor";
-						_markerAir		= "n_air";
-						_markerNaval	= "n_naval";
-						};
-					case civilian: //Resistance
-						{
-						_side			= civilian;
-						_markerColor 	= [1,1,1,0.7];
-						_markerInf		= "n_inf";
-						_markerRecon	= "n_recon";
-						_markerSupport	= "n_support";
-						_markerAutonomous = "n_uav";
-						_markerMech		= "n_mech_inf";
-						_markerArmor	= "n_armor";
-						_markerAir		= "n_air";
-						_markerNaval	= "n_naval";
-						};
+					if (_x getVariable  ["MCC_canbecontrolled",false]) then {"(P)"} else {""};
 				};
-				
-				_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
-				_unitsSize = 0;
-				_markerType = nil; 
+			_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
+			_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
+			_unitsSize = 0;
+			_markerType = nil; 
+			if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
+			if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
+			if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
+			if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
+			if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
+			if (_unitsCount select 5 > 0) then {_markerType = _markerRecon; _unitsSize = _unitsSize + (1*(_unitsCount select 5))};
+			if (_unitsCount select 6 > 0) then {_markerType = _markerSupport; _unitsSize = _unitsSize + (3*(_unitsCount select 6))};
+			if (_unitsCount select 7 > 0) then {_markerType = _markerAutonomous; _unitsSize = _unitsSize + (1*(_unitsCount select 7))};
+			
+			if (isnil "_markerType") then
+			{
+				_unitsCount = [group _leader] call MCC_fnc_countGroup;
 				if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
 				if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
 				if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
 				if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
 				if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
-				if (_unitsCount select 5 > 0) then {_markerType = _markerRecon; _unitsSize = _unitsSize + (1*(_unitsCount select 5))};
-				if (_unitsCount select 6 > 0) then {_markerType = _markerSupport; _unitsSize = _unitsSize + (3*(_unitsCount select 6))};
-				if (_unitsCount select 7 > 0) then {_markerType = _markerAutonomous; _unitsSize = _unitsSize + (1*(_unitsCount select 7))};
-				
-				if (isnil "_markerType") then
+			};
+			//How big is the squad
+			_unitsSize = floor (_unitsSize/4); 
+			if (_unitsSize > 10) then {_unitsSize = 10};
+			_unitsSizeMarker = format ["group_%1",_unitsSize];
+			
+			//Set markers
+			_IsGaiaControlled = if ((count(_x getVariable  ["GAIA_zone_intend",[]])>1)) then {"(G)"} else 
 				{
-					_unitsCount = [group _leader] call MCC_fnc_countGroup;
-					if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
-					if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
-					if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
-					if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
-					if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
+					if (_x getVariable  ["MCC_canbecontrolled",false]) then {"(P)"} else {""};
 				};
+			
+			_icon = (_x getvariable "MCCgroupIconData"); 
+			if (!isnil "_icon") then {_x removeGroupIcon _icon};
+			_icon = _x addGroupIcon [_markerType,[0,0]];
+			_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
+			_x setvariable ["MCCgroupIconData",_icon,false];
+			
+			_icon = (_x getvariable "MCCgroupIconSize") select 0; 
+			if (!isnil "_icon") then {_x removeGroupIcon _icon};
+			_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
+			_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
 				
-				//How big is the squad
-				_unitsSize = floor (_unitsSize/4); 
-				if (_unitsSize > 10) then {_unitsSize = 10};
-				_unitsSizeMarker = format ["group_%1",_unitsSize];
-				
-				//Set markers
-				_IsGaiaControlled = if ((count(_x getVariable  ["GAIA_zone_intend",[]])>1)) then {"(G)"} else {""};
-				_icon = _x addGroupIcon [_markerType,[0,0]];
-				_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
-				_x setvariable ["MCCgroupIconData",_icon,false];
-				_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
-				_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
-			}; 
-	} foreach allgroups; 
-
-while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupGenRefreshTerminate} do 		//Draw WP
-	{
-		{
-			_leader = (leader _x);
-			_groupStatus = _x getvariable "MCC_support";
-			_wpArray = waypoints (group _leader);
-			_behaviour = behaviour _leader;
-			if ((side _leader in MCC_groupGenGroupStatus) && alive _leader) then
+			if (count _wpArray > 0)then
 			{
-				switch (side _leader) do 	
-				{
-					case east: //East
-						{
-						_side			= east;
-						_markerColor 	= [1,0,0,0.7];
-						_markerInf		= "o_inf";
-						_markerRecon	= "o_recon";
-						_markerSupport	= "o_support";
-						_markerAutonomous = "o_uav";
-						_markerMech		= "o_mech_inf";
-						_markerArmor	= "o_armor";
-						_markerAir		= "o_air";
-						_markerNaval	= "o_naval";
-						}; 
-						
-					case west: //West
-						{
-						_side			= west;
-						_markerColor 	= [0,0,1,1];
-						_markerInf		= "b_inf";
-						_markerRecon	= "b_recon";
-						_markerSupport	= "b_support";
-						_markerAutonomous = "b_uav";
-						_markerMech		= "b_mech_inf";
-						_markerArmor	= "b_armor";
-						_markerAir		= "b_air";
-						_markerNaval	= "b_naval";
-						};
-						
-					case resistance: //Resistance
-						{
-						_side			= resistance;
-						_markerColor 	= [0,1,0,0.7];
-						_markerInf		= "n_inf";
-						_markerRecon	= "n_recon";
-						_markerSupport	= "n_support";
-						_markerAutonomous = "n_uav";
-						_markerMech		= "n_mech_inf";
-						_markerArmor	= "n_armor";
-						_markerAir		= "n_air";
-						_markerNaval	= "n_naval";
-						};
-					case civilian: //Resistance
-						{
-						_side			= civilian;
-						_markerColor 	= [1,1,1,0.7];
-						_markerInf		= "n_inf";
-						_markerRecon	= "n_recon";
-						_markerSupport	= "n_support";
-						_markerAutonomous = "n_uav";
-						_markerMech		= "n_mech_inf";
-						_markerArmor	= "n_armor";
-						_markerAir		= "n_air";
-						_markerNaval	= "n_naval";
-						};
-				};
-				_IsGaiaControlled = if ((count(_x getVariable  ["GAIA_zone_intend",[]])>1)) then {"(G)"} else {""};
-				_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
-				_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
-				_unitsSize = 0;
-				if (_unitsCount select 0 > 0) then {_unitsSize = _unitsSize + (1*(_unitsCount select 0))};
-				if (_unitsCount select 1 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 1))};
-				if (_unitsCount select 2 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 2))};
-				if (_unitsCount select 3 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 3))};
-				if (_unitsCount select 4 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 4))};
-				if (_unitsCount select 5 > 0) then {_unitsSize = _unitsSize + (1*(_unitsCount select 5))};
-				if (_unitsCount select 6 > 0) then {_unitsSize = _unitsSize + (3*(_unitsCount select 6))};
-				if (_unitsCount select 7 > 0) then {_unitsSize = _unitsSize + (1*(_unitsCount select 7))};
-				
-				if (_unitsSize == 0) then
-				{
-					_unitsCount = [group _leader] call MCC_fnc_countGroup;
-					if (_unitsCount select 0 > 0) then { _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
-					if (_unitsCount select 1 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
-					if (_unitsCount select 2 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
-					if (_unitsCount select 3 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
-					if (_unitsCount select 4 > 0) then { _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
-				};
-				//How big is the squad
-				_unitsSize = floor (_unitsSize/4); 
-				if (_unitsSize > 10) then {_unitsSize = 10};
-				_unitsSizeMarker = format ["group_%1",_unitsSize];
-				_x removeGroupIcon ((_x getvariable "MCCgroupIconSize") select 0);
-				_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
-				_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
-					
-				if (count _wpArray > 0)then
-				{
-					private ["_wp","_wPos","_wType"];
-					MCC_lastPos = nil; 
-					for [{_i=0},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
-					{			
-						_wp = (_wpArray select _i);
-						_wPos  = waypointPosition _wp;
-						if ((_wPos  distance [0,0,0]) > 50) then
-						{
-							_wType = waypointType _wp;
-							createMarkerLocal [format["%1", _wp],_wPos];
-							format["%1", _wp] setMarkerTypelocal "waypoint";
-							format["%1", _wp] setMarkerColorlocal "ColorBlue";
-							format["%1", _wp] setMarkerTextLocal (format ["%1",_wType]);
-							MCC_groupGenTempWP set [count MCC_groupGenTempWP, format["%1", _wp]];
-							if (isnil "MCC_lastPos") then {MCC_lastPos = [(getpos _leader) select 0,(getpos _leader) select 1]}; 
-							[MCC_lastPos , _wPos ,format ["%1%2", _i,group _leader]] call MCC_fnc_drawLine;	//draw the line
-							MCC_groupGenTempWPLines set [count MCC_groupGenTempWPLines, format["line_%1%2", _i,group _leader]];
-							MCC_lastPos = _wPos; 
-						};
+				private ["_wp","_wPos","_wType"];
+				MCC_lastPos = nil; 
+				for [{_i=0},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
+				{			
+					_wp = (_wpArray select _i);
+					_wPos  = waypointPosition _wp;
+					if ((_wPos  distance [0,0,0]) > 50) then
+					{
+						_wType = waypointType _wp;
+						createMarkerLocal [format["%1", _wp],_wPos];
+						format["%1", _wp] setMarkerTypelocal "waypoint";
+						format["%1", _wp] setMarkerColorlocal "ColorBlue";
+						format["%1", _wp] setMarkerTextLocal (format ["%1",_wType]);
+						MCC_groupGenTempWP set [count MCC_groupGenTempWP, format["%1", _wp]];
+						if (isnil "MCC_lastPos") then {MCC_lastPos = [(getpos _leader) select 0,(getpos _leader) select 1]}; 
+						[MCC_lastPos , _wPos ,format ["%1%2", _i,group _leader]] call MCC_fnc_drawLine;	//draw the line
+						MCC_groupGenTempWPLines set [count MCC_groupGenTempWPLines, format["line_%1%2", _i,group _leader]];
+						MCC_lastPos = _wPos; 
 					};
 				};
-
-				if (! isnil "_groupStatus") then 					//Draw group status
-				{
-					private ["_time","_status"];
-					_time 		= _groupStatus select 1; 
-					_status 	= _groupStatus select 0; 
-					_IsGaiaControlled = if ((count(_x getVariable  ["GAIA_zone_intend",[]])>1)) then {"(G)"} else {""};
-					
-					if (abs (time - _time) < 180) then
-						{
-						
-							_x setGroupIconParams [_markerColor,format ["%1%2%3",_IsGaiaControlled,groupID _x,_status],1,true];
-						}
-						else
-						{
-							_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
-						};
-				};
-					
-				if (_behaviour == "COMBAT") then				//Show in combat
-				{
-					_x setGroupIconParams [[1,1,1,1],format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
-				};
 			};
-		} foreach allgroups; 
-		
-		sleep 0.5;
-		{deletemarkerlocal _x} foreach MCC_groupGenTempWP;
-		MCC_groupGenTempWP = []; 
-		{deletemarkerlocal _x} foreach MCC_groupGenTempWPLines;
-		MCC_groupGenTempWPLines = []; 
-	}; 
+
+			if (! isnil "_groupStatus") then 					//Draw group status
+			{
+				private ["_time","_status"];
+				_time 		= _groupStatus select 1; 
+				_status 	= _groupStatus select 0; 
+				_IsGaiaControlled = if ((count(_x getVariable  ["GAIA_zone_intend",[]])>1)) then {"(G)"} else 
+					{
+						if (_x getVariable  ["MCC_canbecontrolled",false]) then {"(P)"} else {""};
+					};
+				
+				if (abs (time - _time) < 180) then
+					{
+					
+						_x setGroupIconParams [_markerColor,format ["%1%2%3",_IsGaiaControlled,groupID _x,_status],1,true];
+					}
+					else
+					{
+						_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
+					};
+			};
+				
+			if (_behaviour == "COMBAT") then				//Show in combat
+			{
+				_x setGroupIconParams [[1,1,1,1],format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
+			};
+		};
+	} foreach allgroups; 
+	
+	sleep 0.5;
+	{deletemarkerlocal _x} foreach MCC_groupGenTempWP;
+	MCC_groupGenTempWP = []; 
+	{deletemarkerlocal _x} foreach MCC_groupGenTempWPLines;
+	MCC_groupGenTempWPLines = []; 
+}; 
 	
 //Clear stuff after exiting
 {deletemarkerlocal _x} foreach MCC_groupGenTempWP;
@@ -289,10 +215,10 @@ MCC_groupGenTempWP = [];
 MCC_groupGenTempWPLines = []; 
 {
 	_leader = (leader _x); 
-	if (!(side _leader in MCC_groupGenGroupStatus) && alive _leader) then
-		{
-			clearGroupIcons _x; 
-		}; 
+	if ((side _leader in MCC_groupGenGroupStatus) && alive _leader) then
+	{
+		clearGroupIcons _x; 
+	}; 
 } foreach allgroups;
 setGroupIconsVisible [false,false];
 setGroupIconsSelectable false;

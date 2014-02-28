@@ -21,7 +21,7 @@ uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
 ctrlShow [510,false];
 ctrlShow [9013,false];
 
-for "_i" from 500 to 520 step 1 do 
+for "_i" from 500 to 518 step 1 do 
 {
 	((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl _i) ctrlShow false;		
 };
@@ -51,8 +51,8 @@ lbClear _comboBox;
 {
 	_displayname = format ["%1",_x select 0];
 	_index = _comboBox lbAdd _displayname;
-} foreach MCC_spawn_behaviors;
-_comboBox lbSetCurSel MCC_behavior_index;
+} foreach MCC_GAIA_spawn_behaviors;
+_comboBox lbSetCurSel 0;
 
 //------------------------------------------- ZONES --------------------------------------------------------------------------------------------------
 _comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 1023); //fill combobox zone's numbers

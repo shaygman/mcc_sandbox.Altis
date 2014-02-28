@@ -46,7 +46,7 @@ ctrlShow [MCC_CONSOLE_AC_MAP,false];
 
 ctrlSetText [MCC_CONSOLE_UAVPIP, ""];
 _time = time + (1);
-while {_time > time && dialog} do {
+while {_time > time && (str (finddisplay mcc_playerConsole2_IDD) != "no display")} do {
 	_message = "";
 	_messageFinal = ["C","o","n","n","e","c","t","i","n","g"," ","D","R","O","N","E",".",".",".","."];
 	for "_i" from 0 to (count _messageFinal - 1) do {
@@ -55,16 +55,18 @@ while {_time > time && dialog} do {
 		sleep 0.05;
 	};
 };
+
+if ((str (finddisplay mcc_playerConsole2_IDD) == "no display") && (isnil "MCC_ConolseUAV") ) exitWith {};
 	
-if (dialog && (isnil "MCC_ConolseUAV") && MCC_Console2Open) exitWith {
+if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && (isnil "MCC_ConolseUAV") && MCC_Console2Open) exitWith {
 	ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, "No UAV signal found, connection failed"];
 	};
 
-if (dialog &&!alive MCC_ConolseUAV && MCC_Console2Open) exitWith {
+if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && !alive MCC_ConolseUAV && MCC_Console2Open) exitWith {
 	ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, "UAV signal lost, connection failed"];
 	};
 	
-if (dialog && (alive MCC_ConolseUAV) && MCC_Console2Open) then {				//Create the UAV
+if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && (alive MCC_ConolseUAV) && MCC_Console2Open) then {				//Create the UAV
 	//Get rid of the connecting text
 	ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, ""];
 	_control = _mccdialog displayCtrl MCC_CONSOLE_UAVPIP;
@@ -144,7 +146,7 @@ if (dialog && (alive MCC_ConolseUAV) && MCC_Console2Open) then {				//Create the
 		private ["_structured","_data","_mccdialog","_relPos"];
 		disableSerialization;
 		
-		while {MCC_Console2Open && dialog && alive MCC_ConolseUAV} do {
+		while {MCC_Console2Open && (str (finddisplay mcc_playerConsole2_IDD) != "no display") && alive MCC_ConolseUAV} do {
 			_relPos = if (MCC_ConolseUAV iskindof "AIR") then {-0.2} else {3};
 			MCC_fakeUAV camsetpos [(getpos MCC_ConolseUAV) select 0,(getpos MCC_ConolseUAV) select 1, ((getpos MCC_ConolseUAV) select 2)+_relPos];
 			MCC_fakeUAV camsetTarget MCC_fakeUAVCenter;

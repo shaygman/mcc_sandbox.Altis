@@ -1,4 +1,4 @@
-private ["_pos", "_dir","_class","_type","_faction","_unitspawned","_dummy","_notEmpty","_init","_name","_dummyGroup","_loc"];
+private ["_pos", "_dir","_class","_type","_faction","_unitspawned","_dummy","_notEmpty","_init","_name","_dummyGroup","_loc","_vehicleClass"];
 _pos 	 = _this select 0;
 _dir 	 = _this select 1;
 _class	 = _this select 2;
@@ -72,10 +72,19 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 										case "CIV" :  {civilian};
 									};
 							
+							if (!isnil "Object3D") then {waitUntil {_pos distance Object3D > 15}};
 							_veh = createvehicle [_class,_pos,[],0,"none"];
 							_veh setpos _pos;
 							_veh setdir _dir;
 							_grp = createGroup _side;
+							
+							//If autonomous
+							_vehicleClass 	=  getText (configFile >> "CfgVehicles" >> _class >> "vehicleClass");
+							if (_vehicleClass == "autonomous") then 
+							{
+								createVehicleCrew _veh;
+							};
+
 							_crew = [_veh, _grp] call BIS_fnc_spawnCrew;
 							_dummy = [_veh,_crew,_grp]; 
 							
