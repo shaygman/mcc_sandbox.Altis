@@ -30,7 +30,9 @@ switch (_HQ_side) do
 			  	                 _CA = MCC_GAIA_CA_INDEP;
 			  	                };
 			};
-// Delete all CA's that no longer hold any Targets + SPOTS (so fully cleared)
+// Delete all CA's that no longer hold any Targets + 
+// Removed spots from selection (we leave that up to clear patrols, no longer attacks
+//SPOTS (so fully cleared)
 
 {
 	_SelectedCA = _x;
@@ -42,7 +44,7 @@ switch (_HQ_side) do
 				_TargetPos = _TargetInfo select 1;
 				if ((_SelectedCA distance _TargetPos)<100) exitwith {_delete = false;}
 			};		
-	}forEach (_Targets+_Spots);	
+	}forEach (_Targets /*+_Spots*/);	
 	if (_delete) then {_ca=_ca - [_x]};
 }forEach _Ca;
 

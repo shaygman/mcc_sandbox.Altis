@@ -53,7 +53,7 @@ while {true} do
 		 
 		
 		//GAIA IS A GO!
-		if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format ["GAIS woke up from a horrible night of sleep. Dont touch her! ......%1",_HQ_side]; };
+		if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format ["GAIA %1 wakes up and looks around the place. Man what a night. Time to destroy some player.",_HQ_side]; };
 						
 		while { ( {side _x == _HQ_side } count allunits > 0 ) } do
 		{
