@@ -13,10 +13,6 @@ _ar = [
 	, _isServer
 	];
 
-//Close dialog 
-closeDialog 0;
-if (name player != mcc_missionMaker) then {_null = [] execVM MCC_path + 'mcc\dialogs\mcc_PopupMenu.sqf'};
-
 // Send data over the network, or when on server, execute directly
 if (isServer) then 
 {
@@ -26,6 +22,11 @@ else
 {
 	[_ar,"mcc_fnc_login",true,false] spawn BIS_fnc_MP;
 };
+
+//Close dialog 
+sleep 0.5; 
+closeDialog 0;
+_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
 
 
 

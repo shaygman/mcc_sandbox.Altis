@@ -705,7 +705,8 @@ if (_action == 15) exitWith
 		#define MCCGRASSDENSITY 1007
 		
 		//----------------------------------------------------------Client Side settings----------------------------------------------------------------------------
-
+		MCC_GUI1initDone = false; 
+		
 		_comboBox = _mccdialog displayCtrl MCCGRASSDENSITY;		//fill combobox Grass
 		lbClear _comboBox;
 		{
@@ -721,6 +722,8 @@ if (_action == 15) exitWith
 			_comboBox lbAdd _displayname;
 		} foreach MCC_view_array;
 		_comboBox lbSetCurSel ((round ((viewdistance)/1000)) - 1); // set viewdistance index to current vd
+		
+		MCC_GUI1initDone = true; 
 	};
 };
 

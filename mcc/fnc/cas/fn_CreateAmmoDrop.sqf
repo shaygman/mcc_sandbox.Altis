@@ -18,7 +18,7 @@ _para = createVehicle [_class, [0,0,0],[],0,"FLY"];
 _para setDir getDir _drop;
 _para setPos getPos _drop;
 _paras =  [_para];
-_drop attachTo [_para, [0,2,0]];
+_drop attachTo [_para, [0,-1,0]];
 
 //Thanks to KKid for this part
 if ((_drop isKindOf "Car") || (_drop isKindOf "Tank") || (_drop isKindOf "Ship"))

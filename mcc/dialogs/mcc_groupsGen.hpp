@@ -57,7 +57,7 @@ class mcc_groupGen
 		{
 			idc = MCC_FACTION;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			onLBSelChanged = __EVAL("[5] execVM '"+MCCPATH+"mcc\pop_menu\faction.sqf'");
+			onLBSelChanged = __EVAL("[2] execVM '"+MCCPATH+"mcc\pop_menu\faction.sqf'");
 				
 			x = 0.236458 * safezoneW + safezoneX;
 			y = 0.0601715 * safezoneH + safezoneY;
@@ -71,7 +71,7 @@ class mcc_groupGen
 			idc = -1;
 			
 			text = "Close";
-			action = "MCC_mcc_screen=0; closeDialog 0; {deletemarkerlocal _x;} foreach MCC_groupGenTempWP;{deletemarkerlocal _x;} foreach MCC_groupGenTempWPLines;";
+			action = "closeDialog 0; {deletemarkerlocal _x;} foreach MCC_groupGenTempWP;{deletemarkerlocal _x;} foreach MCC_groupGenTempWPLines;";
 			
 			x = 0.84375 * safezoneW + safezoneX;
 			y = 0.796884 * safezoneH + safezoneY;
@@ -468,6 +468,7 @@ class mcc_groupGen
 		#include "mcc_groupGenCS.hpp"			
 		
 		#include "mcc_groupGenWaypoints.hpp"
+		#include "mcc_groupGenUM.hpp"
 
 	};
 	

@@ -442,7 +442,7 @@ MCC_3D_CAM_Handler =
 	//--- Deselect or CloseTerminate 
 	if (_terminate) then 
 		{
-			MCC_mcc_screen=5;
+			MCC_mcc_screen=2;
 			//--- Close
 			MCC3DRuning = false; 
 			if (! isnil "MCC_3D_CAM") then {
@@ -460,7 +460,6 @@ MCC_3D_CAM_Handler =
 	
 	if (MCC_3Dterminate) then 
 		{
-			//MCC_mcc_screen=0;
 			//--- Close
 			MCC3DRuning = false; 
 			if (isNil "MCC_3D_CAM") exitWith {}; 
@@ -523,7 +522,7 @@ MCC_3D_CAM_Handler =
 			MCC_trackMarker = false; 
 		};
 		
-		MCC_mcc_screen=5;
+		MCC_mcc_screen=2;
 		MCC3DRuning = false; 
 		if (! isnil "Object3D") then {deletevehicle Object3D};
 		if (! isnil "MCC_dummyObject") then {deletevehicle MCC_dummyObject};

@@ -30,11 +30,12 @@ Group Generator:
 - Added: Create zones, spawn units, exc from the Group Gen - in time it will replace menu 1 in MCC and a lot of functions will be called from there. 
 - Added: Create and save your own custom groups to profileNameSpace. Spawn or use them in the Mission Wizard. 
 
-- Fix group gen spawns and bugs free
-- complete merging menu 1 and group gen
-- TODO 3D icons?!
+
+- TODO alt + click for 3D?!
+- TODO mission Gen
 - TODO: Tooltip missionWizard.
 - TODO Save all MCC to 2D editor
+- TODO 3D icons?!
 - TODO Save WP
 - TODO: Manual.
 

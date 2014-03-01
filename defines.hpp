@@ -2,18 +2,12 @@
 #define MCCVersion "0.97"
 
 #include "mcc\dialogs\mcc_dialogs.hpp"
-#include "mcc\dialogs\mcc_guiTab1.hpp"
-#include "mcc\dialogs\mcc_guiTab2.hpp"
-#include "mcc\dialogs\mcc_guiTab3.hpp"
-#include "mcc\dialogs\mcc_guiTab4.hpp"
-#include "mcc\dialogs\mcc_guiTab5.hpp"
-
-#include "mcc\dialogs\mcc_guiTabLoading.hpp"
 
 #include "mcc\dialogs\mcc_saveLoadScreen.hpp"
 #include "mcc\dialogs\mcc_3d_dialog.hpp"
 #include "mcc\Dialogs\mcc_boxGen.hpp"
 #include "mcc\Dialogs\mcc_groupsGen.hpp"
+#include "mcc\Dialogs\mcc_loginDialog.hpp"
 
 #include "mcc\Dialogs\mcc_playerConsole.hpp"
 #include "mcc\Dialogs\MCC_playerConsole2.hpp"
@@ -342,6 +336,11 @@ class CfgFunctions
 			class groupSpawn
 			{
 				description = "Create a group on the server";
+			};
+			
+			class groupGenUMRefresh
+			{
+				description = "Refresh the group gen units lists";
 			};
 		};
 		

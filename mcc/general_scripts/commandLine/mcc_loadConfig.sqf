@@ -22,10 +22,8 @@ if (mcc_missionmaker == (name player)) then {
 			if !(_string == "" ) then 
 			{
 				sleep 0.5;
-				//MCC_mcc_screen=0;
 				closeDialog 0;
-				//[] execVM '\mcc_sandbox_mod\mcc\dialogs\mcc_PopupMenu.sqf';
-
+		
 				sleep 0.3;
 				_command = 'mcc_isloading=true;closedialog 0;titleText ["Loading Mission","BLACK FADED",5];' + _string + 'mcc_isloading=false;titleText ["Mission Loaded","BLACK IN",5];'; 
 				[] spawn compile _command;

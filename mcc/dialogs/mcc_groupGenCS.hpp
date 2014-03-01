@@ -11,7 +11,7 @@ class MCC_csDialogControls: MCC_RscControlsGroup
 
 	class Controls
 	{			
-		class MCC_jukeboxDialogFrame: MCC_RscText
+		class MCC_CSDialogFrame: MCC_RscText
 		{
 			idc = -1;
 			colorBackground[] = {0,0,0,0.9};

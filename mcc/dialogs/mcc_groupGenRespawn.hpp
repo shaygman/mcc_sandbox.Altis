@@ -71,19 +71,18 @@ class MCC_respawnDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Teleport players:"; //--- ToDo: Localize;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.316667 * safezoneW + safezoneX;
+			x = 0.276563 * safezoneW + safezoneX;
 			y = 0.324069 * safezoneH + safezoneY;
-			w = 0.0630208 * safezoneW;
+			w = 0.11 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
 		class MCC_respawnteleportCombo: MCC_RscCombo
 		{
 			idc = 20;
-			x = 0.385417 * safezoneW + safezoneX;
+			x = 0.4 * safezoneW + safezoneX;
 			y = 0.324069 * safezoneH + safezoneY;
-			w = 0.0916667 * safezoneW;
+			w = 0.12 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Will will alive players will be teleported to the start location or just after respawn"; //--- ToDo: Localize;
 		};
@@ -91,7 +90,7 @@ class MCC_respawnDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "FOB/HQ:"; //--- ToDo: Localize;
-			x = 0.316667 * safezoneW + safezoneX;
+			x = 0.276563 * safezoneW + safezoneX;
 			y = 0.368051 * safezoneH + safezoneY;
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
@@ -99,9 +98,9 @@ class MCC_respawnDialogControls:MCC_RscControlsGroup
 		class MCC_respawnFOBCombo: MCC_RscCombo
 		{
 			idc = 21;
-			x = 0.385417 * safezoneW + safezoneX;
+			x = 0.4 * safezoneW + safezoneX;
 			y = 0.368051 * safezoneH + safezoneY;
-			w = 0.0916667 * safezoneW;
+			w = 0.12 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "If role selection is on then the position can be set as FOB (Optional respawn location)"; //--- ToDo: Localize;
 		};

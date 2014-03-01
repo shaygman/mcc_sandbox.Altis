@@ -104,7 +104,7 @@ class MCC3D_Dialog
 		y = 0.0491758 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
 		h = 0.0219914 * safezoneH;
-		onLBSelChanged = __EVAL("[4] execVM '"+MCCPATH+"mcc\pop_menu\faction.sqf'");};
+		onLBSelChanged = __EVAL("[1] execVM '"+MCCPATH+"mcc\pop_menu\faction.sqf'");};
 		
 	class unit_type : faction 
 	{	idc=MCC_UNIT_TYPE; 
