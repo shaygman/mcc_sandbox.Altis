@@ -30,7 +30,10 @@ if (!IsNil("_class") and !Isnil("_zone")) then
 				case "Ship": 
 					{ _dummy= [_group,_zone] call fnc_DoPatrolShip;};												
 				case "Helicopter": 
-					{ _dummy= [_group,_zone] call fnc_DoPatrolHeli;};												
+					{ _dummy= [_group,_zone] call fnc_DoPatrolHeli;};	
+				//Autonomous for now the same as heli (might change later)
+				case "Autonomous": 
+					{ _dummy= [_group,_zone] call fnc_DoPatrolHeli;};																	
 			
 		};
 		//Lets set the current Order.

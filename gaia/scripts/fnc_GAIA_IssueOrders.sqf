@@ -495,6 +495,9 @@ _StartTimeIssueOrders = time;
 					   			(count(units _x)>0)
 					   			and
 					   			(alive (leader _x))
+					   			and
+					   			(count(_x getVariable  ["GAIA_zone_intend",[]])>1)		   				
+
 				  )
 					then			
 					{			
@@ -513,11 +516,21 @@ _StartTimeIssueOrders = time;
 						
 						
 						//Group is  busy to attack by DoAttack?
-						_GroupBusy				=	((_x getVariable  ["GAIA_Order",""]) in ["DoAttack"]) ;
+						_GroupBusy				=	((_x getVariable  ["GAIA_Order",""]) in ["DoAttack","DoClear"]) ;
 						
-						//Is somebody already moving over there? -> self reminder to teleport Apollo to a random spot if it is him
+						//Is somebody already moving over there? 
 						_SpotIsBeingCleared				= [_SpotPos,_side] call fnc_isblacklisted;
 						
+						//The dude should be hiding outside a CA (or we will already attack it)
+						_SpotIsOutsideCA					= ((count([_CA, {(_x distance (_SpotPos)>100)}] call BIS_fnc_conditionalSelect))>0);			
+						
+						//He cannot be to far out (only one range as only footmobiles can clear)
+						//Or the spot is in the zone from the group, we clear it, no matter how far we need to go!
+						_SpotIsWithinRange				= (
+																					(((leader _x) distance _SpotPos)<MCC_GAIA_MAX_SLOW_SPEED_RANGE  	)
+																				  or 						 	
+						 															([_SpotPos,((_x getVariable  ["GAIA_zone_intend",[]]) select 0)] call fnc_PosIsInMarker)
+																				);
 								   switch (true) do
 										{
 							  			//The Clear spot dude cases are here. So far i can think of only one case. Who knows later more? I love switch true
@@ -531,6 +544,10 @@ _StartTimeIssueOrders = time;
 							  							!_GroupBusy
 							  							and
 							  							!_SpotIsBeingCleared
+							  							and
+							  							_SpotIsOutsideCA
+							  							and
+							  							_SpotIsWithinRange
 							  							
 							  							
 							  							
@@ -547,6 +564,7 @@ _StartTimeIssueOrders = time;
 		};		
 
 }forEach _tbc;
+
 
 
 

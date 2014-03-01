@@ -61,52 +61,70 @@ if !(isnil("_Zone")) then
 {
 	
 	//Check if the dude already has a 'home'. All helicopters need position where they land and go home to.
-	if isnull((_group) getVariable ["GAIA_LandingSpot",objNull]) then	
+	if (  ((_group) getVariable ["GAIA_LandingSpot",[0,0,0]] distance [0,0,0]==0)  ) then	
 	{ 
 		if (isTouchingGround (assignedvehicle leader _group)) then
-			{_landpos = (position leader _group);}
+			{_landpos = (position assignedvehicle leader _group);}
 		else
-			{_landpos =  [([_zone,"ARM_HILLS_FLAT",(side _group)] call  fnc_GetPosition), 0,100, 12, 0, 60 * (pi / 180), 0] call BIS_fnc_findSafePos;};
+			{
+				_landpos =  [([_zone,"ARM_HILLS_FLAT",(side _group)] call  fnc_GetPosition), 0,100, 12, 0, 60 * (pi / 180), 0] call BIS_fnc_findSafePos;
+				_wp = _group addWaypoint [((_group) getVariable ["GAIA_LandingSpot",[0,0,0]]), 0];
+				_wp setWaypointType "MOVE";
+				_wp setWaypointCompletionRadius 20;
+				_wp setWaypointSpeed "LIMITED";					
+				_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
+			};
 		
-		_group setVariable ["GAIA_LandingSpot"							, ("Land_HelipadEmpty_F" createvehicle _landpos)  , false]; 
+		_dummy = ("Land_HelipadEmpty_F" createvehicle _landpos);
+		_group setVariable ["GAIA_LandingSpot"							, _landpos  , false]; 
 		
-		_wp = _group addWaypoint [position((_group) getVariable ["GAIA_LandingSpot",objNull]), 0];
-		_wp setWaypointType "MOVE";
-		_wp setWaypointCompletionRadius 200;
-		_wp setWaypointSpeed "LIMITED";					
-		_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
+
 		
 		_initial = true;
 	};
 	
 	// In case we are sitting and waiting
-	if ((round(random(20))==1)and (count (waypoints _group) == (currentWaypoint _group)) and !_initial) then
+	if (
+				(round(random(20))==1)and (count (waypoints _group) == (currentWaypoint _group)) 
+				and 
+				!_initial 
+				and 
+				(count(_group getVariable  ["GAIA_zone_intend",[]])>1)
+				and
+				((_group) getVariable ["GAIA_LandingSpot",[0,0,0]] distance [0,0,0]!=0)
+		 ) 
+	then
 	{
 		_rounds =round(random(9));
 		
 		for "_x" from 1 to _rounds do
 		{
 		//Go somewhere
-			_pos= ([(_zns  call BIS_fnc_selectRandom ) ,"AIR",(side _group)] call  fnc_GetPosition);
+			//Defensive
+			if (((_group getVariable  ["GAIA_zone_intend",[]]) select 1)=="NOFOLLOW") then
+				{_pos= ([_zone ,"AIR",(side _group)] call  fnc_GetPosition);}
+			else
+				{_pos= ([(_zns  call BIS_fnc_selectRandom ) ,"AIR",(side _group)] call  fnc_GetPosition);};			
+				
 			_dummy 	=  [_group,_pos,"MOVE"] call fnc_addWaypoint;
 		};
 
 	
-	
-		_wp = _group addWaypoint [position((_group) getVariable ["GAIA_LandingSpot",objNull]), 0];
+		
+		_wp = _group addWaypoint [((_group) getVariable ["GAIA_LandingSpot",[0,0,0]]), 0];
 		_wp setWaypointType "MOVE";
-		_wp setWaypointCompletionRadius 200;
+		_wp setWaypointCompletionRadius 20;
 		_wp setWaypointSpeed "LIMITED";					
 		_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
 	
 	};	
 	
 	//In case we somehow end up in the air without waypoins or anything to do, bring the baby down
-	if (!(isTouchingGround (vehicle leader _group)) and (count (waypoints _group) == (currentWaypoint _group)) and !_initial) then
+	if (!(isTouchingGround (vehicle leader _group)) and (count (waypoints _group) == (currentWaypoint _group)) and !_initial and ((_group) getVariable ["GAIA_LandingSpot",[0,0,0]] distance [0,0,0]!=0)) then
 	{
-		_wp = _group addWaypoint [position((_group) getVariable ["GAIA_LandingSpot",objNull]), 0];
+		_wp = _group addWaypoint [((_group) getVariable ["GAIA_LandingSpot",[0,0,0]]), 0];
 		_wp setWaypointType "MOVE";
-		_wp setWaypointCompletionRadius 200;
+		_wp setWaypointCompletionRadius 20;
 		_wp setWaypointSpeed "LIMITED";					
 		_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
 	};
