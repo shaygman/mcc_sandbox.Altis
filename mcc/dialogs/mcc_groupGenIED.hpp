@@ -37,7 +37,7 @@ class MCC_IEDDialogControls:MCC_RscControlsGroup
 			text = "IED & Ambush:"; //--- ToDo: Localize;
 			x = 0.385417 * safezoneW + safezoneX;
 			y = 0.236103 * safezoneH + safezoneY;
-			w = 0.0849875 * safezoneW;
+			w = 0.09 * safezoneW;
 			h = 0.0340016 * safezoneH;
 			colorText[] = {0,1,1,1};
 		};

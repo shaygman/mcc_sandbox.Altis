@@ -4,13 +4,25 @@
 class MCC_UMDialogControls:MCC_RscControlsGroup
 {
 	idc = 519;
-	x = 0.45 * safezoneW + safezoneX;
-	y = 0.6 * safezoneH + safezoneY;
-	w = 0.464063 * safezoneW;
-	h = 0.175 * safezoneH;
+	x = 0.471354 * safezoneW + safezoneX;
+	y = 0.620953 * safezoneH + safezoneY;
+	w = 0.469792 * safezoneW;
+	h = 0.164936 * safezoneH;
 
 	class Controls
 	{
+		class MCC_UMDialogControlsFrame: MCC_RscText
+		{
+			idc = -1;
+			text = "";
+			colorBackground[] = { 0.120, 0.120, 0.120,1};
+			
+			x = 0.270833 * safezoneW + safezoneX;
+			y = 0.225107 * safezoneH + safezoneY;
+			w = 0.469792 * safezoneW;
+			h = 0.164936 * safezoneH;
+		};
+		
 		class MCC_UMList: MCC_RscListbox
 		{
 			idc = MCC_UM_LIST;

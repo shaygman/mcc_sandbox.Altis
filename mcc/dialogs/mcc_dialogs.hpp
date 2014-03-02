@@ -105,7 +105,7 @@ class MCC_RscText
   autocomplete = "";
   colorSelection[] = {1,0,0,1};
   fixedWidth = 0;
-  font = MCCFontM;
+  font = "PuristaMedium";
   h = 0.037;
   linespacing = 1;
   shadow = 1;
@@ -241,7 +241,7 @@ class MCC_RscButton
 {
   access = 0;
   borderSize = 0;
-  colorBackground[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])",0.7};
+  colorBackground[] = {0.350,0.350,0.350,1};
   colorBackgroundActive[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.3843])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.7019])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.8862])",1};
   colorBackgroundDisabled[] = {0.95,0.95,0.95,1};
   colorBorder[] = {0,0,0,1};
@@ -282,7 +282,7 @@ class MCC_RscButtonMenu : MCC_RscButton
   color2[] = {1,1,1,1};
   color[] = {1,1,1,1};
   colorBackground2[] = {1,1,1,0.5};
-  colorBackground[] = {0.219, 0.147, 0.112,1};
+  colorBackground[] = {0.450,0.450,0.450,1};
   colorDisabled[] = {1,1,1,0.25};
   colorText[] = {1,1,1,1};
   default = 0;
@@ -977,7 +977,7 @@ class MCC_RscToolbox {
 	  colorSelect[] = {0, 0, 0, 1};
 	  colorTextDisable[] = {0.4, 0.4, 0.4, 1};
 	  colorDisable[] = {0.4, 0.4, 0.4, 1};
-	  colorSelectedBg[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])",0.5};
+	  colorSelectedBg[] = {0.450,0.450,0.450,1};
 	  font = "PuristaMedium";
 	  sizeEx = 0.0208333;
 };

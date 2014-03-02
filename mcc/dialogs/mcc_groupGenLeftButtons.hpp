@@ -2,13 +2,23 @@
 class MCC_leftButtonsControls: MCC_RscControlsGroup
 {
 	idc = -1;
-	x = 0.110417 * safezoneW + safezoneX;
-	y = 0.0931586 * safezoneH + safezoneY;	//0.0439824
-	w = 0.06875 * safezoneW;
-	h = 0.472816 * safezoneH;	
+	x = 0.105 * safezoneW + safezoneX;
+	y = 0.0711672 * safezoneH + safezoneY;	//0.0439824
+	w = 0.0802083 * safezoneW;
+	h = 0.53879 * safezoneH;	
 
 	class Controls
 	{	
+		class MCC_leftButtonsControlsFrame: MCC_RscText
+		{
+			idc = -1;
+			text = "";
+			x = 0.270833 * safezoneW + safezoneX;
+			y = 0.225107 * safezoneH + safezoneY;
+			w = 0.0802083 * safezoneW;
+			h = 0.53879 * safezoneH;
+			colorBackground[] = { 0.120, 0.120, 0.120,1};
+		};
 			
 		class MCC_groupGenSpawnButton: MCC_RscButton 
 		{
@@ -18,6 +28,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Spawn units or groups"; 
 			onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.236103 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -30,7 +42,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Box Generator"; 
 			onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'boxGen';} else {player globalchat 'Access Denied'};";
 			
-			y = MCC_buttonsSpace * 1;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.280086 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -43,7 +56,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Close Air Support Menu"; 
 			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
-			y = MCC_buttonsSpace * 2;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.324069 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -56,7 +70,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Supply Drop Menu";
 			onButtonClick = __EVAL("[16] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
-			y = MCC_buttonsSpace * 3;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.368051 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -69,7 +84,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open artillery Menu"; 
 			onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
-			y = MCC_buttonsSpace * 4;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.412034 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -82,7 +98,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Evac Menu"; 
 			onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
-			y = MCC_buttonsSpace * 5;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.456017 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -95,7 +112,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open IEDs Menu"; 
 			onButtonClick = __EVAL("[8] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
-			y = MCC_buttonsSpace * 6;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.5 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -108,7 +126,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Convoy Menu"; 
 			onButtonClick = __EVAL("[9] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
-			y = MCC_buttonsSpace * 7;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.543983 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -121,7 +140,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Spawn AC-130 (use MCC console to control it)"; 
 			onButtonClick = __EVAL ("[0] execVM '"+MCCPATH+"mcc\general_scripts\uav\uavSpawn.sqf'");
 			
-			y = MCC_buttonsSpace * 8;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.587966 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -134,7 +154,8 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Delete Menu"; 
 			onButtonClick = __EVAL("[17] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
-			y = MCC_buttonsSpace * 9;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.631949 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};

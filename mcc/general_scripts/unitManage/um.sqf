@@ -199,6 +199,7 @@ _type = _this select 0;
 				};
 					
 				//Do not refresh if we haven't picked another group
+				if (isnil "UMName") then {UMName = _name};
 				if (UMName == _name) exitWith {};
 				
 				UMName = _name;

@@ -25,7 +25,9 @@ class mcc_groupGen
 	{
 		mcc_groupGenPic,
 		MCC_mapBackground,
-		MCC_map
+		MCC_map,
+		MCC_Logo,
+		MCC_fram1
 	};
 
 
@@ -351,7 +353,7 @@ class mcc_groupGen
 		class MCC_login: MCC_RscButtonMenu 
 		{
 			idc = -1; 
-			text = "Login/Logout"; 
+			text = "Logout"; 
 			x = 0.648958 * safezoneW + safezoneX;
 			y = 0.796884 * safezoneH + safezoneY;
 			w = 0.0916667 * safezoneW;
@@ -477,11 +479,11 @@ class mcc_groupGen
 	{
 		idc = -1;
 		text = "";
-		colorBackground[] = { 0, 0, 0,0.8};
+		colorBackground[] = { 0.051, 0.051, 0.051,1};
 		
 		x = 0.0989583 * safezoneW + safezoneX;
 		y = 0.0161887 * safezoneH + safezoneY;
-		w = 0.842188 * safezoneW;
+		w = 0.844 * safezoneW;
 		h = 0.824678 * safezoneH;
 	};
 
@@ -490,10 +492,10 @@ class mcc_groupGen
 	{
 		idc = -1;
 		
-		x = 0.184896 * safezoneW + safezoneX;
-		y = 0.093159 * safezoneH + safezoneY;
-		w = 0.676042 * safezoneW;
-		h = 0.472816 * safezoneH;
+		x = 0.190625 * safezoneW + safezoneX;
+		y = 0.0931586 * safezoneH + safezoneY;
+		w = 0.664583 * safezoneW;
+		h = 0.46182 * safezoneH;
 		
 		colorBackground[] = { 1, 1, 1, 1}; 
 		colorText[] = { 1, 1, 1, 0};
@@ -504,10 +506,10 @@ class mcc_groupGen
 	{
 		idc = MCC_MINIMAP; 
 		
-		x = 0.184896 * safezoneW + safezoneX;
+		x = 0.190625 * safezoneW + safezoneX;
 		y = 0.0931586 * safezoneH + safezoneY;
-		w = 0.676042 * safezoneW;
-		h = 0.472816 * safezoneH;
+		w = 0.664583 * safezoneW;
+		h = 0.46182 * safezoneH;
 		
 		text = "";
 		onMouseButtonDown = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\mouseDown.sqf'");
@@ -515,5 +517,25 @@ class mcc_groupGen
 		onMouseButtonDblClick = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\mouseDblClick.sqf'");
 		onMouseMoving = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\mouseMoving.sqf'");
 	};
- 
+	
+	class MCC_Logo: MCC_RscPicture
+	{
+		idc = -1;
+		text = __EVAL(MCCPATH +"data\mccLogo.paa");
+		x = 0.104687 * safezoneW + safezoneX;
+		y = 0.72 * safezoneH + safezoneY;
+		w = 0.0859375 * safezoneW;
+		h = 0.109957 * safezoneH;
+	};
+	
+	class MCC_fram1: MCC_RscText
+	{
+		idc = -1;
+		colorBackground[] = { 0.150, 0.150, 0.150,1};
+		
+		x = 0.435833 * safezoneW + safezoneX;
+		y = 0.043458 * safezoneH + safezoneY;
+		w = 0.189063 * safezoneW;
+		h = 0.0439828 * safezoneH;
+	};
 };
