@@ -21,16 +21,27 @@ if (mcc_missionmaker == (name player)) then
 	MCC_GroupGenMouseButtonUp = false;
 	
 	if (isnil "MCC_doubleClicked") then {MCC_doubleClicked =false};	
-
-	if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then 								//Close Group info control
+	
+	//Close Group info control
+	if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then 								
 	{
 		ctrlShow [510,false];
 		ctrlShow [9013,false];
 		hintsilent "";
 	};		
-
+	
+	//Open 3D
+	if ((_pressed == 0) && _alt)  exitWith 								
+	{
+		//worldPos
+		MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
+		
+		[0,MCC_ConsoleWPpos] execVM format ["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
+	};	
+	
+	//Box drawing select
 	if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked && !MCC_zone_drawing && !MCC3DRuning && !MCC_CASrequestMarker && !MCC_brush_drawing && !MCC_drawTriggers
-	    && !MCC_drawMinefield && !MCC_delete_drawing && !MCC_ambushPlacing && !MCC_UMParadropRequestMarker && !_shift) then //Box drawing select
+	    && !MCC_drawMinefield && !MCC_delete_drawing && !MCC_ambushPlacing && !MCC_UMParadropRequestMarker && !_shift) then 
 	{
 		private ["_marker","_markersize","_markerpos","_null","_markerposX","_markerposY","_markersize","_markersizeX","_markersizeY",
 					 "_borderXleft","_borderXright","_borderYdown","_borderYtop","_group","_groupX","_groupY","_leader","_icon","_groupControl"];

@@ -77,12 +77,4 @@ if ((_button == 0) && (count MCC_GroupGenGroupSelected > 0))  then 								//Clo
 	_comboBox lbSetCurSel 0;
 };	
 
-if ((_button == 0) && (count MCC_GroupGenGroupSelected == 0))  then 								//Open 3D
-{
-	//worldPos
-	MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
-	
-	[0,MCC_ConsoleWPpos] execVM format ["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
-};	
-
 MCC_doubleClicked = false;				
