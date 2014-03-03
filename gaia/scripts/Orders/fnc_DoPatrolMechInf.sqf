@@ -20,7 +20,7 @@ _pos= [_group,_zone,"VEH_HILLS_ROAD_FLAT"] call fnc_CreateWP;
 
 if (count (waypoints _group) != (currentWaypoint _group)) then 
 	{
-			_dummy 	=  [_group,(position leader _group),"GETIN NEAREST"] call fnc_addWaypoint;
+			//_dummy 	=  [_group,(position leader _group),"GETIN NEAREST"] call fnc_addWaypoint;
 			_dummy 	=  [_group,_pos,"MOVE"] call fnc_addWaypoint;
 
 	};
