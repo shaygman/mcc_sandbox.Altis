@@ -223,8 +223,11 @@ if (count _vehicles > 0) then
 		} foreach units _grp; 
 	} foreach _vehicles;
 };
-/*
+<<<<<<< HEAD
+=======
 
+
+>>>>>>> e8446e07d2267448487ae5e03920ed36b2ee7123
 /*
 //--- Sort group members by ranks (the same as 2D editor does it)
 private ["_newGrp"];
@@ -242,4 +245,8 @@ while {count units _grp > 0} do {
 _newGrp selectleader (units _newGrp select 0);
 deletegroup _grp;
 */
+<<<<<<< HEAD
+=======
+
+>>>>>>> e8446e07d2267448487ae5e03920ed36b2ee7123
 _grp
