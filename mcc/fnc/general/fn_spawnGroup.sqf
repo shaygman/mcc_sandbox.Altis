@@ -32,7 +32,7 @@ scriptName "Functions\spawning\fn_spawnGroup.sqf";
 //Validate parameter count
 if ((count _this) < 3) exitWith {debugLog "Log: [spawnGroup] Function requires at leat 3 parameters!"; grpNull};
 
-private ["_pos", "_side"];
+private ["_pos", "_side","_vehicles"];
 _pos = [_this, 0, [], [[]]] call BIS_fnc_param;
 _side = [_this, 1, sideUnknown, [sideUnknown]] call BIS_fnc_param;
 
@@ -133,7 +133,7 @@ for "_i" from 0 to ((count _types) - 1) do
 	
 	if (!_skip) then 
 	{
-		private ["_unit", "_type","_vehicles"];
+		private ["_unit", "_type"];
 		_type = _types select _i;
 		_vehicles = []; 
 		
@@ -191,10 +191,12 @@ for "_i" from 0 to ((count _types) - 1) do
 		};
 	};
 };
-
+aa= _grp;
+bb = _vehicles;
 //Assigne to vehicle
 if (count _vehicles > 0) then
 {
+	player globalchat "hoi, gaan";
 	private ["_vehicle","_unit"]; 
 	{
 		_vehicle = _x; 
@@ -222,6 +224,8 @@ if (count _vehicles > 0) then
 	} foreach _vehicles;
 };
 
+
+/*
 //--- Sort group members by ranks (the same as 2D editor does it)
 private ["_newGrp"];
 _newGrp = createGroup _side;
@@ -237,5 +241,6 @@ while {count units _grp > 0} do {
 };
 _newGrp selectleader (units _newGrp select 0);
 deletegroup _grp;
+*/
 
-_newGrp
+_grp
