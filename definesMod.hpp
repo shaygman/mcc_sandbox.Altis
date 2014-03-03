@@ -213,6 +213,11 @@ class CfgFunctions
 			{
 				description = "Teleport the player when start location has been found";
 			};
+			
+			class spawnGroup
+			{
+				description = "MCC Custom group spawning";
+			};
 		};
 		
 		class ui

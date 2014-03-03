@@ -65,8 +65,7 @@ class mcc_groupGen
 			y = 0.0601715 * safezoneH + safezoneY;
 			w = 0.114583 * safezoneW;
 			h = 0.0219914 * safezoneH;
-		};
-		
+		};		
 		
 		class closeGeneratorButton: MCC_RscButtonMenu
 		{
@@ -483,7 +482,7 @@ class mcc_groupGen
 		
 		x = 0.0989583 * safezoneW + safezoneX;
 		y = 0.0161887 * safezoneH + safezoneY;
-		w = 0.844 * safezoneW;
+		w = 0.845 * safezoneW;
 		h = 0.824678 * safezoneH;
 	};
 

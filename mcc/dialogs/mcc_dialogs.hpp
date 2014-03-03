@@ -16,7 +16,7 @@
 
 //-----------------------------------------------------------------------------
 // Fonts
-#define MCCFontM "TahomaB"
+#define MCCFontM "PuristaMedium"
 #define MCCFontHTML "TahomaB"
 //"CourierNewB64" "TahomaB" "Bitstream" "Zeppelin32"
 
@@ -105,7 +105,7 @@ class MCC_RscText
   autocomplete = "";
   colorSelection[] = {1,0,0,1};
   fixedWidth = 0;
-  font = "PuristaMedium";
+  font = MCCFontM;
   h = 0.037;
   linespacing = 1;
   shadow = 1;

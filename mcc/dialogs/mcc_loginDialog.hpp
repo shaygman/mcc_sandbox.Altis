@@ -19,8 +19,19 @@ class mcc_loginDialog
 		class MCC_loginFrame: MCC_RscText
 		{
 			idc = -1;
-			colorBackground[] = {0,0,0,0.8};
+			colorBackground[] = { 0.051, 0.051, 0.051,1};
 			
+			x = 0.368229 * safezoneW + safezoneX;
+			y = 0.247099 * safezoneH + safezoneY;
+			w = 0.240625 * safezoneW;
+			h = 0.296884 * safezoneH;
+		};
+		
+		class mcc_loginDialogFrame: MCC_RscText
+		{
+			idc = -1;
+			
+			colorBackground[] = { 0.150, 0.150, 0.150,1};
 			x = 0.373958 * safezoneW + safezoneX;
 			y = 0.258094 * safezoneH + safezoneY;
 			w = 0.229167 * safezoneW;
@@ -31,6 +42,8 @@ class mcc_loginDialog
 			idc = -1;
 
 			text = "MCC Login"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
+			
 			x = 0.454167 * safezoneW + safezoneX;
 			y = 0.26909 * safezoneH + safezoneY;
 			w = 0.07 * safezoneW;
@@ -98,11 +111,11 @@ class mcc_loginDialog
 			idc = -1;
 
 			text = "Mission Maker:"; //--- ToDo: Localize;
-			x = 0.43125 * safezoneW + safezoneX;
+			x = 0.425521 * safezoneW + safezoneX;
 			y = 0.324069 * safezoneH + safezoneY;
-			w = 0.056 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			w = 0.0572917 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		class MCC_MissionMakerName: MCC_RscText
 		{
@@ -111,8 +124,8 @@ class mcc_loginDialog
 			x = 0.488542 * safezoneW + safezoneX;
 			y = 0.324069 * safezoneH + safezoneY;
 			w = 0.0572917 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			h = 0.0329871 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		class MCC_clientFPSTittle: MCC_RscText
 		{
@@ -120,10 +133,10 @@ class mcc_loginDialog
 
 			text = "Client FPS:"; //--- ToDo: Localize;
 			x = 0.379688 * safezoneW + safezoneX;
-			y = 0.357056 * safezoneH + safezoneY;
+			y = 0.368051 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			h = 0.0329871 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		class MCC_ServerFPSTittle: MCC_RscText
 		{
@@ -131,30 +144,30 @@ class mcc_loginDialog
 
 			text = "Server FPS:"; //--- ToDo: Localize;
 			x = 0.511458 * safezoneW + safezoneX;
-			y = 0.357056 * safezoneH + safezoneY;
+			y = 0.368051 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			h = 0.0329871 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		class MCC_clientFPS: MCC_RscText
 		{
 			idc = 1021;
 
 			x = 0.43125 * safezoneW + safezoneX;
-			y = 0.357056 * safezoneH + safezoneY;
+			y = 0.368051 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			h = 0.0329871 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		class MCC_ServerFPS: MCC_RscText
 		{
 			idc = 1022;
 
 			x = 0.563021 * safezoneW + safezoneX;
-			y = 0.357056 * safezoneH + safezoneY;
+			y = 0.368051 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			h = 0.0329871 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		class MCC_login: MCC_RscButtonMenu
 		{

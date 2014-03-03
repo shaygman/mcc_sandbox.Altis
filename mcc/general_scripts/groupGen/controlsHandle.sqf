@@ -29,27 +29,31 @@ if (_action == 0) exitWith
 	
 	if (_show) then
 	{
-		((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 10) sliderSetRange [0, 1];
-		((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 11) sliderSetRange [0, 1];
-		((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 12) sliderSetRange [0, 1];
+		(_mccdialog displayCtrl 10) sliderSetRange [0, 1];
+		(_mccdialog displayCtrl 11) sliderSetRange [0, 1];
+		(_mccdialog displayCtrl 12) sliderSetRange [0, 1];
+		(_mccdialog displayCtrl 13) sliderSetRange [0, 1];
+		(_mccdialog displayCtrl 14) sliderSetRange [0, 1];
 		
-		((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 10) sliderSetPosition fog;
-		((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 11) sliderSetPosition rain;
-		((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 12) sliderSetPosition overcast;
+		(_mccdialog displayCtrl 10) sliderSetPosition fog;
+		(_mccdialog displayCtrl 11) sliderSetPosition rain;
+		(_mccdialog displayCtrl 12) sliderSetPosition overcast;
+		(_mccdialog displayCtrl 13) sliderSetPosition waves;
+		(_mccdialog displayCtrl 14) sliderSetPosition windStr;
 	};
 };
 
 //-------------------------------------------------------------------------------------Time----------------------------------------------------------------------------------------------
 if (_action == 1) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 502);
+	_control = (_mccdialog displayCtrl 502);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
 	if (_show) then
 	{
 		//--------------------------------------Fill index--------------------------------------------------------------------------
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 15);		// MONTH
+		_comboBox = (_mccdialog displayCtrl 15);		// MONTH
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x select 0];
@@ -57,7 +61,7 @@ if (_action == 1) exitWith
 		} foreach MCC_months_array;
 		_comboBox lbSetCurSel (date select 1)-1;
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 16);		// Day
+		_comboBox = (_mccdialog displayCtrl 16);		// Day
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x];
@@ -65,7 +69,7 @@ if (_action == 1) exitWith
 		} foreach MCC_days_array;
 		_comboBox lbSetCurSel (date select 2)-1;
 		
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 17);		//  Year
+		_comboBox = (_mccdialog displayCtrl 17);		//  Year
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x];
@@ -73,7 +77,7 @@ if (_action == 1) exitWith
 		} foreach [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030];
 		_comboBox lbSetCurSel ((date select 0)-1990);
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 18);		// HOUR
+		_comboBox = (_mccdialog displayCtrl 18);		// HOUR
 		lbClear _comboBox;
 		{
 			_displayname = if (_x < 10) then {format ["0%1",_x]} else {format ["%1",_x]};
@@ -81,7 +85,7 @@ if (_action == 1) exitWith
 		} foreach MCC_hours_array;
 		_comboBox lbSetCurSel (date select 3);
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 19);		// Minutes
+		_comboBox = (_mccdialog displayCtrl 19);		// Minutes
 		lbClear _comboBox;
 		{
 			_displayname = if (_x < 10) then {format ["0%1",_x]} else {format ["%1",_x]};
@@ -94,14 +98,14 @@ if (_action == 1) exitWith
 //-------------------------------------------------------------------------------------RESPWAN----------------------------------------------------------------------------------------------
 if (_action == 2) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 503);
+	_control = (_mccdialog displayCtrl 503);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
 	if (_show) then
 	{
 		//--------------------------------------Fill index--------------------------------------------------------------------------
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 20);		// Teleport
+		_comboBox = (_mccdialog displayCtrl 20);		// Teleport
 		lbClear _comboBox;
 		{
 			_displayname = _x;
@@ -109,7 +113,7 @@ if (_action == 2) exitWith
 		} foreach ["Yes","No"];
 		_comboBox lbSetCurSel 0;
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21);		// FOB
+		_comboBox = (_mccdialog displayCtrl 21);		// FOB
 		lbClear _comboBox;
 		{
 			_displayname = _x;
@@ -122,7 +126,7 @@ if (_action == 2) exitWith
 //-------------------------------------------------------------------------------------DEBUG----------------------------------------------------------------------------------------------
 if (_action == 3) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 504);
+	_control = (_mccdialog displayCtrl 504);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 };
@@ -130,7 +134,7 @@ if (_action == 3) exitWith
 //-------------------------------------------------------------------------------------CAS----------------------------------------------------------------------------------------------
 if (_action == 4) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 500);
+	_control = (_mccdialog displayCtrl 500);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
@@ -138,7 +142,7 @@ if (_action == 4) exitWith
 	{
 		//--------------------------------------CAS--------------------------------------------------------------------------
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 25);		//fill combobox CAS Plane Type
+		_comboBox = (_mccdialog displayCtrl 25);		//fill combobox CAS Plane Type
 		lbClear _comboBox;
 		{
 			_displayname =  format ["%1",(_x select 3)select 0];
@@ -147,7 +151,7 @@ if (_action == 4) exitWith
 		} foreach (U_GEN_AIRPLANE+U_GEN_HELICOPTER);
 		_comboBox lbSetCurSel 0;
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 26);		//fill combobox CAS Bomb Type
+		_comboBox = (_mccdialog displayCtrl 26);		//fill combobox CAS Bomb Type
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x];
@@ -160,14 +164,14 @@ if (_action == 4) exitWith
 //-------------------------------------------------------------------------------------Artillery----------------------------------------------------------------------------------------------
 if (_action == 5) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 505);
+	_control = (_mccdialog displayCtrl 505);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
 	if (_show) then
 	{
 	//---------------------------------Artillery----------------------------------------------------------------------------
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30);		// Artillery Type
+		_comboBox = (_mccdialog displayCtrl 30);		// Artillery Type
 			lbClear _comboBox;
 			{
 				_displayname = format ["%1",_x select 0];
@@ -175,7 +179,7 @@ if (_action == 5) exitWith
 			} foreach MCC_artilleryTypeArray;
 			_comboBox lbSetCurSel 0;
 			
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 31);		//Artillery Spread
+		_comboBox = (_mccdialog displayCtrl 31);		//Artillery Spread
 			lbClear _comboBox;
 			{
 				_displayname = format ["%1",_x select 0];
@@ -183,7 +187,7 @@ if (_action == 5) exitWith
 			} foreach MCC_artillerySpreadArray;
 			_comboBox lbSetCurSel 0;
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 32);		//Artillery Number
+		_comboBox = (_mccdialog displayCtrl 32);		//Artillery Number
 			lbClear _comboBox;
 			{
 				_displayname = format ["%1",_x];
@@ -191,7 +195,7 @@ if (_action == 5) exitWith
 			} foreach MCC_artilleryNumberArray;
 			_comboBox lbSetCurSel 0;
 			
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 33);		//Artillery Delay
+		_comboBox = (_mccdialog displayCtrl 33);		//Artillery Delay
 		lbClear _comboBox;
 		{
 			_displayname = _x;
@@ -204,7 +208,7 @@ if (_action == 5) exitWith
 //-------------------------------------------------------------------------------------SPAWN----------------------------------------------------------------------------------------------
 if (_action == 6) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 506);
+	_control = (_mccdialog displayCtrl 506);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
@@ -244,7 +248,7 @@ if (_action == 6) exitWith
 		} foreach MCC_spawn_empty;
 		_comboBox lbSetCurSel MCC_empty_index;
 		
-		_comboBox =((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 0);		//fill zone locations
+		_comboBox =(_mccdialog displayCtrl 0);		//fill zone locations
 		lbClear _comboBox;
 		{
 			_displayname = _x select 0;
@@ -257,14 +261,14 @@ if (_action == 6) exitWith
 //-------------------------------------------------------------------------------------EVAC----------------------------------------------------------------------------------------------
 if (_action == 7) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 507);
+	_control = (_mccdialog displayCtrl 507);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
 	if (_show) then
 	{
 		//--------------------------------------------------------EVAC Settings---------------------------------------------------------
-		_comboBox =  ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 40);		//EVAC type		
+		_comboBox =  (_mccdialog displayCtrl 40);		//EVAC type		
 		lbClear _comboBox;
 		{
 			_displayname = _x;
@@ -272,7 +276,7 @@ if (_action == 7) exitWith
 		} foreach ["Helicopters", "Vehicles","Tracked", "Ships"];
 		_comboBox lbSetCurSel 0;
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 44);		//fill combobox Fly in Hight
+		_comboBox = (_mccdialog displayCtrl 44);		//fill combobox Fly in Hight
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x  select 0];
@@ -280,7 +284,7 @@ if (_action == 7) exitWith
 		} foreach MCC_evacFlyInHight_array;
 		_comboBox lbSetCurSel MCC_evacFlyInHight_index;
 
-		_comboBox =  ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 42);		//fill combobox for availabe evac type
+		_comboBox =  (_mccdialog displayCtrl 42);		//fill combobox for availabe evac type
 		lbClear _comboBox;
 		{
 			if (alive _x) then	{
@@ -299,17 +303,17 @@ if (_action == 7) exitWith
 		{										
 			private ["_insetionArray","_type"];
 			_insetionArray = ["Move (engine on)","Move (engine off)"];
-			ctrlShow [((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 44),false];
+			ctrlShow [(_mccdialog displayCtrl 44),false];
 			_type = MCC_evacVehicles select MCC_evacVehicles_index;
 			
 			//Case we choose aircrft
 			if (_type iskindof "helicopter") then 
 			{									
 				_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
-				ctrlShow [((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 44),true];
+				ctrlShow [(_mccdialog displayCtrl 44),true];
 			};
 
-			_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 43);					//Adjust insertion type by evac type
+			_comboBox = (_mccdialog displayCtrl 43);					//Adjust insertion type by evac type
 			lbClear _comboBox;
 			{
 				_displayname = _x;
@@ -334,7 +338,7 @@ if (_action == 8) exitWith
 	#define MCC_TRAPS_PROXIMITY 2015
 	#define MCC_TRAPS_AMBUSH 2016
 	
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 508);
+	_control = (_mccdialog displayCtrl 508);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
@@ -418,14 +422,14 @@ if (_action == 8) exitWith
 //-------------------------------------------------------------------------------------CONVOY----------------------------------------------------------------------------------------------
 if (_action == 9) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 509);
+	_control = (_mccdialog displayCtrl 509);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
 	if (_show) then
 	{
 		//------------------------------------------Convoy Generator--------------------------------------------------------
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 50);		//fill combobox Car1
+		_comboBox = (_mccdialog displayCtrl 50);		//fill combobox Car1
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",(_x select 3) select 0];
@@ -435,7 +439,7 @@ if (_action == 9) exitWith
 		_index = _comboBox lbAdd "None";
 		_comboBox lbSetCurSel MCC_convoyCar1Index;
 
-		_comboBox =  ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 51);		//fill combobox Car2
+		_comboBox =  (_mccdialog displayCtrl 51);		//fill combobox Car2
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",(_x select 3) select 0];
@@ -445,7 +449,7 @@ if (_action == 9) exitWith
 		_index = _comboBox lbAdd "None";
 		_comboBox lbSetCurSel MCC_convoyCar2Index;
 
-		_comboBox =  ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 52);		//fill combobox Car3
+		_comboBox =  (_mccdialog displayCtrl 52);		//fill combobox Car3
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",(_x select 3) select 0];
@@ -455,7 +459,7 @@ if (_action == 9) exitWith
 		_index = _comboBox lbAdd "None";
 		_comboBox lbSetCurSel MCC_convoyCar3Index;
 
-		_comboBox =  ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 53);		//fill combobox Car4
+		_comboBox =  (_mccdialog displayCtrl 53);		//fill combobox Car4
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",(_x select 3) select 0];
@@ -465,7 +469,7 @@ if (_action == 9) exitWith
 		_index = _comboBox lbAdd "None";
 		_comboBox lbSetCurSel MCC_convoyCar4Index;
 
-		_comboBox =  ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 54);		//fill combobox Car5
+		_comboBox =  (_mccdialog displayCtrl 54);		//fill combobox Car5
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",(_x select 3) select 0];
@@ -475,7 +479,7 @@ if (_action == 9) exitWith
 		_index = _comboBox lbAdd "None";
 		_comboBox lbSetCurSel MCC_convoyCar5Index;
 
-		_comboBox =  ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 55);;		//fill combobox HVT
+		_comboBox =  (_mccdialog displayCtrl 55);;		//fill combobox HVT
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x select 0];
@@ -483,7 +487,7 @@ if (_action == 9) exitWith
 		} foreach MCC_convoyHVT;
 		_comboBox lbSetCurSel MCC_convoyHVTIndex;
 
-		_comboBox =  ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 56);;		//fill combobox HVT car
+		_comboBox =  (_mccdialog displayCtrl 56);;		//fill combobox HVT car
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x select 0];
@@ -496,14 +500,14 @@ if (_action == 9) exitWith
 //-------------------------------------------------------------------------------------Markers----------------------------------------------------------------------------------------------
 if (_action == 10) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 511);
+	_control = (_mccdialog displayCtrl 511);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
 	if (_show) then
 	{
 		//------------------------------------------------Markers-------------------------------------------------------
-		_comboBox =((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3051);		//fill Markers Colors 1
+		_comboBox =(_mccdialog displayCtrl 3051);		//fill Markers Colors 1
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x select 0];
@@ -511,7 +515,7 @@ if (_action == 10) exitWith
 		} foreach MCC_colorsarray;
 		_comboBox lbSetCurSel 0;
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3053);		//fill Markers Shape
+		_comboBox = (_mccdialog displayCtrl 3053);		//fill Markers Shape
 		lbClear _comboBox;
 		{
 			_displayname = _x;
@@ -519,7 +523,7 @@ if (_action == 10) exitWith
 		} foreach MCC_shapeMarker;
 		_comboBox lbSetCurSel 0;
 
-		_comboBox =((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3054);		//fill Markers Brush
+		_comboBox =(_mccdialog displayCtrl 3054);		//fill Markers Brush
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x select 0];
@@ -529,7 +533,7 @@ if (_action == 10) exitWith
 		} foreach MCC_brushesarray;
 		_comboBox lbSetCurSel 0;
 
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3052);		//fill Markers Type
+		_comboBox = (_mccdialog displayCtrl 3052);		//fill Markers Type
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x select 0];
@@ -544,7 +548,7 @@ if (_action == 10) exitWith
 //-------------------------------------------------------------------------------------Briefing----------------------------------------------------------------------------------------------
 if (_action == 11) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 512);
+	_control = (_mccdialog displayCtrl 512);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 };
@@ -552,14 +556,14 @@ if (_action == 11) exitWith
 //-------------------------------------------------------------------------------------TASKS----------------------------------------------------------------------------------------------
 if (_action == 12) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 513);
+	_control = (_mccdialog displayCtrl 513);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
 	if (_show) then
 	{
 		//---------------------------------------------------Taskss--------------------------------------------------------
-		_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 3058);		//fill Tasks
+		_comboBox = (_mccdialog displayCtrl 3058);		//fill Tasks
 		lbClear _comboBox;
 		{
 			_displayname = format ["%1",_x select 0];
@@ -572,7 +576,7 @@ if (_action == 12) exitWith
 //-------------------------------------------------------------------------------------JUKEBOX----------------------------------------------------------------------------------------------
 if (_action == 13) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 514);
+	_control = (_mccdialog displayCtrl 514);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
@@ -638,7 +642,7 @@ if (_action == 13) exitWith
 //-------------------------------------------------------------------------------------JUKEBOX----------------------------------------------------------------------------------------------
 if (_action == 14) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 515);
+	_control = (_mccdialog displayCtrl 515);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
@@ -695,7 +699,7 @@ if (_action == 14) exitWith
 //-------------------------------------------------------------------------------------CLIENT SIDE----------------------------------------------------------------------------------------------
 if (_action == 15) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 516);
+	_control = (_mccdialog displayCtrl 516);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
@@ -730,7 +734,7 @@ if (_action == 15) exitWith
 //-------------------------------------------------------------------------------------AIRDROP----------------------------------------------------------------------------------------------
 if (_action == 16) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 517);
+	_control = (_mccdialog displayCtrl 517);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	
@@ -763,7 +767,7 @@ if (_action == 16) exitWith
 //-------------------------------------------------------------------------------------DELETE----------------------------------------------------------------------------------------------
 if (_action == 17) exitWith
 {
-	_control = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 518);
+	_control = (_mccdialog displayCtrl 518);
 	_show = if (ctrlShown _control) then {false} else {true}; 
 	_control ctrlShow _show;
 	

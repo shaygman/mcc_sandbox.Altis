@@ -253,7 +253,7 @@ if (_cargoNum > 0) then
 	{
 		if !( _customParaGroup ) then 
 		{ 
-			_unitspawned=[[100,100,5000], _side, (call compile _spawnParaGroup),[],[],[0.1,MCC_AI_Skill],[],[_cargoEmtpy, 0]] call BIS_fnc_spawnGroup;
+			_unitspawned=[[100,100,5000], _side, (call compile _spawnParaGroup),[],[],[0.1,MCC_AI_Skill],[],[_cargoEmtpy, 0]] call MCC_fnc_spawnGroup;
 			sleep 0.1;
 		}
 		else

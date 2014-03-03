@@ -107,7 +107,7 @@ _cargoyGroupArray = [];
 				
 				if !( (count _convoyGroupArray) == 0 ) then
 				{ 
-					_group = [_locGr, side _x, (call compile (_convoyGroupArray select 0)),[],[],[0.1,MCC_AI_Skill],[],[_fillSlots, 0]] call BIS_fnc_spawnGroup;
+					_group = [_locGr, side _x, (call compile (_convoyGroupArray select 0)),[],[],[0.1,MCC_AI_Skill],[],[_fillSlots, 0]] call MCC_fnc_spawnGroup;
 					sleep 0.1;
 				}
 				else 

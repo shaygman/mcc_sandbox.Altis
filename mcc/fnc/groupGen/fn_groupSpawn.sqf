@@ -31,7 +31,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 		//Cfg Group
 		if (typeName _unitsArray == "STRING") then 
 		{
-			_group = [_pos, _side, (call compile _unitsArray)] call BIS_fnc_spawnGroup;
+			_group = [_pos, _side, (call compile _unitsArray)] call MCC_fnc_spawnGroup;
 		} 
 		else //Array group workAround
 		{

@@ -463,13 +463,13 @@ my_pv_handler =
 										_p_mcc_spawnfaction = if (typeName _p_mcc_spawnfaction == "STRING") then {(call compile _p_mcc_spawnfaction)} else {_p_mcc_spawnfaction}; 
 										//Depending on faction we spawn for side
 										if (_p_mcc_grouptype=="GUE") then
-										    {_unitspawned=[_safepos, resistance, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
+										    {_unitspawned=[_safepos, resistance, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};										
 										if (_p_mcc_grouptype=="WEST") then
-										    {_unitspawned=[_safepos, west, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};																				
+										    {_unitspawned=[_safepos, west, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};																				
 										if (_p_mcc_grouptype=="EAST") then
-										    {_unitspawned=[_safepos, east, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
+										    {_unitspawned=[_safepos, east, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};										
 										if (_p_mcc_grouptype=="CIV") then
-										    {_unitspawned=[_safepos, civilian, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call BIS_fnc_spawnGroup;};										
+										    {_unitspawned=[_safepos, civilian, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};										
 										
 										{
 											_x setSkill ["aimingspeed", MCC_AI_Aim];

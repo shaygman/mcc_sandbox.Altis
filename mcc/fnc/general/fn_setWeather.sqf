@@ -15,12 +15,14 @@ _weather = _this select 0;
 
 skipTime -24;
 86400 setOvercast	(_weather select 0);
-if ((count _weather) > 1) then {86400 setWindForce 	(_weather select 1)};
-if ((count _weather) > 2) then {86400 setWaves 		(_weather select 2)};
-if ((count _weather) > 3) then {86400 setRain 		(_weather select 3)};
-if ((count _weather) > 4) then {86400 setLightnings	(_weather select 4)};
-if ((count _weather) > 5) then {86400 setFog [(_weather select 5), 0.03,10]};
 skipTime 24;
+
+if ((count _weather) > 1) then {0 setWindForce 	(_weather select 1)};
+if ((count _weather) > 2) then {0 setWaves 		(_weather select 2)};
+if ((count _weather) > 3) then {0 setRain 		(_weather select 3)};
+if ((count _weather) > 4) then {0 setLightnings	(_weather select 4)};
+if ((count _weather) > 5) then {0 setFog [(_weather select 5), 0.03,10]};
+
 0 = [] spawn 
 {
 	sleep 0.1;

@@ -100,7 +100,7 @@ if (_isSpotter > 0) then {		//If we are spawning a spotter
 	_spotter setcaptive true;
 	_spotter AddWeapon "Binocular";
 } else {
-	_group=[_pos, _side, (call compile _spawnName)] call BIS_fnc_spawnGroup;
+	_group=[_pos, _side, (call compile _spawnName)] call MCC_fnc_spawnGroup;
 	};
 
 		
