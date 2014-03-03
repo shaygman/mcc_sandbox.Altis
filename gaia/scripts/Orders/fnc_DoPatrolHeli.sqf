@@ -63,20 +63,29 @@ if !(isnil("_Zone")) then
 	//Check if the dude already has a 'home'. All helicopters need position where they land and go home to.
 	if (  ((_group) getVariable ["GAIA_LandingSpot",[0,0,0]] distance [0,0,0]==0)  ) then	
 	{ 
+		
 		if (isTouchingGround (assignedvehicle leader _group)) then
-			{_landpos = (position assignedvehicle leader _group);}
+			{
+					_landpos = (position assignedvehicle leader _group); 
+					_dummy = ("Land_HelipadEmpty_F" createvehicle _landpos);
+					_group setVariable ["GAIA_LandingSpot"							, _landpos  , false]; 
+			}
 		else
 			{
+	
 				_landpos =  [([_zone,"ARM_HILLS_FLAT",(side _group)] call  fnc_GetPosition), 0,100, 12, 0, 60 * (pi / 180), 0] call BIS_fnc_findSafePos;
+					
+				_dummy = ("Land_HelipadEmpty_F" createvehicle _landpos);
+				_group setVariable ["GAIA_LandingSpot"							, _landpos  , false]; 
+				
+				
 				_wp = _group addWaypoint [((_group) getVariable ["GAIA_LandingSpot",[0,0,0]]), 0];
 				_wp setWaypointType "MOVE";
 				_wp setWaypointCompletionRadius 20;
 				_wp setWaypointSpeed "LIMITED";					
 				_wp setWaypointStatements ["true","(Vehicle this) land 'land'"];
 			};
-		
-		_dummy = ("Land_HelipadEmpty_F" createvehicle _landpos);
-		_group setVariable ["GAIA_LandingSpot"							, _landpos  , false]; 
+	
 		
 
 		
