@@ -191,10 +191,12 @@ for "_i" from 0 to ((count _types) - 1) do
 		};
 	};
 };
-
+aa= _grp;
+bb = _vehicles;
 //Assigne to vehicle
 if (count _vehicles > 0) then
 {
+	player globalchat "hoi, gaan";
 	private ["_vehicle","_unit"]; 
 	{
 		_vehicle = _x; 
@@ -222,6 +224,8 @@ if (count _vehicles > 0) then
 	} foreach _vehicles;
 };
 /*
+
+/*
 //--- Sort group members by ranks (the same as 2D editor does it)
 private ["_newGrp"];
 _newGrp = createGroup _side;
@@ -238,4 +242,5 @@ while {count units _grp > 0} do {
 _newGrp selectleader (units _newGrp select 0);
 deletegroup _grp;
 */
+_grp
 _grp
