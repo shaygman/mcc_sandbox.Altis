@@ -246,9 +246,6 @@ if !mcc_isloading then
 									];
 						[[_pos, MCC_groupBroadcast, mcc_hc, mcc_sidename, MCC_isEmpty],'MCC_fnc_groupSpawn',false,false] spawn BIS_fnc_MP;
 						onMapSingleClick """";";
-		waituntil {click || (time > _timeout)}; 
-		sleep 1; 
-		[west,east,resistance,civilian] execVM format ["%1mcc\general_scripts\groupGen\group_manage.sqf",MCC_path];	//Refresh the group WP
 	}
 	//Spawn to zone
 	else
@@ -272,7 +269,5 @@ if !mcc_isloading then
 		mcc_awareness = "default";
 		
 		_nul=[4] execVM MCC_path + "mcc\general_scripts\mcc_SpawnStuff.sqf";
-		sleep 1; 
-		[west,east,resistance,civilian] execVM format ["%1mcc\general_scripts\groupGen\group_manage.sqf",MCC_path];	//Refresh the group WP
 	};
 };

@@ -365,7 +365,6 @@ MCC_evacVehicles_last = 0;
 MCCFirstOpenUI= true;
 
 MCC_UMunitsNames = [];
-MCC_UMstatus = 0;
 MCC_UMUnit = 0;
 MCC_gearDialogClassIndex = 0;
 MCC_UMParadropRequestMarker = false; 

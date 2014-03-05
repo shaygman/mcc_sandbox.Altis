@@ -31,8 +31,8 @@ Group Generator:
 - Added: Create and save your own custom groups to profileNameSpace. Spawn or use them in the Mission Wizard. 
 
 
-- TODO alt + click for 3D?!
-- TODO mission Gen
+- TODO show SF in right click. 
+- TODO hints and tooltips
 - TODO: Tooltip missionWizard.
 - TODO Save all MCC to 2D editor
 - TODO 3D icons?!

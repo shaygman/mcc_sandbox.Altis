@@ -186,7 +186,6 @@ _type = _this select 0;
 					
 				//Do not refresh if we haven't picked another group
 				if (isnil "UMName") then {UMName = _name};
-				if (UMName == _name) exitWith {};
 				
 				UMName = _name;
 				deletemarkerlocal "currentUnitSelected";
@@ -296,29 +295,21 @@ _type = _this select 0;
 			
 			if (MCC_UMUnit==0) then // Units selection
 			{
+				if ((lbCurSel MCC_UM_LIST) == -1) exitWith {}; 
 				if (_ctrlKey) then 
 				{
 					if !((MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)) in MCC_selectedUnits) then
 					{
 						MCC_selectedUnits = MCC_selectedUnits + [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
-						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
-						//hint format ["%1", MCC_selectedUnits];						
 					} 
 					else 
 					{
 						MCC_selectedUnits = MCC_selectedUnits - [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
-						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [1, 1, 1, 1]];
-						//hint format ["%1", MCC_selectedUnits];
 					};
 				} 
 				else 
 				{
 					MCC_selectedUnits = [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
-					for [{_x=0},{_x<(lbSize MCC_UM_LIST)},{_x=_x+1}] do {
-						lbSetColor [MCC_UM_LIST, _x, [1, 1, 1, 1]];
-						}
-					lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
-					//hint format ["%1", MCC_selectedUnits];
 				};
 			};
 						
@@ -447,64 +438,4 @@ _type = _this select 0;
 		{
 			player globalchat format ["Access Denied: type %1", _type];
 		};
-	};
-	
-
-if (_type == 8 || _type == 4) exitWIth {}; // Fail safe for loading list only if unit deleted or houn other
-//-------------------------------Reset list managment--------------------------------------------------------------------------------------------------------------
-MCC_UMunitsNames = [];
-UMgroupNames = [];
-_comboBox = _mccdialog displayCtrl MCC_UM_LIST;
-lbClear _comboBox;
-if (MCC_UMstatus == 0) then //player
-	{
-		if (MCC_UMUnit==0) then 
-			{
-				{
-				if ((isPlayer _x) && (alive _x)) then	//unit
-					{
-						_displayname = name _x;
-						_comboBox lbAdd _displayname;
-						MCC_UMunitsNames = MCC_UMunitsNames + [_x];
-					};
-				} forEach  allUnits;
-			} else
-				{
-					{
-					if (isPlayer (leader _x)) then	//group
-						{
-							_displayname =  format ["%1", _x];
-							_comboBox lbAdd _displayname;
-							UMgroupNames = UMgroupNames + [_x];
-						};
-					} forEach  allgroups;
-				};
-	};
-	
-switch (MCC_UMstatus) do
-{
-	case 1:		
-	{
-		_side = east;
-	};
-	
-	case 2:		
-	{
-		_side = west;
-	};
-	
-	case 3:		
-	{
-		_side = resistance;
-	};
-	
-	default
-	{
-		_side = civilian;
-	};
-};
-
-[] spawn MCC_fnc_groupGenUMRefresh; 
-
-
-	
+	};	

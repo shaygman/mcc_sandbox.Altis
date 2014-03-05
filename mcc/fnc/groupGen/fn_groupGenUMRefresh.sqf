@@ -5,7 +5,7 @@
 #define MCC_UM_LIST 3069
 disableSerialization;
 
-private ["_side","_mccdialog", "_name", "_worldPos","_curSel","_group"];
+private ["_mccdialog", "_name", "_worldPos","_group","_index"];
 
 MCC_UMunitsNames = [];
 UMgroupNames = [];
@@ -13,16 +13,17 @@ UMgroupNames = [];
 _mccdialog =  (uiNamespace getVariable "MCC_groupGen_Dialog");
 _comboBox = _mccdialog displayCtrl MCC_UM_LIST;
 lbClear _comboBox;
-_curSel = if (lbCurSel _comboBox == -1) then {0} else {lbCurSel _comboBox};
-if (MCC_UMstatus == 0) exitWith //player
+
+if (("players" in MCC_groupGenGroupStatus) && (count MCC_groupGenGroupStatus == 1)) exitWith //player
 {
 	if (MCC_UMUnit==0) then 
 	{
 		{
 			if ((isPlayer _x) && (alive _x)) then	//unit
 			{
-				_displayname = name _x;
-				_comboBox lbAdd _displayname;
+				_displayname = format ["(Player) - %1",name _x];
+				_index = lbAdd [MCC_UM_LIST,_displayname];
+				if (_x in MCC_selectedUnits) then {lbSetColor [MCC_UM_LIST,_index, [0, 1, 1, 1]]};
 				MCC_UMunitsNames = MCC_UMunitsNames + [_x];
 			};
 		} forEach  allUnits;
@@ -32,36 +33,38 @@ if (MCC_UMstatus == 0) exitWith //player
 		{
 			if (isPlayer (leader _x)) then	//group
 			{
-				_displayname =  format ["%1", _x];
-				_comboBox lbAdd _displayname;
+				_displayname = format ["(Players) - %1",_x];
+				_index = lbAdd [MCC_UM_LIST,_displayname];
+				if (_x in MCC_selectedUnits) then {lbSetColor [MCC_UM_LIST,_index, [0, 1, 1, 1]]};
 				UMgroupNames = UMgroupNames + [_x];
 			};
 		} forEach  allgroups;
 	};
-	_comboBox lbSetCurSel 0;
 };
 
-_side = switch (MCC_UMstatus) do
-		{
-			case 1: {east};
-			case 2: {west};			
-			case 3: {resistance};
-			case 4: {civilian};
-		};
-	
-if (isnil "MCC_GroupGenGroupSelected") exitWith {_comboBox lbSetCurSel _curSel}; 	
+if (isnil "MCC_GroupGenGroupSelected") exitWith {}; 
+
 if (MCC_UMUnit==0) then 
 {
 	{
 		_group = _x; 
 		{
-			if (alive _x && side _x == _side && !(isPlayer _x)) then	//Unit
+			if (alive _x && side _x in MCC_groupGenGroupStatus) then	//Unit
 			{
-				_displayname =  format ["%1",typeOf (vehicle _x)];
+				_displayname = if (isPlayer _x) then 
+								{
+									format ["(Player) - %1",name _x];
+								} 
+								else 
+								{
+									getText (configFile >> "cfgVehicles" >> typeof (vehicle _x) >> "displayName");
+								};
+								
 				if ((_x != vehicle _x) && ((driver (vehicle _x))==_x)) then {_displayname = format ["%1 (Driver)",_displayname]};
 				if ((_x != vehicle _x) && ((gunner (vehicle _x))==_x)) then {_displayname =  format ["%1 (Gunner)",_displayname]};
 				if ((_x != vehicle _x) && ((commander (vehicle _x))==_x)) then {_displayname =  format ["%1 (Commander)",_displayname]};
-				_comboBox lbAdd _displayname;
+				_index = lbAdd [MCC_UM_LIST,_displayname];
+				if (_x in MCC_selectedUnits) then {lbSetColor [MCC_UM_LIST,_index, [0, 1, 1, 1]]};
 				MCC_UMunitsNames = MCC_UMunitsNames + [_x];
 			};
 		} forEach units _group;
@@ -70,12 +73,14 @@ if (MCC_UMUnit==0) then
 else
 {
 	{
-		if ((side (leader _x) == _side) && !(isPlayer leader _x)) then	//group
+		if (side (leader _x) in MCC_groupGenGroupStatus) then	//group
 		{
 			_displayname =  format ["%1", _x];
-			_comboBox lbAdd _displayname;
+			if (isPlayer leader _x) then {_displayname = format ["(Players) - %1",_displayname]};
+			_index = lbAdd [MCC_UM_LIST,_displayname];
+			if (_x in MCC_selectedUnits) then {lbSetColor [MCC_UM_LIST,_index, [0, 1, 1, 1]]};
 			UMgroupNames = UMgroupNames + [_x];
 		};
 	} forEach  MCC_GroupGenGroupSelected;
 };
-_comboBox lbSetCurSel _curSel;
+

@@ -140,7 +140,7 @@ class mcc_groupGen
 		{
 			idc = -1;
 			tooltip = "Show players only"; 
-			onButtonClick = __EVAL("[west,east,resistance,civilian,'players'] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
+			onButtonClick = __EVAL("['players'] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
 
 			text = "Players"; //--- ToDo: Localize;
 			x = 0.603125 * safezoneW + safezoneX;
@@ -153,7 +153,7 @@ class mcc_groupGen
 		{
 			idc = -1;
 			tooltip = "Show all units"; 
-			onButtonClick = __EVAL("[west,east,resistance,civilian] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
+			onButtonClick = __EVAL("[west,east,resistance,civilian,'players'] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_manage.sqf'");
 
 			text = "All"; //--- ToDo: Localize;
 			x = 0.551562 * safezoneW + safezoneX;

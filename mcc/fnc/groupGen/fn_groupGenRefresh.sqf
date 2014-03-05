@@ -38,9 +38,9 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 		_groupStatus = _x getvariable "MCC_support";
 		_wpArray = waypoints (group _leader);
 		_behaviour = behaviour _leader;
-		_players = if ("players" in MCC_groupGenGroupStatus) then {alive _leader && isPlayer _leader} else {alive _leader}; 
+		_players = if ("players" in MCC_groupGenGroupStatus && (count MCC_groupGenGroupStatus == 1)) then {alive _leader && isPlayer _leader} else {alive _leader}; 
 
-		if ((side _leader in MCC_groupGenGroupStatus) && _players) then
+		if (((side _leader in MCC_groupGenGroupStatus) || ("players" in MCC_groupGenGroupStatus && (count MCC_groupGenGroupStatus == 1))) && _players) then
 		{
 			switch (side _leader) do 	
 			{
@@ -202,9 +202,9 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 	} foreach allgroups; 
 	
 	//Refresh UM list
-	[] call MCC_fnc_groupGenUMRefresh;
+	[] spawn MCC_fnc_groupGenUMRefresh;
 	
-	sleep 0.5;
+	sleep 1;
 	{deletemarkerlocal _x} foreach MCC_groupGenTempWP;
 	MCC_groupGenTempWP = []; 
 	{deletemarkerlocal _x} foreach MCC_groupGenTempWPLines;

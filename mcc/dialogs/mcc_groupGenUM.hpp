@@ -44,7 +44,7 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			rows = 1;
 			columns = 2;
 			values[] = {0,1};
-			onToolBoxSelChanged = "MCC_UMUnit = (_this select 1); [] call MCC_fnc_groupGenUMRefresh;";
+			onToolBoxSelChanged = "MCC_UMUnit = (_this select 1);";
 
 			x = 0.276563 * safezoneW + safezoneX;
 			y = 0.236103 * safezoneH + safezoneY;
