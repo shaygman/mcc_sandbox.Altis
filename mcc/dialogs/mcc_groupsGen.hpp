@@ -432,6 +432,20 @@ class mcc_groupGen
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
+		
+		class MCC_openMWButton: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = "createDialog 'MCCMWDialog'";
+			text = "Mission Generator"; 
+			tooltip = "Open mission wizard"; 			
+			
+			x = 0.43125 * safezoneW + safezoneX;
+			y = 0.565974 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			
+		};
 
 		//---------------------- For group ID ---------------------
 		class MCC_GroupGenInfoText: MCC_RscStructuredText

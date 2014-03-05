@@ -84,7 +84,7 @@ class MCC_respawnDialogControls:MCC_RscControlsGroup
 			y = 0.324069 * safezoneH + safezoneY;
 			w = 0.12 * safezoneW;
 			h = 0.0329871 * safezoneH;
-			tooltip = "Will will alive players will be teleported to the start location or just after respawn"; //--- ToDo: Localize;
+			tooltip = "Will alive players will be teleported to the start location immediately or just after respawn"; //--- ToDo: Localize;
 		};
 		class MCC_respawnFOBTittle: MCC_RscText
 		{

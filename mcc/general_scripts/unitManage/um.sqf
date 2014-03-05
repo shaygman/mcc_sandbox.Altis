@@ -73,96 +73,82 @@ _type = _this select 0;
 			
 		case 3:	//Markers
 		{
-			if (!MCC_trackMarker) then 
+			MCC_trackMarker = !MCC_trackMarker; 
+			while {MCC_trackMarker} do 
 			{
-				MCC_trackMarker = true; 
-				while {MCC_trackMarker} do 
-				{
-					_tempMarkers = [];
-					_tempLines = [];
-					_tempVehicles = [];
-						{
-							_leader = leader _x; 
-									
-									{
-										switch (format ["%1", side  _x]) do 
+				_tempMarkers = [];
+				_tempLines = [];
+				_tempVehicles = [];
+					{
+						_leader = leader _x; 
+								
+								{
+									switch (format ["%1", side  _x]) do 
+										{
+										case "EAST": //East
 											{
-											case "EAST": //East
-												{
-												_markerColor = "ColorRed";
-												_sideMarker = "o"
-												}; 
-												
-											case "WEST": //West
-												{
-												_markerColor = "ColorBlue";
-												_sideMarker = "b"
-												};
-												
-											case "GUER": //Resistance
-												{
-												_markerColor = "ColorGreen";
-												_sideMarker = "n";
-												};
-											case "CIVILIAN": //Civilian
-												{
-												_markerColor = "ColorWhite";
-												_sideMarker = "n";
-												};	
+											_markerColor = "ColorRed";
+											_sideMarker = "o"
+											}; 
+											
+										case "WEST": //West
+											{
+											_markerColor = "ColorBlue";
+											_sideMarker = "b"
 											};
 											
-											if ((vehicle _x) != _x) then 
+										case "GUER": //Resistance
 											{
-												if (!((vehicle _x) in _tempVehicles)) then
-												{
-													_tempVehicles set [count _tempVehicles, vehicle _x];
-													_markerType = format ["%1_unknown", _sideMarker];
-													if ((vehicle _x) iskindof "Car") then {_markerType = format ["%1_mech_inf", _sideMarker]; };
-													if ((vehicle _x) iskindof "Tank") then {_markerType = format ["%1_armor", _sideMarker]; };
-													if ((vehicle _x) iskindof "Air") then {_markerType = format ["%1_air", _sideMarker]; };
-													if ((vehicle _x) iskindof "Boat") then {_markerType = format ["%1_recon", _sideMarker]; };
-													createMarkerLocal [format["%1", _x], getpos (vehicle _x)];
-													format["%1", _x] setMarkerTypelocal _markerType;
-													format["%1", _x] setMarkerColorlocal _markerColor;
-													_tempMarkers set [count _tempMarkers, format["%1", _x]];
-												};
-											} 
-											else
+											_markerColor = "ColorGreen";
+											_sideMarker = "n";
+											};
+										case "CIVILIAN": //Civilian
 											{
-												createMarkerLocal [format["%1", _x], getpos _x];
-												format["%1", _x] setMarkerTypelocal "mil_dot";
+											_markerColor = "ColorWhite";
+											_sideMarker = "n";
+											};	
+										};
+										
+										if ((vehicle _x) != _x) then 
+										{
+											if (!((vehicle _x) in _tempVehicles)) then
+											{
+												_tempVehicles set [count _tempVehicles, vehicle _x];
+												_markerType = format ["%1_unknown", _sideMarker];
+												if ((vehicle _x) iskindof "Car") then {_markerType = format ["%1_mech_inf", _sideMarker]; };
+												if ((vehicle _x) iskindof "Tank") then {_markerType = format ["%1_armor", _sideMarker]; };
+												if ((vehicle _x) iskindof "Air") then {_markerType = format ["%1_air", _sideMarker]; };
+												if ((vehicle _x) iskindof "Boat") then {_markerType = format ["%1_recon", _sideMarker]; };
+												createMarkerLocal [format["%1", _x], getpos (vehicle _x)];
+												format["%1", _x] setMarkerTypelocal _markerType;
 												format["%1", _x] setMarkerColorlocal _markerColor;
 												_tempMarkers set [count _tempMarkers, format["%1", _x]];
-												if ( _x != _leader) then 
-												{
-													[getpos _x , getpos _leader ,format ["%1", _x]] call MCC_fnc_drawLine;
-													_tempLines set [count _tempLines, format["line_%1", _x]];
-												};
 											};
-									} foreach (units _x); 
-										
-						} foreach allGroups;
-						
-						sleep 3; 
-						{
-						deletemarkerlocal _x;
-						} foreach _tempMarkers;
-						
-						{
-							deletemarkerlocal _x;
-						} foreach _tempLines;
-				};
-					//Incase we came down here let's clean up
+										} 
+										else
+										{
+											createMarkerLocal [format["%1", _x], getpos _x];
+											format["%1", _x] setMarkerTypelocal "mil_dot";
+											format["%1", _x] setMarkerColorlocal _markerColor;
+											_tempMarkers set [count _tempMarkers, format["%1", _x]];
+											if ( _x != _leader) then 
+											{
+												[getpos _x , getpos _leader ,format ["%1", _x]] call MCC_fnc_drawLine;
+												_tempLines set [count _tempLines, format["line_%1", _x]];
+											};
+										};
+								} foreach (units _x); 
+									
+					} foreach allGroups;
+					
+					sleep 1; 
 					{
-					deletemarkerlocal _x;
-					} count _tempMarkers;
+						deletemarkerlocal _x;
+					} foreach _tempMarkers;
+					
 					{
 						deletemarkerlocal _x;
-					} count _tempLines;
-			} 
-			else 
-			{
-				MCC_trackMarker = false; 
+					} foreach _tempLines;
 			};
 		};
 		
@@ -208,7 +194,7 @@ _type = _this select 0;
 				"currentUnitSelected" setMarkerTypelocal "Select";
 				"currentUnitSelected" setMarkerColorlocal "ColorRed";
 				_control = _mccdialog displayCtrl MCC_MINIMAP;
-				_control ctrlMapAnimAdd [1, 0.3, getpos UMName];
+				_control ctrlMapAnimAdd [0.5, (ctrlMapScale ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl MCC_MINIMAP)), getpos UMName];
 				ctrlMapAnimCommit _control;
 				
 				if (! isnil "MCC_PIPcam") then 

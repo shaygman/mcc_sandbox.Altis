@@ -8,6 +8,7 @@
 #include "mcc\Dialogs\mcc_boxGen.hpp"
 #include "mcc\Dialogs\mcc_groupsGen.hpp"
 #include "mcc\Dialogs\mcc_loginDialog.hpp"
+#include "mcc\Dialogs\mcc_MWMainDialog.hpp"
 
 #include "mcc\Dialogs\mcc_playerConsole.hpp"
 #include "mcc\Dialogs\MCC_playerConsole2.hpp"

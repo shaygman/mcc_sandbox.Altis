@@ -29,6 +29,7 @@ private ["_missionCenter","_missionCenterTrigger","_playersNumber","_difficulty"
 		 "_preciseMarkers","_reinforcement","_artillery"];
 
 if (isnil "MCC_MWisGenerating") then {MCC_MWisGenerating = false}; 
+MCC_mcc_screen = 2;
 if (MCC_MWisGenerating) exitWith {player sideChat "MCC is now generating a mission please try again later"}; 
 MCC_MWisGenerating = true;
 

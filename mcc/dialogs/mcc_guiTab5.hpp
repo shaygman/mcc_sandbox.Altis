@@ -13,9 +13,9 @@
 #define MENU4 1053
 #define MENU5 1054
 #define MCCSTOPCAPTURE 1014
-#define FACTIONCOMBO 1001
 #define MCCZONENUMBER 1023
 
+#define FACTIONCOMBO 1001
 #define MCC_MWPlayersIDC 6001
 #define MCC_MWATMinesIDC 6002
 #define MCC_MWAPMinesIDC 6003
@@ -175,22 +175,6 @@ class MCC_Sandbox5 {
 		colorBackground[] = {0,0,0,1};
 		onButtonClick = __EVAL ("[6] execVM '"+MCCPATH+"mcc\dialogs\mcc_PopupMenu2.sqf'");
 	}
-	class MCC_factioTittle: MCC_RscText	{idc = -1;text = "Faction:";
-		x = 0.184896 * safezoneW + safezoneX;
-		y = 0.445021 * safezoneH + safezoneY;
-		w = 0.06799 * safezoneW;
-		h = 0.0340016 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	};
-	class MCC_factionCombo: MCC_RscCombo {idc = FACTIONCOMBO;
-		x = 0.259375 * safezoneW + safezoneX;
-		y = 0.214111 * safezoneH + safezoneY;
-		w = 0.0859375 * safezoneW;
-		h = 0.0219914 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\pop_menu\mcc_guiTab1Change.sqf'");
-	};
-
 	class MCC_stopCapture: MCC_RscButton {idc = MCCSTOPCAPTURE;	text = "Stop Capturing";
 		x = 0.184896 * safezoneW + safezoneX;
 		y = 0.456017 * safezoneH + safezoneY;
@@ -245,6 +229,26 @@ class MCC_Sandbox5 {
 	};
 	
 	//===========================       Mission Wizard   ============================================================
+	class MCC_factioTittle: MCC_RscText	
+	{	
+		idc = -1;
+		text = "Faction:";
+		x = 0.184896 * safezoneW + safezoneX;
+		y = 0.445021 * safezoneH + safezoneY;
+		w = 0.06799 * safezoneW;
+		h = 0.0340016 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	};
+	class MCC_factionCombo: MCC_RscCombo 
+	{	
+		idc = FACTIONCOMBO;
+		x = 0.259375 * safezoneW + safezoneX;
+		y = 0.214111 * safezoneH + safezoneY;
+		w = 0.0859375 * safezoneW;
+		h = 0.0219914 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\pop_menu\mcc_guiTab1Change.sqf'");
+	};
 	class MCC_MWTittle: MCC_RscText
 	{
 		idc = -1;

@@ -201,6 +201,9 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 		};
 	} foreach allgroups; 
 	
+	//Refresh UM list
+	[] call MCC_fnc_groupGenUMRefresh;
+	
 	sleep 0.5;
 	{deletemarkerlocal _x} foreach MCC_groupGenTempWP;
 	MCC_groupGenTempWP = []; 

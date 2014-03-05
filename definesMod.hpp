@@ -10,6 +10,7 @@
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_boxGen.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_groupsGen.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_loginDialog.hpp"
+#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_MWMainDialog.hpp"
 
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_playerConsole.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCC_playerConsole2.hpp"

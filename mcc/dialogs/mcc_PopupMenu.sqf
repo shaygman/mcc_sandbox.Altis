@@ -13,6 +13,7 @@ else
 	if (MCC_mcc_screen == 0) then {MCC_mcc_screen = 2}; 
 };
 
+
 switch (MCC_mcc_screen) do
 {
 	case 0:
@@ -28,6 +29,11 @@ switch (MCC_mcc_screen) do
 	case 2:
 	{
 		_ok = createDialog "mcc_groupGen";
+		if !(_ok) exitWith { hint "createDialog failed" };
+	};
+	case 3:
+	{
+		_ok = createDialog "MCCMWDialog";
 		if !(_ok) exitWith { hint "createDialog failed" };
 	};
 };

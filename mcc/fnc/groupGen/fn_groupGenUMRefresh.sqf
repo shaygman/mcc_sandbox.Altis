@@ -5,7 +5,7 @@
 #define MCC_UM_LIST 3069
 disableSerialization;
 
-private ["_side","_mccdialog", "_name", "_worldPos"];
+private ["_side","_mccdialog", "_name", "_worldPos","_curSel","_group"];
 
 MCC_UMunitsNames = [];
 UMgroupNames = [];
@@ -13,7 +13,7 @@ UMgroupNames = [];
 _mccdialog =  (uiNamespace getVariable "MCC_groupGen_Dialog");
 _comboBox = _mccdialog displayCtrl MCC_UM_LIST;
 lbClear _comboBox;
-
+_curSel = if (lbCurSel _comboBox == -1) then {0} else {lbCurSel _comboBox};
 if (MCC_UMstatus == 0) exitWith //player
 {
 	if (MCC_UMUnit==0) then 
@@ -48,20 +48,24 @@ _side = switch (MCC_UMstatus) do
 			case 3: {resistance};
 			case 4: {civilian};
 		};
-		
+	
+if (isnil "MCC_GroupGenGroupSelected") exitWith {_comboBox lbSetCurSel _curSel}; 	
 if (MCC_UMUnit==0) then 
 {
 	{
-		if (alive _x && side _x == _side && !(isPlayer _x)) then	//Unit
+		_group = _x; 
 		{
-			_displayname =  format ["%1",typeOf (vehicle _x)];
-			if ((_x != vehicle _x) && ((driver (vehicle _x))==_x)) then {_displayname = format ["%1 (Driver)",_displayname]};
-			if ((_x != vehicle _x) && ((gunner (vehicle _x))==_x)) then {_displayname =  format ["%1 (Gunner)",_displayname]};
-			if ((_x != vehicle _x) && ((commander (vehicle _x))==_x)) then {_displayname =  format ["%1 (Commander)",_displayname]};
-			_comboBox lbAdd _displayname;
-			MCC_UMunitsNames = MCC_UMunitsNames + [_x];
-		};
-	} forEach allUnits;
+			if (alive _x && side _x == _side && !(isPlayer _x)) then	//Unit
+			{
+				_displayname =  format ["%1",typeOf (vehicle _x)];
+				if ((_x != vehicle _x) && ((driver (vehicle _x))==_x)) then {_displayname = format ["%1 (Driver)",_displayname]};
+				if ((_x != vehicle _x) && ((gunner (vehicle _x))==_x)) then {_displayname =  format ["%1 (Gunner)",_displayname]};
+				if ((_x != vehicle _x) && ((commander (vehicle _x))==_x)) then {_displayname =  format ["%1 (Commander)",_displayname]};
+				_comboBox lbAdd _displayname;
+				MCC_UMunitsNames = MCC_UMunitsNames + [_x];
+			};
+		} forEach units _group;
+	} foreach MCC_GroupGenGroupSelected;
 } 
 else
 {
@@ -72,6 +76,6 @@ else
 			_comboBox lbAdd _displayname;
 			UMgroupNames = UMgroupNames + [_x];
 		};
-	} forEach  allgroups;
+	} forEach  MCC_GroupGenGroupSelected;
 };
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel _curSel;
