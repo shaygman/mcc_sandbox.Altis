@@ -257,7 +257,7 @@ class MCC_RscButton
   offsetX = 0.003;
   offsetY = 0.003;
   shadow = 2;
-  sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+  sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
   soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.07,1};
   soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1};
   soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1};
@@ -294,7 +294,7 @@ class MCC_RscButtonMenu : MCC_RscButton
   shadow = 0;
   shortcuts[] = {};
   size = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-  sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+  sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
   soundClick[] = {"\A3\ui_f\data\sound\onclick",0.07,1};
   soundEnter[] = {"\A3\ui_f\data\sound\onover",0.09,1};
   soundEscape[] = {"\A3\ui_f\data\sound\onescape",0.09,1};

@@ -28,8 +28,6 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = -1;
 			colorBackground[] = {0,0,0,0.9};
 			
-			x = 0.270833 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.360938 * safezoneW;
 			h = 0.30788 * safezoneH;
 		};
@@ -41,8 +39,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			text = "Spawn:"; //--- ToDo: Localize;
 			colorText[] = {0,1,1,1};
 			
-			x = 0.373958 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.103125 * safezoneW;
+			y =0.0109958 * safezoneH;
 			w = 0.108854 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -52,8 +50,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Type:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.0549786 * safezoneH;
 			w = 0.045 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -63,8 +61,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = MCC_GGUNIT_TYPE;
 			onLBSelChanged = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
 
-			x = 0.328125 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.0572917 * safezoneW;
+			y = 0.0549786 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0260715 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -74,8 +72,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Branch:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.313073 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.0879657 * safezoneH;
 			w = 0.045 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -85,8 +83,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = UNIT_TYPE;
 			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
 
-			x = 0.328125 * safezoneW + safezoneX;
-			y = 0.313073 * safezoneH + safezoneY;
+			x = 0.0572917 * safezoneW;
+			y = 0.0879657 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0260715 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -96,8 +94,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Class:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.34606 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.120953 * safezoneH;
 			w = 0.045 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -106,8 +104,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		{
 			idc = UNIT_CLASS;
 
-			x = 0.328125 * safezoneW + safezoneX;
-			y = 0.34606 * safezoneH + safezoneY;
+			x = 0.0572917 * safezoneW;
+			y = 0.120953 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0260715 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -117,8 +115,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Behavior:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.379047 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.15394 * safezoneH;
 			w = 0.045 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -127,8 +125,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		{
 			idc = MCC_GGUNIT_BEHAVIOR;
 
-			x = 0.328125 * safezoneW + safezoneX;
-			y = 0.379047 * safezoneH + safezoneY;
+			x = 0.0572917 * safezoneW;
+			y = 0.15394 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0260715 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -138,8 +136,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = MCC_GGUNIT_EMPTYTITLE;
 
 			text = "Empty:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.045 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -148,8 +146,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		{
 			idc = MCC_GGUNIT_EMPTY;
 
-			x = 0.328125 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.0572917 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0260715 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -159,8 +157,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = MCC_GroupGenCurrentGroup_IDD;
 			colorBorder[] = {1,1,1,1};
 
-			x = 0.528646 * safezoneW + safezoneX;
-			y = 0.313073 * safezoneH + safezoneY;
+			x = 0.257813 * safezoneW;
+			y = 0.0879657 * safezoneH;
 			w = 0.0973958 * safezoneW;
 			h = 0.109957 * safezoneH;
 		};
@@ -169,8 +167,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = mcc_groupGen_CurrentgroupNameTittle_IDC;
 
 			text = "Name:"; //--- ToDo: Localize;
-			x = 0.528646 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.257813 * safezoneW;
+			y = 0.0549786 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
@@ -180,8 +178,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = mcc_groupGen_CurrentgroupNameText_IDC;
 			type = 2;
 
-			x = 0.563021 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.292188 * safezoneW;
+			y = 0.0549786 * safezoneH;
 			w = 0.0630208 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
@@ -192,8 +190,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
 
 			text = "Add"; //--- ToDo: Localize;
-			x = 0.454167 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.183334 * safezoneW;
+			y = 0.0549786 * safezoneH;
 			w = 0.065625 * safezoneW;
 			h = 0.035 * safezoneH;
 			tooltip = "Add the selected unit to the list"; //--- ToDo: Localize;
@@ -204,8 +202,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
 
 			text = "Clear"; //--- ToDo: Localize;
-			x = 0.454167 * safezoneW + safezoneX;
-			y = 0.324069 * safezoneH + safezoneY;
+			x = 0.183334 * safezoneW;
+			y = 0.098962 * safezoneH;
 			w = 0.065625 * safezoneW;
 			h = 0.035 * safezoneH;
 			tooltip = "Remove all units from the list"; //--- ToDo: Localize;
@@ -216,8 +214,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
 
 			text = "Save as Custom"; //--- ToDo: Localize;
-			x = 0.563021 * safezoneW + safezoneX;
-			y = 0.434026 * safezoneH + safezoneY;
+			x = 0.292188 * safezoneW;
+			y = 0.208919 * safezoneH;
 			w = 0.065625 * safezoneW;
 			h = 0.035 * safezoneH;
 			tooltip = "Save the group as a custom group"; //--- ToDo: Localize;
@@ -229,8 +227,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\spawn_request.sqf'");
 
 			text = "Create"; //--- ToDo: Localize;
-			x = 0.454167 * safezoneW + safezoneX;
-			y = 0.390043 * safezoneH + safezoneY;
+			x = 0.183334 * safezoneW;
+			y = 0.164936 * safezoneH;
 			w = 0.065625 * safezoneW;
 			h = 0.035 * safezoneH;
 			tooltip = "Mouse click on the map to create the group - AI behavior will be ignored"; //--- ToDo: Localize;
@@ -241,8 +239,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\spawn_request.sqf'");
 
 			text = "Add to zone"; //--- ToDo: Localize;
-			x = 0.454167 * safezoneW + safezoneX;
-			y = 0.434026 * safezoneH + safezoneY;
+			x = 0.183334 * safezoneW;
+			y = 0.208919 * safezoneH;
 			w = 0.065625 * safezoneW;
 			h = 0.035 * safezoneH;
 			tooltip = "Create the group in the selected zone"; //--- ToDo: Localize;
@@ -252,8 +250,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Location:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.445021 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.219914 * safezoneH;
 			w = 0.045 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -263,8 +261,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = 0;
 			onLBSelChanged = "mcc_hc = (MCC_ZoneLocation select (lbCurSel (_this select 0))) select 1;";
 
-			x = 0.328125 * safezoneW + safezoneX;
-			y = 0.445021 * safezoneH + safezoneY;
+			x = 0.0572917 * safezoneW;
+			y = 0.219914 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -276,8 +274,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			text = "Close"; //--- ToDo: Localize;
 			
-			x = 0.436979 * safezoneW + safezoneX;
-			y = 0.489004 * safezoneH + safezoneY;
+			x = 0.166146 * safezoneW;
+			y = 0.263897 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};

@@ -55,7 +55,7 @@ if (_button == 1) then 											//Right click - get info
 		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlSetPosition [_posX,_posY,0,0];	
 		ctrlShow [MCC_GroupGenInfoText_IDC,true];
 		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlCommit 0;
-		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlSetPosition [_posX, _posY,0.15 * safezoneW,0.205 * safezoneH];
+		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlSetPosition [_posX, _posY,0.327273,0.372873];
 		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlCommit 0.1;
 		waituntil {ctrlCommitted (_mccdialog displayctrl MCC_GroupGenInfoText_IDC)};
 		

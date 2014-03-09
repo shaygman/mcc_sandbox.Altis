@@ -13,8 +13,6 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "";
-			x = 0.270833 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.0802083 * safezoneW;
 			h = 0.53879 * safezoneH;
 			colorBackground[] = { 0.150, 0.150, 0.150,1};
@@ -28,8 +26,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'missionSettings';} else {player globalchat 'Access Denied'};";
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.0109958271253347 * safezoneH;	
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -42,8 +40,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Disable respawn to all players"; 
 			action = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.054978585840815 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -56,8 +54,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Weather Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.324069 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.0989620042993254 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -70,8 +68,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Time Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.368051 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.1429437734002606 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -84,8 +82,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Locations Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.1869266420729126 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;		
 		};
@@ -98,8 +96,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Debug Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.456017 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.2309084111738478 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -112,8 +110,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Markers Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.5 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.274890180274783 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -126,8 +124,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Briefing Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.543983 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.3188719493757182 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -140,8 +138,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Tasks Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.587966 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.3628537184766534 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -154,8 +152,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Triggers Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.631949 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.4068354875775886 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -168,8 +166,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Jukebox Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.675931 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.4508172566785238 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -182,8 +180,8 @@ class MCC_rightButtonsControls: MCC_RscControlsGroup
 			tooltip = "Open Client Side Menu"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.719914 * safezoneH + safezoneY;
+			x = 0.0057 * safezoneW;
+			y = 0.494799025779459 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};

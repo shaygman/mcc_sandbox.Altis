@@ -17,8 +17,6 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			idc = -1;
 			colorBackground[] = {0,0,0,0.9};
 			
-			x = 0.270833 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.240625 * safezoneW;
 			h = 0.274893 * safezoneH;
 		};
@@ -27,8 +25,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Tasks Generator:"; //--- ToDo: Localize;
-			x = 0.322396 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.0515627 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.137812 * safezoneW;
 			h = 0.0280063 * safezoneH;
 			colorText[] = {0,1,1,1};
@@ -38,8 +36,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Name:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.26909 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.0439828 * safezoneH;
 			w = 0.0590624 * safezoneW;
 			h = 0.0280063 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -50,8 +48,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Available:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.379047 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.15394 * safezoneH;
 			w = 0.0572917 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -62,8 +60,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Description:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.302077 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.0769698 * safezoneH;
 			w = 0.0590626 * safezoneW;
 			h = 0.0280063 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -73,8 +71,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			idc = MCC_TASKS_NAME;
 			type = 2;
 
-			x = 0.339583 * safezoneW + safezoneX;
-			y = 0.26909 * safezoneH + safezoneY;
+			x = 0.0687497 * safezoneW;
+			y = 0.0439828 * safezoneH;
 			w = 0.108854 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -84,8 +82,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			idc = MCC_TASKS_DESCRIPTION;
 			type = 2;
 
-			x = 0.339583 * safezoneW + safezoneX;
-			y = 0.302077 * safezoneH + safezoneY;
+			x = 0.0687497 * safezoneW;
+			y = 0.0769698 * safezoneH;
 			w = 0.166146 * safezoneW;
 			h = 0.0549786 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -94,8 +92,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 		{
 			idc = MCC_TASKS_LIST;
 
-			x = 0.339583 * safezoneW + safezoneX;
-			y = 0.379047 * safezoneH + safezoneY;
+			x = 0.0687497 * safezoneW;
+			y = 0.15394 * safezoneH;
 			w = 0.166146 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -106,8 +104,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[0] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 
 			text = "Create"; //--- ToDo: Localize;
-			x = 0.454167 * safezoneW + safezoneX;
-			y = 0.26909 * safezoneH + safezoneY;
+			x = 0.183334 * safezoneW;
+			y = 0.0439828 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Create Task with the given name and description"; //--- ToDo: Localize;
@@ -119,8 +117,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			onButtonClick =  __EVAL ("[7] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 
 			text = "WP"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Add Waypoint to the selected task"; //--- ToDo: Localize;
@@ -132,8 +130,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			onButtonClick =  __EVAL ("[1] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 
 			text = "WP (cin)"; //--- ToDo: Localize;
-			x = 0.316667 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.0458336 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Add Waypoint to the selected task with an establish shot"; //--- ToDo: Localize;
@@ -145,8 +143,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			onButtonClick =  __EVAL ("[2] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 
 			text = "Succeed"; //--- ToDo: Localize;
-			x = 0.471354 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.200521 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			colorText[] = {0,1,0,0.5};
@@ -159,8 +157,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			onButtonClick =  __EVAL ("[3] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 
 			text = "Failed"; //--- ToDo: Localize;
-			x = 0.43125 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.160367 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			colorText[] = {1,0,0,0.7};
@@ -173,8 +171,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			onButtonClick =  __EVAL ("[4] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 
 			text = "Cancel"; //--- ToDo: Localize;
-			x = 0.356771 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.0859376 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Mark the selected task as cancelled"; //--- ToDo: Localize;
@@ -186,8 +184,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[8] execVM '"+MCCPATH+"mcc\pop_menu\tasks_req.sqf'");
 
 			text = "Delete"; //--- ToDo: Localize;
-			x = 0.396875 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.126042 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.0286458 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Delete the selected task"; //--- ToDo: Localize;
@@ -200,8 +198,8 @@ class MCC_tasksDialogControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL("[12] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 
 			text = "Close"; //--- ToDo: Localize;
-			x = 0.356771 * safezoneW + safezoneX;
-			y = 0.456017 * safezoneH + safezoneY;
+			x = 0.0859376 * safezoneW;
+			y = 0.23091 * safezoneH;
 			w = 0.0802083 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};

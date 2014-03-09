@@ -13,8 +13,6 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			idc = -1;
 			colorBackground[] = {0,0,0,0.9};
 			
-			x = 0.270833 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.223438 * safezoneW;
 			h = 0.285889 * safezoneH;
 		};
@@ -24,8 +22,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Evac:"; //--- ToDo: Localize;
-			x = 0.333854 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.0630208 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.108854 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			colorText[] = {0,1,1,1};
@@ -36,8 +34,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Type:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.26909 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.0439828 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -47,8 +45,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Class:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.302077 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.07697 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -58,8 +56,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			idc = 40;
 			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\evac\evac_change.sqf'");
 
-			x = 0.333854 * safezoneW + safezoneX;
-			y = 0.26909 * safezoneH + safezoneY;
+			x = 0.0630208 * safezoneW;
+			y = 0.0439828 * safezoneH;
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -68,8 +66,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 		{
 			idc = 41;
 
-			x = 0.333854 * safezoneW + safezoneX;
-			y = 0.302077 * safezoneH + safezoneY;
+			x = 0.0630208 * safezoneW;
+			y = 0.07697 * safezoneH;
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -80,8 +78,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\evac\request_heli.sqf'");
 
 			text = "Spawn"; //--- ToDo: Localize;
-			x = 0.442708 * safezoneW + safezoneX;
-			y = 0.26909 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 0.0439828 * safezoneH;
 			w = 0.0458333 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Spawn Evac Vehicle on map click"; //--- ToDo: Localize;
@@ -92,8 +90,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			idc = 42;
 			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\evac\evac_focus.sqf'");
 
-			x = 0.333854 * safezoneW + safezoneX;
-			y = 0.368051 * safezoneH + safezoneY;
+			x = 0.0630208 * safezoneW;
+			y = 0.142944 * safezoneH;
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -103,8 +101,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Evac:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.368051 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.142944 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -115,8 +113,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[] execVM '"+MCCPATH+"mcc\general_scripts\evac\add_wp_heli.sqf'");
 
 			text = "1 WP"; //--- ToDo: Localize;
-			x = 0.442708 * safezoneW + safezoneX;
-			y = 0.42303 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 0.197923 * safezoneH;
 			w = 0.0458333 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Add Evac WP"; //--- ToDo: Localize;
@@ -128,8 +126,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[] execVM '"+MCCPATH+"mcc\general_scripts\evac\move_heli.sqf'");
 
 			text = "3 WP"; //--- ToDo: Localize;
-			x = 0.442708 * safezoneW + safezoneX;
-			y = 0.368051 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 0.142944 * safezoneH;
 			w = 0.0458333 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Add 3 Evac way points"; //--- ToDo: Localize;
@@ -140,8 +138,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Insertion:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.401039 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.175932 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -150,8 +148,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 		{
 			idc = 43;
 
-			x = 0.333854 * safezoneW + safezoneX;
-			y = 0.401039 * safezoneH + safezoneY;
+			x = 0.0630208 * safezoneW;
+			y = 0.175932 * safezoneH;
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -162,8 +160,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\evac\delete_heli.sqf'");
 
 			text = "Del. Evac"; //--- ToDo: Localize;
-			x = 0.328125 * safezoneW + safezoneX;
-			y = 0.335064 * safezoneH + safezoneY;
+			x = 0.0572917 * safezoneW;
+			y = 0.109957 * safezoneH;
 			w = 0.0458333 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			colorText[] = {1,0,0,0.7};
@@ -175,8 +173,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "F. Height:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.434026 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.208919 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -185,8 +183,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 		{
 			idc = 44;
 
-			x = 0.333854 * safezoneW + safezoneX;
-			y = 0.434026 * safezoneH + safezoneY;
+			x = 0.0630208 * safezoneW;
+			y = 0.208919 * safezoneH;
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -197,8 +195,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\evac\delete_heli.sqf'");
 
 			text = "Del. Driver"; //--- ToDo: Localize;
-			x = 0.402604 * safezoneW + safezoneX;
-			y = 0.335064 * safezoneH + safezoneY;
+			x = 0.131771 * safezoneW;
+			y = 0.109957 * safezoneH;
 			w = 0.0458333 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			colorText[] = {1,0,0,0.7};
@@ -211,8 +209,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\evac\delete_heli.sqf'");
 
 			text = "Res. Driver"; //--- ToDo: Localize;
-			x = 0.442708 * safezoneW + safezoneX;
-			y = 0.302077 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 0.07697 * safezoneH;
 			w = 0.0458333 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			colorText[] = {0,1,0,0.7};
@@ -225,8 +223,8 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 
 			text = "Close"; //--- ToDo: Localize;
-			x = 0.356771 * safezoneW + safezoneX;
-			y = 0.467013 * safezoneH + safezoneY;
+			x = 0.0859375 * safezoneW;
+			y = 0.241906 * safezoneH;
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};

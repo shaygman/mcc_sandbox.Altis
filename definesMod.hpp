@@ -1,5 +1,5 @@
 #define MCCPATH "\mcc_sandbox_mod\"
-#define MCCVersion "0.7"
+#define MCCVersion "0.1"
 #define MCCMODE true
 
 #include "\mcc_sandbox_mod\mcc\dialogs\mcc_dialogs.hpp"

@@ -221,25 +221,26 @@ else
 				
 				[_x, _rope] spawn 
 					{
-						private ["_unit", "_zc", "_zdelta", "_rope","_timeOut","_attachPoint"];
+						private ["_unit", "_zc", "_zdelta", "_rope","_timeOut","_attachPoint","_time"];
 						_unit = _this select 0;
 						_rope = _this select 1;
 						_zdelta = 7 / 10;
 						_zc = 22;
 						
-						if (isPlayer _unit) then
+						if (isPlayer _unit && isMultiplayer) then
 						{
-							 [[0,{unassignVehicle player; player action ["eject", vehicle player];player switchmove "AdvePercMstpSnonWrflDnon_goup";}], "MCC_fnc_globalExecute", _unit, false] call BIS_fnc_MP;
-						};
+							 [[2,{unassignVehicle player; player action ["eject", vehicle player];player switchmove "AdvePercMstpSnonWrflDnon_goup";}], "MCC_fnc_globalExecute", _unit, false] call BIS_fnc_MP;
+						}
+						else
+						{
+							unassignVehicle _unit;
+							_unit action ["eject", vehicle _unit];
+							_unit switchmove "AdvePercMstpSnonWrflDnon_goup";
+						};						
 						
-						unassignVehicle _unit;
-						_unit action ["eject", vehicle _unit];
-						_unit switchmove "AdvePercMstpSnonWrflDnon_goup";
-						
-						
-						//AdvePercMstpSnonWrflDnon_goup
-						//AwopPercMstpSoptWbinDnon_lnr
-						//AcinPercMstpSnonWnonDnon
+						_time = time + 5; 
+						waituntil {(vehicle _unit == _unit) || _time < time};
+						if (_time < time) exitWith {}; 
 						//gunner_standup01
 						
 						_unit setpos [(getpos _unit select 0), (getpos _unit select 1), 0 max ((getpos _unit select 2) - 3)];
@@ -251,13 +252,15 @@ else
 							sleep 0.1;
 						};
 						
-						if (isPlayer _unit) then
+						if (isPlayer _unit && isMultiplayer) then
 						{
-							 [[0,{ player switchmove ""; detach player;}], "MCC_fnc_globalExecute", _unit, false] call BIS_fnc_MP;
+							 [[2,{ player switchmove ""; detach player;}], "MCC_fnc_globalExecute", _unit, false] call BIS_fnc_MP;
+						}
+						else
+						{
+							_unit switchmove "";
+							detach _unit;
 						};
-
-						_unit switchmove "";
-						detach _unit;
 					};
 					
 				sleep ( 1 + ((random 6)/10) );

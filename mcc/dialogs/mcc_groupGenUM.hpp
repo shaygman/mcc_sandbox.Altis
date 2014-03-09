@@ -17,8 +17,6 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			text = "";
 			colorBackground[] = { 0.120, 0.120, 0.120,1};
 			
-			x = 0.270833 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.469792 * safezoneW;
 			h = 0.164936 * safezoneH;
 		};
@@ -32,8 +30,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onMouseButtonUp = __EVAL("[8,_this] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.26909 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.0439828 * safezoneH;
 			w = 0.160417 * safezoneW;
 			h = 0.109957 * safezoneH;
 		};
@@ -46,8 +44,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			values[] = {0,1};
 			onToolBoxSelChanged = "MCC_UMUnit = (_this select 1);";
 
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Switch dispaly between units and groups from the given side"; //--- ToDo: Localize;
@@ -59,8 +57,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[0] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "Teleport"; //--- ToDo: Localize;
-			x = 0.442708 * safezoneW + safezoneX;
-			y = 0.258094 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 0.0329868 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Teleport selected units"; //--- ToDo: Localize;
@@ -72,8 +70,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[2] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "Hijack"; //--- ToDo: Localize;
-			x = 0.442708 * safezoneW + safezoneX;
-			y = 0.324069 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 0.0989618 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Hijack selected unit, can only work on non-player units "; //--- ToDo: Localize;
@@ -85,8 +83,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[3] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "Track units"; //--- ToDo: Localize;
-			x = 0.442708 * safezoneW + safezoneX;
-			y = 0.357056 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 0.131949 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Toggle on and off tracking all units on mission maker map"; //--- ToDo: Localize;
@@ -98,8 +96,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[11] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "Broadcast"; //--- ToDo: Localize;
-			x = 0.442708 * safezoneW + safezoneX;
-			y = 0.291081 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 0.0659738 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Broadcast the live feed to all players for 15 seconds"; //--- ToDo: Localize;
@@ -111,8 +109,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[12] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "Delete"; //--- ToDo: Localize;
-			x = 0.505729 * safezoneW + safezoneX;
-			y = 0.291081 * safezoneH + safezoneY;
+			x = 0.234896 * safezoneW;
+			y = 0.0659738 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Delete the selected unit or group"; //--- ToDo: Localize;
@@ -124,8 +122,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[13] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "Join"; //--- ToDo: Localize;
-			x = 0.505729 * safezoneW + safezoneX;
-			y = 0.258094 * safezoneH + safezoneY;
+			x = 0.234896 * safezoneW;
+			y = 0.0329868 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Join group or unit with another group or unit"; //--- ToDo: Localize;
@@ -137,8 +135,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[9] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "H.A.L.O"; //--- ToDo: Localize;
-			x = 0.505729 * safezoneW + safezoneX;
-			y = 0.357056 * safezoneH + safezoneY;
+			x = 0.234896 * safezoneW;
+			y = 0.131949 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "HALO the current selected units"; //--- ToDo: Localize;
@@ -150,8 +148,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[10] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "Parachute"; //--- ToDo: Localize;
-			x = 0.505729 * safezoneW + safezoneX;
-			y = 0.324069 * safezoneH + safezoneY;
+			x = 0.234896 * safezoneW;
+			y = 0.0989618 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Parachute the currently selected units"; //--- ToDo: Localize;
@@ -161,8 +159,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.26909 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.0439828 * safezoneH;
 			w = 0.160417 * safezoneW;
 			h = 0.109957 * safezoneH;
 		};
@@ -171,8 +169,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "*Hold Ctrl for multi-selection"; //--- ToDo: Localize;
-			x = 0.35 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.0791667 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.0916667 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.55)";
@@ -183,8 +181,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			colorBackground[] = { 0, 0, 0,1};
 			
 			text = "#(argb,256,256,1)r2t(rendertarget10,1.0);"; //--- ToDo: Localize;
-			x = 0.563021 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.292188 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.171875 * safezoneW;
 			h = 0.120953 * safezoneH;
 		};
@@ -192,8 +190,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 
-			x = 0.563021 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.292188 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.171875 * safezoneW;
 			h = 0.120953 * safezoneH;
 		};
@@ -206,8 +204,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			values[] = {0,1,3};
 			onToolBoxSelChanged = __EVAL("_this execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um_camView.sqf'");
 
-			x = 0.563021 * safezoneW + safezoneX;
-			y = 0.359915 * safezoneH + safezoneY;
+			x = 0.292188 * safezoneW;
+			y = 0.134808 * safezoneH;
 			w = 0.171875 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";

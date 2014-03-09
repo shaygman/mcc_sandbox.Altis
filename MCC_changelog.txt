@@ -31,6 +31,8 @@ Group Generator:
 - Added: Create and save your own custom groups to profileNameSpace. Spawn or use them in the Mission Wizard. 
 
 
+- TODO access rights
+- TODO replace by checkboxes
 - TODO show SF in right click. 
 - TODO hints and tooltips
 - TODO: Tooltip missionWizard.

@@ -1,4 +1,4 @@
-private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class","_side"];
+private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class","_side","_html"];
 // By: Shay_gman
 // Version: 1.1 (April 2012)
 #define groupGen_IDD 2994
@@ -66,6 +66,15 @@ lbClear _comboBox;
 } foreach MCC_zones_numbers;
 _comboBox lbSetCurSel MCC_zone_index;
 
+//------------------------------------------- Tooltip --------------------------------------------------------------------------------------------------
+_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 303); //fill combobox zone's numbers
+
+_html = "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Open 3D Editor: ALT + LMB on map. </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Assign Waypoint: Select a group and double Click on map. </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Groups' multi-select: Hold and drag on map. </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Group Info: Righ Click on Group icon. </t>";
+		
+_comboBox ctrlSetStructuredText parseText _html;	
 //----------------------------------------------------------- GROUPs ----------------------------------------------------------------------------
 	
 [] spawn MCC_fnc_groupGenRefresh; 	

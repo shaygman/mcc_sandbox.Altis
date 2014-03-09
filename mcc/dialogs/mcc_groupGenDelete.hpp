@@ -14,8 +14,7 @@ class MCC_deleteDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			colorBackground[] = {0,0,0,0.9};
-			x = 0.270833 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
+
 			w = 0.217708 * safezoneW;
 			h = 0.142944 * safezoneH;
 		};
@@ -24,8 +23,8 @@ class MCC_deleteDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Delete Brush:"; //--- ToDo: Localize;
-			x = 0.310937 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.0401036 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			colorText[] = {0,1,1,1};
@@ -35,8 +34,8 @@ class MCC_deleteDialogControls:MCC_RscControlsGroup
 		{
 			idc = MCCDELETEBRUSH;
 
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.0549788 * safezoneH;
 			w = 0.144479 * safezoneW;
 			h = 0.0340016 * safezoneH;
 		};
@@ -46,8 +45,8 @@ class MCC_deleteDialogControls:MCC_RscControlsGroup
 			onButtonClick = "hint 'Mark the area you want to delete'; MCC_delete_drawing = true";
 
 			text = "Delete"; //--- ToDo: Localize;
-			x = 0.43125 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.160417 * safezoneW;
+			y = 0.0549788 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Delete the certain type of objects"; //--- ToDo: Localize;
@@ -59,8 +58,8 @@ class MCC_deleteDialogControls:MCC_RscControlsGroup
 			text = "Close"; //--- ToDo: Localize;
 			onButtonClick = __EVAL("[17] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
-			x = 0.345313 * safezoneW + safezoneX;
-			y = 0.324069 * safezoneH + safezoneY;
+			x = 0.0744797 * safezoneW;
+			y = 0.0989618 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};

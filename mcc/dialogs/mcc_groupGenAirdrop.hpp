@@ -16,9 +16,7 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			colorBackground[] = {0,0,0,0.9};
-			
-			x = 0.270833 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
+
 			w = 0.280729 * safezoneW;
 			h = 0.164936 * safezoneH;
 		};
@@ -27,8 +25,8 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Supply Drop:"; //--- ToDo: Localize;
-			x = 0.339583 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.0687495 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			colorText[] = {0,1,1,1};
@@ -37,8 +35,8 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 		class MCC_airdropTypeCombo: MCC_RscCombo
 		{
 			idc = MCC_AIRDROPTYPE;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.0549786 * safezoneH;
 			w = 0.0802083 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\cas\airdropReq.sqf'");
@@ -46,16 +44,16 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 		class MCC_airdropClassCombo: MCC_RscCombo
 		{
 			idc = MCC_airdropClass;
-			x = 0.3625 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.0916667 * safezoneW;
+			y = 0.0549786 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
 		class MCC_airdropArrayCombo: MCC_RscCombo
 		{
 			idc = MCC_airdropArray;
-			x = 0.3625 * safezoneW + safezoneX;
-			y = 0.313073 * safezoneH + safezoneY;
+			x = 0.0916667 * safezoneW;
+			y = 0.0879657 * safezoneH;
 			w = 0.120313 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
@@ -64,8 +62,8 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Current Airdrop:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.313073 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.0879657 * safezoneH;
 			w = 0.0802083 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			colorText[] = {1,1,1,1};
@@ -75,8 +73,8 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Add"; //--- ToDo: Localize;
-			x = 0.488542 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.217709 * safezoneW;
+			y = 0.0549786 * safezoneH;
 			w = 0.0572917 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Add this item to the current airdrop list"; //--- ToDo: Localize;
@@ -87,8 +85,8 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Clear"; //--- ToDo: Localize;
-			x = 0.488542 * safezoneW + safezoneX;
-			y = 0.313073 * safezoneH + safezoneY;
+			x = 0.217709 * safezoneW;
+			y = 0.0879657 * safezoneH;
 			w = 0.0572917 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Clear the current airdrop list"; //--- ToDo: Localize;
@@ -99,8 +97,8 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Call"; //--- ToDo: Localize;
-			x = 0.488542 * safezoneW + safezoneX;
-			y = 0.34606 * safezoneH + safezoneY;
+			x = 0.217709 * safezoneW;
+			y = 0.120953 * safezoneH;
 			w = 0.0572917 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Call the current airdrop"; //--- ToDo: Localize;
@@ -112,8 +110,8 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 			idc = -1;
 			
 			text = "Add Console"; //--- ToDo: Localize;
-			x = 0.425521 * safezoneW + safezoneX;
-			y = 0.34606 * safezoneH + safezoneY;
+			x = 0.154688 * safezoneW;
+			y = 0.120953 * safezoneH;
 			w = 0.0572917 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\cas\cas_request.sqf'");
@@ -126,8 +124,8 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 			text = "Close"; //--- ToDo: Localize;
 			onButtonClick = __EVAL("[16] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.34606 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.120953 * safezoneH;
 			w = 0.0572917 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};

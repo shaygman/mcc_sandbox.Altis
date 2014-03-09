@@ -224,7 +224,7 @@ class mcc_groupGen
 			y = 0.609957 * safezoneH + safezoneY;
 			w = 0.0572917 * safezoneW;
 			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
 		
 		class MCC_gaiaBehaviorButton: MCC_RscButton
@@ -259,7 +259,7 @@ class mcc_groupGen
 		{
 			idc = -1; 
 			text = "Mission Maker:"; 
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			
 			x = 0.3625 * safezoneW + safezoneX;
 			y = 0.0161887 * safezoneH + safezoneY;
@@ -270,7 +270,7 @@ class mcc_groupGen
 		class MCC_MissionMakerName: MCC_RscText 
 		{
 			idc = MCCMISSIONMAKERNAME;	
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			
 			x = 0.419792 * safezoneW + safezoneX;
 			y = 0.0161887 * safezoneH + safezoneY;
@@ -282,7 +282,7 @@ class mcc_groupGen
 		{	
 			idc = -1;	
 			text = "Client FPS:"; 
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			
 			x = 0.488542 * safezoneW + safezoneX;
 			y = 0.0161887 * safezoneH + safezoneY;
@@ -294,7 +294,7 @@ class mcc_groupGen
 		{	
 			idc = -1;	
 			text = "Server FPS:";
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			
 			x = 0.585938 * safezoneW + safezoneX;
 			y = 0.0161887 * safezoneH + safezoneY;
@@ -305,7 +305,7 @@ class mcc_groupGen
 		class MCC_clientFPS: MCC_RscText 
 		{
 			idc = MCCCLIENTFPS; 
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			
 			x = 0.540104 * safezoneW + safezoneX;
 			y = 0.0161887 * safezoneH + safezoneY;
@@ -316,7 +316,7 @@ class mcc_groupGen
 		class MCC_ServerFPS: MCC_RscText 
 		{
 			idc = MCCSERVERFPS;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			
 			x = 0.6375 * safezoneW + safezoneX;
 			y = 0.0161887 * safezoneH + safezoneY;
@@ -446,18 +446,16 @@ class mcc_groupGen
 			h = 0.0329871 * safezoneH;
 			
 		};
-
-		//---------------------- For group ID ---------------------
-		class MCC_GroupGenInfoText: MCC_RscStructuredText
+		
+		class MCC_toolTip: MCC_RscStructuredText
 		{
-			idc = MCC_GroupGenInfoText_IDC;
-			x = 0.1 * safezoneW + safezoneX;
-			y = 0.1 * safezoneH + safezoneY;
-			w = 0.1 * safezoneW;
-			h = 0.1 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
-			colorBackground[] = {0,0,0,0.9};
+			idc = 303;
+			x = 0.236458 * safezoneW + safezoneX;
+			y = 0.642944 * safezoneH + safezoneY;
+			w = 0.223438 * safezoneW;
+			h = 0.120953 * safezoneH;
 		};
+		
 		//Left		
 		#include "mcc_groupGenLeftButtons.hpp"
 		#include "mcc_groupGenSpawn.hpp"
@@ -482,9 +480,21 @@ class mcc_groupGen
 		#include "mcc_groupGenTriggers.hpp"	
 		#include "mcc_groupGenCS.hpp"			
 		
-		#include "mcc_groupGenWaypoints.hpp"
 		#include "mcc_groupGenUM.hpp"
-
+		#include "mcc_groupGenWaypoints.hpp"
+		
+		
+		//---------------------- For group ID ---------------------
+		class MCC_GroupGenInfoText: MCC_RscStructuredText
+		{
+			idc = MCC_GroupGenInfoText_IDC;
+			x = 0.1 * safezoneW + safezoneX;
+			y = 0.1 * safezoneH + safezoneY;
+			w = 0.1 * safezoneW;
+			h = 0.1 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
+			colorBackground[] = {0,0,0,0.9};
+		};
 	};
 	
  //========================================= Background========================================

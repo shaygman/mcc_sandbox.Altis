@@ -6,7 +6,7 @@ class CfgPatches {
 		requiredVersion = 1.00;
 		requiredAddons[] = {};
 		author[] = {"shay_gman"};
-		versionDesc = "MCC Sandbox 3";
+		versionDesc = "MCC Sandbox 4";
 		version = "1";
 	};
 };	

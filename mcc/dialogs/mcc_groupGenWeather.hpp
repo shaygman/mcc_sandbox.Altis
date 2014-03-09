@@ -15,8 +15,6 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			text = ""; //--- ToDo: Localize;
 			colorBackground[] = { 0, 0, 0,0.9 };
 			
-			x = 0.270833 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.269271 * safezoneW;
 			h = 0.329871 * safezoneH;
 		};
@@ -27,8 +25,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			text = "Weather:"; //--- ToDo: Localize;
 			colorText[] = {0,1,1,1};
 			
-			x = 0.368229 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			x = 0.0973957 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.0900001 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
@@ -38,8 +36,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Fog:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.0549788 * safezoneH;
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -47,8 +45,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Rain:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.324069 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.0989618 * safezoneH;
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -56,8 +54,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Overcast:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.456017 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.23091 * safezoneH;
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -66,8 +64,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = 10;
 			onSliderPosChanged = "(_this select 0) ctrlSetTooltip str (_this select 1)";
 			
-			x = 0.345313 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.0744797 * safezoneW;
+			y = 0.0549788 * safezoneH;
 			w = 0.148958 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -76,8 +74,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = 11;
 			onSliderPosChanged = "(_this select 0) ctrlSetTooltip str (_this select 1)";
 			
-			x = 0.345313 * safezoneW + safezoneX;
-			y = 0.324069 * safezoneH + safezoneY;
+			x = 0.0744797 * safezoneW;
+			y = 0.0989618 * safezoneH;
 			w = 0.148958 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -86,8 +84,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = 12;
 			onSliderPosChanged = "(_this select 0) ctrlSetTooltip str (_this select 1)";
 			
-			x = 0.345313 * safezoneW + safezoneX;
-			y = 0.456017 * safezoneH + safezoneY;
+			x = 0.0744797 * safezoneW;
+			y = 0.23091 * safezoneH;
 			w = 0.148958 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -97,8 +95,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Wind:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.368051 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.142944 * safezoneH;
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -107,8 +105,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Waves:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -117,8 +115,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = 13;
 			onSliderPosChanged = "(_this select 0) ctrlSetTooltip str (_this select 1)";
 
-			x = 0.345313 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.0744797 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.148958 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -127,8 +125,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = 14;
 			onSliderPosChanged = "(_this select 0) ctrlSetTooltip str (_this select 1)";
 
-			x = 0.345313 * safezoneW + safezoneX;
-			y = 0.368051 * safezoneH + safezoneY;
+			x = 0.0744797 * safezoneW;
+			y = 0.142944 * safezoneH;
 			w = 0.148958 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -138,8 +136,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			text = "Close"; //--- ToDo: Localize;
 			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.510996 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.285889 * safezoneH;
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -149,8 +147,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			text = "Confirm"; //--- ToDo: Localize;
 			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\pop_menu\mission_settings.sqf'");
 			
-			x = 0.471354 * safezoneW + safezoneX;
-			y = 0.510996 * safezoneH + safezoneY;
+			x = 0.200521 * safezoneW;
+			y = 0.285889 * safezoneH;
 			w = 0.0630208 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -159,8 +157,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "max"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.280086 * safezoneH + safezoneY;
+			x = 0.229167 * safezoneW;
+			y = 0.0549788 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -169,8 +167,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "max"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.324069 * safezoneH + safezoneY;
+			x = 0.229167 * safezoneW;
+			y = 0.0989618 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -180,8 +178,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "max"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.368051 * safezoneH + safezoneY;
+			x = 0.229167 * safezoneW;
+			y = 0.142944 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -190,8 +188,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "max"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			x = 0.229167 * safezoneW;
+			y = 0.186927 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -200,8 +198,8 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "max"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.456017 * safezoneH + safezoneY;
+			x = 0.229167 * safezoneW;
+			y = 0.23091 * safezoneH;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
