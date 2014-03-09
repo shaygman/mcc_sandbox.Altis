@@ -5,8 +5,8 @@
 
 GAIA_INIT = FALSE;
 
-GAIA_scripts = "gaia\scripts\";
-GAIA_fsm 		 = "gaia\fsm\";
+GAIA_scripts 	= format ["%1gaia\scripts\",MCC_path];
+GAIA_fsm 		= format ["%1gaia\fsm\",MCC_path];
 
 //GAIA 
 fnc_GAIA					 									= compile preprocessfilelinenumbers (GAIA_scripts + "fnc_GAIA.sqf");

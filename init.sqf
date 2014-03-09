@@ -164,7 +164,7 @@ mccPresets = [
 //*********************************************************************************************************************
 
 //----------------------gaia------------------------------------------------------
-call compile preprocessfile "gaia\gaia_init.sqf";
+call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];
 
 //-----------------------Bon artillery --------------------------------------------
 _nul = [] execVM MCC_path +"bon_artillery\bon_arti_init.sqf";

@@ -42,8 +42,10 @@
 
 class RscTitles
 {
-	#include "mcc\dialogs\compass.hpp"
+	#include "\mcc_sandbox_mod\mcc\dialogs\compass.hpp"
+	#include "\mcc_sandbox_mod\hcam\hcam.hpp"
 };
+
 class CfgFunctions
 {
 	class MCC

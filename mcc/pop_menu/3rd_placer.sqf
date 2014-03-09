@@ -538,7 +538,7 @@ MCC_3D_CAM_Handler =
 	_html = "<t color='#818960' size='2' shadow='0' align='left' underline='true'>" + "Controls:" + "</t><br/><br/>";
 	_html = _html + "<t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left' >" + 
 			"Tab:        Close Editor" + "<br/>" +
-			"X:          Open Menu" + "<br/>" + 
+			"X:          Open/Close Menu" + "<br/>" + 
 			"Ctrl + X:   Undo last spawn" + "<br/>" +
 			"Delete:     Delete object" + "<br/>" +
 			"Space:      Place object" + "<br/>" +
