@@ -3,7 +3,7 @@ class MCC_debugDialogControls:MCC_RscControlsGroup
 	idc = 504;
 	x = 0.52 * safezoneW + safezoneX;
 	y = 0.18 * safezoneH + safezoneY;
-	w = 0.4 * safezoneW;
+	w = 0.345 * safezoneW;
 	h = 0.30788 * safezoneH;
 
 	class Controls
@@ -15,7 +15,7 @@ class MCC_debugDialogControls:MCC_RscControlsGroup
 			
 			x = 0.373958 * safezoneW + safezoneX;
 			y = 0.214111 * safezoneH + safezoneY;
-			w = 0.234896 * safezoneW;
+			w = 0.345 * safezoneW;
 			h = 0.30788 * safezoneH;
 		};
 
@@ -141,7 +141,7 @@ class MCC_debugDialogControls:MCC_RscControlsGroup
 		class MCC_commandlineCloseButton: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 504) ctrlShow false";
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.448438 * safezoneW + safezoneX;

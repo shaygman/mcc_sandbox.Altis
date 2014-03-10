@@ -185,7 +185,7 @@ class MCC_markersDialogControls:MCC_RscControlsGroup
 		class MCC_markerClose: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[10] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 511) ctrlShow false";
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.0687497 * safezoneW;

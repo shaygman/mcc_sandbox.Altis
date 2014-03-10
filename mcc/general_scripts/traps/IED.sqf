@@ -46,23 +46,20 @@ if (_IEDTriggerType==2) then	{		//manual detonation
 							_target = _nrsd select _x;
 							_isJammable = (_target getvariable "MCC_ECM");
 							if (isnil "_isJammable") then {_isJammable = false}; 
-								if (_IEDJammable==0) then	//If the IED is jammable
-								{	
-									if(_isJammable && ((_target distance _dummy) <= 80)) then //check if it's a CREW vehicle
-									{
-										_randomChanceCREW = random 100;
-										while {((_target distance _dummy) < 80) && (_randomChanceCREW>1)} do {_randomChanceCREW = random 100;sleep 2};	//While CREW is near IED got only 1% per 2 second to go off
-										if (_randomChanceCREW <=1) exitWith {_loop=false; _dummy setvariable ["iedTrigered",true,true];}
-									}; 
-						
-									if (_loop) then	//If we come this far someone is near the IED
-									{		
-										{
-										_targetSpeed = if (_IEDTriggerType==1) then {true} else {(speed _target) > 7}; //if it is radio IED speed dosen't matter 
-										if((_target isKindOf _x) && ((_target distance _dummy) <= _trapdistance) && _targetSpeed)exitWith {_loop=false;_dummy setvariable ["iedTrigered",true,true]};
-										} forEach _targets;
-									};
-								};
+							if(_IEDJammable && _isJammable && ((_target distance _dummy) <= 80)) then //check if it's a CREW vehicle
+							{
+								_randomChanceCREW = random 100;
+								while {((_target distance _dummy) < 80) && (_randomChanceCREW>1)} do {_randomChanceCREW = random 100;sleep 2};	//While CREW is near IED got only 1% per 2 second to go off
+								if (_randomChanceCREW <=1) exitWith {_loop=false; _dummy setvariable ["iedTrigered",true,true];}
+							}; 
+				
+							if (_loop) then	//If we come this far someone is near the IED
+							{		
+								{
+								_targetSpeed = if (_IEDTriggerType==1) then {true} else {(speed _target) > 7}; //if it is radio IED speed dosen't matter 
+								if((_target isKindOf _x) && ((_target distance _dummy) <= _trapdistance) && _targetSpeed)exitWith {_loop=false;_dummy setvariable ["iedTrigered",true,true]};
+								} forEach _targets;
+							};
 						};
 						
 					_armed = _dummy getvariable "armed";

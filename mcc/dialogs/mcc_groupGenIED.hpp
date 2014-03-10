@@ -200,13 +200,12 @@ class MCC_IEDDialogControls:MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.65)";
 		};
-		class MCC_trapsJammable: MCC_RscCombo
+		class MCC_trapsJammable: MCC_RscCheckBox
 		{
 			idc = MCC_TRAPS_JAMMABLE;
 
 			x = 0.234896 * safezoneW;
 			y = 0.0989618 * safezoneH;
-			w = 0.0630208 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.65)";
 		};
@@ -301,7 +300,7 @@ class MCC_IEDDialogControls:MCC_RscControlsGroup
 		class MCC_trapsCloseButton: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[8] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 508) ctrlShow false";
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.00572965 * safezoneW;

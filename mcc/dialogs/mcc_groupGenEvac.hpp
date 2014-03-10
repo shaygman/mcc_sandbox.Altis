@@ -220,7 +220,7 @@ class MCC_evacDialogControls:MCC_RscControlsGroup
 		class MCC_evacClose: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 507) ctrlShow false";
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.0859375 * safezoneW;

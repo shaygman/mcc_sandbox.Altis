@@ -52,7 +52,7 @@ class MCC_TimeDialogControls:MCC_RscControlsGroup
 		class MCC_timeDialogClose: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 502) ctrlShow false";
 			text = "Close"; //--- ToDo: Localize;
 			
 			x = 0.00572965 * safezoneW;

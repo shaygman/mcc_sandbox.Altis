@@ -73,7 +73,8 @@ class MCC3D_Dialog
 		MCC_3DCompsaveUIButton,
 		MCC_3DComploadUIButton,
 		MCC_ConsoleCompassMapBackground,
-		MCC_ConsoleCompassMap
+		MCC_ConsoleCompassMap,
+		MCC_3DClose
 	};
 	
 	 //========================================= Background======================================
@@ -83,7 +84,7 @@ class MCC3D_Dialog
 		w = 0.194792 * safezoneW;
 		h = 1.01161 * safezoneH;
 		text = "";colorBackground[] = {0,0,0,0.7};};
-	class nameBackground : MCC_RscText {idc = -1;moving = true;colorBackground[] = { 0, 0, 0, 0.6 };colorText[] = { 1, 1, 1, 0 };
+	class nameBackground : MCC_RscText {idc = -1;moving = true;colorBackground[] = { 0, 0, 0, 1 };colorText[] = { 1, 1, 1, 0 };
 		x = 0.053125 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
@@ -98,7 +99,7 @@ class MCC3D_Dialog
 	 //========================================= Controls========================================
 	 
 	//-------------------------------------------ComboBox----------------------------------------
-	class faction : MCC_RscCombo {idc=MCC_FACTION; style=MCCST_LEFT; colorText[]={1,1,1,1};colorSelect[]={1.0,0.35,0.3,1};colorBackground[]={0,0,0,0.6};
+	class faction : MCC_RscCombo {idc=MCC_FACTION; style=MCCST_LEFT; colorText[]={1,1,1,1};colorSelect[]={1.0,0.35,0.3,1};colorBackground[]={0,0,0,1};
 								colorSelectBackground[]={0,0,0,1}; sizeEx=0.028;
 		x = 0.053125 * safezoneW + safezoneX;
 		y = 0.0491758 * safezoneH + safezoneY;
@@ -184,12 +185,14 @@ class MCC3D_Dialog
 		w = 0.0458333 * safezoneW;
 		h = 0.0219914 * safezoneH;
 		text="Class:";};
-	class EmptyTitle : UnitTitle {
+	class EmptyTitle : UnitTitle 
+	{
 		x = 0.00156247 * safezoneW + safezoneX;
 		y = 0.148137 * safezoneH + safezoneY;
 		w = 0.0458333 * safezoneW;
 		h = 0.0219914 * safezoneH;
-		text="Empty:";};
+		text="Empty:";
+	};
 	class unitNameTitle : UnitTitle {
 		x = 0.00156247 * safezoneW + safezoneX;
 		y = 0.181124 * safezoneH + safezoneY;
@@ -372,4 +375,15 @@ class MCC3D_Dialog
 		w = 0.223438 * safezoneW;
 		h = 0.285889 * safezoneH;
 	};
+	class MCC_3DClose: MCC_RscButtonMenu
+	{
+		idc = -1;
+		text = "Close";
+		action = "closeDialog 0";
+		x = 0.0932292 * safezoneW + safezoneX;
+		y = 0.928833 * safezoneH + safezoneY;
+		w = 0.0916667 * safezoneW;
+		h = 0.0439828 * safezoneH;
+	};
+
 };

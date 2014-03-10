@@ -82,7 +82,7 @@ class MCC_csDialogControls: MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Close"; //--- ToDo: Localize;
-			onButtonClick = __EVAL("[15] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 516) ctrlShow false";
 			
 			x = 0.0401046 * safezoneW;
 			y = 0.120953 * safezoneH;

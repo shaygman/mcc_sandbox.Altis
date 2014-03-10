@@ -95,7 +95,7 @@ class MCC_CASDialogControls:MCC_RscControlsGroup
 		class MCC_CASClose: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 500) ctrlShow false";
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.0744796 * safezoneW;

@@ -209,7 +209,7 @@ class MCC_jukeboxDialogControls: MCC_RscControlsGroup
 		class MCC_jukeboxClose: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[13] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 514) ctrlShow false";
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.0572916 * safezoneW;

@@ -122,7 +122,7 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Close"; //--- ToDo: Localize;
-			onButtonClick = __EVAL("[16] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 517) ctrlShow false";
 
 			x = 0.00572967 * safezoneW;
 			y = 0.120953 * safezoneH;

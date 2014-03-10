@@ -14,7 +14,7 @@
 
 disableSerialization;
 private ["_spawnType","_IEDtype","_trapsArray","_mccdialog"];
-_mccdialog = findDisplay MCC_SANDBOX2_IDD;
+_mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 
 if !mcc_isloading then 
 	{
@@ -25,7 +25,7 @@ if !mcc_isloading then
 		switch (lbCurSel MCC_TRAPS_EXPLOSIN_SIZE) do {case 0:{MCC_trapvolume = ["small"];};	case 1:{MCC_trapvolume = ["medium"];}; case 2:{MCC_trapvolume = ["large"];}; case 3:{MCC_trapvolume = ["at"];};};	//Size of the explosion
 		IEDExplosionType = lbCurSel MCC_TRAPS_EXPLOSIN_TYPE;	//Type of the explosion
 		IEDDisarmTime = lbCurSel MCC_TRAPS_DISARM;	//Time to disarm the IED
-		IEDJammable = lbCurSel MCC_TRAPS_JAMMABLE;	//Can jam the IED with CREW device
+		IEDJammable = cbChecked (_mccdialog displayCtrl MCC_TRAPS_JAMMABLE);	//Can jam the IED with CREW device
 		IEDTriggerType = lbCurSel MCC_TRAPS_TRIGGER;	//The type of trigger for the IED
 		trapdistance = MCC_ied_proxArray select (lbCurSel MCC_TRAPS_PROXIMITY);	//The minimum distance to activate the IED
 		iedside = MCC_ied_targetArray select (lbCurSel MCC_TRAPS_TARGET_FACTION);	//The target faction

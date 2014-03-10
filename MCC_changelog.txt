@@ -1,3 +1,22 @@
+Change log r2:
+3D Editor:
+- Added Close button. 
+- Drop down menus backgrounds are no longer opaque.
+- re-added structures. 
+- Added weapons' holders, intel exc to the 3D (on Dev branch).
+
+- GUI: 
+- when opening a new container all other containers will be closed. 
+- Box Gen: Drop down menus backgrounds are no longer opaque.
+- Fixed changing view mod hide the video feed.
+
+- IED: 
+- Fixed non-jammable IED didn't explode. 
+
+- Mission Wizard: 
+- Added mini map and zone combobox. 
+
+
 Change log r19:
 Enging:
 - Added: Tooltips and indicators for Mission Settings.
@@ -30,7 +49,7 @@ Group Generator:
 - Added: Create zones, spawn units, exc from the Group Gen - in time it will replace menu 1 in MCC and a lot of functions will be called from there. 
 - Added: Create and save your own custom groups to profileNameSpace. Spawn or use them in the Mission Wizard. 
 
-
+- TODO Role selection
 - TODO access rights
 - TODO replace by checkboxes
 - TODO show SF in right click. 

@@ -134,7 +134,7 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Close"; //--- ToDo: Localize;
-			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 501) ctrlShow false";
 			
 			x = 0.00572965 * safezoneW;
 			y = 0.285889 * safezoneH;

@@ -528,6 +528,7 @@ if(_bool) then
 						{
 							case (_item in (uniformItems player)): {player removeItemFromUniform _item;};
 							case (_item in (vestItems player)) : {player removeItemFromVest _item;};
+							case (_item in (backpackItems player)) : {player removeItemFromBackpack _item;};
 							default {player removeWeapon _item;};
 						};
 					};

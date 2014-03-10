@@ -35,6 +35,15 @@ _comboBox = _mccdialog displayCtrl FACTIONCOMBO;		//fill combobox CFG factions
 		_comboBox lbAdd _displayname;
 	} foreach U_FACTIONS;
 	_comboBox lbSetCurSel MCC_faction_index;
+
+//------------------------------------------- ZONES --------------------------------------------------------------------------------------------------
+_comboBox = _mccdialog displayCtrl 1023; //fill combobox zone's numbers
+lbClear _comboBox;
+{
+	_displayname = format ["%1",_x];
+	_comboBox lbAdd _displayname;
+} foreach MCC_zones_numbers;
+_comboBox lbSetCurSel MCC_zone_index;
 	
 //==========================       Mission Wizard ===============================================
 _comboBox = _mccdialog displayCtrl MCC_MWPlayersIDC;		

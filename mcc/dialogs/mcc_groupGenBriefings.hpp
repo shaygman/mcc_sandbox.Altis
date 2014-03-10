@@ -132,7 +132,7 @@ class MCC_briefingDialogControls: MCC_RscControlsGroup
 		class MCC_briefingClose: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[11] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 512) ctrlShow false";
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.14323 * safezoneW;

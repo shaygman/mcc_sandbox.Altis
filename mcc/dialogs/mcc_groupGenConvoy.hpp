@@ -216,7 +216,7 @@ class MCC_convoyDialogControls:MCC_RscControlsGroup
 		class MCC_convoyClose: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[9] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 509) ctrlShow false";
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.120313 * safezoneW;

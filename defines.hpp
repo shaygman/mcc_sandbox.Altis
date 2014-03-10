@@ -529,6 +529,8 @@ class CfgFunctions
 			class transferSaveMenu {};
 			class transferSaveGear {};
 			class VASP {};
+			class quickAttachment {};
+			class accList {};
 		};
 	};
 };

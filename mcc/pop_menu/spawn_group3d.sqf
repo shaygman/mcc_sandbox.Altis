@@ -321,6 +321,84 @@ if (mcc_missionmaker == (name player)) then
 					mcc_spawntype="AMMO";
 				};
 				
+				case 38:	//S - General 
+				{
+					_groupArray = U_STRUCTERS;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 39:	//O_BACKPACKS
+				{
+					_groupArray = O_BACKPACKS;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 40:	//O_INTEL
+				{
+					_groupArray = O_INTEL;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 41:	//O_ITEMS
+				{
+					_groupArray = O_ITEMS;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 42:	//O_HEADGEAR
+				{
+					_groupArray = O_HEADGEAR;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 43:	//O_UNIFORMS
+				{
+					_groupArray = O_UNIFORMS;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 44:	//O_VESTS
+				{
+					_groupArray = O_VESTS;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 45:	//O_WEAPONSACCES
+				{
+					_groupArray = O_WEAPONSACCES;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 46:	//O_WEAPONSHANDGUNS
+				{
+					_groupArray = O_WEAPONSHANDGUNS;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 47:	//O_WEAPONSPRIMARY
+				{
+					_groupArray = O_WEAPONSPRIMARY;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 48:	//O_WEAPONSPRIMARY
+				{
+					_groupArray = O_WEAPONSSECONDARY;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 49:	//O_RESPWN
+				{
+					_groupArray = O_RESPWN;
+					mcc_spawntype="AMMO";
+				};
+				
+				case 50:	//O_SOUNDS
+				{
+					_groupArray = O_SOUNDS;
+					mcc_spawntype="AMMO";
+				};
+				
 			};
 			
 		if ((lbCurSel MCC_UNIT_CLASS) != -1) then

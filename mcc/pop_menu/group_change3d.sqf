@@ -404,6 +404,150 @@ if (_type<=6) then 	//If not doc or object
 							} foreach S_FENCES;
 						_comboBox lbSetCurSel 0;
 					};
+					
+			case 38:	//S-General
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach U_STRUCTERS;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 39:	//O_BACKPACKS
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_BACKPACKS;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 40:	//O_INTEL
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_INTEL;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 41:	//O_ITEMS
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_ITEMS;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 42:	//O_HEADGEAR
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_HEADGEAR;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 43:	//O_UNIFORMS
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_UNIFORMS;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 44:	//O_VESTS
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_VESTS;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 45:	//O_WEAPONSACCES
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_WEAPONSACCES;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 46:	//O_WEAPONSHANDGUNS
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_WEAPONSHANDGUNS;
+						_comboBox lbSetCurSel 0;
+					};
+			
+			case 47:	//O_WEAPONSPRIMARY
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_WEAPONSPRIMARY;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 48:	//O_WEAPONSSECONDARY
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_WEAPONSSECONDARY;
+						_comboBox lbSetCurSel 0;
+					};
+					
+			case 49:	//O_RESPWN
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_RESPWN;
+						_comboBox lbSetCurSel 0;
+					};
+			
+			case 50:	//O_SOUNDS
+					{
+						_comboBox = _mccdialog displayCtrl MCC_UNIT_CLASS;		
+						lbClear _comboBox;
+							{
+								_displayname = format ["%1",(_x select 3) select 0];
+								_comboBox lbAdd _displayname;
+							} foreach O_SOUNDS;
+						_comboBox lbSetCurSel 0;
+					};
+					
 		};
 	};
 

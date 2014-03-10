@@ -56,7 +56,7 @@ class MCC_deleteDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Close"; //--- ToDo: Localize;
-			onButtonClick = __EVAL("[17] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 518) ctrlShow false";
 			
 			x = 0.0744797 * safezoneW;
 			y = 0.0989618 * safezoneH;

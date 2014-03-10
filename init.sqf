@@ -539,6 +539,20 @@ U_EXPLOSIVE				= [];
 U_UNIFORM				= [];
 U_GLASSES				= [];
 
+//Objects 3D
+O_BACKPACKS				= [];
+O_INTEL					= [];
+O_ITEMS					= [];
+O_HEADGEAR				= [];
+O_UNIFORMS				= [];
+O_VESTS					= [];
+O_WEAPONSACCES			= [];
+O_WEAPONSHANDGUNS		= [];
+O_WEAPONSPRIMARY		= [];
+O_WEAPONSSECONDARY		= [];
+O_RESPWN				= [];
+O_SOUNDS				= [];
+
 MCC_3Dobjects			= [];		//Place holder for 3D objects
 MCC_3DobjectsCounter	= -1;
 

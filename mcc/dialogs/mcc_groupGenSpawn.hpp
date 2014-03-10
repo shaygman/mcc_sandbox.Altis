@@ -271,7 +271,7 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		class mcc_groupGen_spawnCloseButton: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
+			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 506) ctrlShow false";
 			text = "Close"; //--- ToDo: Localize;
 			
 			x = 0.166146 * safezoneW;

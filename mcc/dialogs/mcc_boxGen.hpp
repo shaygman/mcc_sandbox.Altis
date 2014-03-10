@@ -109,7 +109,7 @@ class boxGen {
 		style = MCCST_LEFT;
 		colorText[] = { 1, 1, 1, 1 };
 		colorSelect[] = { 1.0, 0.35, 0.3, 1 };
-		colorBackground[] = { 0, 0, 0, 0.6 };
+		colorBackground[]={0,0,0,1};
 		colorSelectBackground[] = { 0, 0, 0, 1 };
 		onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\dialogs\mcc_boxGen_change.sqf'");
 		};

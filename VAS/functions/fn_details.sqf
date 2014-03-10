@@ -12,7 +12,7 @@
 */
 disableSerialization;
 if((uiNamespace getvariable "VAS_UI_FILTER") != "guns" && !(uiNamespace getVariable "VAS_UI_QuickMag")) exitWith {call VAS_fnc_closeDetails;}; //Filter not on guns? exit
-private["_control","_data","_control","_magazines","_details"];
+private["_control","_data","_control","_magazines","_details","_items"];
 _control = _this select 0;
 if(isNil {_control}) exitWith {call VAS_fnc_closeDetails;};
 if((_this select 1) == -1) exitWith {call VAS_fnc_closeDetails;};
@@ -36,5 +36,24 @@ lbClear _control;
 		_control lbSetPicture [(lbSize _control)-1,(_tmp select 2)];
 	};
 } foreach _magazines;
+
+_items = [_data] call VAS_fnc_accList;
+
+_control = ((findDisplay 2500) displayCtrl 2851);
+lbClear _control;
+
+if(count _items > 0) then {
+	{
+		_cfgInfo = [_x,"CfgWeapons"] call VAS_fnc_fetchCfgDetails;
+		_control lbAdd format["%1", _cfgInfo select 1];
+		_control lbSetData [(lbSize _control)-1,_x];
+		_control lbSetPicture [(lbSize _control)-1,_cfgInfo select 2];
+	} foreach _items;
+	ctrlShow[VAS_AccBG,true];
+	ctrlShow[VAS_AccList,true];
+} else {
+	ctrlShow[VAS_AccBG,false];
+	ctrlShow[VAS_AccList,false];
+};
 
 call VAS_fnc_openDetails;

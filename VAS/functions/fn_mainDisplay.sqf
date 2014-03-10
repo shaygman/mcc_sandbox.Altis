@@ -31,6 +31,10 @@ uiNamespace setVariable ["VAS_UI_QuickMag",false];
 
 [] call VAS_fnc_updateLoad;
 
+
+lbSetCurSel[VAS_virt_list,0];
+lbSetCurSel[VAS_unit_list,0];
+
 switch (_request) do
 {
 	case "guns":

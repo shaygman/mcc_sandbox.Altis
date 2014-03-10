@@ -13,3 +13,5 @@
 ctrlShow [VAS_detail_mags_list,false];
 ctrlShow[VAS_detail_mags,false];
 ctrlShow [VAS_detail_magsbg,false];
+ctrlShow[VAS_AccBG,false];
+ctrlShow[VAS_AccList,false];
