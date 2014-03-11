@@ -1,3 +1,6 @@
+Change log r3:
+- Fixed: Fortify updated with altered CBA taskdefend (credits CBA & Rommel).
+
 Change log r2:
 3D Editor:
 - Added Close button. 
@@ -16,8 +19,7 @@ Change log r2:
 - Mission Wizard: 
 - Added mini map and zone combobox. 
 
-Change log r20:
-- Fixed: Fortify updated with altered CBA taskdefend (credits CBA & Rommel).
+
 
 Change log r19:
 Enging:
