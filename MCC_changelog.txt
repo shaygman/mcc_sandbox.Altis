@@ -10,6 +10,9 @@ Change log r2:
 - Box Gen: Drop down menus backgrounds are no longer opaque.
 - Fixed changing view mod hide the video feed.
 
+- VAS:
+- Updated to the latest version. 
+
 - IED: 
 - Fixed non-jammable IED didn't explode. 
 
