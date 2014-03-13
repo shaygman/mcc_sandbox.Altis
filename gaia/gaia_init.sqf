@@ -124,20 +124,8 @@ fnc_GetTurretsWeapons						 	= compile preprocessfilelinenumbers (GAIA_scripts 	
 //garrison specific
 //define functions hint
 
+gaia_CBA_fnc_taskDefend 					=compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\gaia_CBA_fnc_taskDefend.sqf");
 
-
-gaia_fnc_vision_check = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_vision_check.sqf");
-gaia_fnc_MoveTo = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_MoveTo.sqf");
-gaia_fnc_Prone_Limit = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_Prone_Limit.sqf");
-gaia_fnc_smartlook = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_smartlook.sqf");
-gaia_fnc_seek= compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_seek.sqf");
-gaia_fnc_get_angle = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_get_angle.sqf");
-gaia_fnc_cansee = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_cansee.sqf");
-gaia_fnc_get_DoorPositions = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_get_DoorPositions.sqf");
-gaia_fnc_willsee = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_willsee.sqf");
-gaia_fnc_willwalk = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_willwalk.sqf");
-gaia_fnc_indoors = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_indoors.sqf");
-gaia_fnc_sillybuild_check = compile preProcessFileLineNumbers (GAIA_scripts + "Fortify\Garrison_fncs\gaia_fnc_sillybuild_check.sqf");
 
 
 

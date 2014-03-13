@@ -1,3 +1,6 @@
+Change log r3:
+- Fixed: Fortify updated with altered CBA taskdefend (credits CBA & Rommel).
+
 Change log r2:
 Engine:
 - Fixed: Groups/units created with "Create" button are not saved. 
@@ -28,6 +31,7 @@ Mission Wizard:
 
 Delete: 
 - Added: Delete lights - will delete all light sources in the area.
+
 
 
 Change log r19:

@@ -218,7 +218,15 @@ _TempTargets			= (_Targets select 0)+(_Targets select 1)+(_Targets select 2)+(_T
    		//Zone info on group found.
    		{
    				_ZoneBehave	=([(_zoneintend select 0),_side] call fnc_GetZoneStatusBehavior);
-   				if (count(_zonebehave)>0 and (behaviour leader _x	!="COMBAT") and (behaviour leader _x	!="STEALTH")) then
+   				if (	count(_zonebehave)>0 
+   							and 
+   							(behaviour leader _x	!="COMBAT") 
+   							and 
+   							(behaviour leader _x	!="STEALTH")
+   							and
+   							((_x getVariable  ["GAIA_Order",""])!="DoFortify") 
+   					 ) 
+   				then
    				//We even found the expected bheavior.
    				{
    					/*
