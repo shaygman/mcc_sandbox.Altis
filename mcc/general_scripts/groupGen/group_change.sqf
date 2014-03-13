@@ -27,6 +27,7 @@
 #define mcc_groupGen_CurrentgroupNameTittle_IDC 3018
 #define mcc_groupGen_CurrentgroupNameText_IDC 3019
 #define MCC_GGSAVE_GROUPIDC 3020
+#define MCC_GGVREATE_IDC 3021
 
 private ["_action", "_type", "_comboBox", "_mccdialog", "_groupArray","_displayname","_index","_side","_group","_unit","_show"];
 disableSerialization;
@@ -52,6 +53,16 @@ if (_show) then
 {
 	(_mccdialog displayCtrl MCC_GGSAVE_GROUPIDC) ctrlSetTooltip "Save the group as a custom group";
 	ctrlSetText [MCC_GGSAVE_GROUPIDC, "Save as Custom"]; 
+}; 
+
+//Hide Create button for reinforcment/fortify
+if ((((MCC_groupTypes select (lbCurSel UNIT_TYPE) select 0)) =="Reinforcement") || (((MCC_groupTypes select (lbCurSel UNIT_TYPE) select 0)) =="Garrison")) then 
+{
+	ctrlShow [MCC_GGVREATE_IDC,false];
+}
+else 
+{
+	ctrlShow [MCC_GGVREATE_IDC,true];
 }; 
 
 //Changing the group type

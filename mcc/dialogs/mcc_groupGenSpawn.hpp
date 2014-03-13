@@ -11,6 +11,7 @@
 #define mcc_groupGen_CurrentgroupNameTittle_IDC 3018
 #define mcc_groupGen_CurrentgroupNameText_IDC 3019
 #define MCC_GGSAVE_GROUPIDC 3020
+#define MCC_GGVREATE_IDC 3021
 
 class MCC_spawnDialogControls:MCC_RscControlsGroup
 {
@@ -223,7 +224,7 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		};
 		class mcc_groupGen_groupListBoxCreaterButton: MCC_RscButton
 		{
-			idc = -1;
+			idc = MCC_GGVREATE_IDC;
 			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\spawn_request.sqf'");
 
 			text = "Create"; //--- ToDo: Localize;

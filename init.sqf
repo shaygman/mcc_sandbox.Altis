@@ -261,7 +261,7 @@ MCC_spawn_behaviors = [
                       ["aggressive", "MOVE","AI will patrol the zone and pursuit known enemies outside the zone"],
 					  ["Defensive","NOFOLLOW","AI will patrol the zone but will not pursuit known enemies outside the zone"],
 					  ["Fortify","FORTIFY","AI will look for empty building and static weapons and dig inside"],
-					  ["BIS Default","bis","Regular ArmA AI behavior"],
+					  ["None","bis","Regular ArmA AI behavior"],
 					  ["BIS Defence","bisd","AI sit down some will patrol around"],
 					  ["BIS Patrol","bisp","AI will patrol around"]
 					  ];

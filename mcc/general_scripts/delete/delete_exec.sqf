@@ -2,7 +2,7 @@ private ["_pos","_radius","_type","_nearObjects","_crew","_markers"];
 
 _pos = _this select 0;
 _radius = _this select 1;
-_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers"] select (_this select 2); 
+_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights"] select (_this select 2); 
 
 switch _type do
 	{
@@ -40,6 +40,19 @@ switch _type do
 				{
 					[[2, "", "", "", "", "", _x, []],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;; 
 				} foreach _markers;
+				
+				_nearObjects = []; 
+			};
+			
+		case "Lights":	
+			{ 
+				private "_lamps";
+				//Lights
+				{
+					_lamps = [_pos select 0, _pos select 1, 0] nearObjects [_x, _radius];
+					sleep 1;
+					{_x setDamage 1} forEach _lamps;
+				} foreach ["Lamps_Base_F", "PowerLines_base_F"];
 				
 				_nearObjects = []; 
 			};

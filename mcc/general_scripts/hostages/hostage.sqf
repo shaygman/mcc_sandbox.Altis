@@ -29,5 +29,5 @@ if (_action == 1) then {	//disabnd Hostage TODO no leave group while doing so
 	
 if (_action == 2) then {	//Join player
 	_hostage removeAction _index;
-	[_hostage] join _caller;
+	(units group _hostage) join _caller;
 	};

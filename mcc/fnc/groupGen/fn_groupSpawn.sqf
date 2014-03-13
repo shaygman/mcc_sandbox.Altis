@@ -14,7 +14,22 @@ private ["_pos","_unitsArray","_side","_group","_loc","_isEmpty","_unitClass","_
 _pos 		= _this select 0; 
 _unitsArray = _this select 1; 
 _loc 		= _this select 2;
-_side		= if (typeName (_this select 3) == "STRING") then {call compile (_this select 3)} else {(_this select 3)};
+_side		= if (typeName (_this select 3) == "STRING") then 
+				{
+					if (tolower (_this select 3) == "gue") then
+					{
+						resistance
+					}
+					else
+					{
+						call compile (_this select 3);
+					};
+				} 
+				else 
+				{
+					(_this select 3)
+				};
+
 _isEmpty	= _this select 4;
 
 
@@ -29,42 +44,46 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 	else
 	{
 		//Cfg Group
-		if (typeName _unitsArray == "STRING") then 
+		if (typeName _unitsArray == "STRING") exitWith 
 		{
 			_group = [_pos, _side, (call compile _unitsArray)] call MCC_fnc_spawnGroup;
-		} 
-		else //Array group workAround
-		{
-			_group = creategroup _side;
-			for [{_x=0},{_x < (count _unitsArray)},{_x=_x+1}] do 
-			{	
-				_unitClass 	= _unitsArray select _x;
-				_unitSim	= getText(configFile >> "CfgVehicles" >> _unitClass >> "simulation");	
+		};
 
-				switch (tolower _unitSim) do 
+		if (typeName _unitsArray == "CONFIG") exitWith 
+		{
+			_group = [_pos, _side, _unitsArray] call MCC_fnc_spawnGroup;
+		};	
+		
+		//Array group workAround
+		_group = creategroup _side;
+		for [{_x=0},{_x < (count _unitsArray)},{_x=_x+1}] do 
+		{	
+			_unitClass 	= _unitsArray select _x;
+			_unitSim	= getText(configFile >> "CfgVehicles" >> _unitClass >> "simulation");	
+
+			switch (tolower _unitSim) do 
+			{
+				case "soldier": 
 				{
-					case "soldier": 
-					{
-						_unit = _group createunit [_unitClass,_pos,[],0,"none"];
-					};
-					default 
-					{
-						_safepos  =[_pos,1,100,2,_waterSpawn,100,0] call BIS_fnc_findSafePos;
-						_unit = [[_safepos select 0,_safepos select 1,0], 0, _unitClass, _group] call BIS_fnc_spawnVehicle;
-					};
+					_unit = _group createunit [_unitClass,_pos,[],0,"none"];
+				};
+				default 
+				{
+					_safepos  =[_pos,1,100,2,_waterSpawn,100,0] call BIS_fnc_findSafePos;
+					_unit = [[_safepos select 0,_safepos select 1,0], 0, _unitClass, _group] call BIS_fnc_spawnVehicle;
 				};
 			};
-			
-			//Set skill
-			{
-				_x setSkill ["aimingspeed", MCC_AI_Aim];
-				_x setSkill ["spotdistance", MCC_AI_Spot];
-				_x setSkill ["aimingaccuracy", MCC_AI_Aim];
-				_x setSkill ["aimingshake", MCC_AI_Aim];
-				_x setSkill ["spottime", MCC_AI_Spot];
-				_x setSkill ["commanding", MCC_AI_Command];
-				_x setSkill ["general", MCC_AI_Skill];
-			} foreach units _group;
 		};
+		
+		//Set skill
+		{
+			_x setSkill ["aimingspeed", MCC_AI_Aim];
+			_x setSkill ["spotdistance", MCC_AI_Spot];
+			_x setSkill ["aimingaccuracy", MCC_AI_Aim];
+			_x setSkill ["aimingshake", MCC_AI_Aim];
+			_x setSkill ["spottime", MCC_AI_Spot];
+			_x setSkill ["commanding", MCC_AI_Command];
+			_x setSkill ["general", MCC_AI_Skill];
+		} foreach units _group;
 	};
 };

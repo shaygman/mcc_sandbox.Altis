@@ -1,23 +1,33 @@
 Change log r2:
+Engine:
+- Fixed: Groups/units created with "Create" button are not saved. 
+- Fixed: Error creating Resistance's groups/units created with "Create" button. 
+
 3D Editor:
-- Added Close button. 
-- Drop down menus backgrounds are no longer opaque.
-- re-added structures. 
-- Added weapons' holders, intel exc to the 3D (on Dev branch).
+- Added: Close button. 
+- Fixed: Drop down menus backgrounds are no longer opaque.
+- Added: Re-added structures in the drop down menu (hopefully BIS will introduce the new structures classes.. 
+- Added: Weapons' holders, intel exc to the 3D (on Dev branch).
+- Fixed: Recruit preset will recruit the whole unit's group (vehicle's crew). 
+- Added: Pickable items preset will have by default enableSimulation off so you can place them on tables exc. 
 
-- GUI: 
-- when opening a new container all other containers will be closed. 
-- Box Gen: Drop down menus backgrounds are no longer opaque.
-- Fixed changing view mod hide the video feed.
+GUI: 
+- Fixed: When opening a new container all other containers will be closed and not overlap. 
+- Fixed: In Box Gen drop down menus backgrounds are no longer opaque.
+- Fixed: Changing view mod hide the video feed.
+- Fixed: When selecting reinforcement or garrison the create button will not show only add to zone. 
 
-- VAS:
+VAS:
 - Updated to the latest version. 
 
-- IED: 
-- Fixed non-jammable IED didn't explode. 
+IED: 
+- Fixed: Non-jammable IED didn't explode. 
 
-- Mission Wizard: 
-- Added mini map and zone combobox. 
+Mission Wizard: 
+- Added: Mini map and zone combobox. 
+
+Delete: 
+- Added: Delete lights - will delete all light sources in the area.
 
 
 Change log r19:

@@ -10,25 +10,29 @@ _type = _this select 5;
 _text = _this select 6; 
 _pos = _this select 7; 
 
-mcc_safe=mcc_safe + FORMAT ['	_case=%1;
-								_color="%2";
-								_size=%3;
-								_shape = "%4";
-								_brush="%5";
-								_type="%6";
-								_text="%7";
-								_pos = %8;
-								[[_case, _color, _size, _shape, _brush, _type, _text, _pos],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;
-								'								 
-								,_case
-								,_color
-								,_size
-								,_shape
-								,_brush
-								,_type
-								,_text
-								,_pos
-							   ];
+if (_case != 2) then
+{
+	mcc_safe=mcc_safe + FORMAT ['	_case=%1;
+									_color="%2";
+									_size=%3;
+									_shape = "%4";
+									_brush="%5";
+									_type="%6";
+									_text="%7";
+									_pos = %8;
+									[[_case, _color, _size, _shape, _brush, _type, _text, _pos],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;
+									'								 
+									,_case
+									,_color
+									,_size
+									,_shape
+									,_brush
+									,_type
+									,_text
+									,_pos
+								   ];
+};
+
 switch (_case) do
 {
    case 0:		//Create Marker
