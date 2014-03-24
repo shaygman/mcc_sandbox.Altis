@@ -200,7 +200,7 @@ if (_objType in ["tanks","aa","artillery","air"]) then
 {
 	//_init = '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];' + '_this setVehicleLock "LOCKED";'; 
 	_init = '_this setVehicleLock "LOCKED";'; 
-	if (_objType =="artillery") then {_init = _init + format ['createVehicleCrew _this;[0,_this] execVM "%1mcc\general_scripts\ambient\amb_art.sqf";',MCC_path]}; 
+	if (_objType =="artillery") then {_init = _init + "createVehicleCrew _this;[0,_this] spawn MCC_fnc_amb_Art;"}; 
 	[[[netID _object,_object], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 };
 

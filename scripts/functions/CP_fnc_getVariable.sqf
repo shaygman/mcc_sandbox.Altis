@@ -1,17 +1,44 @@
-
 //==================================================================CP_fnc_getVariable======================================================================================
 // Global execute a command on server only  - SERVER ONLY
 // Example: [[varName,playerID,VarDefaultValue], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 //==============================================================================================================================================================================
 
-private ["_varName","_id","_value"];
+private ["_varName","_id","_value","_player","_varType","_valueExist"];
 _varName 	= _this select 0;			
-_id 		= _this select 1; 
+_player		= _this select 1; 
 _varDefault	= _this select 2; 
+_varType	= toUpper (_this select 3); 
 
-_value = profileNamespace getVariable format ["%1_%2",_varName,_id];
-if (isnil "_value") then {														//if it's first time then set us default. 
-	profileNamespace setVariable [format ["%1_%2",_varName,_id], _varDefault];
+if(!isServer) exitWith {};
+if (isnil "_player") exitWith {}; 
+
+_id = getPlayerUID _player;
+
+_value = [name _player, _id, _varName, _varType] call iniDB_read;
+
+switch _varType do 
+{
+	case "STRING" : 
+	{
+		_valueExist = if (_value == "") then {false} else {true}; 
+	}; 
+	
+	case "ARRAY" : 
+	{
+		_valueExist = if (count _value == 0) then {false} else {true}; 
 	};
-_value = profileNamespace getVariable format ["%1_%2",_varName,_id];	
-[[_varName,_value,_id], "CP_fnc_setValue", true, false] spawn BIS_fnc_MP;			//returns value		
+	
+	case "SCALAR" : 
+	{
+		_valueExist = if (_value == 0) then {false} else {true}; 
+	};
+};
+
+if (!_valueExist) then
+{
+	[name _player, _id, _varName, _varDefault, _varType] call iniDB_write;
+	_value = _varDefault;
+}; 
+
+//returns value		
+[[_varName,_value,_id], "CP_fnc_setValue", _player, false] spawn BIS_fnc_MP;			

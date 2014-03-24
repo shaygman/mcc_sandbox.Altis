@@ -230,22 +230,9 @@ if !mcc_isloading then
 		{
 			if (count MCC_groupBroadcast == 0) exitWIth {player sidechat "Cannot spawn an empty group"}; 
 		};
-		click = false; 
-		_timeout = time + 5; 
+
 		hint "click on the map"; 
-		onMapSingleClick " 	hint ""Group Spawned."";
-						click = true; 
-						mcc_safe = mcc_safe + FORMAT ['
-									[[%1 , %2, %3, %4, %5],""MCC_fnc_groupSpawn"",false,false] spawn BIS_fnc_MP;
-									sleep 1;'
-									, _pos
-									, MCC_groupBroadcast
-									, mcc_hc
-									, mcc_sidename
-									, MCC_isEmpty
-									];
-						[[_pos, MCC_groupBroadcast, mcc_hc, mcc_sidename, MCC_isEmpty],'MCC_fnc_groupSpawn',false,false] spawn BIS_fnc_MP;
-						onMapSingleClick """";";
+		MCC_spawnEnabled = true; 
 	}
 	//Spawn to zone
 	else

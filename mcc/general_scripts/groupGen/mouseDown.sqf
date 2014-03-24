@@ -14,6 +14,7 @@ _posY = _params select 3;
 _shift = _params select 4;
 _ctrlKey = _params select 5;
 _alt = _params select 6;
+MCC_XYmap = [_posX,_posY]; 
 
 if (mcc_missionmaker == (name player)) then
 {
@@ -38,6 +39,70 @@ if (mcc_missionmaker == (name player)) then
 		
 		[0,MCC_ConsoleWPpos] execVM format ["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
 	};	
+	
+	//Artillery
+	if (MCC_artilleryEnabled &&  _pressed == 0) exitWith
+	{
+		if (!_ctrlKey) then {MCC_artilleryEnabled = false}; 
+		if (MCC_capture_state) then
+		{
+			hint "Artillery captured.";
+			MCC_capture_var = MCC_capture_var + FORMAT ["
+			[[%1, '%2', %3, %4, %5, %6],'MCC_fnc_artillery',true,false] spawn BIS_fnc_MP;
+			"
+			,_ctrl ctrlMapScreenToWorld [_posX,_posY]
+			,shelltype
+			,shellspread
+			,nshell
+			,MCCSimulate
+			,MCC_artyDelay
+			];
+		}	
+		else
+		{
+			hint "Artillery inbound.";
+			[[_ctrl ctrlMapScreenToWorld [_posX,_posY], shelltype, shellspread, nshell,MCCSimulate,MCC_artyDelay],'MCC_fnc_artillery',true,false] spawn BIS_fnc_MP;								
+		};
+		sleep 0.5;
+		deleteMarkerLocal "mcc_arty";
+	};
+	
+	//Spawn
+	if (MCC_spawnEnabled &&  _pressed == 0) exitWith
+	{
+		if (!_ctrlKey) then {MCC_spawnEnabled = false}; 
+		if (MCC_capture_state) then
+		{
+			hint "Group Spawned Captured";
+			MCC_capture_var = MCC_capture_var + FORMAT ["
+									[[%1 , %2, %3, %4, %5],'MCC_fnc_groupSpawn',false,false] spawn BIS_fnc_MP;
+									"
+									, _ctrl ctrlMapScreenToWorld [_posX,_posY]
+									, MCC_groupBroadcast
+									, mcc_hc
+									, mcc_sidename
+									, MCC_isEmpty
+									];
+		}	
+		else
+		{
+			hint "Group Spawned";
+			mcc_safe = mcc_safe + FORMAT ["
+									[[%1 , %2, %3, %4, %5],'MCC_fnc_groupSpawn',false,false] spawn BIS_fnc_MP;
+									sleep 1;
+									"
+									, _ctrl ctrlMapScreenToWorld [_posX,_posY]
+									, MCC_groupBroadcast
+									, mcc_hc
+									, mcc_sidename
+									, MCC_isEmpty
+									];
+			[[_ctrl ctrlMapScreenToWorld [_posX,_posY], MCC_groupBroadcast, mcc_hc, mcc_sidename, MCC_isEmpty],"MCC_fnc_groupSpawn",false,false] spawn BIS_fnc_MP;
+		};
+		sleep 0.5;
+		deleteMarkerLocal "mcc_spawnMarker";
+	};
+	
 	
 	//Box drawing select
 	if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked && !MCC_zone_drawing && !MCC3DRuning && !MCC_CASrequestMarker && !MCC_brush_drawing && !MCC_drawTriggers

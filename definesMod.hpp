@@ -338,6 +338,11 @@ class CfgFunctions
 				description = "Create DPICM artillery barage.";
 			};
 			
+			class amb_Art
+			{
+				description = "Create ambient artillery barage.";
+			};
+			
 		};
 		
 		class console

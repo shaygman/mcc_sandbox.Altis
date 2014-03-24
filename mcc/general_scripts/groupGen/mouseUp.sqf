@@ -16,8 +16,18 @@ if (mcc_missionmaker == (name player)) then
 {
 	MCC_GroupGenMouseButtonDown = false;	//Mouse state
 	MCC_GroupGenMouseButtonUp = true;
-
-	if (MCC_ambushPlacing && _pressed!=1) then //Ambush group placing
+	
+	//Clear some markers
+	if (_pressed == 1 && (MCC_artilleryEnabled || MCC_spawnEnabled) && (str MCC_XYmap == format ["[%1,%2]",_posX,_posY])) then
+	{
+		MCC_artilleryEnabled = false;
+		deleteMarkerLocal "mcc_arty";
+		
+		MCC_spawnEnabled = false;
+		deleteMarkerLocal "mcc_spawnMarker";
+	};
+		
+	if (MCC_ambushPlacing && _pressed!=1) exitWith //Ambush group placing
 	{
 		MCC_pointB = _ctrl ctrlmapscreentoworld [_posX,_posY];
 		IEDDir = [MCC_pointA,MCC_pointB] call BIS_fnc_dirTo;
@@ -75,7 +85,7 @@ if (mcc_missionmaker == (name player)) then
 		MCC_ambushPlacing = false; 							
 	};
 	
-	if (_shift && _pressed!=1) then //Sync with shift key
+	if (_shift && _pressed!=1) exitWith //Sync with shift key
 	{
 		MCC_pointB = _ctrl ctrlmapscreentoworld [_posX,_posY];
 		_nearObjectsA = MCC_pointA nearObjects ["bomb",50];

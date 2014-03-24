@@ -16,10 +16,11 @@ private ["_unitsArray","_endPos","_side","_size","_zoneMarker","_faction","_star
 _endPos 				= _this select 0;
 _side					= _this select 1;
 _size 					=  if (TypeName  (_this select 2) == "STRING") then {call compile (_this select 2)} else {(_this select 2)};
-_zoneMarker 			=  if (TypeName  (_this select 3) == "STRING") then {(_this select 2)} else {str (_this select 3)};
+_zoneMarker 			=  if (TypeName  (_this select 3) == "STRING") then {(_this select 3)} else {str (_this select 3)};
 _faction				= _this select 4;
 _startPosDir			= _this select 5;
 
+player sidechat "Zone: " + _zoneMarker;
 if (TypeName _side == "STRING") then
 {
 	switch (toUpper _side) do 
@@ -171,8 +172,8 @@ _wp setWaypointBehaviour "SAFE";
 _wp setWaypointSpeed "FULL";
 
 _car1 = vehicle leader _groupVehicles;
-waitUntil {sleep 5; (!(canMove _car1) || (currentCommand _car1 == "") ); };
-sleep 10;
+waitUntil {sleep 5; (!(canMove _car1) || (currentCommand _car1 == "") || (_car1 distance _wpPos) < 50); };
+sleep 3;
 
 _transportCars = [];
 _transportCarsGroup = createGroup _side; 
@@ -198,8 +199,7 @@ _transportCarsGroup = createGroup _side;
 				{
 					unassignVehicle _x;
 					_x action ["getOut", _car];
-					_x setBehaviour "AWARE";
-					sleep 0.8;
+					sleep 0.6;
 				};
 			} foreach crew _car;
 		};
@@ -208,25 +208,11 @@ _transportCarsGroup = createGroup _side;
 
 _vehiclesArray = _vehiclesArray - _transportCars;
 
-//Engine off/Park to the side of the road get the driver out
 {
-	_car = _x; 
-	_car engineOn false;
-	{
-		unassignVehicle _x;
-		_x action ["getOut", _car];
-		_x setBehaviour "AWARE";
-	} foreach crew _car
-} foreach _transportCars;
+	_x setVariable ["GAIA_ZONE_INTEND",[_zoneMarker,"MOVE"], true];
+} foreach _cargoyGroupArray; 
 
 sleep 10; 
 
-//We are here let's patrol 
-{
-	waituntil {vehicle (leader _x) == (leader _x)};
-	[_x, getpos leader _x ,800] call BIS_fnc_taskPatrol;
-} foreach _cargoyGroupArray; 
-
-sleep 60;
-
-[_groupVehicles ,getpos leader _groupVehicles ,800] call BIS_fnc_taskPatrol;
+_groupVehicles setVariable ["GAIA_ZONE_INTEND",[_zoneMarker,"MOVE"], true];
+_transportCarsGroup setVariable ["GAIA_ZONE_INTEND",[_zoneMarker,"MOVE"], true];

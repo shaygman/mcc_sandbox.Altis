@@ -9,6 +9,7 @@ if !mcc_isloading then
 		shelltype 		= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 1;
 		MCCSimulate		= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 2;
 		_shellName		= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 0;
+		MCCshellRadius	= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 3;
 		nshell 			= MCC_artilleryNumberArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 32));
 		MCC_artyDelay 	=(lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 33))*20;
 		
@@ -17,28 +18,9 @@ if !mcc_isloading then
 		   case 0:		//Request
 			{
 				shellspread = (MCC_artillerySpreadArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 31))) select 1;
-				if (MCC_capture_state) then
-				{
+				MCC_artilleryEnabled = true; 
 				hint "click on map where you want to send artillery"; 
-				onMapSingleClick " 	hint ""Artillery captured."";
-									MCC_capture_var = MCC_capture_var + FORMAT ['
-									[[%1, ""%2"", %3, %4, %5, %6],""MCC_fnc_artillery"",true,false] spawn BIS_fnc_MP;
-									'
-									,_pos
-									,shelltype
-									,shellspread
-									,nshell
-									,MCCSimulate
-									,MCC_artyDelay
-									];
-									onMapSingleClick """";";	
-				}	else
-					{
-					hint "click on map where you want to send artillery"; 
-					onMapSingleClick " 	hint ""Artillery inbound."";
-									[[_pos, shelltype, shellspread, nshell,MCCSimulate,MCC_artyDelay],'MCC_fnc_artillery',true,false] spawn BIS_fnc_MP;
-									onMapSingleClick """";";	
-					};
+				
 			};
 			case 1:	//Add		
 			{

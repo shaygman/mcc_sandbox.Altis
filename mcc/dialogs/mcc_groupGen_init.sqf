@@ -29,6 +29,14 @@ for "_i" from 500 to 518 step 1 do
 	((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl _i) ctrlShow false;		
 };
 
+if (CP_activated) then
+{
+	ctrlsettext [520,"Disable Roles"];
+}
+else
+{
+	ctrlsettext [520,"Enable Roles"];
+}; 
 //Capture 
 if (!MCC_capture_state) then { ctrlEnable [MCCSTOPCAPTURE,false];};
 

@@ -45,7 +45,7 @@ if (count _arrayUnits > 0) then
 		_pos = [((_availablePos select 0) select 0) select 0, ((_availablePos select 0) select 0) select 1,0];
 		_availablePos set [0, -1];
 		_availablePos = _availablePos - [-1]; 
-		
+		_group = createGroup _side; 
 		//Spawn the static pieces
 		for "_x" from 1 to _perSpawn step 1 do 
 		{ 
@@ -58,7 +58,7 @@ if (count _arrayUnits > 0) then
 				sleep 0.1; 
 			};
 			
-			_vehicle = [_pos, (random 360), _vehicleClass, _side] call bis_fnc_spawnvehicle; 
+			_vehicle = [_spawnPos, (random 360), _vehicleClass, _group] call bis_fnc_spawnvehicle; 
 			if (_artillery != 999) then 
 							{
 								//_nul = [(_vehicle select 0),1,2000,100,_artillery*6,_artillery*3,"Sh_82mm_AMOS",20] execVM MCC_path + "scripts\UPSMON\MON_artillery_add.sqf";

@@ -117,7 +117,7 @@ class MCC_artilleryDialogControls:MCC_RscControlsGroup
 			y = 0.186927 * safezoneH;
 			w = 0.0859375 * safezoneW;
 			h = 0.0329871 * safezoneH;
-			tooltip = "Call Artillery on map position"; //--- ToDo: Localize;
+			tooltip = "Call Artillery on map position hold Ctrl for multi calls"; //--- ToDo: Localize;
 		};
 		class MCC_artilleryAdd: MCC_RscButton
 		{

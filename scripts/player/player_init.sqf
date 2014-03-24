@@ -1,5 +1,7 @@
 private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight"];
 
+if (!MCC_iniDBenabled) exitWIth {player sidechat "iniDB isn't running. Can't access role selection"};
+
 //Black Screen on mission startup
 cutText ["","BLACK",0.1];
 // - TO DO  delete corpse and items from it.
@@ -8,39 +10,39 @@ cutText ["","BLACK",0.1];
 //******************************************************************************************************************************
 waituntil {alive player};
 
-[["officerLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["officerLevel", player, CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "officerLevel"};
 if (CP_debug) then {player sidechat format ["officerLevel : %1",officerLevel]};
 
-[["arLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["arLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "arLevel"};
 if (CP_debug) then {player sidechat format ["arLevel : %1",arLevel]};
 
-[["riflemanLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["riflemanLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "riflemanLevel"};
 if (CP_debug) then {player sidechat format ["riflemanLevel : %1",riflemanLevel]};
 
-[["ATLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["ATLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "ATLevel"};
 if (CP_debug) then {player sidechat format ["ATLevel : %1",ATLevel]};
 
-[["corpsmanLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["corpsmanLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "corpsmanLevel"};
 if (CP_debug) then {player sidechat format ["corpsmanLevel : %1",corpsmanLevel]};
 
-[["marksmanLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["marksmanLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "marksmanLevel"};
 if (CP_debug) then {player sidechat format ["marksmanLevel : %1",marksmanLevel]};
 
-[["specialistLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["specialistLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "specialistLevel"};
 if (CP_debug) then {player sidechat format ["specialistLevel : %1",specialistLevel]};
 
-[["crewLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["crewLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "crewLevel"};
 if (CP_debug) then {player sidechat format ["crewLevel : %1",crewLevel]};
 
-[["pilotLevel",getPlayerUID player,CP_defaultLevel], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["pilotLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "pilotLevel"};
 if (CP_debug) then {player sidechat format ["pilotLevel : %1",pilotLevel]};
 

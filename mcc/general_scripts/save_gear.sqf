@@ -166,7 +166,7 @@ if (CP_activated) exitWith
 		if (_exp < 0) then {_exp = 0}; 
 		_level = call compile format ["[%1,%2]",floor (_exp/5000)+1 ,_exp];
 		if (CP_debug) then {player sidechat format ["level: %1",_level]};
-		[[format ["%1Level",_role],getplayeruID player,_level], "CP_fnc_setVariable", false, false] spawn BIS_fnc_MP;
+		[[format ["%1Level",_role], player, _level, "ARRAY"], "CP_fnc_setVariable", false, false] spawn BIS_fnc_MP;
 	};
 	
 	_null=[] execVM CP_path + "scripts\player\player_init.sqf";

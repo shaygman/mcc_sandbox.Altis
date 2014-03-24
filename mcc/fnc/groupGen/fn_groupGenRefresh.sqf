@@ -204,7 +204,7 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 	//Refresh UM list
 	[] call MCC_fnc_groupGenUMRefresh;
 	
-	sleep 3;
+	sleep 1;
 	{deletemarkerlocal _x} foreach MCC_groupGenTempWP;
 	MCC_groupGenTempWP = []; 
 	{deletemarkerlocal _x} foreach MCC_groupGenTempWPLines;
@@ -226,4 +226,12 @@ MCC_groupGenTempWPLines = [];
 setGroupIconsVisible [false,false];
 setGroupIconsSelectable false;
 
+//Artillery
+MCC_artilleryEnabled = false; 
+deleteMarkerLocal "mcc_arty";
+
+//Spawn
+MCC_spawnEnabled = false;
+deleteMarkerLocal "mcc_spawnMarker";
+			
 MCC_groupGenRefreshLoop = false; 

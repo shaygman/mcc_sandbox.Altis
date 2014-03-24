@@ -17,7 +17,7 @@ Edited by armatec
 	<out> 
 		if obj select 6 got a a value then it is the target vehicle. 
 */
-private ["_script","_azi","_pos","_objs","_newObjs","_target"];
+private ["_script","_azi","_pos","_objs","_target"];
 
 
 _pos 	= _this select 0; 
@@ -41,7 +41,7 @@ else
 private ["_posX", "_posY"];
 _posX = _pos select 0;
 _posY = _pos select 1;
-_newObjs = [];
+
 private ["_multiplyMatrixFunc"];
 _multiplyMatrixFunc =
 {
@@ -64,7 +64,7 @@ for "_i" from 0 to ((count _objs) - 1) do
 		_azimuth = _obj select 2;
 		_fuel = _obj select 3;
 		_damage = _obj select 4;
-		_vehicleinit = _obj select 5;
+		if (typeName (_obj select 5) == "STRING") then {_vehicleinit = (_obj select 5)};
 		_vehicleTarget = _obj select 6;
 						
 		private ["_rotMatrix", "_newRelPos", "_newPos"];
@@ -78,10 +78,9 @@ for "_i" from 0 to ((count _objs) - 1) do
 		_newObj setPos _newPos;
 		if (!isNil "_fuel") then {_newObj setFuel _fuel};
 		if (!isNil "_damage") then {_newObj setDamage _damage};
-		if (!isNil "_vehicleinit") then {[[[netID _newObj,_newObj],_vehicleinit], "MCC_fnc_setVehicleInit", false, true] spawn BIS_fnc_MP};
+		if (!isNil "_vehicleinit") then {[[[netID _newObj,_newObj], _vehicleinit], "MCC_fnc_setVehicleInit", false, true] spawn BIS_fnc_MP};
 		if (!isNil "_vehicleTarget") then {_target = _newObj};
-
-		_newObjs = _newObjs + [_newObj];
+		MCC_lastSpawn set [count MCC_lastSpawn,_newObj];
 };
-
+publicVariable "MCC_lastSpawn";
 if (!isNil "_target") then {_target}; 

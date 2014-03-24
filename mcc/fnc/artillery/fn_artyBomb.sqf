@@ -14,7 +14,7 @@ _shellspread			 = _this select 2;
 _nshell 				 = _this select 3; 
 _sound 					 = _this select 4; 
 _delay 					 = _this select 5; 
-
+if (isnil "_delay") then {_delay = 1};
 for [{_i=0},{_i<_nshell},{_i=_i+1}] do
 	{
 		_shell = _shelltype createVehicle [(_pos select 0) + _shellspread - 2*(random _shellspread) ,(_pos select 1) + _shellspread - 2*(random _shellspread), 100];

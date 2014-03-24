@@ -232,7 +232,7 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			y = 0.164936 * safezoneH;
 			w = 0.065625 * safezoneW;
 			h = 0.035 * safezoneH;
-			tooltip = "Mouse click on the map to create the group - AI behavior will be ignored"; //--- ToDo: Localize;
+			tooltip = "Mouse click on the map to create the group/unit - Hold Ctrl for multi spawn"; //--- ToDo: Localize;
 		};
 		class mcc_groupGen_groupListBoxAddToZoneButton: MCC_RscButton
 		{

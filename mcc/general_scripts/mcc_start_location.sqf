@@ -108,10 +108,20 @@ if (mcc_missionmaker == (name player)) then {
 					
 					case 6:	//Enable CP
 					{ 
-						CP_activated = true;
+						CP_activated = missionnamespace getVariable ["CP_activated", false];
+						missionnamespace setVariable ["CP_activated", !CP_activated];
 						publicVariable "CP_activated";
-						ctrlEnable [MCCENABLECP,false];
-						mcc_safe=mcc_safe + 'CP_activated = true; publicVariable "CP_activated";';
+						if (CP_activated) then
+						{
+							ctrlsettext [520,"Disable Roles"];
+						}
+						else
+						{
+							ctrlsettext [520,"Enable Roles"];
+						};
+						
+						mcc_safe=mcc_safe + format ['CP_activated = %1; publicVariable "CP_activated";',CP_activated];
+						if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
 					};
 					
 					case 7:	//FOB West

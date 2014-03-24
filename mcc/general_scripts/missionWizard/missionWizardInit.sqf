@@ -36,13 +36,69 @@ MCC_MWisGenerating = true;
 //Get params
 _playersNumber 		= (lbCurSel MCC_MWPlayersIDC) + 1;
 _difficulty 		= (lbCurSel MCC_MWDifficultyIDC+1)*1.5;		//each player == 3 enemy players multiply by difficulty
-_stealth 			= if ((lbCurSel MCC_MWStealthIDC)==0) then {false} else {true};
-_isIED 				= if (lbCurSel MCC_MWIEDIDC == 0) then {false} else {true};
-_isSB 				= if (lbCurSel MCC_MWSBIDC == 0) then {false} else {true};
-_isAS				= if (lbCurSel MCC_MWArmedCiviliansIDC == 0) then {false} else {true};
-_isRoadblocks		= if (lbCurSel MCC_MWRoadBlocksIDC == 0) then {false} else {true};
-_armor 				= if ((lbCurSel MCC_MWArmorIDC)==0) then {false} else {true};
-_vehicles 			= if ((lbCurSel MCC_MWVehiclesIDC)==0) then {false} else {true};
+_stealth 			= if ((lbCurSel MCC_MWStealthIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWStealthIDC)==0) then {false} else {true};
+						}; 
+						
+_isIED 				= if ((lbCurSel MCC_MWIEDIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWIEDIDC)==0) then {false} else {true};
+						}; 
+						
+_isSB 				= if ((lbCurSel MCC_MWSBIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWSBIDC)==0) then {false} else {true};
+						};
+						
+_isAS				= if ((lbCurSel MCC_MWArmedCiviliansIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWArmedCiviliansIDC)==0) then {false} else {true};
+						}; 
+						
+_isRoadblocks		= if ((lbCurSel MCC_MWRoadBlocksIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWRoadBlocksIDC)==0) then {false} else {true};
+						}; 
+						
+_armor 				= if ((lbCurSel MCC_MWArmorIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWArmorIDC)==0) then {false} else {true};
+						}; 
+						
+_vehicles 			= if ((lbCurSel MCC_MWVehiclesIDC)==3) then
+						{
+							[true,false] call BIS_fnc_selectRandom;
+						}
+						else
+						{
+							if ((lbCurSel MCC_MWVehiclesIDC)==0) then {false} else {true};
+						};
+						
 _weatherChange		= if ((lbCurSel MCC_MWWeatherComboIDC)==0) then {true} else {false};
 _wholeMap			= if ((lbCurSel MCC_MCC_MWAreaComboIDC)==0) then {true} else {false};
 MW_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
@@ -69,6 +125,12 @@ switch (lbCurSel MCC_MWCQBIDC) do
 		{
 			_isCQB 	=  true;
 			_isCiv	=  true;
+		};
+		
+		case 3: 
+		{
+			_isCQB 	=  [true,false] call BIS_fnc_selectRandom;
+			_isCiv	=  [true,false] call BIS_fnc_selectRandom;
 		};
 	};
 	

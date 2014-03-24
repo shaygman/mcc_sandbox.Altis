@@ -18,7 +18,7 @@ switch (_type)  do {
 		case 1: {
 			_cannon = MCC_bonCannons select ((_this select 1) select 0)-1;
 			_dummypos = (_this select 1) select 1;
-			_cannon addeventhandler["fired", {_null =[4,_this select 0, _this select 4] execVM MCC_path + "mcc\general_scripts\ambient\amb_art.sqf"}]; //Delete the projectile.
+			_cannon addeventhandler["fired", {_null =[4,_this select 0, _this select 4] spawn MCC_fnc_amb_Art}]; //Delete the projectile.
 			(gunner _cannon) lookAt [_dummypos select 0, _dummypos select 1,(_dummypos select 2)+1000];
 			_cannon disableAI "AUTOTARGET";
 			_cannon disableAI "TARGET";

@@ -67,7 +67,8 @@ _comboBox lbSetCurSel CP_currentSecWeaponIndex;
 _array = [];
 for [{_i = 0},{_i < count CP_handguns},{_i = _i+1}] do 
 	{
-		if (CP_currentLevel >= (CP_handguns select _i)select 0) then {
+		if (CP_currentLevel >= (CP_handguns select _i)select 0) then 
+		{
 			_array set [count _array, (CP_handguns select _i) select 1];
 		};
 	};

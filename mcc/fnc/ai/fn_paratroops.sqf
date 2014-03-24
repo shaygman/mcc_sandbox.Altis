@@ -551,7 +551,8 @@ if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zo
 			_p_mcc_awareness = "AWARE";
 		};
 
-		_null = [leader _paraGroup, _p_mcc_zone_markername,_p_mcc_zone_behavior,_p_mcc_awareness,"SHOWMARKER","spawned" ] spawn mcc_ups;
+		//_null = [leader _paraGroup, _p_mcc_zone_markername,_p_mcc_zone_behavior,_p_mcc_awareness,"SHOWMARKER","spawned" ] spawn mcc_ups;
+		_paraGroup setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 
 		//player sideChat format ["UPSMON activated for %1...", _paraGroup];
 			

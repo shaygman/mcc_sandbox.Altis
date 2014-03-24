@@ -65,7 +65,7 @@ if (_button == 1) then 											//Right click - get info
 		_html = "<t color='#818960' size='1' shadow='1' align='left' underline='true'>" +groupID _group + " - " + toupper _groupSize +"</t><br/>";
 		
 		_info = [_group] call MCC_fnc_countGroupHC;
-		if (_info select 0 == 0 && _info select 1 == 0 && _info select 2 == 0 && _info select 3 == 0 && _info select 4 == 0 && _info select 5 == 0 && _info select 6 == 0 && _info select 5 == 0) then
+		if (_info select 0 == 0 && _info select 1 == 0 && _info select 2 == 0 && _info select 3 == 0 && _info select 4 == 0 && _info select 5 == 0 && _info select 6 == 0 && _info select 7 == 0) then
 		{
 			_info = [_group] call MCC_fnc_countGroup;
 			_properCfg = 5; 
@@ -74,7 +74,10 @@ if (_button == 1) then 											//Right click - get info
 		_html = _html + "<t font='puristaMedium' color='#fefefe' size='0.9' shadow='1' align='left' underline='false'>" + _rank + " " + name leader _group + " - " + behaviour leader _group + " </t><br/>";
 		
 		//Infantry
-		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Infantry: " + str (_info select 0) + " </t>";
+		private "_infCount"; 
+		_infCount = if (_properCfg > 5) then {(_info select 0) + (_info select 5)} else {(_info select 0)}; 
+					
+		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Infantry: " + str _infCount + " </t>";
 		for [{_x = 0},{_x < (_info select 0)},{_x = _x+1}] do	
 			{
 				_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>|</t>";
@@ -112,14 +115,14 @@ if (_button == 1) then 											//Right click - get info
 		if (_properCfg > 5) then
 		{
 			//Support
-			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Support: " + str (_info select 4) + " </t>";
+			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Support: " + str (_info select 6) + " </t>";
 				{
 					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
 				} foreach ((_info select _properCfg) select 4); 
 			_html = _html +	"<br/>";
 			
 			//autonomous
-			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Autonomous: " + str (_info select 4) + " </t>";
+			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Autonomous: " + str (_info select 7) + " </t>";
 				{
 					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
 				} foreach ((_info select _properCfg) select 5); 

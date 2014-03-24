@@ -1,10 +1,40 @@
-Change log r3:
+Change log r3
+Artillery:
+- Added: Marker area to show ordnance spread. 
+- Added: Hold Ctrl to continue spawning ordnance without the need to press Create again. 
+
+Spawn:
+- Added: Marker for unit spawn. 
+- Added: Hold Ctrl to continue spawning units without the need to press Create again. 
+
+Engine:
+- Added: DOC objects will be saved into SQM. 
+- Fixed: Opening spectator will close MCC. 
+- Fixed: Reinforcement air or motorized didn't used GAIA. 
+- Fixed: Halo/parajump didn't work for more than 1 unit. - thanks Ollem.
+
+Role Selection:
+- New: Added iniDB support for RS - need to run iniDB on server only will save stats, xp and easy maintain gear and progression
+- New: In squad menu players will have their role name infront of their name in the players list. 
+
+
+- TODO MCC Console add WP to UAV in UAV map
+- TODO replace BTC revive
+- TODO items tasks
+- TODO Role selection
+- TODO Save all MCC to 2D editor
+- TODO 3D icons?!
+- TODO Save WP
+- TODO: Manual.
+
+Change log r2:0
+GAIA:
 - Fixed: Fortify updated with altered CBA taskdefend (credits CBA & Rommel).
 
-Change log r2:
 Engine:
 - Fixed: Groups/units created with "Create" button are not saved. 
 - Fixed: Error creating Resistance's groups/units created with "Create" button. 
+- Re-added: Role Selections. 
 
 3D Editor:
 - Added: Close button. 
@@ -19,6 +49,7 @@ GUI:
 - Fixed: In Box Gen drop down menus backgrounds are no longer opaque.
 - Fixed: Changing view mod hide the video feed.
 - Fixed: When selecting reinforcement or garrison the create button will not show only add to zone. 
+- Fixed: Missing units count for artillery and SF infantry when right clicking on a group icon. 
 
 VAS:
 - Updated to the latest version. 
@@ -28,6 +59,9 @@ IED:
 
 Mission Wizard: 
 - Added: Mini map and zone combobox. 
+- Added: Random option for most of the wizard options - add more suprise to the mission maker. 
+- Added: Help tooltip to all options.
+- Fixed: Self propelled artillery spawn on top of each other. 
 
 Delete: 
 - Added: Delete lights - will delete all light sources in the area.
@@ -66,16 +100,7 @@ Group Generator:
 - Added: Create zones, spawn units, exc from the Group Gen - in time it will replace menu 1 in MCC and a lot of functions will be called from there. 
 - Added: Create and save your own custom groups to profileNameSpace. Spawn or use them in the Mission Wizard. 
 
-- TODO Role selection
-- TODO access rights
-- TODO replace by checkboxes
-- TODO show SF in right click. 
-- TODO hints and tooltips
-- TODO: Tooltip missionWizard.
-- TODO Save all MCC to 2D editor
-- TODO 3D icons?!
-- TODO Save WP
-- TODO: Manual.
+
 
 - pre init check.
 - vehicle init check. 

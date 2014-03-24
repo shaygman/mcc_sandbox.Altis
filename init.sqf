@@ -8,15 +8,18 @@ MCC_GUI1initDone = false;
 CP_debug = false; 
 MW_debug = true; 
 
-if (MCC_isMode) then {
+if (MCC_isMode) then 
+{
 	MCC_path = "\mcc_sandbox_mod\";
 	CP_path	 = "\mcc_sandbox_mod\";
-		} else {
-			MCC_path = "";
-			CP_path	 = "";
-			[] execVM MCC_path +"init_mission.sqf";
-			enableSaving [false, false];
-			};
+} 
+else 
+{
+	MCC_path = "";
+	CP_path	 = "";
+	[] execVM MCC_path +"init_mission.sqf";
+	enableSaving [false, false];
+};
 
 waituntil {!isnil "MCC_path"};
 
@@ -101,13 +104,14 @@ else
 	MCC_consoleString = str "B_UavTerminal" + "in (assignedItems _this) && (vehicle _target == vehicle _this)"; 
 };
 //------------------------Artillery---------------------------------------------------
-MCC_artilleryTypeArray = [["DPICM","GrenadeHand",0],["HE 120mm","Sh_120mm_HE_Tracer_Red",1], ["HE 155mm","Sh_155mm_AMOS",1], ["Cluster AP","Mo_cluster_AP",1],["Mines 120mm","Mine_155mm_AMOS_range",3],
-						["HE Laser-guided","Bo_GBU12_LGB",3],["HE 82mm","Sh_82mm_AMOS",1], ["Incendiary 82mm","Fire_82mm_AMOS",1],
-						["Smoke White 120mm","Smoke_120mm_AMOS_White",1],["Smoke White 82mm","Smoke_82mm_AMOS_White",1],["Smoke Green 40mm","G_40mm_SmokeGreen",1], ["Smoke Red 40mm","G_40mm_SmokeRed",1],
-						["Flare White","F_40mm_White",2], ["Flare Green","F_40mm_Green",2], ["Flare Red","F_40mm_Red",2]];
-MCC_artillerySpreadArray = [["On-target",0], ["Precise",50], ["Tight",100], ["Wide",200]]; //Name and spread in meters
+MCC_artilleryTypeArray = [["DPICM","GrenadeHand",0,40],["HE 120mm","Sh_120mm_HE_Tracer_Red",1,30], ["HE 155mm","Sh_155mm_AMOS",1,120], ["Cluster AP","Mo_cluster_AP",3,32],["Mines 120mm","Mine_155mm_AMOS_range",3,120],
+						["HE Laser-guided","Bo_GBU12_LGB",3,50],["HE 82mm","Sh_82mm_AMOS",1,75], ["Incendiary 82mm","Fire_82mm_AMOS",1,35],
+						["Smoke White 120mm","Smoke_120mm_AMOS_White",1,20],["Smoke White 82mm","Smoke_82mm_AMOS_White",1,20],["Smoke Green 40mm","G_40mm_SmokeGreen",1,20], ["Smoke Red 40mm","G_40mm_SmokeRed",1,20],
+						["Flare White","F_40mm_White",2,20], ["Flare Green","F_40mm_Green",2,20], ["Flare Red","F_40mm_Red",2,20]];
+MCC_artillerySpreadArray = [["On-target",0], ["Precise",100], ["Tight",200], ["Wide",400]]; //Name and spread in meters
 MCC_artilleryNumberArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
-
+MCC_artilleryEnabled	= false; //for artillery marker
+MCC_spawnEnabled		= false; //for spawn marker
 //-------------------------MCC Convoy presets---------------------------------------------
 //The Type of units, drivers and escort in the HVT car
 MCCConvoyWestEscort = "B_Soldier_F"; MCCConvoyWestDriver = "B_Soldier_SL_F";
@@ -120,11 +124,11 @@ mccPresets = [
 		 ['======= Artillery =======','']
 		,['AI Artillery - Cannon', '[_this,1,2000,100,12,5,"Sh_82mm_AMOS",20] execVM "'+MCC_path+'scripts\UPSMON\MON_artillery_add.sqf";']
 		,['AI Artillery - Rockets', '[_this,6,5000,150,4,2,"Sh_82mm_AMOS",120] execVM "'+MCC_path+'scripts\UPSMON\MON_artillery_add.sqf";']
-		,['Ambient Artillery - Cannon', '[0,_this] execVM "'+MCC_path+'mcc\general_scripts\ambient\amb_art.sqf";']
-		,['Ambient Artillery - Rockets', '[1,_this] execVM "'+MCC_path+'mcc\general_scripts\ambient\amb_art.sqf";']
+		,['Ambient Artillery - Cannon', '[0,_this] spawn MCC_fnc_amb_Art;']
+		,['Ambient Artillery - Rockets', '[1,_this] spawn MCC_fnc_amb_Art;']
 		,['Forward Observer Artillery', '[0,_this] execVM "'+MCC_path+'mcc\general_scripts\artillery\bon_art.sqf";']
-		,['Ambient AA - Cannon/Rockets', '[2,_this] execVM "'+MCC_path+'mcc\general_scripts\ambient\amb_art.sqf";']
-		,['Ambient AA - Search Light', '[3,_this] execVM "'+MCC_path+'mcc\general_scripts\ambient\amb_art.sqf";']
+		,['Ambient AA - Cannon/Rockets', '[2,_this] spawn MCC_fnc_amb_Art;']
+		,['Ambient AA - Search Light', '[3,_this] spawn MCC_fnc_amb_Art;']
 		,['======= Units =======','']
 		,['Recruitable', '_this addAction [format ["Recruit %1", name _this], "'+MCC_path+'mcc\general_scripts\hostages\hostage.sqf",[2],6,false,true];']
 		,['Make Hostage', '_this execVM "'+MCC_path+'mcc\general_scripts\hostages\create_hostage.sqf";']
@@ -165,6 +169,7 @@ mccPresets = [
 
 //----------------------gaia------------------------------------------------------
 call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];
+
 
 //-----------------------Bon artillery --------------------------------------------
 _nul = [] execVM MCC_path +"bon_artillery\bon_arti_init.sqf";
@@ -561,9 +566,9 @@ _index = player createDiarySubject ["MCCZones","MCC Zones"];
 
 if ( isServer ) then 
 {
-	//Initialize UPSMON script
-	_null=[] execVM MCC_path + "scripts\Init_UPSMON.sqf";
-	
+	//Initialize UPSMON script --- DELETE ME
+	//_null=[] execVM MCC_path + "scripts\Init_UPSMON.sqf";
+		
 	//Make sure about who is at war with who or it will be a very peacefull game 
 	_SideHQ_East   = createCenter east;
 	_SideHQ_Resist = createCenter resistance;
@@ -616,9 +621,28 @@ if ( isServer ) then
 	private "_dummyObject";
 	_dummyObject = "Land_Pier_F" createvehicle [-9999, -9999, -1];
 	_dummyObject setpos [-9999, -9999, -1];
+	
+	//----------------------iniDB------------------------------------------------------
+	if (isclass(configFile >> "CfgPatches" >> "iniDBI")) then 
+	{
+		MCC_iniDBenabled = true;
+		call compile preProcessFile "\inidbi\init.sqf";
+	} 
+	else 
+	{
+		MCC_iniDBenabled = false; 
+	};
+	publicVariable "MCC_iniDBenabled"
 };
 
-
+if (MCC_iniDBenabled) then 
+{
+	player sideChat "IniDB is running. ROLE SELECTION WILL WORK :)";
+}
+else
+{
+	player sideChat "iniDB isn't running. ROLE SELECTION WILL NOT WORK!!!";
+};
 // Handler code for the server for MP purpose
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_pv_handler.sqf";
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_extras_pv_handler.sqf";
@@ -643,9 +667,17 @@ CP_guarSpawnPoints	= [];
 CP_dialogInitDone = true; 				//define if dialog is been initialize
 CP_weaponAttachments = ["","",""];	
 CP_defaultLevel = [1,0];
+CP_activated = false;
 
-CP_activated = false; 			//CP activated on MCC mode
+missionnamespace setVariable ["CP_activated", false]; 			//CP activated on MCC mode
 
+"CP_activated" addPublicVariableEventHandler 
+{
+	if(CP_activated && !isDedicated) then
+	{
+		_null=[] execVM CP_path + "scripts\player\player_init.sqf"
+	};
+};
 //---------------------------------------------
 //		Index
 //---------------------------------------------
@@ -668,29 +700,29 @@ CP_attachsIndex			= 0;
 //---------------------------------------------
 //		numbers of roles
 //---------------------------------------------
-CP_availablePilots 				= 100;
-CP_availableCrew 				= 100; 
+if (isnil "CP_availablePilots") then {CP_availablePilots = 100};
+if (isnil "CP_availableCrew") then {CP_availableCrew = 100}; 
 
-CP_officerPerGroup				= 1; 
-CP_officerMinPlayersInGroup		= 1; 
+if (isnil "CP_officerPerGroup") then {CP_officerPerGroup = 1}; 
+if (isnil "CP_officerMinPlayersInGroup") then {CP_officerMinPlayersInGroup = 1}; 
 
-CP_ARPerGroup					= 2; 
-CP_ARMinPlayersInGroup			= 3; 
+if (isnil "CP_ARPerGroup") then {CP_ARPerGroup = 2}; 
+if (isnil "CP_ARMinPlayersInGroup") then {CP_ARMinPlayersInGroup = 3}; 
 
-CP_riflemanPerGroup				= 30; 
-CP_riflemanMinPlayersInGroup	= 0; 
+if (isnil "CP_riflemanPerGroup") then {CP_riflemanPerGroup = 30}; 
+if (isnil "CP_riflemanMinPlayersInGroup") then {CP_riflemanMinPlayersInGroup = 0}; 
 
-CP_ATPerGroup					= 2; 
-CP_ATMinPlayersInGroup			= 4; 
+if (isnil "CP_ATPerGroup") then {CP_ATPerGroup = 2}; 
+if (isnil "CP_ATMinPlayersInGroup") then {CP_ATMinPlayersInGroup = 4}; 
 
-CP_CorpsmanPerGroup				= 2; 
-CP_CorpsmanMinPlayersInGroup	= 3; 
+if (isnil "CP_CorpsmanPerGroup") then {CP_CorpsmanPerGroup = 2}; 
+if (isnil "CP_CorpsmanMinPlayersInGroup") then {CP_CorpsmanMinPlayersInGroup = 3}; 
 
-CP_MarksmanPerGroup				= 1; 
-CP_MarksmanMinPlayersInGroup	= 5; 
+if (isnil "CP_MarksmanPerGroup") then {CP_MarksmanPerGroup = 1}; 
+if (isnil "CP_MarksmanMinPlayersInGroup") then {CP_MarksmanMinPlayersInGroup = 5}; 
 
-CP_SpecialistPerGroup			= 2; 
-CP_SpecialistMinPlayersInGroup	= 4; 
+if (isnil "CP_SpecialistPerGroup") then {CP_SpecialistPerGroup = 2}; 
+if (isnil "CP_SpecialistMinPlayersInGroup") then {CP_SpecialistMinPlayersInGroup = 4}; 
 		
 //---------------------------------------------
 //		Handle functions
@@ -838,7 +870,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	//Handle Name Tags
 	[] spawn MCC_NameTagsPlayerLoop;
 };
-		
+/*		
 //===============Delete Groups (server and HC client only)====================
 if (isServer || MCC_isLocalHC) then 
 {
@@ -851,7 +883,7 @@ if (isServer || MCC_isLocalHC) then
 		};
 	};
 };
-
+*/
 //============== Namspace saves=================
 MCC_saveNames = profileNamespace getVariable "MCC_save";
 if (isnil "MCC_saveNames") then {

@@ -43,6 +43,8 @@ class MCCMWDialog
 		class MCCMWDialoghelptext: MCC_RscStructuredText
 		{
 			idc = 0;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			
 			x = 0.230729 * safezoneW + safezoneX;
 			y = 0.445021 * safezoneH + safezoneY;
 			w = 0.303646 * safezoneW;

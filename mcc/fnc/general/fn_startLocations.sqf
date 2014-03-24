@@ -4,7 +4,7 @@
 // <IN>	side : integer - side number to take effect
 //<OUT>	Nothing
 //==============================================================================================================================================================================	
-private ["_playerClass","_playerSideNr","_safePos","_null","_side"];
+private ["_playerClass","_playerSideNr","_safePos","_null","_side","_firstLoop"];
 _side = _this select 0;
 
 waituntil {alive player}; 
@@ -12,10 +12,11 @@ sleep 1;
 
 _playerClass = typeOf player;
 _playerSideNr =  getNumber (configFile >> "CfgVehicles" >> _playerClass >> "side");
-
+_firstLoop = false; 
 if (isnil "_side") then 
 {
 	_side = _playerSideNr;
+	_firstLoop = true; 
 }; 
 
 if (_side !=  _playerSideNr) exitWith {};
@@ -32,7 +33,7 @@ if (_playerSideNr == 1) then
 				};
 		player setPosATL [_safepos select 0, _safepos select 1, 0];
 	};
-	if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
+	//if (CP_activated && !_firstLoop) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
 
 	if (!isnil "MCC_StartMarkerW") then {deleteMarkerLocal MCC_StartMarkerW};
 	MCC_StartMarkerW = createMarkerLocal ["STARTLOCATIONW", (MCC_START_WEST)];
@@ -62,7 +63,7 @@ if (_playerSideNr == 0) then
 		player setPosATL [_safepos select 0, _safepos select 1, 0];;
 	};
 	
-	if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
+	//if (CP_activated && !_firstLoop) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
 	
 	if (!isnil "MCC_StartMarkerE") then {deleteMarkerLocal MCC_StartMarkerE};
 	MCC_StartMarkerE = createMarkerLocal ["STARTLOCATIONE", ( MCC_START_EAST)];
@@ -91,7 +92,7 @@ if (_playerSideNr == 2) then
 		player setPosATL [_safepos select 0, _safepos select 1, 0];;
 	};
 	
-	if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
+	//if (CP_activated && !_firstLoop) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
 	
 	if (!isnil "MCC_StartMarkerG") then {deleteMarkerLocal MCC_StartMarkerG};
 	MCC_StartMarkerG = createMarkerLocal ["STARTLOCATIONG", (MCC_START_GUER)];

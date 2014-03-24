@@ -4,9 +4,9 @@
 private ["_weather","_type", "_grass","_fogLevel","_d","_nul","_rain","_overcast","_month","_day","_year","_hour","_minute","_wind","_Waves"];
 _type = _this select 0;
 
-if (mcc_missionmaker == (name player)) then 
+if (mcc_missionmaker == (name player)) exitWith 
 {
-	if (_type==0) then	
+	if (_type==0) exitWith	
 	{
 		_fogLevel 	= sliderPosition ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 10);		//Set fog
 		_overcast 	=  sliderPosition ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 12);	//Set overcast
@@ -19,7 +19,7 @@ if (mcc_missionmaker == (name player)) then
 		_nul=[_type, _weather] execVM MCC_path +"mcc\general_scripts\time.sqf";
 	};
 
-	if (_type==3) then	
+	if (_type==3) exitWith	
 	{
 		_month 	= (MCC_months_array select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 15))) select 1;			//Set time
 		_day 	= (MCC_days_array select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 16)));
@@ -30,8 +30,9 @@ if (mcc_missionmaker == (name player)) then
 		_nul=[_type,_month,_day,_year,_hour,_minute] execVM MCC_path +"mcc\general_scripts\time.sqf";
 	};
 	
-	if (_type==4) then	
+	if (_type==4) exitWith	
 	{													//Spectator script
+		while {dialog} do {closeDialog 0; sleep 0.2};
 		[player] execVM MCC_path + "spectator\specta.sqf";
 	};
 };
@@ -40,7 +41,7 @@ switch (_type) do
 {		
 	case 1:	//Set grass (CS)
 	{
-		if (MCC_GUI1initDone) then
+		if (MCC_GUI1initDone) exitWith
 		{
 			_grass = (MCC_grass_array select (lbCurSel MCCGRASSDENSITY)) select 1;
 			setTerrainGrid _grass; 

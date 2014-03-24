@@ -158,5 +158,19 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
+		
+		class MCC_roleSelectionButton: MCC_RscButton
+		{
+			idc = 520;
+			text = ""; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			tooltip = "Enable/Disable Role Selection"; 
+			onButtonClick =  __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
+			
+			x = 0.0057 * safezoneW;
+			y = 0.4508172566785238 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
 	};
 };
