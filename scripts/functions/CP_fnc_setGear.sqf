@@ -35,6 +35,7 @@ switch (_role) do
 			CP_currentItmes1 	= CP_officerItmes1;
 			CP_currentItmes2 	= CP_officerItmes2;
 			CP_currentItmes3 	= CP_officerItmes3;
+			CP_currentGeneralItmes = CP_officerGeneralItmes;
 			
 			//Set playr level
 			CP_currentLevel = officerLevel select 0;
@@ -65,6 +66,7 @@ switch (_role) do
 			CP_currentItmes1 	= CP_ARItmes1;
 			CP_currentItmes2 	= CP_ARItmes2;
 			CP_currentItmes3 	= CP_ARItmes3;
+			CP_currentGeneralItmes = CP_ARGeneralItmes;
 			
 			//Set playr level
 			CP_currentLevel = arLevel select 0;
@@ -95,6 +97,7 @@ switch (_role) do
 			CP_currentItmes1 	= CP_riflemanItmes1;
 			CP_currentItmes2 	= CP_riflemanItmes2;
 			CP_currentItmes3 	= CP_riflemanItmes3;
+			CP_currentGeneralItmes = CP_riflemanGeneralItmes;
 			
 			//Set playr level
 			CP_currentLevel = riflemanLevel select 0;
@@ -124,6 +127,7 @@ switch (_role) do
 			CP_currentItmes1 	= CP_ATItmes1;
 			CP_currentItmes2 	= CP_ATItmes2;
 			CP_currentItmes3 	= CP_ATItmes3;
+			CP_currentGeneralItmes = CP_ATGeneralItmes;
 			
 			//Set playr level
 			CP_currentLevel = ATLevel select 0;
@@ -135,24 +139,25 @@ switch (_role) do
 		{ 
 			//Fets correct weapons Arrays
 			if (side player == west) then {
-				CP_currentWeaponArray 		= CP_carabineWeaponWest;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecWest;
+				CP_currentWeaponArray 		= CP_corpsmanWeaponWest;
+				CP_currentWeaponSecArray	= CP_corpsmanSecWest;
 				CP_currentUniforms 			= CP_corpsmanUniformsWest;
 				};
 			if (side player == east) then {
-				CP_currentWeaponArray 		= CP_carabineWeaponEast;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecEast;
+				CP_currentWeaponArray 		= CP_corpsmanWeaponEast;
+				CP_currentWeaponSecArray	= CP_corpsmanSecEast;
 				CP_currentUniforms 			= CP_corpsmanUniformsEast;
 				};
 			if (side player == resistance) then {
-				CP_currentWeaponArray 		= CP_carabineWeaponGuer;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecGuer;
+				CP_currentWeaponArray 		= CP_corpsmanWeaponGuer;
+				CP_currentWeaponSecArray	= CP_corpsmanSecGuer;
 				CP_currentUniforms 			= CP_corpsmanUniformsGuar;
 				};
 			//set Items array
 			CP_currentItmes1 	= CP_corpsmanItmes1;
 			CP_currentItmes2 	= CP_corpsmanItmes2;
 			CP_currentItmes3 	= CP_corpsmanItmes3;
+			CP_currentGeneralItmes = CP_corpsmanGeneralItmes;
 			
 			//Set playr level
 			CP_currentLevel = corpsmanLevel select 0;
@@ -165,23 +170,24 @@ switch (_role) do
 			//Fets correct weapons Arrays
 			if (side player == west) then {
 				CP_currentWeaponArray 		= CP_marksmanWeaponsWest;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecWest;
+				CP_currentWeaponSecArray	= CP_marksmanWeaponsSecWest;
 				CP_currentUniforms 			= CP_marksmanUniformsWest;
 				};
 			if (side player == east) then {
 				CP_currentWeaponArray 		= CP_marksmanWeaponsEast;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecEast;
+				CP_currentWeaponSecArray	= CP_marksmanWeaponsSecEast;
 				CP_currentUniforms 			= CP_marksmanUniformsEast;
 				};
 			if (side player == resistance) then {
-				CP_currentWeaponArray 		= CP_marksmanWeaponsWest;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecGuer;
+				CP_currentWeaponArray 		= CP_marksmanWeaponsGuer;
+				CP_currentWeaponSecArray	= CP_marksmanWeaponsSecGuer;
 				CP_currentUniforms 			= CP_marksmanUniformsGuar;
 				};
 			//set Items array
-			CP_currentItmes1 	= CP_officerItmes1;
-			CP_currentItmes2 	= CP_corpsmanItmes2;
-			CP_currentItmes3 	= CP_riflemanItmes3;
+			CP_currentItmes1 	= CP_marksmanItmes1;
+			CP_currentItmes2 	= CP_marksmanItmes2;
+			CP_currentItmes3 	= CP_marksmanItmes3;
+			CP_currentGeneralItmes = CP_marksmanGeneralItmes;
 			
 			//Set playr level
 			CP_currentLevel = marksmanLevel select 0;
@@ -193,24 +199,25 @@ switch (_role) do
 		{ 
 			//Fets correct weapons Arrays
 			if (side player == west) then {
-				CP_currentWeaponArray 		= CP_riflemanWeaponWest;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecWest;
-				CP_currentUniforms 			= CP_riflemanUniformsWest;
+				CP_currentWeaponArray 		= CP_specialistWeaponWest;
+				CP_currentWeaponSecArray	= CP_specialistWeaponSecWest;
+				CP_currentUniforms 			= CP_specialistUniformsWest;
 				};
 			if (side player == east) then {
-				CP_currentWeaponArray 		= CP_riflemanWeaponEast;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecEast;
-				CP_currentUniforms 			= CP_riflemanUniformsEast;
+				CP_currentWeaponArray 		= CP_specialistWeaponEast;
+				CP_currentWeaponSecArray	= CP_specialistWeaponSecEast;
+				CP_currentUniforms 			= CP_specialistUniformsEast;
 				};
 			if (side player == resistance) then {
-				CP_currentWeaponArray 		= CP_riflemanWeaponGuer;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecGuer;
-				CP_currentUniforms 			= CP_riflemanUniformsGuar;
+				CP_currentWeaponArray 		= CP_specialistWeaponGuer;
+				CP_currentWeaponSecArray	= CP_specialistWeaponSecGuer;
+				CP_currentUniforms 			= CP_specialistUniformsGuar;
 				};
 			//set Items array
 			CP_currentItmes1 	= CP_specialistItmes1;
 			CP_currentItmes2 	= CP_specialistItmes2;
 			CP_currentItmes3 	= CP_specialistItmes3;
+			CP_currentGeneralItmes = CP_specialistGeneralItmes;
 			
 			//Set playr level
 			CP_currentLevel = specialistLevel select 0;
@@ -222,24 +229,25 @@ switch (_role) do
 		{ 
 			//Fets correct weapons Arrays
 			if (side player == west) then {
-				CP_currentWeaponArray 		= CP_carabineWeaponWest;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecWest;
+				CP_currentWeaponArray 		= CP_crewWeaponWest;
+				CP_currentWeaponSecArray	= CP_crewWeaponSecWest;
 				CP_currentUniforms 			= CP_crewUniformsWest;
 				};
 			if (side player == east) then {
-				CP_currentWeaponArray 		= CP_carabineWeaponEast;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecEast;
+				CP_currentWeaponArray 		= CP_crewWeaponEast;
+				CP_currentWeaponSecArray	= CP_crewWeaponSecEast;
 				CP_currentUniforms 			= CP_crewUniformsEast;
 				};
 			if (side player == resistance) then {
-				CP_currentWeaponArray 		= CP_carabineWeaponGuer;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecGuer;
+				CP_currentWeaponArray 		= CP_crewWeaponGuer;
+				CP_currentWeaponSecArray	= CP_crewWeaponSecGuer;
 				CP_currentUniforms 			= CP_crewUniformsGuar;
 				};
 			//set Items array
-			CP_currentItmes1 	= CP_riflemanItmes1;
-			CP_currentItmes2 	= CP_corpsmanItmes2;
-			CP_currentItmes3 	= CP_riflemanItmes3;
+			CP_currentItmes1 	= CP_crewItmes1;
+			CP_currentItmes2 	= CP_crewItmes2;
+			CP_currentItmes3 	= CP_crewItmes3;
+			CP_currentGeneralItmes = CP_crewGeneralItmes;
 			
 			//Set playr level
 			CP_currentLevel = crewLevel select 0;
@@ -252,23 +260,24 @@ switch (_role) do
 			//Fets correct weapons Arrays
 			if (side player == west) then {
 				CP_currentWeaponArray 		= CP_pilotWeaponWest;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecWest;
+				CP_currentWeaponSecArray	= CP_pilotWeaponSecWest;
 				CP_currentUniforms 			= CP_pilotUniformsWest;
 				};
 			if (side player == east) then {
 				CP_currentWeaponArray 		= CP_pilotWeaponEast;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecEast;
+				CP_currentWeaponSecArray	= CP_pilotWeaponSecEast;
 				CP_currentUniforms 			= CP_pilotUniformsEast;
 				};
 			if (side player == resistance) then {
 				CP_currentWeaponArray 		= CP_pilotWeaponWest;
-				CP_currentWeaponSecArray	= CP_riflemanWeaponSecGuer;
+				CP_currentWeaponSecArray	= CP_pilotWeaponSecGuer;
 				CP_currentUniforms 			= CP_pilotUniformsGuar;
 				};
 			//set Items array
-			CP_currentItmes1 	= CP_riflemanItmes1;
-			CP_currentItmes2 	= CP_corpsmanItmes2;
-			CP_currentItmes3 	= CP_riflemanItmes3;
+			CP_currentItmes1 	= CP_pilotItmes1;
+			CP_currentItmes2 	= CP_pilotItmes2;
+			CP_currentItmes3 	= CP_pilotItmes3;
+			CP_currentGeneralItmes = CP_pilotGeneralItmes;
 			
 			//Set playr level
 			CP_currentLevel = pilotLevel select 0;
@@ -326,8 +335,18 @@ if (isnil "CP_currentItems3") then {
 	CP_currentItems3Index = 0; 
 	};
 
+//Set General Items
+CP_currentGeneralItems = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role,getplayerUID player,side player];
+if (isnil "CP_currentGeneralItems") then 
+{														
+	missionNamespace setVariable [format["CP_player%1GeneralItems_%2_%3",_role,getplayerUID player,side player], CP_currentGeneralItmes];
+	CP_currentGeneralItems = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role,getplayerUID player,side player];
+	CP_currentGeneralItems = 0; 
+};
+	
 //Set player role
 player setvariable ["CP_role", _role, true]; 
+player setvariable ["CP_roleLevel", call compile format ["%1Level select 0",_role], true]; 
 
 //Open subMenu if needed
 if (_select == 1) then {[4] execVM CP_path+"configs\dialogs\switchDialog.sqf"};			//open weapon menu	

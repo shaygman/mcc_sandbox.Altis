@@ -11,8 +11,8 @@ class mcc_test
 
 	//---------------------------------------------
 	objects[] = 
-	{ 
-	};
+	{ 	//(0.671875 * safezoneW + safezoneX) / safezoneW -X
+	};	//(0.478009 * safezoneH + safezoneY) / safezoneH - Y
 
 	class controls 
 	{

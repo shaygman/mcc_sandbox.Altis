@@ -27,9 +27,9 @@ class Mission
 	class Intel
 	{
 		briefingName="Altis COOP: MCC Sandbox - DEV";
-		startWeather=0.1;
+		startWeather=0;
 		startWind=0;
-		forecastWeather=0.1;
+		forecastWeather=0;
 		forecastWind=0;
 		forecastWaves=0;
 		year=2035;
@@ -90,7 +90,7 @@ class Mission
 				items=2;
 				class Item0
 				{
-					position[]={14686.704,17.892273,16329.8};
+					position[]={4595.6211,250.74442,15466.56};
 					id=2;
 					side="WEST";
 					vehicle="B_Soldier_SL_F";

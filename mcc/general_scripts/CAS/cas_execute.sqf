@@ -39,7 +39,7 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then 		//If it's
 	_wp setWaypointType "MOVE";
 	_wp setWaypointSpeed "FULL";
 	_wp setWaypointCombatMode "BLUE";
-	_wp setWaypointCompletionRadius 50;
+	_wp setWaypointCompletionRadius 200;
 	_plane1 flyInHeight 200;
 		
 	waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 400) || (!alive _plane1)};
@@ -59,23 +59,23 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then 		//If it's
 }	
 else 
 {	
-	if ( ( _spawnkind == "Gun-run short" || _spawnkind == "Gun-run long") ) then
+	if (_spawnkind in ["Gun-run short","Gun-run long"]) then
 	{
 	
 		diag_log format ["gun-run: [%1]", _this];
 		
-		if ( _planeType isKindOf "Plane" ) then 
+		if (_planeType isKindOf "Plane") then 
 		{
-			_distStart = 1900;
-			_distEngage = 1800;
-			_planeAltitude = 250;
+			_distStart = 3000;
+			_distEngage = 2500;
+			_planeAltitude = 500;
 			_typeOfAircraft = 1; //plane
 		} 
 		else
 		{
-			_distStart = 1400;
-			_distEngage = 1000;
-			_planeAltitude = 100;
+			_distStart = 1200;
+			_distEngage = 500;
+			_planeAltitude = 150;
 			_typeOfAircraft = 0; //helicopter
 		};
 			
@@ -98,10 +98,46 @@ else
 		_plane1 disableAI "AUTOTARGET";
 		_plane1 disableAI "TARGET";
 		
-		//remove heavy weapons to force gun only as much as possible
-		_plane1 removeMagazine "24Rnd_missiles";
-		_plane1 removeMagazine "12Rnd_PG_missiles";
-
+		private ["_weapons","_planeCfg","_modes","_mode","_weaponOnPlane","_turret"];
+		_planeCfg = configfile >> "cfgvehicles" >> _planeType;
+		if (count (getarray (_planeCfg >> "Turrets" >> "MainTurret" >> "weapons"))>0) then
+			{
+				_weaponOnPlane = getarray (_planeCfg >> "Turrets" >> "MainTurret" >> "weapons");
+				_turret = true; 
+			}
+			else
+			{
+				_weaponOnPlane = getarray (_planeCfg >> "weapons");
+				_turret = false; 
+			};			
+		
+		_weapons = [];
+		{
+			if (tolower ((_x call bis_fnc_itemType) select 1) in ["machinegun"]) then 
+			{
+				_modes = getarray (configfile >> "cfgweapons" >> _x >> "modes");
+				if (count _modes > 0) then 
+				{
+					_mode = _modes select 0;
+					if (_mode == "this") then {_mode = _x;};
+					_weapons set [count _weapons,[_x,_mode]];
+				};
+			};
+		} foreach _weaponOnPlane;
+		
+		//Fail safe if no weapons found
+		if (count _weapons == 0) then
+		{
+			_modes = getarray (configfile >> "cfgweapons" >> (_weaponOnPlane select 0) >> "modes");
+			if (isnil "_modes") then {_modes = ["this"]};
+				if (count _modes > 0) then 
+				{
+					_mode = _modes select 0;
+					if (_mode == "this") then {_mode = (_weaponOnPlane select 0)};
+					_weapons set [count _weapons,[(_weaponOnPlane select 0),_mode]];
+				};
+		};
+		
 		_pilot1 setskill 1;
 		_plane1 setskill 1;
 		
@@ -109,6 +145,9 @@ else
 		
 		_wp = _pilotGroup1 addWaypoint [_poswp, 0];
 		[_pilotGroup1, 1] setWaypointType "MOVE";
+		[_pilotGroup1, 1] setWaypointSpeed "FULL";
+		[_pilotGroup1, 1] setWaypointSpeed "FULL";
+		[_pilotGroup1, 1] setWaypointCompletionRadius 100;
 
 		_casMarker = createMarkerLocal [_cas_name,_poswp];
 		_casMarker setMarkerTypeLocal "MIL_TRIANGLE";
@@ -150,42 +189,34 @@ else
 			{
 				//create "EAST" target
 				_fakeTarget = "B_TargetSoldier" createVehicle _pos;
-				_fakeTarget addRating -3000;
 			}
 			else
 			{
 				//create "WEST" target
 				_fakeTarget = "O_TargetSoldier" createVehicle _pos;
-				_fakeTarget addRating -3000;
 			};
-
-			_target = _fakeTarget;
 			
-		
+			_fakeTarget addRating -3000;
+			_fakeTarget setpos _pos;
+			_target = _fakeTarget;
+				
 			//Create list of real vehicle targets in 60 m radius of the designated gun-run area
 			_targetList = _pos nearEntities [ ["Tank", "Wheeled_APC", "StaticWeapon", "Truck"], 100];
 	
-			if ( (count _targetList) > 0 ) then 
+			if ( (count _targetList) > 1 ) then 
 			{ 
 				// If real vehicle found assign that one as gun-run target
 				[playerSide,'HQ'] sideChat format ["%1 Target List: [%2] - [%3]", _cas_name, typeOf (_targetList select 0), _targetList];
-				_target = _targetList select 0;
+				_target = _targetList select 1;
 			};
 
 			waitUntil {sleep 0.5;(_plane1 distance _target) < _distStart};
 			
-			// trigger script to cancel attack and collect garbage after x time
-			[_cas_name, _target, _spawnkind, _plane1, _planeType, _fakeTarget] execVM MCC_path + "mcc\general_scripts\cas\clear_gunrun_target.sqf";
-						
-			waitUntil {(_plane1 distance _target) < _distEngage};
+			_pilotGroup1 reveal _target;
 
-			_pilotGroup1 reveal [_target, 4];
-
-			sleep 0.3;
-
-			_plane1 enableAI "TARGET";
-			_pilotGroup1 setCombatMode "YELLOW";
-	
+			//_plane1 enableAI "TARGET";
+			//_pilotGroup1 setCombatMode "YELLOW";
+			
 			_plane1 doTarget _target;
 			_pilot1 doTarget _target;
 			gunner _plane1 doTarget _target;
@@ -193,18 +224,33 @@ else
 			(_plane1 turretUnit [0]) doTarget _target;
 			(_plane1 turretUnit [1]) doTarget _target;
 			
+			// trigger script to cancel attack and collect garbage after x time
+			[_cas_name, _target, _spawnkind, _plane1, _planeType, _fakeTarget] execVM MCC_path + "mcc\general_scripts\cas\clear_gunrun_target.sqf";
+						
+			waitUntil {(_plane1 distance _target) < _distEngage};
+			
+			
+			_fire = [_plane1,_weapons,_turret,_target] call 
+			{
+				_plane = _this select 0;
+				_planeDriver = if (_this select 2) then {gunner _plane} else {driver _plane};
+				_weapons = _this select 1;
+				_duration = 20;
+				_target = _this select 3;
+				_time = time + _duration;
+				waituntil 
+				{
+					{
+						if (_plane aimedAtTarget [_target] > 0.1) then {_planeDriver forceweaponfire _x};
+					} foreach _weapons;
+					sleep 0.1;
+					time > _time || isnull _plane || ((_plane distance _target) < 50)
+				};
+			};	
+			
 			_casApproach = false;
 		};
-
-		while { ( damage _fakeTarget < 0.8 ) } do
-		{	
-			_plane1 doFire _target;
-			(gunner _plane1) doFire _target;
-			(_plane1 turretUnit [0]) doFire _target;
-			(_plane1 turretUnit [1]) doFire _target;
-			sleep 0.1;
-		};
-
+		
 		//clear_gunrun_target.sqf should have set the damage of target to 1 now
 		[playerSide,'HQ'] sideChat format ["%1 is leaving the area", _cas_name];
 		
@@ -228,23 +274,26 @@ else
 			_away = _spawn;
 		};
 		
-		// assign new target located at '_away' location to shift focus
-		if (((side _plane1) getFriend east) < 0.6) then // enemy
+		sleep 3;
+		
+		//Fire some flares exiting the area
+		_fire = [_plane1,[["CMFlareLauncher","burst"]]] spawn 
 		{
-			//create "EAST" target
-			_fakeTarget = "B_TargetSoldier" createVehicle _away;
-		}
-		else
-		{
-			//create "WEST" target
-			_fakeTarget = "B_TargetSoldier" createVehicle _away;
+			_plane = _this select 0;
+			_planeDriver = driver _plane;
+			_weapons = _this select 1;
+			_duration = 5;
+			_time = time + _duration;
+			waituntil 
+			{
+				{
+					_planeDriver forceweaponfire _x;
+				} foreach _weapons;
+				sleep 0.5;
+				time > _time || isnull _plane
+			};
 		};
-		
-		_plane1 doTarget _fakeTarget;
-		_pilot1 doTarget _fakeTarget;
-		
-		sleep 0.1;
-		
+			
 		{_x disableAI "AUTOTARGET"} forEach  crew _plane1;
 		{_x disableAI "TARGET"} forEach  crew _plane1;
 		
@@ -286,8 +335,9 @@ else
 
 		waitUntil { sleep 2;!( alive _plane1 ) };
 		deletemarkerlocal _casMarker;
+		
 		// clear invisible targets
-		if (IsNil "_fakeTarget") then {_fakeTarget = objNull};deleteVehicle _fakeTarget;
+		if (!IsNil "_fakeTarget") then {deleteVehicle _fakeTarget};
 	}
 	else		
 	{
@@ -370,6 +420,8 @@ else
 			{ 
 				waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 800) || (!alive _plane1)};
 				//Make the drop
+				if (!alive _plane1) exitWith {}; 
+				
 				for [{_x=1},{_x<=_ammount},{_x=_x+1}] do 
 					{
 						_nul=[[(_pos select 0)+50 - random 100,(_pos select 1)+50 - random 100,_pos select 2], getpos _plane1,"M_AT",200,true,""] execVM MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
@@ -565,6 +617,27 @@ else
 			}			
 		};
 		//Delete the plane when finished
+		sleep 1;
+		
+		//Fire some flares exiting the area
+		{
+			_fire = [_x,[["CMFlareLauncher","burst"]]] spawn 
+			{
+				_plane = _this select 0;
+				_planeDriver = driver _plane;
+				_weapons = _this select 1;
+				_duration = 5;
+				_time = time + _duration;
+				waituntil 
+				{
+					{
+						_planeDriver forceweaponfire _x;
+					} foreach _weapons;
+					sleep 0.5;
+					time > _time || isnull _plane
+				};
+			};
+		} foreach [_plane1,_plane2]; 
 		
 		[_pilotGroup1, _pilot1, _plane1, _away] call MCC_fnc_deletePlane;
 		[_pilotGroup2, _pilot2, _plane2, _away] call MCC_fnc_deletePlane;

@@ -1059,10 +1059,10 @@ class CfgSounds	{
 		titles[] = {};
 	};
 	
-	class MCC_button
+	class MCC_woosh
 	{
-		name = "MCC_button";
-		sound[] = {"sounds\MCC_button.ogg", 1, 1};
+		name = "MCC_woosh";
+		sound[] = {"sounds\woosh.ogg", 1, 1};
 		titles[] = {};
 	};
 };

@@ -20,16 +20,19 @@ switch _varType do
 {
 	case "STRING" : 
 	{
+		if (isnil "_value") then {_value = ""};
 		_valueExist = if (_value == "") then {false} else {true}; 
 	}; 
 	
 	case "ARRAY" : 
 	{
+		if (isnil "_value") then {_value = []};
 		_valueExist = if (count _value == 0) then {false} else {true}; 
 	};
 	
 	case "SCALAR" : 
 	{
+		if (isnil "_value") then {_value = 0};
 		_valueExist = if (_value == 0) then {false} else {true}; 
 	};
 };

@@ -7,6 +7,10 @@ disableSerialization;
 
 private ["_mccdialog", "_name", "_worldPos","_group","_index"];
 
+//If we are messing with the list do not refresh
+if (isnil "MCC_UMFocus") then {MCC_UMFocus = false};
+if (MCC_UMFocus) exitWith {}; 
+
 MCC_UMunitsNames = [];
 UMgroupNames = [];
 

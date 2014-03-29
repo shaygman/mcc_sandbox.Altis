@@ -26,6 +26,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			idc = MCC_UM_LIST;
 			rowHeight = 0.022;
 			colorBackground[] = { 0, 0, 0,1};
+			onSetFocus = "MCC_UMFocus = true";	
+			onKillFocus = "MCC_UMFocus = false";	
 			onLBSelChanged = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 			onMouseButtonUp = __EVAL("[8,_this] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";

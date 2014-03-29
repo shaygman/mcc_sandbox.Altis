@@ -606,7 +606,7 @@ if (_artillery != 0) then
 //Static
 if (random 1 > 0.3) then
 {
-	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,4,8,_side,999],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
+	[[(_totalEnemyUnits*0.2),_missionCenter,_maxObjectivesDistance,MCC_MWunitsArrayStatic,4,8,_side,999,_zoneNumber],"MCC_fnc_MWSpawnStatic",false,false] spawn BIS_fnc_MP;
 	if (MW_debug) then {diag_log "Enemy's Static Weapons Spawned in main zone"};
 };
 

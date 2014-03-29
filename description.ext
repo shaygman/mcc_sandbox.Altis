@@ -83,35 +83,6 @@ class Params
                 default = 3;
                 code = "f_param_timeOfDay = %1";
         };   
-		
-// ==================================BTC===========================================
-		class f_param_BTCRevive
-        {
-                title = "BTC Revive";
-                values[] = {0,1};
-                texts[] = {"Off","On"};
-                default = 1;
-                code = "f_var_BTCRevive = %1";
-        }; 
-		
-		class f_param_BTCwoundingSystem
-        {
-                title = "BTC Wounding (requires BTC Revive ON";
-                values[] = {0,1};
-                texts[] = {"Off","On"};
-                default = 0;
-                code = "f_var_BTCwoundingSystem = %1";
-        }; 
-		
-		class f_param_BTCLifes
-        {
-                title = "BTC Lifes (requires BTC Revive ON";
-                values[] = {5,4,3,2,1,999};
-                texts[] = {"5","4","3","2","1","999"};
-                default = 3;
-                code = "f_var_BTCLifes = %1";
-        };
-
 };
 
 

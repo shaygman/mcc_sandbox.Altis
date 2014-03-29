@@ -59,11 +59,7 @@ if (count _arrayUnits > 0) then
 			};
 			
 			_vehicle = [_spawnPos, (random 360), _vehicleClass, _group] call bis_fnc_spawnvehicle; 
-			if (_artillery != 999) then 
-							{
-								//_nul = [(_vehicle select 0),1,2000,100,_artillery*6,_artillery*3,"Sh_82mm_AMOS",20] execVM MCC_path + "scripts\UPSMON\MON_artillery_add.sqf";
-									(_vehicle select 0) setVariable ["GAIA_ZONE_INTEND",[_zone,"NOFOLLOW"], false];
-							};
+			(_vehicle select 2) setVariable ["GAIA_ZONE_INTEND",[str _zone,"NOFOLLOW"], true];
 		};
 
 		_unitPlaced = _unitPlaced + (_priceUnit*_perSpawn);

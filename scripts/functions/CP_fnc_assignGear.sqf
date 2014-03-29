@@ -11,6 +11,7 @@ _role = _this select 0;
 removeAllWeapons player;
 removeAllItems player;
 removeGoggles player;
+removeAllAssignedItems player;
 
 // Remove NVGs
 if("NVGoggles" in (assignedItems player)) then
@@ -81,14 +82,24 @@ _wepItems = primaryWeaponItems player;
 		player removeItem _x;
 		};
 } foreach _wepItems;
+
 {
-	if (! isnil "_x" && _x != "") then {player addPrimaryWeaponItem _x};
+	if (!isnil "_x") then
+	{
+		if (_x != "") then {player addPrimaryWeaponItem _x};
+	};
 } foreach CP_weaponAttachments;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 //Add generic items
-{player addmagazine "HandGrenade"} foreach [1,2];
-{player addItem "FirstAidKit"} foreach [1,2];
+_currentWeapon = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role, getplayerUID player, side player];
+if (!isnil "_currentWeapon") then 
+{
+	{
+		[_x] call CP_fnc_addItem;
+	} foreach _currentWeapon;
+};
 
 //Select Primary weapon
 player selectweapon primaryweapon player;

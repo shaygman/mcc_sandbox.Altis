@@ -50,22 +50,57 @@ _type = _this select 0;
 			{
 				_targetUnit = MCC_UMunitsNames select (lbCurSel MCC_UM_LIST);	//Hijacked unit
 				if (isplayer _targetUnit) exitwith {hint "Can't hijak other players"};
-				Prev_Player = player; 
-				Prev_Side = side player; 
+				MCC_Prev_Player = player; 
+				MCC_Prev_Group = group Player;
+				MCC_Prev_GroupIsLeader = if (leader group player == player) then {true} else {false}; 
+				MCC_Prev_Side = side player; 
 				_oldUnit = player; 
 				_group = creategroup (side _targetUnit); 
-				//_dummyUnit = _group createUnit ["RU_Assistant", position player,[], 0, "NONE"];
 				[_targetUnit] joinSilent _group;
-				//setPlayable _dummyUnit;
-				//selectPlayer _dummyUnit;	//Make the switch
+				
+				closeDialog 0;
+				private ["_camera","_ppgrain"];
+				_camera = "Camera" camcreate [(getpos _targetUnit) select 0, (getpos _targetUnit) select 1,((getpos _targetUnit) select 2) + 100];
+				_camera cameraeffect ["internal","back"];
+				_camera camPrepareFOV 0.900;
+				_camera camsetTarget _targetUnit;
+				_camera campreparefocus [-1,-1];
+				_camera camCommitPrepared 0;
+				_camera camcommit 0.01;
+				cameraEffectEnableHUD true;
+				
+				_ppgrain = ppEffectCreate ["radialBlur", 100];
+				_ppgrain ppEffectAdjust [0.5, 0.5, 0.3, 0.3];
+				_ppgrain ppEffectCommit 0;
+				_ppgrain ppEffectEnable true;
+				
+				playsound "MCC_woosh"; 
+				for "_i" from floor(((getpos _targetUnit) select 2) + 100) to 0 step -3 do 
+				{
+					_camera camsetpos [(getpos _targetUnit) select 0, (getpos _targetUnit) select 1,_i];
+					_camera camcommit 0.01;
+					sleep 0.01;
+				}; 
+				
+				_camera cameraEffect ["TERMINATE", "BACK"];
+				camdestroy _camera;
+				_camera = nil; 
+
 				removeSwitchableUnit _oldUnit;
 				_group selectLeader player;
 				selectPlayer _targetUnit;
-				//deleteVehicle _dummyUnit;
+
 				deletegroup _group;
-				MCC_backToplayerIndex = _targetUnit addaction ["Back to player", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
-				mcc_actionInedx = player addaction ["> Mission generator", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
-				_ok = _targetUnit addEventHandler ["Killed", "[_this select 0] joinSilent (Prev_Group);selectPlayer Prev_Player;"];
+				
+				_ppgrain ppEffectEnable false;
+				MCC_hijack_effect = ppEffectCreate ["radialBlur", 100];
+				MCC_hijack_effect ppEffectAdjust [1, 1, 0.4, 0.4];
+				MCC_hijack_effect ppEffectCommit 0;
+				MCC_hijack_effect ppEffectEnable true;
+				
+				MCC_backToplayerIndex = _targetUnit addaction ["<t color=""#CC0000"">Back To Player</t>", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+				_ok = _targetUnit addEventHandler ["Killed", format ["[_this select 0] execVM '%1mcc\general_scripts\unitManage\backToPlayer.sqf'",MCC_path]];
 			}
 			else
 			{hint "Can only hijak units not groups"};

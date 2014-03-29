@@ -31,6 +31,63 @@ MCC_groupGenRefreshTerminate = false;
 setGroupIconsVisible [true,false];	
 setGroupIconsSelectable true;
 
+MCC_fnc_mapDrawWP = 
+{
+	_map = _this select 0;
+	
+	{
+		_leader = (leader _x);
+		_players = if ("players" in MCC_groupGenGroupStatus && (count MCC_groupGenGroupStatus == 1)) then {alive _leader && isPlayer _leader} else {alive _leader}; 
+		
+		if (((side _leader in MCC_groupGenGroupStatus) || ("players" in MCC_groupGenGroupStatus && (count MCC_groupGenGroupStatus == 1))) && _players) then
+		{
+			_wpArray = waypoints (group _leader);
+			if (count _wpArray > 0)then
+			{
+				private ["_wp","_wPos","_wType"];
+				MCC_lastPos = nil; 
+				_texture = gettext (configfile >> "CfgMarkers" >> "waypoint" >> "icon");
+				for [{_i=0},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
+				{			
+					_wp = (_wpArray select _i);
+					_wPos  = waypointPosition _wp;
+					if ((_wPos  distance [0,0,0]) > 50) then
+					{
+						_wType = waypointType _wp;
+						
+						
+						_map drawIcon [
+							_texture,
+							[0,0,1,1],
+							_wPos,
+							24,
+							24,
+							0,
+							_wType,
+							0,
+							0.04,
+							"PuristaBold",
+							"center"
+						];
+
+						if (isnil "MCC_lastPos") then {MCC_lastPos = [(getpos _leader) select 0,(getpos _leader) select 1]}; 
+						
+						_map drawLine [
+							MCC_lastPos,
+							_wPos,
+							[0,0,1,1]
+						];
+
+						MCC_lastPos = _wPos; 
+					};
+				};
+			};
+		};
+	} foreach allgroups; 
+};
+
+((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrladdeventhandler ["draw","_this call MCC_fnc_mapDrawWP;"];
+
 while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupGenRefreshTerminate} do 		//Draw WP
 {
 	{
@@ -149,30 +206,6 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 			_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
 			_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
 				
-			if (count _wpArray > 0)then
-			{
-				private ["_wp","_wPos","_wType"];
-				MCC_lastPos = nil; 
-				for [{_i=0},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
-				{			
-					_wp = (_wpArray select _i);
-					_wPos  = waypointPosition _wp;
-					if ((_wPos  distance [0,0,0]) > 50) then
-					{
-						_wType = waypointType _wp;
-						createMarkerLocal [format["%1", _wp],_wPos];
-						format["%1", _wp] setMarkerTypelocal "waypoint";
-						format["%1", _wp] setMarkerColorlocal "ColorBlue";
-						format["%1", _wp] setMarkerTextLocal (format ["%1",_wType]);
-						MCC_groupGenTempWP set [count MCC_groupGenTempWP, format["%1", _wp]];
-						if (isnil "MCC_lastPos") then {MCC_lastPos = [(getpos _leader) select 0,(getpos _leader) select 1]}; 
-						[MCC_lastPos , _wPos ,format ["%1%2", _i,group _leader]] call MCC_fnc_drawLine;	//draw the line
-						MCC_groupGenTempWPLines set [count MCC_groupGenTempWPLines, format["line_%1%2", _i,group _leader]];
-						MCC_lastPos = _wPos; 
-					};
-				};
-			};
-
 			if (! isnil "_groupStatus") then 					//Draw group status
 			{
 				private ["_time","_status"];
@@ -204,11 +237,7 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 	//Refresh UM list
 	[] call MCC_fnc_groupGenUMRefresh;
 	
-	sleep 1;
-	{deletemarkerlocal _x} foreach MCC_groupGenTempWP;
-	MCC_groupGenTempWP = []; 
-	{deletemarkerlocal _x} foreach MCC_groupGenTempWPLines;
-	MCC_groupGenTempWPLines = []; 
+	sleep 1; 
 }; 
 	
 //Clear stuff after exiting
@@ -223,6 +252,7 @@ MCC_groupGenTempWPLines = [];
 		clearGroupIcons _x; 
 	}; 
 } foreach allgroups;
+
 setGroupIconsVisible [false,false];
 setGroupIconsSelectable false;
 

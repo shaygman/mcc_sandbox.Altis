@@ -46,7 +46,7 @@ if (mcc_missionmaker == (name player)) then {
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_EAST  = %1;
 															publicVariable 'MCC_START_EAST';
-															[[_pos, 0, 'east','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+															[[MCC_START_EAST, 0, 'east','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 															""							  
 															,MCC_START_EAST
 															];
@@ -67,7 +67,7 @@ if (mcc_missionmaker == (name player)) then {
 								mcc_safe=mcc_safe + FORMAT [""
 															MCC_START_GUER  = %1;
 															publicVariable 'MCC_START_GUER';
-															[[_pos, 0, 'RESISTANCE','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+															[[MCC_START_GUER, 0, 'RESISTANCE','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 															""							  
 															,MCC_START_GUER
 															];

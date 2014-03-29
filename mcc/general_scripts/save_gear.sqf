@@ -149,7 +149,7 @@ if (MCC_saveGear) then
 	
 if (player getvariable ["MCC_allowed",false]) then 
 	{
-		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= Mission generator =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 		//player setvariable ["MCC_allowed",true,true];
 	};
 	
@@ -164,7 +164,7 @@ if (CP_activated) exitWith
 		if (CP_debug) then {player sidechat format ["rating: %1", _exp]};
 		_exp = (_exp + CP_rating);
 		if (_exp < 0) then {_exp = 0}; 
-		_level = call compile format ["[%1,%2]",floor (_exp/5000)+1 ,_exp];
+		_level = call compile format ["[%1,%2]",floor (_exp/2000)+1 ,_exp];
 		if (CP_debug) then {player sidechat format ["level: %1",_level]};
 		[[format ["%1Level",_role], player, _level, "ARRAY"], "CP_fnc_setVariable", false, false] spawn BIS_fnc_MP;
 	};

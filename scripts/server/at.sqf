@@ -8,9 +8,10 @@ CP_ATWeaponWest = ["SERVER_AT", "primary", "CP_ATWeaponWest", "ARRAY"] call iniD
 if (count CP_ATWeaponWest == 0) then
 {		
 	CP_ATWeaponWest 	= call compileFinal str	[
-							[0,"arifle_TRG20_F",["30Rnd_556x45_Stanag",9]],
-							[10,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9]],
-							[20,"arifle_MXC_F",["30Rnd_65x39_caseless_mag",9]]
+							[0,"arifle_TRG20_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_Red",2]],
+							[5,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_Red",2]],
+							[10,"arifle_MXC_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]],
+							[20,"arifle_MXC_Black_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]]
 						   ]; 
 	["SERVER_AT", "primary", "CP_ATWeaponWest",CP_ATWeaponWest, "ARRAY"] call iniDB_write;
 };
@@ -24,9 +25,9 @@ publicvariable "CP_ATWeaponWest";
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
-									[[20,""],[23,"optic_Aco"],[24,"optic_Holosight"],[25,"optic_MRCO"],[28,"optic_Hamr"],[29,"optic_Arco"]], //optics
-									[[20,""],[29,"muzzle_snds_h"]], //Barrel
-									[[20,""],[25,"acc_flashlight"],[29,"acc_pointer_IR"]]	//Attach
+									[[0,""],[3,"optic_Aco"],[5,"optic_Holosight"],[10,"optic_MRCO"],[13,"optic_Hamr"],[15,"optic_Arco"],[20,"optic_tws"]], //optics
+									[[0,""],[9,"muzzle_snds_h"]], //Barrel
+									[[0,""],[5,"acc_flashlight"],[9,"acc_pointer_IR"]]	//Attach
 									];
 			["SERVER_AT", "primary_attachments_west", format ["CP_%1",_weapon], _weaponAttachments, "ARRAY"] call iniDB_write;
 		};
@@ -43,9 +44,9 @@ CP_ATWeaponEast = ["SERVER_AT", "primary", "CP_ATWeaponEast", "ARRAY"] call iniD
 if (count CP_ATWeaponEast == 0) then
 {							   
 	CP_ATWeaponEast 	= call compileFinal str 	[
-							[0,"arifle_Katiba_C_F",["30Rnd_65x39_caseless_green",9]],
-							[10,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9]],
-							[20,"arifle_MX_F",["30Rnd_65x39_caseless_mag",9]]
+							[0,"arifle_Katiba_C_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_green",2]],
+							[10,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_green",2]],
+							[20,"arifle_MX_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]]
 							]; 
 	["SERVER_AT", "primary", "CP_ATWeaponEast",CP_ATWeaponEast, "ARRAY"] call iniDB_write;
 };
@@ -59,7 +60,7 @@ publicvariable "CP_ATWeaponEast";
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
-									[[0,""],[3,"optic_ACO_grn"],[4,"optic_Holosight"],[5,"optic_MRCO"],[8,"optic_Hamr"],[9,"optic_Arco"]], //optics
+									[[0,""],[3,"optic_ACO_grn"],[5,"optic_Holosight"],[10,"optic_MRCO"],[13,"optic_Hamr"],[15,"optic_Arco"],[20,"optic_tws"]], //optics
 									[[0,""],[9,"muzzle_snds_h"]], //Barrel
 									[[0,""],[5,"acc_flashlight"],[9,"acc_pointer_IR"]]	//Attach
 									];
@@ -77,9 +78,9 @@ CP_ATWeaponGuer = ["SERVER_AT", "primary", "CP_ATWeaponGuer", "ARRAY"] call iniD
 if (count CP_ATWeaponGuer == 0) then
 {
 	CP_ATWeaponGuer 	= call compileFinal str	[
-							[0,"arifle_TRG20_F",["30Rnd_556x45_Stanag",9]],
-							[10,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9]],
-							[20,"arifle_MXC_F",["30Rnd_65x39_caseless_mag"]]
+							[0,"arifle_TRG20_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_green",2]],
+							[10,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_green",2]],
+							[20,"arifle_MXC_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]]
 							];
 	["SERVER_AT", "primary", "CP_ATWeaponGuer",CP_ATWeaponGuer, "ARRAY"] call iniDB_write;
 };
@@ -93,9 +94,9 @@ publicvariable "CP_ATWeaponGuer";
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
-									[[10,""],[13,"optic_Aco"],[14,"optic_Holosight"],[15,"optic_MRCO"],[18,"optic_Hamr"],[19,"optic_Arco"]], //optics
-									[[10,""],[19,"muzzle_snds_M"]], //Barrel
-									[[10,""],[15,"acc_flashlight"],[19,"acc_pointer_IR"]]	//Attach
+									[[0,""],[3,"optic_ACO_grn"],[5,"optic_Holosight"],[10,"optic_MRCO"],[13,"optic_Hamr"],[15,"optic_Arco"],[20,"optic_tws"]], //optics
+									[[0,""],[9,"muzzle_snds_M"]], //Barrel
+									[[0,""],[5,"acc_flashlight"],[10,"acc_pointer_IR"]]	//Attach
 									];
 			["SERVER_AT", "primary_attachments_guer", format ["CP_%1",_weapon], _weaponAttachments, "ARRAY"] call iniDB_write;
 		};
@@ -189,6 +190,23 @@ if (count CP_ATItmes3 == 0) then
 }; 
 publicvariable "CP_ATItmes3"; 
 
+
+CP_ATGeneralItmes = ["SERVER_AT", "items", "CP_ATGeneralItmes", "ARRAY"] call iniDB_read;
+if (count CP_ATGeneralItmes == 0) then
+{
+	CP_ATGeneralItmes		= call compileFinal str	[
+									[0,"ItemMap",1],
+									[0,"ItemCompass",1],
+									[0,"ItemWatch",1],
+									[0,"ItemRadio",1],
+									[0,"HandGrenade",2],
+									[0,"SmokeShell",2],
+									[0,"FirstAidKit",2]
+									];
+
+	["SERVER_AT", "items", "CP_ATGeneralItmes",CP_ATGeneralItmes, "ARRAY"] call iniDB_write;
+}; 
+publicvariable "CP_ATGeneralItmes"; 
 //------------------------------------------------------------------------------Gear---------------------------------------------------------------------------
 
 CP_ATUniformsWest = ["SERVER_AT", "gear", "CP_ATUniformsWest", "ARRAY"] call iniDB_read;
@@ -196,11 +214,11 @@ if (count CP_ATUniformsWest == 0) then
 {
 	CP_ATUniformsWest	= call compileFinal str	[
 										[[0,""],[20,"NVGoggles"]],		//NV
-										[[0,"H_HelmetB_plain_mcamo"],[10,"H_HelmetB_light"],[20,"H_HelmetB"]],	//Head
-										[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
-										[[0,"V_PlateCarrier1_rgr"],[10,"V_PlateCarrierGL_rgr"],[20,"V_TacVest_oli"]],	//Vest
-										[[0,"B_AssaultPack_mcamo"],[10,"B_Kitbag_mcamo"],[20,"B_Bergen_mcamo"]],	//Backpack
-										[[0,"U_B_CombatUniform_mcam"],[10,"U_B_CombatUniform_mcam_tshirt"],[20,"U_B_CombatUniform_mcam_vest"]]	//Uniforms
+										[[0,"H_HelmetB"],[10,"H_HelmetB_light"],[15,"H_HelmetB_light_black"]],	//Head
+										[[0,""],[0,"G_Combat"],[5,"G_Tactical_Black"],[10,"G_Sport_Blackred"],[15,"G_B_Diving"]],	//Goggles
+										[[0,"V_PlateCarrier1_rgr"],[5,"V_PlateCarrierGL_rgr"],[10,"V_TacVest_oli"],[15,"V_RebreatherB"],[20,"V_PlateCarrier1_blk"]],	//Vest
+										[[0,"B_AssaultPack_mcamo"],[5,"B_Kitbag_mcamo"],[10,"B_Bergen_mcamo"],[15,"B_AssaultPack_blk"]],	//Backpack
+										[[0,"U_B_CombatUniform_mcam"],[5,"U_B_CombatUniform_mcam_tshirt"],[10,"U_B_CombatUniform_mcam_vest"],[15,"U_B_Wetsuit"]]	//Uniforms
 									];
 	["SERVER_AT", "gear", "CP_ATUniformsWest",CP_ATUniformsWest, "ARRAY"] call iniDB_write;	
 };
@@ -212,10 +230,10 @@ if (count CP_ATUniformsEast == 0) then
 	CP_ATUniformsEast	= call compileFinal str	[
 										[[0,""],[20,"NVGoggles"]],		//NV
 										[[0,"H_HelmetO_ocamo"],[10,"H_HelmetO_oucamo"],[20,"H_HelmetSpecO_blk"]],	//Head
-										[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
-										[[0,"V_BandollierB_khk"],[10,"V_HarnessOGL_gry"],[20,"V_HarnessOSpec_gry"]],	//Vest
-										[[0,"B_AssaultPack_ocamo"],[10,"B_FieldPack_ocamo"],[20,"B_Carryall_ocamo"]],	//Backpack
-										[[0,"U_O_CombatUniform_ocamo"],[10,"U_O_SpecopsUniform_ocamo"],[20,"U_O_SpecopsUniform_blk"]]	//Uniforms
+										[[0,""],[0,"G_Combat"],[5,"G_Tactical_Black"],[10,"G_Sport_Blackred"],[15,"G_B_Diving"]],	//Goggles
+										[[0,"V_BandollierB_khk"],[10,"V_HarnessOGL_gry"],[20,"V_HarnessOSpec_gry"],[15,"V_RebreatherIR"],[20,"V_TacVestIR_blk"]],	//Vest
+										[[0,"B_AssaultPack_ocamo"],[5,"B_FieldPack_ocamo"],[10,"B_Carryall_ocamo"],[15,"B_FieldPack_blk"]],	//Backpack
+										[[0,"U_O_CombatUniform_ocamo"],[5,"U_O_CombatUniform_oucamo"],[10,"U_O_SpecopsUniform_blk"],[15,"U_O_Wetsuit"]]	//Uniforms
 									];
 	["SERVER_AT", "gear", "CP_ATUniformsEast",CP_ATUniformsEast, "ARRAY"] call iniDB_write;
 };
@@ -227,10 +245,10 @@ if (count CP_ATUniformsGuar == 0) then
 	CP_ATUniformsGuar	= call compileFinal str	[
 										[[0,""],[20,"NVGoggles"]],		//NV
 										[[0,"H_HelmetIA"],[10,"H_HelmetIA_net"],[20,"H_HelmetIA_camo"]],	//Head
-										[[0,""],[0,"G_Combat"],[10,"G_Tactical_Black"],[20,"G_Sport_Blackred"]],	//Goggles
-										[[0,"V_PlateCarrier1_rgr"],[10,"V_PlateCarrierSpec_rgr"],[20,"V_TacVest_oli"]],	//Vest
-										[[0,"B_AssaultPack_mcamo"],[10,"B_Kitbag_mcamo"],[20,"B_Bergen_mcamo"]],	//Backpack
-										[[0,"U_I_CombatUniform"],[10,"U_I_CombatUniform_tshirt"]]	//Uniforms
+										[[0,""],[0,"G_Combat"],[5,"G_Tactical_Black"],[10,"G_Sport_Blackred"],[15,"G_B_Diving"]],	//Goggles
+										[[0,"V_PlateCarrier1_rgr"],[10,"V_PlateCarrierSpec_rgr"],[20,"V_TacVest_oli"],[15,"V_RebreatherIA"],[20,"V_TacVestIR_blk"]],	//Vest
+										[[0,"B_AssaultPack_mcamo"],[5,"B_Kitbag_mcamo"],[10,"B_Bergen_mcamo"],[15,"B_AssaultPack_blk"]],	//Backpack
+										[[0,"U_I_CombatUniform"],[10,"U_I_CombatUniform_tshirt"],[15,"U_I_Wetsuit"]]	//Uniforms
 									];
 	["SERVER_AT", "gear", "CP_ATUniformsGuar",CP_ATUniformsGuar, "ARRAY"] call iniDB_write;
 };

@@ -8,20 +8,34 @@ Spawn:
 - Added: Hold Ctrl to continue spawning units without the need to press Create again. 
 
 Engine:
+- Removed: BTC Revive in the mission version it was a good script but I needed something that isn't based on killed EH for the Role Selection.
+- Added: [TcB]-Psycho- A3 Wounding System 
 - Added: DOC objects will be saved into SQM. 
-- Fixed: Opening spectator will close MCC. 
+- Fixed: Hijack made you lose your old group. 
+- Fixed: Floating rocks bug.
+- Fixed: Opening spectator will now close MCC. 
 - Fixed: Reinforcement air or motorized didn't used GAIA. 
+- Fixed: Artillery or static weapons didn't use GAIA. 
 - Fixed: Halo/parajump didn't work for more than 1 unit. - thanks Ollem.
+- Fixed: Waypoint markers moved to eventhandler so it won't be laggy anymore if there are a lot of units/groups on map. 
+- Fixed: Headless Client fixed. 
+
+CAS: 
+- Improved: CAS gun-runs mostly for fixed wing or helicopters witht a turret.
 
 Role Selection:
-- New: Added iniDB support for RS - need to run iniDB on server only will save stats, xp and easy maintain gear and progression
-- New: In squad menu players will have their role name infront of their name in the players list. 
+- New: Added iniDB support for RS - need to run iniDB on server only will save stats, xp and easy to maintain gear and progression
+- New: Moved all role selection defines such as numbers of roles per squad, gear exc to DB.
+- New: In squad menu players will show their role name and level. 
 
 
+- TODO: delete bodies script
+- TODO: Markers public (check) too many markers on console make delays.
+- TODO RS: Tickets Bleed
+- TODO RS: Capture zones
+- TODO RS: Restriction zone
 - TODO MCC Console add WP to UAV in UAV map
-- TODO replace BTC revive
 - TODO items tasks
-- TODO Role selection
 - TODO Save all MCC to 2D editor
 - TODO 3D icons?!
 - TODO Save WP

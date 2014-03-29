@@ -189,7 +189,8 @@ lbClear _comboBox;
 						"(N/A)"
 					};
 				};
-		_displayname = if (_x == leader (CP_activeGroup select 0)) then {format ["%2(Leader) %1",name _x,_role]} else {format ["%2 %1",name _x,_role]};
+		_role = _role + "Lvl " + str (_x getvariable ["CP_roleLevel",1]) + ": ";
+		_displayname = if (_x == leader (CP_activeGroup select 0)) then {format ["-=Leader=- %2 %1",name _x,_role]} else {format ["%2 %1",name _x,_role]};
 		_index = _comboBox lbAdd _displayname;
 		if (_x == player) then {_comboBox lbSetColor [_index, [0, 1, 0, 0.5]]};
 	} foreach units (CP_activeGroup select 0);

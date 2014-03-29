@@ -180,7 +180,7 @@ _SFATmag = "RPG32_F";
 
 // Base
 _baseUniform = "U_O_CombatUniform_ocamo";
-_lightUniform = "U_O_SpecopsUniform_ocamo";
+_lightUniform = "U_O_CombatUniform_oucamo";
 _baseHelmet = "H_HelmetO_ocamo";
 _lightHelmet = "H_HelmetSpecO_blk";
 _lightRig = "V_HarnessO_brn"; // co,dc,ftl,medic,rat,matag,mmgag
@@ -188,7 +188,7 @@ _heavyRig = "V_HarnessOGL_brn"; // ar,eng
 
 //Sf - GhillieSuit
 _SFbaseUniform = "U_O_CombatUniform_ocamo";
-_SFlightUniform = "U_O_SpecopsUniform_ocamo";
+_SFlightUniform = "U_O_CombatUniform_oucamo";
 _SFbaseHelmet = "H_HelmetO_ocamo";
 _SFlightHelmet = "H_HelmetSpecO_blk";
 _SFlightRig = "V_HarnessO_brn"; // co,dc,ftl,medic,rat,matag,mmgag

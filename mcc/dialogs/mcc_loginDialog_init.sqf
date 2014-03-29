@@ -31,6 +31,7 @@ lbClear _comboBox;
 } foreach MCC_view_array;
 _comboBox lbSetCurSel ((round ((viewdistance)/1000)) - 1); // set viewdistance index to current vd
 
+sleep 1; 
 MCC_GUI1initDone = true; 
 
 //-------------------------------------------------FPS Loop  -----------------------------

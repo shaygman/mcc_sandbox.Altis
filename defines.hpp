@@ -35,7 +35,6 @@
 
 
 //--------------------------Others----------------------------------------------------
-#include "=BTC=_revive\=BTC=_respawn.h"
 #include "bon_artillery\dialog\Artillery.hpp"
 #include "VAS\menu.hpp"
 #include "spectator\spectating.hpp"
@@ -538,6 +537,8 @@ class CfgFunctions
 			class accList {};
 		};
 	};
+	
+	#include "ais_injury\cfgFunctionsAIS.hpp"
 };
 
 //=====================DOC=========================
@@ -819,6 +820,7 @@ class RscTitles
 	};
 	
 	#include "mcc\dialogs\compass.hpp"
+	#include "ais_injury\dialogs\rscTitlesAIS.hpp"	//A3 wounding system
 };
 
 class CfgMusic {
@@ -1093,10 +1095,10 @@ class CfgSounds	{
 		titles[] = {};
 	};
 	
-	class MCC_button
+	class MCC_woosh
 	{
-		name = "MCC_button";
-		sound[] = {"sounds\MCC_button.ogg", 1, 1};
+		name = "MCC_woosh";
+		sound[] = {"sounds\woosh.ogg", 1, 1};
 		titles[] = {};
 	};
 
