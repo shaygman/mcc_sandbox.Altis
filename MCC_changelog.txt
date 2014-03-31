@@ -9,7 +9,8 @@ Engine:
 - Removed: BTC Revive in the mission version it was a good script but I needed something that isn't based on killed EH for the Role Selection.
 - Added: [TcB]-Psycho- A3 Wounding System 
 - Added: DOC objects will be saved into SQM. 
-- Fixed: Hijack made you lose your old group. 
+- Fixed: Hijack made you lose your old group.
+- Fixed: Hijack made the hijcacked unit lose his group.
 - Fixed: Floating rocks bug.
 - Fixed: Opening spectator will now close MCC. 
 - Fixed: Halo/parajump didn't work for more than 1 unit. - thanks Ollem.

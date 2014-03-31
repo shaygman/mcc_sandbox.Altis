@@ -50,6 +50,9 @@ _type = _this select 0;
 			{
 				_targetUnit = MCC_UMunitsNames select (lbCurSel MCC_UM_LIST);	//Hijacked unit
 				if (isplayer _targetUnit) exitwith {hint "Can't hijak other players"};
+				MCC_PrevHijacked_Group = group _targetUnit;
+				MCC_Prev_HijackedGroupIsLeader = if (leader group _targetUnit == _targetUnit) then {true} else {false}; 
+				
 				MCC_Prev_Player = player; 
 				MCC_Prev_Group = group Player;
 				MCC_Prev_GroupIsLeader = if (leader group player == player) then {true} else {false}; 
@@ -85,12 +88,23 @@ _type = _this select 0;
 				_camera cameraEffect ["TERMINATE", "BACK"];
 				camdestroy _camera;
 				_camera = nil; 
-
+				
+				
+				
 				removeSwitchableUnit _oldUnit;
 				_group selectLeader player;
 				selectPlayer _targetUnit;
-
+					
 				deletegroup _group;
+				
+				if (!isnull MCC_PrevHijacked_Group) then
+				{
+					[player] joinSilent MCC_PrevHijacked_Group;
+					if (MCC_Prev_HijackedGroupIsLeader) then 
+					{
+						(group player) selectLeader player;
+					};
+				};
 				
 				_ppgrain ppEffectEnable false;
 				MCC_hijack_effect = ppEffectCreate ["radialBlur", 100];

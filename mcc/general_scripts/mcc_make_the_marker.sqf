@@ -9,6 +9,7 @@ MCC_MarkerZoneType = "mil_join";
 //safe the zone size in the array for later use
 mcc_zone_pos  set [mcc_zone_number,mcc_zone_markposition];
 mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
+mcc_zone_dir set [mcc_zone_number,MCC_Marker_dir];
 mcc_zone_locations set [mcc_zone_number,mcc_hc];
 
 
@@ -16,17 +17,26 @@ mcc_zone_locations set [mcc_zone_number,mcc_hc];
 if (!mcc_isloading && !MCC_capture_state) then 
 	{
 		mcc_safe=mcc_safe + FORMAT ["
-								  mcc_zone_markposition=%1;
-								  mcc_zone_number=%2;
-								  mcc_zone_marker_X=%3;
-								  mcc_zone_marker_Y=%4;
-								  mcc_zone_markername='%5';
-								  mcc_hc=%6;
-								  mcc_zone_pos  set [mcc_zone_number,mcc_zone_markposition];
-								  mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
-								  mcc_zone_locations set [mcc_zone_number,mcc_hc];
-								  script_handler = [0] execVM '%7mcc\general_scripts\mcc_make_the_marker.sqf';
-								  waitUntil {scriptDone script_handler};
+									mcc_zone_markposition=%1;
+									mcc_zone_number=%2;
+									mcc_zone_marker_X=%3;
+									mcc_zone_marker_Y=%4;
+									mcc_zone_markername='%5';
+									mcc_hc=%6;
+									MCC_Marker_dir = %8;
+									MCC_zones_numbers set [(mcc_zone_number-1),mcc_zone_number]; 
+									mcc_zone_pos  set [mcc_zone_number,mcc_zone_markposition];
+									mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
+									mcc_zone_dir set [mcc_zone_number,MCC_Marker_dir];
+									publicVariable 'MCC_zones_numbers';
+									publicVariable 'mcc_zone_pos';
+									publicVariable 'mcc_zone_size';
+									publicVariable 'mcc_zone_dir';
+									mcc_zone_locations set [mcc_zone_number,mcc_hc];
+									script_handler = [0] execVM '%7mcc\general_scripts\mcc_make_the_marker.sqf';
+									waitUntil {scriptDone script_handler};
+									str mcc_zone_number setMarkerColorLocal 'colorBlack';
+									str mcc_zone_number setMarkerAlphalocal 0.4; 
 								  "
 								,mcc_zone_markposition
 								,mcc_zone_number
@@ -35,6 +45,7 @@ if (!mcc_isloading && !MCC_capture_state) then
 								,mcc_zone_markername
 								,mcc_hc
 								,MCC_path
+								,MCC_Marker_dir
 								];
 
 						
@@ -89,15 +100,23 @@ if (!mcc_isloading && !MCC_capture_state) then
 	if (MCC_capture_state) then
 	{
 		MCC_capture_var=MCC_capture_var + FORMAT ["
-								  mcc_zone_markposition=%1;
-								  mcc_zone_number=%2;
-								  mcc_zone_marker_X=%3;
-								  mcc_zone_marker_Y=%4;
-								  mcc_zone_markername='%5';
-								  mcc_hc=%6;
-								  mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
-								  mcc_zone_locations set [mcc_zone_number,mcc_hc];	
-								  script_handler = [0] execVM '"+MCC_path+"mcc\general_scripts\mcc_make_the_marker.sqf';
+									mcc_zone_markposition=%1;
+									mcc_zone_number=%2;
+									mcc_zone_marker_X=%3;
+									mcc_zone_marker_Y=%4;
+									mcc_zone_markername='%5';
+									mcc_hc=%6;
+									MCC_Marker_dir = %7;
+									MCC_zones_numbers set [(mcc_zone_number-1),mcc_zone_number];
+									mcc_zone_pos  set [mcc_zone_number,mcc_zone_markposition];
+									mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
+									mcc_zone_dir set [mcc_zone_number,MCC_Marker_dir];
+									publicVariable 'MCC_zones_numbers';
+									publicVariable 'mcc_zone_pos';
+									publicVariable 'mcc_zone_size';
+									publicVariable 'MCC_Marker_dir';
+									mcc_zone_locations set [mcc_zone_number,mcc_hc];	
+									script_handler = [0] execVM '"+MCC_path+"mcc\general_scripts\mcc_make_the_marker.sqf';
 								  "
 								,mcc_zone_markposition
 								,mcc_zone_number
@@ -105,6 +124,7 @@ if (!mcc_isloading && !MCC_capture_state) then
 								,mcc_zone_marker_Y
 								,mcc_zone_markername
 								,mcc_hc
+								,MCC_Marker_dir
 								];
 		hint "Action captured";						
 	};

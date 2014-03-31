@@ -48,7 +48,7 @@ if (mcc_missionmaker == (name player)) then
 		private ["_nearZone","_selectedPos","_newZone","_comboBox","_distance","_marker"];
 		_selectedPos = _ctrl ctrlmapscreentoworld MCC_XYmap;
 		_nearZone = false;
-		_distance = (ctrlMapScale ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl MCC_MINIMAP)) * 300;
+		_distance = (ctrlMapScale ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl MCC_MINIMAP)) * 400;
 		{
 			if (!isnil "_x") then
 			{
@@ -107,7 +107,7 @@ if (mcc_missionmaker == (name player)) then
 				_pos = getMarkerPos  str mcc_active_zone;
 				deletemarkerlocal str mcc_active_zone;	
 				
-				_null = [1,_pos,_size] execVM MCC_path + "mcc\pop_menu\zones.sqf";
+				_null = [2,_pos,_size] execVM MCC_path + "mcc\pop_menu\zones.sqf";
 		};
 	};
 	

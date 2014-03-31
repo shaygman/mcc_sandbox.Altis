@@ -3,6 +3,8 @@ _caller = _this select 0;	//Who activate the script
 If (!(isPlayer _caller) || !(local player)) exitWith{};
 
 _delete = false; 
+
+//If we came here because we died then delete the old character if it respawned. 
 if (!alive _caller) then 
 {
 	waituntil{alive player};
@@ -66,6 +68,7 @@ _camera = nil;
 				
 _group selectLeader player;
 selectPlayer MCC_Prev_Player;
+player setcaptive false; 
 
 if (!isnull MCC_Prev_Group) then
 {
@@ -81,9 +84,23 @@ deleteGroup _group;
 _ppgrain ppEffectEnable false;
 MCC_hijack_effect ppEffectEnable false;
 
-_group = creategroup _hijackedSide;
+if (isnil "MCC_PrevHijacked_Group" || isnull MCC_PrevHijacked_Group) then
+{
+	_group = creategroup _hijackedSide;
+}
+else
+{
+	_group = MCC_PrevHijacked_Group;
+};
 [_caller] joinSilent _group;
-deleteGroup _group;
-player setcaptive false; 
 
-if (_delete) then {deletevehicle _preUnit}; 
+if (MCC_Prev_HijackedGroupIsLeader) then
+{
+	(group _caller) selectLeader _caller;
+	//[[2, compile format ["(group %1) selectLeader %1",_caller]], "MCC_fnc_globalExecute", leader group _caller, false] spawn BIS_fnc_MP;
+}; 
+
+if (_delete) then 
+{
+	if (!isnil "_preUnit") then {deletevehicle _preUnit};
+}; 

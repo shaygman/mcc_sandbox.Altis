@@ -1,5 +1,6 @@
 private ["_string","_group","_weapon","_weaponAttachments"];
 
+if (!MCC_iniDBenabled) exitWIth {player sidechat "iniDB isn't running. Can't access role selection"};
 if (CP_debug) then {diag_log "CP server init started"};
 
 //---------------------------------------------

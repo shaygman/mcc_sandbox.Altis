@@ -212,7 +212,7 @@ MCC_unitInit = "";
 MCC_unitName = "";
 MCC_capture_state = false;
 MCC_capture_var = "";
-MCC_zones_numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40];
+MCC_zones_numbers = [];
 MCC_zone_drawing = false;
 
 MCC_ZoneType = [["regular",0],["respawn",1],["patrol",2],["reinforcement",3]];
@@ -472,6 +472,7 @@ mcc_spawnbehavior       = "MOVE";
 mcc_awareness			= "DEFAULT";
 mcc_zone_pos  		= 	[];
 mcc_zone_size 		= 	[];
+mcc_zone_dir 		= 	[];
 mcc_zone_types		= 	[];
 mcc_zone_locations	= 	[];
 mcc_grouptype			= "";
@@ -908,31 +909,32 @@ waituntil {alive player};
 MCC_groupGenGroupStatus = [west,east,resistance,civilian]; 	
 
 if (!isServer && !(MCC_isLocalHC)) then
+{
+	private ["_html","_loop"];
+	waituntil {!(IsNull (findDisplay 46))};
+	sleep 2; 
+	waituntil {! isnil "MCC_fnc_countDownLine"}; 
+	mcc_sync_status = false; 
+	[] spawn MCC_fnc_sync;
+	_loop = 20; 
+	
+	for [{_x=1},{_x<=_loop},{_x=_x+1}]  do //Create progress bar
 	{
-		private ["_html","_loop"];
-		waituntil {!(IsNull (findDisplay 46))};
-		sleep 2; 
-		waituntil {! isnil "MCC_fnc_countDownLine"}; 
-		mcc_sync_status = false; 
-		[] spawn MCC_fnc_sync;
-		_loop = 20; 
-		for [{_x=1},{_x<=_loop},{_x=_x+1}]  do //Create progress bar
-		{
-			_footer = [_x,_loop] call MCC_fnc_countDownLine;
-			//add header
-			_html = "<t color='#818960' size='1.2' shadow='0' align='left' underline='true'>" + "Synchronizing with server" + "</t><br/><br/>";
-			//add _text
-			_html = _html + "<t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left'>" + "Wait a moment, Synchronizing with the server" + "</t>";
-			_html = _html + "<br/><t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left'>" + "Use Alt+T to teleport to your team" + "</t>";
-			
-			//add _footer
-			_html = _html + "<br/><br/><t color='#818960' size='0.85' shadow='0' align='right'>" + _footer + "</t>";
-			hintsilent parseText(_html);
-			sleep 0.1;
-			if (!mcc_sync_status) then {sleep 3}; 
-		};
-		Hint "Synchronizing Done";	
+		_footer = [_x,_loop] call MCC_fnc_countDownLine;
+		//add header
+		_html = "<t color='#818960' size='1.2' shadow='0' align='left' underline='true'>" + "Synchronizing with server" + "</t><br/><br/>";
+		//add _text
+		_html = _html + "<t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left'>" + "Wait a moment, Synchronizing with the server" + "</t>";
+		_html = _html + "<br/><t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left'>" + "Use Alt+T to teleport to your team" + "</t>";
+		
+		//add _footer
+		_html = _html + "<br/><br/><t color='#818960' size='0.85' shadow='0' align='right'>" + _footer + "</t>";
+		hintsilent parseText(_html);
+		sleep 0.1;
+		if (!mcc_sync_status) then {sleep 3}; 
 	};
+	Hint "Synchronizing Done";	
+};
 
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 {
