@@ -1,9 +1,6 @@
 // Enable debug mode, enables tracing to rpt. PARAMS_# autotracing etc.
 #define DEBUG_MODE_FULL
 // Define functions
-//Init UPSMON scritp
-
-mcc_ups = compile preProcessFileLineNumbers format ["%1scripts\UPSMON.sqf",MCC_path];
 
 my_pv = [];
 #define DEBUG
@@ -142,7 +139,7 @@ my_pv_handler =
 		_p_mcc_spawn_dir 			= _this select 21; if ( isNil "_p_mcc_spawn_dir"       ) then { _p_mcc_spawn_dir = [0,0,0];       };
 		_p_mcc_zonetype				= 0; //_this select 22; if ( isNil "_p_mcc_zonetype"        ) then { _p_mcc_zonetype = 0;        };
 		_p_mcc_zonetypenr			= 0; //_this select 23; if ( isNil "_p_mcc_zonetypenr"      ) then { _p_mcc_zonetypenr = 0;      };
-		_p_mcc_marker_zone_dir		= 0; //_this select 24; if ( isNil "_p_mcc_marker_zone_dir" ) then { _p_mcc_marker_zone_dir = 0; };
+		_p_mcc_marker_zone_dir		= _this select 24; if ( isNil "_p_mcc_marker_zone_dir" ) then { _p_mcc_marker_zone_dir = 0; };
 		_p_mcc_marker_zone_type 	= "RECTANGLE";
 		_p_mcc_patrol_wps			= [];
 		
@@ -211,18 +208,11 @@ my_pv_handler =
 		//if (_p_mcc_zone_behavior == "bis") then {_bisDefault = false} else {_bisDefault = true}; 	//Disable UPSMON
 		//The first one activating MCC is considered the mission maker. Futher access is all denied as the MCC at the moment does not support multi-user
 		if ((format["%1",mcc_MissionMaker])=="") then
-			{
-				mcc_missionmaker = _p_mcc_player_name;
-				[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Access granted to: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
-				publicVariable "mcc_missionmaker";				
-				
-				ctrlEnable [LOGOUT,true];
-				ctrlEnable [LOGIN,false];
-				ctrlEnable [UNIT_SPAWN_B,true];
-				ctrlEnable [GROUP_SPAWN_B,true];
-				ctrlSetText [MCC_MM, format["Mission Maker: %1",mcc_missionmaker]];
-				publicVariable "mcc_missionmaker";
-			};
+		{
+			mcc_missionmaker = _p_mcc_player_name;
+			[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Access granted to: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+			publicVariable "mcc_missionmaker";				
+		};
 			
 		//Lets see if we are the mission maker, if not we simple deny access
 		if (mcc_missionmaker == _p_mcc_player_name) then 		

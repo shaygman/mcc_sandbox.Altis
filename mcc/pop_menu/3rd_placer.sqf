@@ -42,6 +42,9 @@ startLoadingScreen ["3D Placing","RscDisplayLoadMission"];
 //////////////////////////////////////////////////
 (["MCC_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_compass", "PLAIN"];
 
+//track Units
+MCC_trackMarkerHandler3D = ((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
+
 if (isnil "MCC_3D_CAM") then {
 	_camera = "camconstruct" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
 	_camera cameraeffect ["internal","back"];
@@ -109,12 +112,6 @@ MCC_3DeditorMarker setMarkerColorLocal "ColorBlue";
 MCC_3DeditorMarker setMarkerDirLocal getdir MCC_3D_CAM;
 MCC_3DeditorMarker setMarkerSizeLocal [1, 1];
 
-//Start tracking units
-if !(MCC_trackMarker) then
-{
-_null = [3] execVM  MCC_path +"mcc\general_scripts\unitManage\um.sqf";
-};
-				
 if !(isnil "MCC_3D_CAM_Handler") exitwith {hint "MCC_3D_CAM_Handler is nill";endLoadingScreen};
 MCC_3D_CAM_Handler =
 	{
@@ -510,17 +507,14 @@ MCC_3D_CAM_Handler =
 		(uinamespace getvariable "MCC_3D_displayMain") displayRemoveEventHandler ["mouseholding",MCC3Dmouseholding];
 		(uinamespace getvariable "MCC_3D_displayMain") displayRemoveEventHandler ["MouseZChanged",MCC3DMouseZChanged];
 		
+		if (!isnil "MCC_trackMarkerHandler3D") then {((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrlRemoveEventHandler ["draw",MCC_trackMarkerHandler3D]}; 
+		if (!isnil "MCC_trackMarkerHandler3DDialog") then {((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0) ctrlRemoveEventHandler ["draw",MCC_trackMarkerHandler3DDialog]}; 
+
 		missionnamespace setvariable ["BIS_COIN_border",nil];
 		
 		//Clean 3D placer
 		(["MCC_compass"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
 		deleteMarkerLocal MCC_3DeditorMarker; 
-		
-		//Remove tracking units
-		if (MCC_trackMarker) then
-		{
-			MCC_trackMarker = false; 
-		};
 		
 		MCC_mcc_screen=2;
 		MCC3DRuning = false; 

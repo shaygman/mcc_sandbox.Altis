@@ -246,6 +246,11 @@ class CfgFunctions
 			{
 				description = "Draw a box on the map localy between two points.";
 			};
+			
+			class trackUnits
+			{
+				description = "Track units on the given map display";
+			};
 		};
 		
 		class ied

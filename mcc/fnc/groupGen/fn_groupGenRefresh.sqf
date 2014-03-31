@@ -2,7 +2,7 @@
 // Refresh the group gen markers
 // Example:[] call MCC_fnc_groupGenRefresh
 //==============================================================================================================================================================================	
-private ["_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_side","_unitsCount","_markerType","_markerColor","_leader","_markerInf",
+private ["_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_side","_unitsCount","_markerType","_markerColor","_leader","_markerInf","_handler",
 		         "_markerMech","_markerArmor","_markerAir","_icon","_wpArray","_behaviour","_unitsSize","_unitsSizeMarker","_IsGaiaControlled","_players"];
 #define groupGen_IDD 2994
 
@@ -86,7 +86,7 @@ MCC_fnc_mapDrawWP =
 	} foreach allgroups; 
 };
 
-((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrladdeventhandler ["draw","_this call MCC_fnc_mapDrawWP;"];
+_handler = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrladdeventhandler ["draw","_this call MCC_fnc_mapDrawWP;"];
 
 while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupGenRefreshTerminate} do 		//Draw WP
 {
@@ -263,5 +263,8 @@ deleteMarkerLocal "mcc_arty";
 //Spawn
 MCC_spawnEnabled = false;
 deleteMarkerLocal "mcc_spawnMarker";
-			
+
+//Remove EH
+((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrlRemoveEventHandler ["draw",_handler];
+
 MCC_groupGenRefreshLoop = false; 

@@ -113,6 +113,7 @@ if (MCC_capture_state) then
 				  mcc_sidename = '%15';
 				  mcc_hc = %16;
 				  mcc_spawn_dir = %18;
+				  mcc_marker_dir = %19;
 				  script_handler = [0] execVM '%17mcc\general_scripts\mcc_SpawnStuff.sqf';
 				   waitUntil {scriptDone script_handler};
 				  "								 
@@ -134,6 +135,7 @@ if (MCC_capture_state) then
 				  , mcc_hc
 				  , MCC_path
 				  , mcc_spawn_dir
+				  , mcc_marker_dir
 				  ];
 		};
 	

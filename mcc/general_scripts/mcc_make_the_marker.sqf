@@ -2,7 +2,6 @@ private ["_marker","_nul","_markerlabel"];
 
 
 MCC_Marker_type = "RECTANGLE";
-MCC_Marker_dir = 0;
 MCC_MarkerZoneColor = "colorYellow";
 MCC_MarkerZoneType = "mil_join";
 

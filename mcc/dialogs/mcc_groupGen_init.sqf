@@ -20,6 +20,12 @@ MCC_mcc_screen = 2;	//Group gen for poping up the same menu again
 
 uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
 
+//Track units if enabled
+if (MCC_trackMarker) then
+{
+	MCC_trackMarkerHandler = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
+};
+			
 //Hide GroupWP
 ctrlShow [510,false];
 ctrlShow [9013,false];

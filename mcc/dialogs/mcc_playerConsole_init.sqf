@@ -216,12 +216,12 @@ MCC_fnc_mapDrawWPConsole =
 	
 [] call 
 {
-	private ["_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_haveGPS","_leader","_groupStatus","_wpArray","_behaviour","_groupControl","_haveGPS"]; 
+	private ["_handler","_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_haveGPS","_leader","_groupStatus","_wpArray","_behaviour","_groupControl","_haveGPS"]; 
 
 	setGroupIconsVisible [true,false];	
 	setGroupIconsSelectable true;
 	
-	(_mccdialog displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_fnc_mapDrawWPConsole;"];
+	_handler = (_mccdialog displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_fnc_mapDrawWPConsole;"];
 	while {MCC_Console1Open && (str (finddisplay mcc_playerConsole_IDD) != "no display")} do 		//Draw WP
 		{
 			{
@@ -371,4 +371,7 @@ MCC_fnc_mapDrawWPConsole =
 	setGroupIconsVisible [false,false];
 	setGroupIconsSelectable false;
 	ctrlShow [MCC_MINIMAP,true];
+	
+	//Remove EH
+	(_mccdialog displayCtrl 9120) ctrlRemoveEventHandler ["draw",_handler];
 };

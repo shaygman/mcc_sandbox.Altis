@@ -33,6 +33,8 @@ MCC3DInitDone = false;
 _mccdialog = findDisplay MCC3D_IDD;
 uiNamespace setVariable ["MCC3D_Dialog", _this select 0];
 
+//track Units
+MCC_trackMarkerHandler3DDialog = ((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
 
 ((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0) ctrlMapAnimAdd [0, uiNamespace getVariable "MCC3D_DialogMapScale", getpos MCC_3D_CAM];
 ctrlMapAnimCommit ((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0);

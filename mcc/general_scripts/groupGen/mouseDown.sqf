@@ -2,6 +2,8 @@
 private ["_params","_ctrl","_pressed","_posX","_posY","_shift","_ctrlKey","_alt","_marker","_markerPos","_markerDir","_spawn","_away","_ammount","_dir","_nearObjects"];
 
 #define MCCDELETEBRUSH 1030
+#define MCCZONENUMBER 1023
+#define MCC_MINIMAP 9000
 
 disableSerialization;
  
@@ -39,6 +41,75 @@ if (mcc_missionmaker == (name player)) then
 		
 		[0,MCC_ConsoleWPpos] execVM format ["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
 	};	
+	
+	//Select zone 
+	if (_pressed == 0) then
+	{
+		private ["_nearZone","_selectedPos","_newZone","_comboBox","_distance","_marker"];
+		_selectedPos = _ctrl ctrlmapscreentoworld MCC_XYmap;
+		_nearZone = false;
+		_distance = (ctrlMapScale ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl MCC_MINIMAP)) * 300;
+		{
+			if (!isnil "_x") then
+			{
+				if ((_selectedPos distance _x) < _distance) exitWith 
+				{
+					_nearZone = true;
+					_newZone = _foreachIndex;
+				};
+			};
+		} foreach mcc_zone_pos;
+		
+		if (_nearZone && !MCC_artilleryEnabled && !MCC_spawnEnabled && !MCC_ConsoleRuler && !MCC_doubleClicked && !MCC_zone_drawing && !MCC_CASrequestMarker && !MCC_brush_drawing && !MCC_drawTriggers
+			&& !MCC_drawMinefield && !MCC_delete_drawing && !MCC_ambushPlacing && !MCC_UMParadropRequestMarker) exitWith
+		{
+				private ["_size","_pos","_center","_width","_hight"];
+				//Change the combobox indicatior
+				MCC_zone_index = _newZone -1;
+				_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl MCCZONENUMBER); 
+				_comboBox lbSetCurSel MCC_zone_index;
+					
+				sleep 0.3; 
+				
+				if (!MCC_GroupGenMouseButtonDown) exitWith {}; 
+				str mcc_active_zone setMarkerAlphalocal 1;
+				//While mouse pressed
+				while {MCC_GroupGenMouseButtonDown} do 
+				{	
+					//Moving the zone
+					if (!_shift && !_ctrlKey) then
+					{
+						str mcc_active_zone setMarkerposLocal MCCGroupGenDispPosXY;
+						MCC_Marker_dir	= markerDir  str mcc_active_zone;
+					};
+					
+					//Resizing it
+					if (_shift) then
+					{
+						_center = (getMarkerpos str mcc_active_zone);
+						_width 	= abs ((MCCGroupGenDispPosXY select 1) - (_center select 1));  
+						_hight 	= abs ((MCCGroupGenDispPosXY select 0) - (_center select 0)); 
+						
+						str mcc_active_zone setMarkerSizeLocal [_hight,_width];
+					};
+					
+					//Changing dir
+					if (_ctrlKey) then
+					{
+						_center 		= (getMarkerpos str mcc_active_zone);
+						MCC_Marker_dir	= [_center, MCCGroupGenDispPosXY] call BIS_fnc_dirTo;
+						str mcc_active_zone setMarkerdirLocal MCC_Marker_dir;
+					};
+					sleep 0.1;  
+				};
+				
+				_size = getMarkerSize str mcc_active_zone;
+				_pos = getMarkerPos  str mcc_active_zone;
+				deletemarkerlocal str mcc_active_zone;	
+				
+				_null = [1,_pos,_size] execVM MCC_path + "mcc\pop_menu\zones.sqf";
+		};
+	};
 	
 	//Artillery
 	if (MCC_artilleryEnabled &&  _pressed == 0) exitWith
@@ -212,8 +283,8 @@ if (mcc_missionmaker == (name player)) then
 		// set plane spawn and away position
 		_markerPos 	= getmarkerpos _marker;
 		_markerDir 	= markerDir _marker;
-		_spawn 		= [_markerPos,2500,(_markerDir -180)] call BIS_fnc_relpos;
-		_away 		= [_markerPos,2500,_markerDir] call BIS_fnc_relpos;
+		_spawn 		= [_markerPos,3000,(_markerDir -180)] call BIS_fnc_relpos;
+		_away 		= [_markerPos,3500,_markerDir] call BIS_fnc_relpos;
 		_ammount	=  floor (((getMarkerSize _marker) select 1)/50) + 1; 		//Ammount of drop min 0 max 6
 		
 		if (MCC_capture_state) then	
@@ -272,6 +343,7 @@ if (mcc_missionmaker == (name player)) then
 	if (MCC_zone_drawing && _pressed==0) then 
 	{
 		private private ["_marker","_size","_pos","_null"];
+		MCC_Marker_dir = 0; 
 		MCC_pointA = _ctrl ctrlmapscreentoworld [_posX,_posY];									//Base of the arrow
 		_marker = [MCC_pointA,MCC_pointA,1,"RECTANGLE","ColorYellow","SOLID"] call MCC_fnc_drawBox;	//Drow it first
 		sleep 0.1; 

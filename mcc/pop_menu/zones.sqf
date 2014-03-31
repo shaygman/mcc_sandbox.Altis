@@ -35,3 +35,5 @@ if (_type == 0) then {						//Selecting zone
 	mcc_zone_markername setMarkerAlphalocal 0.4;
 	mcc_active_zone = mcc_zone_number;
 	};
+	
+				

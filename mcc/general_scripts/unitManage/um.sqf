@@ -5,7 +5,7 @@
 disableSerialization;
 
 private ["_type", "_name", "_worldPos","_dummy", "_unitpos", "_ok", "_markerColor", "_leader", "_markerType", "_tempMarkers", "_tempLines", "_tempVehicles",
-		"_targetUnit","_oldUnit","_group","_params","_ctrl","_pressed","_shift","_ctrlKey","_mccdialog","_comboBox","_nul","_dummyUnit","_control","_cam","_sideMarker","_side"];
+		"_targetUnit","_oldUnit","_group","_params","_ctrl","_pressed","_shift","_ctrlKey","_mccdialog","_comboBox","_nul","_dummyUnit","_control","_cam","_side"];
 
 _mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 _comboBox = _mccdialog displayCtrl MCC_UM_LIST;
@@ -109,82 +109,15 @@ _type = _this select 0;
 		case 3:	//Markers
 		{
 			MCC_trackMarker = !MCC_trackMarker; 
-			while {MCC_trackMarker} do 
+			
+			if (MCC_trackMarker) then
 			{
-				_tempMarkers = [];
-				_tempLines = [];
-				_tempVehicles = [];
-					{
-						_leader = leader _x; 
-								
-								{
-									switch (format ["%1", side  _x]) do 
-										{
-										case "EAST": //East
-											{
-											_markerColor = "ColorRed";
-											_sideMarker = "o"
-											}; 
-											
-										case "WEST": //West
-											{
-											_markerColor = "ColorBlue";
-											_sideMarker = "b"
-											};
-											
-										case "GUER": //Resistance
-											{
-											_markerColor = "ColorGreen";
-											_sideMarker = "n";
-											};
-										case "CIVILIAN": //Civilian
-											{
-											_markerColor = "ColorWhite";
-											_sideMarker = "n";
-											};	
-										};
-										
-										if ((vehicle _x) != _x) then 
-										{
-											if (!((vehicle _x) in _tempVehicles)) then
-											{
-												_tempVehicles set [count _tempVehicles, vehicle _x];
-												_markerType = format ["%1_unknown", _sideMarker];
-												if ((vehicle _x) iskindof "Car") then {_markerType = format ["%1_mech_inf", _sideMarker]; };
-												if ((vehicle _x) iskindof "Tank") then {_markerType = format ["%1_armor", _sideMarker]; };
-												if ((vehicle _x) iskindof "Air") then {_markerType = format ["%1_air", _sideMarker]; };
-												if ((vehicle _x) iskindof "Boat") then {_markerType = format ["%1_recon", _sideMarker]; };
-												createMarkerLocal [format["%1", _x], getpos (vehicle _x)];
-												format["%1", _x] setMarkerTypelocal _markerType;
-												format["%1", _x] setMarkerColorlocal _markerColor;
-												_tempMarkers set [count _tempMarkers, format["%1", _x]];
-											};
-										} 
-										else
-										{
-											createMarkerLocal [format["%1", _x], getpos _x];
-											format["%1", _x] setMarkerTypelocal "mil_dot";
-											format["%1", _x] setMarkerColorlocal _markerColor;
-											_tempMarkers set [count _tempMarkers, format["%1", _x]];
-											if ( _x != _leader) then 
-											{
-												[getpos _x , getpos _leader ,format ["%1", _x]] call MCC_fnc_drawLine;
-												_tempLines set [count _tempLines, format["line_%1", _x]];
-											};
-										};
-								} foreach (units _x); 
-									
-					} foreach allGroups;
-					
-					sleep 1; 
-					{
-						deletemarkerlocal _x;
-					} foreach _tempMarkers;
-					
-					{
-						deletemarkerlocal _x;
-					} foreach _tempLines;
-			};
+				MCC_trackMarkerHandler = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
+			}
+			else
+			{
+				if (!isnil "MCC_trackMarkerHandler") then {((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrlRemoveEventHandler ["draw",MCC_trackMarkerHandler]}; 
+			}; 
 		};
 		
 		case 4:	//Indevidual Marker

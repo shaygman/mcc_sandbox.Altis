@@ -125,8 +125,6 @@ MCCConvoyCivEscort = "C_man_1_1_F"; MCCConvoyCivDriver = "C_man_1_1_F";
 //----------------------------Presets---------------------------------------------------------
 mccPresets = [ 
 		 ['======= Artillery =======','']
-		,['AI Artillery - Cannon', '[_this,1,2000,100,12,5,"Sh_82mm_AMOS",20] execVM "'+MCC_path+'scripts\UPSMON\MON_artillery_add.sqf";']
-		,['AI Artillery - Rockets', '[_this,6,5000,150,4,2,"Sh_82mm_AMOS",120] execVM "'+MCC_path+'scripts\UPSMON\MON_artillery_add.sqf";']
 		,['Ambient Artillery - Cannon', '[0,_this] spawn MCC_fnc_amb_Art;']
 		,['Ambient Artillery - Rockets', '[1,_this] spawn MCC_fnc_amb_Art;']
 		,['Forward Observer Artillery', '[0,_this] execVM "'+MCC_path+'mcc\general_scripts\artillery\bon_art.sqf";']

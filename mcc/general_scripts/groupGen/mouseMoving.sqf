@@ -3,9 +3,10 @@ private ["_params","_ctrl","_posX","_posY","_shellspread"];
 disableSerialization;
  
 _params = _this select 0;
-
 _ctrl = _params select 0;
+
 MCCGroupGenDispPosXY = _ctrl ctrlmapscreentoworld [_params select 1,_params select 2];
+
 
 
 //Artillery
@@ -30,9 +31,9 @@ if (MCC_artilleryEnabled) exitWith
 //Group/Unit spawn
 if (MCC_spawnEnabled) exitWith
 {
-		deleteMarkerLocal "mcc_spawnMarker";
 		createMarkerLocal ["mcc_spawnMarker", MCCGroupGenDispPosXY];
 		"mcc_spawnMarker" setMarkerTypeLocal "KIA";
 		"mcc_spawnMarker" setMarkerSizeLocal [0.5,0.5];
 		"mcc_spawnMarker" setMarkerColorLocal "ColorRed";
+		deleteMarkerLocal "mcc_spawnMarker";
 };

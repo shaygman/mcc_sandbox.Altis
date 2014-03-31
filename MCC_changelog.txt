@@ -1,10 +1,8 @@
 Change log r3
 Artillery:
-- Added: Marker area to show ordnance spread. 
 - Added: Hold Ctrl to continue spawning ordnance without the need to press Create again. 
 
 Spawn:
-- Added: Marker for unit spawn. 
 - Added: Hold Ctrl to continue spawning units without the need to press Create again. 
 
 Engine:
@@ -14,10 +12,7 @@ Engine:
 - Fixed: Hijack made you lose your old group. 
 - Fixed: Floating rocks bug.
 - Fixed: Opening spectator will now close MCC. 
-- Fixed: Reinforcement air or motorized didn't used GAIA. 
-- Fixed: Artillery or static weapons didn't use GAIA. 
 - Fixed: Halo/parajump didn't work for more than 1 unit. - thanks Ollem.
-- Fixed: Waypoint markers moved to eventhandler so it won't be laggy anymore if there are a lot of units/groups on map. 
 - Fixed: Headless Client fixed. 
 
 CAS: 
@@ -25,20 +20,39 @@ CAS:
 
 Role Selection:
 - New: Added iniDB support for RS - need to run iniDB on server only will save stats, xp and easy to maintain gear and progression
-- New: Moved all role selection defines such as numbers of roles per squad, gear exc to DB.
+- New: Moved all role selection defines such as numbers of roles per squad, gear exc to iniDB.
 - New: In squad menu players will show their role name and level. 
 
+GAIA:
+- Fixed: Reinforcement air or motorized didn't used GAIA. 
+- Fixed: Artillery or static weapons didn't use GAIA.
 
+UI:
+- Added: Move zones by click and drag over the map. 
+- Added: Set zones size by holding Shift and click and drag. 
+- Added:Set zones direction by holding Ctrl and click and drag. 
+- Added: When spawning artillery markers will show the ordnance spread.
+- Added: When spawning individual units markers will show where the unit spawn. 
+- Fixed: Waypoints markers and track units markers moved to eventhandlers so it won't be laggy and it will show more details then before. 
+
+
+- TODO: Zone rotation - drag and drop and save for MM. * remove zone combo box, change update to create new zone, add help tooltip
+- TODO: handle MON_setUnitPos, R_relPos3D, KRON_UPS_INIT
+- TODO: add presets
 - TODO: delete bodies script
+- TODO items tasks
+- TODO Save WP
+- TODO MCC Console add WP to UAV in UAV map
+- TODO Save all MCC to 2D editor
+- TODO: Save GAIA behavior 
+
+
 - TODO: Markers public (check) too many markers on console make delays.
 - TODO RS: Tickets Bleed
 - TODO RS: Capture zones
 - TODO RS: Restriction zone
-- TODO MCC Console add WP to UAV in UAV map
-- TODO items tasks
-- TODO Save all MCC to 2D editor
 - TODO 3D icons?!
-- TODO Save WP
+
 - TODO: Manual.
 
 Change log r2:0
