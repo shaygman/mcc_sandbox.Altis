@@ -773,6 +773,7 @@ if ( isServer ) then
 	publicVariable "MCC_iniDBenabled"
 };
 
+waituntil {!isnil "MCC_iniDBenabled"}; 
 if (MCC_iniDBenabled) then 
 {
 	player sideChat "IniDB is running. ROLE SELECTION WILL WORK :)";

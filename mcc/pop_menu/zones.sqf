@@ -27,7 +27,6 @@ if (_type == 1) exitWith
 	_comboBox lbSetCurSel MCC_zone_index;
 	
 	waituntil {mcc_active_zone == mcc_zone_number}; 
-	
 	_nul=[1] execVM MCC_path +"mcc\general_scripts\mcc_make_the_marker.sqf";
 };
 

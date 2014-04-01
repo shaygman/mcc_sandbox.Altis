@@ -152,12 +152,12 @@ _maxObjectivesDistance 	= (_minObjectivesDistance*1.5) + (10*_playersNumber);
 
 //What side and faction are we fighting here,
 switch (toLower _side) do	
-	{
-		case "west": {_side =  west};
-		case "east": {_side =  east};
-		case "gue": {_side =  resistance};
-		case "civ": {_side =  civilian};
-	};
+{
+	case "west": {_side =  west};
+	case "east": {_side =  east};
+	case "gue": {_side =  resistance};
+	case "civ": {_side =  civilian};
+};
 	
 //What faction are we fighiting?
 _faction = getText (configFile >> "CfgVehicles" >> (U_GEN_SOLDIER select 0 select 1) >> "faction");
@@ -426,8 +426,9 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 		
 		waituntil {!isnil "MCC_MWObjectivesNames"};
 		_objPos = MCC_MWObjectivesNames select 0;
+		
 		//Lets create a zone
-		_zoneNumber =["MCCMW_zone",1] call bis_fnc_counter; 
+		_zoneNumber =["MCCZoneCounter",1] call bis_fnc_counter; 
 		_script_handler = [_zoneNumber,_objPos,_maxObjectivesDistance] call MCC_fnc_MWUpdateZone; 
 		waituntil {_script_handler}; 
 
@@ -563,7 +564,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 private ["_zoneNumber","_unitPlaced","_safepos","_factor"];
 
 //Let'screate the main zone and placing units
-_zoneNumber =["MCCMW_zone",1] call bis_fnc_counter; 
+_zoneNumber =["MCCZoneCounter",1] call bis_fnc_counter; 
 
 //Create Zone
 _script_handler = [_zoneNumber,_missionCenter,_maxObjectivesDistance*2.5] call MCC_fnc_MWUpdateZone; 

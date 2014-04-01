@@ -20,6 +20,26 @@ MCC_mcc_screen = 2;	//Group gen for poping up the same menu again
 
 uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
 
+//Is it first time we around? Let's respawn the zone markers if they are available
+if (MCCFirstOpenUI) then
+{
+	MCCFirstOpenUI = false; 
+	
+	//Loose mission maker when DC move to after login
+	if (!isnil "MCC_zones_numbers") then 
+	{
+		{
+			_zone = createMarkerLocal [str _x, mcc_zone_pos select _x]; 
+			_zone setMarkerShapeLocal "RECTANGLE";
+			_zone setMarkerColorLocal "colorBlack";
+			_zone setMarkerBrushLocal "Solid";
+			_zone setMarkerAlphalocal 0.4; 
+			_zone setMarkerDirLocal (mcc_zone_dir select _x);
+			_zone setMarkerSizeLocal (mcc_zone_size select _x);
+		} foreach MCC_zones_numbers;
+	};
+};
+
 //Track units if enabled
 if (MCC_trackMarker) then
 {
@@ -83,10 +103,18 @@ _comboBox lbSetCurSel MCC_zone_index;
 //------------------------------------------- Tooltip --------------------------------------------------------------------------------------------------
 _comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 303); //fill combobox zone's numbers
 
-_html = "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Open 3D Editor: ALT + LMB on map. </t><br/>";
+_html = "<t color='#fefefe' size='1' shadow='1' align='center' underline='true'>HELP:</t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Scroll down this menu to get help. </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Open 3D Editor: ALT + LMB on map. </t><br/><br/>";
+_html = _html + "<t color='#fefefe' size='1' shadow='1' align='center' underline='true'>GROUPS: </t><br/>";
 _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Assign Waypoint: Select a group and double Click on map. </t><br/>";
 _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Groups' multi-select: Hold and drag on map. </t><br/>";
-_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Group Info: Righ Click on Group icon. </t>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Group Info:  Righ Click on Group's icon. </t><br/><br/>";
+_html = _html + "<t color='#fefefe' size='1' shadow='1' align='center' underline='true'>ZONES: </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Select Zone: Left Click on Zone's icon. </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Move Zone: Click on Zone's icon and drag. </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Resize Zone: Shift + click on Zone's icon and drag. </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Rotate Zone: Ctrl + click on Zone's icon and rotate. </t><br/>";
 		
 _comboBox ctrlSetStructuredText parseText _html;	
 //----------------------------------------------------------- GROUPs ----------------------------------------------------------------------------

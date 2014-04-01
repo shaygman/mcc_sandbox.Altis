@@ -11,52 +11,41 @@ if (isServer) then
 		
 	my_pv_loginhandler = 
 	{
-		#define MCC_SANDBOX_IDD 1000
-		#define MCCMISSIONMAKERNAME 1020
-		private ["_p_mcc_player","_p_mcc_player_name","_p_mcc_request","_mccdialog","_isAdmin"];
+			#define MCCMISSIONMAKERNAME 1020
+			private ["_p_mcc_player","_p_mcc_player_name","_p_mcc_request","_isAdmin"];
 				
 				disableSerialization;
-				
-				_mccdialog = findDisplay MCC_SANDBOX_IDD;
 				
 				_p_mcc_player = _this select 0;
 				_p_mcc_player_name = _this select 1;
 				_p_mcc_request = _this select 2;
 				_isAdmin = _this select 3;
-			
-				switch (mcc_missionmaker) do {			//MM is logging out
-					case _p_mcc_player_name:
-						{
-							[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> %2 Logged out as Misson Maker.",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
-							mcc_missionmaker="";
-							publicVariable "mcc_missionmaker";
-							ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
-						};
-					case "":							//MM is logging out
-						{
-							mcc_missionmaker = _p_mcc_player_name;
-							[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Access granted to: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
-							publicVariable "mcc_missionmaker";
-							ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
-						};
-						
-					default 							//Check if admin
-						{
-							if (_isAdmin) then
-							{
-								mcc_missionmaker = _p_mcc_player_name;
-								[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Admin have taken control over MCC: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
-								publicVariable "mcc_missionmaker";
-								ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
-							};
-						};
+				
+				
+				//MM is logging out
+				if (mcc_missionmaker == _p_mcc_player_name) exitWith
+				{
+					[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> %2 Logged out as Misson Maker.",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+					mcc_missionmaker="";
+					publicVariable "mcc_missionmaker";
+					ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
 				};
+				
+				//MM is logging in
+				if ((mcc_missionmaker == "") || _isAdmin) exitWith
+				{
+					mcc_missionmaker = _p_mcc_player_name;
+					[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Access granted to: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+					publicVariable "mcc_missionmaker";
+					publicVariable "mcc_zone_pos";
+					publicVariable "mcc_zone_size";
+					publicVariable "mcc_zone_dir";
+					publicVariable "mcc_zone_locations";
+					publicVariable "MCC_zones_numbers";
+					
+					ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
+				}
 	};
-};
-	//---------------------------------------------------------------------------------------
-	
-if ( isServer ) then 
-{
 	
 	mcc_setup =  {_this call my_pv_handler};
 	diag_log format ["Added 'mcc_setup' EventHandler for Server"];

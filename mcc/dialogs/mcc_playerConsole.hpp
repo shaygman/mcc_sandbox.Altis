@@ -1,11 +1,5 @@
 // By: Shay_gman
 // Version: 1.1 (May 2012)
-#define MCC_SANDBOX_IDD 1000
-#define MCC_SANDBOX2_IDD 2000
-#define MCC_SANDBOX3_IDD 3000
-#define MCC_SANDBOX4_IDD 4000
-#define MCC_MINIMAP 9120
-
 #define mcc_playerConsole_IDD 2993
 
 #define MCC_ConsoleCASAvailableTextBox_IDD 9100

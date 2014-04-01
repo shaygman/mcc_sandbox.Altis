@@ -14,10 +14,12 @@ mcc_zone_number			= _zoneNumber;
 mcc_zone_marker_X		= _radius;
 mcc_zone_marker_Y		= _radius;
 mcc_zone_markername		= str _zoneNumber;
+MCC_Marker_dir			= 0;
 mcc_hc					= 0;
-mcc_zone_pos  set [mcc_zone_number,mcc_zone_markposition];
-mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
-mcc_zone_locations set [mcc_zone_number,mcc_hc];
+
+MCC_zones_numbers set [count MCC_zones_numbers, mcc_zone_number]; 
+publicVariableServer "MCC_zones_numbers"; 
+
 _script_handler 		= [0] execVM format ["%1mcc\general_scripts\mcc_make_the_marker.sqf",MCC_path];
 waitUntil {scriptDone _script_handler};
 
@@ -38,6 +40,7 @@ mcc_awareness 			= 'DEFAULT';
 mcc_hc 					= 0;
 _script_handler = [0] execVM format ["%1mcc\general_scripts\mcc_SpawnStuff.sqf",MCC_path];
 waitUntil {scriptDone _script_handler};
+
 scriptDone _script_handler;
 
 

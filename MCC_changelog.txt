@@ -8,6 +8,7 @@ Spawn:
 Engine:
 - Removed: BTC Revive in the mission version it was a good script but I needed something that isn't based on killed EH for the Role Selection.
 - Added: [TcB]-Psycho- A3 Wounding System 
+- Added: If a mission maker log off and another one take his place or if he DC and come back he will have the zones markers. 
 - Added: DOC objects will be saved into SQM. 
 - Fixed: Hijack made you lose your old group.
 - Fixed: Hijack made the hijcacked unit lose his group.
@@ -30,18 +31,19 @@ GAIA:
 
 UI:
 - Added: Move zones by click and drag over the map. 
-- Added: Set zones size by holding Shift and click and drag. 
-- Added:Set zones direction by holding Ctrl and click and drag. 
+- Added: Resize zones size by holding Shift and moving the mouse. 
+- Added: Rotate zones by holding Ctrl and moving the mouse. 
 - Added: When spawning artillery markers will show the ordnance spread.
 - Added: When spawning individual units markers will show where the unit spawn. 
 - Fixed: Waypoints markers and track units markers moved to eventhandlers so it won't be laggy and it will show more details then before. 
 
 
-- TODO: Zone rotation - drag and drop and save for MM. * remove zone combo box, change update to create new zone, add help tooltip
+- TODO: Change the revive script of template files.
 - TODO: handle MON_setUnitPos, R_relPos3D, KRON_UPS_INIT
 - TODO: add presets
 - TODO: delete bodies script
 - TODO items tasks
+- TODO: restrict give to GAIA if no zone available
 - TODO Save WP
 - TODO MCC Console add WP to UAV in UAV map
 - TODO Save all MCC to 2D editor

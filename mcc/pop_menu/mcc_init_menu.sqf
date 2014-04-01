@@ -21,7 +21,6 @@ U_GEN_MOTORCYCLE	= [];
 U_GEN_CAR			= [];
 U_GEN_SOLDIER    	= [];
 
-MCCFirstOpenUI = false; 
 mcc_sidename =(U_FACTIONS select 0) select 1;
 mcc_faction = (U_FACTIONS select 0) select 2;
 [] call mcc_fnc_faction_choice;

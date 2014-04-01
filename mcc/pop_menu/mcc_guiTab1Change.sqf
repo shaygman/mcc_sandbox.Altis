@@ -13,12 +13,12 @@ _task =_this select 0;
 _mccdialog = findDisplay MCC_SANDBOX_IDD;	
 
 if ((_task ==0) && (MCC_faction_index != lbCurSel FACTIONCOMBO)) then					//Change Faction
-	{
+{
 	mcc_sidename = (U_FACTIONS select (lbCurSel FACTIONCOMBO)) select 1;
 	mcc_faction = (U_FACTIONS select (lbCurSel FACTIONCOMBO)) select 2;
 	MCC_faction_index = lbCurSel FACTIONCOMBO;
 	[] call mcc_fnc_faction_choice;
-	};
+};
 	
 if ((_task ==1)&& (MCC_type_index != lbCurSel SPAWNTYPE)) then																	//Change Type
 	{

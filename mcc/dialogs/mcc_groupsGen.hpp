@@ -360,13 +360,23 @@ class mcc_groupGen
 			
 		};
 		
-		class MCC_toolTip: MCC_RscStructuredText
+		class MCC_toolTipControls:MCC_RscControlsGroup
 		{
-			idc = 303;
+			idc = -1;
 			x = 0.242188 * safezoneW + safezoneX;
 			y = 0.697923 * safezoneH + safezoneY;
 			w = 0.223438 * safezoneW;
 			h = 0.120953 * safezoneH;
+
+			class Controls
+			{
+				class MCC_toolTip: MCC_RscStructuredText
+				{
+					idc = 303;
+					w = 0.223438 * safezoneW;
+					h = 0.4 * safezoneH;
+				};
+			};
 		};
 		
 		//Left		

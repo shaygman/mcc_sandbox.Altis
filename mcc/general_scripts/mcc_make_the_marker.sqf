@@ -11,7 +11,11 @@ mcc_zone_pos  set [mcc_zone_number,mcc_zone_markposition];
 mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
 mcc_zone_dir set [mcc_zone_number,MCC_Marker_dir];
 mcc_zone_locations set [mcc_zone_number,mcc_hc];
-
+publicVariableServer "mcc_zone_pos";
+publicVariableServer "mcc_zone_size";
+publicVariableServer "mcc_zone_dir";
+publicVariableServer "mcc_zone_locations";
+publicVariableServer "MCC_zones_numbers";
 
 //obviously when we are loading there is no need to safe it again since that will influence the load process by double output
 if (!mcc_isloading && !MCC_capture_state) then 
@@ -28,10 +32,10 @@ if (!mcc_isloading && !MCC_capture_state) then
 									mcc_zone_pos  set [mcc_zone_number,mcc_zone_markposition];
 									mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
 									mcc_zone_dir set [mcc_zone_number,MCC_Marker_dir];
-									publicVariable 'MCC_zones_numbers';
-									publicVariable 'mcc_zone_pos';
-									publicVariable 'mcc_zone_size';
-									publicVariable 'mcc_zone_dir';
+									publicVariableServer 'MCC_zones_numbers';
+									publicVariableServer 'mcc_zone_pos';
+									publicVariableServer 'mcc_zone_size';
+									publicVariableServer 'mcc_zone_dir';
 									mcc_zone_locations set [mcc_zone_number,mcc_hc];
 									script_handler = [0] execVM '%7mcc\general_scripts\mcc_make_the_marker.sqf';
 									waitUntil {scriptDone script_handler};
@@ -111,10 +115,10 @@ if (!mcc_isloading && !MCC_capture_state) then
 									mcc_zone_pos  set [mcc_zone_number,mcc_zone_markposition];
 									mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
 									mcc_zone_dir set [mcc_zone_number,MCC_Marker_dir];
-									publicVariable 'MCC_zones_numbers';
-									publicVariable 'mcc_zone_pos';
-									publicVariable 'mcc_zone_size';
-									publicVariable 'MCC_Marker_dir';
+									publicVariableServer 'MCC_zones_numbers';
+									publicVariableServer 'mcc_zone_pos';
+									publicVariableServer 'mcc_zone_size';
+									publicVariableServer 'MCC_Marker_dir';
 									mcc_zone_locations set [mcc_zone_number,mcc_hc];	
 									script_handler = [0] execVM '"+MCC_path+"mcc\general_scripts\mcc_make_the_marker.sqf';
 								  "

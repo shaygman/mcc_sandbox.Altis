@@ -1,6 +1,5 @@
 // By: Ollem
 // Version: 1.0 (February 2013)
-#define MCC_SANDBOX_IDD 1000
 #define MCC_SaveLoadScreen_IDD 7000
 #define MCC_SAVE_LIST 7010
 #define MCC_SAVE_DIS 7011
