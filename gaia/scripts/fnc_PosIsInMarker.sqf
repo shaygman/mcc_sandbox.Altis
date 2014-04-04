@@ -57,7 +57,7 @@ if (_shape == "ICON") then {
         _shiftedY = _orgY - _centerY;
         
         // Axis-aligned corner position
-        _posNew = [[_shiftedX,_shiftedY],_dir] call SHK_pos_fnc_rotatePosition;
+        _posNew = [[_shiftedX,_shiftedY],_dir] call fnc_rotatePosition;
         
         // Shift the aligned corner position back near to the original marker location.
         _newX = _posNew select 0;
@@ -75,6 +75,7 @@ if (_shape == "ICON") then {
     };
     
     // Check if the position is within the marker area.
+    
     _return = [_pos,_corners] call fnc_isInRectangle;
   } else {
     if (_shape == "CIRCLE") then {
