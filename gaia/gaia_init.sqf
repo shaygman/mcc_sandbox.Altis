@@ -17,6 +17,19 @@ fnc_GAIA_Classify										= compile preprocessfilelinenumbers (GAIA_scripts + "
 fnc_GAIA_IssueOrders								= compile preprocessfilelinenumbers (GAIA_scripts + "fnc_GAIA_IssueOrders.sqf");
 
 
+//Cache
+gaia_fn_cache												= compile preprocessfilelinenumbers (GAIA_scripts + "fn_cache.sqf");
+gaia_fn_cache_stage_2								= compile preprocessfilelinenumbers (GAIA_scripts + "fn_cache_stage_2.sqf");
+gaia_fn_sync												= compile preprocessfilelinenumbers (GAIA_scripts + "fn_sync.sqf");
+gaia_fn_uncache											= compile preprocessfilelinenumbers (GAIA_scripts + "fn_uncache.sqf");
+gaia_fn_uncache_stage_2							= compile preprocessfilelinenumbers (GAIA_scripts + "fn_uncache_stage_2.sqf");
+gaia_fn_nearPlayer									= compile preprocessfilelinenumbers (GAIA_scripts + "fn_nearPlayer.sqf");
+gaia_fn_gaia_cache_init							= compile preprocessfilelinenumbers (GAIA_scripts + "fn_gaia_cache_init.sqf");
+
+
+
+
+
 
 
 
@@ -134,6 +147,13 @@ gaia_CBA_fnc_taskDefend 					=compile preProcessFileLineNumbers (GAIA_scripts + 
 MCC_GAIA_DEBUG						= false;
 MCC_GAIA_CA_DEBUG					= [];
 
+
+MCC_GAIA_CACHE						= false;
+GAIA_CACHE_SLEEP					= 0.5;
+GAIA_CACHE_STAGE_1				= 2000;
+GAIA_CACHE_STAGE_2				= 4000;
+MCC_GAIA_CACHE_STAGE2			= []; 
+
 // dont CHANGE without knowledge 
 MCC_GAIA_OPERATIONAL 			= false;
 
@@ -189,5 +209,7 @@ MCC_GAIA_TARGETS_INDEP		= []; for "_i" from 0 to 90 do  { MCC_GAIA_TARGETS_INDEP
 [WEST] 				spawn fnc_GAIA;
 [EAST] 				spawn fnc_GAIA;
 [independent] spawn fnc_GAIA;
+
+[] spawn gaia_fn_gaia_cache_init;
 
 GAIA_INIT = TRUE;
