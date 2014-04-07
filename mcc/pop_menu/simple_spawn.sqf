@@ -25,7 +25,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_dummy setdir _dir;
 					sleep 0.01;
-					if (!MCC_align3D) then {_dummy setpos _pos};
+					if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1;",_pos]};
 					
 					//setskill
 					_unitspawned setformdir _dir; 
@@ -38,9 +38,10 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setSkill ["commanding", MCC_AI_Command];
 					_dummy setSkill ["general", MCC_AI_Skill];
 					
-					if (_name != "") then {
+					if (_name != "") then 
+					{
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
-						};
+					};
 					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 				};
 				
@@ -51,11 +52,12 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_dummy setdir _dir;
 					sleep 0.01;
-					if (!MCC_align3D) then {_dummy setpos _pos};
+					if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1;",_pos]};
 					_unitspawned setformdir _dir; 
-					if (_name != "") then {
+					if (_name != "") then 
+					{
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
-						};
+					};
 					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 				};
 				
@@ -100,7 +102,8 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 							{
 								[[[netid (_dummy select 0),(_dummy select 0)], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 							};
-							_init= _init +	FORMAT ["group _this setFormDir %1",_dir];
+							_init= _init +	FORMAT ["group _this setFormDir %1;",_dir];
+							if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1",_pos]};
 							[[[netid (_dummy select 0),(_dummy select 0)], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 						} else
 						{
@@ -109,10 +112,11 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 							_dummy setpos _pos;
 							_dummy setdir _dir;
 							sleep 0.01;
-							if (!MCC_align3D) then {_dummy setpos _pos};
-							if (_name != "") then {
+							if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1;",_pos]};
+							if (_name != "") then 
+							{
 								[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
-								};
+							};
 							[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 						};
 				};
@@ -123,10 +127,11 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_dummy setdir _dir;
 					sleep 0.01;
-					if (!MCC_align3D) then {_dummy setpos _pos};
-					if (_name != "") then {
+					if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1;",_pos]};
+					if (_name != "") then 
+					{
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
-						};
+					};
 					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 				};
 				
@@ -136,9 +141,10 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_init = format ["%1;_this setdir %2;",_init,_dir];
 					sleep 0.01;
-					if (_name != "") then {
+					if (_name != "") then 
+					{
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
-						}; 
+					}; 
 					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 				};
 				

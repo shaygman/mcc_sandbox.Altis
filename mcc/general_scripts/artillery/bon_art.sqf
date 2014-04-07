@@ -1,13 +1,10 @@
 private ["_cannon","_type","_dummypos"];
 _type = _this select 0;
 
-waitUntil {!isNil("KRON_UPS_INIT")};
-waitUntil {KRON_UPS_INIT==1};
-
 switch (_type)  do {
 		case 0: {
 			_cannon = _this select 1;
-			_dummypos = [getpos _cannon, 50, getdir _cannon] call R_relPos3D;
+			_dummypos = [getpos _cannon, 50, getdir _cannon] call BIS_fnc_relPos;
 			(gunner _cannon) lookAt [_dummypos select 0, _dummypos select 1,(_dummypos select 2)+100];
 			MCC_bonCannons set [count MCC_bonCannons, _cannon];
 			publicvariable "MCC_bonCannons";

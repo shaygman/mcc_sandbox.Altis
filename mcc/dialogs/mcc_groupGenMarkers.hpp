@@ -3,6 +3,7 @@
 #define MCC_MARKER_TYPE 3052
 #define MCC_MARKER_SHAPE 3053
 #define MCC_MARKER_BRUSH 3054
+#define MCC_MARKER_AVAILABE 3049
 
 class MCC_markersDialogControls:MCC_RscControlsGroup
 {
@@ -174,14 +175,25 @@ class MCC_markersDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[2] execVM '"+MCCPATH+"mcc\pop_menu\markers_req.sqf'");
 
 			text = "Delete"; //--- ToDo: Localize;
-			x = 0.171875 * safezoneW;
-			y = 0.0549788 * safezoneH;
-			w = 0.0458333 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			x = 0.183334 * safezoneW;
+			y = 0.0439828 * safezoneH;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
 			tooltip = "Delete marker or brush with the give name"; //--- ToDo: Localize;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 		};
+		
+		class MCC_markerAvailableCombo: MCC_RscCombo
+		{
+			idc = MCC_MARKER_AVAILABE;
 
+			x = 0.126042 * safezoneW;
+			y = 0.0439828 * safezoneH;
+			w = 0.0515625 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+		};
+		
 		class MCC_markerClose: MCC_RscButtonMenu
 		{
 			idc = -1;

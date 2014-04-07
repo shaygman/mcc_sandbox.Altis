@@ -46,7 +46,7 @@ _trg setTriggerArea[_range,_range,0,false];
 _trg setTriggerActivation [str _side, "NOT PRESENT",false];
 
 //Create Marker
-[[1, "ColorRed",[_range*1.5,_range*1.5], "ELLIPSE", "DiagGrid", "Empty", ("clearArea" + _name), _objPos],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;
+[1, "ColorRed",[_range*1.5,_range*1.5], "ELLIPSE", "DiagGrid", "Empty", ("clearArea" + _name), _objPos] call MCC_fnc_makeMarker;
 
 //Create Task
 [_trg,"clear_area",_preciseMarkers] call MCC_fnc_MWCreateTask; 
@@ -61,41 +61,5 @@ _trg setTriggerActivation [str _side, "NOT PRESENT",false];
 	
 	while {!(triggeractivated _trg)} do {sleep 5}; 
 	deleteVehicle _trg;
-	[[2, "",[], "", "", "Empty", _name, []],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;
+	[2, "",[], "", "", "Empty", _name, []] call MCC_fnc_makeMarker;
 };
-
-/*
-//Create logic Area
-_dummyGroup = creategroup civilian; 
-_area = _dummyGroup createunit ["LocationArea_F", [0, 90, 90],[],0.5,"NONE"];	
-_area synchronizeObjectsAdd [_trg];
-
-//Create logic sector
-_zone = _dummyGroup createunit ["ModuleSector_F", [0, 90, 90],[],0.5,"NONE"];	
-_zone setvariable ["Name",format ["Objective %1",_name],true];
-_zone setvariable ["Designation","Objective",true];
-_zone setvariable ["CostPlayers","0.1",true];
-
-_zone synchronizeObjectsAdd [MCC_sideWest,MCC_sideEast,MCC_sideResistance,_area];
-
-
-
-
-[_zone,_trg,_area,_dummyGroup,_sidePlayer] spawn 
-{
-	private ["_zone","_trg","_area","_dummyGroup","_sidePlayer"];
-	_zone 		= _this select 0;
-	_trg 		= _this select 1;
-	_area 		= _this select 2;
-	_dummyGroup = _this select 3;
-	_sidePlayer = _this select 4;
-	
-	
-	while {(_zone getvariable "owner") != _sidePlayer} do {sleep 1}; 
-	sleep 10;
-	deletevehicle _zone;
-	deletevehicle _trg;
-	deletevehicle _area;
-	deletegroup _dummyGroup;
-};
-*/

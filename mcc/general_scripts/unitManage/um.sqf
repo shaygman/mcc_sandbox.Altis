@@ -50,7 +50,7 @@ _type = _this select 0;
 			{
 				_targetUnit = MCC_UMunitsNames select (lbCurSel MCC_UM_LIST);	//Hijacked unit
 				if (isplayer _targetUnit) exitwith {hint "Can't hijak other players"};
-				MCC_PrevHijacked_Group = group _targetUnit;
+				MCC_PrevHijacked_Group = netID (group _targetUnit);
 				MCC_Prev_HijackedGroupIsLeader = if (leader group _targetUnit == _targetUnit) then {true} else {false}; 
 				
 				MCC_Prev_Player = player; 
@@ -97,15 +97,6 @@ _type = _this select 0;
 					
 				deletegroup _group;
 				
-				if (!isnull MCC_PrevHijacked_Group) then
-				{
-					[player] joinSilent MCC_PrevHijacked_Group;
-					if (MCC_Prev_HijackedGroupIsLeader) then 
-					{
-						(group player) selectLeader player;
-					};
-				};
-				
 				_ppgrain ppEffectEnable false;
 				MCC_hijack_effect = ppEffectCreate ["radialBlur", 100];
 				MCC_hijack_effect ppEffectAdjust [1, 1, 0.4, 0.4];
@@ -115,6 +106,23 @@ _type = _this select 0;
 				MCC_backToplayerIndex = _targetUnit addaction ["<t color=""#CC0000"">Back To Player</t>", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 				_ok = _targetUnit addEventHandler ["Killed", format ["[_this select 0] execVM '%1mcc\general_scripts\unitManage\backToPlayer.sqf'",MCC_path]];
+				
+				if (MCC_PrevHijacked_Group != "") then
+				{
+					[player] joinSilent (groupFromNetID MCC_PrevHijacked_Group);
+					waituntil {group player == (groupFromNetID MCC_PrevHijacked_Group)};
+					if (MCC_Prev_HijackedGroupIsLeader) then 
+					{
+						if (isMultiplayer) then
+						{
+							[[2, compile format ["(groupFromNetID '%1') selectLeader objectFromNetId '%2'",netID (group Player), netID player]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+						}
+						else
+						{
+							(group player) selectLeader player;
+						}; 
+					};
+				};
 			}
 			else
 			{hint "Can only hijak units not groups"};
@@ -186,15 +194,18 @@ _type = _this select 0;
 						camDestroy MCC_PIPcam;
 					};
 				};
-					
+				
+				_control = _mccdialog displayCtrl MCC_UM_PIC;
+				[_control] call MCC_fnc_pipOpen;	
+				
 				MCC_PIPcam = "camera" camCreate getPos player;
-				waitUntil {MCC_PIPcam != ObjNull};
+				waitUntil {alive MCC_PIPcam};
 				
 				MCC_PIPcam attachTo [vehicle (UMName),[10,15,10]]; // ->todo: grab this from a custom config
 				if(vehicle (UMName) isKindOf "Man") then {MCC_PIPcam  camSetFov 0.15} else {MCC_PIPcam  camSetFov 0.8}; 
 				MCC_PIPcam  camSetTarget vehicle (UMName);
 				MCC_PIPcam cameraEffect ["INTERNAL", "BACK", "rendertarget10"];
-				MCC_PIPcam camCommit 1; // commit Changes
+				MCC_PIPcam camCommit 0; // commit Changes
 				
 				private ["_effectParams"];
 				_effectParams = switch (MCC_UMPIPView) do 
@@ -217,11 +228,12 @@ _type = _this select 0;
 										[2]
 									};
 								};
-	
+				
+				sleep 0.1;
 				// Set effect
 				"rendertarget10" setPiPEffect _effectParams;
-				_control = _mccdialog displayCtrl MCC_UM_PIC;
-				[_control] call MCC_fnc_pipOpen;
+				_control ctrlsettext"#(argb,512,512,1)r2t(rendertarget10,1.0);";
+				sleep 0.1;
 				_control ctrlsettext"#(argb,512,512,1)r2t(rendertarget10,1.0);";
 			};
 		};

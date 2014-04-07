@@ -5,7 +5,7 @@
 
 private ["_varName","_id","_value","_player","_varType"];
 _varName 	= _this select 0;			
-_player 		= _this select 1; 
+_player 	= _this select 1; 
 _value		= _this select 2; 
 _varType	= toUpper (_this select 3); 
 

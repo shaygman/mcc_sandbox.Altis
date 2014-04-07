@@ -123,7 +123,7 @@ _dummyAmbush setvariable ["iedTrigered", false, true];
 sleep 2;	
 if (_isSpotter > 0) then {													
 	if (_isSpotter == 3) then {											//If it is camuflaged spotter get prone
-		[_spotter,"DOWN"] spawn MON_setUnitPos;
+		[_spotter,"DOWN"] spawn MCC_fnc_setUnitPos;
 		_move = "AwopPpneMstpSoptWbinDnon_non"; 						//defualt bino use when prone
 	} else	{
 		_null = [_spotter,_targetSide,15,"Makarov","8Rnd_9x18_Makarov"] execVM MCC_path + "mcc\general_scripts\traps\cw.sqf";
@@ -134,7 +134,7 @@ if (_isSpotter > 0) then {
 			(_this select 0) playmove format ["%1",(_this select 1)]; 
 		};
 	};
-} else {{[_x,"DOWN"] spawn MON_setUnitPos}foreach units _group};	//If not all prone
+} else {{[_x,"DOWN"] spawn MCC_fnc_setUnitPos}foreach units _group};	//If not all prone
 
 if (isnil "_spotter") then {_spotter = ""}; //failsafe for passing the variables
 [_dummyAmbush,_groupLeader,_group,_isSpotter,_pointB,_iedMarkerName,_spotter] spawn
@@ -153,7 +153,7 @@ if (isnil "_spotter") then {_spotter = ""}; //failsafe for passing the variables
 		_group setCombatMode "RED";
 		if (_isSpotter == 0) then {
 			_wp = _group addWaypoint [_pointB, 0];												//Add WP 
-			{[_x,"MIDDLE"] spawn MON_setUnitPos}foreach units _group; 							//stand up
+			{[_x,"MIDDLE"] spawn MCC_fnc_setUnitPos}foreach units _group; 							//stand up
 		};
 	} 	else	{																				//If the ambush leader has been killed and this is a spotter
 			if (_isSpotter > 0) then {

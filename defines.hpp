@@ -492,6 +492,11 @@ class CfgFunctions
 			{
 				description = "Contorol the motorized reinforcement spawn.";
 			};
+			
+			class setUnitPos
+			{
+				description = "Sets units pos.";
+			};
 		};
 	};
 	

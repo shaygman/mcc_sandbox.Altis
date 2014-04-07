@@ -503,6 +503,11 @@ class CfgFunctions
 			{
 				description = "Contorol the motorized reinforcement spawn.";
 			};
+			
+			class setUnitPos
+			{
+				description = "Sets units pos.";
+			};
 		};
 		
 	};
@@ -1067,7 +1072,7 @@ class CfgSounds	{
 	class MCC_woosh
 	{
 		name = "MCC_woosh";
-		sound[] = {"sounds\woosh.ogg", 1, 1};
+		sound[] = {"\mcc_sandbox_mod\sounds\woosh.ogg", 1, 1};
 		titles[] = {};
 	};
 };

@@ -72,8 +72,8 @@ class MCC3D_Dialog
 		MCC_3DCompsaveNameTittle,
 		MCC_3DCompsaveUIButton,
 		MCC_3DComploadUIButton,
-		MCC_ConsoleCompassMapBackground,
-		MCC_ConsoleCompassMap,
+		MCC_3DCompassMapBackground,
+		MCC_3DCompassMap,
 		MCC_3DClose
 	};
 	
@@ -348,7 +348,7 @@ class MCC3D_Dialog
 	};
 
 //---------------------- new ---------------------
-	class MCC_ConsoleCompassMapBackground : MCC_RscText 
+	class MCC_3DCompassMapBackground : MCC_RscText 
 	{
 		idc = -1;
 		
@@ -362,14 +362,11 @@ class MCC3D_Dialog
 		text = "";
 	};
 	
-	class MCC_ConsoleCompassMap: MCC_RscMapControl
+	class MCC_3DCompassMap: MCC_RscMapControl
 	{
 		idc = 0;
-		onMouseButtonDown =__EVAL("[_this,0] execVM '"+MCCPATH+"mcc\general_scripts\3Deditor\mouseDown.sqf'");
 		onMouseButtonDblClick =  __EVAL("[_this,1] execVM '"+MCCPATH+"mcc\general_scripts\3Deditor\mouseDown.sqf'");
-		onMouseButtonUp = __EVAL("[_this,1] execVM '"+MCCPATH+"mcc\general_scripts\3Deditor\mouseUp.sqf'");
-		onMouseMoving = __EVAL("[_this,1] execVM '"+MCCPATH+"mcc\general_scripts\3Deditor\mouseMoving.sqf'");
-		
+	
 		x = 0.78073 * safezoneW + safezoneX;
 		y = 0.719914 * safezoneH + safezoneY;
 		w = 0.223438 * safezoneW;

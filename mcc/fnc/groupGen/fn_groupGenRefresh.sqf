@@ -47,7 +47,7 @@ MCC_fnc_mapDrawWP =
 				private ["_wp","_wPos","_wType"];
 				MCC_lastPos = nil; 
 				_texture = gettext (configfile >> "CfgMarkers" >> "waypoint" >> "icon");
-				for [{_i=0},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
+				for [{_i= currentWaypoint (group _leader)},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
 				{			
 					_wp = (_wpArray select _i);
 					_wPos  = waypointPosition _wp;

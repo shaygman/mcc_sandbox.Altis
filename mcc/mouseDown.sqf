@@ -134,7 +134,7 @@ if (MCC_brush_drawing && _pressed==0) then //Brush Drawing
 		_pos = getMarkerPos  _marker;
 		if (!isnil "_marker") then {deletemarkerlocal _marker};	
 		MCC_brush_drawing = false; 
-		[[Mcase, Mcolor, _size, Mshape, Mbrush, Mtype, Mtext, _pos],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;
+		[Mcase, Mcolor, _size, Mshape, Mbrush, Mtype, Mtext, _pos] call MCC_fnc_makeMarker;
 	};
 
 		

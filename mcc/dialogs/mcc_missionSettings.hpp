@@ -14,6 +14,7 @@
 #define MCC_IDCNAMETAGS 8410
 #define mcc_artilleryTitleIDC 8411
 #define mcc_saveGearComboIDC 8412
+#define mcc_showGRPMarkerComboIDC 8413
 
 //-----------------------------------------------------------------------------
 // Main dialog
@@ -61,6 +62,8 @@ class missionSettings {
 	mcc_artilleryCombo,
 	mcc_saveGearTitle,
 	mcc_saveGearCombo,
+	mcc_showGRPMarkerTitle,
+	mcc_showGRPMarkerCombo,
 	confirmButton,
 	CancelButton	
   };
@@ -261,7 +264,7 @@ class missionSettings {
 	{
 		idc = -1;
 				
-		text = "Console - Can Command AI"; //--- ToDo: Localize;
+		text = "Console - Can Command AI:"; //--- ToDo: Localize;
 		x = 0.305208 * safezoneW + safezoneX;
 		y = 0.587966 * safezoneH + safezoneY;
 		w = 0.25 * safezoneW;
@@ -328,6 +331,28 @@ class missionSettings {
 		
 		x = 0.557292 * safezoneW + safezoneX;
 		y = 0.686927 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	}
+	
+	class mcc_showGRPMarkerTitle: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Groups Marker(Roles):"; //--- ToDo: Localize;
+		x = 0.305208 * safezoneW + safezoneX;
+		y = 0.719914 * safezoneH + safezoneY;
+		w = 0.25 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
+	class mcc_showGRPMarkerCombo: MCC_RscCombo
+	{
+		idc =  mcc_showGRPMarkerComboIDC;
+		Tooltip = "Disable/Enable group markers when playing with role selection"; 
+		
+		x = 0.557292 * safezoneW + safezoneX;
+		y = 0.719914 * safezoneH + safezoneY;
 		w = 0.06875 * safezoneW;
 		h = 0.0219914 * safezoneH;
 	}

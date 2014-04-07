@@ -1,6 +1,7 @@
 // By: Shay_gman
 // Version: 1.1 (May 2012)
 #define mcc_playerConsole_IDD 2993
+#define MCC_MINIMAP 9120
 
 #define MCC_ConsoleCASAvailableTextBox_IDD 9100
 #define MCC_ConsoleEvacFlyHightComboBox_IDD 9101

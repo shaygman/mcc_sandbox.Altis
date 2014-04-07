@@ -106,15 +106,15 @@ if (_action == 2) exitWith
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["Yes","No"];
-	_comboBox lbSetCurSel 0;
+	} foreach ["None","Teleport","Paradrop","HALO"];
+	_comboBox lbSetCurSel 1;
 
 	_comboBox = (_mccdialog displayCtrl 21);		// FOB
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["HQ","FOB"];
+	} foreach ["Primary","F.O.B"];
 	_comboBox lbSetCurSel 0;
 };
 
@@ -509,6 +509,14 @@ if (_action == 10) exitWith
 		if (!isnil "_pic") then {_comboBox lbsetpicture [_index, _x select 1]};
 	} foreach MCC_markerarray;
 	_comboBox lbSetCurSel 0;
+	
+	_comboBox = (_mccdialog displayCtrl 3049);		//fill Available Markers
+	lbClear _comboBox;
+	{
+		_displayname = _x; 
+		_index = _comboBox lbAdd _displayname;
+	} foreach MCC_activeMarkers;
+	_comboBox lbSetCurSel 0;
 };
 
 //-------------------------------------------------------------------------------------Briefing----------------------------------------------------------------------------------------------
@@ -723,6 +731,6 @@ if (_action == 17) exitWith
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights"];
+	} foreach ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights","N/V","Bodies"];
 	_comboBox lbSetCurSel 0;
 };

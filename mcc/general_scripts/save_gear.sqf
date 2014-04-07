@@ -1,9 +1,8 @@
-private ["_unit","_goggles","_handgunitems","_primaryWeaponItems", "_headgear","_uniform","_uniformItems","_vest","_magazines","_primMag","_secmMag","_handMag","_assigneditems",
-         "_vestItems","_secondaryWeaponItems","_handgunWeapon","_backpack","_backpackthings","_primaryWeapon","_secondaryWeapon","_null","_rating","_role","_exp","_level"];
+private ["_unit","_goggles","_headgear","_uniform","_uniformItems","_vest","_magazines","_primMag","_secmMag","_handMag","_assigneditems",
+         "_vestItems","_handgunWeapon","_backpack","_primaryWeapon","_secondaryWeapon","_null"];
 
 
 _unit = _this;
-if (CP_debug) then {player sidechat format ["rating add: %1", CP_rating]};
 
 if (MCC_saveGear) then 
 {
@@ -19,9 +18,6 @@ if (MCC_saveGear) then
 	_items = items _unit;
 	_assigneditems = assigneditems _unit;
 
-	//_primaryWeaponItems = primaryWeaponItems _unit;
-	//_secondaryWeaponItems = secondaryWeaponItems _unit;
-	//_handgunitems = handgunItems _unit; 
 	_uniformItems = uniformItems _unit;
 	_vestItems = vestItems _unit;
 
@@ -148,26 +144,13 @@ if (MCC_saveGear) then
 };
 	
 if (player getvariable ["MCC_allowed",false]) then 
-	{
-		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
-		//player setvariable ["MCC_allowed",true,true];
-	};
+{
+	mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+};
 	
 _null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
 
 if (CP_activated) exitWith 
 {
-	_role = player getvariable "CP_role";							//Get player's role
-	_exp = call compile format  ["%1Level select 1",_role]; 		//Get role exp
-	if (!isnil "_exp") then 
-	{
-		if (CP_debug) then {player sidechat format ["rating: %1", _exp]};
-		_exp = (_exp + CP_rating);
-		if (_exp < 0) then {_exp = 0}; 
-		_level = call compile format ["[%1,%2]",floor (_exp/2000)+1 ,_exp];
-		if (CP_debug) then {player sidechat format ["level: %1",_level]};
-		[[format ["%1Level",_role], player, _level, "ARRAY"], "CP_fnc_setVariable", false, false] spawn BIS_fnc_MP;
-	};
-	
 	_null=[] execVM CP_path + "scripts\player\player_init.sqf";
 }; 

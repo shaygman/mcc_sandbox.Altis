@@ -42,6 +42,7 @@ if (isServer) then
 					publicVariable "mcc_zone_dir";
 					publicVariable "mcc_zone_locations";
 					publicVariable "MCC_zones_numbers";
+					publicvariable "MCC_evacVehicles"; 
 					
 					ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
 				}
@@ -185,8 +186,6 @@ my_pv_handler =
 				};																					
 			};
 								
-			//diag_log format ["MCC specialUps: %1,%2,%3", _specialUps, _specialUpsNr, _specialUpsRandom];
-			
 	//------------ End Special Zone Stuff ----------
 	
 	#ifdef DEBUG
@@ -194,15 +193,7 @@ my_pv_handler =
 	#endif
 	
 		if _p_mcc_track_units then { _track_units = "TRACK";} else { _track_units = "NOTHING";};
-		//if (_p_mcc_zone_behavior == "bis") then {_bisDefault = false} else {_bisDefault = true}; 	//Disable UPSMON
-		//The first one activating MCC is considered the mission maker. Futher access is all denied as the MCC at the moment does not support multi-user
-		if ((format["%1",mcc_MissionMaker])=="") then
-		{
-			mcc_missionmaker = _p_mcc_player_name;
-			[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Access granted to: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
-			publicVariable "mcc_missionmaker";				
-		};
-			
+
 		//Lets see if we are the mission maker, if not we simple deny access
 		if (mcc_missionmaker == _p_mcc_player_name) then 		
 				//Yeah we are the mission maker, lets go dude!

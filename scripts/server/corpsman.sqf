@@ -32,9 +32,9 @@ publicvariable "CP_corpsmanWeaponWest";
 			["SERVER_Corpsman", "primary_attachments_west", format ["CP_%1",_weapon], _weaponAttachments, "ARRAY"] call iniDB_write;
 		};
 		 missionNamespace setvariable [format ["CP_%1",_weapon], _weaponAttachments];
+		 publicvariable format ["CP_%1",_weapon];
 	};
 } foreach CP_corpsmanWeaponWest;
-publicvariable format ["CP_%1",_weapon];
 
 
 
@@ -67,9 +67,9 @@ publicvariable "CP_corpsmanWeaponEast";
 			["SERVER_Corpsman", "primary_attachments_east", format ["CP_%1",_weapon], _weaponAttachments, "ARRAY"] call iniDB_write;
 		};
 		 missionNamespace setvariable [format ["CP_%1",_weapon], _weaponAttachments];
+		 publicvariable format ["CP_%1",_weapon];
 	};
 } foreach CP_corpsmanWeaponEast;
-publicvariable format ["CP_%1",_weapon];
 
 
 
@@ -101,9 +101,10 @@ publicvariable "CP_corpsmanWeaponGuer";
 			["SERVER_Corpsman", "primary_attachments_guer", format ["CP_%1",_weapon], _weaponAttachments, "ARRAY"] call iniDB_write;
 		};
 		 missionNamespace setvariable [format ["CP_%1",_weapon], _weaponAttachments];
+		 publicvariable format ["CP_%1",_weapon];
 	};
 } foreach CP_corpsmanWeaponGuer;
-publicvariable format ["CP_%1",_weapon];
+
 //----------------------------------------------------Secondery----------------------------------------------------------------	
 //west
 CP_corpsmanSecWest = ["SERVER_Corpsman", "secondery", "CP_corpsmanSecWest", "ARRAY"] call iniDB_read;
@@ -203,7 +204,7 @@ if (count CP_corpsmanUniformsWest == 0) then
 {
 	CP_corpsmanUniformsWest	= call compileFinal str	[
 										[[0,""],[20,"NVGoggles"]],		//NV
-										[[0,"H_Booniehat_khk"],[5,"H_Booniehat_mcamo"],[10,"H_Booniehat_ocamo"],[15,"H_HelmetB_light_black"]],	//Head
+										[[0,"H_Booniehat_khk"],[5,"H_Booniehat_mcamo"],[10,"H_HelmetB_light_black"]],	//Head
 										[[0,""],[0,"G_Combat"],[5,"G_Tactical_Black"],[10,"G_Sport_Blackred"],[15,"G_B_Diving"]],	//Goggles
 										[[0,"V_PlateCarrier1_rgr"],[5,"V_PlateCarrierGL_rgr"],[10,"V_TacVest_oli"],[15,"V_RebreatherB"],[20,"V_PlateCarrier1_blk"]],	//Vest
 										[[0,"B_AssaultPack_mcamo"],[5,"B_Kitbag_mcamo"],[10,"B_Bergen_mcamo"],[15,"B_AssaultPack_blk"]],	//Backpack
@@ -218,7 +219,7 @@ if (count CP_corpsmanUniformsEast == 0) then
 {								
 	CP_corpsmanUniformsEast	= call compileFinal str	[
 										[[0,""],[20,"NVGoggles"]],		//NV
-										[[0,"H_Booniehat_khk"],[10,"H_Booniehat_mcamo"],[20,"H_Booniehat_ocamo"]],	//Head
+										[[0,"H_Booniehat_khk"],[10,"H_Booniehat_mcamo"]],	//Head
 										[[0,""],[0,"G_Combat"],[5,"G_Tactical_Black"],[10,"G_Sport_Blackred"],[15,"G_B_Diving"]],	//Goggles
 										[[0,"V_BandollierB_khk"],[10,"V_HarnessOGL_gry"],[20,"V_HarnessOSpec_gry"],[15,"V_RebreatherIR"],[20,"V_TacVestIR_blk"]],	//Vest
 										[[0,"B_AssaultPack_ocamo"],[5,"B_FieldPack_ocamo"],[10,"B_Carryall_ocamo"],[15,"B_FieldPack_blk"]],	//Backpack
@@ -233,7 +234,7 @@ if (count CP_corpsmanUniformsGuar == 0) then
 {	
 	CP_corpsmanUniformsGuar	= call compileFinal str	[
 										[[0,""],[20,"NVGoggles"]],		//NV
-										[[0,"H_Booniehat_khk"],[10,"H_Booniehat_mcamo"],[20,"H_Booniehat_ocamo"]],	//Head
+										[[0,"H_Booniehat_khk"],[10,"H_Booniehat_mcamo"]],	//Head
 										[[0,""],[0,"G_Combat"],[5,"G_Tactical_Black"],[10,"G_Sport_Blackred"],[15,"G_B_Diving"]],	//Goggles
 										[[0,"V_PlateCarrier1_rgr"],[10,"V_PlateCarrierSpec_rgr"],[20,"V_TacVest_oli"],[15,"V_RebreatherIA"],[20,"V_TacVestIR_blk"]],	//Vest
 										[[0,"B_AssaultPack_mcamo"],[5,"B_Kitbag_mcamo"],[10,"B_Bergen_mcamo"],[15,"B_AssaultPack_blk"]],	//Backpack

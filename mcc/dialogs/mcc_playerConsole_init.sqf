@@ -157,7 +157,6 @@ MCC_fnc_mapDrawWPConsole =
 	_map = _this select 0;
 	{
 		_leader = (leader _x);
-		_groupStatus = _x getvariable "MCC_support";
 		_groupControl = if (isplayer _leader) then {true} else {_x getvariable ["MCC_canbecontrolled",false]};	//Can we control this group
 		_haveGPS =  if ((vehicle _leader != _leader) || !isPlayer _leader) then {true} else {("ItemGPS" in (assignedItems _leader) || "B_UavTerminal" in (assignedItems _leader) || "MCC_Console" in (assignedItems _leader))};
 		if (isnil "_haveGPS") then {_haveGPS = false};
@@ -169,7 +168,7 @@ MCC_fnc_mapDrawWPConsole =
 				private ["_wp","_wPos","_wType"];
 				MCC_lastPos = nil; 
 				_texture = gettext (configfile >> "CfgMarkers" >> "waypoint" >> "icon");
-				for [{_i=0},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
+				for [{_i= currentWaypoint (group _leader)},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
 				{			
 					_wp = (_wpArray select _i);
 					_wPos  = waypointPosition _wp;
@@ -364,7 +363,6 @@ MCC_fnc_mapDrawWPConsole =
 	} foreach allgroups;
 	setGroupIconsVisible [false,false];
 	setGroupIconsSelectable false;
-	ctrlShow [MCC_MINIMAP,true];
 	
 	//Remove EH
 	(_mccdialog displayCtrl 9120) ctrlRemoveEventHandler ["draw",_handler];

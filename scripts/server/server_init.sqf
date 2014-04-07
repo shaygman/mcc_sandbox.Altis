@@ -28,11 +28,15 @@ if (isnil "CP_westTickets") then {CP_westTickets = 200};
 publicVariable "CP_eastTickets";
 publicVariable "CP_westTickets";
 
-/*
-//Build starting spawn points
-[[getpos spawn_west, getdir spawn_west, "west", "HQ-BASE", false] , "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP;
-[[getpos spawn_east, getdir spawn_east,"east", "HQ-BASE", false] , "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP;
-*/
+//Default Groups
+CP_defaultGroups = ["SERVER_misc", "RoleSelectionDefinse", "CP_defaultGroups", "ARRAY"] call iniDB_read;
+
+if (count CP_defaultGroups == 0) then
+{
+	CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"];
+	 ["SERVER_misc", "RoleSelectionDefinse", "CP_defaultGroups",CP_defaultGroups, "ARRAY"] call iniDB_write;
+};
+publicVariable "CP_defaultGroups";
 
 
 //---------------------------------------------
@@ -43,8 +47,9 @@ if (count CP_westGroups == 0) then
 	{												//West
 		_group = createGroup west;
 		waituntil {!isnil "_group"};
+		_group setVariable ["MCC_CPGroup",true,true]; 
 		CP_westGroups set [_forEachIndex,[_group,_x]];
-	} foreach ["Alpha","Bravo","Charlie","Delta"];
+	} foreach CP_defaultGroups;
 	
 	publicvariable "CP_westGroups";
 };
@@ -54,8 +59,9 @@ if (count CP_eastGroups == 0) then
 	{												//East
 		_group = createGroup east;
 		waituntil {!isnil "_group"};
+		_group setVariable ["MCC_CPGroup",true,true]; 
 		CP_eastGroups set [_forEachIndex,[_group,_x]];
-	} foreach ["Alpha","Bravo","Charlie","Delta"];
+	} foreach CP_defaultGroups;
 	
 	publicvariable "CP_eastGroups";
 };
@@ -65,8 +71,9 @@ if (count CP_guarGroups == 0) then
 	{												//East
 		_group = createGroup resistance;
 		waituntil {!isnil "_group"};
+		_group setVariable ["MCC_CPGroup",true,true]; 
 		CP_guarGroups set [_forEachIndex,[_group,_x]];
-	} foreach ["Alpha","Bravo","Charlie","Delta"];
+	} foreach CP_defaultGroups;
 	
 	publicvariable "CP_guarGroups";
 };

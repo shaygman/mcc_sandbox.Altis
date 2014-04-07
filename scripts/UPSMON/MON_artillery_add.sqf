@@ -60,5 +60,5 @@ _vector = [_artillery,_rounds,_range,_area,_maxcadence,_mincadence,_bullet,_salv
 if (isnil "KRON_UPS_ARTILLERY_UNITS" ) then  {KRON_UPS_ARTILLERY_UNITS = []};
 KRON_UPS_ARTILLERY_UNITS = KRON_UPS_ARTILLERY_UNITS + [_vector];
 
-_dummypos = [getpos _artillery, 50, getdir _artillery] call R_relPos3D;
+_dummypos = [getpos _artillery, 50, getdir _artillery] call BIS_fnc_relPos;
 (gunner _artillery) lookAt [_dummypos select 0, _dummypos select 1,(_dummypos select 2)+100];

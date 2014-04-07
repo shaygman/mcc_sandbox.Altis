@@ -45,10 +45,13 @@ if (mcc_missionmaker == (name player)) then
 	//Select zone 
 	if (_pressed == 0) then
 	{
-		private ["_nearZone","_selectedPos","_newZone","_comboBox","_distance","_marker"];
+		private ["_nearZone","_selectedPos","_newZone","_comboBox","_distance","_marker","_nearMarker","_markerName","_isIcon"];
 		_selectedPos = _ctrl ctrlmapscreentoworld MCC_XYmap;
-		_nearZone = false;
+		_nearZone 	= false;
+		_nearMarker	= false; 
 		_distance = (ctrlMapScale ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl MCC_MINIMAP)) * 400;
+		
+		//Are we near a zone marker
 		{
 			if (!isnil "_x") then
 			{
@@ -60,54 +63,80 @@ if (mcc_missionmaker == (name player)) then
 			};
 		} foreach mcc_zone_pos;
 		
-		if (_nearZone && !MCC_artilleryEnabled && !MCC_spawnEnabled && !MCC_ConsoleRuler && !MCC_doubleClicked && !MCC_zone_drawing && !MCC_CASrequestMarker && !MCC_brush_drawing && !MCC_drawTriggers
+		//Are we near MCC marker
+		{
+			if ((_selectedPos distance (markerpos _x)) < _distance) exitWith 
+			{
+				_nearMarker = true;
+				_markerName = _x;
+			};
+		} foreach MCC_activeMarkers;
+		
+		if ((_nearZone || _nearMarker) && !MCC_artilleryEnabled && !MCC_spawnEnabled && !MCC_ConsoleRuler && !MCC_doubleClicked && !MCC_zone_drawing && !MCC_CASrequestMarker && !MCC_brush_drawing && !MCC_drawTriggers
 			&& !MCC_drawMinefield && !MCC_delete_drawing && !MCC_ambushPlacing && !MCC_UMParadropRequestMarker) exitWith
 		{
 				private ["_size","_pos","_center","_width","_hight"];
-				//Change the combobox indicatior
-				MCC_zone_index = _newZone -1;
-				_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl MCCZONENUMBER); 
-				_comboBox lbSetCurSel MCC_zone_index;
+				if (_nearZone) then
+				{
+					//Change the combobox indicatior
+					MCC_zone_index = _newZone -1;
+					_comboBox = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl MCCZONENUMBER); 
+					_comboBox lbSetCurSel MCC_zone_index;
 					
-				sleep 0.3; 
+					sleep 0.3; 
+
+					_markerName = str mcc_active_zone;
+				};
+				
+				_isIcon = if (MarkerShape _markerName == "ICON") then {0} else {1}; 
 				
 				if (!MCC_GroupGenMouseButtonDown) exitWith {}; 
-				str mcc_active_zone setMarkerAlphalocal 1;
+				_markerName setMarkerAlphalocal 1;
+				
 				//While mouse pressed
 				while {MCC_GroupGenMouseButtonDown} do 
 				{	
 					//Moving the zone
 					if (!_shift && !_ctrlKey) then
 					{
-						str mcc_active_zone setMarkerposLocal MCCGroupGenDispPosXY;
-						MCC_Marker_dir	= markerDir  str mcc_active_zone;
+						_markerName setMarkerposLocal MCCGroupGenDispPosXY;
+						MCC_Marker_dir	= markerDir  _markerName;
 					};
 					
 					//Resizing it
-					if (_shift) then
+					if (_shift && (_isIcon != 0)) then
 					{
-						_center = (getMarkerpos str mcc_active_zone);
+						_center = (getMarkerpos _markerName);
 						_width 	= abs ((MCCGroupGenDispPosXY select 1) - (_center select 1));  
 						_hight 	= abs ((MCCGroupGenDispPosXY select 0) - (_center select 0)); 
 						
-						str mcc_active_zone setMarkerSizeLocal [_hight,_width];
+						_markerName setMarkerSizeLocal [_hight,_width];
 					};
 					
 					//Changing dir
 					if (_ctrlKey) then
 					{
-						_center 		= (getMarkerpos str mcc_active_zone);
+						_center 		= (getMarkerpos _markerName);
 						MCC_Marker_dir	= [_center, MCCGroupGenDispPosXY] call BIS_fnc_dirTo;
-						str mcc_active_zone setMarkerdirLocal MCC_Marker_dir;
+						_markerName setMarkerdirLocal MCC_Marker_dir;
 					};
 					sleep 0.1;  
 				};
 				
-				_size = getMarkerSize str mcc_active_zone;
-				_pos = getMarkerPos  str mcc_active_zone;
-				deletemarkerlocal str mcc_active_zone;	
+				_size = getMarkerSize _markerName;
+				_pos = getMarkerPos  _markerName;
 				
-				_null = [2,_pos,_size] execVM MCC_path + "mcc\pop_menu\zones.sqf";
+				sleep 0.2;
+				
+				if (_nearZone) then
+				{
+					deletemarkerlocal _markerName;	
+					_null = [2,_pos,_size] execVM MCC_path + "mcc\pop_menu\zones.sqf";
+				}
+				else
+				{
+					[_isIcon, getMarkerColor _markerName , _size, MarkerShape _markerName, MarkerBrush _markerName, MarkerType _markerName, _markerName, _pos, MCC_Marker_dir] call MCC_fnc_makeMarker;
+				}; 
 		};
 	};
 	
@@ -381,7 +410,7 @@ if (mcc_missionmaker == (name player)) then
 		_pos = getMarkerPos  _marker;
 		if (!isnil "_marker") then {deletemarkerlocal _marker};	
 		MCC_brush_drawing = false; 
-		[[Mcase, Mcolor, _size, Mshape, Mbrush, Mtype, Mtext, _pos],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;
+		[Mcase, Mcolor, _size, Mshape, Mbrush, Mtype, Mtext, _pos, MCC_Marker_dir] call MCC_fnc_makeMarker;
 	};
 
 	//Triggerd drawing	

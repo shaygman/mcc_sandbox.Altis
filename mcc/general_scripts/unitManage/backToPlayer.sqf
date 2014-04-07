@@ -1,16 +1,16 @@
 private ["_caller","_groupSide", "_group","_hijackedSide","_delete","_preUnit"];
 _caller = _this select 0;	//Who activate the script
 If (!(isPlayer _caller) || !(local player)) exitWith{};
-
+if (!alive MCC_Prev_Player) exitWith {player sidechat "Previous player is no longer alive"; player removeaction MCC_backToplayerIndex};
 _delete = false; 
 
 //If we came here because we died then delete the old character if it respawned. 
 if (!alive _caller) then 
 {
 	waituntil{alive player};
-	_preUnit = vehicle player; 
 	_delete = true; 
 }; 
+_preUnit = vehicle player; 
 _hijackedSide = side _caller;
 
 
@@ -73,31 +73,47 @@ player setcaptive false;
 if (!isnull MCC_Prev_Group) then
 {
 	[player] joinSilent MCC_Prev_Group;
+	waituntil {group player == MCC_Prev_Group};
 	if (MCC_Prev_GroupIsLeader) then 
 	{
-		 [[2, compile format ["(group %1) selectLeader %1",player]], "MCC_fnc_globalExecute", leader group player, false] spawn BIS_fnc_MP;
+		if (isMultiplayer) then
+		{
+			[[2, compile format ["(groupFromNetID '%1') selectLeader objectFromNetId '%2'",netID (group player), netID player]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+		}
+		else
+		{
+			(group _preUnit) selectLeader _preUnit;
+		};
 	};
 };
-
-deleteGroup _group;
 
 _ppgrain ppEffectEnable false;
 MCC_hijack_effect ppEffectEnable false;
 
-if (isnil "MCC_PrevHijacked_Group" || isnull MCC_PrevHijacked_Group) then
+deleteGroup _group;
+
+if (MCC_PrevHijacked_Group == "") then
 {
 	_group = creategroup _hijackedSide;
 }
 else
 {
-	_group = MCC_PrevHijacked_Group;
+	_group =  groupFromNetID MCC_PrevHijacked_Group;
 };
-[_caller] joinSilent _group;
 
+[_preUnit] joinSilent _group;
+
+waituntil {group _preUnit == _group};
 if (MCC_Prev_HijackedGroupIsLeader) then
 {
-	(group _caller) selectLeader _caller;
-	//[[2, compile format ["(group %1) selectLeader %1",_caller]], "MCC_fnc_globalExecute", leader group _caller, false] spawn BIS_fnc_MP;
+	if (isMultiplayer) then
+	{
+		[[2, compile format ["(groupFromNetID '%1') selectLeader objectFromNetId '%2'",netID (group _preUnit), netID _preUnit]], "MCC_fnc_globalExecute", _preUnit, false] spawn BIS_fnc_MP;
+	}
+	else
+	{
+		(group _preUnit) selectLeader _preUnit;
+	};
 }; 
 
 if (_delete) then 

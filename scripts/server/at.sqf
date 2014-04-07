@@ -32,9 +32,9 @@ publicvariable "CP_ATWeaponWest";
 			["SERVER_AT", "primary_attachments_west", format ["CP_%1",_weapon], _weaponAttachments, "ARRAY"] call iniDB_write;
 		};
 		 missionNamespace setvariable [format ["CP_%1",_weapon], _weaponAttachments];
+		 publicvariable format ["CP_%1",_weapon];
 	};
 } foreach CP_ATWeaponWest;
-publicvariable format ["CP_%1",_weapon];
 
 
 
@@ -67,9 +67,9 @@ publicvariable "CP_ATWeaponEast";
 			["SERVER_AT", "primary_attachments_east", format ["CP_%1",_weapon], _weaponAttachments, "ARRAY"] call iniDB_write;
 		};
 		 missionNamespace setvariable [format ["CP_%1",_weapon], _weaponAttachments];
+		 publicvariable format ["CP_%1",_weapon];
 	};
 } foreach CP_ATWeaponEast;
-publicvariable format ["CP_%1",_weapon];
 
 
 
@@ -101,9 +101,9 @@ publicvariable "CP_ATWeaponGuer";
 			["SERVER_AT", "primary_attachments_guer", format ["CP_%1",_weapon], _weaponAttachments, "ARRAY"] call iniDB_write;
 		};
 		 missionNamespace setvariable [format ["CP_%1",_weapon], _weaponAttachments];
+		 publicvariable format ["CP_%1",_weapon];
 	};
 } foreach CP_ATWeaponGuer;
-publicvariable format ["CP_%1",_weapon];
 
 //----------------------------------------------------Secondery----------------------------------------------------------------	
 //west

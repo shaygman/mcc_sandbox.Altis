@@ -24,17 +24,32 @@ if (_side !=  _playerSideNr) exitWith {};
 if (_playerSideNr == 1) then 
 { 
 	while {(isnil ("MCC_START_WEST"))} do {sleep 3};
-	if (MCC_teleportAtStart) then
+	
+	if (MCC_teleportAtStartWest != 0) then
 	{
-		if (surfaceIsWater (MCC_START_WEST)) then {
+		if (surfaceIsWater (MCC_START_WEST)) then 
+		{
 			_safePos = [(MCC_START_WEST),1,50,1,2,900,0] call BIS_fnc_findSafePos;
-			} else {
-				_safePos = [(MCC_START_WEST),1,50,1,0,900,0] call BIS_fnc_findSafePos;
-				};
-		player setPosATL [_safepos select 0, _safepos select 1, 0];
+		} 
+		else 
+		{
+			_safePos = [(MCC_START_WEST),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+		};
+		
+		//Teleport
+		if (MCC_teleportAtStartWest == 1) then
+		{
+			player setPosATL [_safepos select 0, _safepos select 1, 0];
+		}
+		else
+		{
+			private "_helo";
+			_helo = if (MCC_teleportAtStartWest ==2) then {false} else {true}; 
+			
+			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
+		};
 	};
-	//if (CP_activated && !_firstLoop) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
-
+	
 	if (!isnil "MCC_StartMarkerW") then {deleteMarkerLocal MCC_StartMarkerW};
 	MCC_StartMarkerW = createMarkerLocal ["STARTLOCATIONW", (MCC_START_WEST)];
 	MCC_StartMarkerW setMarkerShapeLocal "ICON";	
@@ -53,17 +68,31 @@ if (_playerSideNr == 0) then
   { 
 
 	while { (isnil ("MCC_START_EAST"))  } do {sleep 3};
-	if (MCC_teleportAtStart) then
-	{
-		if (surfaceIsWater (MCC_START_EAST)) then {
-			_safePos = [(MCC_START_EAST),1,50,1,2,900,0] call BIS_fnc_findSafePos;
-			} else {
-				_safePos = [(MCC_START_EAST),1,50,1,0,900,0] call BIS_fnc_findSafePos;
-				};
-		player setPosATL [_safepos select 0, _safepos select 1, 0];;
-	};
 	
-	//if (CP_activated && !_firstLoop) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
+	if (MCC_teleportAtStartEast != 0) then
+	{
+		if (surfaceIsWater (MCC_START_EAST)) then 
+		{
+			_safePos = [(MCC_START_EAST),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+		} 
+		else 
+		{
+			_safePos = [(MCC_START_EAST),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+		};
+		
+		//Teleport
+		if (MCC_teleportAtStartEast == 1) then
+		{
+			player setPosATL [_safepos select 0, _safepos select 1, 0];
+		}
+		else
+		{
+			private "_helo";
+			_helo = if (MCC_teleportAtStartEast ==2) then {false} else {true}; 
+			
+			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
+		};
+	};
 	
 	if (!isnil "MCC_StartMarkerE") then {deleteMarkerLocal MCC_StartMarkerE};
 	MCC_StartMarkerE = createMarkerLocal ["STARTLOCATIONE", ( MCC_START_EAST)];
@@ -82,14 +111,30 @@ if (_playerSideNr == 2) then
   { 
 	
 	while { (isnil ("MCC_START_GUER")) } do {sleep 3};
-	if (MCC_teleportAtStart) then
+
+	if (MCC_teleportAtStartGuer != 0) then
 	{
-		if (surfaceIsWater (MCC_START_GUER)) then {
+		if (surfaceIsWater (MCC_START_GUER)) then 
+		{
 			_safePos = [(MCC_START_GUER),1,50,1,2,900,0] call BIS_fnc_findSafePos;
-			} else {
-				_safePos = [(MCC_START_GUER),1,50,1,0,900,0] call BIS_fnc_findSafePos;
-				};
-		player setPosATL [_safepos select 0, _safepos select 1, 0];;
+		} 
+		else 
+		{
+			_safePos = [(MCC_START_GUER),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+		};
+		
+		//Teleport
+		if (MCC_teleportAtStartGuer == 1) then
+		{
+			player setPosATL [_safepos select 0, _safepos select 1, 0];
+		}
+		else
+		{
+			private "_helo";
+			_helo = if (MCC_teleportAtStartGuer ==2) then {false} else {true}; 
+			
+			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
+		};
 	};
 	
 	//if (CP_activated && !_firstLoop) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
@@ -112,14 +157,30 @@ if (_playerSideNr == 3) then
   { 
 	
 	while { (isnil ("MCC_START_CIV")) } do {sleep 3};
-	if (MCC_teleportAtStart) then
+
+	if (MCC_teleportAtStartCiv != 0) then
 	{
-		if (surfaceIsWater (MCC_START_CIV)) then {
+		if (surfaceIsWater (MCC_START_CIV)) then 
+		{
 			_safePos = [(MCC_START_CIV),1,50,1,2,900,0] call BIS_fnc_findSafePos;
-			} else {
-				_safePos = [(MCC_START_CIV),1,50,1,0,900,0] call BIS_fnc_findSafePos;
-				};
-		player setPosATL [_safepos select 0, _safepos select 1, 0];;
+		} 
+		else 
+		{
+			_safePos = [(MCC_START_CIV),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+		};
+		
+		//Teleport
+		if (MCC_teleportAtStartCiv == 1) then
+		{
+			player setPosATL [_safepos select 0, _safepos select 1, 0];
+		}
+		else
+		{
+			private "_helo";
+			_helo = if (MCC_teleportAtStartCiv ==2) then {false} else {true}; 
+			
+			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
+		};
 	};
 	
 	if (!isnil "MCC_StartMarkerC") then {deleteMarkerLocal MCC_StartMarkerC};

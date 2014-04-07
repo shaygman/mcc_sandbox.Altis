@@ -13,6 +13,7 @@
 #define MCC_IDCNAMETAGS 8410
 #define mcc_artilleryTitleIDC 8411
 #define mcc_saveGearComboIDC 8412
+#define mcc_showGRPMarkerComboIDC 8413
 
 private ["_string", "_resistanceHostile", "_AiSkill","_value","_ACEReviveTime","_ACESpectator","_t2t","_code"];
 disableSerialization;
@@ -60,6 +61,8 @@ if !mcc_isloading then
 		};
 	};
 	
+	if (_string != "") then {[[2,compile _string], "MCC_fnc_globalExecute", true, true] spawn BIS_fnc_MP};
+	
 	_AiSkill = (((lbCurSel AI_SKILL)+1)/10);															//AI Skill
 	MCC_aiSkillIndex = lbCurSel AI_SKILL;
 	MCC_AI_Skill = _AiSkill; 
@@ -102,6 +105,10 @@ if !mcc_isloading then
 	MCC_saveGearIndex = lbCurSel mcc_saveGearComboIDC;
 	MCC_saveGear = if ((lbCurSel mcc_saveGearComboIDC) == 0) then {false} else {true};								//Save gear EH
 	publicvariable "MCC_saveGear";
+	
+	MCC_groupMarkersIndex = lbCurSel mcc_showGRPMarkerComboIDC;
+	MCC_groupMarkers = if ((lbCurSel mcc_showGRPMarkerComboIDC) == 0) then {false} else {true};								//Group Markers
+	publicvariable "MCC_groupMarkers";
 	
 	MCC_artilleryComputerIndex = lbCurSel mcc_artilleryTitleIDC;
 	if ((lbCurSel mcc_artilleryTitleIDC) == 0) then 

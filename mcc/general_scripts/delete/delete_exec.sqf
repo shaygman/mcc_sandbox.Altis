@@ -2,7 +2,8 @@ private ["_pos","_radius","_type","_nearObjects","_crew","_markers"];
 
 _pos = _this select 0;
 _radius = _this select 1;
-_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights"] select (_this select 2); 
+_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights","N/V","Bodies"] select (_this select 2); 
+_nearObjects = []; 
 
 switch _type do
 	{
@@ -17,7 +18,7 @@ switch _type do
 				} foreach allMapMarkers;
 				
 				{
-					[[2, "", "", "", "", "", _x, []],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;; 
+					[2, "", "", "", "", "", _x, []] call MCC_fnc_makeMarker;
 				} foreach _markers;
 			};
 		case "All Units":	
@@ -38,10 +39,8 @@ switch _type do
 				} foreach allMapMarkers;
 				
 				{
-					[[2, "", "", "", "", "", _x, []],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;; 
+					[2, "", "", "", "", "", _x, []] call MCC_fnc_makeMarker;
 				} foreach _markers;
-				
-				_nearObjects = []; 
 			};
 			
 		case "Lights":	
@@ -53,8 +52,28 @@ switch _type do
 					sleep 1;
 					{_x setDamage 1} forEach _lamps;
 				} foreach ["Lamps_Base_F", "PowerLines_base_F"];
-				
-				_nearObjects = []; 
+			};
+			
+		case "N/V":	
+			{ 
+				//Night Vision
+				_nearObjects = [_pos select 0, _pos select 1, 0] nearObjects ["Man", _radius];
+				private "_unit"; 
+				{
+					_unit = _x; 
+					{
+						_unit unassignItem _x;
+						_unit removeItem _x;
+					} foreach ["NVGoggles","NVGoggles_OPFOR","NVGoggles_INDEP"];
+				} foreach _nearObjects;
+			};
+		
+		case "Bodies":	
+			{ 
+				//Bodies
+				{
+					if ((_x distance [_pos select 0, _pos select 1, 0]) < _radius) then {_nearObjects set [count _nearObjects, _x]};
+				} foreach allDeadMen;
 			};
 			
 		default	
@@ -64,12 +83,16 @@ switch _type do
 	};
 		
 {
-	if ((_x iskindof "Car") || (_x iskindof "Tank") || (_x iskindof "Air")) then {
+	if ((_x iskindof "Car") || (_x iskindof "Tank") || (_x iskindof "Air")) then
+	{
 			_crew = crew _x;
 			deletevehicle _x;
 			{deletevehicle _x} foreach _crew;
-		} else	{deletevehicle _x};
-
+	} 
+	else	
+	{
+		deletevehicle _x;
+	};
 } foreach _nearObjects;
 
 

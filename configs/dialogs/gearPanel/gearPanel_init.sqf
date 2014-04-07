@@ -29,7 +29,6 @@ uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 20];
 #define CP_InfoText (uiNamespace getVariable "CP_InfoText")
 
 CP_respawnPanelOpen = false;
-CP_groupPanelOpen	= false; 
 CP_gearPanelOpen	= true; 
 
 //Disable Esc while respawn is on

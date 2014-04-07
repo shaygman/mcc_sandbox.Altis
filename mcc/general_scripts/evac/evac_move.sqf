@@ -5,6 +5,7 @@ _route         = _this select 0;
 _height        = _this select 1;
 _landing       = _this select 2;
 _heli          = _this select 3;
+_cargoUnits	   = _this select 4;
 
 if (!local _heli) exitWith {hint "vehicle must be local";};
 
@@ -37,7 +38,6 @@ else
 	_heli setVariable ["wp_complete", false];
 	
 	_startPos = _heli getVariable"MCC_evacStartPos";
-	_cargoUnits = assignedCargo _heli;
 	
 	for [{_j = 0},{_j < count _route},{_j = _j + 1}] do
 	{ 
@@ -87,16 +87,18 @@ else
 			{					
 				[_x] spawn 
 					{
-						private ["_unit","_timeOut"];
+						private "_unit";
 						_unit = _this select 0;
 						
-						if (isPlayer _unit) then
+						if (isMultiplayer) then
 						{
-							 [[0,{unassignVehicle player; player action ["eject", vehicle player];}], "MCC_fnc_globalExecute", _unit, false] call BIS_fnc_MP;
+							 [compile format ["unassignVehicle objectFromNetID '%1'; objectFromNetID '%1' action ['eject', vehicle objectFromNetID '%1']", netID _unit], "BIS_fnc_spawn", _unit, false] call BIS_fnc_MP;
+						}
+						else
+						{
+							unassignVehicle _unit;
+							_unit action ["eject", vehicle _unit];
 						};
-						
-						unassignVehicle _unit;
-						_unit action ["eject", vehicle _unit];
 					};
 					
 				sleep ( 1 + ((random 6)/10) );
@@ -227,9 +229,9 @@ else
 						_zdelta = 7 / 10;
 						_zc = 22;
 						
-						if (isPlayer _unit && isMultiplayer) then
+						if (isMultiplayer) then
 						{
-							 [[2,{unassignVehicle player; player action ["eject", vehicle player];player switchmove "AdvePercMstpSnonWrflDnon_goup";}], "MCC_fnc_globalExecute", _unit, false] call BIS_fnc_MP;
+							 [compile format ["unassignVehicle objectFromNetID '%1'; objectFromNetID '%1' action ['eject', vehicle objectFromNetID '%1'];objectFromNetID '%1' switchmove 'AdvePercMstpSnonWrflDnon_goup'", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
 						}
 						else
 						{
@@ -252,9 +254,9 @@ else
 							sleep 0.1;
 						};
 						
-						if (isPlayer _unit && isMultiplayer) then
+						if (isMultiplayer) then
 						{
-							 [[2,{ player switchmove ""; detach player;}], "MCC_fnc_globalExecute", _unit, false] call BIS_fnc_MP;
+							 [compile format ["objectFromNetID '%1' switchmove ''; detach objectFromNetID '%1'", netID _unit], "BIS_fnc_spawn", _unit, false] call BIS_fnc_MP;
 						}
 						else
 						{
@@ -286,14 +288,27 @@ else
 		};
 	};
 	
-	//Do we have return trip
+	//Do we have a return trip
 	if (count _cargoUnits > 0) then
 	{
-		_timeOut = time + 20;
-		waitUntil { sleep 1; (count (assignedCargo _heli) == 0) || (time > _timeOut)  || (!alive _heli) || (!alive (driver _heli))};
-		if ((count (assignedCargo _heli) == 0) && (!isnil "_startPos")) then
+		private ["_crew","_empty"];
+		_timeOut = time + 30;
+		waitUntil 
 		{
-			[[[_startPos], _height, 1, [netid _heli,_heli]],"MCC_fnc_evacMove",_heli,false] spawn BIS_fnc_MP;
+			sleep 1; 
+			_crew = crew _heli;
+			_empty = true; 
+			
+			{
+				if (vehicle _x == _heli) exitWith {_empty = false};
+			} foreach _cargoUnits; 
+			
+			_empty || (time > _timeOut)  || (!alive _heli) || (!alive (driver _heli));
+		};
+		
+		if (_empty && (!isnil "_startPos")) then
+		{
+			[[[_startPos], _height, 1, [netid _heli,_heli],assignedCargo _heli],"MCC_fnc_evacMove",_heli,false] spawn BIS_fnc_MP;
 		}; 
 	};
 };

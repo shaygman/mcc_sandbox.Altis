@@ -58,7 +58,10 @@ if (isnil "MCC_nameTags") then {MCC_nameTags = false};
 //-------------------- Save Gear --------------------------------------------------
 if (isnil "MCC_saveGear") then {MCC_saveGear = false};
 
-//-----------------------BTC Revive - --------------------------------------------
+//-------------------- Group Markers (Role Selection) --------------------------------------------------
+if (isnil "MCC_groupMarkers") then {MCC_groupMarkers = true};
+
+//-----------------------Revive - --------------------------------------------
 //disable this line if you don't want it in the mission version - will not work on the mod version by default
 if (!MCC_isMode) then
 	{
@@ -95,7 +98,7 @@ if (isnil "MCC_ConsoleDrawWP") then {MCC_ConsoleDrawWP = true}; 											//Dra
 if (isnil "MCC_ConsoleLiveFeedHelmetsOnly") then {MCC_ConsoleLiveFeedHelmetsOnly = false};					//Allow live feed to vehicles only and units wearing one of the specific helmets types defined in MCC_ConsoleLiveFeedHelmets 
 if (isnil "MCC_ConsoleLiveFeedHelmets") then {MCC_ConsoleLiveFeedHelmets = ["H_HelmetB","H_HelmetB_paint","H_HelmetB_light","H_HelmetO_ocamo","H_HelmetLeaderO_ocamo","H_HelmetSpecO_ocamo","H_HelmetSpecO_blk"]};
 if (isnil "MCC_ConsoleCanCommandAI") then {MCC_ConsoleCanCommandAI = true}; 								//If set to false the console can only command non-AI groups
-if (isnil "MCC_ConsolePlayersCanSeeWPonMap") then {MCC_ConsolePlayersCanSeeWPonMap = false};					//If set to true players with GPS or UAVTerminal or MCC conosle can see WP assigned to them on the map
+if (isnil "MCC_ConsolePlayersCanSeeWPonMap") then {MCC_ConsolePlayersCanSeeWPonMap = true};					//If set to true players with GPS or UAVTerminal or MCC conosle can see WP assigned to them on the map
 
 //string that must return true inorder to open the MCC Console - str "MCC_Console" + "in (assignedItems player)"; 
 if (MCC_isMode) then 
@@ -199,10 +202,12 @@ if ( !(isServer) && !(hasInterface) ) then
 
 // define if tracking is enabled or disabled
 MCC_trackMarker = false; 
-// use mcc logic module to set to true to always allow to teleport to team, e.g. in case of training mission or respawn enabled mission
-if (isnil "MCC_alwaysAllowTeleport") then {MCC_alwaysAllowTeleport = false};
+
 // use mcc logic module to set to false to disable auto teleport to mcc start location 
-if (isnil "MCC_teleportAtStart") then {MCC_teleportAtStart = true};
+if (isnil "MCC_teleportAtStartWest") then {MCC_teleportAtStartWest = 1};
+if (isnil "MCC_teleportAtStartEast") then {MCC_teleportAtStartEast = 1};
+if (isnil "MCC_teleportAtStartGuer") then {MCC_teleportAtStartGuer = 1};
+if (isnil "MCC_teleportAtStartCiv") then {MCC_teleportAtStartCiv = 1};
 
 //define stuff for popup menu
 MCC_mouseButtonDown = false; //Mouse state
@@ -243,6 +248,7 @@ MCC_triggers = [];
 MCC_drawTriggers = false; 
 MCC_markerarray = [];
 MCC_brushesarray = [];
+MCC_activeMarkers = [];
 MCC_musicTracks_array = [];
 MCC_soundTracks_array = [];
 MCC_musicTracks_index = 0;
@@ -361,8 +367,6 @@ MCC_evacVehicles = [];
 MCC_evacVehicles_index = 0;
 MCC_evacVehicles_last = 0;
 
-MCCFirstOpenUI= true;
-
 MCC_UMunitsNames = [];
 MCC_UMUnit = 0;
 MCC_gearDialogClassIndex = 0;
@@ -399,6 +403,7 @@ MCC_consoleCommandAIIndex				= 0;
 MCC_nameTagsIndex						= 0;
 MCC_artilleryComputerIndex				= 1;
 MCC_saveGearIndex						= 0;
+MCC_groupMarkersIndex					= 1;
 
 
 //Group Gen
@@ -771,17 +776,19 @@ if ( isServer ) then
 		MCC_iniDBenabled = false; 
 	};
 	publicVariable "MCC_iniDBenabled"
-};
-
-waituntil {!isnil "MCC_iniDBenabled"}; 
-if (MCC_iniDBenabled) then 
-{
-	player sideChat "IniDB is running. ROLE SELECTION WILL WORK :)";
 }
 else
 {
-	player sideChat "iniDB isn't running. ROLE SELECTION WILL NOT WORK!!!";
+	if (isMultiplayer) then
+	{
+		waituntil {!isnil "MCC_iniDBenabled"}; 
+	}
+	else
+	{
+		MCC_iniDBenabled = false; 
+	}; 
 };
+
 // Handler code for the server for MP purpose
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_pv_handler.sqf";
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_extras_pv_handler.sqf";
@@ -797,19 +804,17 @@ diag_log format ["%1 - MCC Local Headless Client: %2", time, MCC_isLocalHC];
 //---------------------------------------------
 //		General
 //---------------------------------------------
-CP_maxPlayers		= 100; 
-CP_maxSquads		= 20; 
-CP_westSpawnPoints 	= [];
-CP_eastSpawnPoints	= [];
-CP_guarSpawnPoints	= [];
+if (isnil "CP_maxPlayers") then {CP_maxPlayers		= 100}; 
+if (isnil "CP_maxSquads") then {CP_maxSquads		= 20}; 
+if (isnil "CP_westSpawnPoints") then {CP_westSpawnPoints 	= []};
+if (isnil "CP_eastSpawnPoints") then {CP_eastSpawnPoints	= []};
+if (isnil "CP_guarSpawnPoints") then {CP_guarSpawnPoints	= []};
 
 CP_dialogInitDone = true; 				//define if dialog is been initialize
-CP_weaponAttachments = ["","",""];	
-CP_defaultLevel = [1,0];
-CP_activated = false;
-
-missionnamespace setVariable ["CP_activated", false]; 			//CP activated on MCC mode
-
+if (isnil "CP_weaponAttachments") then {CP_weaponAttachments = ["","",""]};	
+if (isnil "CP_defaultLevel") then {CP_defaultLevel = [1,0]};
+if (isnil "CP_activated") then {CP_activated = false};
+if (isnil "CP_defaultGroups") then {CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"]}; 
 "CP_activated" addPublicVariableEventHandler 
 {
 	if(CP_activated && !isDedicated) then
@@ -817,6 +822,7 @@ missionnamespace setVariable ["CP_activated", false]; 			//CP activated on MCC m
 		_null=[] execVM CP_path + "scripts\player\player_init.sqf"
 	};
 };
+
 //---------------------------------------------
 //		Index
 //---------------------------------------------
@@ -975,29 +981,31 @@ MCC_NameTagsPlayerLoop = compile preprocessFile format ["%1mcc\general_scripts\l
 
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then 
 {
-	MCC_groupLocalWP = [];
-	MCC_groupLocalWPLines = []; 
-	
 	//Handle CP stuff
 	[] spawn MCC_CPplayerLoop;
 	
 	//Handle Name Tags
 	[] spawn MCC_NameTagsPlayerLoop;
 };
-/*		
+
 //===============Delete Groups (server and HC client only)====================
 if (isServer || MCC_isLocalHC) then 
 {
 	[] spawn 
 	{
-		while {true && !CP_activated} do
+		while {true} do
 		{
-			{if (({alive _x} count units _x) == 0) then {deleteGroup _x}} foreach allGroups;
 			sleep 60; 
+			{
+				if ((({alive _x} count units _x) == 0) && !(_x getVariable ["MCC_CPGroup",false])) then 
+				{
+					deleteGroup _x;
+				};
+			} foreach allGroups;			
 		};
 	};
 };
-*/
+
 //============== Namspace saves=================
 MCC_saveNames = profileNamespace getVariable "MCC_save";
 if (isnil "MCC_saveNames") then {
@@ -1044,5 +1052,9 @@ if (getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMine
 };		
 		
 //============= Init MCC done===========================
+if(CP_activated && !isDedicated) then
+{
+	_null=[] execVM CP_path + "scripts\player\player_init.sqf"
+};
 MCC_initDone = true; 
 finishMissionInit;

@@ -12,6 +12,7 @@
 #define MCC_IDCNAMETAGS 8410
 #define mcc_artilleryTitleIDC 8411
 #define mcc_saveGearComboIDC 8412
+#define mcc_showGRPMarkerComboIDC 8413
 
 private ["_mccdialog","_comboBox","_displayname"];
 disableSerialization;
@@ -112,4 +113,12 @@ _comboBox = _mccdialog displayCtrl mcc_saveGearComboIDC; //Save Gear
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
 _comboBox lbSetCurSel MCC_saveGearIndex;
+
+_comboBox = _mccdialog displayCtrl mcc_showGRPMarkerComboIDC; //Save Gear
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Disabled","Enabled"];
+_comboBox lbSetCurSel MCC_groupMarkersIndex;
 

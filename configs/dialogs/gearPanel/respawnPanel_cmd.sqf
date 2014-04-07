@@ -149,8 +149,6 @@ switch (_cmd) do
 			if (!isnil "CP_UNIFORMSPANEL_IDD") then {CP_UNIFORMSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
 			deletemarkerlocal "spawnSelected";
 			CP_respawnPanelOpen = false; 
-			CP_groupPanelOpen	= false; 
-			
 		};
 		
 		case 2:				//Change role

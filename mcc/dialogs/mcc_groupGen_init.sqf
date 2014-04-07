@@ -1,4 +1,4 @@
-private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class","_side","_html"];
+private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class","_side","_html","_zone","_markerlabel"];
 // By: Shay_gman
 // Version: 1.1 (April 2012)
 #define groupGen_IDD 2994
@@ -19,26 +19,6 @@ disableSerialization;
 MCC_mcc_screen = 2;	//Group gen for poping up the same menu again
 
 uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
-
-//Is it first time we around? Let's respawn the zone markers if they are available
-if (MCCFirstOpenUI) then
-{
-	MCCFirstOpenUI = false; 
-	
-	//Loose mission maker when DC move to after login
-	if (!isnil "MCC_zones_numbers") then 
-	{
-		{
-			_zone = createMarkerLocal [str _x, mcc_zone_pos select _x]; 
-			_zone setMarkerShapeLocal "RECTANGLE";
-			_zone setMarkerColorLocal "colorBlack";
-			_zone setMarkerBrushLocal "Solid";
-			_zone setMarkerAlphalocal 0.4; 
-			_zone setMarkerDirLocal (mcc_zone_dir select _x);
-			_zone setMarkerSizeLocal (mcc_zone_size select _x);
-		} foreach MCC_zones_numbers;
-	};
-};
 
 //Track units if enabled
 if (MCC_trackMarker) then
@@ -117,6 +97,34 @@ _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline
 _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Rotate Zone: Ctrl + click on Zone's icon and rotate. </t><br/>";
 		
 _comboBox ctrlSetStructuredText parseText _html;	
+
+//Is it first time we around? Let's respawn the zone markers if they are available
+if (isnil "MCCFirstOpenUI") then
+{
+	MCCFirstOpenUI = false; 
+	
+	sleep 1;
+	//Loose mission maker when DC move to after login
+	if (!isnil "MCC_zones_numbers") then 
+	{
+		{
+			_zone = createMarkerLocal [str _x, mcc_zone_pos select _x]; 
+			_zone setMarkerShapeLocal "RECTANGLE";
+			_zone setMarkerColorLocal "colorBlack";
+			_zone setMarkerBrushLocal "Solid";
+			_zone setMarkerAlphalocal 0.4; 
+			_zone setMarkerDirLocal (mcc_zone_dir select _x);
+			_zone setMarkerSizeLocal (mcc_zone_size select _x);
+			
+			_markerlabel = createMarkerLocal [(format["LABEL_%1",_x]), mcc_zone_pos select _x];
+			_markerlabel setMarkerShapeLocal "ICON"; 
+			(format["LABEL_%1",_x]) setMarkerTypeLocal str _x;
+			(format["LABEL_%1",_x]) setMarkerTextLocal str _x;
+			(format["LABEL_%1",_x]) setMarkerColorLocal "ColorRed";
+		} foreach MCC_zones_numbers;
+	};
+};
+
 //----------------------------------------------------------- GROUPs ----------------------------------------------------------------------------
 	
 [] spawn MCC_fnc_groupGenRefresh; 	

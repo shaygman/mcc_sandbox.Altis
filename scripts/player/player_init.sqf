@@ -52,15 +52,16 @@ if (CP_debug) then {player sidechat format ["pilotLevel : %1",pilotLevel]};
 [] spawn {
 			private ["_groups","_mkr","_mkrArray"]; 
 			_mkrArray = [];
-			while {alive player} do	{
-					_groups	 = switch (side player) do	{
+			while {alive player && MCC_groupMarkers} do	
+			{
+					_groups	 = switch (side player) do	
+							{
 								case west:			{CP_westGroups};
 								case east:			{CP_eastGroups};
 								case resistance:	{CP_guarGroups};
 								case civilian:		{CP_guarGroups};
 							};
 					{
-						
 						_mkr = createMarkerLocal [(_x select 1),[(getPos leader (_x select 0) select 0),(getPos leader (_x select 0) select 1)]];
 						_mkr setMarkerShapeLocal "ICON";
 						(_x select 1) setMarkerTypeLocal "b_hq";
@@ -69,10 +70,11 @@ if (CP_debug) then {player sidechat format ["pilotLevel : %1",pilotLevel]};
 						(_x select 1) setMarkerTextLocal (_x select 1);
 						_mkrArray set [count _mkrArray ,(_x select 1)];
 					} foreach _groups;
+					
 					sleep 6;
 					{deletemarkerlocal _x} foreach _mkrArray;
 					_mkrArray = [];
-				};
+			};
 		  };
 		  
 //******************************************************************************************************************************
@@ -84,10 +86,11 @@ playerDeploy = false;
 _logicPos = [(random 1000) + 1000,(random 1000) + 1000,(random 1000) + 10000];
 
 _logicEmpty = false;
-while {!_logicEmpty} do {																//Check if can spawn a dummy unit
+while {!_logicEmpty} do 
+{																//Check if can spawn a dummy unit
 		_nearObjects = _logicPos nearObjects ["Man",50];
 		if ((count _nearObjects) == 0) then {_logicEmpty = true} else {_logicPos = [_logicPos select 0,_logicPos select 1, (_logicPos select 2)-30]};
-	};
+};
 
 if (CP_debug) then {player sidechat format ["position: %1",_logicPos]};
 _camLogic = createagent ["Logic",_logicPos,[],0,"none"];
@@ -127,7 +130,6 @@ CP_gearCam camcommit 0;
 player switchmove "AidlPercMstpSlowWrflDnon_G03";
 sleep 0.3;
 
-//endloadingscreen;
 //--------------------------------------------------------------------
 //	Spawn player
 //--------------------------------------------------------------------
@@ -153,7 +155,5 @@ setviewdistance 2500;
 closedialog 0; 
 waituntil {!dialog};
 //Respawning
-								
-						
-if(rating player < 0) then {player addrating abs(rating player)} else {player addrating (rating player)*-1}; 	//Sets unit rating to zero
+
 cutText ["Deploying ....","BLACK IN",5];

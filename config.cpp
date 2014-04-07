@@ -60,31 +60,6 @@ class cfgVehicles
 		};
 	};
 	
-		
-	class mcc_sandbox_moduleTP : Logic
-	{
-		displayName = "(MCC Sandbox) Always Allow Teleport";
-		icon = "\mcc_sandbox_mod\data\mcc_access.paa";
-		picture = "\mcc_sandbox_mod\data\mcc_access.paa";
-		vehicleClass = "Modules";
-
-		class Eventhandlers {
-		init = "_ok = _this execVM '\mcc_sandbox_mod\init_moduleTeleport.sqf'";
-		};
-	};
-	
-	class mcc_sandbox_moduleTS : Logic
-	{
-		displayName = "(MCC Sandbox) Disable Auto Teleport to Start";
-		icon = "\mcc_sandbox_mod\data\mcc_access.paa";
-		picture = "\mcc_sandbox_mod\data\mcc_access.paa";
-		vehicleClass = "Modules";
-
-		class Eventhandlers {
-		init = "_ok = _this execVM '\mcc_sandbox_mod\init_moduleStartTeleport.sqf'";
-		};
-	};
-	
 	class mcc_sandbox_moduleSF : Logic
 	{
 		displayName = "(MCC Sandbox) Special Forces";

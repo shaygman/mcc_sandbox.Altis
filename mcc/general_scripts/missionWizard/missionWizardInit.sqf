@@ -333,7 +333,7 @@ publicvariable "MCC_MWmissionsCenter";
 diag_log format ["MCC Mission Wizard center = %1", _missionCenter];
 
 //Create the marker
-[[1, "ColorRed",[_maxObjectivesDistance*3,_maxObjectivesDistance*3], "ELLIPSE", "Border", "Empty", FORMAT ["MCCMW_operationMarker_%1",["MCCMW_operationMarker",1] call bis_fnc_counter], _missionCenter],"MCC_fnc_makeMarker",true,false] spawn BIS_fnc_MP;
+[1, "ColorRed",[_maxObjectivesDistance*3,_maxObjectivesDistance*3], "ELLIPSE", "Border", "Empty", FORMAT ["MCCMW_operationMarker_%1",["MCCMW_operationMarker",1] call bis_fnc_counter], _missionCenter] call MCC_fnc_makeMarker;
 
 
 

@@ -14,7 +14,8 @@ _side 			= toupper (_this select 2);
 _size 			= toupper (_this select 3);			
 _destructable	= _this select 4; 
 
-if (isServer) then {
+if (isServer) then 
+{
 	switch (_side) do
 		{
 			case "WEST":	//west
@@ -45,4 +46,4 @@ if (isServer) then {
 						case "EAST":		{CP_eastSpawnPoints set [count CP_eastSpawnPoints, _dummy]; publicvariable "CP_eastSpawnPoints"};
 						case "RESISTANCE":	{CP_guarSpawnPoints set [count CP_guarSpawnPoints, _dummy]; publicvariable "CP_guarSpawnPoints"};
 					};
-	}; 
+}; 
