@@ -16,8 +16,8 @@ while {true} do
 			if (_target isKindOf "Man") then
 			{
 				_name = name _target;
-				_rank = [_target,"displayNameShort"] call BIS_fnc_rankParams;
-				_string = format ["<t font='puristaMedium' size='0.4' color='#a8e748'>%1. %2</t>",_rank, _name];
+				_rank = [_target,"texture"] call BIS_fnc_rankParams;
+				_string = format ["<t font='puristaMedium' size='0.4' color='#a8e748'><img size='0.45' image='%1'/> %2</t>",_rank, _name];
 			};
 			
 			//Vehicle show type name and name and rank of the commander or driver or gunner

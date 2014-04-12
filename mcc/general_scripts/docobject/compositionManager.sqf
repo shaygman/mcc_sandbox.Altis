@@ -1,49 +1,27 @@
-#define MCC3D_IDD 8000
 #define MCC3DOpenCompIDC 8010
+#define MCC_3DDOCIDC 8017
 #define MCC_3DCompssaveListIDC 8011
 #define MCC_3DCompssaveDescriptionIDC 8012
 #define MCC_3DCsaveNameIDC 8013
-#define MCC_3DCompsaveNameTittleIDC 8014
-#define MCC_3DCompsaveUIButtonIDC 8015
-#define MCC_3DComploadUIButtonIDC 8016
-#define MCC_3DComploadBcgIDC 8017
+#define MCC_3DCargoGen 8018
+#define MCC_3dTasksControlsIDC 8020
 
 private ["_mccdialog","_pos","_comboBox","_index"];
 disableSerialization;
-_mccdialog = findDisplay MCC3D_IDD;
+_mccdialog = uiNamespace getVariable "MCC3D_Dialog";
 
-if (ctrlShown (_mccdialog displayctrl MCC_3DComploadBcgIDC)) then
+if (ctrlShown (_mccdialog displayctrl MCC_3DDOCIDC)) then
 {
-	ctrlSetText [MCC3DOpenCompIDC, "->"];
-	ctrlShow [MCC_3DCompssaveListIDC,false];
-	ctrlShow [MCC_3DCompssaveDescriptionIDC,false];
-	ctrlShow [MCC_3DCsaveNameIDC,false];
-	ctrlShow [MCC_3DCompsaveNameTittleIDC,false];
-	ctrlShow [MCC_3DCompsaveUIButtonIDC,false];
-	ctrlShow [MCC_3DComploadUIButtonIDC,false];
-	_pos = ctrlPosition (_mccdialog displayctrl MCC_3DCompssaveListIDC);
-	(_mccdialog displayctrl MCC_3DComploadBcgIDC) ctrlSetPosition [(_pos select 0) - 0.01,(_pos select 1) - 0.05,0,0];
-	(_mccdialog displayctrl MCC_3DComploadBcgIDC) ctrlCommit 0;
-	waitUntil {ctrlCommitted (_mccdialog displayctrl MCC_3DComploadBcgIDC)};
-	ctrlShow [MCC_3DComploadBcgIDC,false];
+	ctrlSetText [MCC3DOpenCompIDC, "DOC -->"];
+	ctrlShow [MCC_3DDOCIDC,false];
 }
 else
 {
-	ctrlSetText [MCC3DOpenCompIDC, "<-"];
-	ctrlShow [MCC_3DComploadBcgIDC,true];
-	_pos = ctrlPosition (_mccdialog displayctrl MCC_3DCompssaveListIDC);
-	(_mccdialog displayctrl MCC_3DComploadBcgIDC) ctrlSetPosition [(_pos select 0) - 0.01,(_pos select 1) - 0.05,0.269271 * safezoneW,0.4 * safezoneH];
-	(_mccdialog displayctrl MCC_3DComploadBcgIDC) ctrlCommit 0;
-	waitUntil {ctrlCommitted (_mccdialog displayctrl MCC_3DComploadBcgIDC)};
-	
-	ctrlShow [MCC_3DCompssaveListIDC,true];
-	ctrlShow [MCC_3DCompssaveDescriptionIDC,true];
-	ctrlShow [MCC_3DCsaveNameIDC,true];
-	ctrlShow [MCC_3DCompsaveNameTittleIDC,true];
-	ctrlShow [MCC_3DCompsaveUIButtonIDC,true];
-	ctrlShow [MCC_3DComploadUIButtonIDC,true];
-	ctrlShow [MCC_3DComploadBcgIDC,true];
-	
+	ctrlShow [MCC_3DCargoGen,false];
+	ctrlShow [MCC_3dTasksControlsIDC,false];
+	ctrlSetText [MCC3DOpenCompIDC, "<-- DOC"];
+	ctrlShow [MCC_3DDOCIDC,true];
+
 	_comboBox = _mccdialog displayCtrl MCC_3DCompssaveListIDC; 
 	lbClear _comboBox;
 	{

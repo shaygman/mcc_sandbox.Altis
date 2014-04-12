@@ -267,6 +267,9 @@ if (_cargoNum > 0) then
 					//diag_log format ["MCC paradrop custom group array: %1", _spawnParaGroup];
 					_type = _spawnParaGroup select round (random 4); 
 					_unit = _newParaGroup createUnit [_type, _spawn, [], 0.5, "NONE"];
+					
+					//Curator
+					MCC_curator addCuratorEditableObjects [[_unit],false];
 				};
 			};
 
@@ -442,7 +445,8 @@ if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 							
 							unassignVehicle _unit;
 							_unit action ["eject", vehicle _unit];
-							_unit switchmove "gunner_standup01";
+							[compile format ["objectFromNetID '%1' switchmove 'crew_tank01_out'", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
+							//_unit switchmove "crew_tank01_out";
 							
 							_unit setpos [(getpos _unit select 0), (getpos _unit select 1), 0 max ((getpos _unit select 2) - 3)];
 							
@@ -453,7 +457,8 @@ if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 								sleep 0.1;
 							};
 							
-							_unit switchmove "";
+							[compile format ["objectFromNetID '%1' switchmove ''", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
+							//_unit switchmove "";
 							detach _unit;
 						};
 					sleep ( 1 + ((random 6)/10) );

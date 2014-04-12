@@ -27,6 +27,7 @@ if (isServer) then
 				{
 					[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> %2 Logged out as Misson Maker.",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
 					mcc_missionmaker="";
+					unassignCurator MCC_curator;
 					publicVariable "mcc_missionmaker";
 					ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
 				};
@@ -36,6 +37,8 @@ if (isServer) then
 				{
 					mcc_missionmaker = _p_mcc_player_name;
 					[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Access granted to: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+					unassignCurator MCC_curator;
+					_p_mcc_player assignCurator MCC_curator;
 					publicVariable "mcc_missionmaker";
 					publicVariable "mcc_zone_pos";
 					publicVariable "mcc_zone_size";
@@ -299,6 +302,9 @@ my_pv_handler =
 								
 								_dummyUnit = _unitspawned createUnit [_p_mcc_spawnname, _safepos, [],0,""];
 								
+								//Curator
+								MCC_curator addCuratorEditableObjects [[_dummyUnit],false];
+								
 										_dummyUnit setSkill ["aimingspeed", MCC_AI_Aim];
 										_dummyUnit setSkill ["spotdistance", MCC_AI_Spot];
 										_dummyUnit setSkill ["aimingaccuracy", MCC_AI_Aim];
@@ -329,7 +335,10 @@ my_pv_handler =
 							{
 								_unitspawned = createGroup sidelogic;							
 								_dummyUnit = _unitspawned createUnit [_p_mcc_spawnname, _safepos, [],0,""];
-							
+								
+								//Curator
+								MCC_curator addCuratorEditableObjects [[_dummyUnit],false];
+								
 								[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned ""%2"" of type %3.",_p_mcc_request,_unitspawned,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
 																
 							};
@@ -357,6 +366,10 @@ my_pv_handler =
 												createVehicleCrew (_unitspawned select 0);
 												(group (_unitspawned select 0)) setvariable ["MCC_canbecontrolled",true,true];		
 											};
+											
+										//Curator
+										MCC_curator addCuratorEditableObjects [[(_unitspawned select 0)],true];
+										
 										//Find out who is the poor bastard leading this joint and then give him something to do with UPS
 										//Specific resctrictions or lifting rescrictions on type of unit in UPS
 										switch (_p_mcc_classtype) do
@@ -412,6 +425,10 @@ my_pv_handler =
 										_safepos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,1,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
 										
 										_unitspawned 	= _p_mcc_spawnname createVehicle _safepos;
+										
+										//Curator
+										MCC_curator addCuratorEditableObjects [[_unitspawned],false];
+										
 										[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned type %2.",_p_mcc_request,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
 									};
 							

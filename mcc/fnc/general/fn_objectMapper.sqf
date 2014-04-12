@@ -81,6 +81,9 @@ for "_i" from 0 to ((count _objs) - 1) do
 		if (!isNil "_vehicleinit") then {[[[netID _newObj,_newObj], _vehicleinit], "MCC_fnc_setVehicleInit", false, true] spawn BIS_fnc_MP};
 		if (!isNil "_vehicleTarget") then {_target = _newObj};
 		MCC_lastSpawn set [count MCC_lastSpawn,_newObj];
+		
+		//Curator
+		MCC_curator addCuratorEditableObjects [[_newObj],false];
 };
 publicVariable "MCC_lastSpawn";
 if (!isNil "_target") then {_target}; 

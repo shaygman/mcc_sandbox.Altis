@@ -66,37 +66,40 @@ while {true} do
 			//Check if in vehicle
 			[] call CP_fnc_allowedDrivers;
 			
-			//Manage XP
-			_rating = rating player;
-			
-			if (_rating != 0) then
+			if (CP_saveGear) then
 			{
-				if (CP_debug) then {player sidechat format ["rating add: %1", _rating]};
+				//Manage XP
+				_rating = rating player;
 				
-				while {isnil "_role"} do {_role = player getvariable "CP_role";}; 
-				
-				_exp = call compile format  ["%1Level select 1",_role]; 
-							
-				if (!isnil "_exp") then 
+				if (_rating != 0) then
 				{
-					if (_exp < 0) then {_exp = 0};
-					if (CP_debug) then {player sidechat format ["rating: %1", _exp]};
-					_exp = (_exp + _rating);
-					 
-					_level =[floor(_exp/2000)+1 ,_exp];
-					if (CP_debug) then {player sidechat format ["level: %1",_level]};
+					if (CP_debug) then {player sidechat format ["rating add: %1", _rating]};
 					
-					missionNameSpace setVariable [format ["%1Level",_role], _level]; 
-					[[format ["%1Level",_role], player, _level, "ARRAY"], "CP_fnc_setVariable", false, false] spawn BIS_fnc_MP;
-				};
-				
-				if (_rating > 0) then 
-				{
-					player addRating (-1 * _rating);
-				}
-				else
-				{
-					player addRating _rating;
+					while {isnil "_role"} do {_role = player getvariable "CP_role";}; 
+					
+					_exp = call compile format  ["%1Level select 1",_role]; 
+								
+					if (!isnil "_exp") then 
+					{
+						if (_exp < 0) then {_exp = 0};
+						if (CP_debug) then {player sidechat format ["rating: %1", _exp]};
+						_exp = (_exp + _rating);
+						 
+						_level =[floor(_exp/2000)+1 ,_exp];
+						if (CP_debug) then {player sidechat format ["level: %1",_level]};
+						
+						missionNameSpace setVariable [format ["%1Level",_role], _level]; 
+						[[format ["%1Level",_role], player, _level, "ARRAY"], "CP_fnc_setVariable", false, false] spawn BIS_fnc_MP;
+					};
+					
+					if (_rating > 0) then 
+					{
+						player addRating (-1 * _rating);
+					}
+					else
+					{
+						player addRating _rating;
+					};
 				};
 			};
 		}; 

@@ -10,6 +10,12 @@ cutText ["","BLACK",0.1];
 //******************************************************************************************************************************
 waituntil {alive player};
 
+//Get rank from the server
+[["MCCplayerRank", player, "PRIVATE", "STRING"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+waituntil {! isnil "MCCplayerRank"};
+if (CP_debug) then {player sidechat format ["player Rank : %1",MCCplayerRank]};
+player setRank MCCplayerRank; 
+
 [["officerLevel", player, CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "officerLevel"};
 if (CP_debug) then {player sidechat format ["officerLevel : %1",officerLevel]};

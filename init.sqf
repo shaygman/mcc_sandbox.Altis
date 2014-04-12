@@ -58,6 +58,9 @@ if (isnil "MCC_nameTags") then {MCC_nameTags = false};
 //-------------------- Save Gear --------------------------------------------------
 if (isnil "MCC_saveGear") then {MCC_saveGear = false};
 
+//--------------------Gain XP (in role selection)--------------------------------
+if (isnil "CP_saveGear") then {CP_saveGear = true};
+
 //-------------------- Group Markers (Role Selection) --------------------------------------------------
 if (isnil "MCC_groupMarkers") then {MCC_groupMarkers = true};
 
@@ -133,6 +136,7 @@ mccPresets = [
 		,['Forward Observer Artillery', '[0,_this] execVM "'+MCC_path+'mcc\general_scripts\artillery\bon_art.sqf";']
 		,['Ambient AA - Cannon/Rockets', '[2,_this] spawn MCC_fnc_amb_Art;']
 		,['Ambient AA - Search Light', '[3,_this] spawn MCC_fnc_amb_Art;']
+		,['', '']
 		,['======= Units =======','']
 		,['Recruitable', '_this addAction [format ["Recruit %1", name _this], "'+MCC_path+'mcc\general_scripts\hostages\hostage.sqf",[2],6,false,true];']
 		,['Make Hostage', '_this execVM "'+MCC_path+'mcc\general_scripts\hostages\create_hostage.sqf";']
@@ -141,25 +145,34 @@ mccPresets = [
 		,['Stand Up', '_this setUnitPos "UP";']
 		,['Kneel', '_this setUnitPos "Middle";']
 		,['Prone', '_this setUnitPos "DOWN";']
+		,['Remove All Weapons', 'removeAllWeapons _this;']
+		,['Remove All Items', 'removeAllItems _this;']
 		,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
+		,['', '']
 		,['======= Vehicles =======','']
 		,['Set Empty (Fuel)', '_this setfuel 0;']
 		,['Set Empty (Ammo)', '_this setvehicleammo 0;']
 		,['Set Empty (Cargo)', 'clearMagazineCargoGlobal _this; clearWeaponCargoGlobal _this; clearItemCargoGlobal _this;']
 		,['Set Locked', '_this setVehicleLock "LOCKED";']
+		,['Clear Cargo', 'clearMagazineCargo _this; clearWeaponCargo _this; clearItemCargo _this;']
 		,['Add Crew (UAV)','createVehicleCrew _this;group _this setvariable ["MCC_canbecontrolled",true,true];']
 		,['ECM - can jamm IED','if (isServer) then {_this setvariable ["MCC_ECM",true,true]};']
+		,['HQ Vehicle - create FOB','_this addAction ["<t color=""#99FF00"">Create FOB </t>", "'+MCC_path+'scripts\player\createFOB.sqf",[],6,false, false,"teamSwitch","(driver vehicle _target == _this) && (speed (vehicle _target) == 0)"];']
+		,['', '']
 		,['======= Objects =======','']
 		,['Pickable Object','_this call MCC_fnc_pickItem;']
-		,['Virtual Ammobox System (VAS)', '_this addAction ["Virtual Ammobox", "'+MCC_path+'VAS\open.sqf"];']
-		,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];']
+		,['Disable Simulation','_this enableSimulation false;']
 		,['Destroy Object', '_this setdamage 1;']
 		,['Flip Object', '[_this ,0, 90] call bis_fnc_setpitchbank;']
+		,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "VAS\open.sqf"];']
+		,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];']
+		,['', '']
 		,['======= Effects =======','']
 		,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
 		,['Flies','[getposatl _this] call BIS_fnc_flies;']
 		,['Smoke','if (isServer) then {_effect = "test_EmptyObjectForSmoke" createVehicle (getpos _this); _effect attachto [_this,[0,0,0]];};']
 		,['Fire','if (isServer) then {_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _this); _effect attachto [_this,[0,0,0]];};']
+		,['', '']
 		,['======= Misc =======','']
 		,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
 	];
@@ -575,10 +588,18 @@ if ( isServer ) then
 	_SideHQ_west   = createCenter west;
 
 	//create logics
+	
 	//server
 	_dummyGroup = creategroup civilian; 
 	_dummy = _dummyGroup createunit ["Logic", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "server";
+	call compile (_name + " = _dummy");
+	publicVariable _name;
+	
+	//CURATOR
+	_dummy = _dummyGroup createunit ["ModuleCurator_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
+	_dummy setvariable ["Addons",2,true];
+	_name = "MCC_curator";
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 	

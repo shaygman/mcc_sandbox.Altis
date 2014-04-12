@@ -8,14 +8,16 @@ _type = _this select 0;
 
 _dlg = (uiNamespace getVariable "MCC_groupGen_Dialog");
 
-	if (mcc_missionmaker == (name player)) then {
+if (mcc_missionmaker == (name player)) then 
+{
 	switch (_type) do
 	{
 	   case 0:	//create
-	   {_stringName = ctrlText (_dlg displayCtrl MCC_TASKS_NAME);
-		_stringDescription = ctrlText (_dlg displayCtrl MCC_TASKS_DESCRIPTION); 
-		_pos =[];
-		if (MCC_capture_state) then
+		{
+			_stringName = ctrlText (_dlg displayCtrl MCC_TASKS_NAME);
+			_stringDescription = ctrlText (_dlg displayCtrl MCC_TASKS_DESCRIPTION); 
+			_pos =[];
+			if (MCC_capture_state) then
 			{
 				hint "Task Captured";
 				MCC_capture_var = MCC_capture_var + FORMAT ['
@@ -26,7 +28,9 @@ _dlg = (uiNamespace getVariable "MCC_groupGen_Dialog");
 								,_stringDescription
 								,_pos
 								];
-			} else {
+			} 
+			else 
+			{
 				mcc_safe=mcc_safe + FORMAT ['
 										 [[%1, "%2", "%3", %4],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;
 										sleep 1;'								 
@@ -44,9 +48,9 @@ _dlg = (uiNamespace getVariable "MCC_groupGen_Dialog");
 					_comboBox lbAdd format ["%1",_x select 0];
 				} foreach MCC_tasks;
 				_comboBox lbSetCurSel 0;
-				};
 			};
-		
+		};
+
 	   case 1:	//Set WP Cinametic
 	   {
 		if (count MCC_tasks == 0) exitWith {hint "You must create a task first"};

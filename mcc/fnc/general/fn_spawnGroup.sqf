@@ -162,6 +162,9 @@ for "_i" from 0 to ((count _types) - 1) do
 			_vehicles set [count _vehicles, _unit];
 		};
 		
+		//Curator
+		MCC_curator addCuratorEditableObjects [[_unit],false];
+			
 		//If given, set the unit's rank.
 		if ((count _ranks) > 0) then 
 		{

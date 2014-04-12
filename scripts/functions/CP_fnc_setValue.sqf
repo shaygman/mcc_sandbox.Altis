@@ -9,6 +9,13 @@ _id			= _this select 2;
 
 if (getPlayerUID player == _id) then	
 {
-	call compile format ["%1=%2;",_varName,_value];
+	if (typeName _value == "STRING") then
+	{
+		call compile format ["%1 = '%2';",_varName,_value];
+	}
+	else
+	{
+		call compile format ["%1=%2;",_varName,_value];
+	};
 };
 

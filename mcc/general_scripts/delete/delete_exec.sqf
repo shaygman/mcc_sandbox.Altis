@@ -2,7 +2,7 @@ private ["_pos","_radius","_type","_nearObjects","_crew","_markers"];
 
 _pos = _this select 0;
 _radius = _this select 1;
-_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights","N/V","Bodies"] select (_this select 2); 
+_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights","N/V","Bodies","Flashlights"] select (_this select 2); 
 _nearObjects = []; 
 
 switch _type do
@@ -66,6 +66,8 @@ switch _type do
 						_unit removeItem _x;
 					} foreach ["NVGoggles","NVGoggles_OPFOR","NVGoggles_INDEP"];
 				} foreach _nearObjects;
+				
+				_nearObjects = []; 
 			};
 		
 		case "Bodies":	
@@ -75,6 +77,27 @@ switch _type do
 					if ((_x distance [_pos select 0, _pos select 1, 0]) < _radius) then {_nearObjects set [count _nearObjects, _x]};
 				} foreach allDeadMen;
 			};
+		
+		case "Flashlights":	
+			{ 
+				_nearObjects = [_pos select 0, _pos select 1, 0] nearObjects ["Man", _radius];
+				
+				//Flashlight
+				{
+					if ("acc_flashlight" in primaryWeaponItems _x) then
+					{
+						_x enablegunlights "forceOn";
+					}
+					else
+					{
+						_x addPrimaryWeaponItem "acc_flashlight";
+						_x enablegunlights "forceOn";
+					};
+				} foreach _nearObjects;
+				
+				_nearObjects = []; 
+			};
+			
 			
 		default	
 			{

@@ -89,7 +89,12 @@ if (_action == 0 || _action == 1) then	//Garisson
 						_group setFormDir _dir;
 						
 						_static = if (random 1 > 0.1) then {true} else {false};
-						[_group, _static] spawn MCC_fnc_garrisonBehavior
+						[_group, _static] spawn MCC_fnc_garrisonBehavior;
+						
+						//Curator
+						MCC_curator addCuratorEditableObjects [[_unit],false];
+						//_unit setVariable ["vehicleinit",";_this setpos (getpos_this);"];
+						
 					};
 				}
 			};
@@ -130,6 +135,9 @@ if (_action == 1) then	{	//vehicles
 			_vehicle setpos _spawnPos;
 			_vehicle setDir _dir;
 			_vehicle setVehicleLock "LOCKED";
+			
+			//Curator
+			MCC_curator addCuratorEditableObjects [[_vehicle],false];
 		};
 	};
 };

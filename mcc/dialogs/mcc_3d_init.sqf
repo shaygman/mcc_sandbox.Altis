@@ -8,22 +8,13 @@
 #define MCC_SETTING_EMPTY 8006
 #define MCC_ZONE_LOC 8007
 
-#define MCC3DOpenCompIDC 8010
-#define MCC_3DCompssaveListIDC 8011
-#define MCC_3DCompssaveDescriptionIDC 8012
-#define MCC_3DCsaveNameIDC 8013
-#define MCC_3DCompsaveNameTittleIDC 8014
-#define MCC_3DCompsaveUIButtonIDC 8015
-#define MCC_3DComploadUIButtonIDC 8016
-#define MCC_3DComploadBcgIDC 8017
+#define MCC_3DDOCIDC 8017
+#define MCC_3DCargoGen 8018
+#define MCC_3dTasksControlsIDC 8020
 
-ctrlShow [MCC_3DCompssaveListIDC,false];
-ctrlShow [MCC_3DCompssaveDescriptionIDC,false];
-ctrlShow [MCC_3DCsaveNameIDC,false];
-ctrlShow [MCC_3DCompsaveNameTittleIDC,false];
-ctrlShow [MCC_3DCompsaveUIButtonIDC,false];
-ctrlShow [MCC_3DComploadUIButtonIDC,false];
-ctrlShow [MCC_3DComploadBcgIDC,false];
+ctrlShow [MCC_3DDOCIDC,false];
+ctrlShow [MCC_3DCargoGen,false];
+ctrlShow [MCC_3dTasksControlsIDC,false];
 
 disableSerialization;
 private ["_mccdialog","_comboBox","_displayname","_x"];

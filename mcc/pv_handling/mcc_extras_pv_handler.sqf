@@ -3,7 +3,7 @@ MCC_3D_PLACER = compile preProcessFileLineNumbers format["%1mcc\pop_menu\3rd_pla
 
 MCC_fnc_makeMarker = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7), (_this select 8)] execVM MCC_path + "mcc\pop_menu\markers_add.sqf"};
 MCC_fnc_makeBriefing = {[(_this select 0), (_this select 1)] execVM MCC_path + "mcc\pop_menu\briefing_add.sqf"};
-MCC_fnc_makeTaks = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3)] execVM MCC_path + "mcc\pop_menu\tasks_add.sqf"};
+MCC_fnc_makeTaks = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)] execVM MCC_path + "mcc\pop_menu\tasks_add.sqf"};
 MCC_fnc_MusicTrigger = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7)] execVM MCC_path + "mcc\general_scripts\jukebox\jukebox_execute.sqf"};
 /*
 sf_para = compile preProcessFileLineNumbers format["%1mcc\general_scripts\paradrop\parastart.sqf",MCC_path];
@@ -46,7 +46,7 @@ if (isServer) then
 // 	_items:  array 1st: item class 2nd: ammount [["itemClass1","itemClass2"],[5,5]]
 // 	_rucks: array 1st: ruck class 2nd: ammount [["ruckClass1","ruckClass2"],[5,5]]
 //==============================================================================================================================================================================	
-	MCC_fnc_boxGenerator = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5)] execVM MCC_path + "mcc\general_scripts\boxGen\box_spawn.sqf";};
+	MCC_fnc_boxGenerator = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)] execVM MCC_path + "mcc\general_scripts\boxGen\box_spawn.sqf";};
 	
 //===================================================================MCC_fnc_artillery======================================================================================
 // Create an artillery shell above the location

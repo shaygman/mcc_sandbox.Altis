@@ -25,7 +25,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_dummy setdir _dir;
 					sleep 0.01;
-					if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1;",_pos]};
+					if (!MCC_align3D) then {_init= _init +	FORMAT [";_this setpos %1;",_pos]};
 					
 					//setskill
 					_unitspawned setformdir _dir; 
@@ -43,6 +43,9 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 					};
 					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+					
+					//Curator
+					MCC_curator addCuratorEditableObjects [[_dummy],false];
 				};
 				
 				case "ANIMAL":	
@@ -52,73 +55,83 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_dummy setdir _dir;
 					sleep 0.01;
-					if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1;",_pos]};
+					if (!MCC_align3D) then {_init= _init +	FORMAT [";_this setpos %1;",_pos]};
 					_unitspawned setformdir _dir; 
 					if (_name != "") then 
 					{
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 					};
 					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+					
+					//Curator
+					MCC_curator addCuratorEditableObjects [[_dummy],false];
 				};
 				
 				case "VEHICLE":	
 				{
 					if (_notEmpty) then
+					{
+						private ["_side","_veh","_crew"];
+						_side = switch (_faction) do
+								{
+									case "GUE" :  {resistance};
+									case "WEST" : {WEST};
+									case "EAST" : {EAST};
+									case "CIV" :  {civilian};
+								};
+						
+						if (!isnil "Object3D") then {waitUntil {_pos distance Object3D > 15}};
+						_veh = createvehicle [_class,_pos,[],0,"none"];
+						_veh setpos _pos;
+						_veh setdir _dir;
+						_grp = createGroup _side;
+						
+						//If autonomous
+						_vehicleClass 	=  getText (configFile >> "CfgVehicles" >> _class >> "vehicleClass");
+						if (_vehicleClass == "autonomous") then 
 						{
-							private ["_side","_veh","_crew"];
-							_side = switch (_faction) do
-									{
-										case "GUE" :  {resistance};
-										case "WEST" : {WEST};
-										case "EAST" : {EAST};
-										case "CIV" :  {civilian};
-									};
-							
-							if (!isnil "Object3D") then {waitUntil {_pos distance Object3D > 15}};
-							_veh = createvehicle [_class,_pos,[],0,"none"];
-							_veh setpos _pos;
-							_veh setdir _dir;
-							_grp = createGroup _side;
-							
-							//If autonomous
-							_vehicleClass 	=  getText (configFile >> "CfgVehicles" >> _class >> "vehicleClass");
-							if (_vehicleClass == "autonomous") then 
-							{
-								createVehicleCrew _veh;
-							};
-
-							_crew = [_veh, _grp] call BIS_fnc_spawnCrew;
-							_dummy = [_veh,_crew,_grp]; 
-							
-							(_dummy select 0) setSkill ["aimingspeed", MCC_AI_Aim];
-							(_dummy select 0) setSkill ["spotdistance", MCC_AI_Spot];
-							(_dummy select 0) setSkill ["aimingaccuracy", MCC_AI_Aim];
-							(_dummy select 0) setSkill ["aimingshake", MCC_AI_Aim];
-							(_dummy select 0) setSkill ["spottime", MCC_AI_Spot];
-							(_dummy select 0) setSkill ["commanding", MCC_AI_Command];
-							(_dummy select 0) setSkill ["general", MCC_AI_Skill];
-					
-							if (_name != "") then 
-							{
-								[[[netid (_dummy select 0),(_dummy select 0)], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
-							};
-							_init= _init +	FORMAT ["group _this setFormDir %1;",_dir];
-							if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1",_pos]};
-							[[[netid (_dummy select 0),(_dummy select 0)], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-						} else
-						{
-							if (!isnil "Object3D") then {waitUntil {_pos distance Object3D > 15}};
-							_dummy = _class createvehicle _pos;
-							_dummy setpos _pos;
-							_dummy setdir _dir;
-							sleep 0.01;
-							if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1;",_pos]};
-							if (_name != "") then 
-							{
-								[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
-							};
-							[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+							createVehicleCrew _veh;
 						};
+
+						_crew = [_veh, _grp] call BIS_fnc_spawnCrew;
+						_dummy = [_veh,_crew,_grp]; 
+						
+						(_dummy select 0) setSkill ["aimingspeed", MCC_AI_Aim];
+						(_dummy select 0) setSkill ["spotdistance", MCC_AI_Spot];
+						(_dummy select 0) setSkill ["aimingaccuracy", MCC_AI_Aim];
+						(_dummy select 0) setSkill ["aimingshake", MCC_AI_Aim];
+						(_dummy select 0) setSkill ["spottime", MCC_AI_Spot];
+						(_dummy select 0) setSkill ["commanding", MCC_AI_Command];
+						(_dummy select 0) setSkill ["general", MCC_AI_Skill];
+				
+						if (_name != "") then 
+						{
+							[[[netid (_dummy select 0),(_dummy select 0)], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
+						};
+						_init= _init +	FORMAT [";group _this setFormDir %1;",_dir];
+						if (!MCC_align3D) then {_init= _init + ";_this setPos (getPos _this);";};
+						[[[netid (_dummy select 0),(_dummy select 0)], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+						
+						//Curator
+						MCC_curator addCuratorEditableObjects [[(_dummy select 0)],true];
+					} 
+					else
+					{
+						if (!isnil "Object3D") then {waitUntil {_pos distance Object3D > 15}};
+						_dummy = _class createvehicle _pos;
+						_dummy setpos _pos;
+						_dummy setdir _dir;
+						sleep 0.01;
+						if (!MCC_align3D) then {_init= _init +	";_this setPos (getPos _this);";};
+						if (_name != "") then 
+						{
+							[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
+						};
+						[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+						
+						//Curator
+						MCC_curator addCuratorEditableObjects [[_dummy],false];
+					};
 				};
 				
 				case "AMMO":	
@@ -127,12 +140,15 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_dummy setdir _dir;
 					sleep 0.01;
-					if (!MCC_align3D) then {_init= _init +	FORMAT ["_this setpos %1;",_pos]};
+					if (!MCC_align3D) then {_init= _init +	";_this setPos (getPos _this);";};
 					if (_name != "") then 
 					{
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 					};
 					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+					
+					//Curator
+					MCC_curator addCuratorEditableObjects [[_dummy],false];
 				};
 				
 				case "MINES":	
@@ -146,6 +162,9 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 					}; 
 					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+					
+					//Curator
+					MCC_curator addCuratorEditableObjects [[_dummy],false];
 				};
 				
 				case "DOC":	

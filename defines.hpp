@@ -210,6 +210,11 @@ class CfgFunctions
 			{
 				description = "MCC Custom group spawning";
 			};
+			
+			class createTask
+			{
+				description = "create a simple task with trigger assigned to a specific object";
+			};
 		};
 		
 		class ui

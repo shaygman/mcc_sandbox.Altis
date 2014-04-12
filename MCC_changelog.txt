@@ -1,4 +1,11 @@
 Change log r3
+
+Zeus Support:
+- MCC now have built in Zeus support:
+	- Once mission maker log in he will have Zeus key enabled once he logged out he'll lose it. 
+	- Units added with MCC can be controled via Zeus.
+	- Units placed with Zeus will be saved to SQM. - so basicly you got a full 3D editor with save to SQM feature. 
+	
 Artillery:
 - Added: Hold Ctrl to continue spawning ordnance without the need to press Create again. 
 
@@ -9,31 +16,42 @@ Spawn:
 - Added: Teleport, paradrop or HALO start location.
 
 Engine:
+- Removed: VAS from the mod version, it still there in the mission version but if you are using the mod version you should add VAS to your template mission - let see how this will work out. 
 - Removed: BTC Revive in the mission version it was a good script but I needed something that isn't based on killed EH for the Role Selection.
 - Added: [TcB]-Psycho- A3 Wounding System 
-- Added: If a mission maker log off and another one take his place or if he DC and come back he will have the zones markers. 
-- Added: DOC objects will be saved into SQM. 
+- Added: If a mission maker log off and another one take his place or if he DC and come back he will still have the zones markers. 
+- Added: DOC/Waypoints/Groups and basiclly almost anything you spawn will be saved into SQM. 
 - Fixed: Changing faction relations from mission's settings didn't effect the game. 
 - Fixed: Hijack made you lose your old group.
 - Fixed: Hijack made the hijcacked unit lose his group.
 - Fixed: Floating rocks bug.
 - Fixed: Opening spectator will now close MCC. 
 - Fixed: Halo/parajump didn't work for more than 1 unit. - thanks Ollem.
-- Fixed: Headless Client fixed. 
+- Fixed: Headless Client fixed  - thanks Ollem. 
 - Fixed: Saving without align to terrain in the 3D editor didn't show on the save to sqm file.
+- Changed: Garrison values have been decreased. 
+- Changed: Name tags will show rank picture instead of text. 
+
+3D Editor:
+- New: Moved the Box generator from MCC main interface to the 3D editor - you can create custom cargo items to any kind of vehicle/object that can hold cargo (not units). 
+- New Preset: Remove All Weapons (unit), Remove All Items (unit) - remove all items or weapons from the given unit. 
+- New Preset: Clear Cargo (Vehicle) - remove all cargo items from the vehicle cargo space. 
+- New Preset: HQ Vehicle (Vehicle) - can convert any vehicle to a FOB (secondary respawn point in roles selections) - the vehicle's driver can deploy the FOB. 
+- New Preset: Disable Simulation (object).
 
 CAS: 
-- Improved: CAS gun-runs mostly for fixed wing or helicopters witht a turret.
+- Improved: CAS gun-runs will work best for fixed wing or helicopters with a turret.
 
 Role Selection:
 - Alot of work have been put here to clear some bugs and make this system stable. 
-- New: Added iniDB support for RS - need to run iniDB on server only will save stats, xp and easy to maintain gear and progression
+- New: Added iniDB support for RS - need to run iniDB on server only will save stats such as xp, level, rank, role exc.
 - New: Moved all role selection defines such as numbers of roles per squad, gear exc to iniDB.
 - New: In squad menu players will show their role name and level. 
 
 GAIA:
 - Fixed: Reinforcement air or motorized didn't used GAIA. 
 - Fixed: Artillery or static weapons didn't use GAIA.
+- Added: GAIA can now handle rotated zones. 
 
 UI:
 - Added: Move,resize,rotate zones by click and drag over the map. 
@@ -45,11 +63,10 @@ UI:
 Delete Brush: 
 - Added: Delete N/V - will remove and delete all N/V from all the units in the selected zone. 
 - Added: Delete dead bodies.
+- Added: Add flashlights to units and force them using it (yeah I know it is a delete brush but hey it fits). 
 
-- TODO: add presets
-- TODO: Add build fob preset
-- TODO: Remove VAS
-- TODO: Add flash lights delete brush
+
+
 - TODO items tasks
 - TODO: Add fog levels/weather over time.
 - TODO: restrict give to GAIA if no zone available

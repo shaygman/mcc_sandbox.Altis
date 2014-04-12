@@ -731,6 +731,6 @@ if (_action == 17) exitWith
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights","N/V","Bodies"];
+	} foreach ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights","N/V","Bodies","Flashlights Add/Delete"];
 	_comboBox lbSetCurSel 0;
 };

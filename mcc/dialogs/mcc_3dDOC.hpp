@@ -1,42 +1,41 @@
-class mcc_test
+#define MCC_3DDOCIDC 8017
+#define MCC_3DCompssaveListIDC 8011
+#define MCC_3DCompssaveDescriptionIDC 8012
+#define MCC_3DCsaveNameIDC 8013
+
+class MCC_3dDOCControls:MCC_RscControlsGroup
 {
-	idd = 9999999;
-	movingEnable = true;
-	onLoad ="";
+	idc = MCC_3DDOCIDC;
+	x = 0.195 * safezoneW + safezoneX;
+	y = 0.214111 * safezoneH + safezoneY;
+	w = 0.275 * safezoneW;
+	h = 0.38485 * safezoneH;
 
-	controlsBackground[] = 
-	{
-	};
-
-
-	//---------------------------------------------
-	objects[] = 
-	{ 	//(0.671875 * safezoneW + safezoneX) / safezoneW -X
-	};	//(0.478009 * safezoneH + safezoneY) / safezoneH - Y
-
-	class controls 
+	class Controls
 	{
 		class MCC_3DComploadBcg: MCC_RscText
 		{
-			idc = MCC_3DComploadBcgIDC;
+			idc = -1;
 			text = "";
-			x = 0.190625 * safezoneW + safezoneX;
-			y = 0.214111 * safezoneH + safezoneY;
-			w = 0.269271 * safezoneW;
-			h = 0.4 * safezoneH;
 			colorBackground[] = {0,0,0,0.7};
+			
+			w = 0.275 * safezoneW;
+			h = 0.38485 * safezoneH;			
 		};
+		
 		class MCC_3DCompssaveList: MCC_RscListbox
 		{
 			idc = MCC_3DCompssaveListIDC;
+			colorBackground[] = {0,0,0,0.9};
 			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\docobject\compositionManagerChnage.sqf'");
 
-			x = 0.196354 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.0109958 * safezoneH;
 			w = 0.0973958 * safezoneW;
 			h = 0.274893 * safezoneH;
 			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
 		class MCC_3DCompssaveDescription: MCC_RscText
 		{
 			idc = MCC_3DCompssaveDescriptionIDC;
@@ -45,10 +44,11 @@ class mcc_test
 			style = MCCST_MULTI;
 			autocomplete = false;
 			access = ReadAndWrite;
+			colorBackground[] = {0,0,0,0.9};
 
-			x = 0.299479 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
-			w = 0.154688 * safezoneW;
+			x = 0.114584 * safezoneW;
+			y = 0.0109958 * safezoneH;
+			w = 0.154687 * safezoneW;
 			h = 0.274893 * safezoneH;
 			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
@@ -60,20 +60,21 @@ class mcc_test
 			style = MCCST_MULTI;
 			autocomplete = false;
 			access = ReadAndWrite;
-
-			x = 0.322396 * safezoneW + safezoneX;
-			y = 0.510996 * safezoneH + safezoneY;
+			colorBackground[] = {0,0,0,0.9};
+			
+			x = 0.0802087 * safezoneW;
+			y = 0.296884 * safezoneH;
 			w = 0.131771 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
 		class MCC_3DCompsaveNameTittle: MCC_RscText
 		{
-			idc = MCC_3DCompsaveNameTittleIDC;
+			idc = -1;
 
 			text = "Name:"; //--- ToDo: Localize;
-			x = 0.196354 * safezoneW + safezoneX;
-			y = 0.510996 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.296884 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			colorText[] = {0,1,1,1};
@@ -81,12 +82,12 @@ class mcc_test
 		};
 		class MCC_3DCompsaveUIButton: MCC_RscButton
 		{
-			idc = MCC_3DCompsaveUIButtonIDC;
+			idc = -1;
 			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\docobject\compositionManagerChnage.sqf'");
 
 			text = "Save To Profile"; //--- ToDo: Localize;
-			x = 0.196354 * safezoneW + safezoneX;
-			y = 0.554979 * safezoneH + safezoneY;
+			x = 0.00572965 * safezoneW;
+			y = 0.340867 * safezoneH;
 			w = 0.103125 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Save the composition as the player as an anchor point and radius 200 meters to the profile name space - choose a slot from the above list first"; //--- ToDo: Localize;
@@ -94,12 +95,12 @@ class mcc_test
 		};
 		class MCC_3DComploadUIButton: MCC_RscButton
 		{
-			idc = MCC_3DComploadUIButtonIDC;
+			idc = -1;
 			onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\docobject\compositionManagerChnage.sqf'");
 
 			text = "Load From Profile"; //--- ToDo: Localize;
-			x = 0.356771 * safezoneW + safezoneX;
-			y = 0.554979 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 0.340867 * safezoneH;
 			w = 0.0973958 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			tooltip = "Load a composition from the profile name space to the init line of the choosen vehicle- choose a slot from the above list first"; //--- ToDo: Localize;
@@ -107,3 +108,4 @@ class mcc_test
 		};
 	};
 };
+		

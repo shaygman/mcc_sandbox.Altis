@@ -14,7 +14,8 @@
 */
 private ["_logic", "_camera","_logicGrp","_logicASL","_nvgstate","_preview","_pos","_GUIstate"];
 
-MCC_3Dterminate = false; 
+MCC_3Dterminate 		= false; 
+MCC_3DterminateNoMCC	= false; 
 preview3DClass 	= _this select 0;
 _pos 			= _this select 1;
 
@@ -437,7 +438,7 @@ MCC_3D_CAM_Handler =
 		};
 
 	//--- Deselect or CloseTerminate 
-	if (_terminate) then 
+	if (_terminate || MCC_3Dterminate || MCC_3DterminateNoMCC) then 
 		{
 			MCC_mcc_screen=2;
 			//--- Close
@@ -452,27 +453,12 @@ MCC_3D_CAM_Handler =
 			player setvariable ["3D_isRuning",nil];
 			hintsilent "";
 			waituntil {isnil "MCC_3D_CAM"};
-			_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
+			if !(MCC_3DterminateNoMCC) then {_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
 		};
-	
-	if (MCC_3Dterminate) then 
-		{
-			//--- Close
-			MCC3DRuning = false; 
-			if (isNil "MCC_3D_CAM") exitWith {}; 
-			MCC_3D_CAM cameraeffect ["terminate","back"];
-			camdestroy MCC_3D_CAM;
-			MCC_3D_CAM = nil;
-			deletevehicle Object3D;
-			deletevehicle MCC_dummyObject;
-			player setvariable ["3D_isRuning",nil];
-			hintsilent "";
-			waituntil {isnil "MCC_3D_CAM"};
-			if (true) exitWith {_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
-		};
-	//--- Camera no longer exists - terminate and start cleanup	
+
+		//--- Camera no longer exists - terminate and start cleanup	
 	if (isnil "MCC_3D_CAM" || player != DOperator || !alive player) exitwith
-		{
+	{
 		//////////////////////////////////////////////////
 		startLoadingScreen ["MCC 3D","RscDisplayLoadMission"];
 		//////////////////////////////////////////////////
@@ -528,7 +514,7 @@ MCC_3D_CAM_Handler =
 		//////////////////////////////////////////////////
 		endLoadingScreen;
 		//////////////////////////////////////////////////
-		};
+	};
 	_html = "<t color='#818960' size='2' shadow='0' align='left' underline='true'>" + "Controls:" + "</t><br/><br/>";
 	_html = _html + "<t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left' >" + 
 			"Tab:        Close Editor" + "<br/>" +

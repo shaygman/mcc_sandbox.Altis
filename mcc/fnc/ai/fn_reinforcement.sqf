@@ -71,6 +71,9 @@ while {_counter <=_limit} do
 		_vehicle = [_isFlat , ([_isFlat, _endPos] call BIS_fnc_dirTo), _vehicleClass, _groupVehicles] call BIS_fnc_spawnVehicle;
 		_vehiclesArray set [count _vehiclesArray, (_vehicle select 0)];
 		_counter = _counter + 1; 
+		
+		//Curator
+		MCC_curator addCuratorEditableObjects [[(_vehicle select 0)],true];
 	};
 };
 
@@ -129,6 +132,9 @@ _cargoyGroupArray = [];
 							_type = _unitsArray select round (random (5 min (count _unitsArray-1))); 
 							_unit = _group createUnit [_type, _locGr, [], 0.5, "NONE"];
 							sleep 0.1;
+							
+							//Curator
+							MCC_curator addCuratorEditableObjects [[_unit],false];
 						};
 					};
 				};

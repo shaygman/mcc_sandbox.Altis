@@ -62,25 +62,25 @@ if !mcc_isloading then
 				case 0:	//Light
 				{
 					_action 	= 0;
-					_intanse 	= 0.5;
+					_intanse 	= 0.2;
 				};
 
 				 case 1:	//Light -vehicles
 				{
 					_action 	= 1;
-					_intanse 	= 0.5;
+					_intanse 	= 0.2;
 				};
 
 				 case 2:	//Heavy
 				{
 					_action 	= 0;
-					_intanse 	= 1.5;
+					_intanse 	= 1;
 				};
 
 				 case 3:	//Heavy -vehicles
 				{
 					_action 	= 1;
-					_intanse 	= 1.5;
+					_intanse 	= 1;
 				};
 			};
 			

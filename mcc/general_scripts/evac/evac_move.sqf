@@ -231,13 +231,14 @@ else
 						
 						if (isMultiplayer) then
 						{
-							 [compile format ["unassignVehicle objectFromNetID '%1'; objectFromNetID '%1' action ['eject', vehicle objectFromNetID '%1'];objectFromNetID '%1' switchmove 'AdvePercMstpSnonWrflDnon_goup'", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
+							 [compile format ["unassignVehicle objectFromNetID '%1'; objectFromNetID '%1' action ['eject', vehicle objectFromNetID '%1'];objectFromNetID '%1' switchmove 'crew_tank01_out'", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
 						}
 						else
 						{
 							unassignVehicle _unit;
 							_unit action ["eject", vehicle _unit];
-							_unit switchmove "AdvePercMstpSnonWrflDnon_goup";
+							[compile format ["objectFromNetID '%1' switchmove 'crew_tank01_out'", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
+							//_unit switchmove "crew_tank01_out";
 						};						
 						
 						_time = time + 5; 
@@ -256,11 +257,12 @@ else
 						
 						if (isMultiplayer) then
 						{
-							 [compile format ["objectFromNetID '%1' switchmove ''; detach objectFromNetID '%1'", netID _unit], "BIS_fnc_spawn", _unit, false] call BIS_fnc_MP;
+							 [compile format ["objectFromNetID '%1' switchmove ''; detach objectFromNetID '%1'", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
 						}
 						else
 						{
-							_unit switchmove "";
+							[compile format ["objectFromNetID '%1' switchmove ''", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
+							//_unit switchmove "";
 							detach _unit;
 						};
 					};

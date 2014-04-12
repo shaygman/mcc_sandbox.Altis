@@ -1,18 +1,38 @@
-private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class"];
-#define boxGen_IDD 2995
-
+private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class","_null"];
 #define ALLGEAR_IDD 8500
 #define BOXGEAR_IDD 8501
 #define GEARCLASS_IDD 8502
-if (! isnil "tempBox") then {deleteVehicle tempBox};
-tempBox = "B_supplyCrate_F" createvehicle [0,0,200];
+#define MCC_3dTasksControlsIDC 8020
+
+disableSerialization;
+_mccdialog = uiNamespace getVariable "MCC3D_Dialog";
+
+(_mccdialog displayCtrl 8018) ctrlShow !(ctrlShown (_mccdialog displayCtrl 8018));
+if (ctrlShown (_mccdialog displayCtrl 8018)) then 
+{
+	 if (ctrlShown (_mccdialog displayCtrl 8017)) then {_null = [0] execVM MCC_path + "mcc\general_scripts\docobject\compositionManager.sqf"};
+	 ctrlShow [MCC_3dTasksControlsIDC,false];
+	(_this select 0) ctrlSetText "<-- Cargo";
+} 
+else 
+{
+	(_this select 0) ctrlSetText "Cargo -->";
+};
+
+if (!isnil "tempBox") then
+{
+	if (alive tempBox) then {deleteVehicle tempBox};
+}; 
+
+if !(ctrlShown (_mccdialog displayCtrl 8018)) exitWith {};
+
+tempBox = "B_supplyCrate_F" createvehicle [0,0,0];
 clearMagazineCargo tempBox;
 clearWeaponCargo tempBox;
 clearItemCargo tempBox;
 clearBackpackCargo tempBox;
 
-disableSerialization;
-_mccdialog = findDisplay boxGen_IDD;
+
 _comboBox = _mccdialog displayCtrl GEARCLASS_IDD; 
 	lbClear _comboBox;
 	{
@@ -20,6 +40,7 @@ _comboBox = _mccdialog displayCtrl GEARCLASS_IDD;
 		_comboBox lbAdd _displayname;
 	} foreach ["Binoculars", "Items","Uniforms", "Launchers", "Machine Guns", "Pistols", "Rifles","Sniper Rifles","Rucks","Glasses","Magazines","Under Barrel","Grenades","Explosive"];
 _comboBox lbSetCurSel MCC_gearDialogClassIndex;
+
 switch (MCC_gearDialogClassIndex) do 
 		{
 		case 0: //Binos

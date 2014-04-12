@@ -33,20 +33,6 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			h = 0.0329871 * safezoneH;
 		};
 
-		class MCC_boxGenerator: MCC_RscButton
-		{
-			idc = -1;
-			text = "Box Generator"; //--- ToDo: Localize;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			tooltip = "Open Box Generator"; 
-			onButtonClick = "if (mcc_missionmaker == (name player)) then {createDialog 'boxGen';} else {player globalchat 'Access Denied'};";
-			
-			x = 0.0057 * safezoneW;
-			y = 0.054978585840815 * safezoneH; 
-			w = 0.06875 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
-
 		class MCC_callCASButton: MCC_RscButton
 		{
 			idc = -1;
@@ -56,7 +42,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
 			x = 0.0057 * safezoneW;
-			y = 0.0989620042993254 * safezoneH;
+			y = 0.054978585840815 * safezoneH; 
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -70,7 +56,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL("[16] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
 			x = 0.0057 * safezoneW;
-			y = 0.1429437734002606 * safezoneH;
+			y = 0.0989620042993254 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -84,7 +70,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
 			x = 0.0057 * safezoneW;
-			y = 0.1869266420729126 * safezoneH;
+			y = 0.1429437734002606 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -98,7 +84,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
 			x = 0.0057 * safezoneW;
-			y = 0.2309084111738478 * safezoneH;
+			y = 0.1869266420729126 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -112,7 +98,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL("[8] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
 			x = 0.0057 * safezoneW;
-			y = 0.274890180274783 * safezoneH;
+			y = 0.2309084111738478 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -126,7 +112,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL("[9] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
 			x = 0.0057 * safezoneW;
-			y = 0.3188719493757182 * safezoneH;
+			y = 0.274890180274783 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -140,7 +126,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[0] execVM '"+MCCPATH+"mcc\general_scripts\uav\uavSpawn.sqf'");
 			
 			x = 0.0057 * safezoneW;
-			y = 0.3628537184766534 * safezoneH;
+			y = 0.3188719493757182 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -154,7 +140,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			onButtonClick = __EVAL("[17] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
 			x = 0.0057 * safezoneW;
-			y = 0.4068354875775886 * safezoneH;
+			y = 0.3628537184766534 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -168,7 +154,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			onButtonClick =  __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\mcc_start_location.sqf'");
 			
 			x = 0.0057 * safezoneW;
-			y = 0.4508172566785238 * safezoneH;
+			y = 0.4068354875775886 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
