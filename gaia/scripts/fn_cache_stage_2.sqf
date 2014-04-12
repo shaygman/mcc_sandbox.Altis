@@ -24,27 +24,64 @@ _gv					= [];
 	  then
 		{
 			//player globalchat format ["%1, %2",_veh,_x];
-			_crew = _crew + [[(typeof _x),(position _x),damage _x,skill _x,rank _x,(assignedVehicleRole _x),direction _x]];
+			_crew = _crew + [[(typeof _x),(getpos _x),damage _x,skill _x,rank _x,(assignedVehicleRole _x),getdir _x]];
 			_units = _units  - [_x];
 			
 		}
 	}	foreach _units;
 	
-	_gv = _gv + [[(typeof _veh),position _veh,damage _veh,fuel _veh,_crew]];
+	_gv = _gv + [[(typeof _veh),position _veh,damage _veh,fuel _veh,_crew,getdir _x]];
 	
 } foreach _vehicles;
 
 {
 	if  ( alive _x) then 
 	{
-		_uv = _uv + [[typeof _x,(visiblePositionasl _x),damage _x,skill _x,rank _x,direction _x]];
+		_uv = _uv + [[typeof _x,(visiblePositionasl _x),damage _x,skill _x,rank _x,getdir _x]];
 		//deleteVehicle _x;
 	};
 	
 }
 foreach _units;
 
-_sf = [_gv,_uv,side _group,(_x getVariable  ["GAIA_zone_intend",[]])];
+_array = [];_waypoints=[];
+
+if (((count (waypoints _group)) - currentWaypoint _group)>0) then
+{
+	{
+		private "_waypoint";
+		
+		if (( (waypointposition _x) distance [0,0,0])>0) then 
+		{
+				_waypoint = [
+					waypointposition _x,
+					waypointtype _x,
+					waypointbehaviour _x,
+					waypointspeed _x,
+					waypointcombatmode _x,
+					waypointformation _x,
+					waypointstatements _x,
+					waypointtimeout _x,
+					waypointhouseposition _x
+				];
+				
+				_array set [count _array, _waypoint];
+		};
+		
+	} foreach (waypoints _group);
+	_waypoints = [_array, currentwaypoint _group];
+};
+
+_sf = 	[_gv  
+				,_uv  
+				,side _group
+				,(_x getVariable  ["GAIA_zone_intend",[]])
+				,behaviour (leader _group)
+				,combatmode _group
+				,speedmode _group
+				,formation _group
+				,_waypoints
+				];
 
 _pos = position leader _group;
 
