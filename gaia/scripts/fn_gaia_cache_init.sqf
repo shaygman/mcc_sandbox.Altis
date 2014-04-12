@@ -38,31 +38,31 @@ while {MCC_GAIA_CACHE} do
 					   												(count(_x getVariable  ["GAIA_zone_intend",[]])==0)
 					   											)
 																)					   										
-													  ):  {	_x call gaia_fn_cache;};
+													  ):  {	_x spawn gaia_fn_cache;};
 													  
 										 //We are cached, player is in range 1
 											case (
 																(_x getVariable  ["GAIA_CACHED_STAGE_1",false])
 																and
 																([getPosATL(leader _x),GAIA_CACHE_STAGE_1] call gaia_fn_nearPlayer)
-													  ):  {_x call gaia_fn_uncache;};
+													  ):  {_x spawn gaia_fn_uncache;};
 													  
 					  					//We are in combat, decache him at all times, no matter the range					  					
 					  					case (
 																(_x getVariable  ["GAIA_CACHED_STAGE_1",false])
 																and
 																(behaviour(leader _x)=="COMBAT")		
-													  ):  {	_x call gaia_fn_uncache;};
+													  ):  {	_x spawn gaia_fn_uncache;};
 													  
- 											default {_x call gaia_fn_sync;};		  
+ 											default {_x spawn gaia_fn_sync;};		  
 							};									
 								 
 								 
 							//Cache stage 2
 							if (
 											!([getPosATL(leader _x),GAIA_CACHE_STAGE_2] call gaia_fn_nearPlayer)	 
-											and
-											(behaviour(leader _x)!="COMBAT")	
+											//and
+											//(behaviour(leader _x)!="COMBAT")	
 											/*
 											and
 											(_x getVariable ["GAIA_class",""])!=""
