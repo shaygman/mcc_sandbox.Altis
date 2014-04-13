@@ -9,6 +9,7 @@ _gv					= [];
 _group = creategroup (_sf select 2);
 if (isnull _group) exitwith {};
 _group  setVariable ["GAIA_zone_intend", (_sf select 3),true];
+_group  setVariable ["mcc_gaia_cache", true];
 
 
 //Create Vehicles in group
