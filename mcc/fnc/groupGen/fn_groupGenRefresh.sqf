@@ -69,6 +69,20 @@ MCC_fnc_mapDrawWP =
 							"PuristaBold",
 							"center"
 						];
+						
+						drawIcon3D [
+							_texture,
+							[0,1,1,0.8],
+							[_wPos select 0,_wPos select 1,2],
+							1,
+							1,
+							0,
+							_wType,
+							0,
+							0.04,
+							"PuristaBold",
+							"center"
+						];
 
 						if (isnil "MCC_lastPos") then {MCC_lastPos = [(getpos _leader) select 0,(getpos _leader) select 1]}; 
 						
@@ -76,6 +90,12 @@ MCC_fnc_mapDrawWP =
 							MCC_lastPos,
 							_wPos,
 							[0,0,1,1]
+						];
+						
+						drawLine3D [
+							[MCC_lastPos select 0, MCC_lastPos select 1, 2],
+							[_wPos select 0, _wPos select 1, 2],
+							[0,1,1,0.8]
 						];
 
 						MCC_lastPos = _wPos; 

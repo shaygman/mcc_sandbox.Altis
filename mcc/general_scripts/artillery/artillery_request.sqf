@@ -24,19 +24,17 @@ if !mcc_isloading then
 			};
 			case 1:	//Add		
 			{
-				if (MCC_capture_state) then	{
-					MCC_capture_var = MCC_capture_var + FORMAT ['HW_arti_types set [count HW_arti_types,["%1", "%2"]];
-						publicVariable "HW_arti_types";
-						HW_arti_number_shells_per_hour = HW_arti_number_shells_per_hour + %3;
-						publicVariable "HW_arti_number_shells_per_hour";
-						[[2,{["MCCNotifications",["%1 %3 shells added","%4data\ammo_icon.paa",""]] call bis_fnc_showNotification;}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-						'
-						,_shellName
-						,shelltype
-						,nshell
-						,MCC_path
-						];
-					} else {
+				if (MCC_capture_state) then	
+				{
+					MCC_capture_var = MCC_capture_var 
+						+ FORMAT ["HW_arti_types set [count HW_arti_types,[""%1"", ""%2""]];",_shellName, shelltype]
+						+ 		  "publicVariable ""HW_arti_types"";"
+						+ FORMAT ["HW_arti_number_shells_per_hour = HW_arti_number_shells_per_hour + %1;",nshell]
+						+ 		  "publicVariable ""HW_arti_number_shells_per_hour"";"
+						+ FORMAT ["[[2,{[""MCCNotifications"",[""%1 %2 shells added"",""%3data\ammo_icon.paa"",""""]] call bis_fnc_showNotification;}], ""MCC_fnc_globalExecute"", true, false] spawn BIS_fnc_MP;",_shellName,nshell,MCC_path];
+				} 
+				else 
+				{
 						mcc_safe = mcc_safe + FORMAT ['HW_arti_types set [count HW_arti_types,["%1", "%2"]];
 						publicVariable "HW_arti_types";
 						HW_arti_number_shells_per_hour = HW_arti_number_shells_per_hour + %3;
@@ -56,7 +54,7 @@ if !mcc_isloading then
 						Server setVariable ["Arti_CIV_shellsleft",HW_arti_number_shells_per_hour,true];
 						[[2,compile format ['["MCCNotifications",["%2 %1 shells added","%3data\ammo_icon.paa",""]] call bis_fnc_showNotification;',nshell,_shellName,MCC_path]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 						//["MCCNotifications",[format ["%2 %1 shells added",nshell,_shellName],format ["%1data\ammo_icon.paa",MCC_path],""]] call bis_fnc_showNotification;
-						};
+				};
 				hint format ["%1 Artillery enabled. \nAdded %2 artillery rounds",_shellName,nshell];
 			};
 		};

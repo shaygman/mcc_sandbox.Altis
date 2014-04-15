@@ -703,7 +703,7 @@ if (_isIED) then
 				};
 				
 				//Spawn the IED
-				[[_iedpos,_objectType,"large",floor (random 2),2,0,0,((random 25) + 15),_sidePlayer,_name,_dir,_groupArray,_side],"MCC_fnc_trapSingle",false,false] spawn BIS_fnc_MP;
+				[[_iedpos,_objectType,"large",floor (random 2),2,false,0,((random 25) + 15),_sidePlayer,_name,_dir,_groupArray,_side],"MCC_fnc_trapSingle",false,false] spawn BIS_fnc_MP;
 			
 				//Debug
 				if (MW_debug) then 

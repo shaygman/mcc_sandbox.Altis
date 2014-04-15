@@ -92,8 +92,8 @@ if (mcc_missionmaker == (name player)) then {
 		
 		case 5: //Save to SQM
 		{
-			_null = [] execVm "mcc\fnc\general\fn_saveToSQM.sqf";
-			//[] call MCC_fnc_saveToSQM;
+			//_null = [] execVm "mcc\fnc\general\fn_saveToSQM.sqf";
+			[] call MCC_fnc_saveToSQM;
 		};
 		
 		case 6: //Save to COMP

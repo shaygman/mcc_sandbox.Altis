@@ -61,7 +61,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes","Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 2;
 
 _comboBox = _mccdialog displayCtrl MCC_MWPreciseMarkersComboIDC;		
 lbClear _comboBox;
@@ -77,7 +77,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes - Aerial","Yes - Motorized","Yes - Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 3;
 
 _comboBox = _mccdialog displayCtrl MCC_MWArtilleryIDC;		
 lbClear _comboBox;
@@ -85,7 +85,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Mortars","Self Propelled Artillery","Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 3;
 	
 _comboBox = _mccdialog displayCtrl MCC_MWDifficultyIDC;		
 lbClear _comboBox;
@@ -125,7 +125,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes","Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 2;
 
 _comboBox = _mccdialog displayCtrl MCC_MWArmorIDC;		
 lbClear _comboBox;
@@ -133,7 +133,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes","Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 2;
 
 _comboBox = _mccdialog displayCtrl MCC_MWDebugComboIDC;		
 lbClear _comboBox;
@@ -149,7 +149,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes","Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 2;
 
 _comboBox = _mccdialog displayCtrl MCC_MWSBIDC;		
 lbClear _comboBox;
@@ -157,7 +157,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes","Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 2;
 
 _comboBox = _mccdialog displayCtrl MCC_MWArmedCiviliansIDC;		
 lbClear _comboBox;
@@ -165,7 +165,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes","Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 2;
 
 _comboBox = _mccdialog displayCtrl MCC_MWCQBIDC;		
 lbClear _comboBox;
@@ -173,7 +173,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes Without Civilians","Yes With Civilians","Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 3;
 
 _comboBox = _mccdialog displayCtrl MCC_MWRoadBlocksIDC;		
 lbClear _comboBox;
@@ -181,7 +181,7 @@ lbClear _comboBox;
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
 } foreach ["No","Yes","Random"];
-_comboBox lbSetCurSel 0;
+_comboBox lbSetCurSel 2;
 
 
 _comboBox = _mccdialog displayCtrl MCC_MWWeatherComboIDC;		

@@ -44,7 +44,7 @@ startLoadingScreen ["3D Placing","RscDisplayLoadMission"];
 (["MCC_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_compass", "PLAIN"];
 
 //track Units
-MCC_trackMarkerHandler3D = ((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
+MCC_trackMarkerHandler3D = ((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits; _this call MCC_fnc_mapDrawWP;"];
 
 if (isnil "MCC_3D_CAM") then {
 	_camera = "camconstruct" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
@@ -253,10 +253,12 @@ MCC_3D_CAM_Handler =
 			if (_GUIstate) then
 			{
 				(["MCC_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_compass", "PLAIN"];
+				MCC_trackMarkerHandler3D = ((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits; _this call MCC_fnc_mapDrawWP;"];
 			}
 			else
 			{
 				(["MCC_compass"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
+				if (!isnil "MCC_trackMarkerHandler3D") then {(findDisplay 12 displayCtrl 51) ctrlRemoveEventHandler ["draw",MCC_trackMarkerHandler3D]};
 			};
 		};
 		

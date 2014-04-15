@@ -38,22 +38,42 @@ _map = _this select 0;
 			_texture = gettext (configfile >> "CfgVehicles" >> typeof (vehicle _unit) >> "Icon");
 			_mapsize = if ((vehicle _unit) == _unit) then {20} else {30}; 
 			
-			if (isPlayer _unit) then {_markerColor = [_markerColor select 0, _markerColor select 1, _markerColor select 2, 0.3]}; 
+			if (isPlayer _unit) then {_markerColor = [1, 0, 1,0.8]}; 
 			_map drawIcon [
 				_texture,
 				_markerColor,
 				getpos _unit,
 				_mapsize,
 				_mapsize,
-				direction _unit
+				direction vehicle _unit
 			];
-
+			
+			_bbr = boundingBoxReal vehicle _unit;
+			_p1 = _bbr select 0;
+			_p2 = _bbr select 1;
+			_maxHeight = abs ((_p2 select 2) - (_p1 select 2));
+			
+			drawIcon3D [
+				_texture,
+				_markerColor,
+				[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, _maxHeight],
+				if (vehicle _unit != _unit) then {1.5} else {1},
+				if (vehicle _unit != _unit) then {1.5} else {1},
+				getdir (vehicle _unit)
+			];
+			
 			if (_x != leader _group) then
 			{
 				_map drawLine [
 					getpos _unit,
 					getpos (leader _group),
 					[0,0,1,0.8]
+				];
+				
+				drawLine3D [
+					[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, _maxHeight],
+					[(getpos vehicle (leader _group)) select 0, (getpos vehicle(leader _group)) select 1, _maxHeight],
+					[0,0,1,1]
 				];
 			};
 		};

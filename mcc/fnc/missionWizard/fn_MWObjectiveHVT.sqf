@@ -35,15 +35,7 @@ MCC_MWcreateHostage =
 		_unit setpos _spawnPos;
 		_unit setpos _spawnPos;
 		removeallweapons _unit; 
-		_init = format ["
-						_this setcaptive true; 
-						_this allowFleeing 0;
-						_this disableAI 'MOVE';
-						removeallweapons _this;
-						_this switchmove 'AmovPercMstpSsurWnonDnon';
-						_this addaction ['Secure Hostage','%1mcc\general_scripts\hostages\hostage.sqf',[0],6,false,true];
-						dostop _this; 
-						",
+		_init = format ["_this setcaptive true; _this allowFleeing 0;_this disableAI 'MOVE'; removeallweapons _this; _this switchmove 'AmovPercMstpSsurWnonDnon'; _this addaction ['Secure Hostage','%1mcc\general_scripts\hostages\hostage.sqf',[0],6,false,true]; dostop _this;",
 						MCC_path
 						];
 		[[[netID _unit,_unit], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;

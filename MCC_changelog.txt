@@ -5,6 +5,8 @@ Zeus Support:
 	- Once mission maker log in he will have Zeus key enabled once he logged out he'll lose it. 
 	- Units added with MCC can be controled via Zeus.
 	- Units placed with Zeus will be saved to SQM. - so basicly you got a full 3D editor with save to SQM feature. 
+	- Use _object setVariable ["mccIgnore",true] - so that the save to SQM ignore that object.
+	- Use _object setVariable ["text","Name"] - so that the save to SQM sets it's name.
 	
 Artillery:
 - Added: Hold Ctrl to continue spawning ordnance without the need to press Create again. 
@@ -18,9 +20,12 @@ Spawn:
 Engine:
 - Removed: VAS from the mod version, it still there in the mission version but if you are using the mod version you should add VAS to your template mission - let see how this will work out. 
 - Removed: BTC Revive in the mission version it was a good script but I needed something that isn't based on killed EH for the Role Selection.
+- Added: Save to SQM now save everything: Groups, waypoints, markers, objects, units, triggers and vehicles stats (locked, health exc), weather, time, resistance hostiles exc...
+- Note: Saving triggers to SQM - you'll need to manually edit the triggers in the sqm values: expCond, expActiv, expDesactiv and replace any " with "" also make sure there are not enters between the lines or you'll have CTD. 
 - Added: [TcB]-Psycho- A3 Wounding System 
 - Added: If a mission maker log off and another one take his place or if he DC and come back he will still have the zones markers. 
 - Added: DOC/Waypoints/Groups and basiclly almost anything you spawn will be saved into SQM. 
+- Added: "Track Units" button will keep tracking groups and WP on the mission maker map and not just in MCC. 
 - Fixed: Changing faction relations from mission's settings didn't effect the game. 
 - Fixed: Hijack made you lose your old group.
 - Fixed: Hijack made the hijcacked unit lose his group.
@@ -65,6 +70,9 @@ Delete Brush:
 - Added: Delete dead bodies.
 - Added: Add flashlights to units and force them using it (yeah I know it is a delete brush but hey it fits). 
 
+Bug fixing:
+- Fixed: Select CIV faction, go to spawn, select unit. Select Boat. Error pops up.
+- Fixed: Create zone, spawn armor group of 4 tanks, select AI armor group, teleport. Result: only crew is teleported, vehicle stays empty at same location.
 
 
 - TODO items tasks

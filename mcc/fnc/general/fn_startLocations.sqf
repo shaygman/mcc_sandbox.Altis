@@ -198,9 +198,12 @@ if (_playerSideNr == 3) then
   };
 
 //BTC - Revive
-BTC_respawn_marker = format ["respawn_%1",playerSide];
-if (BTC_respawn_marker == "respawn_guer") then {BTC_respawn_marker = "respawn_guerrila"};
+if (!isnil "BTC_respawn_marker") then
+{
+	BTC_respawn_marker = format ["respawn_%1",playerSide];
+	if (BTC_respawn_marker == "respawn_guer") then {BTC_respawn_marker = "respawn_guerrila"};
 
-if (!isNil "BTC_r_base_spawn") then {deletevehicle BTC_r_base_spawn};
+	if (!isNil "BTC_r_base_spawn") then {deletevehicle BTC_r_base_spawn};
 
-BTC_r_base_spawn = "Land_HelipadEmpty_F" createVehicleLocal getMarkerPos BTC_respawn_marker;
+	BTC_r_base_spawn = "Land_HelipadEmpty_F" createVehicleLocal getMarkerPos BTC_respawn_marker;
+};

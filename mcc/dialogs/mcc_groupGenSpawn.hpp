@@ -189,8 +189,9 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		{
 			idc = MCC_GGADDIDC;
 			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
 
-			text = "Add"; //--- ToDo: Localize;
+			text = "Add to List"; //--- ToDo: Localize;
 			x = 0.183334 * safezoneW;
 			y = 0.0549786 * safezoneH;
 			w = 0.065625 * safezoneW;
@@ -202,7 +203,7 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = MCC_GGCLEARIDC;
 			onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\group_change.sqf'");
 
-			text = "Clear"; //--- ToDo: Localize;
+			text = "Clear List"; //--- ToDo: Localize;
 			x = 0.183334 * safezoneW;
 			y = 0.098962 * safezoneH;
 			w = 0.065625 * safezoneW;
@@ -238,8 +239,9 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\spawn_request.sqf'");
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.9)";
 
-			text = "Add to zone"; //--- ToDo: Localize;
+			text = "Spawn in zone"; //--- ToDo: Localize;
 			x = 0.183334 * safezoneW;
 			y = 0.208919 * safezoneH;
 			w = 0.065625 * safezoneW;

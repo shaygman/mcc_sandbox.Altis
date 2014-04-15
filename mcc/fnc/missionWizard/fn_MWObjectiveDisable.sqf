@@ -44,6 +44,6 @@ else
 }; 
 
 //Spawn it
-_ied = ([_objPos,_objectType,"large",0,2,0,0,15,_sidePlayer,_name,random 360,_groupArray,_side] call MCC_fnc_trapSingle) select 0;
+_ied = ([_objPos,_objectType,"large",0,2,false,0,15,_sidePlayer,_name,random 360,_groupArray,_side] call MCC_fnc_trapSingle) select 0;
 
 [_ied,"disableIED",_preciseMarkers] call MCC_fnc_MWCreateTask; 

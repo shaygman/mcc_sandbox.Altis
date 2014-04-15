@@ -15,7 +15,7 @@ _type = _this select 0;
 	{
 		case 0: //Teleport
 		{
-		mapClick = false; 
+			mapClick = false; 
 			hint "Click on the map"; 
 			onMapSingleClick " 	hint format ['%1 teleported', UMName];
 								teleportPos = _pos; 
@@ -23,12 +23,20 @@ _type = _this select 0;
 								onMapSingleClick """";";
 			waituntil {mapClick};
 			if (MCC_UMUnit==0) then 
+			{
 				{
-					{[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", true, false] spawn BIS_fnc_MP} foreach MCC_selectedUnits;
-				} else 
+					[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", _x, false] spawn BIS_fnc_MP;
+				} foreach MCC_selectedUnits;
+			} 
+			else 
+			{
+				{
 					{
-						{{[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", true, false] spawn BIS_fnc_MP} foreach (units _x);} foreach MCC_selectedUnits;
-					};
+						[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", _x, false] spawn BIS_fnc_MP;
+						sleep 0.2; 
+					} foreach (units _x);
+				} foreach MCC_selectedUnits;
+			};
 		};
 		
 		case 1:	//Teleport to LHD
@@ -135,10 +143,19 @@ _type = _this select 0;
 			if (MCC_trackMarker) then
 			{
 				MCC_trackMarkerHandler = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
+				MCC_trackMarkerHandlerMap = (findDisplay 12 displayCtrl 51) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits; _this call MCC_fnc_mapDrawWP;"];
 			}
 			else
 			{
-				if (!isnil "MCC_trackMarkerHandler") then {((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrlRemoveEventHandler ["draw",MCC_trackMarkerHandler]}; 
+				if (!isnil "MCC_trackMarkerHandler") then 
+				{
+					((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrlRemoveEventHandler ["draw",MCC_trackMarkerHandler];
+				}; 
+				
+				if (!isnil "MCC_trackMarkerHandlerMap") then 
+				{
+					(findDisplay 12 displayCtrl 51) ctrlRemoveEventHandler ["draw",MCC_trackMarkerHandlerMap];
+				};
 			}; 
 		};
 		

@@ -8,4 +8,12 @@
 private ["_unit","_pos"];
 _unit = if (((_this select 0) select 0) == "") then {(_this select 0) select 1} else {objectFromNetID ((_this select 0) select 0)};
 _pos = _this select 1;
-_unit setpos _pos;
+if (vehicle _unit == _unit) then
+{
+	_unit setpos _pos;
+}
+else
+{
+	_pos = [_pos,1,100,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+	if (driver vehicle _unit == _unit) then {vehicle _unit setpos _pos;}; 
+}; 

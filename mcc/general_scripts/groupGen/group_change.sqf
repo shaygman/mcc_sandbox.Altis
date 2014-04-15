@@ -49,21 +49,26 @@ for "_x" from 3018 to 3020 step 1 do
 };
 ctrlShow [MCC_GroupGenCurrentGroup_IDD,_show];
 
+player sidechat str _show;
 if (_show) then 
 {
 	(_mccdialog displayCtrl MCC_GGSAVE_GROUPIDC) ctrlSetTooltip "Save the group as a custom group";
-	ctrlSetText [MCC_GGSAVE_GROUPIDC, "Save as Custom"]; 
-}; 
-
-//Hide Create button for reinforcment/fortify
-if ((((MCC_groupTypes select (lbCurSel UNIT_TYPE) select 0)) =="Reinforcement") || (((MCC_groupTypes select (lbCurSel UNIT_TYPE) select 0)) =="Garrison")) then 
-{
-	ctrlShow [MCC_GGVREATE_IDC,false];
+	ctrlSetText [MCC_GGSAVE_GROUPIDC, "Save as Custom"];
 }
-else 
+else
 {
-	ctrlShow [MCC_GGVREATE_IDC,true];
-}; 
+	//Hide Create button for reinforcment/fortify
+	if ((((MCC_groupTypes select (lbCurSel UNIT_TYPE) select 0)) =="Reinforcement") || (((MCC_groupTypes select (lbCurSel UNIT_TYPE) select 0)) =="Garrison")) then 
+	{
+		ctrlShow [MCC_GGVREATE_IDC,false];
+	}
+	else 
+	{
+		ctrlShow [MCC_GGVREATE_IDC,true];
+	};
+};
+
+ 
 
 //Changing the group type
 if (_action == 0) exitWIth 
@@ -220,7 +225,9 @@ if (_action == 1) then
 {			
 	_type = lbCurSel UNIT_TYPE;
 	
-	if (_type in [7,8]) exitWith {hint "Cannot add static object to a group"};
+	if (_type in [7,8,-1]) exitWith {hint "Cannot add static object to a group"};
+	
+	if ((lbCurSel UNIT_CLASS) == -1) exitWith {};
 	
 	switch (_type) do		//Which unit do we want
 		{
@@ -350,8 +357,11 @@ if (_action ==4) exitWIth
 _comboBox = _mccdialog displayCtrl MCC_GroupGenCurrentGroup_IDD;		//Update units
 lbClear _comboBox;
 {
-	_displayname = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
-	_index = _comboBox lbAdd _displayname;
+	if (!isNil "_x") then
+	{
+		_displayname = getText (configFile >> "cfgVehicles" >> _x >> "displayName");
+		_index = _comboBox lbAdd _displayname;
+	};
 } foreach MCC_groupGenCurrenGroupArray;
 _comboBox lbSetCurSel 0;
 	
