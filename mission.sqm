@@ -10,8 +10,7 @@ class Mission
 		"a3_characters_f_gamma",
 		"A3_Characters_F_INDEP",
 		"A3_Structures_F_Mil_Flags",
-		"a3_map_altis",
-		"caf_ag_eur"
+		"a3_map_altis"
 	};
 	addOnsAuto[]=
 	{
@@ -21,7 +20,6 @@ class Mission
 		"A3_Characters_F_Civil",
 		"a3_characters_f_gamma",
 		"A3_Characters_F_INDEP",
-		"caf_ag_eur",
 		"a3_map_altis"
 	};
 	randomSeed=11823142;
