@@ -242,12 +242,28 @@ class mcc_groupGen
 		{
 			idc = MCCSTOPCAPTURE;
 			text = "Stop Capturing"; 
-			x = 0.746354 * safezoneW + safezoneX;
-			y = 0.0491758 * safezoneH + safezoneY;
-			w = 0.108854 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			tooltip = "Once a trigger has been generated all the action done by MCC won't execute but will be saved to the trigger until this button is pressed";
 			onButtonClick = "ctrlEnable [1014,false];MCC_capture_state=false;";
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			
+			x = 0.391146 * safezoneW + safezoneX;
+			y = 0.708919 * safezoneH + safezoneY;
+			w = 0.0744792 * safezoneW;
+			h = 0.07697 * safezoneH;
+		};
+		
+		class MCC_cacheButton: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = "if (!isnil 'MCC_GroupGenGroupSelected') then {if (count MCC_GroupGenGroupSelected > 0) then {{_x setVariable ['mcc_gaia_cache', !(_x getVariable ['mcc_gaia_cache',false]),true];}foreach MCC_GroupGenGroupSelected}};";
+			tooltip = "Give the selected groups to caching system";
+			text = "Cache Group"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			
+			x = 0.391146 * safezoneW + safezoneX;
+			y = 0.631949 * safezoneH + safezoneY;
+			w = 0.0744792 * safezoneW;
+			h = 0.0219914 * safezoneH;		
 		};
 		
 		class MCC_saveLoad: MCC_RscButtonMenu 
@@ -363,9 +379,9 @@ class mcc_groupGen
 		class MCC_toolTipControls:MCC_RscControlsGroup
 		{
 			idc = -1;
-			x = 0.242188 * safezoneW + safezoneX;
+			x = 0.190625 * safezoneW + safezoneX;
 			y = 0.697923 * safezoneH + safezoneY;
-			w = 0.223438 * safezoneW;
+			w = 0.194792 * safezoneW;
 			h = 0.120953 * safezoneH;
 
 			class Controls
@@ -373,8 +389,8 @@ class mcc_groupGen
 				class MCC_toolTip: MCC_RscStructuredText
 				{
 					idc = 303;
-					w = 0.223438 * safezoneW;
-					h = 0.4 * safezoneH;
+					w = 0.194792 * safezoneW;
+					h = 0.35 * safezoneH;
 				};
 			};
 		};
