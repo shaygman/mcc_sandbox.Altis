@@ -38,6 +38,8 @@ Engine:
 - Changed: Name tags will show rank picture instead of text. 
 
 3D Editor:
+- New: Added 3D icons for groups, waypoint exc. 
+- New: Integrated Zeus. 
 - New: Moved the Box generator from MCC main interface to the 3D editor - you can create custom cargo items to any kind of vehicle/object that can hold cargo (not units). 
 - New Preset: Remove All Weapons (unit), Remove All Items (unit) - remove all items or weapons from the given unit. 
 - New Preset: Clear Cargo (Vehicle) - remove all cargo items from the vehicle cargo space. 
