@@ -58,7 +58,13 @@ Role Selection:
 GAIA:
 - Fixed: Reinforcement air or motorized didn't used GAIA. 
 - Fixed: Artillery or static weapons didn't use GAIA.
+- Fixed: GAIA now gives waypoints to submarines
 - Added: GAIA can now handle rotated zones. 
+
+
+CACHING: 
+- Added: Caching per group implemented. ((_x) getVariable ["MCC_GAIA_CACHE", false])	
+
 
 UI:
 - Added: Move,resize,rotate zones by click and drag over the map. 

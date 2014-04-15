@@ -1,5 +1,30 @@
-if(!isServer or !MCC_GAIA_CACHE) exitWith {};
+if(!isServer ) exitWith {};
 private["_count"];
+
+
+while {!MCC_GAIA_CACHE} 
+	do {
+					{
+						if (
+					   			//Seems like allgroups opens up with all sorts of empty groups, better check it					   		
+					   			(count(units _x)>0)
+					   			and
+					   			(alive (leader _x))			
+					   			and
+					   			((_x) getVariable ["MCC_GAIA_CACHE", false])	   			
+			  				)
+			  		then {MCC_GAIA_CACHE=true;};
+			  		//stop 
+			  		if (MCC_GAIA_CACHE) exitwith {true;};
+		  		 }  forEach allgroups;
+		  		 
+		  		 //if not found go sleep
+		  		 if !(MCC_GAIA_CACHE) then {sleep 20;};
+		  		 
+		  		 //player globalchat "we wachten";
+		 } ;
+
+
 
 while {MCC_GAIA_CACHE} do	
 {
@@ -79,7 +104,7 @@ while {MCC_GAIA_CACHE} do
 			//chill out, no rush			
 		  sleep 0.1;
 		  
-	 }  forEach allgroups;
+	 }  forEach ([ALLGROUPS, {_x getVariable ["mcc_gaia_cache", false]}] call BIS_fnc_conditionalSelect);
 	 _idx = 0;
 	 {
 	 						

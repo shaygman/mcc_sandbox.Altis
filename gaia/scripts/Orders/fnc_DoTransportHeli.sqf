@@ -18,7 +18,7 @@ Author:
 _group 								= _this select 0;
 _trnsprtgrp						= _this select 1;
 
-player globalchat format ["%1 instappper, %2 vervoer",_group,_trnsprtgrp];
+//player globalchat format ["%1 instappper, %2 vervoer",_group,_trnsprtgrp];
 
 _PosCloseRoadStart = [];
 _PosCloseRoadEnd	 = [];

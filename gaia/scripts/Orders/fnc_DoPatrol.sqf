@@ -29,6 +29,8 @@ if (!IsNil("_class") and !Isnil("_zone")) then
 					{ _dummy= [_group,_zone] call fnc_DoPatrolMotorRecon;};			
 				case "Ship": 
 					{ _dummy= [_group,_zone] call fnc_DoPatrolShip;};												
+				case "Submarine": 
+					{ _dummy= [_group,_zone] call fnc_DoPatrolShip;};									
 				case "Helicopter": 
 					{ _dummy= [_group,_zone] call fnc_DoPatrolHeli;};	
 				//Autonomous for now the same as heli (might change later)
