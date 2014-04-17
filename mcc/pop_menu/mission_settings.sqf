@@ -32,7 +32,7 @@ if (_type==3) exitWith
 if (_type==4) exitWith	
 {													//Spectator script
 	while {dialog} do {closeDialog 0; sleep 0.2};
-	[player] execVM MCC_path + "spectator\specta.sqf";
+	[] execVM MCC_path + "spectator\specta.sqf";
 };
 
 if (MCC_GUI1initDone) then

@@ -17,14 +17,14 @@ while { true } do
 	
 	sleep 1;
 	
-	if (side player == west) then {KEGsShownSides = [west];};
-	if (side player == east) then {KEGsShownSides = [east];};
-	if (side player == resistance) then {KEGsShownSides = [resistance];};
-	if (side player == civilian) then {KEGsShownSides = [civilian];};
+	//if (side player == west) then {KEGsShownSides = [west];};
+	//if (side player == east) then {KEGsShownSides = [east];};
+	//if (side player == resistance) then {KEGsShownSides = [resistance];};
+	//if (side player == civilian) then {KEGsShownSides = [civilian];};
 	
 	player setCaptive true;
 	[player] join MCC_deadGroup;
 	
 	sleep 2;
-	[player] execVM MCC_path + "spectator\specta.sqf";
+	[] execVM MCC_path + "spectator\specta.sqf";
 };

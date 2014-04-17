@@ -47,7 +47,9 @@
 #define COL_GRAY			{0.2, 0.2, 0.2, 1}
 
 
-class KEGsRscText {
+class KEGsRscText 
+{
+
 	access = ReadAndWrite;
 	type = 0;
 	idc = -1;
@@ -57,12 +59,17 @@ class KEGsRscText {
 	font = "TahomaB";
 	sizeEx = 0.04;
 	colorBackground[] = {0, 0, 0, 0};
-	colorText[] = {1, 1, 1, 1};
+	colorDisabled[] = {0,0,0,0.5};
+	colorShadow[] = {0,0,0,0.5};
+	colorText[] = {1,1,1,1};
+	colorSelection[] = {1,0,0,1};
 	text = "";
 };
 
 
-class KEGsRscListBox {
+class KEGsRscListBox 
+{
+
 	access = ReadAndWrite;
 	type = 5;
 	style = 0;
@@ -91,14 +98,39 @@ class KEGsRscListBox {
 	autoScrollDelay = 5;
 	autoScrollRewind = 0;
 	
-	class ListScrollBar {
+	class ScrollBar 
+	{
 		color[] = {1, 1, 1, 0.6};
 		colorActive[] = {1, 1, 1, 1};
 		colorDisabled[] = {1, 1, 1, 0.3};
-		thumb = "\ca\ui\data\ui_scrollbar_thumb_ca.paa";
-		arrowFull = "\ca\ui\data\ui_arrow_top_active_ca.paa";
-		arrowEmpty = "\ca\ui\data\ui_arrow_top_ca.paa";
-		border = "\ca\ui\data\ui_border_scroll_ca.paa";
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+	};
+	
+	class ListScrollBar
+	{
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 0;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+
+		color[] = {1,1,1,0.6};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+
+
+
+
 	};
 	
 };
@@ -555,7 +587,7 @@ class KEGsRscSpectate {
 		// Camera menu
 		class menuCameras : KEGsRscText {
 			idc = IDC_MENUCAMB;
-			style = ST_HUD_BACKGROUND;
+			style = 0; //ST_HUD_BACKGROUND;
 			x = SafeZoneX + BORDERXSIZE;	y = SafeZoneY + BORDERSIZE;
 			w = CMENUWIDTH;		h = MENUHEIGHT;
 			text = "";
@@ -590,7 +622,7 @@ class KEGsRscSpectate {
 		// Targets menu
 		class menuTargets : KEGsRscText {
 			idc = IDC_MENUTGTB;
-			style = ST_HUD_BACKGROUND;
+			style = 0; //ST_HUD_BACKGROUND;
 			x = SafeZoneX + SafeZoneW-BORDERXSIZE-TMENUWIDTH;
 			y = SafeZoneY + BORDERSIZE;
 			w = TMENUWIDTH;	h = MENUHEIGHT;

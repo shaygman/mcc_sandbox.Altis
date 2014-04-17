@@ -56,7 +56,7 @@ if (_halo) then
 		{
 			if (_backpack != "") then 
 			{
-				_packHolder = createVehicle ["groundWeaponHolder", getPos _unit, [], 0, "can_collide"]; //create an empty holder 
+				_packHolder = createVehicle ["groundWeaponHolder", [0,0,0], [], 0, "can_collide"]; //create an empty holder 
 				_packHolder addBackpackCargo [_backpack, 1]; //place your old backpack into the empty holder
 				_packHolder attachTo [_unit,[0.1,0.56,-.72],"pelvis"]; //attach empty holder to unit
 				_packHolder setVectorDirAndUp [[0,1,0],[0,0,-1]]; //set the vector and direction of the empty holder				
@@ -100,10 +100,20 @@ if (_halo) then
 		
 		if ( isPlayer _unit ) then
 		{
-			if (!isnil "_packHolder") then 
+			if (_backpack != "") then 
 			{
-				detach _packHolder;
-				deleteVehicle _packHolder; //delete the temp backpack and empty holder  
+				{ 
+					//player globalChat str ["obj: ", typeOf _x]; 
+					if ( typeOf _x == "groundWeaponHolder" ) then
+
+					{
+						detach _x;
+						sleep 0.1;
+						deleteVehicle _x;
+					};
+				} forEach attachedObjects _unit;
+
+				sleep 0.1;
 				_unit addBackpack _backpack;
 				
 				clearItemCargoGlobal unitBackpack _unit; // delete all default items from backback 
