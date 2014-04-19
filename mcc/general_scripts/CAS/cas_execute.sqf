@@ -206,7 +206,7 @@ else
 			if ( (count _targetList) > 1 ) then 
 			{ 
 				// If real vehicle found assign that one as gun-run target
-				[playerSide,'HQ'] sideChat format ["%1 Target List: [%2] - [%3]", _cas_name, typeOf (_targetList select 0), _targetList];
+				//[playerSide,'HQ'] sideChat format ["%1 Target List: [%2] - [%3]", _cas_name, typeOf (_targetList select 0), _targetList];
 				_target = _targetList select 1;
 			};
 

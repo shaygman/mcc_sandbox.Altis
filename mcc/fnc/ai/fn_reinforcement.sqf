@@ -20,7 +20,7 @@ _zoneMarker 			=  if (TypeName  (_this select 3) == "STRING") then {(_this selec
 _faction				= _this select 4;
 _startPosDir			= _this select 5;
 
-player sidechat "Zone: " + _zoneMarker;
+//player sidechat "Zone: " + _zoneMarker;
 if (TypeName _side == "STRING") then
 {
 	switch (toUpper _side) do 

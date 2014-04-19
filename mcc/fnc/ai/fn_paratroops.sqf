@@ -319,8 +319,9 @@ _heli setDestination [_away, "VehiclePlanned", true];
 
 waitUntil { sleep 1;(_heli distance _dropPos) < ((getPosATL _heli select 2) + 150)};  // include heli heigth else if flying higher then 250 m this wil be 'true'
 
-_heli animateDoor ["door_R", 1];
-_heli animateDoor ["door_L", 1];
+{ 
+	_heli animateDoor [_x,1]; 
+} foreach ["door_back_L","door_back_R","door_L","door_R"];
 
 if (typeOf _heli == "I_Heli_Transport_02_F") then
 {
@@ -536,8 +537,10 @@ _heli setBehaviour "CARELESS";
 _heli setDestination [_away, "VehiclePlanned", true];
 
 
-_heli animateDoor ["door_R", 0];
-_heli animateDoor ["door_L", 0];
+{ 
+	_heli animateDoor [_x,0]; 
+} foreach ["door_back_L","door_back_R","door_L","door_R"];
+
 _heli animate ["CargoRamp_Open", 0];
 
 // Allow chopper to leave else AI will board again :-/

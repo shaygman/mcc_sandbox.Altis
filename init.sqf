@@ -38,6 +38,7 @@ if (!isMultiplayer && !MCC_isMode) then
 //=							                Shay-Gman  (C)
 //==========================================================================================
 //******************************************************************************************
+if (isNil "MCC_Lite") then {MCC_Lite = false};
 
 //--------------------- Who can access MCC leave "all" for everbody --------------------------------
 //Should be MCC_allowedPlayers = ["12321","1321123"]; 
@@ -75,6 +76,8 @@ if (!MCC_isMode) then
 		};
 	};
 
+//Bon artillery (moved up to avoid potential error messages)
+MCC_bonCannons = [];
 //----------------------IED settings---------------------------------------------
 // IED types the first one is display name the second is the classname [displayName, ClassName]
 MCC_ied_small = [["Plastic Crates","Land_CratesPlastic_F"],["Plastic Canister","Land_CanisterPlastic_F"],["Sack","Land_Sack_F"],["Road Cone","RoadCone"],["Tyre","Land_Tyre_F"],["Radio","Land_SurvivalRadio_F"],["Suitcase","Land_Suitcase_F"],["Grinder","Land_Grinder_F"],
@@ -241,7 +244,7 @@ MCC_MarkerZoneType = "join";
 mcc_patrol_wps = [];
 
 MCC_ZoneLocation = [["Server", 0], ["Headless Client", 1]]; //NEW
-mcc_hc = 0; // 0 = UPSMON target is server, 1 = UPSMON target is HeadlessClient
+mcc_hc = 0; // 0 = AI Spawn target is server, 1 = AI Spawn target is HeadlessClient
 mcc_spawn_dir = [0,0,0];
 MCC_trackdetail_units = false; 
 
@@ -251,10 +254,10 @@ MCC_type_index = 0;
 MCC_beanch_index = 0; 
 MCC_class_index = 0; 
 MCC_zone_index = 0; 
-MCC_zoneX_index = 0; 
-MCC_ZoneType_index = 0; //NEW
-MCC_ZoneType_nr_index = 0; //NEW
-MCC_zoneY_index = 0; 
+//MCC_zoneX_index = 0; // no longer used
+//MCC_ZoneType_index = 0;  // no longer used
+//MCC_ZoneType_nr_index = 0;  // no longer used
+//MCC_zoneY_index = 0;  // no longer used  
 MCC_mcc_screen = 0;
 MCC_tasks =[];
 MCC_triggers = [];
@@ -269,7 +272,7 @@ MCC_brush_drawing = false;
 if (isnil "MCC_jukeboxMusic") then {MCC_jukeboxMusic = true};
 MCC_musicActivateby_array = ["NONE","EAST","WEST","GUER","CIV","LOGIC","ANY","ALPHA","BRAVO","CHARLIE","DELTA","ECHO","FOXTROT","GOLF","HOTEL","INDIA","JULIET","STATIC","VEHICLE","GROUP","LEADER","MEMBER","WEST SEIZED","EAST  SEIZED","GUER  SEIZED"];
 MCC_musicCond_array = ["PRESENT","NOT PRESENT","WEST D","EAST D","GUER D","CIV D"];
-MCC_angle_array = [0,45,90,135,180,225,270,315];
+//MCC_angle_array = [0,45,90,135,180,225,270,315]; // no longer used
 MCC_shapeMarker = ["RECTANGLE","ELLIPSE"];
 MCC_colorsarray = [["Black","ColorBlack"],["White","ColorWhite"],["Red","ColorRed"],["Green","ColorGreen"],["Blue","ColorBlue"],["Yellow","ColorYellow"]];
 
@@ -303,7 +306,7 @@ MCC_hours_array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 MCC_weather_array = [["Clear",[0, 0, 0, 0, 0]], ["Clouded",[0.5, 0.5, 0.5, 0.5, 0.5]],["Rainy",[0.8, 0.8, 0.8, 0.8, 0.8]],["Storm",[1, 1, 1,1,1]]];
 
 MCC_grass_array = [["No grass",50],["Medium grass",25], ["High grass",12.5]];
-MCC_view_array = [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000];
+MCC_view_array = [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000,9500,10000,10500,11000,11500,12000];
 MCC_grass_index = 2;
 
 MCC_ied_proxArray = [3,5,10,15,20,25,30,35,45,50];
@@ -405,10 +408,13 @@ MCC_planeNameCount	= 0;
 //Mission Settings Index
 HW_arti_number_shells_per_hourIndex		= 0;
 MCC_resistanceHostileIndex				= 0;
-MCC_aiSkillIndex						= 5;
-MCC_aiAimIndex							= 0;
-MCC_aiSpotIndex							= 3;
-MCC_aiCommandIndex						= 5;
+
+// autoadjust based on settings above or publicVariable
+MCC_aiSkillIndex					= (MCC_AI_Skill*10)-1;    //5;
+MCC_aiAimIndex						= (MCC_AI_Aim*10)-1;    //0;
+MCC_aiSpotIndex						= (MCC_AI_Spot*10)-1;    //3;
+MCC_aiCommandIndex					= (MCC_AI_Command*10)-1;    //5;
+
 MCC_t2tIndex							= 1;
 MCC_consoleGPSIndex						= 0;
 MCC_consoleShowFriendsIndex				= 0;
@@ -429,7 +435,7 @@ MCC_groupGenTempWPLines = [];
 MCC_currentSide = 0; //0- west 1 - east 2- resistance 3 - civilian
 
 //Bon artillery
-MCC_bonCannons = []; 
+//MCC_bonCannons = []; 
 
 //MCC Save
 MCC_saveIndex = 0;
@@ -655,6 +661,7 @@ if ( isServer ) then
 	_dummyObject setVariable ["mccIgnore",true];
 	_dummyObject setpos [-9999, -9999, -1];
 	
+
 	//----------------------iniDB------------------------------------------------------
 	if (isclass(configFile >> "CfgPatches" >> "iniDBI")) then 
 	{

@@ -349,7 +349,13 @@ KEGs_fnc_MovementCameraLoop =
 		{			
 			_actionCam = false;
 			
-			if ( KEGsCombatActionFilter && { (time > _nextTarget) } && { !(KEGs_autoTarget == KEGs_target) } && { (alive KEGs_autoTarget) } ) then 
+			if ( 
+					KEGsCombatActionFilter && 
+					{ (time > _nextTarget) } && 
+					{ !(KEGs_autoTarget == KEGs_target) } && 
+					{ (alive KEGs_autoTarget) } &&
+					{ ( !KEGsAIfilter || isPlayer KEGs_AutoTarget ) }
+				) then 
 			{
 				//diag_log format ["%1 - switch to new auto target: %2 (old target: %3)", time, name KEGs_autoTarget, name KEGs_target];
 				KEGs_target = KEGs_AutoTarget;
@@ -357,6 +363,11 @@ KEGs_fnc_MovementCameraLoop =
 				// set camera focus name lower left corner
 				[false] spawn PlayerMenuHandler;
 				_actionCam = true;
+				
+				if((KEGs_cameras select KEGs_cameraIdx) == KEGscam_1stperson) then 
+				{
+					[] spawn CameraMenuHandler;
+				};
 			};
 	
 			//while { sleep 0.05; ( ( !(isPlayer KEGs_target) || ((isPlayer KEGs_target) && { (alive KEGs_target) } )) && { KEGsNextRun } ); } do  
@@ -727,9 +738,9 @@ while{ dialog } do
 		KEGs_lastTgt = KEGs_tgtIdx;	 //capture the last target index for the player in focus	
 
 		// Wait a moment. 125fps ought to be enough for everyone :-)
-		_tt = time;
-		sleep(1/125);
-		KEGs_tbase = time-_tt;
+		//_tt = time;
+		//sleep(1/125);
+		//KEGs_tbase = time-_tt;
 		
 		vm_count = vm_count + 1;
 };
@@ -789,3 +800,10 @@ deletemarkerlocal KEGS_camMarker;
 
 player switchCamera "INTERNAL";
 player cameraEffect["terminate","FRONT"];
+
+if ( (name player) == mcc_missionmaker ) then 
+{
+	// Close all dialogs and restart MCC
+	closeDialog 0;
+	[] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
+};

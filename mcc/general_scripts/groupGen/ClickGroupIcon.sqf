@@ -42,6 +42,9 @@ if (((_button == 0) && (!_ctrl)) || (_button == 1 )) then 								//Not multi-se
 		MCC_GroupGenGroupSelected set [count MCC_GroupGenGroupSelected, _group];
 		_icon = _group addGroupIcon ["selector_selectedFriendly",[0,0]];
 		_group setvariable ["MCCgroupIconDataSelected",_icon,false]; 
+		
+		// set spectator focus to latest selected group leader on MCC map
+		KEGs_target = leader _group; 
 	};
 	
 if (_button == 0) then 												//Left Click
