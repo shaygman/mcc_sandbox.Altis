@@ -56,7 +56,7 @@ _map = _this select 0;
 			drawIcon3D [
 				_texture,
 				_markerColor,
-				[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, _maxHeight],
+				[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, ((getpos vehicle _unit) select 2) + _maxHeight],
 				if (vehicle _unit != _unit) then {1.5} else {1},
 				if (vehicle _unit != _unit) then {1.5} else {1},
 				getdir (vehicle _unit)
@@ -71,8 +71,8 @@ _map = _this select 0;
 				];
 				
 				drawLine3D [
-					[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, _maxHeight],
-					[(getpos vehicle (leader _group)) select 0, (getpos vehicle(leader _group)) select 1, _maxHeight],
+					[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, ((getpos vehicle _unit) select 2) + _maxHeight],
+					[(getpos vehicle (leader _group)) select 0, (getpos vehicle(leader _group)) select 1, ((getpos vehicle (leader _group)) select 2) + _maxHeight],
 					[0,0,1,1]
 				];
 			};

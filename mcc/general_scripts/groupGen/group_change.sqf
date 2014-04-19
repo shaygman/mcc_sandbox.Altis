@@ -49,7 +49,6 @@ for "_x" from 3018 to 3020 step 1 do
 };
 ctrlShow [MCC_GroupGenCurrentGroup_IDD,_show];
 
-player sidechat str _show;
 if (_show) then 
 {
 	(_mccdialog displayCtrl MCC_GGSAVE_GROUPIDC) ctrlSetTooltip "Save the group as a custom group";

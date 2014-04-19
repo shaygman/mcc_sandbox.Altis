@@ -60,6 +60,7 @@ if (CP_debug) then {player sidechat format ["pilotLevel : %1",pilotLevel]};
 			_mkrArray = [];
 			while {alive player && MCC_groupMarkers} do	
 			{
+					waituntil {side player in [west, east, resistance]};
 					_groups	 = switch (side player) do	
 							{
 								case west:			{CP_westGroups};

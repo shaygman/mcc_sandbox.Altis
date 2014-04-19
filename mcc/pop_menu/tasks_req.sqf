@@ -151,17 +151,25 @@ if (mcc_missionmaker == (name player)) then
 				};
 		};
 		
-		case 5:	//End Mission : Sucess
+		case 5:	//End Mission : succeeded
 		{
 			if (MCC_capture_state) then
 			{
-			MCC_capture_var = MCC_capture_var + FORMAT ['
-								[[2,{"end1" call BIS_fnc_endMission; playMusic "Track06_CarnHeli";}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+				MCC_capture_var = MCC_capture_var + FORMAT ['
+								[["everyonewon"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
 								'
 								];
-			} else
+			} 
+			else
 			{
-			[[2,{"end1" call BIS_fnc_endMission; playMusic "Track06_CarnHeli";}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+				private "_answer";
+				_answer = ["<t font='TahomaB'>Are you sure you want to end the mission?</t>","End Mission - Succeeded",nil,true] call BIS_fnc_guiMessage;	
+				waituntil {!isnil "_answer"};
+				if (_answer) then 
+				{
+					
+					[["everyonewon"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
+				};
 			};
 		};
 		
@@ -169,13 +177,20 @@ if (mcc_missionmaker == (name player)) then
 		{
 			if (MCC_capture_state) then
 			{
-			MCC_capture_var = MCC_capture_var + FORMAT ['
-								[[2,{if (CP_activated) then {cutText ["","BLACK",0.1]; player setdamage 1;}; "LOSER" call BIS_fnc_endMission; playMusic "Track07_ActionDark";}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-								'
-								];
-			} else
+				MCC_capture_var = MCC_capture_var + FORMAT ['
+									[["everyonelost"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
+									'
+									];
+			} 
+			else
 			{
-			[[2,{if (CP_activated) then {cutText ["","BLACK",0.1]; player setdamage 1};"LOSER" call BIS_fnc_endMission; playMusic "Track07_ActionDark";}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+				private "_answer";
+				_answer = ["<t font='TahomaB'>Are you sure you want to end the mission?</t>","End Mission - Fail",nil,true] call BIS_fnc_guiMessage;	
+				waituntil {!isnil "_answer"};
+				if (_answer) then 
+				{
+					[["everyonelost"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
+				};
 			};
 		};
 		

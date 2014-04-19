@@ -20,6 +20,8 @@ MCC_mcc_screen = 2;	//Group gen for poping up the same menu again
 
 uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
 
+if (player != getAssignedCuratorUnit MCC_curator) then {[compile format ["%1 assignCurator MCC_curator;", player],"BIS_fnc_spawn",false,false] spawn BIS_fnc_MP}; 
+
 //Track units if enabled
 if (MCC_trackMarker) then
 {
@@ -118,7 +120,7 @@ if (isnil "MCCFirstOpenUI") then
 			
 			_markerlabel = createMarkerLocal [(format["LABEL_%1",_x]), mcc_zone_pos select _x];
 			_markerlabel setMarkerShapeLocal "ICON"; 
-			(format["LABEL_%1",_x]) setMarkerTypeLocal str _x;
+			(format["LABEL_%1",_x]) setMarkerTypeLocal "mil_join";
 			(format["LABEL_%1",_x]) setMarkerTextLocal str _x;
 			(format["LABEL_%1",_x]) setMarkerColorLocal "ColorRed";
 		} foreach MCC_zones_numbers;

@@ -165,13 +165,13 @@ mccPresets = [
 		,['Destroy Object', '_this setdamage 1;']
 		,['Flip Object', '[_this ,0, 90] call bis_fnc_setpitchbank;']
 		,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "VAS\open.sqf"];']
-		,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];']
+		,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
 		,['', '']
 		,['======= Effects =======','']
 		,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
 		,['Flies','[getposatl _this] call BIS_fnc_flies;']
-		,['Smoke','if (isServer) then {_effect = "test_EmptyObjectForSmoke" createVehicle (getpos _this); _effect attachto [_this,[0,0,0]];};']
-		,['Fire','if (isServer) then {_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _this); _effect attachto [_this,[0,0,0]];};']
+		,['Smoke','if (isServer) then {_effect = "test_EmptyObjectForSmoke" createVehicle (getpos _this);_effect setpos (getpos _this)};']
+		,['Fire','if (isServer) then {_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _this);_effect setpos (getpos _this)};']
 		,['', '']
 		,['======= Misc =======','']
 		,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
@@ -998,14 +998,18 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 		player setvariable ["MCC_allowed",true,true];
 	};
 	
+	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["null = [nil,nil,nil,nil,_this select 1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf';",MCC_path]];
 	//Add MCC Console action menu
 	_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
-		
+			
 	//Save gear EH
 	if(local player) then {player addEventHandler ["killed",{player execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};
 	
 	//Handle Heal
 	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && ("Medikit" in (items(_this select 1)))) then {(_this select 1) addrating 200; false}}];};
+	
+	//Curator
+	if(local player) then {MCC_curator addCuratorEditableObjects [[player],false]};
 };
 
 //========= player Loops (for saving gear/name tag exc)=================================

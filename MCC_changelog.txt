@@ -1,3 +1,12 @@
+Change log r4:
+- Fixed: after respawning will not loose zues. 
+- Fixed: Error garrison group spawn for "AAF (GUE)" faction
+- Fixed: Floating rocks issue.
+- Added: "Are you sure?" dialogs to mission end buttons. 
+- Added: Open or close MCC with the Custom user action key 2. 
+
+
+
 Change log r3
 
 Zeus Support:
@@ -64,7 +73,6 @@ GAIA:
 
 CACHING: 
 - Added: Caching per group implemented. ((_x) getVariable ["MCC_GAIA_CACHE", false])	
-
 
 UI:
 - Added: Move,resize,rotate zones by click and drag over the map. 

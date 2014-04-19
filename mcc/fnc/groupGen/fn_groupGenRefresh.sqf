@@ -93,8 +93,8 @@ MCC_fnc_mapDrawWP =
 						];
 						
 						drawLine3D [
-							[MCC_lastPos select 0, MCC_lastPos select 1, 2],
-							[_wPos select 0, _wPos select 1, 2],
+							[MCC_lastPos select 0, MCC_lastPos select 1, (MCC_lastPos select 2)+2],
+							[_wPos select 0, _wPos select 1, (_wPos select 2)+2],
 							[0,1,1,0.8]
 						];
 

@@ -20,7 +20,7 @@ disableSerialization;
 
 _action = _this select 0;
 _mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
-
+MCC_GUI1initDone = false; 
 //------------------------------------------------------------------------------------ Close all open boxes -------------------------------------------------------------------------------
 for "_i" from 500 to 518 step 1 do 
 {
@@ -667,7 +667,6 @@ if (_action == 15) exitWith
 	#define MCCGRASSDENSITY 1007
 	
 	//----------------------------------------------------------Client Side settings----------------------------------------------------------------------------
-	MCC_GUI1initDone = false; 
 	
 	_comboBox = _mccdialog displayCtrl MCCGRASSDENSITY;		//fill combobox Grass
 	lbClear _comboBox;
@@ -734,3 +733,6 @@ if (_action == 17) exitWith
 	} foreach ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights","N/V","Bodies","Flashlights Add/Delete"];
 	_comboBox lbSetCurSel 0;
 };
+
+sleep 1; 
+MCC_GUI1initDone = true; 

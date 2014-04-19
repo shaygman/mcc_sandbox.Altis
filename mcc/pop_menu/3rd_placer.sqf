@@ -84,7 +84,7 @@ if (isnil "MCC_3D_CAM_ASL") then {
 _logic setvariable ["MCC_3D_menu","#USER:BIS_Coin_categories_0"];
 
 //NV State
-_nvgstate = if (daytime > 18.5 || daytime < 5.5) then {3} else {4};
+_nvgstate = if (daytime > 18.5 || daytime < 5.5) then {2} else {4};
 if (_nvgstate == 2) then 
 {
 	camusenvg true;

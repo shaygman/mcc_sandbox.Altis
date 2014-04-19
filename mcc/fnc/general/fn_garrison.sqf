@@ -42,12 +42,16 @@ _unitsCount		= count _unitsArray;
 _vehiclesCount	= count _vehiclesArray;
 _buildingscount	= count _buildingsArray;
 
-switch (toLower _side) do	{
+player sidechat  (toLower _side);
+switch (toLower _side) do	
+{
 	case "west": {_side =  west};
 	case "east": {_side =  east};
-	case "guer": {_side =  resistance};
+	case "gue": {_side =  resistance};
 	case "civ": {_side =  civilian};
-	};
+};
+
+if (isnil "_side") exitWith {}; 
 		
 if (_action == 0 || _action == 1) then	//Garisson
 {	

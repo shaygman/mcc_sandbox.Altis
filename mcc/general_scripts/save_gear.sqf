@@ -35,6 +35,7 @@ if (!isnil "mcc_actionInedx") then
 WaitUntil {alive player};
 
 if (isnil ("MCC_TRAINING")) then {deleteVehicle _unit};
+MCC_curator addCuratorEditableObjects [[player],false];
 
 if (MCC_saveGear) then 
 {
