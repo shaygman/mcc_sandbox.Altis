@@ -29,7 +29,7 @@ _posY = (_this select 2) select 1;
 _shift = _this select 3;
 _ctrl = _this select 4;
 _alt = _this select 5;
-_groupControl = if (isplayer (leader _group)) then {true} else {_group getvariable "MCC_canbecontrolled"};	//Can we control this group
+_groupControl = if ((isplayer (leader _group)) || (getText (configfile >> "CfgVehicles" >> typeOF vehicle (leader _group) >> "vehicleClass")== "Autonomous")) then {true} else {_group getvariable "MCC_canbecontrolled"};	//Can we control this group
 _properCfg = 8; 		//if the cfg file is good then take from array number 8  else false - count on sim not vehicleClass take from array 5
 
 if (isnil "MCC_ConsoleGroupSelected") then {MCC_ConsoleGroupSelected = []}; 

@@ -61,7 +61,8 @@ ctrlSetText [MCC_ConsoleMapRulerDis,format ["Dis: %1m",MCC_ConsoleRulerData sele
 _mccdialog = findDisplay mcc_playerConsole_IDD;
 MCC_Console1Open = true; 
 //--------------------------------------------------Evac-------------------------------------------------------------------------------	
-if (count MCC_evacVehicles > 0) then	{
+if (count MCC_evacVehicles > 0) then	
+{
 	_comboBox = _mccdialog displayCtrl MCC_ConsoleEvacTypeText_IDD;		//fill combobox type
 	lbClear _comboBox;
 	{
@@ -157,7 +158,7 @@ MCC_fnc_mapDrawWPConsole =
 	_map = _this select 0;
 	{
 		_leader = (leader _x);
-		_groupControl = if (isplayer _leader) then {true} else {_x getvariable ["MCC_canbecontrolled",false]};	//Can we control this group
+		_groupControl = if ((isplayer _leader) || (getText (configfile >> "CfgVehicles" >> typeOF vehicle _leader >> "vehicleClass")== "Autonomous")) then {true} else {_x getvariable ["MCC_canbecontrolled",false]};	//Can we control this group
 		_haveGPS =  if ((vehicle _leader != _leader) || !isPlayer _leader) then {true} else {("ItemGPS" in (assignedItems _leader) || "B_UavTerminal" in (assignedItems _leader) || "MCC_Console" in (assignedItems _leader))};
 		if (isnil "_haveGPS") then {_haveGPS = false};
 		if ((side _leader == side player) && alive _leader && _groupControl && ((MCC_ConsoleOnlyShowUnitsWithGPS && _haveGPS) || !MCC_ConsoleOnlyShowUnitsWithGPS)) then
@@ -222,7 +223,7 @@ MCC_fnc_mapDrawWPConsole =
 				_groupStatus = _x getvariable "MCC_support";
 				_wpArray = waypoints (group _leader);
 				_behaviour = behaviour _leader;
-				_groupControl = if (isplayer _leader) then {true} else {_x getvariable ["MCC_canbecontrolled",false]};	//Can we control this group
+				_groupControl = if ((isplayer _leader) || (getText (configfile >> "CfgVehicles" >> typeOF vehicle _leader >> "vehicleClass")== "Autonomous")) then {true} else {_x getvariable ["MCC_canbecontrolled",false]};	//Can we control this group
 				_haveGPS =  if ((vehicle _leader != _leader) || !isPlayer _leader) then {true} else {("ItemGPS" in (assignedItems _leader) || "B_UavTerminal" in (assignedItems _leader) || "MCC_Console" in (assignedItems _leader))};
 				if (isnil "_haveGPS") then {_haveGPS = false};
 				if ((side _leader == side player) && alive _leader && _groupControl && ((MCC_ConsoleOnlyShowUnitsWithGPS && _haveGPS) || !MCC_ConsoleOnlyShowUnitsWithGPS)) then

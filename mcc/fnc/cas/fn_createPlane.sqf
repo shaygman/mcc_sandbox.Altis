@@ -15,7 +15,6 @@ _spawn = _this select 1;
 _pos = _this select 2;
 _flyHight = _this select 3; //integer e.g. 100
 _captive = _this select 4; //true or false
-_side = _this select 5;
 
 _heading = 180;
 

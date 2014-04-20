@@ -70,34 +70,44 @@ MCC_fnc_mapDrawWP =
 							"center"
 						];
 						
-						drawIcon3D [
-							_texture,
-							[0,1,1,0.8],
-							[_wPos select 0,_wPos select 1,2],
-							1,
-							1,
-							0,
-							_wType,
-							0,
-							0.04,
-							"PuristaBold",
-							"center"
-						];
-
-						if (isnil "MCC_lastPos") then {MCC_lastPos = [(getpos _leader) select 0,(getpos _leader) select 1]}; 
+						if (isnil "MCC_lastPos" || _i== currentWaypoint (group _leader) ) then {MCC_lastPos = getpos _leader}; 
 						
 						_map drawLine [
-							MCC_lastPos,
+							[MCC_lastPos select 0, MCC_lastPos select 1],
 							_wPos,
 							[0,0,1,1]
 						];
 						
-						drawLine3D [
-							[MCC_lastPos select 0, MCC_lastPos select 1, (MCC_lastPos select 2)+2],
-							[_wPos select 0, _wPos select 1, (_wPos select 2)+2],
-							[0,1,1,0.8]
-						];
-
+						if (!isnil "MCC_3D_CAM") then
+						{
+							private ["_size"];
+							_size =if ((1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001)) < 0) then {0} else {(1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001))};
+							
+							if (_size>0) then
+							{
+								drawIcon3D [
+										_texture,
+										[0,1,1,0.6],
+										[_wPos select 0,_wPos select 1,2],
+										_size,
+										_size,
+										0,
+										_wType,
+										0,
+										(_size*0.03),
+										"PuristaBold",
+										"center"
+									];
+								
+								
+									drawLine3D [
+										[MCC_lastPos select 0, MCC_lastPos select 1, (MCC_lastPos select 2)+2],
+										[_wPos select 0, _wPos select 1, (_wPos select 2)+2],
+										[0,1,1,0.8]
+									];
+							};
+						};
+						
 						MCC_lastPos = _wPos; 
 					};
 				};

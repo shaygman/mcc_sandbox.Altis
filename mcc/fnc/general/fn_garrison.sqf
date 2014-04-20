@@ -42,7 +42,6 @@ _unitsCount		= count _unitsArray;
 _vehiclesCount	= count _vehiclesArray;
 _buildingscount	= count _buildingsArray;
 
-player sidechat  (toLower _side);
 switch (toLower _side) do	
 {
 	case "west": {_side =  west};

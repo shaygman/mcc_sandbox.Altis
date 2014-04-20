@@ -1,29 +1,39 @@
 //===================================================================MCC_fnc_saveToSQM=========================================================================================
 // Save MCC's 3D editor placments in SQM file format and copy it to clipboard. 
-// Example: [] call MCC_fnc_saveToSQM
+// Example: [saveAll] call MCC_fnc_saveToSQM
 // Params:
-// 	<Nothing>
+// 	saveAll:	Boolean, true -save all, false - save only MCC/Zeus objects
 // Returns:
 //     <Nothing>
 //==============================================================================================================================================================================	
- private ["_arrayGroups","_allItems","_simItems","_logicItems","_arrayVehicles","_mission","_br","_object","_side","_array","_pos","_count","_seed","_newString","_finalString","_checkedGroups","_isKindofUnit"];
-    
+ private ["_arrayGroups","_triggersArray","_allItems","_simItems","_logicItems","_arrayVehicles","_mission","_br","_object","_side","_array","_pos","_count",
+          "_seed","_newString","_finalString","_checkedGroups","_isKindofUnit","_saveAll"];
+ 
+_saveAll = _this select 0;
 _br = toString [0x0D, 0x0A];
 
 _checkedGroups	= []; 
 _arrayGroups 	= [];
 _arrayVehicles 	= [];
 _seed			= str (random 100000);
-_allItems		= allMissionObjects "All";
-_simItems		= allMissionObjects "WeaponHolderSimulated";
-_allItems = _allItems - _simItems;
 
-_logicItems		= allMissionObjects "logic";
-_allItems = _allItems - _logicItems;
+if (_saveAll) then
+{
+	_allItems		= allMissionObjects "All";
+	_simItems		= allMissionObjects "WeaponHolderSimulated";
+	_triggersArray 	= allMissionObjects "EmptyDetector";
+	_logicItems		= allMissionObjects "logic";
 
+	_allItems 		= _allItems - _simItems;
+	_allItems 		= _allItems - _logicItems;
+}
+else
+{
+	_allItems		= curatorEditableObjects MCC_curator;
+	_triggersArray 	= MCC_triggers;
+};
 
 //Sort the arrays
-
 {
 	if (((count units group _x) <=1) && !(_x getVariable ["mccIgnore",false])) then
 	{
@@ -32,14 +42,14 @@ _allItems = _allItems - _logicItems;
 		{
 			case (_isKindofUnit)     	: 
 			{
-				if (((count units group _x) ==1) || (_x isKindOf "CAManBase")) then
+				if ((((count units group _x) ==1) || (_x isKindOf "CAManBase")) && !(group _x in _checkedGroups)) then
 				{
 					_arrayGroups set [count _arrayGroups, [group _x,toupper (format ["%1",side _x])]];
 					_checkedGroups set [count _checkedGroups, group _x]; 
 				}
 				else
 				{
-					_arrayVehicles set [count _arrayVehicles, [_x,"EMPTY"]];
+					if !(_x isKindOf "CAManBase") then {_arrayVehicles set [count _arrayVehicles, [_x,"EMPTY"]]};
 				};
 			};	
 			
@@ -244,6 +254,7 @@ if (count _arrayGroups > 0) then
 						+ format ["                   	class Item%1", _wpCounter] + _br
 						+         "                   	{           " + _br
 						+ format ["                       	position[]={%1,%3,%2};",(waypointPosition _wp) select 0, (waypointPosition _wp) select 1, (waypointPosition _wp) select 2] + _br
+						+ format ["                       	type=""%1"";",waypointType _wp] + _br
 						+ format ["                       	combatMode=""%1"";",waypointCombatMode _wp] + _br
 						+ format ["                       	formation=""%1"";",waypointFormation  _wp] + _br
 						+ format ["                       	speed=""%1"";",waypointSpeed _wp] + _br
@@ -325,9 +336,6 @@ if ((count _arrayVehicles) > 0) then
 
 };
 
-private "_triggersArray";
-_triggersArray = allMissionObjects "EmptyDetector";
-
 if (count _triggersArray >0) then
 {
 	_mission = _mission 
@@ -339,7 +347,7 @@ if (count _triggersArray >0) then
 	_count = 0;
 
 	{
-		_object = _x;
+		_object = if (_saveAll) then {_x} else {_x select 1};
 		_pos = getPos _object;
 		_newString = (triggerStatements _object);
 		_mission = _mission 

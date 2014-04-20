@@ -197,6 +197,16 @@ class CfgFunctions
 				description = "Save MCC's 3D editor placments in SQM file format and copy it to clipboard";
 			};
 			
+			class saveToMCC
+			{
+				description = "prepare the mcc_output variable";
+			};
+			
+			class loadFromMCC
+			{
+				description = "Load the mcc_output variable";
+			};
+			
 			class saveToComp
 			{
 				description = "Save MCC's 3D editor placments in composition format";

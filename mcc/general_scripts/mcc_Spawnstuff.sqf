@@ -93,7 +93,7 @@ if (MCC_capture_state) then
 	}
 	else
 	{
-		if !mcc_isloading then 
+		if (!mcc_isloading && mcc_isnewzone)then 
 		{
 			mcc_safe=mcc_safe + FORMAT ["
 				  mcc_spawntype='%1';

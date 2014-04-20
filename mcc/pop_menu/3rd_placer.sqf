@@ -297,22 +297,26 @@ MCC_3D_CAM_Handler =
 					{
 						if (typeName (MCC_lastSpawn select _index) == "ARRAY") then
 						{
+							/*
 							mcc_safe = mcc_safe + FORMAT ["
 						                                    deleteVehicle ((MCC_lastSpawn select %1) select 0);
 							                                {deleteVehicle _x} forEach ((MCC_lastSpawn select %1) select 1);
 								                          "
 								                          , _index
 								                          ];
+							*/
 							deleteVehicle ((MCC_lastSpawn select _index) select 0);
 							{deleteVehicle _x} forEach ((MCC_lastSpawn select _index) select 1);
 						}	
 						else	
 						{
+							/*
 							mcc_safe = mcc_safe + FORMAT ["
 						                                    deleteVehicle (MCC_lastSpawn select %1);
 								                          "
 								                          , _index
 								                          ];
+							*/
 							deleteVehicle (MCC_lastSpawn select _index);
 						};
 						

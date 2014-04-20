@@ -45,7 +45,8 @@ class MCC_SaveLoadScreen
 		MCC_saveNameTittle,
 		MCC_saveUIButton,
 		MCC_loadUIButton,
-		MCC3DSaveToSQM
+		MCC3DSaveToSQM,
+		MCC3DSaveAllToSQM
 		//MCC3DSaveToComp 
 	};
   
@@ -226,14 +227,29 @@ class MCC_SaveLoadScreen
 		h = 0.0329871 * safezoneH;
 	};
 	
-	class MCC3DSaveToSQM: MCC_RscButton
+	class MCC3DSaveAllToSQM: MCC_RscButton
 	{
 		idc = -1;
 		colorDisabled[] = {1,0.4,0.3,0.8};
 		onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
-		tooltip = "Save MCC's 3D editor placments in SQM file format and copy it to clipboard."; //--- ToDo: Localize;
-		text = "Save SQM"; //--- ToDo: Localize;
+		sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.85)";
+		tooltip = "Save all missions's object in SQM file format and copy it to clipboard."; //--- ToDo: Localize;
+		text = "Save All (SQM)"; //--- ToDo: Localize;
 		x = 0.288021 * safezoneW + safezoneX;
+		y = 0.719914 * safezoneH + safezoneY;
+		w = 0.103125 * safezoneW;
+		h = 0.0329871 * safezoneH;
+	};
+	
+	class MCC3DSaveToSQM: MCC_RscButton
+	{
+		idc = -1;
+		colorDisabled[] = {1,0.4,0.3,0.8};
+		onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+		sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.85)";
+		tooltip = "Save only MCC/Zeus missions's object in SQM file format and copy it to clipboard."; //--- ToDo: Localize;
+		text = "Save MCC (SQM)"; //--- ToDo: Localize;
+		x = 0.4 * safezoneW + safezoneX;
 		y = 0.719914 * safezoneH + safezoneY;
 		w = 0.103125 * safezoneW;
 		h = 0.0329871 * safezoneH;

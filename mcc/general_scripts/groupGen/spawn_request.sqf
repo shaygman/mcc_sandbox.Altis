@@ -105,6 +105,7 @@ if !mcc_isloading then
 			} 
 			else 
 			{
+					/*
 					mcc_safe = mcc_safe + FORMAT ['
 					[[%1,%2,%3,%4,"%5","%6"],"MCC_fnc_garrison",true,false] call BIS_fnc_MP;;
 					'
@@ -115,7 +116,8 @@ if !mcc_isloading then
 					,_faction
 					,mcc_sidename
 					];
-					[[_center,_radius,_action,_intanse,_faction,mcc_sidename],"MCC_fnc_garrison",true,false] call BIS_fnc_MP;;
+					[[_center,_radius,_action,_intanse,_faction,mcc_sidename],"MCC_fnc_garrison",true,false] call BIS_fnc_MP;
+					*/
 			};
 		};
 			
@@ -198,13 +200,7 @@ if !mcc_isloading then
 					mcc_spawntype="VEHICLE";
 				};
 						
-				case 7:	//DOC
-				{
-					_groupArray = GEN_DOC1;
-					mcc_spawntype="DOC";
-				};
-				
-				case 8:	//AMMO
+				case 7:	//AMMO
 				{
 					_groupArray = U_AMMO;
 					mcc_spawntype="AMMO";
@@ -228,9 +224,8 @@ if !mcc_isloading then
 		};
 	};
 	
-	//Spawn Group
 	//Spawn in mouse Click
-	if ((_type==0) && !(((MCC_groupTypes select (lbCurSel UNIT_TYPE) select 0)) in ["Reinforcement","Garrison"])) then	
+	if ((_type==0) && ((!(((MCC_groupTypes select (lbCurSel UNIT_TYPE) select 0)) in ["Reinforcement","Garrison"]) && (lbCurSel MCC_GGUNIT_TYPE) == 1) ||(lbCurSel MCC_GGUNIT_TYPE) == 0)) then	
 	{	
 		if (typeName MCC_groupBroadcast != "STRING") then
 		{

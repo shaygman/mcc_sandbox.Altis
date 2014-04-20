@@ -53,7 +53,9 @@ if (typeName _side == "STRING") then
 	};
 }; 
 
-if (_isSpotter > 0) then {		//If we are spawning a spotter
+//If we are spawning a spotter
+if (_isSpotter > 0) then 
+{	
 	switch (_isSpotter) do {
 		case 1:			//Civilian
 		{ 	
@@ -99,9 +101,14 @@ if (_isSpotter > 0) then {		//If we are spawning a spotter
 	_spotter = _group createUnit [_spotterClass , _pos, [], 0, "NONE"];
 	_spotter setcaptive true;
 	_spotter AddWeapon "Binocular";
-} else {
+} 
+else 
+{
 	_group=[_pos, _side, (call compile _spawnName)] call MCC_fnc_spawnGroup;
-	};
+	{
+		MCC_curator removeCuratorEditableObjects [[_x],false];
+	} foreach units _group; 
+};
 
 		
 _group setFormDir _groupDir;

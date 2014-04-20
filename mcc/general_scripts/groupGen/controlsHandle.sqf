@@ -204,7 +204,7 @@ if (_action == 6) exitWith
 	{
 		_displayname =  _x;
 		_index = _comboBox lbAdd _displayname;
-	} foreach ["Infantry", "Vehicles", "Tracked", "Motorcycle", "Helicopter", "Fixed-wing", "Ship","D.O.C", "Ammo"];
+	} foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "Ammo"];
 	_comboBox lbSetCurSel MCC_class_index;
 
 	_comboBox = _mccdialog displayCtrl MCC_GGUNIT_TYPE;		

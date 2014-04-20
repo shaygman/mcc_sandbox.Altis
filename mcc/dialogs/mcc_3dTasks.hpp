@@ -139,7 +139,7 @@ class MCC_3dTasksControls:MCC_RscControlsGroup
 		
 		class MCC_3dTasksCompletedCombo: MCC_RscCombo
 		{
-			idc = 8505
+			idc = 8505;
 			x = 0.356771 * safezoneW + safezoneX;
 			y = 0.5 * safezoneH + safezoneY;
 			w = 0.126042 * safezoneW;
@@ -147,6 +147,7 @@ class MCC_3dTasksControls:MCC_RscControlsGroup
 			tooltip = "What will trigger task complete"; //--- ToDo: Localize;
 			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) *0.9)";
 		};
+		
 		class MCC_3dTasksMarkerCombo: MCC_RscCombo
 		{
 			idc = 8506;

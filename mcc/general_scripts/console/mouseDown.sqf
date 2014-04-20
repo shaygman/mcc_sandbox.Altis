@@ -147,7 +147,7 @@ if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked) then //Box drawing s
 			{
 				_groupControl = nil; 
 				_leader = (leader _x);
-				_groupControl = if (isplayer _leader) then {true} else {_x getvariable ["MCC_canbecontrolled",false]};	//Can we control this group
+				_groupControl = if ((isplayer _leader) || (getText (configfile >> "CfgVehicles" >> typeOF vehicle _leader >> "vehicleClass")== "Autonomous")) then {true} else {_x getvariable ["MCC_canbecontrolled",false]};	//Can we control this group
 				if ((side _leader == side player) && alive _leader && count (units _x)>0 && _groupControl) then
 					{
 						_group = _x;

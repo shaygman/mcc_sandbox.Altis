@@ -1,3 +1,4 @@
+ /*
  if !mcc_isloading then 
 			{
 			mcc_safe = mcc_safe + FORMAT ["script_handler = [1] execVM '%1mcc\general_scripts\delete\undo.sqf';
@@ -6,7 +7,7 @@
 								, MCC_path
 								];									
 			};
-
+*/
 [[2, {
 		if ((count MCC_lastSpawn)>0) then
 		{

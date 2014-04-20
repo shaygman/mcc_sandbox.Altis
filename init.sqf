@@ -254,10 +254,6 @@ MCC_type_index = 0;
 MCC_beanch_index = 0; 
 MCC_class_index = 0; 
 MCC_zone_index = 0; 
-//MCC_zoneX_index = 0; // no longer used
-//MCC_ZoneType_index = 0;  // no longer used
-//MCC_ZoneType_nr_index = 0;  // no longer used
-//MCC_zoneY_index = 0;  // no longer used  
 MCC_mcc_screen = 0;
 MCC_tasks =[];
 MCC_triggers = [];
@@ -370,7 +366,7 @@ MCC_consoleACgunReady3 = true;
 MCC_consoleACmousebuttonUp = true; 
 
 MCC_airDropArray = []; 
-MCC_CASBombs = ["Gun-run short","Gun-run long","S&D","Rockets-run","AT run","AA run","JDAM","LGB","Bombing-run"];
+MCC_CASBombs = ["Gun-run short","Gun-run long","Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)","S&D","Rockets-run","AT run","AA run","JDAM","LGB","Bombing-run"];
 MCC_GunRunBusy = [0,0,0,0,0,0,0];
 MCC_CASrequestMarker = false;
 MCC_CASConsoleArray	= []; 
@@ -585,9 +581,6 @@ _index = player createDiarySubject ["MCCZones","MCC Zones"];
 
 if ( isServer ) then 
 {
-	//Initialize UPSMON script --- DELETE ME
-	//_null=[] execVM MCC_path + "scripts\Init_UPSMON.sqf";
-		
 	//Make sure about who is at war with who or it will be a very peacefull game 
 	_SideHQ_East   = createCenter east;
 	_SideHQ_Resist = createCenter resistance;

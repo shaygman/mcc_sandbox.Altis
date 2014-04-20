@@ -1,9 +1,16 @@
 Change log r4:
+- Added: "Are you sure?" dialogs to mission end buttons. 
+- Added: Open or close MCC with the Custom user action key 2. 
+- Added: Button: Save MCC/Zeus only missions object to SQM - will only save new placed objects to SQM file. 
+- Added: Reworked MCC save now will save all objects/units placesd with MCC or Zeus including waypoints, GAIA behavior, GAIA cashing status and disregard units that has been deleted.
+- Added: new ModuleCAS_F to MCC's CAS - means 3 new CAS (the Zeus one). 
+
+- Fixed: 3D icons size will be depending on the distance from the camera. 
 - Fixed: after respawning will not loose zues. 
 - Fixed: Error garrison group spawn for "AAF (GUE)" faction
 - Fixed: Floating rocks issue.
-- Added: "Are you sure?" dialogs to mission end buttons. 
-- Added: Open or close MCC with the Custom user action key 2. 
+- Fixed: Save to SQM didn't saved WP type. 
+- Fixed: Could not take control of same side UAV/UGV with MCC handheld console unless mission maker allowed it. 
 
 
 
@@ -16,6 +23,7 @@ Zeus Support:
 	- Units placed with Zeus will be saved to SQM. - so basicly you got a full 3D editor with save to SQM feature. 
 	- Use _object setVariable ["mccIgnore",true] - so that the save to SQM ignore that object.
 	- Use _object setVariable ["text","Name"] - so that the save to SQM sets it's name.
+	
 	
 Artillery:
 - Added: Hold Ctrl to continue spawning ordnance without the need to press Create again. 

@@ -173,7 +173,7 @@ if (mcc_missionmaker == (name player)) then
 		if (!_ctrlKey) then {MCC_spawnEnabled = false}; 
 		if (MCC_capture_state) then
 		{
-			hint "Group Spawned Captured";
+			hint "Spawned Captured";
 			MCC_capture_var = MCC_capture_var + FORMAT ["
 									[[%1 , %2, %3, %4, %5],'MCC_fnc_groupSpawn',false,false] spawn BIS_fnc_MP;
 									"
@@ -186,7 +186,8 @@ if (mcc_missionmaker == (name player)) then
 		}	
 		else
 		{
-			hint "Group Spawned";
+			hint "Spawned";
+			/*
 			mcc_safe = mcc_safe + FORMAT ["
 									[[%1 , %2, %3, %4, %5],'MCC_fnc_groupSpawn',false,false] spawn BIS_fnc_MP;
 									sleep 1;
@@ -197,6 +198,7 @@ if (mcc_missionmaker == (name player)) then
 									, mcc_sidename
 									, MCC_isEmpty
 									];
+			*/						
 			[[_ctrl ctrlMapScreenToWorld [_posX,_posY], MCC_groupBroadcast, mcc_hc, mcc_sidename, MCC_isEmpty],"MCC_fnc_groupSpawn",false,false] spawn BIS_fnc_MP;
 		};
 		sleep 0.5;

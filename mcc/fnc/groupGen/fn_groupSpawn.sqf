@@ -40,6 +40,8 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 	if (_isEmpty) then
 	{
 		_group = (_unitsArray select 0) createVehicle _pos;
+		_group setpos _pos;
+		MCC_curator addCuratorEditableObjects [[_group],false];
 	}
 	else
 	{
@@ -66,11 +68,13 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 				case "soldier": 
 				{
 					_unit = _group createunit [_unitClass,_pos,[],0,"none"];
+					MCC_curator addCuratorEditableObjects [[_unit],false];
 				};
 				default 
 				{
-					_safepos  =[_pos,1,100,2,_waterSpawn,100,0] call BIS_fnc_findSafePos;
+					_safepos  =[_pos,1,50,2,_waterSpawn,50,0] call BIS_fnc_findSafePos;
 					_unit = [[_safepos select 0,_safepos select 1,0], 0, _unitClass, _group] call BIS_fnc_spawnVehicle;
+					MCC_curator addCuratorEditableObjects [[_unit select 0],true];
 				};
 			};
 		};

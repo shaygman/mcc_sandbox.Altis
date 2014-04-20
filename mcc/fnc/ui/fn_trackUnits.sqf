@@ -48,20 +48,6 @@ _map = _this select 0;
 				direction vehicle _unit
 			];
 			
-			_bbr = boundingBoxReal vehicle _unit;
-			_p1 = _bbr select 0;
-			_p2 = _bbr select 1;
-			_maxHeight = abs ((_p2 select 2) - (_p1 select 2));
-			
-			drawIcon3D [
-				_texture,
-				_markerColor,
-				[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, ((getpos vehicle _unit) select 2) + _maxHeight],
-				if (vehicle _unit != _unit) then {1.5} else {1},
-				if (vehicle _unit != _unit) then {1.5} else {1},
-				getdir (vehicle _unit)
-			];
-			
 			if (_x != leader _group) then
 			{
 				_map drawLine [
@@ -69,13 +55,43 @@ _map = _this select 0;
 					getpos (leader _group),
 					[0,0,1,0.8]
 				];
-				
-				drawLine3D [
-					[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, ((getpos vehicle _unit) select 2) + _maxHeight],
-					[(getpos vehicle (leader _group)) select 0, (getpos vehicle(leader _group)) select 1, ((getpos vehicle (leader _group)) select 2) + _maxHeight],
-					[0,0,1,1]
-				];
 			};
+			
+			
+			
+			if (!isnil "MCC_3D_CAM") then
+			{
+				private ["_size"];
+				_bbr = boundingBoxReal vehicle _unit;
+				_p1 = _bbr select 0;
+				_p2 = _bbr select 1;
+				_maxHeight = abs ((_p2 select 2) - (_p1 select 2));
+				
+				_size =if ((1.5 - ((MCC_3D_CAM distance vehicle _unit)*0.001)) < 0) then {0} else {(1.5 - ((MCC_3D_CAM distance vehicle _unit)*0.001))};
+				
+				if (_size > 0) then
+				{
+					drawIcon3D [
+						_texture,
+						_markerColor,
+						[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, ((getpos vehicle _unit) select 2) + _maxHeight],
+						_size,
+						_size,
+						getdir (vehicle _unit)
+					];
+					
+					if (_x != leader _group) then
+					{
+						drawLine3D [
+							[(getpos vehicle _unit) select 0, (getpos vehicle _unit) select 1, ((getpos vehicle _unit) select 2) + _maxHeight],
+							[(getpos vehicle (leader _group)) select 0, (getpos vehicle(leader _group)) select 1, ((getpos vehicle (leader _group)) select 2) + _maxHeight],
+							[0,0,1,1]
+						];
+					};
+				};
+			};
+			
+
 		};
 	} foreach (units _group); 
 	
