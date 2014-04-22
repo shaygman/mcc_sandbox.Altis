@@ -6,6 +6,7 @@ Change log r4:
 - Added: new ModuleCAS_F to MCC's CAS - means 3 new CAS (the Zeus one). 
 - Added: 1st person spectator support (including 'auto combat focus')
 - Added: set spectator focus to last selected group on MCC map (so after selecting icon, open spectator will focus on the group leader)
+- Added: Respawn can now be set on GAIA groups (caching friendly) (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
 
 - Update: 500m increment to viewdistance setting
 - Update: improved check if zone exists before spawning AI units
