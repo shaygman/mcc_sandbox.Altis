@@ -105,7 +105,7 @@ if !mcc_isloading then
 			} 
 			else 
 			{
-					/*
+					//*/
 					mcc_safe = mcc_safe + FORMAT ['
 					[[%1,%2,%3,%4,"%5","%6"],"MCC_fnc_garrison",true,false] call BIS_fnc_MP;;
 					'
@@ -117,7 +117,7 @@ if !mcc_isloading then
 					,mcc_sidename
 					];
 					[[_center,_radius,_action,_intanse,_faction,mcc_sidename],"MCC_fnc_garrison",true,false] call BIS_fnc_MP;
-					*/
+					//*/
 			};
 		};
 			
