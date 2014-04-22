@@ -9,7 +9,14 @@ _gv					= [];
 _group = creategroup (_sf select 2);
 if (isnull _group) exitwith {};
 _group  setVariable ["GAIA_zone_intend", (_sf select 3),true];
-_group  setVariable ["mcc_gaia_cache", true];
+_group  setVariable ["MCC_GAIA_RESPAWN", (_sf select 9),true];
+
+//Now the trick is to restore the original group variable before we got cached.
+_var2 = "GAIA_RESPAWN_" + str(_group); 	
+missionNamespace setVariable [_var2, (_sf select 10)];
+
+//I gues we were cached, because we just got uncached.
+_group  setVariable ["mcc_gaia_cache", true,true];
 
 
 //Create Vehicles in group

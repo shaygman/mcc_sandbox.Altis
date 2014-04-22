@@ -26,6 +26,11 @@ gaia_fn_uncache_stage_2							= compile preprocessfilelinenumbers (GAIA_scripts 
 gaia_fn_nearPlayer									= compile preprocessfilelinenumbers (GAIA_scripts + "fn_nearPlayer.sqf");
 gaia_fn_gaia_cache_init							= compile preprocessfilelinenumbers (GAIA_scripts + "fn_gaia_cache_init.sqf");
 
+fn_cache_original_group							= compile preprocessfilelinenumbers (GAIA_scripts + "fn_cache_original_group.sqf");
+fn_uncache_original_group						= compile preprocessfilelinenumbers (GAIA_scripts + "fn_uncache_original_group.sqf");
+
+
+
 
 
 
@@ -153,6 +158,9 @@ GAIA_CACHE_SLEEP					= 0.5;
 GAIA_CACHE_STAGE_1				= 2000;
 GAIA_CACHE_STAGE_2				= 4000;
 MCC_GAIA_CACHE_STAGE2			= []; 
+
+
+
 
 // dont CHANGE without knowledge 
 MCC_GAIA_OPERATIONAL 			= false;
