@@ -81,6 +81,8 @@ _sf = 	[_gv
 				,speedmode _group
 				,formation _group
 				,_waypoints
+				,(_group getVariable  ["MCC_GAIA_RESPAWN",-1])
+				, (missionNamespace getVariable [ "GAIA_RESPAWN_" + str(_group),[] ])
 				];
 
 _pos = position leader _group;

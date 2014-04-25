@@ -1030,15 +1030,34 @@ if (isServer || MCC_isLocalHC) then
 {
 	[] spawn 
 	{
+		_gaia_respawn = [];
 		while {true} do
 		{
-			sleep 60; 
+			
+			
 			{
+				_gaia_respawn = (missionNamespace getVariable [ "GAIA_RESPAWN_" + str(_x),[] ]);
+				//Store ALL original group setups
+				if (count(_gaia_respawn)==0) then {[(_x)] call fn_cache_original_group;};
+				
 				if ((({alive _x} count units _x) == 0) && !(_x getVariable ["MCC_CPGroup",false])) then 
 				{
+					//Before we send him to heaven check if he should be reincarnated
+					if (count(_gaia_respawn)==2) then {	[_gaia_respawn,(_x getVariable  ["MCC_GAIA_RESPAWN",-1]),(_x getVariable  ["MCC_GAIA_CACHE",false])] call fn_uncache_original_group;};					
+					
+					//Remove the respawn group content before the group is re-used
+					missionNamespace setVariable ["GAIA_RESPAWN_" + str(_x), nil];
+					
 					deleteGroup _x;
+					
+
 				};
+				
+				sleep .1;
+				
 			} foreach allGroups;			
+			
+			sleep 2; 
 		};
 	};
 };
