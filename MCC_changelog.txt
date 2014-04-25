@@ -1,11 +1,16 @@
 Change log r4:
+- Added: Save to SQM will save gaia behavior.
+- Fixed: Delete markers and all in delete brush won't delete MCC Zone. 
+
+
+
 - Added: "Are you sure?" dialogs to mission end buttons. 
 - Added: Open or close MCC with the Custom user action key 2. 
 - Added: Button: Save MCC/Zeus only missions object to SQM - will only save new placed objects to SQM file. 
 - Added: Reworked MCC save now will save all objects/units placesd with MCC or Zeus including waypoints, GAIA behavior, GAIA cashing status and disregard units that has been deleted.
 - Added: new ModuleCAS_F to MCC's CAS - means 3 new CAS (the Zeus one). 
 
-- Fixed: 3D icons size will be depending on the distance from the camera. 
+- Fixed: 3D icons size will depends on the distance from the camera. 
 - Fixed: after respawning will not loose zues. 
 - Fixed: Error garrison group spawn for "AAF (GUE)" faction
 - Fixed: Floating rocks issue.

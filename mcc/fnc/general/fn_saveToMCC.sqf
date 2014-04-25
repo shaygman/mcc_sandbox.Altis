@@ -70,7 +70,7 @@ MCC_output = MCC_output + "[[";
 	_side 	= _x select 1;
 	if (!isnil "_group" && !isnull _group) then 
 	{
-		_groupArrayGeneral = [_side, [["GAIA_ZONE_INTEND",_group getVariable ["GAIA_ZONE_INTEND",[]]], ["mcc_gaia_cache",_group getVariable ["mcc_gaia_cache",false]]]]; 
+		_groupArrayGeneral = [_side, [["GAIA_ZONE_INTEND",_group getVariable ["GAIA_ZONE_INTEND",[]]], ["mcc_gaia_cache", _group getVariable ["mcc_gaia_cache",false]]]]; 
 		_blackListVehicles = []; 
 		_refinedGroup = [];
 		

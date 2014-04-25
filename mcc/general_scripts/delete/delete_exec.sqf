@@ -14,7 +14,11 @@ switch _type do
 				//Markers
 				_markers = []; 
 				{
-					if ((getMarkerPos _x distance [_pos select 0, _pos select 1, 0]) < _radius) then {_markers set [count _markers, _x]}; 
+					if ((((getMarkerPos _x distance [_pos select 0, _pos select 1, 0]) < _radius)) && !(getMarkerPos _x in mcc_zone_pos))
+					then 
+					{
+						_markers set [count _markers, _x];
+					}; 
 				} foreach allMapMarkers;
 				
 				{
@@ -35,7 +39,11 @@ switch _type do
 				//Markers
 				_markers = []; 
 				{
-					if ((getMarkerPos _x distance [_pos select 0, _pos select 1, 0]) < _radius) then {_markers set [count _markers, _x]}; 
+					if (((getMarkerPos _x distance [_pos select 0, _pos select 1, 0]) < _radius) && !(getMarkerPos _x in mcc_zone_pos)) 
+					then 
+					{
+						_markers set [count _markers, _x];
+					}; 
 				} foreach allMapMarkers;
 				
 				{

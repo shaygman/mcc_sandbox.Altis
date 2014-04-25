@@ -185,6 +185,18 @@ if (count _arrayGroups > 0) then
 				{
 					_mission = _mission
 							 +         "                       leader=1;" + _br;
+							 
+					if (count(group _object getvariable ["GAIA_ZONE_INTEND",[]])>0) then 
+					{
+						_newString = (_object getvariable ["vehicleinit",""]) + format ["group _this setVariable ['GAIA_ZONE_INTEND',%1]",group _object getvariable ["GAIA_ZONE_INTEND",[]]];
+						_object setvariable ["vehicleinit",_newString];
+					};
+					
+					if (group _object getvariable ["mcc_gaia_cache",false]) then 
+					{
+						_newString = (_object getvariable ["vehicleinit",""]) + "group _this setVariable ['mcc_gaia_cache',true]" ;
+						_object setvariable ["vehicleinit",_newString];
+					};
 				};
 			}
 			else
@@ -193,6 +205,19 @@ if (count _arrayGroups > 0) then
 				{
 					_mission = _mission
 							 +         "                       leader=1;" + _br;
+							 
+					if (count(_group getvariable ["GAIA_ZONE_INTEND",[]])>0) then 
+					{
+						_newString = (_object getvariable ["vehicleinit",""]) + format ["group _this setVariable ['GAIA_ZONE_INTEND',%1]",group _object getvariable ["GAIA_ZONE_INTEND",[]]];
+						_object setvariable ["vehicleinit",_newString];
+						player sidechat "string:" + _newString;
+					};
+					
+					if (_group getvariable ["mcc_gaia_cache",false]) then 
+					{
+						_newString = (_object getvariable ["vehicleinit",""]) + "group _this setVariable ['mcc_gaia_cache',true]" ;
+						_object setvariable ["vehicleinit",_newString];
+					};
 				};
 			};
 			
