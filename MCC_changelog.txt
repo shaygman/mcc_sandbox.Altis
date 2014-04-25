@@ -1,31 +1,35 @@
 Change log r4:
-- Added: Save to SQM will save gaia behavior.
-- Fixed: Delete markers and all in delete brush won't delete MCC Zone. 
-
-
-
-- Added: "Are you sure?" dialogs to mission end buttons. 
-- Added: Open or close MCC with the Custom user action key 2. 
+Engine:
 - Added: Button: Save MCC/Zeus only missions object to SQM - will only save new placed objects to SQM file. 
 - Added: Reworked MCC save now will save all objects/units placesd with MCC or Zeus including waypoints, GAIA behavior, GAIA cashing status and disregard units that has been deleted.
-- Added: new ModuleCAS_F to MCC's CAS - means 3 new CAS (the Zeus one). 
-- Added: 1st person spectator support (including 'auto combat focus')
-- Added: set spectator focus to last selected group on MCC map (so after selecting icon, open spectator will focus on the group leader)
-- Added: Respawn can now be set on GAIA groups (caching friendly) (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
-
+- Added: Save to SQM will save gaia behavior.
 - Update: 500m increment to viewdistance setting
 - Update: improved check if zone exists before spawning AI units
-
 - Fixed: after HALO jump backpack on pelvis was not removed
-- Fixed: spectator log file error messages
-- Fixed: 3D icons size will be depending on the distance from the camera. 
+- Fixed: Save to SQM didn't saved WP type. 
 - Fixed: after respawning will not loose zues. 
 - Fixed: Error garrison group spawn for "AAF (GUE)" faction
 - Fixed: Floating rocks issue.
-- Fixed: Save to SQM didn't saved WP type. 
 - Fixed: Could not take control of same side UAV/UGV with MCC handheld console unless mission maker allowed it. 
 
+GAIA:
+- Added: Respawn can now be set on GAIA groups (caching friendly) (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
 
+Delete Brush:
+- Fixed: Delete markers and all in delete brush won't delete MCC Zone. 
+
+UI:
+- Added: "Are you sure?" dialogs to mission end buttons. 
+- Added: Open or close MCC with the Custom user action key 2. 
+- Fixed: 3D icons size will be depending on the distance from the camera. 
+
+CAS:
+- Added: new ModuleCAS_F to MCC's CAS - means 3 new CAS (the Zeus one). 
+
+Spectator:
+- Added: 1st person spectator support (including 'auto combat focus')
+- Added: set spectator focus to last selected group on MCC map (so after selecting icon, open spectator will focus on the group leader)
+- Fixed: spectator log file error messages
 
 Change log r3
 
