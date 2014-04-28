@@ -93,7 +93,7 @@ class MCC_zoneControls: MCC_RscControlsGroup
 		
 		class MCC_giveToPlayer: MCC_RscButton
 		{
-			idc = -1;
+			idc = 10232; // idc 10232 set to allow button disablement in mcc_groupGen_init.sqf
 			onButtonClick = "if (!isnil 'MCC_GroupGenGroupSelected') then {if (count MCC_GroupGenGroupSelected > 0) then {{_x setVariable ['MCC_canbecontrolled',true,true]; _x setVariable ['GAIA_ZONE_INTEND',[],true]}foreach MCC_GroupGenGroupSelected}};";
 
 			text = "Give to Player"; //--- ToDo: Localize;

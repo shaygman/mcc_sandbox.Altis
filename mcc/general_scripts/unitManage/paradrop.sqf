@@ -60,7 +60,7 @@ if (_UMUnit==0) then {
 _count = 0;
 for [{_x=0},{_x < count _unitsArray},{_x=_x+1}] do {
 		_unit = _unitsArray select _x;
-		_init = format[" if (local _this) then {[%1,_this,%2,%3] execVM ""\mcc_sandbox_mod\mcc\general_scripts\unitManage\paraStart.sqf"";}",_planeName,_count,_pos];
+		_init = format[" if (local _this) then {[%1,_this,%2,%3] execVM '%4mcc\general_scripts\unitManage\paraStart.sqf';}",_planeName,_count,_pos, MCC_path];
 		[[[netid _unit,_unit], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 		_count = _count + 1;
 	};

@@ -121,7 +121,7 @@ class MCC_artilleryDialogControls:MCC_RscControlsGroup
 		};
 		class MCC_artilleryAdd: MCC_RscButton
 		{
-			idc = -1;
+			idc = 27; // idc set to allow hiding button when no mcc_console available
 			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\artillery\artillery_request.sqf'");
 
 			text = "Add"; //--- ToDo: Localize;

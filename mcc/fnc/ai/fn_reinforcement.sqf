@@ -27,7 +27,7 @@ if (TypeName _side == "STRING") then
 	{
 		case "WEST": {_side = west};
 		case "EAST": {_side = east};
-		case "GUE": {_side = resistance};
+		case "GUER": {_side = resistance};
 		case "CIV": {_side = civilian};
 	};
 };

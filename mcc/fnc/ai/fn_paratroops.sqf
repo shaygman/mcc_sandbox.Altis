@@ -141,7 +141,7 @@ switch (_paraSide) do
 			};
 		};
 				
-		case "GUE":
+		case "GUER":
 		{
 			_side = resistance;
 			_helitype = "I_Heli_Transport_02_F";

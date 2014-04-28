@@ -7,6 +7,10 @@
 //******************************************************************************************
 private ["_logic","_names","_namesList","_synced"];
 
+
+// Exit when no player system
+if !(hasInterface) exitWith {}; 
+
 _logic 		= _this select 0;
 _namesList 	= []; 
 

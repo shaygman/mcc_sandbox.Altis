@@ -17,7 +17,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 			{
 				case "MAN":	
 				{
-					if (_faction=="GUE") then {_unitspawned = createGroup resistance;};
+					if (_faction=="GUER") then {_unitspawned = createGroup resistance;};
 					if (_faction=="WEST") then {_unitspawned = createGroup west;};							
 					if (_faction=="EAST") then {_unitspawned = createGroup east;};
 					if (_faction=="CIV") then {_unitspawned = createGroup civilian;};
@@ -74,7 +74,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 						private ["_side","_veh","_crew"];
 						_side = switch (_faction) do
 								{
-									case "GUE" :  {resistance};
+									case "GUER" :  {resistance};
 									case "WEST" : {WEST};
 									case "EAST" : {EAST};
 									case "CIV" :  {civilian};

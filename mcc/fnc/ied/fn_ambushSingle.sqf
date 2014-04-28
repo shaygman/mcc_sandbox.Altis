@@ -31,7 +31,7 @@ if (typeName _side == "STRING") then
 {
 	switch (toUpper _side) do	
 	{
-		case "GUE":
+		case "GUER":
 		{ 
 			_side = resistance;
 		};
