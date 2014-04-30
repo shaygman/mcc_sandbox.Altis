@@ -147,3 +147,5 @@ if ((count _arrayVehicles) > 0) then
  //[_side, typeof _objectData, _pos, getDir _objectData, _objectData getvariable ["vehicleinit",""]];
 
     
+
+
