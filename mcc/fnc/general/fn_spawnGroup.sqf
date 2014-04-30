@@ -199,7 +199,6 @@ bb = _vehicles;
 //Assigne to vehicle
 if (count _vehicles > 0) then
 {
-	player globalchat "hoi, gaan";
 	private ["_vehicle","_unit"]; 
 	{
 		_vehicle = _x; 

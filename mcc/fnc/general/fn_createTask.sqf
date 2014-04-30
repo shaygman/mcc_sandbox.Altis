@@ -12,6 +12,7 @@ _desc 			= _this select 3;
 _pos			= _this select 4;
 _preTask		= _this select 5;
 
+if (!isServer) exitWith {}; 
 
 if (_preTask != 0) then 
 {

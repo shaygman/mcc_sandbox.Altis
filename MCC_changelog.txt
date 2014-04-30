@@ -1,11 +1,12 @@
 Change log r4:
 Engine:
-- Added: Button: Save MCC/Zeus only missions object to SQM - will only save new placed objects to SQM file. 
-- Added: Reworked MCC save now will save all objects/units placesd with MCC or Zeus including waypoints, GAIA behavior, GAIA cashing status and disregard units that has been deleted.
-- Added: Save to SQM will save gaia behavior.
+- Added: Button: "Save MCC(SQM)" will save MCC/Zeus only missions' objects to SQM - will only save the new placed objects. 
+- Added: Reworked MCC save now will save all objects/units placesd with MCC or Zeus including waypoints, GAIA behavior, GAIA cashing status and disregard units that has been deleted. First step to persistence. 
+- Added: Save to SQM will save gaia behavior, cacheing and respawn.
 - Update: 500m increment to viewdistance setting
 - Update: improved check if zone exists before spawning AI units
-- Fixed: after HALO jump backpack on pelvis was not removed
+- Fixed: after HALO jump backpack on pelvis was not removed.
+- Fixed: Player were not assigned to Zeus in dedicated servers. 
 - Fixed: Save to SQM didn't saved WP type. 
 - Fixed: after respawning will not loose zues. 
 - Fixed: Error garrison group spawn for "AAF (GUE)" faction
@@ -13,14 +14,15 @@ Engine:
 - Fixed: Could not take control of same side UAV/UGV with MCC handheld console unless mission maker allowed it. 
 
 GAIA:
-- Added: Respawn can now be set on GAIA groups (caching friendly) (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
+- Added: Respawns. It can now be set on GAIA groups (caching friendly) the group will respawn for number of times after all it's group members has been killed. (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
 
 Delete Brush:
-- Fixed: Delete markers and all in delete brush won't delete MCC Zone. 
+- Fixed: Delete "markers" and "all"  won't delete MCC Zone's markers. 
 
 UI:
-- Added: "Are you sure?" dialogs to mission end buttons. 
-- Added: Open or close MCC with the Custom user action key 2. 
+- Added: "Are you sure?" dialogs to mission's end buttons. 
+- Added: Open or close MCC with the Custom user "action key 2". 
+- Added: Towns names and map markers in 3D editor. 
 - Fixed: 3D icons size will be depending on the distance from the camera. 
 
 CAS:
@@ -31,8 +33,14 @@ Spectator:
 - Added: set spectator focus to last selected group on MCC map (so after selecting icon, open spectator will focus on the group leader)
 - Fixed: spectator log file error messages
 
-Change log r3
+Misc:
+- Added: In Unit Managment realistic paradrop (runing up the ramp exc). 
+- Fixed: Mission version and template missions revive for JIP. 
 
+
+TODO IED DISBALE
+TASK LIST
+Change log r3
 Zeus Support:
 - MCC now have built in Zeus support:
 	- Once mission maker log in he will have Zeus key enabled once he logged out he'll lose it. 

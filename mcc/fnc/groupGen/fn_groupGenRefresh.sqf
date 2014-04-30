@@ -114,6 +114,79 @@ MCC_fnc_mapDrawWP =
 			};
 		};
 	} foreach allgroups; 
+	
+	//Show towns name up to2Km
+	if (!isnil "MCC_3D_CAM") then
+	{
+		{
+			_pos = locationposition _x;
+			_pos set [2,0];
+			drawIcon3D [
+							"#(argb,8,8,3)color(0,0,0,0)",
+							[1,1,1,1],
+							_pos,
+							0,
+							0,
+							0,
+							text _x,
+							2,
+							0.05
+						];
+		} foreach (nearestlocations [getpos MCC_3D_CAM,["nameVillage","nameCity","nameCityCapital"],2000]);
+		
+		{
+			if (markerType _x != "") then
+			{
+				private "_color"; 
+				
+				_texture = gettext (configfile >> "CfgMarkers" >> markerType _x >> "icon");
+				_pos = getMarkerpos _x;
+				_pos set [2,10];
+				private ["_size"];
+				_size =if ((1.5 - ((MCC_3D_CAM distance _pos)*0.001)) < 0) then {0} else {(1.5 - ((MCC_3D_CAM distance _pos)*0.001))};
+				_color = switch (tolower (markerColor _x)) do
+							{
+								case "default": {[1,1,1,1]};
+								case "colorblack": {[0,0,0,1]};
+								case "colorgrey": {[0.2,0.2,0.2,1]};
+								case "colorred": {[1,0,0,1]};
+								case "colorredalpha": {[1,0,0,1]};
+								case "colorgreen": {[0,1,0,1]};
+								case "colorgreenalpha": {[0,1,0,1]};
+								case "colorblue": {[0,0,1,1]};
+								case "coloryellow": {[0.255,0.255,0,1]};
+								case "colororange": {[0.255,0.165,0,1]};
+								case "colorwhite": {[1,1,1,1]};
+								case "colorpink": {[0.255,0.192,0.203,1]};
+								case "colorbrown": {[0.165,0.42,0.42,1]};
+								case "colorkhaki": {[0.240,0.230,0.140,1]};
+								case "colorwest": {[0,0,1,1]};
+								case "coloreast": {[1,0,0,1]};
+								case "colorguer": {[0,1,0,1]};
+								case "colorciv": {[1,1,1,1]};
+								case "colorunknown": {[1,1,1,1]};
+								case "color1_fd_f": {[0.8,0,0,1]};
+								case "color2_fd_f": {[0.240,0.230,0.140,1]};
+								case "color3_fd_f": {[0.255,0.165,0,1]};
+								case "color4_fd_f": {[0,0,0.8,1]};
+								default {[1,1,1,1]}; 
+							};
+				drawIcon3D [
+								_texture,
+								_color,
+								_pos,
+								_size,
+								_size,
+								markerDir _x,
+								MarkerText _x,
+								0,
+								(_size*0.03),
+								"PuristaBold",
+								"center"
+							];
+			};
+		} foreach allMapMarkers;
+	};
 };
 
 _handler = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrladdeventhandler ["draw","_this call MCC_fnc_mapDrawWP;"];
@@ -194,6 +267,7 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 				};
 			
 			if (_x getVariable ["mcc_gaia_cache",false]) then {_IsGaiaControlled = _IsGaiaControlled + "(C) ";};
+			if ((_x getVariable ["MCC_GAIA_RESPAWN",0]) > 0) then {_IsGaiaControlled = _IsGaiaControlled + "(R-" + (str (_x getVariable ["MCC_GAIA_RESPAWN",0])) + ") ";};
 			
 			_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
 			_unitsCount = [group _leader] call MCC_fnc_countGroupHC;

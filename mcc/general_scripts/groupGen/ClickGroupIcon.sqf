@@ -10,8 +10,16 @@
 //==================================================================================================================================================================================
 #define groupGen_IDD 2994
 #define MCC_GroupGenInfoText_IDC 9013
+#define MCC_GroupGenInfo_IDC 530
+#define MCC_GroupGenInfo_zone_IDC 5311
+#define MCC_GroupGenInfo_gaiaBehaviorCombo_IDC 5312
+#define MCC_GroupGenInfo_gaiaBehaviorButton_IDC 5313
+#define MCC_GroupGenInfo_gaiaRespawnCombo_IDC 5314
+#define MCC_GroupGenInfo_gaiaRespawnComboButton_IDC 5315
+#define MCC_GroupGenInfo_giveToPlayer_IDC 5316
+#define MCC_GroupGenInfo_cacheButton_IDC 5317
 
-private ["_mccdialog","_group","_button","_posX","_posY","_shift","_ctrl","_alt","_html","_info","_rank","_icon","_groupSize","_properCfg"];
+private ["_mccdialog","_group","_button","_posX","_posY","_shift","_ctrl","_alt","_html","_info","_rank","_icon","_groupSize","_properCfg","_lineCounter"];
 disableSerialization;
 
 _mccdialog = findDisplay groupGen_IDD;
@@ -54,18 +62,10 @@ if (_button == 0) then 												//Left Click
 
 if (_button == 1) then 											//Right click - get info
 	{
-		//Reveal background info
-		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlSetPosition [_posX,_posY,0,0];	
-		ctrlShow [MCC_GroupGenInfoText_IDC,true];
-		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlCommit 0;
-		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlSetPosition [_posX, _posY,0.327273,0.372873];
-		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlCommit 0.1;
-		waituntil {ctrlCommitted (_mccdialog displayctrl MCC_GroupGenInfoText_IDC)};
-		
 		_rank =[leader _group,"displayNameShort"] call BIS_fnc_rankParams;
 					
 		_groupSize	= gettext (configfile >> "CfgMarkers" >> ((_group getvariable "MCCgroupIconSize") select 1) >> "name"); 		
-		_html = "<t color='#818960' size='1' shadow='1' align='left' underline='true'>" +groupID _group + " - " + toupper _groupSize +"</t><br/>";
+		_html = "<t color='#818960' size='1' shadow='1' align='center' underline='true'>" +groupID _group + " - " + toupper _groupSize +"</t><br/>";
 		
 		_info = [_group] call MCC_fnc_countGroupHC;
 		if (_info select 0 == 0 && _info select 1 == 0 && _info select 2 == 0 && _info select 3 == 0 && _info select 4 == 0 && _info select 5 == 0 && _info select 6 == 0 && _info select 7 == 0) then
@@ -74,63 +74,167 @@ if (_button == 1) then 											//Right click - get info
 			_properCfg = 5; 
 		};
 		
-		_html = _html + "<t font='puristaMedium' color='#fefefe' size='0.9' shadow='1' align='left' underline='false'>" + _rank + " " + name leader _group + " - " + behaviour leader _group + " </t><br/>";
+		_html = _html + "<t font='puristaMedium' color='#fefefe' size='0.9' shadow='1' align='center' underline='false'>" + _rank + " " + name leader _group + "<br/>" + behaviour leader _group + " </t><br/>";
+		
+		_lineCounter = 0; 
 		
 		//Infantry
 		private "_infCount"; 
 		_infCount = if (_properCfg > 5) then {(_info select 0) + (_info select 5)} else {(_info select 0)}; 
-					
-		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Infantry: " + str _infCount + " </t>";
-		for [{_x = 0},{_x < (_info select 0)},{_x = _x+1}] do	
-			{
-				_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>|</t>";
-			};
-		_html = _html +	"<br/>";
+		
+		if (_infCount > 0) then
+		{
+			_lineCounter = _lineCounter + 1;
+			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Infantry: " + str _infCount + " </t>";
+			for [{_x = 0},{_x < (_info select 0)},{_x = _x+1}] do	
+				{
+					_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>|</t>";
+				};
+			_html = _html +	"<br/>";
+		};
 		
 		//Vehicles
-		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Motorized: " + str (_info select 1) + " </t>";
-			{
-				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select _properCfg) select 0); 
-		_html = _html +	"<br/>";
+		if ((_info select 1) > 0) then
+		{
+			_lineCounter = _lineCounter + 1;
+			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Motorized: " + str (_info select 1) + " </t>";
+				{
+					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
+				} foreach ((_info select _properCfg) select 0); 
+			_html = _html +	"<br/>";
+		};
 		
 		//Armor
-		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Armored: " + str (_info select 2) + " </t>";
-			{
-				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select _properCfg) select 1); 
-		_html = _html +	"<br/>";
+		if ((_info select 2) > 0) then
+		{
+			_lineCounter = _lineCounter + 1;
+			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Armored: " + str (_info select 2) + " </t>";
+				{
+					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
+				} foreach ((_info select _properCfg) select 1); 
+			_html = _html +	"<br/>";
+		};
 		
 		//Air
-		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Air: " + str (_info select 3) + " </t>";
-			{
-				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select _properCfg) select 2); 
-		_html = _html +	"<br/>";
+		if ((_info select 3) > 0) then
+		{
+			_lineCounter = _lineCounter + 1;
+			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Air: " + str (_info select 3) + " </t>";
+				{
+					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
+				} foreach ((_info select _properCfg) select 2); 
+			_html = _html +	"<br/>";
+		};
 		
 		//Naval
-		_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Naval: " + str (_info select 4) + " </t>";
-			{
-				_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-			} foreach ((_info select _properCfg) select 3); 
-		_html = _html +	"<br/>";
+		if ((_info select 4) > 0) then
+		{
+			_lineCounter = _lineCounter + 1;
+			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Naval: " + str (_info select 4) + " </t>";
+				{
+					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
+				} foreach ((_info select _properCfg) select 3); 
+			_html = _html +	"<br/>";
+		};
 		
 		if (_properCfg > 5) then
 		{
 			//Support
-			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Support: " + str (_info select 6) + " </t>";
-				{
-					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-				} foreach ((_info select _properCfg) select 4); 
-			_html = _html +	"<br/>";
+			if ((_info select 6) > 0) then
+			{
+				_lineCounter = _lineCounter + 1;
+				_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Support: " + str (_info select 6) + " </t>";
+					{
+						_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
+					} foreach ((_info select _properCfg) select 4); 
+				_html = _html +	"<br/>";
+			};
 			
 			//autonomous
-			_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Autonomous: " + str (_info select 7) + " </t>";
-				{
-					_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
-				} foreach ((_info select _properCfg) select 5); 
-			_html = _html +	"<br/>";
+			if ((_info select 7) > 0) then
+			{
+				_lineCounter = _lineCounter + 1;
+				_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>Autonomous: " + str (_info select 7) + " </t>";
+					{
+						_html = _html + format ["<img size='0.7' color='#fefefe' image=%1/><t> </t>",str _x];
+					} foreach ((_info select _properCfg) select 5); 
+				_html = _html +	"<br/>";
+			};
 		};
 		
+		//Prase the text :)
 		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlSetStructuredText parseText _html;
+		
+		private ["_UIFactor","_ctrl","_displayname"]; 
+		_UIFactor = (0.02 * _lineCounter)* safezoneH;
+		
+				
+	
+
+		//Reveal GAIA Zone
+		_ctrl = _mccdialog displayctrl MCC_GroupGenInfo_zone_IDC;
+		_ctrl ctrlSetPosition [(0.002 * safezoneW), _UIFactor + (0.07 * safezoneH) ,0.0458333 * safezoneW,0.0219914 * safezoneH];
+		_ctrl ctrlCommit 0;
+		
+		lbClear _ctrl;
+		{
+			_displayname = format ["%1",_x];
+			_ctrl lbAdd _displayname;
+		} foreach MCC_zones_numbers;
+		_ctrl lbSetCurSel MCC_zone_index;
+		
+		//Reveal GAIA Behavior
+		_ctrl = _mccdialog displayctrl MCC_GroupGenInfo_gaiaBehaviorCombo_IDC;
+		_ctrl ctrlSetPosition [(0.055 * safezoneW), _UIFactor + (0.07 * safezoneH) ,0.06875 * safezoneW,0.0219914 * safezoneH];
+		_ctrl ctrlCommit 0;
+		
+		lbClear _ctrl;
+		{
+			_displayname = format ["%1",_x select 0];
+			_index = _ctrl lbAdd _displayname;
+		} foreach MCC_GAIA_spawn_behaviors;
+		_ctrl lbSetCurSel 0;
+
+		//Reveal GAIA Button
+		_ctrl = _mccdialog displayctrl MCC_GroupGenInfo_gaiaBehaviorButton_IDC;
+		_ctrl ctrlSetPosition [(0.13 * safezoneW), _UIFactor + (0.07 * safezoneH) ,0.035 * safezoneW,0.0219914 * safezoneH];
+		_ctrl ctrlCommit 0;
+		
+		
+		//Reveal GAIA Respawn numbers
+		_ctrl = _mccdialog displayctrl MCC_GroupGenInfo_gaiaRespawnCombo_IDC;
+		_ctrl ctrlSetPosition [(0.002 * safezoneW), _UIFactor + (0.1 * safezoneH) ,0.0458333 * safezoneW,0.0219914 * safezoneH];
+		_ctrl ctrlCommit 0;
+		
+		lbClear _ctrl;
+		{
+			_displayname = format ["%1",_x];
+			_ctrl lbAdd _displayname;
+		} foreach [0,1,2,3,4,5,6,7,8,9,10,999];
+		_ctrl lbSetCurSel 0;
+		
+		//Reveal GAIA Button
+		_ctrl = _mccdialog displayctrl MCC_GroupGenInfo_gaiaRespawnComboButton_IDC;
+		_ctrl ctrlSetPosition [(0.07 * safezoneW), _UIFactor + (0.1 * safezoneH) ,0.095 * safezoneW,0.0219914 * safezoneH];
+		_ctrl ctrlCommit 0;
+		
+		//Reveal Player Button
+		_ctrl = _mccdialog displayctrl MCC_GroupGenInfo_giveToPlayer_IDC;
+		_ctrl ctrlSetPosition [(0.002 * safezoneW), _UIFactor + (0.13 * safezoneH) ,0.035 * safezoneW,0.0219914 * safezoneH];
+		_ctrl ctrlCommit 0;
+		
+		//Reveal Cache Button
+		_ctrl = _mccdialog displayctrl MCC_GroupGenInfo_cacheButton_IDC;
+		_ctrl ctrlSetPosition [(0.13 * safezoneW), _UIFactor + (0.13 * safezoneH) ,0.035 * safezoneW,0.0219914 * safezoneH];
+		_ctrl ctrlCommit 0;
+		
+		//Reveal background info
+		_ctrl = _mccdialog displayctrl MCC_GroupGenInfo_IDC;
+		_ctrl ctrlSetPosition [_posX,_posY,0,0];
+		
+		ctrlShow [MCC_GroupGenInfo_IDC,true];
+		_ctrl ctrlCommit 0;
+		_ctrl ctrlSetPosition [_posX, _posY,0.18 * safezoneW, _UIFactor + (0.16 * safezoneH)];
+		_ctrl ctrlCommit 0.1;
+
 	};

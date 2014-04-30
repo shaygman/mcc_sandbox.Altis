@@ -4,6 +4,7 @@ private ["_params","_ctrl","_pressed","_posX","_posY","_shift","_ctrlKey","_alt"
 #define MCCDELETEBRUSH 1030
 #define MCCZONENUMBER 1023
 #define MCC_MINIMAP 9000
+#define MCC_GroupGenInfo_IDC 530
 
 disableSerialization;
  
@@ -29,7 +30,7 @@ if (mcc_missionmaker == (name player)) then
 	if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then 								
 	{
 		ctrlShow [510,false];
-		ctrlShow [9013,false];
+		ctrlShow [MCC_GroupGenInfo_IDC,false];
 		hintsilent "";
 	};		
 	
@@ -128,6 +129,14 @@ if (mcc_missionmaker == (name player)) then
 				
 				sleep 0.2;
 				
+				mcc_isnewzone = false;
+				mcc_grouptype = "";
+				mcc_spawntype = "";
+				mcc_classtype = "";
+				mcc_spawnname = "";
+				mcc_spawnfaction ="";
+				mcc_resetmissionmaker = false;
+					
 				if (_nearZone) then
 				{
 					deletemarkerlocal _markerName;	
@@ -215,7 +224,7 @@ if (mcc_missionmaker == (name player)) then
 		
 		//Close WP dialog and hints
 		ctrlShow [510,false];
-		ctrlShow [9013,false];
+		ctrlShow [MCC_GroupGenInfo_IDC,false];
 		hintsilent "";
 		
 		//Start creating the box
@@ -362,9 +371,9 @@ if (mcc_missionmaker == (name player)) then
 		_markerDir 	= markerDir _marker;
 		_spawn 		= [_markerPos,4500,(_markerDir -180)] call BIS_fnc_relpos;
 		_away 		= [_markerPos,4500,_markerDir] call BIS_fnc_relpos;
-				
-		['paradrop', [ getmarkerpos _marker, MCC_selectedUnits, MCC_UMUnit, MCC_UMparadropIsHalo,_spawn,_away]] call CBA_fnc_globalEvent;
-										
+		
+		[[getmarkerpos _marker, MCC_selectedUnits, MCC_UMUnit, MCC_UMparadropIsHalo,_spawn,_away, MCC_path], "MCC_fnc_realParadrop", false] spawn BIS_fnc_MP;
+
 		MCC_UMParadropRequestMarker = false;			//Wait and delete the marker
 		sleep 40;
 		deletemarkerlocal _marker;

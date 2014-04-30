@@ -65,17 +65,6 @@ if (isnil "CP_saveGear") then {CP_saveGear = true};
 //-------------------- Group Markers (Role Selection) --------------------------------------------------
 if (isnil "MCC_groupMarkers") then {MCC_groupMarkers = true};
 
-//-----------------------Revive - --------------------------------------------
-//disable this line if you don't want it in the mission version - will not work on the mod version by default
-if (!MCC_isMode) then
-	{
-		if (!isDedicated) then 
-		{
-			TCB_AIS_PATH = "ais_injury\";
-			{[_x] call compile preprocessFile (TCB_AIS_PATH+"init_ais.sqf")} forEach (if (isMultiplayer) then {playableUnits} else {switchableUnits});		// execute for every playable unit
-		};
-	};
-
 //Bon artillery (moved up to avoid potential error messages)
 MCC_bonCannons = [];
 //----------------------IED settings---------------------------------------------
@@ -999,6 +988,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	};
 	
 	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["null = [nil,nil,nil,nil,_this select 1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf';",MCC_path]];
+	
 	//Add MCC Console action menu
 	_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
 			
@@ -1009,7 +999,10 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && ("Medikit" in (items(_this select 1)))) then {(_this select 1) addrating 200; false}}];};
 	
 	//Curator
-	if(local player) then {MCC_curator addCuratorEditableObjects [[player],false]};
+	if(local player) then 
+	{
+		[compile format ["MCC_curator addCuratorEditableObjects [[%1],false]", player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
+	};
 };
 
 //========= player Loops (for saving gear/name tag exc)=================================

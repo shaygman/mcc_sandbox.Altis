@@ -14,18 +14,18 @@ _class = format ["%1_parachute_02_F",  toString [(toArray faction _pilot) select
  _drop = createVehicle [_spawnkind,  [_pos select 0,_pos select 1,(_pos select 2) -50], [], 0, 'NONE'];
  _drop setPos [_pos select 0,_pos select 1,(_pos select 2) -50];
 
-_para = createVehicle [_class, [0,0,0],[],0,"FLY"];
+_para = createVehicle [_class, getpos _drop,[],0,"none"];
+_drop attachto [_para,[0,0,(abs ((boundingbox _drop select 1) select 2))]];
+
 _para setDir getDir _drop;
-_para setPos getPos _drop;
 _paras =  [_para];
-_drop attachTo [_para, [0,-1,0]];
 
 //Thanks to KKid for this part
 if ((_drop isKindOf "Car") || (_drop isKindOf "Tank") || (_drop isKindOf "Ship"))
 then 
 {
 	{
-		_p = createVehicle [_class, [0,0,0], [], 0, "FLY"];
+		_p = createVehicle [_class, getpos _para,[],0,"none"];
 		_paras set [count _paras, _p];
 		_p attachTo [_para, [0,0,0]];
 		_p setVectorUp _x;

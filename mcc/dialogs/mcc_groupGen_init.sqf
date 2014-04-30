@@ -8,7 +8,7 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_c
 #define MCCMISSIONMAKERNAME 1020
 #define MCCCLIENTFPS 1021
 #define MCCSERVERFPS 1022
-#define MCC_GroupGenInfoText_IDC 9013
+#define MCC_GroupGenInfo_IDC 530
 
 #define MCCSTOPCAPTURE 1014
 
@@ -20,6 +20,7 @@ MCC_mcc_screen = 2;	//Group gen for poping up the same menu again
 
 uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
 
+//Assign as Curator on init
 if (player != getAssignedCuratorUnit MCC_curator) then {[compile format ["%1 assignCurator MCC_curator;", player],"BIS_fnc_spawn",false,false] spawn BIS_fnc_MP}; 
 
 //Track units if enabled
@@ -30,7 +31,7 @@ if (MCC_trackMarker) then
 			
 //Hide GroupWP
 ctrlShow [510,false];
-ctrlShow [9013,false];
+ctrlShow [MCC_GroupGenInfo_IDC,false];
 
 for "_i" from 500 to 518 step 1 do 
 {

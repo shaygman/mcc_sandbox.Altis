@@ -13,9 +13,9 @@ if (_type == 0) exitWith
 	_desc = ctrlText (_mccdialog displayCtrl 8504);
 	_action = switch (lbCurSel 8507) do 
 				{ 
-					case 0: {0}; 
-					case 1: {8};
-					case 2: {10}; 					
+					case 0: {0}; 	//None
+					case 1: {8};	//WP
+					case 2: {10}; 	//WP Cinametic				
 				};
 				
 	if (_name == "") exitWith {player sidechat "Name cannot be empty"}; 

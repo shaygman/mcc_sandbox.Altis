@@ -21,7 +21,7 @@ if (count _wpArray > 0) then
 	{
 	_WPTypeIndecator 	= _wpArray select 0; 
 	
-	_wpTypes = ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS","Land","Land - Get in"];
+	_wpTypes = ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS","Helicopter - Land","Helicopter - Get in","Artillery - Fire Mission"];
 	_wpType  = _wpTypes select _WPTypeIndecator; 
 	};
 _groups				= _this select 3; 
@@ -31,133 +31,99 @@ _groups				= _this select 3;
 	if (_action <2) then																						//Add or replace WP
 		{
 			switch _wpType do
-				{
-					case "GETIN":
+			{
+				case "GETIN":
+					{
+						//Find nearest transport
+						_objects 	= nearestObjects [[_wpLoc select 0,_wpLoc select 1,0],["Car","Tank","AIR"], 100];
 						{
-							//Find nearest transport
-							_objects 	= nearestObjects [[_wpLoc select 0,_wpLoc select 1,0],["Car","Tank","AIR"], 100];
-							{
-								if ((_x emptyPositions "cargo")>3) exitWith {_wpObject = _x};
-							} foreach _objects;
+							if ((_x emptyPositions "cargo")>3) exitWith {_wpObject = _x};
+						} foreach _objects;
 
-							if (isnil "_wpObject") exitWith 				//Exit - no vehicle found
-								{
-									_wp = _x addWaypoint [_wpLoc, 0];
-									_wp setWaypointType _wpType;
-									_wp setWaypointCombatMode (_wpArray select 1);
-									_wp setWaypointFormation (_wpArray select 2);
-									_wp setWaypointSpeed (_wpArray select 3);
-									_wp setWaypointBehaviour (_wpArray select 4);
-									_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-									_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-								}; 
-							//If transport isn't empty
-							if ({alive _x} count crew _wpObject != 0) then 
-								{
-									while {(count (waypoints (group _wpObject))) > 0} do {deleteWaypoint ((waypoints (group _wpObject)) select 0)};
-									_wp = _x addWaypoint [_wpLoc, 0];
-									_wp setWaypointType _wpType;
-									_wp setWaypointCombatMode (_wpArray select 1);
-									_wp setWaypointFormation (_wpArray select 2);
-									_wp setWaypointSpeed (_wpArray select 3);
-									_wp setWaypointBehaviour (_wpArray select 4);
-									_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-									_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-									_wp2 = (group _wpObject) addWaypoint [_wpLoc, 0];
-									_wp2 setWaypointType "LOAD";
-									_wp synchronizeWaypoint [_wp2];
-								} 
-								else
-								{
-									_wp = _x addWaypoint [_wpObject, 0];	//If transport empty
-									_wp setWaypointType _wpType;
-									_wp setWaypointCombatMode (_wpArray select 1);
-									_wp setWaypointFormation (_wpArray select 2);
-									_wp setWaypointSpeed (_wpArray select 3);
-									_wp setWaypointBehaviour (_wpArray select 4);
-									_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-									_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-								};
-						};
-						
-					case "JOIN":
+						if (isnil "_wpObject") exitWith 				//Exit - no vehicle found
+							{
+								_wp = _x addWaypoint [_wpLoc, 0];
+								_wp setWaypointType _wpType;
+								_wp setWaypointCombatMode (_wpArray select 1);
+								_wp setWaypointFormation (_wpArray select 2);
+								_wp setWaypointSpeed (_wpArray select 3);
+								_wp setWaypointBehaviour (_wpArray select 4);
+								_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
+								_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+							}; 
+						//If transport isn't empty
+						if ({alive _x} count crew _wpObject != 0) then 
+							{
+								while {(count (waypoints (group _wpObject))) > 0} do {deleteWaypoint ((waypoints (group _wpObject)) select 0)};
+								_wp = _x addWaypoint [_wpLoc, 0];
+								_wp setWaypointType _wpType;
+								_wp setWaypointCombatMode (_wpArray select 1);
+								_wp setWaypointFormation (_wpArray select 2);
+								_wp setWaypointSpeed (_wpArray select 3);
+								_wp setWaypointBehaviour (_wpArray select 4);
+								_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
+								_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+								_wp2 = (group _wpObject) addWaypoint [_wpLoc, 0];
+								_wp2 setWaypointType "LOAD";
+								_wp synchronizeWaypoint [_wp2];
+							} 
+							else
+							{
+								_wp = _x addWaypoint [_wpObject, 0];	//If transport empty
+								_wp setWaypointType _wpType;
+								_wp setWaypointCombatMode (_wpArray select 1);
+								_wp setWaypointFormation (_wpArray select 2);
+								_wp setWaypointSpeed (_wpArray select 3);
+								_wp setWaypointBehaviour (_wpArray select 4);
+								_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
+								_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+							};
+					};
+					
+				case "JOIN":
+					{
+						_group = _x;
+						//Find nearest group
 						{
-							_group = _x;
-							//Find nearest group
+							if (((leader _x distance _wpLoc) < 50) &&(_x != _group) && (side _x == side _group) && !isPlayer leader _x)exitWith {_wpObject = _x};
+						} foreach allGroups;
+
+						if (isnil "_wpObject") exitWith 				//Exit - no group found
 							{
-								if (((leader _x distance _wpLoc) < 50) &&(_x != _group) && (side _x == side _group) && !isPlayer leader _x)exitWith {_wpObject = _x};
-							} foreach allGroups;
+								_wp = _x addWaypoint [_wpLoc, 0];
+								_wp setWaypointType _wpType;
+								_wp setWaypointCombatMode (_wpArray select 1);
+								_wp setWaypointFormation (_wpArray select 2);
+								_wp setWaypointSpeed (_wpArray select 3);
+								_wp setWaypointBehaviour (_wpArray select 4);
+								_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
+								_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+							}; 
 
-							if (isnil "_wpObject") exitWith 				//Exit - no group found
-								{
-									_wp = _x addWaypoint [_wpLoc, 0];
-									_wp setWaypointType _wpType;
-									_wp setWaypointCombatMode (_wpArray select 1);
-									_wp setWaypointFormation (_wpArray select 2);
-									_wp setWaypointSpeed (_wpArray select 3);
-									_wp setWaypointBehaviour (_wpArray select 4);
-									_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-									_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-								}; 
-
-							//If group found
-							while {(count (waypoints _wpObject)) > 0} do {deleteWaypoint ((waypoints _wpObject) select 0)};
-							_wp = _x addWaypoint [_wpLoc, 0];
-							_wp setWaypointType _wpType;
-							_wp setWaypointCombatMode (_wpArray select 1);
-							_wp setWaypointFormation (_wpArray select 2);
-							_wp setWaypointSpeed (_wpArray select 3);
-							_wp setWaypointBehaviour (_wpArray select 4);
-							_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-							_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-							_wp2 = _wpObject addWaypoint [_wpLoc, 0];
-							_wp2 setWaypointType "LEADER";
-							_wp synchronizeWaypoint [_wp2];
-						};
-						
-					case "LEADER":
+						//If group found
+						while {(count (waypoints _wpObject)) > 0} do {deleteWaypoint ((waypoints _wpObject) select 0)};
+						_wp = _x addWaypoint [_wpLoc, 0];
+						_wp setWaypointType _wpType;
+						_wp setWaypointCombatMode (_wpArray select 1);
+						_wp setWaypointFormation (_wpArray select 2);
+						_wp setWaypointSpeed (_wpArray select 3);
+						_wp setWaypointBehaviour (_wpArray select 4);
+						_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
+						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+						_wp2 = _wpObject addWaypoint [_wpLoc, 0];
+						_wp2 setWaypointType "LEADER";
+						_wp synchronizeWaypoint [_wp2];
+					};
+					
+				case "LEADER":
+					{
+						_group = _x;
+						//Find nearest group
 						{
-							_group = _x;
-							//Find nearest group
-							{
-								if (((leader _x distance _wpLoc) < 50) &&(_x != _group) && (side _x == side _group))exitWith {_wpObject = _x};
-							} foreach allGroups;
+							if (((leader _x distance _wpLoc) < 50) &&(_x != _group) && (side _x == side _group))exitWith {_wpObject = _x};
+						} foreach allGroups;
 
-							if (isnil "_wpObject") exitWith 			//Exit - no group found
-								{
-									_wp = _x addWaypoint [_wpLoc, 0];
-									_wp setWaypointType _wpType;
-									_wp setWaypointFormation (_wpArray select 2);
-									_wp setWaypointSpeed (_wpArray select 3);
-									_wp setWaypointBehaviour (_wpArray select 4);
-									_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-									_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-
-								}; 
-
-							//If group found
-							while {(count (waypoints _wpObject)) > 0} do {deleteWaypoint ((waypoints _wpObject) select 0)};
-							_wp = _x addWaypoint [_wpLoc, 0];
-							_wp setWaypointType _wpType;
-							_wp setWaypointFormation (_wpArray select 2);
-							_wp setWaypointSpeed (_wpArray select 3);
-							_wp setWaypointBehaviour (_wpArray select 4);
-							_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-							_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-							_wp2 = _wpObject addWaypoint [_wpLoc, 0];
-							_wp2 setWaypointType "JOIN";
-							_wp synchronizeWaypoint [_wp2];
-						};
-						
-					case "LOAD":
-						{
-							_group = _x;
-							//Find nearest group
-							{
-								if (((leader _x distance _wpLoc) < 50) &&(_x != _group) && (side _x == side _group))exitWith {_wpObject = _x};
-							} foreach allGroups;
-							
-							if (isnil "_wpObject") exitWith 			//Exit - no group found
+						if (isnil "_wpObject") exitWith 			//Exit - no group found
 							{
 								_wp = _x addWaypoint [_wpLoc, 0];
 								_wp setWaypointType _wpType;
@@ -168,44 +134,30 @@ _groups				= _this select 3;
 								_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
 
 							}; 
-								
-							//If group found
-							while {(count (waypoints _wpObject)) > 0} do {deleteWaypoint ((waypoints _wpObject) select 0)};
-							_wp = _group addWaypoint [_wpLoc, 0];
-							_wp setWaypointType _wpType;
-							_wp setWaypointFormation (_wpArray select 2);
-							_wp setWaypointSpeed (_wpArray select 3);
-							_wp setWaypointBehaviour (_wpArray select 4);
-							_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
-							_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-							_wp2 = _wpObject addWaypoint [_wpLoc, 0];
-							_wp2 setWaypointType "GETIN";
-							_wp synchronizeWaypoint [_wp2];
-						};
-						
-					case "Land":
+
+						//If group found
+						while {(count (waypoints _wpObject)) > 0} do {deleteWaypoint ((waypoints _wpObject) select 0)};
+						_wp = _x addWaypoint [_wpLoc, 0];
+						_wp setWaypointType _wpType;
+						_wp setWaypointFormation (_wpArray select 2);
+						_wp setWaypointSpeed (_wpArray select 3);
+						_wp setWaypointBehaviour (_wpArray select 4);
+						_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
+						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+						_wp2 = _wpObject addWaypoint [_wpLoc, 0];
+						_wp2 setWaypointType "JOIN";
+						_wp synchronizeWaypoint [_wp2];
+					};
+					
+				case "LOAD":
+					{
+						_group = _x;
+						//Find nearest group
 						{
-							_wp = _x addWaypoint [_wpLoc, 0];
-							_wp setWaypointType "MOVE";
-							_wp setWaypointFormation (_wpArray select 2);
-							_wp setWaypointSpeed (_wpArray select 3);
-							_wp setWaypointBehaviour (_wpArray select 4);
-							_wp setWaypointStatements ["true",'vehicle this land "LAND"'];
-							_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-						};
+							if (((leader _x distance _wpLoc) < 50) &&(_x != _group) && (side _x == side _group))exitWith {_wpObject = _x};
+						} foreach allGroups;
 						
-					case "Land - Get in":
-						{
-							_wp = _x addWaypoint [_wpLoc, 0];
-							_wp setWaypointType "MOVE";
-							_wp setWaypointFormation (_wpArray select 2);
-							_wp setWaypointSpeed (_wpArray select 3);
-							_wp setWaypointBehaviour (_wpArray select 4);
-							_wp setWaypointStatements ["true",'vehicle this land "GET IN"'];
-							_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-						};
-						
-					default
+						if (isnil "_wpObject") exitWith 			//Exit - no group found
 						{
 							_wp = _x addWaypoint [_wpLoc, 0];
 							_wp setWaypointType _wpType;
@@ -214,8 +166,67 @@ _groups				= _this select 3;
 							_wp setWaypointBehaviour (_wpArray select 4);
 							_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
 							_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-						};
-				};
+
+						}; 
+							
+						//If group found
+						while {(count (waypoints _wpObject)) > 0} do {deleteWaypoint ((waypoints _wpObject) select 0)};
+						_wp = _group addWaypoint [_wpLoc, 0];
+						_wp setWaypointType _wpType;
+						_wp setWaypointFormation (_wpArray select 2);
+						_wp setWaypointSpeed (_wpArray select 3);
+						_wp setWaypointBehaviour (_wpArray select 4);
+						_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
+						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+						_wp2 = _wpObject addWaypoint [_wpLoc, 0];
+						_wp2 setWaypointType "GETIN";
+						_wp synchronizeWaypoint [_wp2];
+					};
+					
+				case "Helicopter - Land":
+					{
+						_wp = _x addWaypoint [_wpLoc, 0];
+						_wp setWaypointType "MOVE";
+						_wp setWaypointFormation (_wpArray select 2);
+						_wp setWaypointSpeed (_wpArray select 3);
+						_wp setWaypointBehaviour (_wpArray select 4);
+						_wp setWaypointStatements ["true",'vehicle this land "LAND"'];
+						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+					};
+					
+				case "Helicopter - Get in":
+					{
+						_wp = _x addWaypoint [_wpLoc, 0];
+						_wp setWaypointType "MOVE";
+						_wp setWaypointFormation (_wpArray select 2);
+						_wp setWaypointSpeed (_wpArray select 3);
+						_wp setWaypointBehaviour (_wpArray select 4);
+						_wp setWaypointStatements ["true",'vehicle this land "GET IN"'];
+						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+					};
+					
+				case "Artillery - Fire Mission":
+					{
+						private "_isArty"; 
+						_isArty= getNumber (configfile >> "CfgVehicles" >> typeof (vehicle leader _x) >> "artilleryScanner"); 
+						 if ((vehicle (leader _x) != leader _x) && (_isArty ==1)) then 
+						 {
+							_x setVariable ["GAIA_MortarRound",6];
+							[_x, _wpLoc] call fnc_DoMortar
+						 };
+					};
+					
+				default
+					{
+						_wp = _x addWaypoint [_wpLoc, 0];
+						_wp setWaypointType _wpType;
+						_wp setWaypointFormation (_wpArray select 2);
+						_wp setWaypointSpeed (_wpArray select 3);
+						_wp setWaypointBehaviour (_wpArray select 4);
+						_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
+						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+					};
+			};
 		};
 } foreach _groups;
 	

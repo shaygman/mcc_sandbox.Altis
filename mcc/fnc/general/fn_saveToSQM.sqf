@@ -188,13 +188,19 @@ if (count _arrayGroups > 0) then
 							 
 					if (count(group _object getvariable ["GAIA_ZONE_INTEND",[]])>0) then 
 					{
-						_newString = (_object getvariable ["vehicleinit",""]) + format ["group _this setVariable ['GAIA_ZONE_INTEND',%1]",group _object getvariable ["GAIA_ZONE_INTEND",[]]];
+						_newString = (_object getvariable ["vehicleinit",""]) + format [";group _this setVariable ['GAIA_ZONE_INTEND',%1];",group _object getvariable ["GAIA_ZONE_INTEND",[]]];
 						_object setvariable ["vehicleinit",_newString];
 					};
 					
 					if (group _object getvariable ["mcc_gaia_cache",false]) then 
 					{
-						_newString = (_object getvariable ["vehicleinit",""]) + "group _this setVariable ['mcc_gaia_cache',true]" ;
+						_newString = (_object getvariable ["vehicleinit",""]) + "group _this setVariable ['mcc_gaia_cache',true];" ;
+						_object setvariable ["vehicleinit",_newString];
+					};
+					
+					if ((group _object getvariable ["MCC_GAIA_RESPAWN",0])>0) then 
+					{
+						_newString = (_object getvariable ["vehicleinit",""]) +  format [";group _this setVariable ['MCC_GAIA_RESPAWN',%1];",group _object getvariable ["MCC_GAIA_RESPAWN",0]];
 						_object setvariable ["vehicleinit",_newString];
 					};
 				};

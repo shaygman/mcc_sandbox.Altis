@@ -99,11 +99,10 @@ if (count _arrayGroups > 0) then
 			} foreach _wayPoints;
 		};
 		
-		if (count (_indecator select 1) > 0) then
+		_variables = _indecator select 1;
+		if (count _variables > 0) then
 		{
-			_variables = _indecator select 1;
 			{
-				
 				_group setVariable [(_x select 0),(_x select 1),true]
 			} foreach _variables; 
 		};

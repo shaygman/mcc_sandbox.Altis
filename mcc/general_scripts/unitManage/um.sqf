@@ -351,32 +351,8 @@ _type = _this select 0;
 				};
 			};
 		};
-		
+
 		case 9:	//HALO
-		{
-			hint "click on the map to start the Parachute";
-			MCC_click = false; 
-			onMapSingleClick " 	hint format ['%1 Paradroped', MCC_UMunitsNames];
-								MCC_pos = _pos;
-								MCC_click = true; 
-								onMapSingleClick """";";
-			waituntil {MCC_click}; 					
-			if (MCC_UMUnit==0) then {
-				{
-					[[MCC_pos,[netId _x,_x],true,5000,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
-					sleep 0.5; 
-				} foreach MCC_selectedUnits;
-					} else {
-							{
-								{
-									[[MCC_pos,[netId _x,_x],true,5000,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
-									sleep 0.5; 
-								} foreach units _x;
-							} foreach MCC_selectedUnits;
-						};
-		};
-				
-		case 10:	//Parachute
 		{
 			hint "click on the map to start the Parachute";
 			MCC_click = false; 
@@ -388,7 +364,7 @@ _type = _this select 0;
 			if (MCC_UMUnit==0) then 
 			{
 				{
-					[[MCC_pos,[netId _x,_x],false,800,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
+					[[MCC_pos,[netId _x,_x],true,5000,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
 					sleep 0.5; 
 				} foreach MCC_selectedUnits;
 			} 
@@ -396,13 +372,20 @@ _type = _this select 0;
 			{
 				{
 					{
-						[[MCC_pos,[netId _x,_x],false,800,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
+						[[MCC_pos,[netId _x,_x],true,5000,_forEachIndex],"MCC_fnc_paradrop",_x,false] call BIS_fnc_MP;
 						sleep 0.5; 
 					} foreach units _x;
 				} foreach MCC_selectedUnits;
 			};
 		};
-		
+
+		case 10:	//HALO
+		{
+			MCC_UMParadropRequestMarker = true; 
+			MCC_UMparadropIsHalo = false; 
+			hint "click and dragto start the Parachute";
+		};
+				
 		case 11:	//Broadcast
 		{
 			hint "Live feed is broadcasting";

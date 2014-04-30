@@ -3,7 +3,7 @@
 #define MCC_AIRDROPCLASSCONTROL 1032
 #define MCC_AIRDROPARRAYCONTROL 1033
 
-private ["_action", "_type", "_comboBox", "_mccdialog", "_groupArray","_displayname","_dummy"];
+private ["_action", "_type", "_comboBox", "_mccdialog", "_groupArray","_displayname","_dummy","_index"];
 disableSerialization;
 
 _action =_this select 0;
@@ -12,6 +12,7 @@ _mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 if (_action==0) then 		//Refresh list
 	{
 	_type = lbCurSel MCC_AIRDROPTYPECONTROL;
+	if (_type == -1) exitWith {}; 
 	switch (_type) do		//Which unit do we want
 		{
 		   case 0:	//Car
@@ -62,6 +63,7 @@ if (_action==0) then 		//Refresh list
 if (_action==1) then 		//Add airdrop to list
 	{	
 	_type = lbCurSel MCC_AIRDROPTYPECONTROL;
+	if (_type == -1) exitWith {}; 
 	switch (_type) do		//Which unit do we want
 		{
 		   case 0:	//Car
@@ -89,7 +91,10 @@ if (_action==1) then 		//Add airdrop to list
 				_groupArray = U_AMMO;
 			};
 		};
-	_dummy = (_groupArray select (lbCurSel MCC_AIRDROPCLASSCONTROL)) select 1;
+	_index = lbCurSel MCC_AIRDROPCLASSCONTROL;
+	if (_index == -1) exitWith {}; 
+	
+	_dummy = (_groupArray select _index) select 1;
 	MCC_airDropArray set[count MCC_airDropArray , _dummy];
 	
 	_comboBox = _mccdialog displayCtrl MCC_AIRDROPARRAYCONTROL;		//added objects

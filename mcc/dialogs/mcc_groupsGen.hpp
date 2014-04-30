@@ -8,7 +8,6 @@
 #define MCCMISSIONMAKERNAME 1020
 #define MCCCLIENTFPS 1021
 #define MCCSERVERFPS 1022
-#define MCC_GroupGenInfoText_IDC 9013
 
 #define MCCSTOPCAPTURE 1014
 
@@ -421,19 +420,7 @@ class mcc_groupGen
 		
 		#include "mcc_groupGenUM.hpp"
 		#include "mcc_groupGenWaypoints.hpp"
-		
-		
-		//---------------------- For group ID ---------------------
-		class MCC_GroupGenInfoText: MCC_RscStructuredText
-		{
-			idc = MCC_GroupGenInfoText_IDC;
-			x = 0.1 * safezoneW + safezoneX;
-			y = 0.1 * safezoneH + safezoneY;
-			w = 0.1 * safezoneW;
-			h = 0.1 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
-			colorBackground[] = {0,0,0,0.9};
-		};
+		#include "MCC_GroupGenInfo.hpp"
 	};
 	
  //========================================= Background========================================

@@ -22,7 +22,7 @@ _comboBox = _mccdialog displayCtrl 8505;
 	{
 		_displayname = _x;
 		_index = _comboBox lbAdd _displayname;
-	} foreach ["Killed","Destroyed","Taken","Get to marker location","Repair","heal"];
+	} foreach ["Killed/Destroyed","Taken","Get to marker location","Repair","heal"];
 _comboBox lbSetCurSel 0;
 
 _comboBox = _mccdialog displayCtrl 8506; 

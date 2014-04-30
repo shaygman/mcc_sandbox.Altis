@@ -146,6 +146,16 @@ class CfgFunctions
 				description = "Create a HALO or regular parachute jump for the given unit.";
 			};
 			
+			class realParadrop
+			{
+				description = "Create a HALO or regular parachute jump for the given units with simulation of runing out of an airplane.";
+			};
+			
+			class realParadropPlayer
+			{
+				description = "Handle the paradrop from the unit side.";
+			};
+			
 			class countGroupHC
 			{
 				description = "Count the number of infantry, vehicles, tank, air, ships in a group expand.";
@@ -254,6 +264,11 @@ class CfgFunctions
 			class trackUnits
 			{
 				description = "Track units on the given map display";
+			};
+			
+			class camp_showOSD
+			{
+				description = "Show player OSD";
 			};
 		};
 		
