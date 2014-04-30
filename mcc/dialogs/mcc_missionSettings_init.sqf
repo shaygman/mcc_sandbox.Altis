@@ -14,6 +14,10 @@
 #define mcc_saveGearComboIDC 8412
 #define mcc_showGRPMarkerComboIDC 8413
 
+MCC_aiSkillIndex		= (MCC_AI_Skill*10)-1;
+MCC_aiAimIndex			= (MCC_AI_Aim*10)-1;
+MCC_aiSpotIndex			= (MCC_AI_Spot*10)-1;
+MCC_aiCommandIndex		= (MCC_AI_Command*10)-1;
 private ["_mccdialog","_comboBox","_displayname"];
 disableSerialization;
 _mccdialog = findDisplay missionSettings_IDD;
@@ -31,7 +35,7 @@ _comboBox = _mccdialog displayCtrl T2T_AD; //Teleport To Team
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["Disabled","JIP Only","After Respawn"];
+	} foreach ["Disabled","JIP Only","After Respawn","Always"];
 _comboBox lbSetCurSel MCC_t2tIndex;
 
 _comboBox = _mccdialog displayCtrl AI_SKILL; //AI Skill

@@ -29,7 +29,7 @@ if (_angle < 0) then { _angle = 360 + _angle; };
 switch (toLower _side) do	{
 	case "west": {_side =  west; _escrot = MCCConvoyWestEscort; _escrotDriver = MCCConvoyWestDriver};
 	case "east": {_side =  east;  _escrot = MCCConvoyEastEscort; _escrotDriver = MCCConvoyEastDriver};
-	case "gue": {_side =  resistance;  _escrot = MCCConvoyGueEscort; _escrotDriver = MCCConvoyGueDriver};
+	case "guer": {_side =  resistance;  _escrot = MCCConvoyGueEscort; _escrotDriver = MCCConvoyGueDriver};
 	case "civ": {_side =  civilian;  _escrot = MCCConvoyCivEscort; _escrotDriver = MCCConvoyCivDriver};
 	};
 	

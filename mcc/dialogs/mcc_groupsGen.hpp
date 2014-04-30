@@ -2,7 +2,8 @@
 // Version: 1.1 (April 2012)
 #define groupGen_IDD 2994
 #define MCC_MINIMAP 9000
-
+#define MCC_MINIMAPBACK 9001
+#define MCC_BACK 9002
 #define MCC_FACTION 8008
 
 #define MCCMISSIONMAKERNAME 1020
@@ -246,9 +247,9 @@ class mcc_groupGen
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
 			x = 0.391146 * safezoneW + safezoneX;
-			y = 0.708919 * safezoneH + safezoneY;
+			y = 0.72000 * safezoneH + safezoneY;
 			w = 0.0744792 * safezoneW;
-			h = 0.07697 * safezoneH;
+			h = 0.0329871 * safezoneH;
 		};
 		
 		class MCC_cacheButton: MCC_RscButton
@@ -426,7 +427,7 @@ class mcc_groupGen
  //========================================= Background========================================
 	class mcc_groupGenPic: MCC_RscText	
 	{
-		idc = -1;
+		idc = MCC_BACK;
 		text = "";
 		colorBackground[] = { 0.051, 0.051, 0.051,1};
 		
@@ -439,7 +440,7 @@ class mcc_groupGen
 //===========================================Map==============================================
 	class MCC_mapBackground : MCC_RscText 
 	{
-		idc = -1;
+		idc = MCC_MINIMAPBACK;
 		
 		x = 0.190625 * safezoneW + safezoneX;
 		y = 0.0931586 * safezoneH + safezoneY;
@@ -488,3 +489,4 @@ class mcc_groupGen
 		h = 0.0439828 * safezoneH;
 	};
 };
+

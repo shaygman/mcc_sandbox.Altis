@@ -81,7 +81,7 @@ class MCC_CASDialogControls:MCC_RscControlsGroup
 		};
 		class MCC_CASAdd: MCC_RscButton
 		{
-			idc = -1;
+			idc = 27; // idc set to allow hiding button when no mcc_console available
 			onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\cas\cas_request.sqf'");
 
 			text = "Add"; //--- ToDo: Localize;

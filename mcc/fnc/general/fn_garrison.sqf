@@ -46,7 +46,7 @@ switch (toLower _side) do
 {
 	case "west": {_side =  west};
 	case "east": {_side =  east};
-	case "gue": {_side =  resistance};
+	case "guer": {_side =  resistance};
 	case "civ": {_side =  civilian};
 };
 

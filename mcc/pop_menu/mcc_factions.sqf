@@ -1,7 +1,7 @@
 private ["_mcc_config","_mcc_faction_idx","_mcc_sides","_unitCfg","_cfgname","_cfgdisplayname","_side","_sidename", "_check"];
 _mcc_config =configFile >> "CfgFactionClasses";
 _mcc_faction_idx = 0;
-_mcc_sides       = ["EAST","WEST","GUE","CIV"];
+_mcc_sides       = ["EAST","WEST","GUER","CIV"];
 u_factions=[];
 
 for "_i" from 1 to ((count _mcc_config) - 1) do 

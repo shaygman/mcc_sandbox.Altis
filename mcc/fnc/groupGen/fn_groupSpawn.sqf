@@ -16,7 +16,7 @@ _unitsArray = _this select 1;
 _loc 		= _this select 2;
 _side		= if (typeName (_this select 3) == "STRING") then 
 				{
-					if (tolower (_this select 3) == "gue") then
+					if (tolower (_this select 3) == "guer") then
 					{
 						resistance
 					}

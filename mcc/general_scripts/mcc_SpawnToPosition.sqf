@@ -9,5 +9,9 @@ if (MCC_teleportToTeam) then
 			{
 			player setPos (getPos (leader player)); 
 			};
-		MCC_teleportToTeam = false;
+		
+		if ( MCC_t2tIndex < 3 ) then // 3 = always allow teleport
+		{ 
+			MCC_teleportToTeam = false;
+		};
 	} else {hint "Telpeport is N/A"};

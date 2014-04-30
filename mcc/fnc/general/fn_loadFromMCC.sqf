@@ -17,16 +17,16 @@ private ["_group","_indecator","_tempArray"];
 
 if (count _arrayGroups > 0) then 
 {
-	{
-		
+	{		
 		_indecator 	= _x; 
+
 		_side 		= _indecator select 0;
 		
 		switch (toLower _side) do	
 			{
 				case "west": {_side =  west};
 				case "east": {_side =  east};
-				case "gue": {_side =  resistance};
+				case "guer": {_side =  resistance};
 				case "civ": {_side =  civilian};
 			};
 			
@@ -102,7 +102,10 @@ if (count _arrayGroups > 0) then
 		_variables = _indecator select 1;
 		if (count _variables > 0) then
 		{
-			{
+		if (count (_indecator select 1) > 0) then
+		{
+			_variables = _indecator select 1;
+			{				
 				_group setVariable [(_x select 0),(_x select 1),true]
 			} foreach _variables; 
 		};

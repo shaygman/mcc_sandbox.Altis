@@ -71,7 +71,7 @@ class MCC_airdropDialogControls:MCC_RscControlsGroup
 		};
 		class MCC_airdropAdd: MCC_RscButton
 		{
-			idc = -1;
+			idc = 27; // idc set to allow hiding button when no mcc_console available
 			text = "Add"; //--- ToDo: Localize;
 			x = 0.217709 * safezoneW;
 			y = 0.0549786 * safezoneH;

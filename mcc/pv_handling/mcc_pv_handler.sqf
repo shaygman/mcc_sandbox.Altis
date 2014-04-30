@@ -290,7 +290,7 @@ my_pv_handler =
 						if (_p_mcc_spawntype == "MAN") then
 							{
 								
-								if (_p_mcc_spawnfaction=="GUE") then
+								if (_p_mcc_spawnfaction=="GUER") then
 									{_unitspawned = createGroup resistance;};
 								if (_p_mcc_spawnfaction=="WEST") then
 									{_unitspawned = createGroup west;};							
@@ -351,7 +351,7 @@ my_pv_handler =
 										private ["_vehicleClass"];
 										//Some sort of vehicle, now if the config has any crew we spawn it with it, incase not, well its still empty
 										_vehicleClass = tolower (gettext (configFile >> "CfgVehicles" >> _p_mcc_spawnname >> "vehicleClass")); 
-										if (_p_mcc_spawnfaction=="GUE") then
+										if (_p_mcc_spawnfaction=="GUER") then
 											{_unitspawned 	=	[_safepos, _spawndirection, _p_mcc_spawnname, resistance] call BIS_fnc_spawnVehicle;};										
 										if (_p_mcc_spawnfaction=="WEST") then
 											{ _unitspawned 	=	[_safepos, _spawndirection, _p_mcc_spawnname, WEST] call BIS_fnc_spawnVehicle;};
@@ -449,7 +449,7 @@ my_pv_handler =
 							{
 										_p_mcc_spawnfaction = if (typeName _p_mcc_spawnfaction == "STRING") then {(call compile _p_mcc_spawnfaction)} else {_p_mcc_spawnfaction}; 
 										//Depending on faction we spawn for side
-										if (_p_mcc_grouptype=="GUE") then
+										if (_p_mcc_grouptype=="GUER") then
 										    {_unitspawned=[_safepos, resistance, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};										
 										if (_p_mcc_grouptype=="WEST") then
 										    {_unitspawned=[_safepos, west, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};																				

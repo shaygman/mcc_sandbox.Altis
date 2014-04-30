@@ -119,7 +119,7 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 		
 		class MCC_AC130Button: MCC_RscButton
 		{
-			idc = -1;
+			idc = 620; // idc set to allow hiding button when no mcc_console available
 			text = "AC-130"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			tooltip = "Spawn AC-130 (use MCC console to control it)"; 
