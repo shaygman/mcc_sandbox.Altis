@@ -102,12 +102,13 @@ if (count _arrayGroups > 0) then
 		_variables = _indecator select 1;
 		if (count _variables > 0) then
 		{
-		if (count (_indecator select 1) > 0) then
-		{
-			_variables = _indecator select 1;
-			{				
-				_group setVariable [(_x select 0),(_x select 1),true]
-			} foreach _variables; 
+			if (count (_indecator select 1) > 0) then
+			{
+				_variables = _indecator select 1;
+				{				
+					_group setVariable [(_x select 0),(_x select 1),true]
+				} foreach _variables; 
+			};
 		};
 	} forEach _arrayGroups;
 };
@@ -146,3 +147,5 @@ if ((count _arrayVehicles) > 0) then
  //[_side, typeof _objectData, _pos, getDir _objectData, _objectData getvariable ["vehicleinit",""]];
 
     
+
+
