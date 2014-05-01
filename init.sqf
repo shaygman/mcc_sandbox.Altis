@@ -302,6 +302,16 @@ MCC_weather_array = [
 		["Storm - no rain",	[1   , 1   , 1   , 0  , 0  , [0.5,0.015]]]
 	];
 
+MCC_fog_array = [
+		["default",[0,0]],
+		["none",[0.1,003]],
+		["low - light",[0.5,0.06]], ["low - dense",[1,0.06]],
+		["low/medium - light",[0.5,0.03]], ["low/medium - dense",[1,0.03]],
+		["medium - light",[0.5,0.015]], ["medium - dense",[1,0.015]],
+		["high - light",[0.5,0.009]], ["high - dense",[1,0.009]],
+		["full - light",[0.5,0.005]], ["full - dense",[1,0.005]]
+	];
+
 MCC_wind_array  = [["default", -1], ["none", 0], ["minimal", 1], ["breeze", 2], ["strong", 3], ["storm", 4]];
 
 MCC_waves_array = [["default", -1], ["none", 0], ["minimal", 1], ["breeze", 2], ["strong", 3], ["storm", 4]];
