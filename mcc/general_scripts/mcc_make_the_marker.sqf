@@ -5,7 +5,11 @@ MCC_Marker_type = "RECTANGLE";
 MCC_MarkerZoneColor = "colorYellow";
 MCC_MarkerZoneType = "mil_join";
 
-
+if (!(mcc_zone_markposition in mcc_zone_pos) && !mcc_isloading) then
+{
+	mcc_safe=mcc_safe + "_zoneNumber =['MCCZoneCounter',1] call bis_fnc_counter;"
+};
+		
 //safe the zone size in the array for later use
 mcc_zone_pos  set [mcc_zone_number,mcc_zone_markposition];
 mcc_zone_size set [mcc_zone_number,[mcc_zone_marker_X,mcc_zone_marker_Y]];
@@ -52,7 +56,7 @@ if (!mcc_isloading && !MCC_capture_state) then
 								,MCC_Marker_dir
 								];
 
-						
+		
 		deleteMarkerLocal mcc_zone_markername;					
 		_marker = createMarkerLocal [mcc_zone_markername, mcc_zone_markposition];
 		_marker setMarkerShapeLocal MCC_Marker_type;

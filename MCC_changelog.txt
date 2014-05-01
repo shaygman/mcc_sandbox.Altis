@@ -3,12 +3,16 @@ Engine:
 - Added: Button: "Save MCC(SQM)" will save MCC/Zeus only missions' objects to SQM - will only save the new placed objects. 
 - Added: Reworked MCC save now will save all objects/units placesd with MCC or Zeus including waypoints, GAIA behavior, GAIA cashing status and disregard units that has been deleted. First step to persistence. 
 - Added: Save to SQM will save gaia behavior, cacheing and respawn.
+- Added: Disable global MCC messages in missions settings. 
 - Update: 500m increment to viewdistance setting
-- Update: improved check if zone exists before spawning AI units
-- Fixed: after HALO jump backpack on pelvis was not removed.
+- Update: improved check if zone exists before spawning AI units.
+- Update: Added VAS again with some safty changes so it won't override missions already using VAS. 
+- Fixed: When someone else taking control over MCC and trying to access Zeus he gets a black screen. 
+- Fixed: After loading a mission from MCC creating a new zone will start from 1 again. 
+- Fixed: After HALO jump backpack on pelvis was not removed.
 - Fixed: Player were not assigned to Zeus in dedicated servers. 
 - Fixed: Save to SQM didn't saved WP type. 
-- Fixed: after respawning will not loose zues. 
+- Fixed: After respawning will not loose zues. 
 - Fixed: Error garrison group spawn for "AAF (GUE)" faction
 - Fixed: Floating rocks issue.
 - Fixed: Could not take control of same side UAV/UGV with MCC handheld console unless mission maker allowed it. 
@@ -17,7 +21,12 @@ GAIA:
 - Added: Respawns. It can now be set on GAIA groups (caching friendly) the group will respawn for number of times after all it's group members has been killed. (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
 
 Delete Brush:
-- Fixed: Delete "markers" and "all"  won't delete MCC Zone's markers. 
+- Fixed: Delete "markers" won't delete MCC Zone's markers. 
+- Update: Delete "all" won't delete markers. 
+
+Cargo (Box Gen)
+- Update: Will not automatically clear all the cargo in the vehicle/Ammo box. 
+- Fixed: Scroll bars were buggy. 
 
 UI:
 - Added: "Are you sure?" dialogs to mission's end buttons. 
@@ -40,6 +49,7 @@ Misc:
 
 TODO IED DISBALE
 TASK LIST
+
 Change log r3
 Zeus Support:
 - MCC now have built in Zeus support:

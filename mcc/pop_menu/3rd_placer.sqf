@@ -445,22 +445,23 @@ MCC_3D_CAM_Handler =
 
 	//--- Deselect or CloseTerminate 
 	if (_terminate || MCC_3Dterminate || MCC_3DterminateNoMCC) then 
-		{
-			MCC_mcc_screen=2;
-			//--- Close
-			MCC3DRuning = false; 
-			if (! isnil "MCC_3D_CAM") then {
-				MCC_3D_CAM cameraeffect ["terminate","back"];
-				camdestroy MCC_3D_CAM;
-				MCC_3D_CAM = nil;
-			};		
-			if (! isnil "Object3D") then {deletevehicle Object3D};
-			if (! isnil "MCC_dummyObject") then {deletevehicle MCC_dummyObject};
-			player setvariable ["3D_isRuning",nil];
-			hintsilent "";
-			waituntil {isnil "MCC_3D_CAM"};
-			if !(MCC_3DterminateNoMCC) then {_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
-		};
+	{
+		MCC_mcc_screen=2;
+		//--- Close
+		MCC3DRuning = false; 
+		if (! isnil "MCC_3D_CAM") then {
+			MCC_3D_CAM cameraeffect ["terminate","back"];
+			camdestroy MCC_3D_CAM;
+			MCC_3D_CAM = nil;
+		};		
+		if (! isnil "Object3D") then {deletevehicle Object3D};
+		if (! isnil "MCC_dummyObject") then {deletevehicle MCC_dummyObject};
+		player setvariable ["3D_isRuning",nil];
+		hintsilent "";
+		waituntil {isnil "MCC_3D_CAM"};
+		while {dialog} do {closeDialog 0; sleep 0.1};
+		if !(MCC_3DterminateNoMCC) then {_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
+	};
 
 		//--- Camera no longer exists - terminate and start cleanup	
 	if (isnil "MCC_3D_CAM" || player != DOperator || !alive player) exitwith

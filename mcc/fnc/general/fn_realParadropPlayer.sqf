@@ -14,7 +14,6 @@ _isHalo			= _plane getvariable ["MCCisHALO",false];
 _jumpReady		= _plane getvariable "MCCjumpReady"; 
 
 sleep .1;
-player sidechat "Registered"; 
 
 if (isNull _unit) exitwith {};
 

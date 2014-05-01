@@ -97,9 +97,9 @@ if !mcc_isloading then
 							MCC3DRuning = true;
 							while {MCC3DRuning} do
 								{
-								MCC3DgotValue = false; 
-								while {!MCC3DgotValue && MCC3DRuning} do {sleep 0.2};
-								if (MCC3DRuning) then 
+									MCC3DgotValue = false; 
+									while {!MCC3DgotValue && MCC3DRuning} do {sleep 0.2};
+									if (MCC3DRuning) then 
 									{
 										MCC_capture_var=MCC_capture_var + FORMAT ["
 										[[%1 , %2 select 0, %3 select 0, %4, %5 , %6, %7, %8, %9, %10 select 0,%11,[],[]],""MCC_fnc_trapSingle"",false,false] call BIS_fnc_MP;
@@ -119,10 +119,10 @@ if !mcc_isloading then
 										, iedside
 										, IedName
 										, MCC3DValue select 1
-									];
-									MCC_3Dterminate = true; 
+										];
+										MCC_3Dterminate = true; 
 									};
-								sleep 0.1;
+									sleep 0.1;
 								};
 						} else 
 						{
@@ -137,34 +137,34 @@ if !mcc_isloading then
 								MCC3DgotValue = false; 
 								while {!MCC3DgotValue && MCC3DRuning} do {sleep 0.2};
 								if (MCC3DRuning) then 
-									{
-										_eib_marker = createMarkerlocal [IedName select 0 ,MCC3DValue select 0];
-										_eib_marker setMarkerTypelocal "selector_selectedMission";
-										_eib_marker setMarkerColorlocal "ColorRed";
-										_eib_marker setMarkerTextlocal (IedName select 0);
-										mcc_safe=mcc_safe + FORMAT ["
-										[[%1 , %2 select 0, %3 select 0, %4, %5 , %6, %7, %8, %9, %10 select 0,%11,[],[]],""MCC_fnc_trapSingle"",false,false] call BIS_fnc_MP;
-										sleep 1;
-										_eib_marker = createMarkerlocal [%10 select 0 ,%1];
-										_eib_marker setMarkerTypelocal ""selector_selectedMission"";
-										_eib_marker setMarkerColorlocal ""ColorRed"";
-										_eib_marker setMarkerTextlocal (%10 select 0);
-										"								 
-										, MCC3DValue select 0
-										, trapkind
-										, MCC_trapvolume
-										, IEDExplosionType
-										, IEDDisarmTime
-										, IEDJammable
-										, IEDTriggerType 
-										, trapdistance
-										, iedside
-										, IedName 
-										, MCC3DValue select 1
-										];
-										[[MCC3DValue select 0 , trapkind select 0, MCC_trapvolume select 0, IEDExplosionType, IEDDisarmTime , IEDJammable, IEDTriggerType, trapdistance, iedside, IedName select 0, MCC3DValue select 1,[],[]],"MCC_fnc_trapSingle",false,false] call BIS_fnc_MP;
-										MCC_3Dterminate = true; 
-									};
+								{
+									_eib_marker = createMarkerlocal [IedName select 0 ,MCC3DValue select 0];
+									_eib_marker setMarkerTypelocal "selector_selectedMission";
+									_eib_marker setMarkerColorlocal "ColorRed";
+									_eib_marker setMarkerTextlocal (IedName select 0);
+									mcc_safe=mcc_safe + FORMAT ["
+									[[%1 , %2 select 0, %3 select 0, %4, %5 , %6, %7, %8, %9, %10 select 0,%11,[],[]],""MCC_fnc_trapSingle"",false,false] call BIS_fnc_MP;
+									sleep 1;
+									_eib_marker = createMarkerlocal [%10 select 0 ,%1];
+									_eib_marker setMarkerTypelocal ""selector_selectedMission"";
+									_eib_marker setMarkerColorlocal ""ColorRed"";
+									_eib_marker setMarkerTextlocal (%10 select 0);
+									"								 
+									, MCC3DValue select 0
+									, trapkind
+									, MCC_trapvolume
+									, IEDExplosionType
+									, IEDDisarmTime
+									, IEDJammable
+									, IEDTriggerType 
+									, trapdistance
+									, iedside
+									, IedName 
+									, MCC3DValue select 1
+									];
+									[[MCC3DValue select 0 , trapkind select 0, MCC_trapvolume select 0, IEDExplosionType, IEDDisarmTime , IEDJammable, IEDTriggerType, trapdistance, iedside, IedName select 0, MCC3DValue select 1,[],[]],"MCC_fnc_trapSingle",false,false] call BIS_fnc_MP;
+									MCC_3Dterminate = true; 
+								};
 								sleep 0.1;
 								};
 						};

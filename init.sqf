@@ -76,7 +76,7 @@ MCC_ied_medium = [["Wheel Cart","Land_WheelCart_F"],["Metal Barrel","Land_MetalB
 				  ["Sacks Heap","Land_Sacks_heap_F"], ["Water Barrel","Land_WaterBarrel_F"],["Water Tank","Land_WaterTank_F"]];
 MCC_ied_wrecks = [["Car Wreck","Land_Wreck_Car3_F"],["BRDM Wreck","Land_Wreck_BRDM2_F"],["Offroad Wreck","Land_Wreck_Offroad_F"],["Truck Wreck","Land_Wreck_Truck_FWreck"]];
 MCC_ied_mine = [["Mine Field AP - Visable","apv"], ["Mine Field AP - Hidden","ap"],["Mine Field AP Bounding - Visable","apbv"],["Mine Field AP Bounding- Hidden","apb"], ["Mine Field AT - Visable","atv"], ["Mine Field AT - Hidden","at"]];
-MCC_ied_hidden = [["Dirt Small","IEDLandSmall_Remote_Ammo"],["Dirt Big","IEDLandBig_Remote_Ammo"],["Urban Small","IEDUrbanSmall_Remote_Ammo"],["Urban Big","IEDUrbanBig_Remote_Ammo"]];
+MCC_ied_hidden = [["Dirt Small","ModuleExplosive_IEDLandSmall_F"],["Dirt Big","ModuleExplosive_IEDLandBig_F"],["Urban Small","ModuleExplosive_IEDUrbanSmall_F"],["Urban Big","ModuleExplosive_IEDUrbanBig_F"]];
 
 //------------------------Convoy settings----------------------------------------
 MCC_convoyHVT = [["None","0"],["B.Officer","B_officer_F"],["B. Pilot","B_Helipilot_F"],["O. Officer","O_officer_F"],["O. Pilot","O_helipilot_F"],["I.Commander","I_officer_F"],["Citizen","C_man_polo_1_F"],
@@ -408,6 +408,7 @@ MCC_nameTagsIndex						= 0;
 MCC_artilleryComputerIndex				= 1;
 MCC_saveGearIndex						= 0;
 MCC_groupMarkersIndex					= 1;
+MCC_MessagesIndex						= 1;
 
 
 //Group Gen
@@ -446,7 +447,7 @@ MCC_MWAir = ["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_UAV_02_F","O_UAV
 MCC_MWcache = ["Box_East_AmmoVeh_F"];
 MCC_MWradar = ["Land_Radar_Small_F"];
 MCC_MWIntelObjects = ["Land_File2_F","Land_FilePhotos_F","Land_Laptop_unfolded_F","Land_SatellitePhone_F","Land_Suitcase_F"]; //s2 setPos (s3 modelToWorld [0,0,0.41]); 
-MCC_MWIED = ["IEDLandSmall_Remote_Ammo","IEDLandBig_Remote_Ammo","IEDUrbanSmall_Remote_Ammo","IEDUrbanBig_Remote_Ammo"];
+MCC_MWIED = ["ModuleExplosive_IEDLandSmall_F","ModuleExplosive_IEDLandBig_F","ModuleExplosive_IEDUrbanSmall_F","ModuleExplosive_IEDUrbanBig_F"];
 
 //StratigicMap
 MCC_MWObjectivesNames	= []; 	//placeHolder for objectives

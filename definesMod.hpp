@@ -35,7 +35,7 @@
 #include "\mcc_sandbox_mod\configs\dialogs\gearPanel\uniformPanel.hpp"
 //--------------------------Others----------------------------------------------------
 #include "\mcc_sandbox_mod\bon_artillery\dialog\Artillery.hpp"
-//#include "\mcc_sandbox_mod\VAS\menu.hpp"
+#include "\mcc_sandbox_mod\VAS\menu.hpp"
 #include "\mcc_sandbox_mod\spectator\spectating.hpp"
 #include "\mcc_sandbox_mod\hcam\hcam.hpp"
 //---------------------------Functions------------------------------------------------
@@ -542,7 +542,7 @@ class CfgFunctions
 		
 	};
 	
-	/*
+
 	class VAS
 	{
 		tag = "VAS";
@@ -590,7 +590,6 @@ class CfgFunctions
 			class accList {};
 		};
 	}
-	*/
 };
 
 //=====================DOC=========================

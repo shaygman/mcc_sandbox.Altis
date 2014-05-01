@@ -13,6 +13,11 @@ MCC_gearDialogClassIndex = lbCurSel GEARCLASS_IDD;
 
 if (_type == 0) exitWith 	//Change class
 {
+	if (isnil "MCC_boxChange") then {MCC_boxChange = false};
+	
+	if (MCC_boxChange) exitWith {}; 
+	MCC_boxChange = !MCC_boxChange;
+	
 	switch (MCC_gearDialogClassIndex) do 
 		{
 		case 0: //Binos
@@ -92,6 +97,8 @@ if (_type == 0) exitWith 	//Change class
 			_comboBox lbSetData [_index, _class];
 		} foreach _array;
 	_comboBox lbSetCurSel 0;
+	sleep 0.5;
+	MCC_boxChange = false; 
 };
 
 if (_type == 1) then //Add weapon + mags

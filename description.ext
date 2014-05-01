@@ -9,7 +9,7 @@ onLoadMission = MCC Sandbox stands for Mission Control Centre. With it you can c
 
 respawn      = "BASE";
 respawndelay = 4;
-disabledAI   = 0;
+disabledAI   = 1;
 
 class Header
 {

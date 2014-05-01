@@ -8,7 +8,7 @@ my_pv = [];
 if (isServer) then
 {
 	mcc_fnc_login = {_this call my_pv_loginhandler};
-		
+	if (isnil "MCC_Chat") then {MCC_Chat = true}; 	
 	my_pv_loginhandler = 
 	{
 			#define MCCMISSIONMAKERNAME 1020
@@ -25,7 +25,10 @@ if (isServer) then
 				//MM is logging out
 				if (mcc_missionmaker == _p_mcc_player_name) exitWith
 				{
-					[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> %2 Logged out as Misson Maker.",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+					if (MCC_Chat) then
+					{
+						[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> %2 Logged out as Misson Maker.",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+					};
 					mcc_missionmaker="";
 					unassignCurator MCC_curator;
 					publicVariable "mcc_missionmaker";
@@ -36,8 +39,12 @@ if (isServer) then
 				if ((mcc_missionmaker == "") || _isAdmin) exitWith
 				{
 					mcc_missionmaker = _p_mcc_player_name;
-					[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Access granted to: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+					if (MCC_Chat) then
+					{
+						[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Access granted to: %2",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+					};
 					unassignCurator MCC_curator;
+					waituntil {!(MCC_curator in allCurators)};
 					_p_mcc_player assignCurator MCC_curator;
 					publicVariable "mcc_missionmaker";
 					publicVariable "mcc_zone_pos";
@@ -203,7 +210,10 @@ my_pv_handler =
 				{	
 					if ( _p_mcc_resetmissionmaker ) then
 					{
-						[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> %2 Logged out as Misson Maker",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+						if (MCC_Chat) then
+						{
+							[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> %2 Logged out as Misson Maker",_p_mcc_request,mcc_missionMaker], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+						};
 						mcc_missionmaker="";
 						publicVariable "mcc_missionmaker";
 					}
@@ -312,8 +322,11 @@ my_pv_handler =
 										_dummyUnit setSkill ["spottime", MCC_AI_Spot];
 										_dummyUnit setSkill ["commanding", MCC_AI_Command];
 										_dummyUnit setSkill ["general", MCC_AI_Skill];
-								
-								[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned ""%2"" of type %3.",_p_mcc_request,_unitspawned,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+										
+								if (MCC_Chat) then
+								{
+									[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned ""%2"" of type %3.",_p_mcc_request,_unitspawned,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+								};
 																
 								if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 								{
@@ -339,7 +352,10 @@ my_pv_handler =
 								//Curator
 								MCC_curator addCuratorEditableObjects [[_dummyUnit],false];
 								
-								[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned ""%2"" of type %3.",_p_mcc_request,_unitspawned,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+								if (MCC_Chat) then
+								{
+									[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned ""%2"" of type %3.",_p_mcc_request,_unitspawned,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+								};
 																
 							};
 							
@@ -415,8 +431,11 @@ my_pv_handler =
 											};
 										
 										if ( MCC_trackdetail_units ) then {  [leader (_unitspawned select 2), "WP"] execVm format ["%1scripts\track.sqf",MCC_path] };
-														
-										[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned ""%3"" of type %2.",_p_mcc_request,_p_mcc_spawnname,(_unitspawned select 0)], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+										
+										if (MCC_Chat) then
+										{
+											[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned ""%3"" of type %2.",_p_mcc_request,_p_mcc_spawnname,(_unitspawned select 0)], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+										};
 									}
 								else
 									{
@@ -429,7 +448,10 @@ my_pv_handler =
 										//Curator
 										MCC_curator addCuratorEditableObjects [[_unitspawned],false];
 										
-										[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned type %2.",_p_mcc_request,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+										if (MCC_Chat) then
+										{
+											[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned type %2.",_p_mcc_request,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+										};
 									};
 							
 							};
@@ -438,8 +460,12 @@ my_pv_handler =
 						if (_p_mcc_spawntype == "DOC") then
 							{
 								//Well we need a dynamic object composition to spawn so we us a BIS function for that.
-								_unitspawned =[ _safepos, _spawndirection, _p_mcc_spawnname] call MCC_fnc_objectMapper;			
-								[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned type %2.",_p_mcc_request,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+								_unitspawned =[ _safepos, _spawndirection, _p_mcc_spawnname] call MCC_fnc_objectMapper;		
+								
+								if (MCC_Chat) then
+								{
+									[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned type %2.",_p_mcc_request,_p_mcc_spawnname], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+								};
 								
 								
 							};		
@@ -532,7 +558,10 @@ my_pv_handler =
 										
 										if ( MCC_trackdetail_units ) then {  [leader _unitspawned, "GROUP","WP"] execVm format ["%1scripts\track.sqf",MCC_path] };
 										
-										[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned ""%3"" of type %2.",_p_mcc_request,_p_mcc_spawnname,((units _unitspawned) select 0)], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+										if (MCC_Chat) then
+										{
+											[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned ""%3"" of type %2.",_p_mcc_request,_p_mcc_spawnname,((units _unitspawned) select 0)], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+										};
 										
 							
 							};
@@ -550,18 +579,27 @@ my_pv_handler =
 					};
 					if _p_mcc_iszone_update then
 						{
-							[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Created/Updated zone: %2.",_p_mcc_request,_p_mcc_zone_markername], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+							if (MCC_Chat) then
+							{
+								[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Created/Updated zone: %2.",_p_mcc_request,_p_mcc_zone_markername], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+							};
 						}
 					else
 						{
 							if (format["%1",_safepos] != "[-500,-500,0]" ) 
 							then
 								{
-									[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned in grid: %2.",_p_mcc_request,(_safepos call BIS_fnc_PosToGrid)], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+									if (MCC_Chat) then
+									{
+										[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> Spawned in grid: %2.",_p_mcc_request,(_safepos call BIS_fnc_PosToGrid)], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+									};
 								}
 							else
 								{
-									[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> SPAWN FAILED! No good position found!",_p_mcc_request], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+									if (MCC_Chat) then
+									{
+										[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1-> SPAWN FAILED! No good position found!",_p_mcc_request], true],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+									};
 								};
 						};
 					};
@@ -569,6 +607,9 @@ my_pv_handler =
 				// we are at the if then else part of checking if we are the mission maker. At this case it will be denied cause player <> mcc_missionmaker
 				else
 				{
-					[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1->: Server access denied for: %2.",_p_mcc_request,_p_mcc_player], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+					if (MCC_Chat) then
+					{
+						[[[netId _p_mcc_player,_p_mcc_player], format["MCC ID %1->: Server access denied for: %2.",_p_mcc_request,_p_mcc_player], false],"MCC_fnc_groupchat",true,false] spawn BIS_fnc_MP; 
+					};
 				};
 	};

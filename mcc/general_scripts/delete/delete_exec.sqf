@@ -10,20 +10,6 @@ switch _type do
 		case "All":	
 			{ 
 				_nearObjects =  [_pos select 0, _pos select 1, 0] nearObjects _radius;
-				
-				//Markers
-				_markers = []; 
-				{
-					if ((((getMarkerPos _x distance [_pos select 0, _pos select 1, 0]) < _radius)) && !(getMarkerPos _x in mcc_zone_pos))
-					then 
-					{
-						_markers set [count _markers, _x];
-					}; 
-				} foreach allMapMarkers;
-				
-				{
-					[2, "", "", "", "", "", _x, []] call MCC_fnc_makeMarker;
-				} foreach _markers;
 			};
 		case "All Units":	
 			{ 

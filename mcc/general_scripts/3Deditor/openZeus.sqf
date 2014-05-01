@@ -12,9 +12,7 @@ waituntil {isnil "MCC_3D_CAM"};
 
 while {dialog} do {closeDialog 0; sleep 0.01};
 
-openCuratorInterface;
-
-waituntil {str findDisplay 312 != "No display"};
+while {str findDisplay 312 == "No display"} do {sleep 1; openCuratorInterface};
 sleep 1;
 [_pos, _target, 0] call BIS_fnc_setCuratorCamera; 
 cutText ["","BLACK IN",0.5];

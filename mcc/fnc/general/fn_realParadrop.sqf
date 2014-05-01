@@ -51,7 +51,7 @@ else
 };
 
 if (count _chockArray == 0) then {_chockArray = [_unitsArray]};
-player sidechat str _chockArray;  
+
 {
 	_unitsArray = _x; 
 

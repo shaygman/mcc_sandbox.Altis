@@ -7,12 +7,6 @@ _rucks		= _this select 4;
 
 if !(_object iskindof "Tank" || _object iskindof "Air" ||  _object iskindof "car" || _object iskindof "ReammoBox" || _object iskindof "ReammoBox_F" || _object iskindof "ship") exitWith {};
 
-clearMagazineCargoGlobal _object;
-clearWeaponCargoGlobal _object;
-clearItemCargoGlobal _object;
-clearBackpackCargoGlobal _object;
-
-sleep 2;
 _count = 0;						//Add weapons
 {
 	_object addWeaponCargoGlobal [_x,(_weapons select 1) select _count];

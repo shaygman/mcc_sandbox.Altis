@@ -17,12 +17,8 @@ while { true } do
 	
 	sleep 1;
 	
-	//if (side player == west) then {KEGsShownSides = [west];};
-	//if (side player == east) then {KEGsShownSides = [east];};
-	//if (side player == resistance) then {KEGsShownSides = [resistance];};
-	//if (side player == civilian) then {KEGsShownSides = [civilian];};
-	
 	player setCaptive true;
+	if (isnil "MCC_deadGroup") then {MCC_deadGroup = createGroup civilian; publicVariable "MCC_deadGroup"}; 
 	[player] join MCC_deadGroup;
 	
 	sleep 2;

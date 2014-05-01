@@ -26,12 +26,14 @@ if (!isnil "tempBox") then
 
 if !(ctrlShown (_mccdialog displayCtrl 8018)) exitWith {};
 
+tempBox = Object3D;
+/*
 tempBox = "B_supplyCrate_F" createvehicle [0,0,0];
 clearMagazineCargo tempBox;
 clearWeaponCargo tempBox;
 clearItemCargo tempBox;
 clearBackpackCargo tempBox;
-
+*/
 
 _comboBox = _mccdialog displayCtrl GEARCLASS_IDD; 
 	lbClear _comboBox;
@@ -121,3 +123,53 @@ _comboBox = _mccdialog displayCtrl ALLGEAR_IDD;
 	} foreach _array;
 _comboBox lbSetCurSel 0;
 
+tempBoxWeapons 	= getWeaponCargo tempBox;	//Update box
+tempBoxMagazine = getMagazineCargo tempBox;
+tempBoxItems	= getItemCargo tempBox;
+tempBoxRucks	= getBackpackCargo tempBox;
+
+_count = 0;
+_comboBox = _mccdialog displayCtrl BOXGEAR_IDD; 
+lbClear _comboBox;
+{
+	_cfg = configFile >> "CfgWeapons" >> _x;
+	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (tempBoxWeapons select 1) select _count];
+	_pic = getText(_cfg >> "picture");
+	_index = _comboBox lbAdd _displayname;
+	_comboBox lbSetPicture [_index, _pic];
+	_count = _count+ 1;
+} foreach (tempBoxWeapons select 0);
+
+_count = 0;
+{
+	_cfg = configFile >> "CfgMagazines" >> _x;
+	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (tempBoxMagazine select 1) select _count];
+	_pic = getText(_cfg >> "picture");
+	_index = _comboBox lbAdd _displayname;
+	_comboBox lbSetPicture [_index, _pic];
+	_count = _count+ 1;
+} foreach (tempBoxMagazine select 0);
+_comboBox lbSetCurSel 0;
+
+_count = 0;
+{
+	_cfg = configFile >> "CfgWeapons" >> _x;
+	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (tempBoxItems select 1) select _count];
+	_pic = getText(_cfg >> "picture");
+	_index = _comboBox lbAdd _displayname;
+	_comboBox lbSetPicture [_index, _pic];
+	_count = _count+ 1;
+} foreach (tempBoxItems select 0);
+_comboBox lbSetCurSel 0;
+
+_count = 0;
+{
+	_cfg = configFile >> "CfgVehicles" >> _x;
+	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (tempBoxRucks select 1) select _count];
+	_pic = getText(_cfg >> "picture");
+	_index = _comboBox lbAdd _displayname;
+	_comboBox lbSetPicture [_index, _pic];
+	_count = _count+ 1;
+} foreach (tempBoxRucks select 0);
+_comboBox lbSetCurSel 0;
+	

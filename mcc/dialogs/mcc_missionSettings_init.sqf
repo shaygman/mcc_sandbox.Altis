@@ -13,6 +13,7 @@
 #define mcc_artilleryTitleIDC 8411
 #define mcc_saveGearComboIDC 8412
 #define mcc_showGRPMarkerComboIDC 8413
+#define mcc_showMessagesComboIDC 8414
 
 MCC_aiSkillIndex		= (MCC_AI_Skill*10)-1;
 MCC_aiAimIndex			= (MCC_AI_Aim*10)-1;
@@ -126,3 +127,10 @@ _comboBox = _mccdialog displayCtrl mcc_showGRPMarkerComboIDC; //Save Gear
 	} foreach ["Disabled","Enabled"];
 _comboBox lbSetCurSel MCC_groupMarkersIndex;
 
+_comboBox = _mccdialog displayCtrl mcc_showMessagesComboIDC; //Messages
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Disabled","Enabled"];
+_comboBox lbSetCurSel MCC_MessagesIndex;

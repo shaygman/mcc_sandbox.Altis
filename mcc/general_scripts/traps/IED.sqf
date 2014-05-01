@@ -26,7 +26,7 @@ if (_IEDTriggerType==2) then	{		//manual detonation
 		while {! _triggered} do {_triggered = _dummy getvariable "iedTrigered";sleep 0.5};	
 	} else
 		{	//Proximity or radio
-			while {alive _fakeIed && _loop && _armed && !_triggered} do	{  
+			while {alive _fakeIed && !isNull _fakeIed && _loop && _armed && !_triggered} do	{  
 				sleep 3;
 				_triggered = _dummy getvariable "iedTrigered";
 				if (isnil "_triggered") then {_triggered = false}; 
@@ -100,29 +100,36 @@ switch (_IEDExplosionType) do
 			   _IedExplosion = {};
 			};
 		};
-		
-if (_armed && _triggered) then	//If triger epxplosion
-	{	
-		[_pos,_trapvolume] spawn _IedExplosion; 
-		_explode = true;
-	};
 
-if (!alive _fakeIed && _armed ) then	//If IED is destroyed
-	{
-		[_pos,_trapvolume] spawn _IedExplosion;
-		_explode = true;
-	};
+if !((_IEDExplosionType == 0) && (typeof _fakeIed) in MCC_MWIED) then 
+{
+	if (_armed && _triggered) then	//If triger epxplosion
+		{	
+			[_pos,_trapvolume] spawn _IedExplosion; 
+			_explode = true;
+		};
 
-if (!_armed ) then 	//If IED critical fail while trying to disarm it
-	{	
-		sleep 5; 
-		_triggered = _dummy getvariable "iedTrigered";
-		if (isnil "_triggered") then {_triggered = false};
-		if (_triggered) then {
-						[_pos,_trapvolume] spawn _IedExplosion;
-						_explode = true;
-						};
-	};
+	if (!alive _fakeIed && _armed ) then	//If IED is destroyed
+		{
+			[_pos,_trapvolume] spawn _IedExplosion;
+			_explode = true;
+		};
+
+	if (!_armed ) then 	//If IED critical fail while trying to disarm it
+		{	
+			sleep 5; 
+			_triggered = _dummy getvariable "iedTrigered";
+			if (isnil "_triggered") then {_triggered = false};
+			if (_triggered) then {
+							[_pos,_trapvolume] spawn _IedExplosion;
+							_explode = true;
+							};
+		};
+}
+else
+{
+	_explode = true;
+}; 
 
 sleep 0.5;
 if (_explode) then 
@@ -135,11 +142,13 @@ if (_explode) then
 	} 
 	else 
 	{
-		if (str _IedExplosion != str {}) then {deletevehicle _fakeIed};
+		if (str _IedExplosion != str {}) then {_fakeIed setdamage 1; sleep 0.2; deletevehicle _fakeIed};
 	};
 };
-sleep 10;	//fail safe give the game enough time to read the variable from it before deleting it.
 
-if ((typeof _fakeIed) in MCC_MWIED) then {deletevehicle _fakeIed;}; 
+
+sleep 2;	//fail safe give the game enough time to read the variable from it before deleting it.
+
+//if ((typeof _fakeIed) in MCC_MWIED) then {deletevehicle _fakeIed;}; 
 deletevehicle _dummy;	//Delete the dummyIED
 if (true) exitWith {};
