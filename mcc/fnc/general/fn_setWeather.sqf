@@ -9,22 +9,31 @@
 //	Lightnings: number, 0-1
 //	Fog: array, [fogValue, fogDecay, fogBase]
 //==============================================================================================================================================================================	
-private ["_weather"];
-
+private ["_weather","_fogBase","_changeWeatherDelay"];
+	
 _weather = _this select 0;
 
-skipTime -24;
-86400 setOvercast	(_weather select 0);
-skipTime 24;
+_changeWeatherDelay = _weather select 6;
 
-if ((count _weather) > 1) then {0 setWindForce 	(_weather select 1)};
-if ((count _weather) > 2) then {0 setWaves 		(_weather select 2)};
-if ((count _weather) > 3) then {0 setRain 		(_weather select 3)};
-if ((count _weather) > 4) then {0 setLightnings	(_weather select 4)};
-if ((count _weather) > 5) then {0 setFog [(_weather select 5), 0.03,10]};
-
-0 = [] spawn 
+if ( _changeWeatherDelay > 0 ) then 
 {
-	sleep 0.1;
-	simulWeatherSync;
+	_changeWeatherDelay setFog (_weather select 5);
 };
+
+_changeWeatherDelay setWindForce 	(_weather select 1);	sleep 0.1;
+_changeWeatherDelay setWaves 		(_weather select 2);	sleep 0.1;
+
+_changeWeatherDelay setOvercast		(_weather select 0);	sleep 0.1;
+
+_changeWeatherDelay setRain 		(_weather select 3);	sleep 0.1;
+_changeWeatherDelay setLightnings	(_weather select 4);	sleep 0.1;
+
+if ( _changeWeatherDelay == 0 ) then 
+{
+	forceWeatherChange;
+	0 setFog (_weather select 5);
+};
+
+sleep 0.5;
+
+simulWeatherSync;

@@ -7,15 +7,47 @@ _type = _this select 0;
 
 if (_type==0) exitWith	
 {
-	_fogLevel 	= sliderPosition ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 10);		//Set fog
-	_overcast 	=  sliderPosition ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 12);	//Set overcast
-	_rain 		=  sliderPosition ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 11);	//Set rain
-	_wind 		=  sliderPosition ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 14);	//Set wind
-	_Waves 		=  sliderPosition ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 13);	//Set wind
+	diag_log format ["MCC - weather change"];
 	
-	_weather	= [_overcast, _wind, _Waves, _rain, _overcast, _fogLevel];
+	_weather = (MCC_weather_array select (lbCurSel 10)) select 1;	//Set weather
+	MCC_weather_index=lbCurSel 10;
 
+	MCC_fog_index=lbCurSel 11;
+	if !(MCC_fog_index == 0 ) then 
+	{
+		_fogLevel = (MCC_fog_array select (lbCurSel 11)) select 1;		//Set fog		
+		_mccFog = [];
+		_mccFog = [_fogLevel select 0, _fogLevel select 1, 0];
+		_weather set [5, _mccFog];
+	};
+	
+	MCC_wind_index = lbCurSel 12;		//Set wind
+	if !( MCC_wind_index == 0 ) then
+	{
+		_mccWind = (MCC_wind_array select (lbCurSel 12)) select 1;
+		_weather set [1, _mccWind];
+	};
+	
+	MCC_waves_index=lbCurSel 13;	//Set waves
+	if !( MCC_waves_index == 0 ) then
+	{
+		_mccWaves = (MCC_waves_array select (lbCurSel 13)) select 1;
+		_weather set [2, _mccWaves];
+	};
+	
+	_weatherChangeTime = (MCC_ChangeWeather_array select (lbCurSel 14)) select 1;		//Set time delay for weatherchange
+	MCC_ChangeWeather_index=lbCurSel 14;
+	_weather set [6, _weatherChangeTime];
+	
 	_nul=[_type, _weather] execVM MCC_path +"mcc\general_scripts\time.sqf";
+	
+	if ( _weatherChangeTime == 0 ) then 
+	{
+		//disable button for 5 seconds to wait for instant weather change sync
+		ctrlEnable [15,false];
+		sleep 5;
+		ctrlEnable [15,true];			
+	};
 };
 
 if (_type==3) exitWith	
