@@ -44,9 +44,9 @@ if (_type==0) exitWith
 	if ( _weatherChangeTime == 0 ) then 
 	{
 		//disable button for 5 seconds to wait for instant weather change sync
-		ctrlEnable [15,false];
+		ctrlEnable [8,false];
 		sleep 5;
-		ctrlEnable [15,true];			
+		ctrlEnable [8,true];			
 	};
 };
 

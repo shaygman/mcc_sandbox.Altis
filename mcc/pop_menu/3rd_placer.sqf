@@ -84,15 +84,23 @@ if (isnil "MCC_3D_CAM_ASL") then {
 _logic setvariable ["MCC_3D_menu","#USER:BIS_Coin_categories_0"];
 
 //NV State
-_nvgstate = if (daytime > 18.5 || daytime < 5.5) then {2} else {4};
+_nvgstate = if ( sunOrMoon < 0.5 ) then {2} else {4};
 if (_nvgstate == 2) then 
 {
 	camusenvg true;
-	((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "N/V";
+	[] spawn { 
+				((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "N/V";
+				sleep 1.5;
+				((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "";
+			};
 }
 else
 {
-	((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "Normal";
+	[] spawn { 
+				((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "Normal";
+				sleep 1.5;
+				((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "";
+			};
 }; 
 _logic setvariable ["MCC_3D_nvg",_nvgstate];
 
@@ -209,21 +217,33 @@ MCC_3D_CAM_Handler =
 					{
 						playSound "nvSound";
 						true setCamUseTi _NVGstate; 
-						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "WHOT";
+						[] spawn { 
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "WHOT";
+									sleep 3;
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "";
+								};
 					};
 				
 				case 1:		//BHOT
 					{
 						playSound "nvSound";
 						true setCamUseTi _NVGstate; 
-						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "BHOT";
+						[] spawn { 
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "BHOT";
+									sleep 3;
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "";
+								};
 					};	
 				
 				case 2:		//RHOT
 					{
 						playSound "nvSound";
 						true setCamUseTi 7; 
-						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "THERMAL";
+						[] spawn { 
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "THERMAL";
+									sleep 3;
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "";
+								};						
 					};
 					
 				case 3:		//NV			
@@ -231,7 +251,11 @@ MCC_3D_CAM_Handler =
 						playSound "nvSound";
 						false setCamUseTi _NVGstate; 
 						camusenvg true;
-						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "N/V";
+						[] spawn { 
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "N/V";
+									sleep 3;
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "";
+								};
 					}; 
 					
 				case 4:		//Normal			
@@ -239,7 +263,11 @@ MCC_3D_CAM_Handler =
 						playSound "nvSound";
 						false setCamUseTi _NVGstate; 
 						camusenvg false;
-						((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "Normal";
+						[] spawn { 
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "Normal";
+									sleep 1.5;
+									((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "";
+								};
 					};
 			};
 		};

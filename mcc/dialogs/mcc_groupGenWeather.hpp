@@ -123,7 +123,7 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 		//----- Buttons ---------------------------------------------
 		class MCC_weatherDialogConfirm: MCC_RscButton
 		{
-			idc = 15;
+			idc = 8;
 			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\pop_menu\mission_settings.sqf'");
 			text = "Confirm"; //--- ToDo: Localize;
 			
@@ -134,7 +134,7 @@ class MCC_WeatherDialogControls:MCC_RscControlsGroup
 		};
 		class MCC_weatherDialogClose: MCC_RscButtonMenu
 		{
-			idc = 16;
+			idc = 9;
 			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 501) ctrlShow false;((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 9000) ctrlShow true;((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 9001) ctrlShow true;((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 9002) ctrlShow true;";
 			text = "Close"; //--- ToDo: Localize;
 			
