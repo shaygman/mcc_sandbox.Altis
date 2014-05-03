@@ -297,8 +297,7 @@ class mcc_groupGen
 			text = "Ghost Mode"; 
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			tooltip = "Make the mission maker invisible to enemies"; 
-			onButtonClick = "if (mcc_missionmaker == (name player)) then{if (captive player) then {player setcaptive false; [['Mission maker is no longer cheating'],'MCC_fnc_globalHint',true,false] call BIS_fnc_MP;} else {player setcaptive true; [['Mission maker is cheating'],'MCC_fnc_globalHint',true,false] spawn BIS_fnc_MP;}} else {player globalchat 'Access Denied'};";
-			
+			onButtonClick = "if (mcc_missionmaker == (name player)) then {if (captive player) then {player setcaptive false;if (MCC_Chat) then {[['Mission maker is no longer cheating'],'MCC_fnc_globalHint',true,false] call BIS_fnc_MP;};} else {player setcaptive true; if (MCC_Chat) then {[['Mission maker is cheating'],'MCC_fnc_globalHint',true,false] spawn BIS_fnc_MP;}};} else {player globalchat 'Access Denied'};";			
 			x = 0.448438 * safezoneW + safezoneX;
 			y = 0.0491758 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;

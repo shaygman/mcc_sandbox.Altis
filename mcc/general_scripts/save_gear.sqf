@@ -35,7 +35,11 @@ if (!isnil "mcc_actionInedx") then
 WaitUntil {alive player};
 
 if (isnil ("MCC_TRAINING")) then {deleteVehicle _unit};
-MCC_curator addCuratorEditableObjects [[player],false];
+
+// MCC_curator addCuratorEditableObjects [[player],false];
+// -> wrong format while command needs to be run on server only - is this needed anyway? Is it possible to edit player objects?
+// seems to work without this
+//[(compile format ["MCC_curator addCuratorEditableObjects [[%1],false];", name player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 
 if (MCC_saveGear) then 
 {
@@ -148,8 +152,11 @@ if (player getvariable ["MCC_allowed",false]) then
 {
 	mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 };
-	
-_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
+
+if !( MCC_Lite ) then 
+{	
+	_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
+};
 
 if (CP_activated) exitWith 
 {
