@@ -17,7 +17,7 @@ if (_type==0) exitWith
 	{
 		_fogLevel = (MCC_fog_array select (lbCurSel 11)) select 1;		//Set fog		
 		_mccFog = [];
-		_mccFog = [_fogLevel select 0, _fogLevel select 1, 0];
+		_mccFog = [_fogLevel select 0, _fogLevel select 1, _fogLevel select 2];
 		_weather set [5, _mccFog];
 	};
 	
