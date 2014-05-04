@@ -36,10 +36,7 @@ WaitUntil {alive player};
 
 if (isnil ("MCC_TRAINING")) then {deleteVehicle _unit};
 
-// MCC_curator addCuratorEditableObjects [[player],false];
-// -> wrong format while command needs to be run on server only - is this needed anyway? Is it possible to edit player objects?
-// seems to work without this
-//[(compile format ["MCC_curator addCuratorEditableObjects [[%1],false];", name player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
+_null = [(compile format ["MCC_curator addCuratorEditableObjects [[%1],false];", name player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 
 if (MCC_saveGear) then 
 {
