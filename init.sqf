@@ -1036,7 +1036,7 @@ if ( !(isDedicated) && !(MCC_isLocalHC) ) then
 	//Save gear EH
 	_null = player addEventHandler ["killed",{player execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];
 	//Curator
-	_null = [compile format ["MCC_curator addCuratorEditableObjects [[%1],false]", name player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
+	_null = [compile format ["MCC_curator addCuratorEditableObjects [[%1],false]", player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 
 	//Lets create our MCC subject in the diary
 	_index = player createDiarySubject ["MCCZones","MCC Zones"];
