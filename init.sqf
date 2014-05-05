@@ -1036,7 +1036,7 @@ if (isServer || MCC_isLocalHC) then
 				if ((({alive _x} count units _x) == 0) && !(_x getVariable ["MCC_CPGroup",false])) then 
 				{
 					//Before we send him to heaven check if he should be reincarnated
-					if (count(_gaia_respawn)==2) then {	[_gaia_respawn,(_x getVariable  ["MCC_GAIA_RESPAWN",-1]),(_x getVariable  ["MCC_GAIA_CACHE",false])] call fn_uncache_original_group;};					
+					if (count(_gaia_respawn)==2) then {	[_gaia_respawn,(_x getVariable  ["MCC_GAIA_RESPAWN",-1]),(_x getVariable  ["MCC_GAIA_CACHE",false]),(_x getVariable  ["GAIA_zone_intend",[]])] call fn_uncache_original_group;};					
 					
 					//Remove the respawn group content before the group is re-used
 					missionNamespace setVariable ["GAIA_RESPAWN_" + str(_x), nil];

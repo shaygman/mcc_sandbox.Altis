@@ -4,6 +4,7 @@ _sf   			= _this select 0 select 0;
 
 _respawn    = _this select 1;
 _cache			= _this select 2;
+_zoneIntend	= _this select 3;
 
 if (_respawn >=0)  then
 {			
@@ -13,7 +14,7 @@ if (_respawn >=0)  then
 			
 			_group = creategroup (_sf select 2);
 			if (isnull _group) exitwith {};
-			_group  setVariable ["GAIA_zone_intend", (_sf select 3),true];
+			_group  setVariable ["GAIA_zone_intend", _zoneIntend,true];
 			_group  setVariable ["mcc_gaia_cache", _cache];
 			_group  setVariable ["MCC_GAIA_RESPAWN", (_respawn-1)];
 			
