@@ -12,18 +12,22 @@ if (!isnil "MCC_Rain") then {0 setRain MCC_Rain};
 if (!isnil "MCC_Lightnings") then {0 setLightnings MCC_Lightnings};
 if (!isnil "MCC_Fog") then {0 setFog MCC_Fog};
 
-skipTime 1;
-skipTime -1;
-sleep 5;
+sleep 0.5;
 
 if (!isnil "MCC_date") then {setDate MCC_date};
+
 if (!isnil "MCC_sync") then 
 {
 	_ok = [] spawn compile MCC_sync;
 	waituntil {scriptdone _ok};
 };
 
-mcc_sync_status = true; 
+// force weather change
+skipTime -24;
+sleep 2;
 
-sleep 1; 
-skipTime +1;
+// finalyze sync
+mcc_sync_status = true;
+
+sleep 1;
+skipTime 24;

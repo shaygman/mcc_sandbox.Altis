@@ -16,18 +16,23 @@ switch (_type) do
 			  , MCC_path
 			  ];
 			  
-			MCC_Overcast	= (_weather select 0);
-			MCC_WindForce 	= (_weather select 1);
-			MCC_Waves 		= (_weather select 2);
-			MCC_Rain 		= (_weather select 3);
-			MCC_Lightnings	= (_weather select 4);
+			MCC_Overcast	 = (_weather select 0);
+			MCC_WindForce 	 = (_weather select 1);
+			MCC_Waves 		 = (_weather select 2);
+			MCC_Rain 		 = (_weather select 3);
+			MCC_Lightnings	 = (_weather select 4);
+			MCC_Fog 		 = (_weather select 5);
+			MCC_WeatherDelay = (_weather select 6);
 			publicVariable "MCC_Overcast";
 			publicVariable "MCC_WindForce";
 			publicVariable "MCC_Waves";
 			publicVariable "MCC_Rain";
 			publicVariable "MCC_Lightnings";
-			
-			if ((count _weather) > 5) then {MCC_Fog =(_weather select 5);publicVariable "MCC_Fog"};
+			publicVariable "MCC_Fog";
+			publicVariable "MCC_WeatherDelay";
+
+			sleep 0.5;
+
 			[[_weather],"MCC_fnc_setWeather",true,false] spawn BIS_fnc_MP;
 		};
 	
