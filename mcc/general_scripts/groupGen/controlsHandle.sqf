@@ -27,60 +27,23 @@ for "_i" from 500 to 518 step 1 do
 	(_mccdialog displayCtrl _i) ctrlShow false;
 }; 
 
-(_mccdialog displayCtrl 9000) ctrlShow true;
-(_mccdialog displayCtrl 9001) ctrlShow true;
-(_mccdialog displayCtrl 9002) ctrlShow true;
-
 //-------------------------------------------------------------------------------------Weather----------------------------------------------------------------------------------------------
 if (_action == 0) exitWith
 {
-	(_mccdialog displayCtrl 9000) ctrlShow false;
-	(_mccdialog displayCtrl 9001) ctrlShow false;
-	(_mccdialog displayCtrl 9002) ctrlShow false;
-	
-	//createDialog 'MCC_WeatherDialogControls';
 	_control = (_mccdialog displayCtrl 501);
 	_control ctrlShow true;		
-
-	_comboBox = _mccdialog displayCtrl 10;		//fill combobox WEATHER
-	lbClear _comboBox;
-	{
-		_displayname = format ["%1",_x select 0];
-		_comboBox lbAdd _displayname;
-	} foreach MCC_weather_array;
-	_comboBox lbSetCurSel MCC_weather_index;
-
-	_comboBox = _mccdialog displayCtrl 11;		//fill combobox FOG
-	lbClear _comboBox;
-	{
-		_displayname = format ["%1",_x select 0];
-		_comboBox lbAdd _displayname;
-	} foreach MCC_fog_array;
-	_comboBox lbSetCurSel MCC_fog_index;
-
-	_comboBox = _mccdialog displayCtrl 12;		//fill combobox WIND
-	lbClear _comboBox;
-	{
-		_displayname = format ["%1",_x select 0];
-		_comboBox lbAdd _displayname;
-	} foreach MCC_Wind_array;
-	_comboBox lbSetCurSel MCC_Wind_index;
 	
-	_comboBox = _mccdialog displayCtrl 13;		//fill combobox WAVES
-	lbClear _comboBox;
-	{
-		_displayname = format ["%1",_x select 0];
-		_comboBox lbAdd _displayname;
-	} foreach MCC_Waves_array;
-	_comboBox lbSetCurSel MCC_Waves_index;
+	(_mccdialog displayCtrl 10) sliderSetRange [0, 1];
+	(_mccdialog displayCtrl 11) sliderSetRange [0, 1];
+	(_mccdialog displayCtrl 12) sliderSetRange [0, 1];
+	(_mccdialog displayCtrl 13) sliderSetRange [0, 1];
+	(_mccdialog displayCtrl 14) sliderSetRange [0, 1];
 	
-	_comboBox = _mccdialog displayCtrl 14;		//fill combobox FOG
-	lbClear _comboBox;
-	{
-		_displayname = format ["%1",_x select 0];
-		_comboBox lbAdd _displayname;
-	} foreach MCC_ChangeWeather_array;
-	_comboBox lbSetCurSel MCC_ChangeWeather_index;
+	(_mccdialog displayCtrl 10) sliderSetPosition fog;
+	(_mccdialog displayCtrl 11) sliderSetPosition rain;
+	(_mccdialog displayCtrl 12) sliderSetPosition overcast;
+	(_mccdialog displayCtrl 13) sliderSetPosition waves;
+	(_mccdialog displayCtrl 14) sliderSetPosition windStr;
 };
 
 //-------------------------------------------------------------------------------------Time----------------------------------------------------------------------------------------------
@@ -168,8 +131,6 @@ if (_action == 4) exitWith
 	_control = (_mccdialog displayCtrl 500);
 	_control ctrlShow true;
 
-	// Hide "Add" button when MCC Console not available in mission
-	if (MCC_Lite) then { ctrlShow [27, false]; };
 	//--------------------------------------CAS--------------------------------------------------------------------------
 
 	_comboBox = (_mccdialog displayCtrl 25);		//fill combobox CAS Plane Type
@@ -196,8 +157,6 @@ if (_action == 5) exitWith
 	_control = (_mccdialog displayCtrl 505);
 	_control ctrlShow true;
 	
-	// Hide "Add" button when MCC Console not available in mission
-	if (MCC_Lite) then { ctrlShow [27, false]; };
 	//---------------------------------Artillery----------------------------------------------------------------------------
 	_comboBox = (_mccdialog displayCtrl 30);		// Artillery Type
 		lbClear _comboBox;
@@ -708,7 +667,7 @@ if (_action == 15) exitWith
 	#define MCCGRASSDENSITY 1007
 	
 	//----------------------------------------------------------Client Side settings----------------------------------------------------------------------------
-
+	
 	_comboBox = _mccdialog displayCtrl MCCGRASSDENSITY;		//fill combobox Grass
 	lbClear _comboBox;
 	{
@@ -735,9 +694,6 @@ if (_action == 16) exitWith
 	_control = (_mccdialog displayCtrl 517);
 	_control ctrlShow true;
 
-	// Hide "Add" button when MCC Console not available in mission
-	if (MCC_Lite) then { ctrlShow [27, false]; };
-	
 	#define MCC_AIRDROPTYPE 1031
 	#define MCC_airdropArray 1033
 	
@@ -780,4 +736,3 @@ if (_action == 17) exitWith
 
 sleep 1; 
 MCC_GUI1initDone = true; 
-

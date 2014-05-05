@@ -47,13 +47,6 @@ else
 	ctrlsettext [520,"Enable Roles"];
 }; 
 
-// Hide specific buttons in case of MCC Lite
-if (MCC_Lite) then 
-{
-	ctrlShow [520, false]; // Select Role button
-	ctrlShow [620, false]; // AC310 Butotn 
-	ctrlShow [10232, false]; // Give to player button
-};
 //Capture 
 if (!MCC_capture_state) then { ctrlEnable [MCCSTOPCAPTURE,false];};
 
