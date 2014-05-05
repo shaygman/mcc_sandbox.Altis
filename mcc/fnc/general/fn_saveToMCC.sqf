@@ -30,6 +30,7 @@ _curatorObjectives = [];
 } foreach _logics; 
 
 _logics = _logics - _curatorObjectives;
+
 //Sort the arrays
 {
 	if ((((count units group _x) <=1) || (_x in _logics))&& !(_x getVariable ["mccIgnore",false])) then
@@ -146,8 +147,6 @@ if (count _curatorObjectives > 0) then
 			MCC_output = MCC_output + ",";
 		};
 	} foreach _curatorObjectives;
-	
-
 };
 
 MCC_output = MCC_output + "],[";
@@ -283,16 +282,6 @@ if ((count _arrayVehicles) > 0) then
 			MCC_output = MCC_output + format ["%1",_tempArray];
 		};
 		
-		if (_type == "ModuleSound_F") then
-		{
-			_tempArray set [4, _init + format [";_this setVariable ['RscAttributeSound','%1'];" ,_object getvariable ["RscAttributeSound",""]]];
-		}; 
-		
-		if (_type == "ModulePostprocess_F") then
-		{
-			_tempArray set [4, _init + format [";_this setVariable ['RscAttributeSound','%1'];" ,_object getvariable ["RscAttributeSound",""]]];
-		};
-
 		if (_foreachIndex < (count _arrayVehicles)-1) then
 		{
 			MCC_output = MCC_output + ",";
@@ -301,7 +290,21 @@ if ((count _arrayVehicles) > 0) then
 	} forEach _arrayVehicles;
 };
 
-MCC_output = MCC_output + "]];";
+MCC_output = MCC_output + "]";
+
+//Save Weather
+MCC_output = MCC_output + ",";
+_tempArray = [overcast, windStr, waves, rain, lightnings, fog];
+MCC_output = MCC_output + format ["%1",_tempArray];
+
+//Save Time
+MCC_output = MCC_output + ",";
+_tempArray = [Date select 0, Date select 1, Date select 2, Date select 3, Date select 4, missionnamespace getvariable ["bis_fnc_moduleMissionName_name",""]];
+MCC_output = MCC_output + format ["%1",_tempArray];
+			
+//End File
+MCC_output = MCC_output + "];";	
+
 
 copyToClipboard MCC_output;
 player sidechat "Objects saved";
@@ -400,22 +403,7 @@ if (count allMapMarkers > 0) then
 
 
 
-/*
-MCC_output = MCC_output 
-	+ format ["MCC_Overcast = %1",overcast]	
-	+ format ["MCC_WindForce = %1",windStr]	
-	+ format ["MCC_Waves = %1",windStr]	
-	+ format ["MCC_Rain = %1",rain]	
-	+ format ["MCC_Lightnings = %1",lightnings]	
-	+ format ["MCC_Fog = %1",fog]	
-	+		  "publicVariable 'MCC_Overcast'"
-	+		  "publicVariable 'MCC_WindForce'"
-	+		  "publicVariable 'MCC_Waves'"
-	+		  "publicVariable 'MCC_Rain'"
-	+		  "publicVariable 'MCC_Lightnings'"
-	+		  "publicVariable 'MCC_Fog'"
-	+		  "[[MCC_Overcast,MCC_WindForce,MCC_Waves,MCC_Rain,MCC_Lightnings,MCC_Fog],'MCC_fnc_setWeather',true,false] spawn BIS_fnc_MP;";
-*/	
+	
 				  
 
     

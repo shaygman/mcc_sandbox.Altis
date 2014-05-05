@@ -325,6 +325,7 @@ if (_action ==4) exitWIth
 			MCC_customGroupsSave set [(call compile (_comboBox lbData (lbCurSel UNIT_CLASS))),-1];
 			MCC_customGroupsSave = MCC_customGroupsSave - [-1];
 			profileNamespace setVariable ["MCC_customGroupsSave", MCC_customGroupsSave];
+			saveProfileNamespace;
 		};
 		
 		_nul = [0] execVM format ["%1mcc\general_scripts\groupGen\group_change.sqf",MCC_path];

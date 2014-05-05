@@ -370,7 +370,7 @@ MCC_3D_CAM_Handler =
 	if (_mode == "MouseZChanged") then
 		{
 		_key = _input select 1;
-		_gain = if (MCC_smooth3D) then {0.05} else {0.3};
+		_gain = if (MCC_smooth3D) then {0.025} else {0.3};
 		//raise
 		if (_key < 0) then 
 			{
@@ -418,18 +418,18 @@ MCC_3D_CAM_Handler =
 			};
 		if (_key in _keyalt) then 		//Align
 			{
-			if (MCC_align3D) then {
-				MCC_align3D=false;
-				publicVariable "MCC_align3D";
-				MCC_align3DText = "Enabled";
-				mcc_safe = mcc_safe + FORMAT ["MCC_align3D=false;publicVariable 'MCC_align3D';"];
-				} else
-					{
+				if (MCC_align3D) then 
+				{
+					MCC_align3D=false;
+					publicVariable "MCC_align3D";
+					MCC_align3DText = "Enabled";
+				} 
+				else
+				{
 					MCC_align3D=true;
 					publicVariable "MCC_align3D";
 					MCC_align3DText = "Disabled";
-					mcc_safe = mcc_safe + FORMAT ["MCC_align3D=true;publicVariable 'MCC_align3D';"];
-					};
+				};
 			};
 
 		if (_key in _keysShift) then 			//Smooth

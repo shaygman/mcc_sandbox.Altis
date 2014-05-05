@@ -6,16 +6,6 @@ switch (_type) do
 		case 0:	//Set weather
 		{
 			_weather 	= if ((count _this) == 2) then {_this select 1};	
-			
-			mcc_safe=mcc_safe + FORMAT ["													
-			  script_handler = [%1, %2] execVM '%3mcc\general_scripts\time.sqf';
-		      waitUntil {scriptDone script_handler};
-			  "								 
-			  , _type
-			  , _weather
-			  , MCC_path
-			  ];
-			  
 			MCC_Overcast	= (_weather select 0);
 			MCC_WindForce 	= (_weather select 1);
 			MCC_Waves 		= (_weather select 2);
@@ -39,19 +29,6 @@ switch (_type) do
 			_hour = _this select 4; 
 			_minute = _this select 5; 
 			
-			mcc_safe=mcc_safe + FORMAT ["													
-				  script_handler = [%6,%1,%2,%3,%4,%5] execVM '%7mcc\general_scripts\time.sqf';
-				  waitUntil {scriptDone script_handler};
-				  "	
-				  , _month
-				  , _day
-				  , _year
-				  , _hour
-				  , _minute
-				  , _type
-				  , MCC_path
-				  ];
-				  
 			MCC_date=[_year, _month, _day, _hour, _minute];
 			publicVariable "MCC_date";
 			[[MCC_date],"MCC_fnc_setTime",true,false] spawn BIS_fnc_MP;

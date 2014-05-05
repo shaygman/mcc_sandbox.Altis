@@ -42,8 +42,10 @@ if (mcc_missionmaker == (name player)) then {
 
 			MCC_output = 'MCC_savedObjectives = ' + (str((call compile _temp) select 0)) + ';' + _br
 					 +   'MCC_savedGroups = ' + (str((call compile _temp) select 1)) + ';' + _br 
-					  +  'MCC_savedVehicles = ' + (str((call compile _temp) select 2)) + ';' + _br
-					 +   '[[MCC_savedObjectives, MCC_savedGroups, MCC_savedVehicles], "MCC_fnc_loadFromMCC", false, false] spawn BIS_fnc_MP;' + _br;
+					 +   'MCC_savedVehicles = ' + (str((call compile _temp) select 2)) + ';' + _br
+					 +   'MCC_savedWeather = ' + (str((call compile _temp) select 3)) + ';' + _br
+					 +   'MCC_savedTime = ' + (str((call compile _temp) select 4)) + ';' + _br
+					 +   '[[MCC_savedObjectives, MCC_savedGroups, MCC_savedVehicles, MCC_savedWeather, MCC_savedTime], "MCC_fnc_loadFromMCC", false, false] spawn BIS_fnc_MP;' + _br;
 					 
 			MCC_output = MCC_output + mcc_safe;
 			copyToClipboard MCC_output;
@@ -65,11 +67,12 @@ if (mcc_missionmaker == (name player)) then {
 			_temp = [] call MCC_fnc_saveToMCC;
 			
 
-			MCC_output = [((call compile _temp) select 0),((call compile _temp) select 1),((call compile _temp) select 2),mcc_safe];
+			MCC_output = [((call compile _temp) select 0),((call compile _temp) select 1),((call compile _temp) select 2),((call compile _temp) select 3),((call compile _temp) select 4), mcc_safe];
 			
 			MCC_saveFiles set [MCC_saveIndex,[_string,MCC_output]];
 			profileNamespace setVariable ["MCC_save", MCC_saveNames];
 			profileNamespace setVariable ["MCC_saveFiles", MCC_saveFiles];
+			saveProfileNamespace;
 			hint "Saved MCC Mission configuration.";
 			
 			_comboBox = _mccdialog displayCtrl MCC_SAVE_LIST; 
@@ -99,14 +102,14 @@ if (mcc_missionmaker == (name player)) then {
 		case 4: //Load MCC Mission config code to uinamespace
 		{
 			_array = (((profileNamespace getVariable "MCC_saveFiles") select MCC_saveIndex) select 1);
-			_string = _array select 3; 
+			_string = _array select 5; 
 			//Do we have saved objects?
-			if ((count (_array select 0))>0 || (count (_array select 1))>0 || (count (_array select 2))>0 || _string != "") then
+			if ((count (_array select 0))>0 || (count (_array select 1))>0 || (count (_array select 2))>0 || (count (_array select 3))>0 || (count (_array select 4))>0 || _string != "") then
 			{
 				sleep 0.5;
 				closeDialog 0;
 				sleep 0.3;
-				[[_array select 0, _array select 1, _array select 2], "MCC_fnc_loadFromMCC", false, false] spawn BIS_fnc_MP;
+				[[_array select 0, _array select 1, _array select 2, _array select 3, _array select 4], "MCC_fnc_loadFromMCC", false, false] spawn BIS_fnc_MP;
 				_command = 'mcc_isloading=true;closedialog 0;titleText ["Loading Mission","BLACK FADED",5];' + _string + 'mcc_isloading=false;titleText ["Mission Loaded","BLACK IN",5];'; 
 
 			[] spawn compile _command;

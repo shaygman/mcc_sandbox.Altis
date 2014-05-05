@@ -19,7 +19,7 @@ Engine:
 
 Zeus:
 - Added: Save Zeus Objectives (persistence - will save the task status when pressed saved) .
-- Added: Save Zeus modules: Animals.
+- Added: Save Zeus modules: Animals, Chem Lights, Effects, Environment, Objectives, Respawn, Scenario Name, Smoke Shells.
 
 GAIA:
 - Added: Respawns. It can now be set on GAIA groups (caching friendly) the group will respawn for number of times after all it's group members has been killed. (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
@@ -49,6 +49,7 @@ Spectator:
 
 Misc:
 - Added: In Unit Managment realistic paradrop (runing up the ramp exc). 
+- Updated: 3D editor smooth place smoothen by half :)
 - Fixed: Mission version and template missions revive for JIP. 
 
 

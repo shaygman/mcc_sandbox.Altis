@@ -14,7 +14,7 @@ private ["_weather"];
 _weather = _this select 0;
 
 skipTime -24;
-86400 setOvercast	(_weather select 0);
+86400 setOvercast (_weather select 0);
 skipTime 24;
 
 if ((count _weather) > 1) then {0 setWindForce 	(_weather select 1)};

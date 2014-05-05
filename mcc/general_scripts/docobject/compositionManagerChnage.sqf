@@ -38,6 +38,7 @@ switch (_type) do
 			MCC_3DCompSaveFiles set [_saveIndex,_string];
 			profileNamespace setVariable ["MCC_3DCompSaveNames", MCC_3DCompSaveNames];
 			profileNamespace setVariable ["MCC_3DCompSaveFiles", MCC_3DCompSaveFiles];
+			saveProfileNamespace;
 			hint "Saved MCC Composition.";
 			
 			_comboBox = _mccdialog displayCtrl MCC_3DCompssaveListIDC; 
