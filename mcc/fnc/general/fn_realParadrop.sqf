@@ -29,7 +29,7 @@ if (_UMUnit==0) then
 {
 	{
 		_unitsArray set [count _unitsArray,_x];
-		if ((count _unitsArray) mod 12 == 0) then 
+		if (count _unitsArray >= 12) then 
 		{
 			_chockArray set [count _chockArray, _unitsArray];
 			_unitsArray	= [];
@@ -41,7 +41,7 @@ else
 	{
 		{
 			_unitsArray set [count _unitsArray,_x];
-			if ((count _unitsArray) mod 12 == 0) then 
+			if (count _unitsArray >= 12) then 
 			{
 				_chockArray set [count _chockArray, _unitsArray];
 				_unitsArray	= [];
@@ -50,12 +50,16 @@ else
 	} foreach _units;
 };
 
-if (count _chockArray == 0) then {_chockArray = [_unitsArray]};
+//Add the last chock even if it isn't full
+_chockArray set [count _chockArray, _unitsArray];
 
+private "_safepos";
 {
 	_unitsArray = _x; 
-
-	_plane = ["I_Heli_Transport_02_F", _spawn, _pos, _flightHight, true] call MCC_fnc_createPlane;		//Spawn plane 1 
+	
+	_safepos  =[_spawn ,1,200,2,1,10,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;						
+	_plane = ["I_Heli_Transport_02_F", _safepos, _pos, _flightHight, true] call MCC_fnc_createPlane;		//Spawn plane 1 
+	
 	_pilot = driver _plane;
 
 	if (side (_units select 0)  == east) then 
@@ -84,7 +88,7 @@ if (count _chockArray == 0) then {_chockArray = [_unitsArray]};
 	for [{_x=0},{_x < count _unitsArray},{_x=_x+1}] do 
 	{
 		_unit = _unitsArray select _x;
-		[[_plane, _unit,_count, _pos], "MCC_fnc_realParadropPlayer", _unit] spawn BIS_fnc_MP;
+		[[_plane, _unit,_count], "MCC_fnc_realParadropPlayer", _unit] spawn BIS_fnc_MP;
 		_count = _count + 1;
 	};
 

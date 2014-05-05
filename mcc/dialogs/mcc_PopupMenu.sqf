@@ -6,7 +6,7 @@ if (isnil "_key") then {_key = []};
 
 if (count _key > 4) exitWith
 {
-	if (((_key  select 4) in actionKeys "User2") && (player getVariable ['MCC_allowed',false])) then 
+	if (((_key select 4) in actionKeys "User2") && (player getVariable ['MCC_allowed',false])) exitWith 
 	{
 		if (str findDisplay 2994 != "No display") then 
 		{
@@ -18,6 +18,18 @@ if (count _key > 4) exitWith
 			_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
 		};
 	};  
+	
+	if ((_key select 4) in actionKeys "User3") exitWith 
+	{
+		if (dialog) then 
+		{
+			closeDialog 0;
+		}
+		else
+		{
+			_null = [nil,nil,nil,[0]] execVM  format ["%1mcc\general_scripts\console\conoleOpenMenu.sqf",MCC_path];
+		};
+	}; 
 };
 
 

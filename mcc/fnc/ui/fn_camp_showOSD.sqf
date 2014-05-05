@@ -150,7 +150,7 @@ if (_showLocation && _tLoc == "auto") then
 	{
 		if (text _x == "") then
 		{
-			locations set [_forEachIndex, objNull];
+			_locations set [_forEachIndex, objNull];
 		};
 	}
 	forEach _locations; _locations = _locations - [objNull];

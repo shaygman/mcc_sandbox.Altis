@@ -17,6 +17,10 @@ Engine:
 - Fixed: Floating rocks issue.
 - Fixed: Could not take control of same side UAV/UGV with MCC handheld console unless mission maker allowed it. 
 
+Zeus:
+- Added: Save Zeus Objectives (persistence - will save the task status when pressed saved) .
+- Added: Save Zeus modules: Animals.
+
 GAIA:
 - Added: Respawns. It can now be set on GAIA groups (caching friendly) the group will respawn for number of times after all it's group members has been killed. (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
 
@@ -31,6 +35,7 @@ Cargo (Box Gen)
 UI:
 - Added: "Are you sure?" dialogs to mission's end buttons. 
 - Added: Open or close MCC with the Custom user "action key 2". 
+- Added: Open or close MCC handheld console with the Custom user "action key 3". 
 - Added: Towns names and map markers in 3D editor. 
 - Fixed: 3D icons size will be depending on the distance from the camera. 
 
@@ -47,7 +52,6 @@ Misc:
 - Fixed: Mission version and template missions revive for JIP. 
 
 
-TODO IED DISBALE
 TASK LIST
 
 Change log r3

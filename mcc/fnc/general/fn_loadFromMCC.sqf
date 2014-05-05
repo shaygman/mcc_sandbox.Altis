@@ -6,15 +6,16 @@
 // Returns:
 //     <Nothing>
 //==============================================================================================================================================================================	
- private ["_arrayGroups","_arrayVehicles","_objectData","_side","_array","_pos","_newString","_finalString","_isKindofUnit","_vehicle","_unitData"];
+ private ["_arrayGroups","_arrayVehicles","_objectData","_side","_array","_pos","_newString","_finalString","_isKindofUnit","_vehicle","_unitData",
+          "_allCuratorObjectives","_class","_group","_indecator","_tempArray"];
 
- _input = _this;
-_arrayGroups 	= _input select 0;
-_arrayVehicles 	= _input select 1;
+ _input 				= _this;
+_allCuratorObjectives 	= _input select 0;
+_arrayGroups 			= _input select 1;
+_arrayVehicles 			= _input select 2;
+
 
 //Groups
-private ["_group","_indecator","_tempArray"]; 
-
 if (count _arrayGroups > 0) then 
 {
 	{		
@@ -119,16 +120,17 @@ if ((count _arrayVehicles) > 0) then
 	{
 		_objectData = _x;
 		_side 	= _objectData select 0;
-		_pos = _objectData select 2;
+		_class	= _objectData select 1;
+		_pos	= _objectData select 2;
 		_group = createGroup sidelogic;
 		
 		if (tolower _side == "empty") then
 		{
-			_vehicle = createvehicle [(_objectData select 1),_pos,[],0,"none"]; 
+			_vehicle = createvehicle [_class,_pos,[],0,"none"]; 
 		}
 		else
 		{
-			_vehicle = _group createUnit [(_objectData select 1), _pos, [], 0, "NONE"];
+			_vehicle = _group createUnit [_class, _pos, [], 0, "NONE"];
 		};	 
 		
 		MCC_curator addCuratorEditableObjects [[_vehicle],false];
@@ -140,10 +142,86 @@ if ((count _arrayVehicles) > 0) then
 			_vehicle setVariable ["vehicleinit",(_objectData select 4),true]; 
 			[[[netID _vehicle,_vehicle], (_objectData select 4)], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 		};
-	
+		
 	} forEach _arrayVehicles;
 }; 
-  
+ 
+if ((count _allCuratorObjectives) > 0) then
+{
+	
+	{ 
+		private ["_sector","_areas","_size","_trigger","_attachedUnit"]; 
+		_objectData = _x;
+		_pos = _objectData select 1;
+		_class = _objectData select 0; 
+		_side = [_objectData select 3, "CIV", "civilian"] call MCC_fnc_replaceString;
+		_side = [_side, "GUER", "resistance"] call MCC_fnc_replaceString; 
+		_group = createGroup sidelogic;
+				
+		switch (true) do
+		{
+			case (_class in ["ModuleObjectiveAttackDefend_F","ModuleObjectiveSector_F"]): 
+			{
+				_vehicle =  _group createunit [_class, _pos,[],0.5,"NONE"]; 
+				_vehicle setvariable ["name", _objectData select 2];
+				
+				if (_class == "ModuleObjectiveAttackDefend_F") then 
+				{
+					_vehicle setvariable ["RscAttributeOwners2", call compile _side];
+				}
+				else
+				{
+					_vehicle setvariable ["RscAttributeOwners", call compile _side];
+				};
+				
+				_vehicle setvariable ["updated",true];
+				sleep 1; 
+				
+				//--- Set desired size
+				_size = _objectData select 4;
+				_sector = _vehicle getvariable ["sector",objnull];
+				_areas = _sector getvariable ["areas",[]];
+				if (count _areas > 0) then 
+				{
+					_trigger = _areas select 0;
+					_trigger settriggerarea [_size,_size,0,false];
+					_trigger setvariable ["pos",[0,0,0],true];
+					_sector setvariable ["size",_size,true];
+				};
+				_vehicle setvariable ["updated",false];
+			};
+			
+			case ("ModuleObjective_F"): 
+			{
+				_attachedUnit = _objectData select 2;
+				if (typeName (_attachedUnit) == "STRING" ) then {while {isnil _attachedUnit} do {sleep 0.2}};
+
+				_vehicle =  _group createunit ["ModuleObjective_F", _pos,[],0.5,"NONE"]; 
+				_vehicle setvariable ["RscAttributeOwners",call compile _side]; 
+				if (typeName _attachedUnit == "STRING" ) then {_vehicle setvariable ["bis_fnc_curatorAttachObject_object",call compile _attachedUnit]};
+				
+				_vehicle setvariable ["RscAttributeTaskState",_objectData select 4];
+				_vehicle setvariable ["RscAttributeTaskDestination",_objectData select 5];
+				[_vehicle,"RscAttributeTaskDescription",_objectData select 6] call bis_fnc_setServerVariable;
+			};
+			
+			case (_class in ["ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"]): 
+			{
+				_attachedUnit = _objectData select 2;
+				if (typeName (_attachedUnit) == "STRING" ) then {while {isnil _attachedUnit} do {sleep 0.2}};
+
+				_vehicle =  _group createunit [_class, _pos,[],0.5,"NONE"]; 
+				_vehicle setvariable ["RscAttributeOwners",call compile _side]; 
+				if (typeName _attachedUnit == "STRING" ) then {_vehicle setvariable ["bis_fnc_curatorAttachObject_object",call compile _attachedUnit]};
+				[_vehicle,"RscAttributeTaskDescription",_objectData select 4] call bis_fnc_setServerVariable;
+			};
+		};
+		
+		MCC_curator addCuratorEditableObjects [[_vehicle],false]; 
+		_vehicle setvariable ["updated",true];
+		
+	} foreach _allCuratorObjectives;
+};
  //[_side, typeof _objectData, _pos, getDir _objectData, _objectData getvariable ["vehicleinit",""]];
 
     

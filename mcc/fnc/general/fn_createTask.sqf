@@ -14,10 +14,13 @@ _preTask		= _this select 5;
 
 if (!isServer) exitWith {}; 
 
+[[0, _name, _desc, _pos, _side],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+
 if (_preTask != 0) then 
 {
 	while {!(taskCompleted ((MCC_tasks select (_preTask-1)) select 1))} do {sleep 5};
 };
 
 [[_action, _name, _desc, _pos, _side],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;
+
 

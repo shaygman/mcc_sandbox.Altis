@@ -40,8 +40,10 @@ if (_type == 0) then {											//Opening the conole
 				};
 			player playMove _stance;
 		};
-	if (MCC_CASConsoleFirstTime) then	{
-		while {_time > time && dialog} do {
+	if (MCC_CASConsoleFirstTime) then	
+	{
+		while {_time > time && dialog} do 
+		{
 			_message = "";
 			_messageFinal = ["S","e","a","r","c","h","i","n","g"," ","S","a","t","e","l","l","i","t","e","s",".",".",".",".","."];
 			for "_i" from 0 to (count _messageFinal - 1) do {
@@ -53,12 +55,15 @@ if (_type == 0) then {											//Opening the conole
 		MCC_CASConsoleFirstTime = false; 
 	};
 
-	if (dialog) then {
-		_time = time + 3; 
-		while {_time > time && dialog} do {
+	if (dialog) then 
+	{
+		_time = time + random 1; 
+		while {_time > time && dialog} do 
+		{
 			_message = "";
 			_messageFinal = ["C","o","n","n","e","c","t","i","n","g",".",".",".",".","."];
-			for "_i" from 0 to (count _messageFinal - 1) do {
+			for "_i" from 0 to (count _messageFinal - 1) do 
+			{
 				_message = _message + (_messageFinal select _i);
 				ctrlSetText [9105, _message];
 				sleep 0.05;
@@ -81,7 +86,7 @@ if (_type == 0) then {											//Opening the conole
 	};
 
 if (_type == 1) then {											//Switching to Artillery
-	_time = time + (2 + random 4);
+	_time = time + random 2;
 	while {_time > time && dialog} do {
 		_message = "";
 		_messageFinal = ["C","o","n","n","e","c","t","i","n","g"," ","S","t","e","e","l"," ","R","a","i","n",".",".","."];

@@ -156,7 +156,7 @@ mccPresets = [
 		,['Disable Simulation','_this enableSimulation false;']
 		,['Destroy Object', '_this setdamage 1;']
 		,['Flip Object', '[_this ,0, 90] call bis_fnc_setpitchbank;']
-		,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "VAS\open.sqf"];']
+		,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "'+MCC_path+'VAS\open.sqf"];']
 		,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
 		,['', '']
 		,['======= Effects =======','']
@@ -587,16 +587,6 @@ if ( isServer ) then
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 	
-	//CURATOR
-	_dummy = _dummyGroup createunit ["ModuleCurator_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
-	_name = "MCC_curator";
-	_dummy setvariable ["text","MCC_curator"];
-	_dummy setvariable ["mccIgnore",true];
-	_dummy setvariable ["Addons",2,true];	
-	_dummy setvariable ["vehicleinit","_this setvariable ['Addons',2,true];"];
-	call compile (_name + " = _dummy");
-	publicVariable _name;
-	
 	//west
 	_dummy = _dummyGroup createunit ["SideBLUFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_sideWest";
@@ -618,6 +608,16 @@ if ( isServer ) then
 	_name = "MCC_sideResistance";
 	_dummy setvariable ["text","MCC_sideResistance"];
 	_dummy setvariable ["mccIgnore",true];
+	call compile (_name + " = _dummy");
+	publicVariable _name;
+	
+	//CURATOR
+	_dummy = _dummyGroup createunit ["ModuleCurator_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
+	_name = "MCC_curator";
+	_dummy setvariable ["text","MCC_curator"];
+	_dummy setvariable ["mccIgnore",true];
+	_dummy setvariable ["Addons",2,true];	
+	_dummy setvariable ["vehicleinit","_this setvariable ['Addons',2,true];"];
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 	

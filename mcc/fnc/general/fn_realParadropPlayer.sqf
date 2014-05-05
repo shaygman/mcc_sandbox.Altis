@@ -1,8 +1,7 @@
-private ["_unit","_plane","_positions","_dir","_isHalo","_jumpReady","_unitPosition","_dropPos","_isCargo","_y","_x","_pos","_vehicle","_init","_time","_light"];
+private ["_unit","_plane","_positions","_dir","_isHalo","_jumpReady","_unitPosition","_isCargo","_y","_x","_pos","_vehicle","_init","_time","_light"];
 _plane 		= _this select 0;												//where from
 _unit 		= _this select 1;												//Who is jumping
 _unitNumber	= _this select 2;												//what is his jumper number
-_dropPos	= _this select 3;												//where is the LZ
 _isCargo	= false; 
 
 _positions 	= [[-0.5,-2.5,-2.23],[0.5,-2.5,-2.23],[-0.5,-1,-2.23],[0.5,-1,-2.23],[-0.5,0.5,-2.23],[0.5,0.5,-2.23],
@@ -17,21 +16,27 @@ sleep .1;
 
 if (isNull _unit) exitwith {};
 
-if (!local _unit) exitwith {};
+if (!local _unit || !alive _plane) exitwith {};
 
 if (isplayer _unit) then
 {
 	titleText ["","BLACK FADED",5];	
 };
 
+if ((vehicle _unit != _unit) && (vehicle _unit != _plane)) then {unassignVehicle _unit; sleep 0.5;}; 
+_unit assignAsCargo _plane;
+_unit moveInCargo _plane;
+		
+/*		
 while {!_isCargo && (alive _plane)} do
 {
-		if (vehicle _unit != _unit) then {unassignVehicle _unit}; 
-		_unit MoveInCargo [_plane,_unitNumber];
-		_unit assignAsCargoIndex [_plane,_unitNumber];
-		sleep 1;
-		if (vehicle _unit == _plane) then {_isCargo = true};
+	if ((vehicle _unit != _unit) && (vehicle _unit != _plane)) then {unassignVehicle _unit; sleep 0.5;}; 
+	_unit assignAsCargo _plane;
+	_unit MoveInCargo _plane;
+	sleep 1;
+	if (vehicle _unit == _plane) then {_isCargo = true};
 };
+*/
 
 sleep 5;
 
@@ -97,10 +102,22 @@ if (isplayer _unit) then
 
 _unit allowdamage false; 		
 _unit enablesimulation false;
-_unit action ["getout",vehicle _unit];
-unassignVehicle _unit;
-waituntil {vehicle _unit == _unit};
-sleep 0.5;
+
+while {vehicle _unit != _unit} do 
+{
+	unassignVehicle _unit;
+	_unit action ["EJECT",vehicle _unit];	
+	/*				
+	[_unit] orderGetIn false;
+	_unit leaveVehicle vehicle _unit;
+	sleep 0.2;
+	unassignVehicle _unit;
+	sleep 0.2;
+	_unit action ["getout",vehicle _unit];
+	*/
+	sleep 0.2;
+};
+
 _unit setPos [(getPos _unit)select 0,(getPos _unit)select 1,1000];
 
 _unit switchMove "";
@@ -122,6 +139,7 @@ if ((primaryWeapon _unit) != "") then
 if (!isPlayer _unit) then	
 {
 	_unit disableAI "MOVE"; 
+	_unit disableAI "FSM"; 
 };
 
 sleep 1;
@@ -181,6 +199,7 @@ _dir = getdir _unit;
 if (!isPlayer _unit) then	
 {
 	_unit enableAI "MOVE"; 
+	_unit enableAI "FSM"; 
 	_unit playmoveNow "HaloFreeFall_non";
 };
 

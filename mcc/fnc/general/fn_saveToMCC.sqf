@@ -6,7 +6,8 @@
 // Returns:
 //     <Nothing>
 //==============================================================================================================================================================================	
- private ["_arrayGroups","_triggersArray","_allItems","_arrayVehicles","_object","_side","_array","_pos","_newString","_finalString","_checkedGroups","_isKindofUnit","_allGroupsOutput"];
+ private ["_arrayGroups","_triggersArray","_allItems","_arrayVehicles","_object","_side","_array","_pos","_newString","_finalString","_checkedGroups","_isKindofUnit","_allGroupsOutput",
+		  "_curatorObjectives","_allCuratorObjectives","_logics","_init"];
  
 _checkedGroups	= []; 
 _arrayGroups 	= [];
@@ -17,12 +18,24 @@ _triggersArray 	= MCC_triggers;
 _allGroupsOutput = []; 
 _allVehiclesOutput = [];
 MCC_output = ""; 
+_logics = allMissionObjects "logic"; 
 
+//Curator objectives
+_curatorObjectives = [];
+{
+	if (typeOf _x in ["ModuleObjectiveAttackDefend_F","ModuleObjectiveSector_F","ModuleObjective_F","ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"]) then
+	{
+		_curatorObjectives set [count _curatorObjectives, _x]; 
+	};
+} foreach _logics; 
+
+_logics = _logics - _curatorObjectives;
 //Sort the arrays
 {
-	if (((count units group _x) <=1) && !(_x getVariable ["mccIgnore",false])) then
+	if ((((count units group _x) <=1) || (_x in _logics))&& !(_x getVariable ["mccIgnore",false])) then
 	{
 		_isKindofUnit = if ((_x isKindOf "CAManBase") || (_x isKindOf "car") || (_x isKindOf "tank") || (_x isKindOf "air") || (_x isKindOf "StaticWeapon") || (_x isKindOf "ship")) then {true} else {false};
+		
 		switch (true) do
 		{
 			case (_isKindofUnit)     	: 
@@ -47,12 +60,25 @@ MCC_output = "";
 				};
 			};
 			
-			default 					  		{_arrayVehicles set [count _arrayVehicles, [_x,"EMPTY"]]};	//Others
+			//Logic
+			case (_x in _logics)  		: 
+			{
+				_arrayVehicles set [count _arrayVehicles, [_x,"LOGIC"]];
+			};
+			
+			//Others
+			default 
+			{
+				if !(typeOf _x in ["ModuleObjectiveAttackDefend_F","ModuleObjectiveSector_F","ModuleObjective_F","ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"]) then
+				{
+					_arrayVehicles set [count _arrayVehicles, [_x,"EMPTY"]];
+				};
+			};	
 		};
 	}
 	else
 	{
-		if (!(group _x in _checkedGroups) && !(_x getVariable ["mccIgnore",false]) && (alive _x)) then
+		if (!(group _x in _checkedGroups) && !(_x getVariable ["mccIgnore",false]) && (alive _x) && !(typeOf _x in ["ModuleObjectiveAttackDefend_F","ModuleObjectiveSector_F","ModuleObjective_F","ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"])) then
 		{
 			_arrayGroups set [count _arrayGroups, [group _x,toupper (format ["%1",side _x])]];
 			_checkedGroups set [count _checkedGroups, group _x]; 
@@ -60,11 +86,75 @@ MCC_output = "";
 	};
 } foreach _allItems;
 
- 
+
+//Objectives
+MCC_output = MCC_output + "[[";
+
+if (count _curatorObjectives > 0) then
+{
+	private ["_attachedUnitInit","_attachedUnit","_newName","_class"];
+	_allCuratorObjectives = [];
+	_tempArray =[];
+	
+	{
+		_class = typeOf _x;
+		
+		if (_class in ["ModuleObjective_F","ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"]) then
+		{
+			_attachedUnit = _x getvariable ["bis_fnc_curatorAttachObject_object",objnull];
+				
+				if (!isnull _attachedUnit) then
+				{
+					_attachedUnitInit = _attachedUnit getvariable ["vehicleinit",""]; 
+					_newName = format ["MCC_objectUnits_%1", ["MCC_objectUnitsCounter",1] call bis_fnc_counter];
+					_init = format [";%1 = _this;", _newName];
+					_attachedUnit setVariable ["vehicleinit",_attachedUnitInit + _init]; 
+				}
+				else
+				{
+					_newName = -1; 
+				};
+		};
+		
+		switch (true) do
+		{
+			case (_class in ["ModuleObjectiveAttackDefend_F"]): 
+			{
+				_tempArray = ["ModuleObjectiveAttackDefend_F",getpos _x, _x getVariable ["name",""],str (_x getvariable ["RscAttributeOwners2",[[],[]]]), ((_x getvariable "sector") getvariable "size")];
+			};
+			
+			case (_class in ["ModuleObjectiveSector_F"]): 
+			{
+				_tempArray = ["ModuleObjectiveSector_F",getpos _x, _x getVariable ["name",""],str (_x getvariable ["RscAttributeOwners",[]]), ((_x getvariable "sector") getvariable "size")];
+			};
+			
+			case (_class in ["ModuleObjective_F"]): 
+			{
+				_tempArray = ["ModuleObjective_F", getpos _x, _newName, str (_x getvariable ["RscAttributeOwners",[]]) ,_x getvariable ["RscAttributeTaskState","created"], _x getvariable ["RscAttributeTaskDestination",0],[_x,"RscAttributeTaskDescription",["","", ""]] call bis_fnc_getServerVariable];
+			};
+			
+			case (_class in ["ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"]): 
+			{
+				_tempArray = [_class, getpos _x,_newName, str (_x getvariable ["RscAttributeOwners",[]]),[_x,"RscAttributeTaskDescription",["","", ""]] call bis_fnc_getServerVariable];
+			};
+		};
+		
+		MCC_output = MCC_output + format ["%1",_tempArray];
+		
+		if (_foreachIndex < (count _curatorObjectives)-1) then
+		{
+			MCC_output = MCC_output + ",";
+		};
+	} foreach _curatorObjectives;
+	
+
+};
+
+MCC_output = MCC_output + "],[";
+
 //Groups
 private ["_group","_blackListVehicles","_refinedGroup","_tempArray","_groupArrayGeneral","_groupArrayUnits"]; 
 
-MCC_output = MCC_output + "[[";
 {
 	_group 	= _x select 0;
 	_side 	= _x select 1;
@@ -183,25 +273,35 @@ if ((count _arrayVehicles) > 0) then
 	{
 		_object = _x select 0;
 		_side 	= _x select 1;
-		_pos = getPos _object;
-		_type = typeof _object;
+		_pos 	= getPos _object;
+		_type 	= typeof _object;
+		_init 	= _object getvariable ["vehicleinit",""];
+		
 		if (!isnil "_type") then
 		{
-			_tempArray = [_side, typeof _object, _pos, getDir _object, _object getvariable ["vehicleinit",""]];
-			_allVehiclesOutput set [count _allVehiclesOutput, _tempArray];
+			_tempArray = [_side, _type, _pos, getDir _object, _init];
 			MCC_output = MCC_output + format ["%1",_tempArray];
 		};
 		
+		if (_type == "ModuleSound_F") then
+		{
+			_tempArray set [4, _init + format [";_this setVariable ['RscAttributeSound','%1'];" ,_object getvariable ["RscAttributeSound",""]]];
+		}; 
+		
+		if (_type == "ModulePostprocess_F") then
+		{
+			_tempArray set [4, _init + format [";_this setVariable ['RscAttributeSound','%1'];" ,_object getvariable ["RscAttributeSound",""]]];
+		};
+
 		if (_foreachIndex < (count _arrayVehicles)-1) then
 		{
-			MCC_output = MCC_output + format [",",_tempArray];
+			MCC_output = MCC_output + ",";
 		};
 	  
 	} forEach _arrayVehicles;
 };
 
-MCC_output = MCC_output 
-	+ "]];";
+MCC_output = MCC_output + "]];";
 
 copyToClipboard MCC_output;
 player sidechat "Objects saved";

@@ -7,6 +7,9 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_c
 disableSerialization;
 _mccdialog = uiNamespace getVariable "MCC3D_Dialog";
 
+if (isnil "Object3D") exitWith {}; 
+if !(Object3D isKindof "CAR" || Object3D isKindof "TANK" || Object3D isKindof "Air" || Object3D isKindof "ReammoBox_F") exitWith {}; 
+
 (_mccdialog displayCtrl 8018) ctrlShow !(ctrlShown (_mccdialog displayCtrl 8018));
 if (ctrlShown (_mccdialog displayCtrl 8018)) then 
 {
@@ -18,11 +21,6 @@ else
 {
 	(_this select 0) ctrlSetText "Cargo -->";
 };
-
-if (!isnil "tempBox") then
-{
-	if (alive tempBox) then {deleteVehicle tempBox};
-}; 
 
 if !(ctrlShown (_mccdialog displayCtrl 8018)) exitWith {};
 
