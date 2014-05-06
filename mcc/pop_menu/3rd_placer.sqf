@@ -47,7 +47,8 @@ startLoadingScreen ["3D Placing","RscDisplayLoadMission"];
 MCC_trackMarkerHandler3D = ((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits; _this call MCC_fnc_mapDrawWP;"];
 
 if (isnil "MCC_3D_CAM") then {
-	_camera = "camconstruct" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
+	_camera = "camCurator" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
+	//_camera = "camconstruct" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
 	_camera cameraeffect ["internal","back"];
 	_camera camPrepareFOV 0.900;
 	_camera campreparefocus [-1,-1];

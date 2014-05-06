@@ -49,7 +49,7 @@ Spectator:
 
 Misc:
 - Added: In Unit Managment realistic paradrop (runing up the ramp exc). 
-- Updated: 3D editor smooth place smoothen by half :)
+- Updated: 3D editor smooth place smoothen by half :) and fixed the 3D placment.
 - Fixed: Mission version and template missions revive for JIP. 
 
 
