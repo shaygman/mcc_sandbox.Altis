@@ -27,11 +27,12 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 			_spread = (_this select 1) select 4;
 			_salvo = _this select 3;
 	
-			if (count MCC_bonCannons > 0) then {
-			[[[netid (MCC_bonCannons select (_cannon-1)),(MCC_bonCannons select (_cannon-1))], 0],"MCC_fnc_broadcast",true,false] spawn BIS_fnc_MP;
+			if (count MCC_bonCannons > 0) then 
+			{
+				[[[netid (MCC_bonCannons select (_cannon-1)),(MCC_bonCannons select (_cannon-1))], 0],"MCC_fnc_broadcast",true,false] spawn BIS_fnc_MP;
 
-			sleep 2;
-			[1, [_cannon,_splashpos]] execVM MCC_path+"mcc\general_scripts\artillery\bon_art.sqf";
+				sleep 2;
+				[1, [_cannon,_splashpos]] execVM MCC_path+"mcc\general_scripts\artillery\bon_art.sqf";
 			};
 			
 			_requestor = _this select 2;
@@ -71,9 +72,10 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 				};
 				
 				_lasertarget = _requestor call arti_func_getLaser;
+				
 				if(_spread < 0 && isNull _lasertarget) exitWith{};
 				if(_spread < 0) then{_splashpos = getPos _lasertarget};
-
+				
 				switch (_artitype) do
 					{
 						case "GrenadeHand":	//HE DPICM

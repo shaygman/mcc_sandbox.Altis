@@ -141,27 +141,36 @@ if !mcc_isloading then
 		
 		case 6:	//Enable CP
 		{ 
-			CP_activated = missionnamespace getVariable ["CP_activated", false];
-			missionnamespace setVariable ["CP_activated", !CP_activated];
-			publicVariable "CP_activated";
-			if (CP_activated) then
+			private "_answer";
+			_answer = ["<t font='TahomaB'>Are you sure you want to enable/disable role selection?</t>","Role Selection",nil,true] call BIS_fnc_guiMessage;	
+			waituntil {!isnil "_answer"};
+			if (_answer) then 
 			{
-				ctrlsettext [520,"Disable Roles"];
-			}
-			else
-			{
-				ctrlsettext [520,"Enable Roles"];
-			};
+				[["everyonelost"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
 			
-			mcc_safe=mcc_safe + format ['
-											missionnamespace setVariable ["CP_activated", %1];
-											publicVariable "CP_activated";
-											_null=[] execVM "%2scripts\player\player_init.sqf";
-										'
-										,CP_activated
-										,CP_path
-										];
-			if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
+				
+				CP_activated = missionnamespace getVariable ["CP_activated", false];
+				missionnamespace setVariable ["CP_activated", !CP_activated];
+				publicVariable "CP_activated";
+				if (CP_activated) then
+				{
+					ctrlsettext [520,"Disable Roles"];
+				}
+				else
+				{
+					ctrlsettext [520,"Enable Roles"];
+				};
+				
+				mcc_safe=mcc_safe + format ['
+												missionnamespace setVariable ["CP_activated", %1];
+												publicVariable "CP_activated";
+												_null=[] execVM "%2scripts\player\player_init.sqf";
+											'
+											,CP_activated
+											,CP_path
+											];
+				if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
+			};
 		};
 		
 		case 7:	//FOB West

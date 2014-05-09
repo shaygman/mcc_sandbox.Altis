@@ -8,6 +8,7 @@ Engine:
 - Update: improved check if zone exists before spawning AI units.
 - Update: Added VAS again with some safty changes so it won't override missions already using VAS. 
 - Fixed: When someone else taking control over MCC and trying to access Zeus he gets a black screen. 
+- Fixed: Added delay for laser target bombs. 
 - Fixed: After loading a mission from MCC creating a new zone will start from 1 again. 
 - Fixed: After HALO jump backpack on pelvis was not removed.
 - Fixed: Player were not assigned to Zeus in dedicated servers. 

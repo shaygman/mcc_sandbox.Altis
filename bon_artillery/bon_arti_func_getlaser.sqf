@@ -20,7 +20,8 @@ _dir = getDir _unit;
 _distance = _threshold * 2;
 _min = _threshold * 2;
 
-for "_i" from 0 to (count _lasertargets - 1) do{
+for "_i" from 0 to (count _lasertargets - 1) do
+{
 	_target = _lasertargets select _i;
 	_targetpos = [getPos _target select 0,getPos _target select 1,0];
 

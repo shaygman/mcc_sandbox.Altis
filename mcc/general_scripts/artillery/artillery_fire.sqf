@@ -29,15 +29,24 @@ switch (_simulate) do
 			    { 
 					_sound = true;
 					_lasertargets = [];
-					for [{_x = 0},{_x < _nshell},{_x = _x+1}] do	{
+					
+					for [{_x = 0},{_x < _nshell},{_x = _x+1}] do	
+					{
 						_lasertargets = nearestObjects[_pos,["LaserTarget"],500]; 
-						if (count _lasertargets == 0) then { 						//No laser target act as normal barage
+						
+						//No laser target act as normal barage
+						if (count _lasertargets == 0) then 
+						{ 						
 							[_pos, _shelltype, _shellspread, 1, _sound] spawn MCC_fnc_artyBomb;
-							};
-						if (!isnull (_lasertargets select 0)) then { 				//Laser target lock on LT
-								_nul=[(_lasertargets select 0), [_pos select 0, _pos select 1, 200],_shelltype,100,true,""] execVM MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf"; 
-								};
-					sleep random 3; 
+						};
+						
+						//Laser target lock on LT
+						if (!isnull (_lasertargets select 0)) then 
+						{ 				
+							_nul=[(_lasertargets select 0), [_pos select 0, _pos select 1, 200],_shelltype,100,true,""] execVM MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf"; 
+						};
+						
+						sleep _delay; 
 					};
 				};
 			};
