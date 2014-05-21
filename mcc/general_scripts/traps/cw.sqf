@@ -4,12 +4,14 @@ _side = _this select 1;
 _rad  = _this select 2;
 _weapon = _this select 3;
 _mag  = _this select 4;
+
 _suspect setvariable ["armed",true,true];
 
 _targ = ["Car","Man"];
 
 // =============================Chase script by Shay_Gman=================
  _check=true;
+
 while {alive _suspect && _check} do 
 	{  
 	sleep 1;

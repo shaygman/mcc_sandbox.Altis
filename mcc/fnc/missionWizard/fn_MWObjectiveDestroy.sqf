@@ -21,94 +21,94 @@ _objType = ["fuel","radio","tanks","aa","artillery","air","cache","radar"] call 
 
 //What do we spawn
 switch _objType do	
+{
+	case "fuel": 
 	{
-		case "fuel": 
-		{
-			_type =  MCC_MWFuelDeop call BIS_fnc_selectRandom;
-		};
-		
-		case "radio": 
-		{
-			_type =  MCC_MWRadio call BIS_fnc_selectRandom;
-		};
-		
-		case "tanks": 
-		{
-			_type =  MCC_MWTanks call BIS_fnc_selectRandom;
-		};
-		
-		case "aa": 
-		{
-			_type = switch _side do	
-					{
-						case west: 
-						{
-							MCC_MWAAB call BIS_fnc_selectRandom;
-						}; 
-						
-						case east: 
-						{
-							MCC_MWAAO call BIS_fnc_selectRandom;
-						}; 
-						
-						case resistance: 
-						{
-							MCC_MWAAI call BIS_fnc_selectRandom;
-						}; 
-						
-						case default 
-						{
-							MCC_MWAAB call BIS_fnc_selectRandom;
-						}; 
-					};
-		};
-		
-		case "artillery": 
-		{
-			_type = switch _side do	
-					{
-						case west: 
-						{
-							MCC_MWArtilleryB call BIS_fnc_selectRandom;
-						}; 
-						
-						case east: 
-						{
-							MCC_MWArtilleryO call BIS_fnc_selectRandom;
-						}; 
-						
-						case resistance: 
-						{
-							MCC_MWArtilleryI call BIS_fnc_selectRandom;
-						}; 
-						
-						case default 
-						{
-							MCC_MWArtilleryB call BIS_fnc_selectRandom;
-						}; 
-					};
-		};
-		
-		case "air": 
-		{
-			_type =  MCC_MWAir call BIS_fnc_selectRandom;
-		};
-		
-		case "cache": 
-		{
-			_type =  MCC_MWcache call BIS_fnc_selectRandom;
-		};
-		
-		case "radar": 
-		{
-			_type =  MCC_MWradar call BIS_fnc_selectRandom;
-		};
-		
-		default 
-		{
-			_type =  MCC_MWFuelDeop call BIS_fnc_selectRandom;
-		};
+		_type =  MCC_MWFuelDeop call BIS_fnc_selectRandom;
 	};
+	
+	case "radio": 
+	{
+		_type =  MCC_MWRadio call BIS_fnc_selectRandom;
+	};
+	
+	case "tanks": 
+	{
+		_type =  MCC_MWTanks call BIS_fnc_selectRandom;
+	};
+	
+	case "aa": 
+	{
+		_type = switch _side do	
+				{
+					case west: 
+					{
+						MCC_MWAAB call BIS_fnc_selectRandom;
+					}; 
+					
+					case east: 
+					{
+						MCC_MWAAO call BIS_fnc_selectRandom;
+					}; 
+					
+					case resistance: 
+					{
+						MCC_MWAAI call BIS_fnc_selectRandom;
+					}; 
+					
+					case default 
+					{
+						MCC_MWAAB call BIS_fnc_selectRandom;
+					}; 
+				};
+	};
+	
+	case "artillery": 
+	{
+		_type = switch _side do	
+				{
+					case west: 
+					{
+						MCC_MWArtilleryB call BIS_fnc_selectRandom;
+					}; 
+					
+					case east: 
+					{
+						MCC_MWArtilleryO call BIS_fnc_selectRandom;
+					}; 
+					
+					case resistance: 
+					{
+						MCC_MWArtilleryI call BIS_fnc_selectRandom;
+					}; 
+					
+					case default 
+					{
+						MCC_MWArtilleryB call BIS_fnc_selectRandom;
+					}; 
+				};
+	};
+	
+	case "air": 
+	{
+		_type =  MCC_MWAir call BIS_fnc_selectRandom;
+	};
+	
+	case "cache": 
+	{
+		_type =  MCC_MWcache call BIS_fnc_selectRandom;
+	};
+	
+	case "radar": 
+	{
+		_type =  MCC_MWradar call BIS_fnc_selectRandom;
+	};
+	
+	default 
+	{
+		_type =  MCC_MWFuelDeop call BIS_fnc_selectRandom;
+	};
+};
 
 //How big is it
 _typeSize = switch _objType do	

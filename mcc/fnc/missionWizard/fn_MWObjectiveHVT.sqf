@@ -35,10 +35,15 @@ MCC_MWcreateHostage =
 		_unit setpos _spawnPos;
 		_unit setpos _spawnPos;
 		removeallweapons _unit; 
-		_init = format ["_this setcaptive true; _this allowFleeing 0;_this disableAI 'MOVE'; removeallweapons _this; _this switchmove 'AmovPercMstpSsurWnonDnon'; _this addaction ['Secure Hostage','%1mcc\general_scripts\hostages\hostage.sqf',[0],6,false,true]; dostop _this;",
-						MCC_path
+		MCC_tempName = format ["MCC_objectUnits_%1", ["MCC_objectUnitsCounter",1] call bis_fnc_counter];
+		
+		_init = format [";%2 = _this;_this setcaptive true; _this allowFleeing 0;_this disableAI 'MOVE'; removeallweapons _this; _this switchmove 'AmovPercMstpSsurWnonDnon'; _this addaction ['Secure Hostage','%1mcc\general_scripts\hostages\hostage.sqf',[0],6,false,true]; dostop _this;"
+						,MCC_path
+						,MCC_tempName
 						];
+
 		[[[netID _unit,_unit], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+		MCC_curator addCuratorEditableObjects [[_unit],false];
 		_unit;
 	};	
 
@@ -66,6 +71,13 @@ if (_isCQB) then
 					_type = _unitsArray call BIS_fnc_selectRandom;	
 					_unit = [_sidePlayer,_spawnPos,_type] call MCC_MWcreateHostage;
 					waituntil {alive _unit}; 
+					
+					MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Secure HVT',%2] call MCC_fnc_MWCreateTask;
+										 "
+										 ,MCC_tempName,
+										 _preciseMarkers
+										 ];
+			
 					[_unit,"Secure HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
 				}
 				else
@@ -80,6 +92,13 @@ if (_isCQB) then
 						};
 					_unit = [_spawnPos, _type, _sidePlayer,"",random 360] call MCC_fnc_ACSingle;
 					waituntil {alive _unit}; 
+					
+					MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Kill HVT',%2] call MCC_fnc_MWCreateTask;
+										 "
+										 ,MCC_tempName,
+										 _preciseMarkers
+										 ];
+			
 					[_unit,"Kill HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
 				};
 					
@@ -110,6 +129,13 @@ if (_isCQB) then
 			
 			//Start Briefings
 			waituntil {alive _unit}; 
+			
+			MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Secure HVT',%2] call MCC_fnc_MWCreateTask;
+										 "
+										 ,MCC_tempName,
+										 _preciseMarkers
+										 ];
+			
 			[_unit,"Secure HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
 			
 			//Static Patrol
@@ -135,6 +161,13 @@ if (_isCQB) then
 			if (_walking) then
 			{
 				_unit = _group createUnit [_type ,_spawnPos,[],0.5,"NONE"];
+				waituntil {alive _unit}; 
+				
+				MCC_tempName = format ["MCC_objectUnits_%1", ["MCC_objectUnitsCounter",1] call bis_fnc_counter];
+				_init = FORMAT [";%1 = _this;",MCC_tempName];
+					
+				[[[netid _unit,_unit], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+
 			}
 			else
 			{
@@ -142,7 +175,12 @@ if (_isCQB) then
 			};
 			
 			//Start Briefings
-			waituntil {alive _unit}; 
+			MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Kill HVT',%2] call MCC_fnc_MWCreateTask;
+											 "
+											 ,MCC_tempName,
+											 _preciseMarkers
+											 ];
+											 
 			[_unit,"Kill HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
 		};
 				
@@ -155,6 +193,7 @@ if (_isCQB) then
 			_spawnPos = (getpos _unit) findEmptyPosition [0,100,(_type select 0)]; 
 			_unit = _group createUnit [_type select 0,_spawnPos,[],0.5,"NONE"];
 			waituntil {alive _unit}; 
+			MCC_curator addCuratorEditableObjects [[_unit],false];
 		};
 		
 		_group setFormDir (round(random 360));

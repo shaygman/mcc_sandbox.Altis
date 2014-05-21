@@ -246,6 +246,11 @@ class CfgFunctions
 			{
 				description = "create a simple task with trigger assigned to a specific object";
 			};
+			
+			class keyToName
+			{
+				description = "get idkKey and return string with his name";
+			};
 		};
 		
 		class ui

@@ -15,6 +15,10 @@
 #define mcc_showGRPMarkerComboIDC 8413
 #define mcc_showMessagesComboIDC 8414
 
+#define MCC_keyBindsOpenMCCButtonIDC 8415
+#define MCC_keyBindsOpenConsoleButtonIDC 8416
+#define MCC_keyBindsT2TButtonIDC 8417
+
 MCC_aiSkillIndex		= (MCC_AI_Skill*10)-1;
 MCC_aiAimIndex			= (MCC_AI_Aim*10)-1;
 MCC_aiSpotIndex			= (MCC_AI_Spot*10)-1;
@@ -134,3 +138,22 @@ _comboBox = _mccdialog displayCtrl mcc_showMessagesComboIDC; //Messages
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
 _comboBox lbSetCurSel MCC_MessagesIndex;
+
+//Show key Binds
+private ["_text","_key","_textKey"];
+
+for [{_x=8415},{_x<=8417},{_x=_x+1}]  do 
+{
+	_key = MCC_keyBinds select (_x-8415);
+
+	_text = "";
+	if (_key select 0) then {_text = "Shift + "}; 
+	if (_key select 1) then {_text = _text + "Ctrl + "}; 
+	if (_key select 2) then {_text = _text + "Alt + "}; 
+	
+	
+	_textKey = 	[(_key select 3)] call MCC_fnc_keyToName;
+	_text = format ["%1%2",_text,_textKey];
+
+	ctrlsettext [_x, _text];
+};

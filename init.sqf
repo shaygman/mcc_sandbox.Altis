@@ -968,6 +968,8 @@ if (!isServer && !(MCC_isLocalHC)) then
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 {
 	waituntil {!(IsNull (findDisplay 46))};
+	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,false,false,nil],[false,false,false,nil],[false,false,false,nil]]];
+	
 	//Opening status radio
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 2) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Medic)',time],true]}"];
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 3) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Medevac)',time],true]}"];
@@ -978,7 +980,8 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 
 	// Teleport to team on Alt + T
 	MCC_teleportToTeam = true;
-	_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1)==20 && (_this select 4)) then {player execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
+	_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1 ==((MCC_keyBinds select 2) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 2) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 2) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 2) select 2))) then {player execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
+	//_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1)==20 && (_this select 4)) then {player execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
 
 	// Add to the action menu
 	if (getplayerUID player in MCC_allowedPlayers || "all" in MCC_allowedPlayers || serverCommandAvailable "#logout" || isServer) then 
@@ -987,7 +990,8 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 		player setvariable ["MCC_allowed",true,true];
 	};
 	
-	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["null = [nil,nil,nil,nil,_this select 1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf';",MCC_path]];
+	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 0) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 0) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 0) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 0) select 2))) then {null = [nil,nil,nil,nil,0] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
+	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 1) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 1) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 1) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 1) select 2))) then {null = [nil,nil,nil,nil,1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 	
 	//Add MCC Console action menu
 	_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];

@@ -109,7 +109,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 							[[[netid (_dummy select 0),(_dummy select 0)], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 						};
 						_init= _init +	FORMAT [";group _this setFormDir %1;",_dir];
-						if (!MCC_align3D) then {_dummy setpos _pos; _init= _init +	FORMAT [";_this setpos %1;",_pos]};
+						if (!MCC_align3D) then {(_dummy select 0) setpos _pos; _init= _init +	FORMAT [";_this setpos %1;",_pos]};
 						[[[netid (_dummy select 0),(_dummy select 0)], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 						
 						//Curator

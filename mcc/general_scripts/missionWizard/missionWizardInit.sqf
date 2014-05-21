@@ -428,7 +428,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 		_objPos = MCC_MWObjectivesNames select 0;
 		
 		//Lets create a zone
-		_zoneNumber =["MCCZoneCounter",1] call bis_fnc_counter; 
+		_zoneNumber = (count MCC_zones_numbers) + 1; 
 		_script_handler = [_zoneNumber,_objPos,_maxObjectivesDistance] call MCC_fnc_MWUpdateZone; 
 		waituntil {_script_handler}; 
 
@@ -564,7 +564,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 private ["_zoneNumber","_unitPlaced","_safepos","_factor"];
 
 //Let'screate the main zone and placing units
-_zoneNumber =["MCCZoneCounter",1] call bis_fnc_counter; 
+_zoneNumber = (count MCC_zones_numbers) + 1;
 
 //Create Zone
 _script_handler = [_zoneNumber,_missionCenter,_maxObjectivesDistance*2.5] call MCC_fnc_MWUpdateZone; 
@@ -803,6 +803,12 @@ _missionName2 = ["Storm","Lightning","Rain","Thunder","Tornado","Hurricane","Flo
                  "Urgency","Snake","Serpent","Famine","Cage","Contempt","Priest","Stranger","Dagger","One","Two","Three","Zero","Arrow"] call BIS_fnc_selectRandom; 
 _night = if ((date select 3)>19 || (date select 3)<6) then {true} else {false}; 
 _factionName = getText (configfile >> "CfgFactionClasses" >> _faction >> "displayName");
+
+//Publish the name
+missionnamespace setvariable ["bis_fnc_moduleMissionName_name",(_missionName1 +" " + _missionName2)];
+publicvariable "bis_fnc_moduleMissionName_name";
+[true,"bis_fnc_moduleMissionName"] call bis_fnc_mp;
+
 //Location
 if ((_center select 1) != "") then
 {

@@ -136,7 +136,7 @@ VM_CheckOriginalSide =
 		_RatingDelta = abs(Rating _unit);
 		_unit addRating _RatingDelta; 
 		_unit setVariable ["KEG_OriginalSide",(side _unit)];
-		_unit addRating -(_RatingDelta);
+		_unit addRating (-(_RatingDelta))+1;
 	};
 	_OriginalSide = _unit getVariable ["KEG_OriginalSide", civilian];
 	

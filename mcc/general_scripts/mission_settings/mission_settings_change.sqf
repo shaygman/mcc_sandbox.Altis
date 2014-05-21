@@ -124,10 +124,7 @@ if !mcc_isloading then
 	{
 		[[2,compile format ["enableEngineArtillery true"]], "MCC_fnc_globalExecute", true, true] spawn BIS_fnc_MP;
 	};
-	
-	
-	
-	
+
 	Hint "Mission Settings Saved";
     closedialog 0;
 };

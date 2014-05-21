@@ -17,6 +17,10 @@
 #define mcc_showGRPMarkerComboIDC 8413
 #define mcc_showMessagesComboIDC 8414
 
+#define MCC_keyBindsOpenMCCButtonIDC 8415
+#define MCC_keyBindsOpenConsoleButtonIDC 8416
+#define MCC_keyBindsT2TButtonIDC 8417
+
 //-----------------------------------------------------------------------------
 // Main dialog
 //-----------------------------------------------------------------------------
@@ -67,6 +71,13 @@ class missionSettings {
 	mcc_showGRPMarkerCombo,
 	mcc_showMessages,
 	mcc_showMessagesCombo,
+	MCC_keyBindstittle,
+	MCC_keyBindsOpenMCCtext,
+	MCC_keyBindsOpenConsoletext,
+	MCC_keyBindsOpenT2Ttext,
+	MCC_keyBindsOpenMCCButton,
+	MCC_keyBindsOpenConsoleButton,
+	MCC_keyBindsT2TButton,
 	confirmButton,
 	CancelButton	
   };
@@ -79,7 +90,7 @@ class missionSettings {
 		x = 0.270833 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.464063 * safezoneW;
-		h = 0.406841 * safezoneH;
+		h = 0.549786 * safezoneH;
 		text = "";
 		colorBackground[] = { 0, 0, 0, 0.6 };
 	};
@@ -370,6 +381,7 @@ class missionSettings {
 		w = 0.108854 * safezoneW;
 		h = 0.0219914 * safezoneH;
 	};
+	
 	class mcc_showMessagesCombo: MCC_RscCombo
 	{
 		idc = mcc_showMessagesComboIDC;
@@ -381,14 +393,98 @@ class missionSettings {
 		tooltip = "Disable/Enable MCC's Messages"; //--- ToDo: Localize;
 	};
 	
+	class MCC_keyBindstittle: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Key Binds:"; //--- ToDo: Localize;
+		x = 0.43125 * safezoneW + safezoneX;
+		y = 0.587966 * safezoneH + safezoneY;
+		w = 0.133125 * safezoneW;
+		h = 0.0299633 * safezoneH;
+		colorText[] = {0,1,1,1};
+		colorBackground[] = {1,1,1,0};
+	};
+	
+	class MCC_keyBindsOpenMCCtext: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Open MCC:"; //--- ToDo: Localize;
+		x = 0.391146 * safezoneW + safezoneX;
+		y = 0.620953 * safezoneH + safezoneY;
+		w = 0.108854 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
+	class MCC_keyBindsOpenConsoletext: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Open MCC Console:"; //--- ToDo: Localize;
+		x = 0.391146 * safezoneW + safezoneX;
+		y = 0.65394 * safezoneH + safezoneY;
+		w = 0.108854 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
+	class MCC_keyBindsOpenT2Ttext: MCC_RscText
+	{
+		idc = -1;
+
+		text = "Teleport to team:"; //--- ToDo: Localize;
+		x = 0.391146 * safezoneW + safezoneX;
+		y = 0.686927 * safezoneH + safezoneY;
+		w = 0.108854 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
+	class MCC_keyBindsOpenMCCButton: MCC_RscButton
+	{
+		idc = MCC_keyBindsOpenMCCButtonIDC;
+		tooltip = "Click to change";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		action =  __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+		x = 0.505729 * safezoneW + safezoneX;
+		y = 0.620953 * safezoneH + safezoneY;
+		w = 0.1 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	class MCC_keyBindsOpenConsoleButton: MCC_RscButton
+	{
+		idc = MCC_keyBindsOpenConsoleButtonIDC;
+		tooltip = "Click to change";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		action =  __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+		x = 0.505729 * safezoneW + safezoneX;
+		y = 0.65394 * safezoneH + safezoneY;
+		w = 0.1 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+
+	class MCC_keyBindsT2TButton: MCC_RscButton
+	{
+		idc = MCC_keyBindsT2TButtonIDC;
+		tooltip = "Click to change";
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		action =  __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+		x = 0.505729 * safezoneW + safezoneX;
+		y = 0.686927 * safezoneH + safezoneY;
+		w = 0.1 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
 	class confirmButton: MCC_RscButton
 	{
 		idc = -1;
 		action = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\mission_settings_change.sqf'");
 
 		text = "Confirm"; //--- ToDo: Localize;
-		x = 0.603125 * safezoneW + safezoneX;
-		y = 0.57697 * safezoneH + safezoneY;
+		x = 0.608854 * safezoneW + safezoneX;
+		y = 0.719914 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
 		h = 0.0439828 * safezoneH;
 	};
@@ -400,7 +496,7 @@ class missionSettings {
 
 		text = "Cancel"; //--- ToDo: Localize;
 		x = 0.276563 * safezoneW + safezoneX;
-		y = 0.57697 * safezoneH + safezoneY;
+		y = 0.719914 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
 		h = 0.0439828 * safezoneH;
 	};

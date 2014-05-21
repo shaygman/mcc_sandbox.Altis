@@ -10,7 +10,7 @@ _size = _this select 2;
 //Creating a zone
 if (_type == 1) exitWith 
 {	
-	mcc_zone_number = ["MCCZoneCounter",1] call bis_fnc_counter;
+	mcc_zone_number = (count MCC_zones_numbers) + 1;
 	MCC_zones_numbers set [count MCC_zones_numbers, mcc_zone_number]; 
 	mcc_zone_markposition = _pos; 
 	mcc_zone_marker_X = _size select 0;

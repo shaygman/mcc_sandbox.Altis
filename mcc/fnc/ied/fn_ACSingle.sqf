@@ -26,16 +26,25 @@ _rank = ["SERGEANT","LIEUTENANT","CAPTAIN"] select (floor random 3);
 _group = creategroup civilian;
 _sb = _group createunit [_trapkind, _pos, [], 0, "NONE"];
 _null = [_sb,_iedside,25,_weapon,_mag] execVM MCC_path +"mcc\general_scripts\traps\cw.sqf";
-_init = "removeallweapons _this; _this setbehaviour 'CARELESS'; _this allowfleeing 0; _this addaction ['Neutralize Suspect','"+ MCC_path +"mcc\general_scripts\traps\neutralize.sqf',[],1,true,true,'','(_target distance _this) < 3'];";
+MCC_tempName = format ["MCC_objectUnits_%1", ["MCC_objectUnitsCounter",1] call bis_fnc_counter];
+
+_init = FORMAT [";%2 = _this;removeallweapons _this; _this setbehaviour 'CARELESS'; _this allowfleeing 0; _this addaction ['Neutralize Suspect','%1mcc\general_scripts\traps\neutralize.sqf',[],1,true,true,'','(_target distance _this) < 3'];"
+				,MCC_path
+				,MCC_tempName
+				];
+				
 [[[netid _sb,_sb], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+
 _sb setpos _pos;
-_sb addrating -1;
+//_sb addrating -1;
 _sb setdir _iedDir;
 _sb setrank _rank;
 _group setformdir _iedDir; 
 
 _sb setvariable ["armed",true,true];
 _sb setvariable ["iedTrigered", false, true]; 
+
+MCC_curator addCuratorEditableObjects [[_sb],false];
 
 //Create a marker
 if (_iedMarkerName != "") then

@@ -1,3 +1,11 @@
+Change log r6:
+- Added: Save Mission Wizard objectives to MCC save. 
+- Fixed: Groups respawn after loading a mission. 
+- Fixed: Zeus respawn template makes AI hostile to player. 
+
+Change log r5:
+- Fixed: MCC key bindings moved to MCC mission's settings so it can be binded from in game to profile and not hard coded. 
+
 Change log r4:
 Engine:
 - Added: Button: "Save MCC(SQM)" will save MCC/Zeus only missions' objects to SQM - will only save the new placed objects. 

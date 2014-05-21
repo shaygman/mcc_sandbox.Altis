@@ -7,7 +7,7 @@
 //     <Nothing>
 //==============================================================================================================================================================================	
  private ["_arrayGroups","_arrayVehicles","_objectData","_side","_array","_pos","_newString","_finalString","_isKindofUnit","_vehicle","_unitData",
-          "_allCuratorObjectives","_class","_group","_indecator","_tempArray","_arrayWeather","_arrayTime"];
+          "_allCuratorObjectives","_class","_group","_indecator","_tempArray","_arrayWeather","_arrayTime","_savedZones"];
 
  _input 				= _this;
 _allCuratorObjectives 	= _input select 0;
@@ -15,7 +15,10 @@ _arrayGroups 			= _input select 1;
 _arrayVehicles 			= _input select 2;
 _arrayWeather 			= _input select 3;
 _arrayTime 				= _input select 4;
+_savedZones				= _input select 5;
 
+//Zones 
+[_savedZones] call MCC_fn_loadZones;
 
 //Groups
 if (count _arrayGroups > 0) then 

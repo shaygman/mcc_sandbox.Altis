@@ -1,4 +1,4 @@
-private ["_ok","_key"];
+private ["_ok","_key","_haveItem"];
 disableSerialization;		//If we came from the addAction
 
 _key = _this;
@@ -6,7 +6,16 @@ if (isnil "_key") then {_key = []};
 
 if (count _key > 4) exitWith
 {
-	if (((_key select 4) in actionKeys "User2") && (player getVariable ['MCC_allowed',false])) exitWith 
+	if (MCC_isMode) then 
+	{
+		_haveItem =  "MCC_Console" in (assignedItems player); 
+	}
+	else 
+	{
+		_haveItem = "B_UavTerminal" in (assignedItems player);
+	};
+		
+	if (((_key select 4) == 0) && (player getVariable ['MCC_allowed',false])) exitWith 
 	{
 		if (str findDisplay 2994 != "No display") then 
 		{
@@ -19,7 +28,7 @@ if (count _key > 4) exitWith
 		};
 	};  
 	
-	if ((_key select 4) in actionKeys "User3") exitWith 
+	if (((_key select 4) == 1) && _haveItem) exitWith 
 	{
 		if (dialog) then 
 		{

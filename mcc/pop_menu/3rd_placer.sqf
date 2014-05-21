@@ -276,7 +276,7 @@ MCC_3D_CAM_Handler =
 		//--- Hide GUI
 		if (_key in _keyGUI) then 
 		{
-			_GUIstate = !(_logic getvariable "MCC_3D_GUI");
+			_GUIstate = !(_logic getvariable ["MCC_3D_GUI",true]);
 			_logic setvariable ["MCC_3D_GUI",_GUIstate];
 			MCC_dummyObject hideObject !(_GUIstate); 
 			if (_GUIstate) then

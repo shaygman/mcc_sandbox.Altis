@@ -159,7 +159,7 @@ private ["_group","_blackListVehicles","_refinedGroup","_tempArray","_groupArray
 	_side 	= _x select 1;
 	if (!isnil "_group" && !isnull _group) then 
 	{
-		_groupArrayGeneral = [_side, [["GAIA_ZONE_INTEND",_group getVariable ["GAIA_ZONE_INTEND",[]]],["mcc_gaia_cache", _group getVariable ["mcc_gaia_cache",false]],["MCC_GAIA_RESPAWN", _group getVariable ["MCC_GAIA_RESPAWN",0]]]]; 
+		_groupArrayGeneral = [_side, [["GAIA_ZONE_INTEND",_group getVariable ["GAIA_ZONE_INTEND",[]]],["mcc_gaia_cache", _group getVariable ["mcc_gaia_cache",false]],["MCC_GAIA_RESPAWN", _group getVariable ["MCC_GAIA_RESPAWN",-1]]]]; 
 		_blackListVehicles = []; 
 		_refinedGroup = [];
 		

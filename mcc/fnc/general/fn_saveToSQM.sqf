@@ -200,7 +200,7 @@ if (count _arrayGroups > 0) then
 					
 					if ((group _object getvariable ["MCC_GAIA_RESPAWN",0])>0) then 
 					{
-						_newString = (_object getvariable ["vehicleinit",""]) +  format [";group _this setVariable ['MCC_GAIA_RESPAWN',%1];",group _object getvariable ["MCC_GAIA_RESPAWN",0]];
+						_newString = (_object getvariable ["vehicleinit",""]) +  format [";group _this setVariable ['MCC_GAIA_RESPAWN',%1];",group _object getvariable ["MCC_GAIA_RESPAWN",-1]];
 						_object setvariable ["vehicleinit",_newString];
 					};
 				};
