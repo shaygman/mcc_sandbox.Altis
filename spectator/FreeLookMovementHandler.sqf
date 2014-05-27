@@ -1,4 +1,4 @@
-//FreeLookMovementHandler = 
+//KEGs_fnc_freeLookMovementHandler = 
 //{
 	private ["_dX", "_dY", "_mouseScroll", "_zfactor"];
 

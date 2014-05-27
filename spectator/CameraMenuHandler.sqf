@@ -8,8 +8,8 @@ private ["_Source", "_debugPlayer", "_cName", "_cCamera", "_KEGs_cs"];
 //if ( f_var_debugMode == 1 ) then {
 //	_debugPlayer=player;
 //};
-//_debugPlayer groupchat format ["CameraMenuHandler Source: %1", _Source]; 
-//_msg = format["CameraMenuHandler Source: %1", _Source];
+//_debugPlayer groupchat format ["KEGs_fnc_cameraMenuHandler Source: %1", _Source]; 
+//_msg = format["KEGs_fnc_cameraMenuHandler Source: %1", _Source];
 //if ( f_var_debugMode == 1 ) then { diag_log  _msg; };
 
 _cName = 55004;
@@ -28,8 +28,8 @@ _cCamera = 55002;
 		// Special for toggling tags
 		if(_KEGs_cs == KEGs_cLbToggleTags) then {
 			KEGsTags = !KEGsTags;
-			//["ToggleTags", [KEGsTags]] call spectate_events;
-			if ( KEGsTags ) then { KEGSTagsScript = [] spawn KEGsShowUnitLocator; };
+			//["ToggleTags", [KEGsTags]] call KEGs_fnc_spectateEvents;
+			if ( KEGsTags ) then { KEGSTagsScript = [] spawn KEGs_fnc_showUnitLocator; };
 			_KEGs_cs = KEGs_camSelLast;
 			//_debugPlayer globalchat "toggle tags";
 		};
@@ -37,8 +37,8 @@ _cCamera = 55002;
 		// Special for toggling awareness ststus tags
 		if(_KEGs_cs == KEGs_cLbToggleTagsStat) then {
 			KEGsTagsStat = !KEGsTagsStat;
-			//["ToggleTagsStat", [KEGsTagsStat]] call spectate_events;
-			if ( KEGsTagsStat ) then { KEGSTagsStatScript = [] spawn KEGsShowCombatMode; };
+			//["ToggleTagsStat", [KEGsTagsStat]] call KEGs_fnc_spectateEvents;
+			if ( KEGsTagsStat ) then { KEGSTagsStatScript = [] spawn KEGs_fnc_showCombatMode; };
 			_KEGs_cs = KEGs_camSelLast;
 			//_debugPlayer globalchat "toggle tags";
 		};						
@@ -84,7 +84,7 @@ _cCamera = 55002;
 	//if (!((KEGs_cameras select KEGs_cameraIdx) == KEGscam_1stperson) && !(VM_CurrentCameraView in ["INTERNAL","GUNNER"]) ) then 
 	if !( (KEGs_cameras select KEGs_cameraIdx) == KEGscam_1stperson )  then 
 	{ 
-		(KEGs_cameras select KEGs_cameraIdx) cameraEffect["internal", "BACK"]; // CHECK IF NEEDED !!!
+		(KEGs_cameras select KEGs_cameraIdx) cameraEffect["internal", "BACK"]; 
 		//_debugplayer globalchat format ["Resetting Camera on to %1", KEGs_target];
 	};
 

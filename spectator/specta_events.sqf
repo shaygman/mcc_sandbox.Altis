@@ -109,7 +109,7 @@ switch (_type) do
 				KEGS_camMarker setmarkerdirlocal direction KEGscam_free;
 				
 				// adjust target name bottom left
-				[false] spawn PlayerMenuHandler;
+				[false] spawn KEGs_fnc_playerMenuHandler;
 
 				KEGs_autoTarget = KEGs_target;				
 				//player sideChat format ["new target '%1' - curr target '%2' - ('%3' - '%4')", _newCamTarget, KEGs_target, KEGs_tgtIdx, deathCam select KEGs_tgtIdx];			
@@ -222,11 +222,11 @@ switch (_type) do
 						KEGs_target = deathCam select KEGs_tgtIdx;
 					};					
 					
-					[false] spawn PlayerMenuHandler;
+					[false] spawn KEGs_fnc_playerMenuHandler;
 					
 					if((KEGs_cameras select KEGs_cameraIdx) == KEGscam_1stperson) then 
 					{
-						[] spawn CameraMenuHandler;
+						[] spawn KEGs_fnc_cameraMenuHandler;
 					};					
 
 					KEGs_autoTarget = KEGs_target;					
@@ -263,11 +263,11 @@ switch (_type) do
 						KEGs_target = deathCam select KEGs_tgtIdx;
 					};	
 					
-					[false] spawn PlayerMenuHandler;
+					[false] spawn KEGs_fnc_playerMenuHandler;
 					
 					if((KEGs_cameras select KEGs_cameraIdx) == KEGscam_1stperson) then 
 					{
-						[] spawn CameraMenuHandler;
+						[] spawn KEGs_fnc_cameraMenuHandler;
 					};
 					
 					KEGs_autoTarget = KEGs_target;
@@ -283,7 +283,7 @@ switch (_type) do
 				VM_CurrentCameraView = ""; 
 				KEGs_cameraIdx = KEGs_cameraIdx + 1;
 				KEGs_cameraIdx = KEGs_cameraIdx % (count KEGs_cameras);
-				["Specta_Events"] call CameraMenuHandler;
+				["Specta_Events"] call KEGs_fnc_cameraMenuHandler;
 				KEGsCamBack = false;
 			};
 
@@ -293,11 +293,13 @@ switch (_type) do
 				if(!KEGsTags) then 
 				{
 					lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleTags, [1,1,1,0.33]];
+					if (!isnil "KEGs_trackMarkerHandler") then {(findDisplay 55001 displayCtrl 55013) ctrlRemoveEventHandler ["draw",KEGs_trackMarkerHandler]}; 
 				}
 				else
 				{
-					KEGSTagsScript = [] spawn KEGsShowUnitLocator;
+					KEGSTagsScript = [] spawn KEGs_fnc_showUnitLocator;
 					lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleTags, [1, 0.5, 0, 1]];
+					KEGs_trackMarkerHandler = (findDisplay 55001 displayCtrl 55013) ctrladdeventhandler ["draw","_this call KEGS_fnc_trackUnits;"];
 				};
 			};
 			
@@ -310,7 +312,7 @@ switch (_type) do
 					}
 					else
 					{
-						KEGSTagsStatScript = [] spawn KEGsShowCombatMode;
+						KEGSTagsStatScript = [] spawn KEGs_fnc_showCombatMode;
 						lbSetColor[KEGs_cLBCameras, KEGs_cLbToggleTagsStat, [1, 0.5, 0, 1]];
 					};
 			};
@@ -367,7 +369,7 @@ switch (_type) do
 				{
 					KEGs1stGunner = !KEGs1stGunner;
 				};
-				[] spawn CameraMenuHandler;
+				[] spawn KEGs_fnc_cameraMenuHandler;
 			};
 			
 			// "Direct camera change with number keys";
@@ -377,7 +379,7 @@ switch (_type) do
 						//_debugPlayer globalchat "key 1"; 
 						lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; 
 						ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]]; 
-						["Specta_Events"] spawn CameraMenuHandler;
+						["Specta_Events"] spawn KEGs_fnc_cameraMenuHandler;
 					};				
 			
 			case 3: {
@@ -386,7 +388,7 @@ switch (_type) do
 						//_debugPlayer globalchat "key 2"; 
 						lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; 
 						ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]];	
-						["Specta_Events"] spawn CameraMenuHandler;
+						["Specta_Events"] spawn KEGs_fnc_cameraMenuHandler;
 					};				
 			
 			case 4: {
@@ -395,7 +397,7 @@ switch (_type) do
 						//_debugPlayer globalchat "key 3"; 
 						lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; 
 						ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]];	
-						["Specta_Events"] spawn CameraMenuHandler;
+						["Specta_Events"] spawn KEGs_fnc_cameraMenuHandler;
 					};
 			
 			case 5: {
@@ -404,7 +406,7 @@ switch (_type) do
 						//_debugPlayer globalchat "key 4"; 
 						lbSetCurSel[KEGs_cLBCameras, KEGs_cameraIdx]; 
 						ctrlSetText[_cCamera, format["Camera: %1", KEGs_cameraNames select KEGs_cameraIdx]];	
-						["Specta_Events"] spawn CameraMenuHandler;
+						["Specta_Events"] spawn KEGs_fnc_cameraMenuHandler;
 					};					
 		
 			// "Toggle NVG or map text type";
@@ -441,9 +443,9 @@ switch (_type) do
 				};
 			};
 			
-			case 50: {["ToggleMap",0] call spectate_events;};
-			case 15: {["ToggleUI",0] call spectate_events;};
-			case 59: {["ToggleHelp",0] call spectate_events;};			
+			case 50: {["ToggleMap",0] call KEGs_fnc_spectateEvents;};
+			case 15: {["ToggleUI",0] call KEGs_fnc_spectateEvents;};
+			case 59: {["ToggleHelp",0] call KEGs_fnc_spectateEvents;};			
 			
 			// "Numpad + / -";
 			case 78: {if(KEGsMarkerSize < 1.7) then {KEGsMarkerSize = KEGsMarkerSize * 1.15}};
@@ -468,7 +470,7 @@ switch (_type) do
 			_x = _param select 1;
 			_y = _param select 2;
 			KEGsMouseCoord = [_x, _y];
-			[] spawn FreeLookMovementHandler;
+			[] spawn KEGs_fnc_freeLookMovementHandler;
 		//};
 	};
 		
@@ -491,7 +493,7 @@ switch (_type) do
 			_y = _param select 3;
 			_button = _param select 1;
 			KEGsMouseButtons set[_button, false];
-			[] spawn FreeLookMovementHandler;
+			[] spawn KEGs_fnc_freeLookMovementHandler;
 		//};
 	};	
 	
@@ -502,7 +504,7 @@ switch (_type) do
 		if !(KEGs_cameraNames select KEGs_cameraIdx == "Free") then 
 		{
 			//KEGsMouseScroll = KEGsMouseScroll + (_param select 1);
-			[(_param select 1)] spawn FreeLookMovementHandler; 
+			[(_param select 1)] spawn KEGs_fnc_freeLookMovementHandler; 
 		}
 		else
 		{
@@ -660,7 +662,7 @@ switch (_type) do
 			{
 				_u = _x select 0;
 				_s = _x select 1;
-				[_u, _s] spawn KEGsShowCombatMode;
+				[_u, _s] spawn KEGs_fnc_showCombatMode;
 			} foreach KEGsTagStatSources;
 		}
 		else 
