@@ -74,8 +74,18 @@ MCC_ied_small = [["Plastic Crates","Land_CratesPlastic_F"],["Plastic Canister","
 MCC_ied_medium = [["Wheel Cart","Land_WheelCart_F"],["Metal Barrel","Land_MetalBarrel_F"],["Plastic Barrel","Land_BarrelSand_F"],["Pipes","Land_Pipes_small_F"],["Wooden Crates","Land_CratesShabby_F"],["Wooden Box","Land_WoodenBox_F"],["Cinder Blocks","Land_Ytong_F"],
 				  ["Sacks Heap","Land_Sacks_heap_F"], ["Water Barrel","Land_WaterBarrel_F"],["Water Tank","Land_WaterTank_F"]];
 MCC_ied_wrecks = [["Car Wreck","Land_Wreck_Car3_F"],["BRDM Wreck","Land_Wreck_BRDM2_F"],["Offroad Wreck","Land_Wreck_Offroad_F"],["Truck Wreck","Land_Wreck_Truck_FWreck"]];
-MCC_ied_mine = [["Mine Field AP - Visable","apv"], ["Mine Field AP - Hidden","ap"],["Mine Field AP Bounding - Visable","apbv"],["Mine Field AP Bounding- Hidden","apb"], ["Mine Field AT - Visable","atv"], ["Mine Field AT - Hidden","at"]];
-MCC_ied_hidden = [["Dirt Small","ModuleExplosive_IEDLandSmall_F"],["Dirt Big","ModuleExplosive_IEDLandBig_F"],["Urban Small","ModuleExplosive_IEDUrbanSmall_F"],["Urban Big","ModuleExplosive_IEDUrbanBig_F"]];
+MCC_ied_mine = [
+                ["Mine Field AP - Visable","apv"], 
+				["Mine Field AP - Hidden","ap"],
+				["Mine Field AP Bounding - Visable","apbv"],
+				["Mine Field AP Bounding- Hidden","apb"], 
+				["Mine Field AT - Visable","atv"], 
+				["Mine Field AT - Hidden","at"], 
+				["Mine Field Naval - Moored","nvm"],
+				["Mine Field Naval - Bottom","nv"],
+				["Mine Field Naval - PDM","pdm"]
+			   ];
+MCC_ied_hidden = [["Dirt Small","IEDLandSmall_Remote_Ammo"],["Dirt Big","IEDLandBig_Remote_Ammo"],["Urban Small","IEDUrbanSmall_Remote_Ammo"],["Urban Big","IEDUrbanBig_Remote_Ammo"]];
 
 //------------------------Convoy settings----------------------------------------
 MCC_convoyHVT = [["None","0"],["B.Officer","B_officer_F"],["B. Pilot","B_Helipilot_F"],["O. Officer","O_officer_F"],["O. Pilot","O_helipilot_F"],["I.Commander","I_officer_F"],["Citizen","C_man_polo_1_F"],
@@ -174,6 +184,8 @@ mccPresets = [
 //=		 				DO NOT EDIT BENEATH THIS LINE
 //====================================================================================================================
 //*********************************************************************************************************************
+
+MCC_dummy = "bomb"; //Dummy object for OO saving
 
 //----------------------gaia------------------------------------------------------
 call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];
@@ -289,9 +301,8 @@ MCC_minutes_array =[00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,
 MCC_hours_array = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
 MCC_weather_array = [["Clear",[0, 0, 0, 0, 0]], ["Clouded",[0.5, 0.5, 0.5, 0.5, 0.5]],["Rainy",[0.8, 0.8, 0.8, 0.8, 0.8]],["Storm",[1, 1, 1,1,1]]];
 
-MCC_grass_array = [["No grass",50],["Medium grass",25], ["High grass",12.5]];
+MCC_grass_array = [["No grass",50],["Low",25], ["Medium",12.5], ["High",6.25], ["Very High",3.125]];
 MCC_view_array = [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000,9500,10000,10500,11000,11500,12000];
-MCC_grass_index = 2;
 
 MCC_ied_proxArray = [3,5,10,15,20,25,30,35,45,50];
 MCC_ied_targetArray = [west, east, resistance, civilian];
@@ -428,7 +439,21 @@ MCC_saveIndex = 0;
 // Mission Wizard
 MCC_MWmaxPlayers = 100;
 MCC_MWDifficulty = ["Easy","Medium","Hard"];
-MCC_MWMissionType = ["None","Random","Secure HVT","Kill HVT","Destroy Object","Aquire Intel","Clear Area","Disarm IED"];
+MCC_MWMissionType = ["None",
+                     "Random",
+					 "Secure HVT",
+					 "Kill HVT",
+					 "Destroy Vehicle",
+					 "Destroy AA",
+					 "Destroy Artillery",
+					 "Destroy Weapon Cahce",
+					 "Destroy Fuel Depot",
+					 "Destroy Radar/Radio",
+					 "Aquire Intel",
+					 "Clear Area",
+					 "Disarm IED"
+					 ];
+					 
 MCC_MWObjectiveMarkers = []; 
 MCC_MWmissionsCenter = []; 
 MCC_MWHVT = ["B_officer_F","O_officer_F","I_officer_F","C_Nikos"]; 
@@ -446,7 +471,7 @@ MCC_MWAir = ["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_UAV_02_F","O_UAV
 MCC_MWcache = ["Box_East_AmmoVeh_F"];
 MCC_MWradar = ["Land_Radar_Small_F"];
 MCC_MWIntelObjects = ["Land_File2_F","Land_FilePhotos_F","Land_Laptop_unfolded_F","Land_SatellitePhone_F","Land_Suitcase_F"]; //s2 setPos (s3 modelToWorld [0,0,0.41]); 
-MCC_MWIED = ["ModuleExplosive_IEDLandSmall_F","ModuleExplosive_IEDLandBig_F","ModuleExplosive_IEDUrbanSmall_F","ModuleExplosive_IEDUrbanBig_F"];
+MCC_MWIED = ["IEDLandSmall_Remote_Ammo","IEDLandBig_Remote_Ammo","IEDUrbanSmall_Remote_Ammo","IEDUrbanBig_Remote_Ammo"];
 
 //StratigicMap
 MCC_MWObjectivesNames	= []; 	//placeHolder for objectives
@@ -968,7 +993,7 @@ if (!isServer && !(MCC_isLocalHC)) then
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 {
 	waituntil {!(IsNull (findDisplay 46))};
-	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,false,false,nil],[false,false,false,nil],[false,false,false,nil]]];
+	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20]]];
 	
 	//Opening status radio
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 2) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Medic)',time],true]}"];
@@ -1007,6 +1032,9 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	{
 		[compile format ["MCC_curator addCuratorEditableObjects [[%1],false]", player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 	};
+	
+	//Default viewDistance
+	setviewDistance 3000;
 };
 
 //========= player Loops (for saving gear/name tag exc)=================================
@@ -1085,14 +1113,19 @@ if (isnil "MCC_3DCompSaveFiles") then {
 MCC_3DCompSaveFiles = ["","","","","","","","","","","","","","","","","","","",""];
 	profileNamespace setVariable ["MCC_3DCompSaveFiles", MCC_3DCompSaveFiles];
 		};
-
 	
 MCC_customGroupsSave = profileNamespace getVariable "MCC_customGroupsSave";
 if (isnil "MCC_customGroupsSave") then {	
 MCC_customGroupsSave = [];
 	profileNamespace setVariable ["MCC_customGroupsSave", MCC_customGroupsSave];
 		};
-	
+
+MCC_terrainPref = profileNamespace getVariable "MCC_terrainPref";
+if (isnil "MCC_terrainPref") then 
+{	
+	MCC_terrainPref = [1,5];
+	profileNamespace setVariable ["MCC_terrainPref", MCC_terrainPref];
+};	
 //============ engineer data ========================
 if (getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMines") == 1) then	//Check if is engineer
 {	

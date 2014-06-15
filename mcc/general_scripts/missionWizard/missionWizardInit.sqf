@@ -22,12 +22,15 @@
 #define MCC_MWArtilleryIDC 6021
 
 #define FACTIONCOMBO 1001
+#define CIVILIANFACTIONCOMBO 6022
+#define MCC_MCC_MWMusicIDC 6024
 
 private ["_missionCenter","_missionCenterTrigger","_playersNumber","_difficulty","_totalEnemyUnits","_isCQB","_objType","_objArray","_check","_objFirstTime",
          "_minObjectivesDistance","_objPos","_timeStart","_side","_faction","_sidePlayer","_factionPlayer","_obj1","_obj2","_obj3","_pos","_center","_wholeMap",
 		 "_armor","_vehicles","_stealth","_roadPositions","_script_handler","_isIED","_isAS","_spawnbehavior","_isRoadblocks","_objectives","_isCiv","_weatherChange",
-		 "_preciseMarkers","_reinforcement","_artillery"];
+		 "_preciseMarkers","_reinforcement","_artillery","_civFaction","_playMusic"];
 
+//MCC_MWAnimalsIndex MCC_MWBattleGroundIndex MCC_MWMusicIndex
 if (isnil "MCC_MWisGenerating") then {MCC_MWisGenerating = false}; 
 MCC_mcc_screen = 2;
 if (MCC_MWisGenerating) exitWith {player sideChat "MCC is now generating a mission please try again later"}; 
@@ -35,6 +38,8 @@ MCC_MWisGenerating = true;
 
 //Get params
 _playersNumber 		= (lbCurSel MCC_MWPlayersIDC) + 1;
+_civFaction			= (U_FACTIONSCIV select (lbCurSel CIVILIANFACTIONCOMBO)) select 2;
+_playMusic			= (lbCurSel MCC_MCC_MWMusicIDC);
 _difficulty 		= (lbCurSel MCC_MWDifficultyIDC+1)*1.5;		//each player == 3 enemy players multiply by difficulty
 _stealth 			= if ((lbCurSel MCC_MWStealthIDC)==3) then
 						{
@@ -145,7 +150,20 @@ _side				= mcc_sidename;
 _pos 				= getpos player;
 
 _totalEnemyUnits 		= if ((_playersNumber * _difficulty)>10) then {(_playersNumber * _difficulty)} else {20};
-_objArray			 	= ["Secure HVT","Kill HVT","Destroy Object","Aquire Intel","Clear Area","Disarm IED"]; 
+
+_objArray			 	= ["Secure HVT",
+						   "Kill HVT",
+						   "Destroy Vehicle",
+						   "Destroy AA",
+						   "Destroy Artillery",
+						   "Destroy Weapon Cahce",
+						   "Destroy Fuel Depot",
+						   "Destroy Radar/Radio",
+						   "Aquire Intel",
+						   "Clear Area",
+						   "Disarm IED"
+						  ];
+						  
 _minObjectivesDistance 	= if (_isCQB) then {100} else {200};
 _maxObjectivesDistance 	= (_minObjectivesDistance*1.5) + (10*_playersNumber);
 
@@ -370,40 +388,42 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 		//Not the first objective we can get away from the center
 		_objFirstTime = false;
 		
-		switch (_objType) do
+		if (["Destroy", _objType] call BIS_fnc_inString) then
 		{
-		   case "Secure HVT":		
+			[[_objPos, _isCQB, _side, _faction,_preciseMarkers,_objType], "MCC_fnc_MWObjectiveDestroy", false, false] call BIS_fnc_MP;
+		}
+		else
+		{
+			switch (_objType) do
 			{
-				//Change faction because we are dealing with a hostage and not an enemy
-				if ((random 1)>0.5) then {_factionPlayer = faction player; _sidePlayer = side player} else {_factionPlayer = "CIV_F"; _sidePlayer = civilian};
+			   case "Secure HVT":		
+				{
+					//Change faction because we are dealing with a hostage and not an enemy
+					if ((random 1)>0.5) then {_factionPlayer = faction player; _sidePlayer = side player} else {_factionPlayer = "CIV_F"; _sidePlayer = civilian};
+					
+					//Spawn a hostage on the server
+					[[_objPos, _isCQB, true, _side, _faction, _sidePlayer, _factionPlayer,_preciseMarkers], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
+				};
 				
-				//Spawn a hostage on the server
-				[[_objPos, _isCQB, true, _side, _faction, _sidePlayer, _factionPlayer,_preciseMarkers], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
-			};
-			
-		  case "Kill HVT":		
-			{
-				[[_objPos, _isCQB, false, _side, _faction, _sidePlayer, faction player,_preciseMarkers], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
-			};
-			
-		  case "Destroy Object":		
-			{
-				[[_objPos, _isCQB, _side, _faction,_preciseMarkers], "MCC_fnc_MWObjectiveDestroy", false, false] call BIS_fnc_MP;
-			};
-			
-		  case "Aquire Intel":		
-			{
-				[[_objPos, _isCQB, _side, _faction,_preciseMarkers], "MCC_fnc_MWObjectiveIntel", false, false] call BIS_fnc_MP;
-			};
-			
-		 case "Clear Area":		
-			{
-				[[_objPos, _isCQB,_side, _faction,_sidePlayer,_preciseMarkers], "MCC_fnc_MWObjectiveClear", false, false] call BIS_fnc_MP;
-			};
-			
-		 case "Disarm IED":		
-			{
-				[[_objPos, _isCQB,_side, _faction,_sidePlayer,_preciseMarkers], "MCC_fnc_MWObjectiveDisable", false, false] call BIS_fnc_MP;
+			  case "Kill HVT":		
+				{
+					[[_objPos, _isCQB, false, _side, _faction, _sidePlayer, faction player,_preciseMarkers], "MCC_fnc_MWObjectiveHVT", false, false] call BIS_fnc_MP;
+				};
+				
+			  case "Aquire Intel":		
+				{
+					[[_objPos, _isCQB, _side, _faction,_preciseMarkers], "MCC_fnc_MWObjectiveIntel", false, false] call BIS_fnc_MP;
+				};
+				
+			 case "Clear Area":		
+				{
+					[[_objPos, _isCQB,_side, _faction,_sidePlayer,_preciseMarkers], "MCC_fnc_MWObjectiveClear", false, false] call BIS_fnc_MP;
+				};
+				
+			 case "Disarm IED":		
+				{
+					[[_objPos, _isCQB,_side, _faction,_sidePlayer,_preciseMarkers], "MCC_fnc_MWObjectiveDisable", false, false] call BIS_fnc_MP;
+				};
 			};
 		};
 		
@@ -419,6 +439,12 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 					case civilian: {_activate =  "CIV"; _cond = "CIV D"};
 				};
 			_alarm = "Land_Loudspeakers_F" createVehicle ([_objPos,1,100,10,0,10,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos);
+			
+			//for saving 
+			_init = format ["['', %1, 100, 100, '%2', '%3', 'AlarmSfx',false] call MCC_fnc_MusicTrigger",getpos _alarm, _activate, _cond];
+			_alarm setVariable ["vehicleinit",_init];
+			MCC_curator addCuratorEditableObjects [[_alarm],false];
+			
 			[["", getpos _alarm, 100, 100, _activate, _cond,"AlarmSfx",false],"MCC_fnc_MusicTrigger",true,false] spawn BIS_fnc_MP;
 		};
 		
@@ -446,13 +472,13 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 		// Is _isCiv
 		if (_isCiv) then 
 		{
-			[[_objPos,(_maxObjectivesDistance*0.5),1,(_totalEnemyUnits*0.008),"CIV_F","CIV"],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
+			[[_objPos,(_maxObjectivesDistance*0.5),1,(_totalEnemyUnits*0.008),_civFaction,"CIV"],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
 		};
 		
 				
 		//Suicide Bombers
 		private ["_name","_objectType","_unitsArray","_pos"];
-		_unitsArray 	= ["CIV_F","soldier"] call MCC_fnc_makeUnitsArray;		//Let's build the faction unit's array	
+		_unitsArray 	= [_civFaction, "soldier"] call MCC_fnc_makeUnitsArray;		//Let's build the faction unit's array	
 		
 		if (_isSB) then 
 		{
@@ -461,11 +487,10 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 				if (random 1 >0.5) then
 				{
 					//Name the bomber.
-					_name = format ["SBObject_%1", ["SBObject_",1] call bis_fnc_counter]; 
 					_objectType = (_unitsArray call BIS_fnc_selectRandom) select 0;
 					_pos = [[[_objPos,(_maxObjectivesDistance*0.7)]],["water","out"],{true}] call BIS_fnc_randomPos;
 					
-					[[_pos,_objectType,"large",floor (random 2),_sidePlayer,_name],"MCC_fnc_SBSingle",false,false] spawn BIS_fnc_MP;
+					[[_pos,_objectType,"large",floor (random 2),_sidePlayer],"MCC_fnc_SBSingle",false,false] spawn BIS_fnc_MP;
 						
 					//Debug
 					if (MW_debug) then 
@@ -485,16 +510,15 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 		//Armed Civilans
 		if (_isAS) then 
 		{
-			for [{_i = 0},{_i <=(_totalEnemyUnits/10)},{_i = _i+1}] do		
+			for [{_i = 0},{_i <=(_totalEnemyUnits/5)},{_i = _i+1}] do		
 			{
 				if (random 1 >0.5) then
 				{
 					//Name the AC.
-					_name = format ["ACObject_%1", ["ACObject_",1] call bis_fnc_counter]; 
 					_objectType = (_unitsArray call BIS_fnc_selectRandom) select 0;
 					_pos = [[[_objPos,(_maxObjectivesDistance*0.7)]],["water","out"],{true}] call BIS_fnc_randomPos;
 
-					[[_pos,_objectType,_sidePlayer,_name,random 360],"MCC_fnc_ACSingle",false,false] spawn BIS_fnc_MP;
+					[[_pos,_objectType,_sidePlayer,"Armed Civilian",random 360],"MCC_fnc_ACSingle",false,false] spawn BIS_fnc_MP;
 						
 					//Debug
 					if (MW_debug) then 
@@ -535,7 +559,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 							_objectType = MCC_MWIED call BIS_fnc_selectRandom;
 						}; 
 
-						[[_x modeltoworld [3,2,0],_objectType,"large",floor (random 2),2,0,0,((random 25) + 15),_sidePlayer,_name,random 360,[],_side],"MCC_fnc_trapSingle",false,false] spawn BIS_fnc_MP;
+						[[_x modeltoworld [3,2,0],_objectType,"large",floor (random 2),2,0,0,((random 25) + 15),_sidePlayer,_name,random 360,true,_side],"MCC_fnc_trapSingle",false,false] spawn BIS_fnc_MP;
 					
 						//Debug
 						if (MW_debug) then 
@@ -667,7 +691,13 @@ if (_isIED) then
 				//Care or hidden?
 				if (random 1 < 0.3) then
 				{
-					_objectType = (_unitsArray call BIS_fnc_selectRandom) select 0;	
+					//Why the hell we have karts in a milsim?!
+					_objectType = "";
+					while {_objectType in ["","C_Kart_01_Blu_F","C_Kart_01_F","C_Kart_01_F_Base","C_Kart_01_Fuel_F","C_Kart_01_Red_F","C_Kart_01_Vrana_F"]} do
+					{
+						_objectType = (_unitsArray call BIS_fnc_selectRandom) select 0;	
+						sleep 0.1;
+					};
 				} 
 				else
 				{
@@ -692,18 +722,8 @@ if (_isIED) then
 					_iedpos = _x modeltoworld [_iedX,_iedY,0];
 				}; 
 				
-				//Ambush Group 
-				_groupArray = if (count MCC_MWGroupArrayMenRecon > 0) then 
-				{
-					if (random 1 > 0.5) then {MCC_MWGroupArrayMenRecon} else {MCC_MWGroupArrayMen};
-				} 
-				else 
-				{
-					MCC_MWGroupArrayMen
-				};
-				
 				//Spawn the IED
-				[[_iedpos,_objectType,"large",floor (random 2),2,false,0,((random 25) + 15),_sidePlayer,_name,_dir,_groupArray,_side],"MCC_fnc_trapSingle",false,false] spawn BIS_fnc_MP;
+				[[_iedpos,_objectType,"large",floor (random 2),2,false,0,((random 25) + 15),_sidePlayer,_name,_dir,true,_side],"MCC_fnc_trapSingle",false,false] spawn BIS_fnc_MP;
 			
 				//Debug
 				if (MW_debug) then 
@@ -732,6 +752,22 @@ if (_reinforcement in [1,2,3]) then
 	{
 		_cond set [_x, (_cond select (_x-1)) + 0.3];
 	};
+	
+	//for saving 
+	_dummy = MCC_dummy createVehicle (getpos _missionCenterTrigger);
+	_init = format ["_this hideobject true;if (isServer) then {[%1, '%2', %3, %4, %5, %6,'%7',%8,%9] spawn MCC_fnc_MWreinforcement}"
+	                   ,_reinforcement
+					   , _side
+					   ,(getpos _missionCenterTrigger)
+					   ,triggerArea _missionCenterTrigger
+					   ,_cond
+					   ,_zoneNumber
+					   ,_faction
+					   ,MW_debug
+					   ,_totalEnemyUnits
+					   ];
+	_dummy setVariable ["vehicleinit",_init];
+	MCC_curator addCuratorEditableObjects [[_dummy],false];
 	
 	[[_reinforcement,_side,getpos _missionCenterTrigger, triggerArea _missionCenterTrigger, _cond,_zoneNumber,_faction,MW_debug,_totalEnemyUnits],"MCC_fnc_MWreinforcement",false,false] call BIS_fnc_MP;
 }; 
@@ -896,9 +932,12 @@ if (_reinforcement in [1,2,3] || _stealth) then
 
 _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Go over your objectives, gear up and get ready.<br/>Mission is a go!</t>",_factionName];
 
-_music = ["LeadTrack01a_F","LeadTrack02_F","LeadTrack03_F","LeadTrack04a_F","LeadTrack05_F","LeadTrack06_F","AmbientTrack03_F","BackgroundTrack03_F","BackgroundTrack01_F",
-           "BackgroundTrack01a_F","BackgroundTrack02_F","LeadTrack01_F_EPA","LeadTrack02_F_EPA","EventTrack01_F_EPA","EventTrack01a_F_EPA","EventTrack03_F_EPA"] call BIS_fnc_selectRandom; 
-[[2,compile format ["playMusic '%1'",_music]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+if (_playMusic == 0) then
+{
+	_music = ["LeadTrack01a_F","LeadTrack02_F","LeadTrack03_F","LeadTrack04a_F","LeadTrack05_F","LeadTrack06_F","AmbientTrack03_F","BackgroundTrack03_F","BackgroundTrack01_F",
+			   "BackgroundTrack01a_F","BackgroundTrack02_F","LeadTrack01_F_EPA","LeadTrack02_F_EPA","EventTrack01_F_EPA","EventTrack01a_F_EPA","EventTrack03_F_EPA"] call BIS_fnc_selectRandom; 
+	[[2,compile format ["playMusic '%1'",_music]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+};
 
 //move that into client side
 [[_missionCenter,_objectives,overcast,_night,1,_html], "MCC_fnc_MWopenBriefing", true, false] spawn BIS_fnc_MP;

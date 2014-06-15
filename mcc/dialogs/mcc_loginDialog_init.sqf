@@ -4,13 +4,18 @@ MCC_GUI1initDone = false;
 
 #define MCCVIEWDISTANCE 1006
 #define MCCGRASSDENSITY 1007
-
 #define MCCMISSIONMAKERNAME 1020
 #define MCCCLIENTFPS 1021
 #define MCCSERVERFPS 1022
 
+#define MCC_keyBindsOpenMCCButtonIDC 8415
+#define MCC_keyBindsOpenConsoleButtonIDC 8416
+#define MCC_keyBindsT2TButtonIDC 8417
+
 //Mission Maker
-ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
+private ["_text","_key","_textKey","_mmName"];
+_mmName = if (mcc_missionmaker != "") then {mcc_missionmaker} else {"Not Assigned"};
+ctrlSetText [MCCMISSIONMAKERNAME, format["%1",_mmName]];
 
 //----------------------------------------------------------Client Side settings----------------------------------------------------------------------------
 _mccdialog = finddisplay 2990;
@@ -21,7 +26,7 @@ lbClear _comboBox;
 	_displayname = format ["%1",_x select 0];
 	_comboBox lbAdd _displayname;
 } foreach MCC_grass_array;
-_comboBox lbSetCurSel MCC_grass_index;
+_comboBox lbSetCurSel (MCC_terrainPref select 0);
 
 _comboBox = _mccdialog displayCtrl MCCVIEWDISTANCE;		//fill combobox View distance
 lbClear _comboBox;
@@ -29,7 +34,24 @@ lbClear _comboBox;
 	_displayname = format ["%1",_x];
 	_comboBox lbAdd _displayname;
 } foreach MCC_view_array;
-_comboBox lbSetCurSel ((round ((viewdistance)/500)) - 2); // set viewdistance index to current vd
+_comboBox lbSetCurSel (MCC_terrainPref select 1); // set viewdistance index to current vd
+
+//Show key Binds
+for [{_x=8415},{_x<=8417},{_x=_x+1}]  do 
+{
+	_key = MCC_keyBinds select (_x-8415);
+
+	_text = "";
+	if (_key select 0) then {_text = "Shift + "}; 
+	if (_key select 1) then {_text = _text + "Ctrl + "}; 
+	if (_key select 2) then {_text = _text + "Alt + "}; 
+	
+	
+	_textKey = 	[(_key select 3)] call MCC_fnc_keyToName;
+	_text = format ["%1%2",_text,_textKey];
+
+	ctrlsettext [_x, _text];
+};
 
 sleep 1; 
 MCC_GUI1initDone = true; 

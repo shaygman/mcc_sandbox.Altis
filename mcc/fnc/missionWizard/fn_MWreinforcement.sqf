@@ -13,7 +13,7 @@
 //			Nothing
 //========================================================================================================================================================================================
 private ["_reinforcement","_side","_missionCenterTriggerPos","_missionCenterTriggerArea","_cond","_trigger","_tlist","_zoneNumber","_script_handler","_found",
-         "_faction","_warning","_ar","_totalEnemyUnits","_size","_strDir","_command","_para"];
+         "_faction","_warning","_ar","_totalEnemyUnits","_size","_strDir","_command","_para","_check"];
 		 
 _reinforcement 				= _this select 0;
 _side 						= _this select 1;
@@ -27,6 +27,25 @@ _totalEnemyUnits			= _this select 8;
 
 
 if !(isServer || isDedicated) exitWith {};
+
+if (isnil "mcc_mwunitsarraycar") then
+{
+	//Build the faction's unitsArrays and send it to the server. 
+	_check = [] call MCC_fnc_MWCreateUnitsArray;
+	waituntil {_check};	
+};
+
+if (typeName _side == "STRING") then
+{
+	_side = switch (_side) do	
+			{
+				case "WEST":{west};
+				case "EAST":{east};
+				case "GUER":{resistance};
+				case "CIV":{civilian};
+				default {east};
+			};
+};
 
 //Size: 0 - small, 1 - medium, 2 - large
 _size = 0;	

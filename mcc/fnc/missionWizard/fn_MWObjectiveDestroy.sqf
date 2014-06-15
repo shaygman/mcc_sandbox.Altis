@@ -10,14 +10,20 @@
 private ["_objPos","_isCQB","_side","_faction","_preciseMarkers","_type","_objType","_typeSize","_spawnPos",
          "_object","_dummyObject","_spawndir","_unitsArray","_group","_init","_range"];
 
-_objPos = _this select 0;
-_isCQB = _this select 1;
-_side = _this select 2;
-_faction = _this select 3;
+_objPos 		= _this select 0;
+_isCQB 			= _this select 1;
+_side 			= _this select 2;
+_faction 		= _this select 3;
 _preciseMarkers = _this select 4; 
-
-_objType = ["fuel","radio","tanks","aa","artillery","air","cache","radar"] call BIS_fnc_selectRandom;
-
+_objType = switch (_this select 5) do	
+			{
+				case "Destroy Vehicle": {["tanks","air"] call BIS_fnc_selectRandom};
+				case "Destroy AA": {"aa"};
+				case "Destroy Artillery": {"artillery"};
+				case "Destroy Weapon Cahce": {"cache"};
+				case "Destroy Fuel Depot": {"fuel"};
+				case "Destroy Radar/Radio": {["radar","radio"] call BIS_fnc_selectRandom};
+			};
 
 //What do we spawn
 switch _objType do	
@@ -199,13 +205,15 @@ _object setdir _spawndir;
 if (_objType in ["tanks","aa","artillery","air"]) then
 {
 	//_init = '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {0}}];' + '_this setVehicleLock "LOCKED";'; 
-	_init = '_this setVehicleLock "LOCKED";'; 
+	_init = "_this setVehicleLock 'LOCKED';"; 
 	if (_objType =="artillery") then {_init = _init + "createVehicleCrew _this;[0,_this] spawn MCC_fnc_amb_Art;"}; 
 	[[[netID _object,_object], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 };
 
 
-
+//Add to curator
+MCC_curator addCuratorEditableObjects [[_object],false]; 
+ 
 //Start Briefings
 switch _objType do	
 {
@@ -254,19 +262,3 @@ switch _objType do
 		[_object,"destroy_cache",_preciseMarkers] call MCC_fnc_MWCreateTask; 
 	};
 };
-
-
-/*//Lets spawn some body guards
-_unitsArray = [_faction ,"soldier"] call MCC_fnc_makeUnitsArray;		//Let's build the faction unit's array
-
-_group = creategroup _side; 
-_unit = _object;
-for [{_i=0},{_i<4},{_i=_i+1}] do 
-{
-	_type = _unitsArray select round (random 4); 	
-	_spawnPos = (getpos _unit) findEmptyPosition [10,200,(_type select 0)]; 
-	_unit = _group createUnit [_type select 0,_spawnPos,[],0.5,"NONE"];
-	waituntil {alive _unit}; 
-};
-
-[_group, _spawnPos] call bis_fnc_taskDefend;

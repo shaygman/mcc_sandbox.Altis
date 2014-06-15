@@ -27,7 +27,7 @@ class MCCMWDialog
 			x = 0.225 * safezoneW + safezoneX;
 			y = 0.11515 * safezoneH + safezoneY;
 			w = 0.55 * safezoneW;
-			h = 0.736713 * safezoneH;
+			h = 0.76 * safezoneH;
 		};
 
 		class MCCMWDialoglogo: MCC_RscPicture
@@ -58,9 +58,25 @@ class MCCMWDialog
 			action = "MCC_mcc_screen = 2;closeDialog 0;";
 			
 			x = 0.694792 * safezoneW + safezoneX;
-			y = 0.80788 * safezoneH + safezoneY;
+			y = 0.83 * safezoneH + safezoneY;
 			w = 0.0744792 * safezoneW;
 			h = 0.0329871 * safezoneH;
+		};
+		
+				
+		//Generate
+		class MCC_MWGenerate: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\missionWizard\missionWizardInit.sqf'");
+			text = "Generate Mission"; //--- ToDo: Localize;
+			
+			x = 0.45 * safezoneW + safezoneX;
+			y = 0.83 * safezoneH + safezoneY;
+			w = 0.085 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			tooltip = "Generate a mission "; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
 		
 		class MCC_mapBackground : MCC_RscText 

@@ -9,7 +9,7 @@
 // Return - pos
 //========================================================================================================================================================================================
 private ["_missionCenter","_isCQB","_minObjectivesDistance","_positionFound","_maxObjectivesDistance","_newPos","_buildingsArray",
-		 "_farEnough","_range","_flatPos","_buildingsArraySorted","_building","_isBuilding","_objFirstTime","_time"];
+		 "_farEnough","_range","_flatPos","_buildingsArraySorted","_building","_isBuilding","_objFirstTime","_time","_availablePos"];
 
 _missionCenter 			= _this select 0;
 _isCQB 					= _this select 1;
@@ -25,21 +25,23 @@ _time = time + 30;
 while {!_positionFound && time < _time} do
 {
 	//if it is the first time then find objective close to the center
-	if !(_objFirstTime) then
-		{
-			_newPos = [[_missionCenter],["water","out"]] call BIS_fnc_randomPos; //first is whitelist second is blacklist, third is condition
-		}
-		else
-		{
-			_newPos = getpos _missionCenter;
-		};
+	_range = 100;
+	_availablePos = selectBestPlaces [_missionCenter, _range, "2*meadow + hills", 1, 5];
+	
+	while {(count _availablePos) == 0} do 
+	{	
+		_range = _range + 100;
+		_availablePos = selectBestPlaces [_missionCenter, _range, "2*meadow + hills", 1, 5];
+	};
+	
+	_newPos =  [((_availablePos select 0) select 0) select 0, ((_availablePos select 0) select 0) select 1, 0];
 	
 	{
 		_range = (getMarkerPos _x) distance _newPos;
 		if (_range > _minObjectivesDistance) then {_farEnough = true};
 	} foreach MCC_MWObjectiveMarkers;
 	
-	if (_farEnough || (count MCC_MWObjectiveMarkers ==0)) then
+	if (_farEnough || (count MCC_MWObjectiveMarkers == 0)) then
 	{
 		if (_isCQB) then
 		{
@@ -58,21 +60,13 @@ while {!_positionFound && time < _time} do
 		} 
 		else
 		{
-			_flatPos = selectBestPlaces [_newPos, 200, "meadow", 1, 5];
-			/*_flatPos =  _newPos isflatempty [
-												20,							//--- Minimal distance from another object
-												0,								//--- If 0, just check position. If >0, select new one
-												0.3,							//--- Max gradient
-												20,								//--- Gradient area
-												0,								//--- 0 for restricted water, 2 for required water,
-												false							//--- True if some water can be in 25m radius
-											];*/
-			//_flatPos = _newPos isFlatEmpty [2,0,0.3,1,1,true];
+			_flatPos = selectBestPlaces [_newPos, 200,  "2*meadow + hills", 1, 5];
+
 			if ((count _flatPos) != 0) then 
-				{	
-					_positionFound = true;
-					_newPos =  [((_flatPos select 0) select 0) select 0, ((_flatPos select 0) select 0) select 1, 0];
-				};
+			{	
+				_positionFound = true;
+				_newPos =  [((_flatPos select 0) select 0) select 0, ((_flatPos select 0) select 0) select 1, 0];
+			};
 		};
 			
 		if (_positionFound) then

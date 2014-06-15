@@ -21,13 +21,18 @@
 #define MCC_MWPreciseMarkersComboIDC 6020
 #define MCC_MWArtilleryIDC 6021
 
+#define CIVILIANFACTIONCOMBO 6022
+#define MCC_MWAnimalsIDC 6023
+#define MCC_MWBattleGroundIDC 6024
+#define MCC_MCC_MWMusicIDC 6024
+
 class MCC_MWControls: MCC_RscControlsGroup
 {
 	idc = -1;
 	x = 0.230729 * safezoneW + safezoneX;
 	y = 0.5 * safezoneH + safezoneY;
 	w = 0.538542 * safezoneW;
-	h = 0.296884 * safezoneH;
+	h = 0.33 * safezoneH;
 
 	class Controls
 	{
@@ -38,7 +43,7 @@ class MCC_MWControls: MCC_RscControlsGroup
 			colorBackground[] = { 0.150, 0.150, 0.150,1};
 			
 			w = 0.538542 * safezoneW;
-			h = 0.296884 * safezoneH;
+			h = 0.32 * safezoneH;
 		};
 		
 		class MCC_MWTittle: MCC_RscText
@@ -53,40 +58,8 @@ class MCC_MWControls: MCC_RscControlsGroup
 			colorText[] = {0,1,1,1};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
-		class MCC_MWPlayersTittle: MCC_RscText
-		{
-			idc = -1;
-
-			text = "# Players:"; //--- ToDo: Localize;
-			x = 0.00572965 * safezoneW;
-			y = 0.0879658 * safezoneH;
-			w = 0.06875 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWRoadBlockTittle: MCC_RscText
-		{
-			idc = -1;
-
-			text = "Roadblocks:"; //--- ToDo: Localize;
-			x = 0.372396 * safezoneW;
-			y = 0.15394 * safezoneH;
-			w = 0.06875 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWStealthTittle: MCC_RscText
-		{
-			idc = -1;
-
-			text = "Stealth:"; //--- ToDo: Localize;
-			x = 0.00572965 * safezoneW;
-			y = 0.186927 * safezoneH;
-			w = 0.06875 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
 		
+		//Faction
 		class MCC_MWRivalFactionTittle: MCC_RscText
 		{
 			idc = -1;
@@ -113,36 +86,104 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 		};
 		
-		class MCC_MWPlayersCombo: MCC_RscCombo
+		//Civilian
+		class MCC_MWCivilianFactionTittle: MCC_RscText
 		{
-			idc = MCC_MWPlayersIDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'More players = more enemies and larger mission area'";	
+			idc = -1;
+
+			text = "Civilians Faction:"; //--- ToDo: Localize;
+			x = 0.00572965 * safezoneW;
+			y = 0.0879658 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		class MCC_CivilianfactionCombo: MCC_RscCombo
+		{
+			idc = CIVILIANFACTIONCOMBO;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'The civilian faction'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";	
 
 			x = 0.0802087 * safezoneW;
 			y = 0.0879658 * safezoneH;
 			w = 0.0859375 * safezoneW;
 			h = 0.0219914 * safezoneH;
+		};
+		
+		//Players
+		class MCC_MWPlayersTittle: MCC_RscText
+		{
+			idc = -1;
+
+			text = "# Players:"; //--- ToDo: Localize;
+			x = 0.00572965 * safezoneW;
+			y = 0.120953 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
 		
-		class MCC_MWRoadBlockCombo: MCC_RscCombo
+		class MCC_MWPlayersCombo: MCC_RscCombo
 		{
-			idc = MCC_MWRoadBlocksIDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Generates random roadblock on the way to the mission objectives'";	
-			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			idc = MCC_MWPlayersIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWPlayersIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'More players = more enemies and larger mission area';";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";	
 
-			x = 0.446875 * safezoneW;
+			x = 0.0802087 * safezoneW;
+			y = 0.120953 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		//Difficulty
+		class MCC_MWDifficultyTittle: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Difficulty:"; //--- ToDo: Localize;
+			x = 0.00572965 * safezoneW;
+			y = 0.15394 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		class MCC_MWDifficultyCombo: MCC_RscCombo
+		{
+			idc = MCC_MWDifficultyIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWDifficultyIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Harder difficulty means more enemies'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			
+			x = 0.0802087 * safezoneW;
 			y = 0.15394 * safezoneH;
 			w = 0.0859375 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		class MCC_MWStealthCombo: MCC_RscCombo
+		
+		//CQB
+		class MCC_MWCQBTittle: MCC_RscText
 		{
-			idc = MCC_MWStealthIDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'If set to Yes and the change weather is also set to yes will generate a night time mission with alarms triggers'";	
-			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";	
+			idc = -1;
+
+			text = "CQB:"; //--- ToDo: Localize;
+			x = 0.00572965 * safezoneW;
+			y = 0.186927 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		class MCC_MWCQBCombo: MCC_RscCombo
+		{
+			idc = MCC_MWCQBIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWCQBIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Yes means more likely the mission will be set in an urban area with or without enemy units in buildings'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
 			x = 0.0802087 * safezoneW;
 			y = 0.186927 * safezoneH;
@@ -150,6 +191,91 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		//Stealth
+		class MCC_MWStealthTittle: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Stealth:"; //--- ToDo: Localize;
+			x = 0.00572965 * safezoneW;
+			y = 0.219914 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		class MCC_MWStealthCombo: MCC_RscCombo
+		{
+			idc = MCC_MWStealthIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWStealthIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'If set to Yes and the change weather is also set to yes will generate a night time mission with alarms triggers'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";	
+			
+			x = 0.0802087 * safezoneW;
+			y = 0.219914 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		
+		//Precise Markers
+		class MCC_MWPreciseMarkersText: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Precise Locations:"; //--- ToDo: Localize;
+			x = 0.00572965 * safezoneW;
+			y = 0.252902 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+		};
+		
+		class MCC_MWPreciseMarkersCombo: MCC_RscCombo
+		{
+			idc = MCC_MWPreciseMarkersComboIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWPreciseMarkersIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Will the objectives markers spawn directly on the objective or in the vicinity'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			
+			x = 0.0802087 * safezoneW;
+			y = 0.252902 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		//Debug
+		class MCC_MWDebugText: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Show Markers:"; //--- ToDo: Localize;
+			x = 0.00572965 * safezoneW;
+			y = 0.28589 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		class MCC_MWDebugCombo: MCC_RscCombo
+		{
+			idc = MCC_MWDebugComboIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWDebugIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Show/hide debug markers such as IED location exc'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+
+			x = 0.0802087 * safezoneW;
+			y = 0.28589 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		//-------------------------------------------------2 ------------------------------------------------
+		
+		//Objective 1
 		class MCC_MWObjective1Tittle: MCC_RscText
 		{
 			idc = -1;
@@ -161,6 +287,23 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		class MCC_MWObjective1Combo: MCC_RscCombo
+		{
+			idc = MCC_MWObjective1IDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWObjective1Index',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Create the 1st objective'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			
+			x = 0.263542 * safezoneW;
+			y = 0.0549788 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		
+		//Objective 2
 		class MCC_MWObjective2Tittle: MCC_RscText
 		{
 			idc = -1;
@@ -172,6 +315,23 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		class MCC_MWObjective2Combo: MCC_RscCombo
+		{
+			idc = MCC_MWObjective2IDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWObjective2Index',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Create the 2nd objective (If needed)'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			
+			x = 0.263542 * safezoneW;
+			y = 0.0879658 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		
+		//Objective 3
 		class MCC_MWObjective3Tittle: MCC_RscText
 		{
 			idc = -1;
@@ -183,6 +343,22 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		class MCC_MWObjective3Combo: MCC_RscCombo
+		{
+			idc = MCC_MWObjective3IDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWObjective3Index',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Create the 2nd objective (If needed)'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			
+			x = 0.263542 * safezoneW;
+			y = 0.120953 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		//Cars
 		class MCC_MWVehiclesTittle: MCC_RscText
 		{
 			idc = -1;
@@ -194,68 +370,11 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		class MCC_MWDifficultyTittle: MCC_RscText
-		{
-			idc = -1;
-
-			text = "Difficulty:"; //--- ToDo: Localize;
-			x = 0.00572965 * safezoneW;
-			y = 0.120953 * safezoneH;
-			w = 0.06875 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWDifficultyCombo: MCC_RscCombo
-		{
-			idc = MCC_MWDifficultyIDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Harder difficulty means more enemies'";	
-			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
-			x = 0.0802087 * safezoneW;
-			y = 0.120953 * safezoneH;
-			w = 0.0859375 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWObjective1Combo: MCC_RscCombo
-		{
-			idc = MCC_MWObjective1IDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Create the 1st objective'";	
-			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
-			
-			x = 0.263542 * safezoneW;
-			y = 0.0549788 * safezoneH;
-			w = 0.0859375 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWObjective2Combo: MCC_RscCombo
-		{
-			idc = MCC_MWObjective2IDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Create the 2nd objective (If needed)'";	
-			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
-			
-			x = 0.263542 * safezoneW;
-			y = 0.0879658 * safezoneH;
-			w = 0.0859375 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWObjective3Combo: MCC_RscCombo
-		{
-			idc = MCC_MWObjective3IDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Create the 2nd objective (If needed)'";	
-			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
-			
-			x = 0.263542 * safezoneW;
-			y = 0.120953 * safezoneH;
-			w = 0.0859375 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
 		class MCC_MWVehiclesCombo: MCC_RscCombo
 		{
 			idc = MCC_MWVehiclesIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWVehiclesIndex',_this select 1]";
 			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Will there be vehicles patrolling the area'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
@@ -265,6 +384,9 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		
+		//Armor
 		class MCC_MWArmorTittle: MCC_RscText
 		{
 			idc = -1;
@@ -276,9 +398,11 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+				
 		class MCC_MWArmorCombo: MCC_RscCombo
 		{
 			idc = MCC_MWArmorIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWArmorIndex',_this select 1]";
 			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Will there be armored vehicles patrolling the area'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
@@ -288,6 +412,10 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		
+		
+		//Reonforcment
 		class MCC_MWReinforcementTittle: MCC_RscText
 		{
 			idc = -1;
@@ -302,6 +430,7 @@ class MCC_MWControls: MCC_RscControlsGroup
 		class MCC_MWReinforcementCombo: MCC_RscCombo
 		{
 			idc = MCC_MWReinforcementIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWReinforcementIndex',_this select 1]";
 			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'After a certain amount of enemy units killed a reinforcement will come'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 
@@ -311,6 +440,10 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		
+		
+		//Artilllery
 		class MCC_MWArtilleryTittle: MCC_RscText
 		{
 			idc = -1;
@@ -322,9 +455,11 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
 		class MCC_MWArtilleryCombo: MCC_RscCombo
 		{
 			idc = MCC_MWArtilleryIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWArtilleryIndex',_this select 1]";
 			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Will spawn artillery units to support the enemy units in the area'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
@@ -334,52 +469,35 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		class MCC_MWPreciseMarkersText: MCC_RscText
+		
+		//Music
+		class MCC_MWMusicText: MCC_RscText
 		{
 			idc = -1;
 
-			text = "Precise Locations:"; //--- ToDo: Localize;
-			x = 0.00572965 * safezoneW;
-			y = 0.219914 * safezoneH;
+			text = "Music:"; //--- ToDo: Localize;
+			x = 0.189063 * safezoneW;
+			y = 0.28589 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		class MCC_MWPreciseMarkersCombo: MCC_RscCombo
+		class MCC_MWMusicCombo: MCC_RscCombo
 		{
-			idc = MCC_MWPreciseMarkersComboIDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Will the objectives markers spawn directly on the objective or in the vicinity'";	
+			idc = MCC_MCC_MWMusicIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWMusicIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Play music on start'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
-			x = 0.0802087 * safezoneW;
-			y = 0.219914 * safezoneH;
+			x = 0.263542 * safezoneW;
+			y = 0.28589 * safezoneH;
 			w = 0.0859375 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		class MCC_MWDebugText: MCC_RscText
-		{
-			idc = -1;
-
-			text = "Show Markers:"; //--- ToDo: Localize;
-			x = 0.00572965 * safezoneW;
-			y = 0.252902 * safezoneH;
-			w = 0.06875 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWDebugCombo: MCC_RscCombo
-		{
-			idc = MCC_MWDebugComboIDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Show/hide debug markers such as IED location exc'";	
-			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
-
-			x = 0.0802087 * safezoneW;
-			y = 0.252902 * safezoneH;
-			w = 0.0859375 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
+		
+		//--------------------------------------------------- 3---------------------------------------------------------------------------
+		//IED
 		class MCC_MWIEDTittle: MCC_RscText
 		{
 			idc = -1;
@@ -391,6 +509,23 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		class MCC_MWIEDCombo: MCC_RscCombo
+		{
+			idc = MCC_MWIEDIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWIEDIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Spawn random IEDs charges and ambushes in the mission area'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			
+			x = 0.446875 * safezoneW;
+			y = 0.0549788 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		
+		//Suicide Bomber
 		class MCC_MWSBTittle: MCC_RscText
 		{
 			idc = -1;
@@ -402,6 +537,22 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.65)";
 		};
+				
+		class MCC_MWSBCombo: MCC_RscCombo
+		{
+			idc = MCC_MWSBIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWSBIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Spawn some random suicide bombers in the mission area'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			
+			x = 0.446875 * safezoneW;
+			y = 0.0879658 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		//Armmed Civilian
 		class MCC_MWArmedCiviliansTittle: MCC_RscText
 		{
 			idc = -1;
@@ -413,44 +564,11 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.65)";
 		};
-		class MCC_MWCQBTittle: MCC_RscText
-		{
-			idc = -1;
-
-			text = "CQB:"; //--- ToDo: Localize;
-			x = 0.00572965 * safezoneW;
-			y = 0.15394 * safezoneH;
-			w = 0.06875 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWIEDCombo: MCC_RscCombo
-		{
-			idc = MCC_MWIEDIDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Spawn random IEDs charges and ambushes in the mission area'";	
-			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
-			
-			x = 0.446875 * safezoneW;
-			y = 0.0549788 * safezoneH;
-			w = 0.0859375 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWSBCombo: MCC_RscCombo
-		{
-			idc = MCC_MWSBIDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Spawn some random suicide bombers in the mission area'";	
-			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
-			
-			x = 0.446875 * safezoneW;
-			y = 0.0879658 * safezoneH;
-			w = 0.0859375 * safezoneW;
-			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
+		
 		class MCC_MWArmedCiviliansCombo: MCC_RscCombo
 		{
 			idc = MCC_MWArmedCiviliansIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWArmedCiviliansIndex',_this select 1]";
 			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Spawn some random hostile civilians in the mission area'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
@@ -460,25 +578,69 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		class MCC_MWCQBCombo: MCC_RscCombo
+		
+		//RoadBlock
+		class MCC_MWRoadBlockTittle: MCC_RscText
 		{
-			idc = MCC_MWCQBIDC;
-			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Yes means more likely the mission will be set in an urban area with or without enemy units in buildings'";	
+			idc = -1;
+
+			text = "Roadblocks:"; //--- ToDo: Localize;
+			x = 0.372396 * safezoneW;
+			y = 0.15394 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		class MCC_MWRoadBlockCombo: MCC_RscCombo
+		{
+			idc = MCC_MWRoadBlocksIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWRoadBlockIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Generates random roadblock on the way to the mission objectives'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
-			
-			x = 0.0802087 * safezoneW;
+
+			x = 0.446875 * safezoneW;
 			y = 0.15394 * safezoneH;
 			w = 0.0859375 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		//Animals
+		class MCC_MWAnimalsText: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Animals:"; //--- ToDo: Localize;
+			x = 0.372396 * safezoneW;
+			y = 0.186927 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		class MCC_MWAnimalsCombo: MCC_RscCombo
+		{
+			idc = MCC_MWAnimalsIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWAnimalsIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Spawn animals on the battlefield'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			
+			x = 0.446875 * safezoneW;
+			y = 0.186927 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		//Weather		
 		class MCC_MWWeatherText: MCC_RscText
 		{
 			idc = -1;
 
 			text = "Time/Weather:"; //--- ToDo: Localize;
 			x = 0.372396 * safezoneW;
-			y = 0.186927 * safezoneH;
+			y = 0.219914 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
@@ -486,22 +648,52 @@ class MCC_MWControls: MCC_RscControlsGroup
 		class MCC_MWWeatherCombo: MCC_RscCombo
 		{
 			idc = MCC_MWWeatherComboIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWWeatherIndex',_this select 1]";
 			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Will randomly change the weather acording to mission in hand'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
 			x = 0.446875 * safezoneW;
-			y = 0.186927 * safezoneH;
+			y = 0.219914 * safezoneH;
 			w = 0.0859375 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
+		
+		//BattleGround		
+		class MCC_MWBattleGroundText: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Atmosphere:"; //--- ToDo: Localize;
+			x = 0.372396 * safezoneW;
+			y = 0.252902 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		class MCC_MWBattleGroundCombo: MCC_RscCombo
+		{
+			idc = MCC_MWBattleGroundIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWBattleGroundIndex',_this select 1]";
+			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Randomly change the atmosphere of the battlefield'";	
+			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
+			
+			x = 0.446875 * safezoneW;
+			y = 0.252902 * safezoneH;
+			w = 0.0859375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		
+		
+		//Area
 		class MCC_MWAreaText: MCC_RscText
 		{
 			idc = -1;
 
 			text = "Area:"; //--- ToDo: Localize;
 			x = 0.372396 * safezoneW;
-			y = 0.219914 * safezoneH;
+			y = 0.28589 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
@@ -509,26 +701,14 @@ class MCC_MWControls: MCC_RscControlsGroup
 		class MCC_MWAreaCombo: MCC_RscCombo
 		{
 			idc = MCC_MCC_MWAreaComboIDC;
+			onLBSelChanged = "profileNamespace setVariable ['MCC_MWAreaIndex',_this select 1]";
 			onSetFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText 'Will randomly generate the mission in the specific zone area or the entire map (Choose zone option for ArmA2 maps)'";	
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
 			x = 0.446875 * safezoneW;
-			y = 0.219914 * safezoneH;
+			y = 0.28589 * safezoneH;
 			w = 0.0859375 * safezoneW;
 			h = 0.0219914 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-		};
-		class MCC_MWGenerate: MCC_RscButton
-		{
-			idc = -1;
-			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\missionWizard\missionWizardInit.sqf'");
-
-			text = "Generate Mission"; //--- ToDo: Localize;
-			x = 0.401042 * safezoneW;
-			y = 0.252902 * safezoneH;
-			w = 0.101985 * safezoneW;
-			h = 0.0340016 * safezoneH;
-			tooltip = "Generate a mission "; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
 	};

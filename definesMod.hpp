@@ -326,6 +326,31 @@ class CfgFunctions
 			{
 				description = "Create an ambush group.";
 			};
+			
+			class createIED
+			{
+				description = "Create the IED mechanic.";
+			};
+			
+			class manageAmbush
+			{
+				description = "Manage ambush behavior in a group.";
+			};
+			
+			class manageAC
+			{
+				description = "Manage armed civilian behavior.";
+			};
+			
+			class SBSingle
+			{
+				description = "Place suicide bomber.";
+			};
+			
+			class manageSB
+			{
+				description = "Manage SB bomber behavior.";
+			};
 		};
 		
 		class cas
@@ -517,6 +542,11 @@ class CfgFunctions
 			class MWSpawnStatic
 			{
 				description = "Spawn static weapons in the zone.";
+			};
+			
+			class customTasks
+			{
+				description = "Manage custom tasks.";
 			};
 		};
 		

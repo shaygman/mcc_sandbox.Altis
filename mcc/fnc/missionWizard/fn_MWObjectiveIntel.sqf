@@ -79,6 +79,7 @@ else		//Not CQB
 //Pick Item 
 _init = '_this call MCC_fnc_pickItem'; 
 [[[netID _object,_object], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+MCC_curator addCuratorEditableObjects [[_object],false]; 
 
 //Start Briefings
 [_object,"pick_intel",_preciseMarkers] call MCC_fnc_MWCreateTask; 

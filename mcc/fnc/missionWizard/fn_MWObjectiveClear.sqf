@@ -7,16 +7,14 @@
 //_faction = enemy Faction
 // Return - nothing
 //========================================================================================================================================================================================
-private ["_objPos","_isCQB","_side","_faction","_preciseMarkers","_trg","_range","_doc","_sidePlayer","_name"];
+private ["_objPos","_isCQB","_side","_faction","_preciseMarkers","_range","_doc","_sidePlayer"];
 
-_objPos = _this select 0;
-_isCQB = _this select 1;
-_side = _this select 2;
-_faction = _this select 3;
-_sidePlayer = _this select 4;
+_objPos 		= _this select 0;
+_isCQB 			= _this select 1;
+_side 			= _this select 2;
+_faction 		= _this select 3;
+_sidePlayer 	= _this select 4;
 _preciseMarkers = _this select 5;
-
-_name = format ["%1", ["MCCMWClearObjective_",1] call bis_fnc_counter]; 
 
 if (_isCQB) then
 {
@@ -40,26 +38,5 @@ else
 
 sleep 2;
 
-//Create Trigger
-_trg= createTrigger["EmptyDetector",_objPos];
-_trg setTriggerArea[_range,_range,0,false];
-_trg setTriggerActivation [str _side, "NOT PRESENT",false];
-
-//Create Marker
-[1, "ColorRed",[_range*1.5,_range*1.5], "ELLIPSE", "DiagGrid", "Empty", ("clearArea" + _name), _objPos] call MCC_fnc_makeMarker;
-
 //Create Task
-[_trg,"clear_area",_preciseMarkers] call MCC_fnc_MWCreateTask; 
-
-
-//Waituntil there are no more enemy units in the area
-[_trg,_name] spawn 
-{
-	private ["_trg"];
-	_trg 		= _this select 0;
-	_name		= _this select 1;
-	
-	while {!(triggeractivated _trg)} do {sleep 5}; 
-	deleteVehicle _trg;
-	[2, "",[], "", "", "Empty", _name, []] call MCC_fnc_makeMarker;
-};
+[_objPos,"clear_area",_preciseMarkers] call MCC_fnc_MWCreateTask; 

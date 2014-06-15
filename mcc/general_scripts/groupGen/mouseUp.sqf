@@ -36,39 +36,11 @@ if (mcc_missionmaker == (name player)) then
 		{
 			hint "Ambush Captured."; 
 			MCC_capture_var = MCC_capture_var 
-					+ FORMAT ["[[%1 , '%2' , '%3', %4, %5, %6, %7, %8],'MCC_fnc_ambushSingle',true,false] call BIS_fnc_MP;", MCC_pointA, IEDAmbushspawnname, mcc_sidename, IedName, IEDDir, MCC_pointB, MCC_IEDisSpotter, iedside]
-					+ FORMAT ["_eib_marker = createMarkerlocal [%2 select 0 ,%1];", MCC_pointA, IedName]
-					+         "_eib_marker setMarkerTypelocal 'mil_ambush';"
-					+         "_eib_marker setMarkerColorlocal 'ColorRed';"		  
-					+ FORMAT ["_eib_marker setMarkerTextlocal [%1 select 0];",IedName]
-					+ FORMAT ["_eib_marker setMarkerdirlocal (%1 -90);",IEDDir];
+					+ FORMAT ["[[%1 , '%2' , '%3', %4, %5, %6, %7, %8],'MCC_fnc_ambushSingle',true,false] call BIS_fnc_MP;", MCC_pointA, IEDAmbushspawnname, mcc_sidename, IedName, IEDDir, MCC_pointB, MCC_IEDisSpotter, iedside];
 		} 
 		else 
 		{
 			hint "Ambush Placed."; 
-				_eib_marker = createMarkerlocal [IedName select 0 ,MCC_pointA];
-				_eib_marker setMarkerTypelocal "mil_ambush";
-				_eib_marker setMarkerColorlocal "ColorRed";
-				_eib_marker setMarkerTextlocal (IedName select 0);
-				_eib_marker setMarkerdirlocal IEDDir-90;
-				mcc_safe=mcc_safe + FORMAT ["
-				[[%1 , '%2' , '%3', %4, %5, %6, %7, %8],'MCC_fnc_ambushSingle',false,false] call BIS_fnc_MP;
-				sleep 1;
-				_eib_marker = createMarkerlocal [%4 select 0 ,%1];
-				_eib_marker setMarkerTypelocal 'mil_ambush';
-				_eib_marker setMarkerColorlocal 'ColorRed';
-				_eib_marker setMarkerTextlocal (%4 select 0);
-				_eib_marker setMarkerdirlocal %5 -90;
-				"							 
-				, MCC_pointA
-				, IEDAmbushspawnname
-				, mcc_sidename
-				, IedName
-				, IEDDir
-				, MCC_pointB
-				, MCC_IEDisSpotter
-				, iedside
-				];
 			[[MCC_pointA , IEDAmbushspawnname,mcc_sidename, IedName, IEDDir, MCC_pointB, MCC_IEDisSpotter, iedside],"MCC_fnc_ambushSingle",false,false] call BIS_fnc_MP;
 		};
 		
@@ -78,22 +50,12 @@ if (mcc_missionmaker == (name player)) then
 	if (_shift && _pressed!=1) exitWith //Sync with shift key
 	{
 		MCC_pointB = _ctrl ctrlmapscreentoworld [_posX,_posY];
-		_nearObjectsA = MCC_pointA nearObjects ["bomb",50];
-		_nearObjectsB = MCC_pointB nearObjects ["bomb",50];
+		_nearObjectsA = MCC_pointA nearObjects [MCC_dummy,50];
+		_nearObjectsB = MCC_pointB nearObjects [MCC_dummy,50];
+		
 		if (count _nearObjectsA > 0 && count _nearObjectsB > 0) then
 		{
-			MCC_IEDLineCount = MCC_IEDLineCount +1;
-			[MCC_pointA,MCC_pointB,MCC_IEDLineCount] call MCC_fnc_drawLine;
-			mcc_safe=mcc_safe + FORMAT ["
-			[[%1,%2,%3],'MCC_fnc_iedSync',true,false] call BIS_fnc_MP;
-			sleep 2;
-			[%1,%2,%3] call MCC_fnc_drawLine;
-			"							 
-			, MCC_pointA
-			, MCC_pointB
-			, MCC_IEDLineCount
-			];
-			[[MCC_pointA , MCC_pointB, MCC_IEDLineCount],"MCC_fnc_iedSync",true,false] call BIS_fnc_MP;
+			[[MCC_pointA , MCC_pointB],"MCC_fnc_iedSync",true,false] call BIS_fnc_MP;
 		};
 	};
 };

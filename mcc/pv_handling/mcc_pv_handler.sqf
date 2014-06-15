@@ -65,6 +65,7 @@ if (isServer) then
 if ( MCC_isLocalHC ) then 
 {
 	mcc_setup_hc ={_this call my_pv_handler};
+	if (isnil "MCC_Chat") then {MCC_Chat = true};
 	diag_log format ["Added 'mcc_setup_hc' EventHandler for HeadLess Client"];
 };
 	

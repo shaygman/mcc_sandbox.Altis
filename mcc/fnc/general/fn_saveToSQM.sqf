@@ -7,14 +7,15 @@
 //     <Nothing>
 //==============================================================================================================================================================================	
  private ["_arrayGroups","_triggersArray","_allItems","_simItems","_logicItems","_arrayVehicles","_mission","_br","_object","_side","_array","_pos","_count",
-          "_seed","_newString","_finalString","_checkedGroups","_isKindofUnit","_saveAll"];
+          "_seed","_newString","_finalString","_checkedGroups","_isKindofUnit","_saveAll","_allCuratorObjectives","_class"];
  
 _saveAll = _this select 0;
 _br = toString [0x0D, 0x0A];
 
-_checkedGroups	= []; 
-_arrayGroups 	= [];
-_arrayVehicles 	= [];
+_checkedGroups		= []; 
+_arrayGroups 		= [];
+_arrayVehicles 		= [];
+_allCuratorObjectives 	= [];
 _seed			= str (random 100000);
 
 if (_saveAll) then
@@ -23,6 +24,13 @@ if (_saveAll) then
 	_simItems		= allMissionObjects "WeaponHolderSimulated";
 	_triggersArray 	= allMissionObjects "EmptyDetector";
 	_logicItems		= allMissionObjects "logic";
+	
+	{
+		if (typeOf _x in ["ModuleObjective_F","ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"]) then
+		{
+			_allCuratorObjectives set [count _allCuratorObjectives, _x];
+		};
+	} foreach _logicItems;
 
 	_allItems 		= _allItems - _simItems;
 	_allItems 		= _allItems - _logicItems;
@@ -30,6 +38,15 @@ if (_saveAll) then
 else
 {
 	_allItems		= curatorEditableObjects MCC_curator;
+	
+	{
+		if (typeOf _x in ["ModuleObjective_F","ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"]) then
+		{
+			_allCuratorObjectives set [count _allCuratorObjectives, _x];
+		};
+	} foreach _allItems;
+	
+	_allItems = _allItems - _allCuratorObjectives;
 	_triggersArray 	= MCC_triggers;
 };
 
@@ -116,12 +133,110 @@ _mission = _mission
 _mission = _mission		
 		+ "    class Groups" + _br
 		+ "    {" + _br
-		+ format ["        items= %1;", count _arrayGroups] + _br;
+		+ format ["        items= %1;", (count _arrayGroups + count _allCuratorObjectives)] + _br;
  
 //Groups
-private ["_group","_groupCounter","_blackListVehicles","_refinedGroup"]; 
+private ["_group","_groupCounter","_blackListVehicles","_refinedGroup","_attachedUnit","_attachedUnitInit","_newName","_init","_desc","_owners"]; 
 _count = 0;
 _countID = 0;
+
+if (count _allCuratorObjectives > 0) then 
+{
+	{
+		_object 	= _x;
+		_class		= typeOf _x;
+		_pos		= getpos _object;
+		_mission = _mission 
+				 + format ["        class Item%1", _count] + _br
+				 +         "        {" + _br
+				 +         "              side= ""LOGIC"";" + _br
+				 +         "              class Vehicles" + _br
+				 +         "              {" + _br
+				 + 		   "                   items=1;" + _br
+				 +         "                   class Item0" + _br
+				 +         "                   {" + _br
+				 + format ["                       position[]={%1,%3,%2};", _pos select 0, _pos select 1, _pos select 2] + _br
+				 + format ["                       id=%1;", _countID] + _br
+				 +         "                       side= ""LOGIC"";"  + _br
+				 + format ["                       vehicle=""%1"";", typeof _object] + _br
+				 +         "                       leader= 1;"  + _br
+				 +         "                       lock= ""UNLOCKED"";"  + _br
+				 +         "                       skill= 0.6;"  + _br;
+				 
+		if (!isnil {_object getvariable "text"}) then 
+		{
+			_mission = _mission 
+				+ format ["                       text=""%1"";", (_object getvariable "text")] + _br;
+		};
+		
+		_attachedUnit = _object getvariable ["bis_fnc_curatorAttachObject_object",objnull];
+
+		if (!isnull _attachedUnit) then
+		{
+			_attachedUnitInit = _attachedUnit getvariable ["vehicleinit",""]; 
+			_newName = format ["MCC_objectUnits_%1", ["MCC_objectUnitsCounter",1] call bis_fnc_counter];
+			_init = format [";%1 = _this;", _newName];
+			_attachedUnit setVariable ["vehicleinit",_attachedUnitInit + _init]; 
+		}
+		else
+		{
+			_newName = -1; 
+		};
+		
+		_desc 	= [_object,"RscAttributeTaskDescription",["","", ""]] call bis_fnc_getServerVariable;
+		
+		_owners = format ["%1",_object getVariable ["RscAttributeOwners",[]]];
+		_owners = [_owners, "WEST", "west"] call MCC_fnc_replaceString;
+		_owners = [_owners, "EAST", "east"] call MCC_fnc_replaceString;
+		_owners = [_owners, "GUER", "resistance"] call MCC_fnc_replaceString; 
+		_owners = [_owners, "CIV", "civilian"] call MCC_fnc_replaceString; 
+		
+		_init = 	format ["this setVariable ['RscAttributeOwners',%1];", _owners] 
+						+ 	format ["[this,'RscAttributeTaskDescription',['%1','%2','%3']] call bis_fnc_setServerVariable;", _desc select 0, _desc select 1, _desc select 2];
+
+		
+		if (_class in ["ModuleObjective_F"]) then
+		{
+			_init = 		format ["this setVariable ['RscAttributeTaskState','%1'];", _object getVariable ["RscAttributeTaskState","created"]] 
+						+ 	format ["this setVariable ['RscAttributeTaskDestination',%1];", _object getVariable ["RscAttributeTaskDestination",0]];
+		};
+		
+		if ((_object getVariable ["customTask",""]) != "") then
+		{
+			_init = _init +	format ["this setVariable ['customTask','%1'];", _object getVariable ["customTask",""]] 
+				          +     	"[this] spawn MCC_fnc_customTasks;"
+		};
+		
+		if (!isnull _attachedUnit) then 
+		{
+			_init = _init +	format ["waituntil {alive %1};", _newName]
+						  +	format ["this setVariable ['bis_fnc_curatorAttachObject_object',%1];",_newName]
+						  + 	    "this setVariable ['updated',true];";
+		}
+		else
+		{
+			_init = _init 
+					+ 	"this setVariable ['updated',true];";
+		};
+				
+		_mission = _mission 
+				+ format ["                       init=""%1"";", _init] + _br;
+
+					
+		
+		
+		_mission = _mission 
+				+         "                  };" + _br
+				+         "              };" + _br
+				+         "			};" + _br;
+			
+							
+			
+			_countID = _countID + 1;
+			_count = _count + 1;
+		  
+	} forEach _allCuratorObjectives;
+};
 
 if (count _arrayGroups > 0) then 
 {

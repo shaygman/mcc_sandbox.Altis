@@ -74,22 +74,17 @@ if (mcc_missionmaker == (name player)) then
 	if (_shift && _pressed!=1) then //Sync with shift key
 		{
 		MCC_pointB = _ctrl ctrlmapscreentoworld [_posX,_posY];
-		_nearObjectsA = MCC_pointA nearObjects ["bomb",50];
-		_nearObjectsB = MCC_pointB nearObjects ["bomb",50];
+		_nearObjectsA = MCC_pointA nearObjects [MCC_dummy,50];
+		_nearObjectsB = MCC_pointB nearObjects [MCC_dummy,50];
 		if (count _nearObjectsA > 0 && count _nearObjectsB > 0) then
 			{
-			MCC_IEDLineCount = MCC_IEDLineCount +1;
-			[MCC_pointA,MCC_pointB,MCC_IEDLineCount] call MCC_fnc_drawLine;
-			mcc_safe=mcc_safe + FORMAT ["
-			[[%1,%2,%3],'MCC_fnc_iedSync',true,false] call BIS_fnc_MP;
-			sleep 2;
-			[%1,%2,%3] call MCC_fnc_drawLine;
-			"							 
-			, MCC_pointA
-			, MCC_pointB
-			, MCC_IEDLineCount
-			];
-			[[MCC_pointA , MCC_pointB, MCC_IEDLineCount],"MCC_fnc_iedSync",true,false] call BIS_fnc_MP;
+				mcc_safe=mcc_safe + FORMAT ["
+				[[%1,%2,%3],'MCC_fnc_iedSync',true,false] call BIS_fnc_MP;
+				"							 
+				, MCC_pointA
+				, MCC_pointB
+				];
+				[[MCC_pointA , MCC_pointB],"MCC_fnc_iedSync",true,false] call BIS_fnc_MP;
 			};
 		};
 	};

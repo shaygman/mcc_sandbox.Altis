@@ -68,17 +68,26 @@ if (_isCQB) then
 				{
 					//Hostage
 					_unitsArray	= [_factionPlayer ,"soldier"] call MCC_fnc_makeUnitsArray;		//Let's build the faction unit's array
-					_type = _unitsArray call BIS_fnc_selectRandom;	
+					_type = "";
+					
+					//Karts again?!   
+					while {_type iskindof "C_Driver_1_F" || _type == ""} do
+					{
+						_type = _unitsArray call BIS_fnc_selectRandom;	
+					};
+		
 					_unit = [_sidePlayer,_spawnPos,_type] call MCC_MWcreateHostage;
 					waituntil {alive _unit}; 
 					
+					/*
 					MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Secure HVT',%2] call MCC_fnc_MWCreateTask;
 										 "
 										 ,MCC_tempName,
 										 _preciseMarkers
 										 ];
-			
-					[_unit,"Secure HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
+					*/
+					
+					[_unit,"Secure_HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
 				}
 				else
 				{
@@ -90,16 +99,18 @@ if (_isCQB) then
 							case resistance:  {_type =   MCC_MWHVT select 2};
 							default {_type =   MCC_MWHVT select 3};
 						};
-					_unit = [_spawnPos, _type, _sidePlayer,"",random 360] call MCC_fnc_ACSingle;
+					_unit = [_spawnPos, _type, _sidePlayer,"Armed Civilian",random 360,true] call MCC_fnc_ACSingle;
 					waituntil {alive _unit}; 
 					
+					/*
 					MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Kill HVT',%2] call MCC_fnc_MWCreateTask;
 										 "
 										 ,MCC_tempName,
 										 _preciseMarkers
 										 ];
-			
-					[_unit,"Kill HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
+					*/
+					
+					[_unit,"Kill_HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
 				};
 					
 				_unitPlaced = true; 
@@ -130,13 +141,15 @@ if (_isCQB) then
 			//Start Briefings
 			waituntil {alive _unit}; 
 			
-			MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Secure HVT',%2] call MCC_fnc_MWCreateTask;
+			/*
+			MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Secure_HVT',%2] call MCC_fnc_MWCreateTask;
 										 "
 										 ,MCC_tempName,
 										 _preciseMarkers
 										 ];
+			*/
 			
-			[_unit,"Secure HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
+			[_unit,"Secure_HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
 			
 			//Static Patrol
 			_walking = false; 
@@ -171,17 +184,19 @@ if (_isCQB) then
 			}
 			else
 			{
-				_unit = [_spawnPos, _type, _sidePlayer,"",random 360] call MCC_fnc_ACSingle;
+				_unit = [_spawnPos, _type, _sidePlayer,"Armed Civilian",random 360,true] call MCC_fnc_ACSingle;
 			};
 			
+			/*
 			//Start Briefings
-			MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Kill HVT',%2] call MCC_fnc_MWCreateTask;
+			MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Kill_HVT',%2] call MCC_fnc_MWCreateTask;
 											 "
 											 ,MCC_tempName,
 											 _preciseMarkers
 											 ];
-											 
-			[_unit,"Kill HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
+			*/
+			
+			[_unit,"Kill_HVT",_preciseMarkers] call MCC_fnc_MWCreateTask; 
 		};
 				
 		//Lets spawn some body guards

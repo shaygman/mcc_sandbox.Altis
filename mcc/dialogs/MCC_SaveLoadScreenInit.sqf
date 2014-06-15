@@ -21,5 +21,6 @@ _comboBox = _mccdialog displayCtrl MCC_SAVE_LIST;
 	} foreach (profileNamespace getVariable "MCC_save");
 _comboBox lbSetCurSel MCC_saveIndex;
 
+ctrlSetText [MCC_SAVE_NAME, (missionnamespace getvariable ["bis_fnc_moduleMissionName_name",""])];
 ctrlSetText [MCC_SAVE_DIS,(((profileNamespace getVariable "MCC_saveFiles") select MCC_saveIndex) select 0)];
 

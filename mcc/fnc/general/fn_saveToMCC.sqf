@@ -131,7 +131,7 @@ if (count _curatorObjectives > 0) then
 			
 			case (_class in ["ModuleObjective_F"]): 
 			{
-				_tempArray = ["ModuleObjective_F", getpos _x, _newName, str (_x getvariable ["RscAttributeOwners",[]]) ,_x getvariable ["RscAttributeTaskState","created"], _x getvariable ["RscAttributeTaskDestination",0],[_x,"RscAttributeTaskDescription",["","", ""]] call bis_fnc_getServerVariable];
+				_tempArray = ["ModuleObjective_F", getpos _x, _newName, str (_x getvariable ["RscAttributeOwners",[]]) ,_x getvariable ["RscAttributeTaskState","created"], _x getvariable ["RscAttributeTaskDestination",0],[_x,"RscAttributeTaskDescription",["","", ""]] call bis_fnc_getServerVariable, _x getVariable ["customTask",""]];
 			};
 			
 			case (_class in ["ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"]): 
@@ -189,7 +189,10 @@ private ["_group","_blackListVehicles","_refinedGroup","_tempArray","_groupArray
 		{
 			_object = _x; 
 			_pos 	= getPos _object;
-			_tempArray = [typeof _object, _pos, getDir _object, rank _object,skill _object, damage _object, fuel vehicle _object,_object getvariable ["vehicleinit",""]];
+			_init 	= _object getvariable ["vehicleinit",""];
+			if (_object getVariable ["isIED",false]) then {_init = _init + FORMAT [";_this setVariable ['syncedObject', %1];",_object getVariable ["syncedObject", [0,0,0]]]}; 
+			
+			_tempArray = [typeof _object, _pos, getDir _object, rank _object,skill _object, damage _object, fuel vehicle _object, _init];
 
 			if (count crew _object > 0) then
 			{
@@ -275,6 +278,8 @@ if ((count _arrayVehicles) > 0) then
 		_pos 	= getPos _object;
 		_type 	= typeof _object;
 		_init 	= _object getvariable ["vehicleinit",""];
+		
+		if (_object getVariable ["isIED",false]) then {_init = _init + FORMAT [";_this setVariable ['syncedObject', %1];",_object getVariable ["syncedObject", [0,0,0]]]}; 
 		
 		if (!isnil "_type") then
 		{

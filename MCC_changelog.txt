@@ -1,7 +1,33 @@
 Change log r6:
-- Added: Save Mission Wizard objectives to MCC save. 
+- Added: Set MCC keys from the login menu - for players who are not the mission maker.
+- Added: Two more levels of terrain detail (grass).
+- Added: Terrain detail and view distance preferences will be saved to user profile automatically.  
+- Added: Mission Wizard presets will be saved to profile name. 
+- Added: Armed civilians will patrol the area and be much more aggressive also they now have SMG. 
+- Added: Save to SQM will save Zeus or MCC Mission Wizard objectives (the zeus sector and attack defends objectives not included). 
+- Added: Mission Wizards will completely save including objectives reinforcment exc, objectives can be edited by Zeus in game.
+- Added: You can now select the civilians faction in Mission Wizard. 
+
+- Changed: Zones can be loaded changed and re-saved again and again. 
+- Changed: MCC Mission Wizard objectives added: "Destroy Vehicle","Destroy AA", "Destroy Artillery", "Destroy Weapon Cahce", "Destroy Fuel Depot", "Destroy Radar/Radio",
+- Changed: By default MCC keys will be: 
+	- Open MCC: Ctrl + Delete
+	- Open MCC Console: Ctrl + End
+	- Teleport 2 Team: Alt + T
+- Changed: Traps, IED, suicide bombers, armed civilians and ambushes will be under Zeus control and can be edited and moved and saved/loaded after they have been edited. 
+	
+- Fixed: Failing the mission if enabling roles.
 - Fixed: Groups respawn after loading a mission. 
 - Fixed: Zeus respawn template makes AI hostile to player. 
+- Fixed: Supply drop for ammoboxes was buggy. 
+- Fixed: Karts and karts drivers spawns in garrison and mission wizard. 
+- Fixed: Cargo system didn't actually clear the box cargo when "Clear" pressed. 
+- Fixed: Hidden IED auto reveal for the mission maker side. 
+
+
+TODO save markers
+TODO Populate car preset
+TODO civilians behavior
 
 Change log r5:
 - Fixed: MCC key bindings moved to MCC mission's settings so it can be binded from in game to profile and not hard coded. 

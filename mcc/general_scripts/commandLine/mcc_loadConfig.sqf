@@ -33,7 +33,7 @@ MCC_fn_loadZones =
 		script_handler = [0] execVM MCC_path +"mcc\general_scripts\mcc_make_the_marker.sqf";
 		waitUntil {str(getMarkerPos mcc_zone_markername) != "[0,0,0]"};
 		
-		sleep 5;
+		sleep 1;
 		mcc_zone_markername setMarkerColorLocal "colorBlack";
 		mcc_zone_markername setMarkerAlphalocal 0.4; 
 		
@@ -79,7 +79,9 @@ switch (_type) do
 				 +   'MCC_savedWeather = ' + (str((call compile _temp) select 3)) + ';' + _br
 				 +   'MCC_savedTime = ' + (str((call compile _temp) select 4)) + ';' + _br
 				 +   'MCC_savedZones = ' + MCC_savedZones + ';' + _br
-				 +   '[[MCC_savedObjectives, MCC_savedGroups, MCC_savedVehicles, MCC_savedWeather, MCC_savedTime, MCC_savedZones], "MCC_fnc_loadFromMCC", false, false] spawn BIS_fnc_MP;' + _br;
+				 +   '[MCC_savedZones] spawn MCC_fn_loadZones;' + _br
+				 +   '[[MCC_savedObjectives, MCC_savedGroups, MCC_savedVehicles, MCC_savedWeather, MCC_savedTime], "MCC_fnc_loadFromMCC", false, false] spawn BIS_fnc_MP;' + _br;
+				
 				 
 		MCC_output = MCC_output + mcc_safe;
 		copyToClipboard MCC_output;
@@ -94,14 +96,19 @@ switch (_type) do
 	{
 		_string = ctrlText MCC_SAVE_NAME;
 		if (_string == "" ) exitWith {hint "Mission save failed! Please type a name for your saved mission"};
+		
+		//Give the mission a new name
+		missionnamespace setvariable ["bis_fnc_moduleMissionName_name",_string];
 		MCC_saveNames set [MCC_saveIndex,_string];
 		_string = ctrlText MCC_SAVE_DIS;
 		
 		private ["_temp"];
 		_temp = [] call MCC_fnc_saveToMCC;
 		
+		MCC_savedZones = str [MCC_zones_numbers, mcc_zone_pos, mcc_zone_size, mcc_zone_dir, mcc_zone_locations];
+		MCC_savedZones = [MCC_savedZones, "<null>", "nil"] call MCC_fnc_replaceString;
 
-		MCC_output = [((call compile _temp) select 0),((call compile _temp) select 1),((call compile _temp) select 2),((call compile _temp) select 3),((call compile _temp) select 4), mcc_safe];
+		MCC_output = [((call compile _temp) select 0),((call compile _temp) select 1),((call compile _temp) select 2),((call compile _temp) select 3),((call compile _temp) select 4), call compile MCC_savedZones, mcc_safe];
 		
 		MCC_saveFiles set [MCC_saveIndex,[_string,MCC_output]];
 		profileNamespace setVariable ["MCC_save", MCC_saveNames];
@@ -136,14 +143,16 @@ switch (_type) do
 	case 4: //Load MCC Mission config code to uinamespace
 	{
 		_array = (((profileNamespace getVariable "MCC_saveFiles") select MCC_saveIndex) select 1);
-		_string = _array select 5; 
+		_string = _array select 6; 
+		
 		//Do we have saved objects?
-		if ((count (_array select 0))>0 || (count (_array select 1))>0 || (count (_array select 2))>0 || (count (_array select 3))>0 || (count (_array select 4))>0 || _string != "") then
+		if ((count (_array select 0))>0 || (count (_array select 1))>0 || (count (_array select 2))>0 || (count (_array select 3))>0 || (count (_array select 4))>0 || (count (_array select 5))>0 || _string != "") then
 		{
 			sleep 0.5;
 			closeDialog 0;
 			sleep 0.3;
 			[[_array select 0, _array select 1, _array select 2, _array select 3, _array select 4], "MCC_fnc_loadFromMCC", false, false] spawn BIS_fnc_MP;
+			[(_array select 5)] spawn MCC_fn_loadZones;
 			_command = 'mcc_isloading=true;closedialog 0;titleText ["Loading Mission","BLACK FADED",5];' + _string + 'mcc_isloading=false;titleText ["Mission Loaded","BLACK IN",5];'; 
 
 		[] spawn compile _command;

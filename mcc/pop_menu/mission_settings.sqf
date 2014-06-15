@@ -45,13 +45,15 @@ if (MCC_GUI1initDone) then
 			{
 				_grass = (MCC_grass_array select (lbCurSel MCCGRASSDENSITY)) select 1;
 				setTerrainGrid _grass; 
-				MCC_grass_index = (lbCurSel MCCGRASSDENSITY);
+				MCC_terrainPref set [0,(lbCurSel MCCGRASSDENSITY)];
+				profileNamespace setVariable ["MCC_terrainPref", MCC_terrainPref];
 			}
 		};
 
 		case 2:	//Set viewdistance (CS)
 		{
 		setViewDistance (MCC_view_array select (lbCurSel MCCVIEWDISTANCE));
+		MCC_terrainPref set [1,(lbCurSel MCCVIEWDISTANCE)];
 		};
 	 };
 }; 		

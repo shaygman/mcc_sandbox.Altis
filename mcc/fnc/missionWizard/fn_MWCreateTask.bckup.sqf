@@ -9,10 +9,9 @@
 private ["_obj","_task","_preciseMarker","_type","_stringName","_stringDescription","_pos","_objectName","_missionTime","_missionIntel","_indecator","_capturVar",
       "_stateCond","_name","_missionWherabouts"];
 
-_obj 			= _this select 0;
-_task 			= _this select 1;
-_preciseMarker 	= _this select 2;
-
+_obj = _this select 0;
+_task = _this select 1;
+_preciseMarker = _this select 2;
 _name = FORMAT ["MCCMWObject_%1", ["MCCMWObject_",1] call bis_fnc_counter]; 
 _nameTask = FORMAT ["Objective %1:", ["",1] call bis_fnc_counter]; 
 //Global defines for briefings.    
@@ -41,18 +40,12 @@ _missionWherabouts =
       "close to this location",
       "around here"
    ];
-
-_pos = if (typeName _obj == "OBJECT") then {getpos _obj} else {_obj}; 
- 
-if !(_preciseMarker) then 
-{
-	_pos =  [(_pos select 0) + (random 150 - random 150),(_pos select 1) + (random 150 - random 150),(_pos select 2)];
-};
-		
+   
+_pos = if (_preciseMarker) then {getpos _obj} else {[((getpos _obj) select 0) + (random 150 - random 150),((getpos _obj) select 1) + (random 150 - random 150),((getpos _obj) select 2)]};
 switch (_task) do
 {
    //Hostage
-   case "Secure_HVT":      
+   case "Secure HVT":      
    {
       if (side _obj != civilian) then
       {
@@ -73,10 +66,27 @@ switch (_task) do
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
                              ];
+      
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      //Fail - not alive
+      _capturVar = FORMAT ['[[3, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
+      
+      //Succeed - not hostage
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['(isPlayer leader %1) && (alive %1)', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
 
    //Kill
-   case "Kill_HVT":      
+   case "Kill HVT":      
    {
       if (side _obj != civilian) then
       {
@@ -94,7 +104,19 @@ switch (_task) do
                              , _missionIntel call BIS_fnc_selectRandom
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
-							];
+                             ];
+
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+
+      //---Create A trigger---
+      //Succeed alive
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1 || (isplayer (leader group %1))', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
    
    //destroy_tanks
@@ -109,6 +131,18 @@ switch (_task) do
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
                              ];
+      
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      //Succeed alive
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
    
    //destroy_aa
@@ -123,6 +157,18 @@ switch (_task) do
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
                              ];
+      
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      //Succeed alive
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
    
    //destroy_artillery
@@ -137,6 +183,18 @@ switch (_task) do
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
                              ];
+      
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      //Succeed alive
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
    
    //destroy_cache
@@ -150,8 +208,19 @@ switch (_task) do
                              , _stringName
                              ];
       
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      //Succeed alive
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
-
+   
    //destroy_fuel
    case "destroy_fuel":      
    {
@@ -163,6 +232,17 @@ switch (_task) do
                              , _stringName
                              ];
       
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      //Succeed alive
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
    
    //destroy_radio
@@ -175,6 +255,18 @@ switch (_task) do
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
                              ];
+      
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      //Succeed alive
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
    
    //destroy_radar
@@ -187,6 +279,18 @@ switch (_task) do
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
                              ];
+      
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      //Succeed alive
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
    
    //pick_intel
@@ -201,6 +305,17 @@ switch (_task) do
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
                              ];
+      
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
    
    //clear_area
@@ -212,6 +327,17 @@ switch (_task) do
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
                              ];
+      
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", name _obj, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
    
    //disableIED
@@ -223,58 +349,19 @@ switch (_task) do
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName
                              ];
+      
+      //Create A task
+      [[8, _stringName, _stringDescription, _pos],"MCC_fnc_makeTaks",true,false] call BIS_fnc_MP;
+      
+      //Give it public name
+      [[[netid _obj,_obj], _name], "MCC_fnc_setVehicleName", true, false] call BIS_fnc_MP;
+      
+      //---Create A trigger---
+      _capturVar = FORMAT ['[[2, "%1", "", [0,0,0]],"MCC_fnc_makeTaks",true,false] spawn BIS_fnc_MP;',_stringName];
+      _stateCond = FORMAT ['!alive %1', _name];
+      [0, getpos _obj, [1,1], "NONE", "PRESENT", "RECTANGLE", _name, _capturVar,0,2,_stateCond,""] execVM MCC_path + "mcc\general_scripts\triggers\triggers_execute.sqf";
    };
 };   
-//If it is a clear area task
-if (_task in ["clear_area"]) then
-{
-	private ["_group","_vehicle"];
-	
-	_group = createGroup sidelogic;
-	
-	_vehicle =  _group createunit ["ModuleObjective_F", _pos,[],0.5,"NONE"]; 
-	_vehicle setvariable ["RscAttributeOwners",[west,east,resistance,civilian],true]; 
-	_vehicle setvariable ["RscAttributeTaskState","created", true];
-	_vehicle setvariable ["customTask",_task,true];
-	[_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
-	MCC_curator addCuratorEditableObjects [[_vehicle],false]; 
-	_vehicle setvariable ["updated",true];
-	[_vehicle] spawn MCC_fnc_customTasks; 
-};
-
-//If it is a HVT task
-if (_task in ["Secure_HVT","Kill_HVT","pick_intel","disableIED"]) then
-{
-	private ["_group","_vehicle"];
-	
-	_group = createGroup sidelogic;
-	
-	_vehicle =  _group createunit ["ModuleObjective_F", _pos,[],0.5,"NONE"]; 
-	_vehicle setvariable ["RscAttributeOwners",[west,east,resistance,civilian],true]; 
-	_vehicle setvariable ["bis_fnc_curatorAttachObject_object",_obj,true];
-	_vehicle setvariable ["RscAttributeTaskState","created", true];
-	_vehicle setvariable ["customTask",_task,true];
-	[_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
-	MCC_curator addCuratorEditableObjects [[_vehicle],false]; 
-	_vehicle setvariable ["updated",true];
-	[_vehicle] spawn MCC_fnc_customTasks; 
-};
-
-//If it is a destroy task
-if (_task in ["destroy_tanks","destroy_aa","destroy_artillery","destroy_cache","destroy_fuel","destroy_radio","destroy_radar"]) then
-{
-	private ["_group","_vehicle"];
-	
-	_group = createGroup sidelogic;
-	
-	_vehicle =  _group createunit ["ModuleObjectiveNeutralize_F", _pos,[],0.5,"NONE"]; 
-	_vehicle setvariable ["RscAttributeOwners",[west,east,resistance,civilian],true]; 
-	_vehicle setvariable ["bis_fnc_curatorAttachObject_object",_obj,true];
-	[_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
-	MCC_curator addCuratorEditableObjects [[_vehicle],false]; 
-	_vehicle setvariable ["updated",true];
-};
-
 MCC_MWObjectivesNames = [_pos,"",_stringName,_stringDescription,"","",1,[]];
 publicVariable "MCC_MWObjectivesNames";
 

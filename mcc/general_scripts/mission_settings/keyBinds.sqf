@@ -1,10 +1,11 @@
 //Made by Shay_Gman (c) 05.14
 #define missionSettings_IDD 2997
+#define MCC_LoginDIalog_IDD 2990
 
 #define MCC_keyBindsOpenMCCButtonIDC 8415
 #define MCC_keyBindsOpenConsoleButtonIDC 8416
 #define MCC_keyBindsT2TButtonIDC 8417
-private ["_type","_keyDown","_ctrl"];
+private ["_type","_keyDown","_ctrl","_display"];
 disableSerialization;
 
 _type = _this select 0;
@@ -39,25 +40,26 @@ MCC_functionName_keyDown =
 	};
 };
 
+_display = if (tolower str(findDisplay missionSettings_IDD) == "no display") then {MCC_LoginDIalog_IDD} else {missionSettings_IDD}; 
 hint "Press any key or key combination with Alt, Shift or Ctrl to bind";
 
 switch (_type) do	
 {
 	case 0:	//Open MCC
 	{
-		_ctrl = (findDisplay missionSettings_IDD) displayCtrl MCC_keyBindsOpenMCCButtonIDC;
+		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsOpenMCCButtonIDC;
 		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,0] call MCC_functionName_keyDown"];
 	};
 	
 	case 1:	
 	{
-		_ctrl = (findDisplay missionSettings_IDD) displayCtrl MCC_keyBindsOpenConsoleButtonIDC;
+		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsOpenConsoleButtonIDC;
 		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,1] call MCC_functionName_keyDown"];
 	};
 	
 	case 2:	
 	{
-		_ctrl = (findDisplay missionSettings_IDD) displayCtrl MCC_keyBindsT2TButtonIDC;
+		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsT2TButtonIDC;
 		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,2] call MCC_functionName_keyDown"];
 	};
 };

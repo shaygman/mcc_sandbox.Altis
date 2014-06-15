@@ -15,7 +15,7 @@ class MCC_IEDDialogControls:MCC_RscControlsGroup
 	x = 0.186 * safezoneW + safezoneX;
 	y = 0.18 * safezoneH + safezoneY;
 	w = 0.303646 * safezoneW;
-	h = 0.4 * safezoneH;
+	h = 0.43 * safezoneH;
 
 	class Controls
 	{

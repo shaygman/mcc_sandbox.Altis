@@ -391,6 +391,7 @@ if (_action == 8) exitWith
 		_index = _comboBox lbAdd _displayname;
 	} foreach GEN_INFANTRY;
 	_index = _comboBox lbAdd "Spotter - Civilian";
+	_index = _comboBox lbAdd "Spotter - Camouflaged";
 	_comboBox lbSetCurSel 0;
 };
 //-------------------------------------------------------------------------------------CONVOY----------------------------------------------------------------------------------------------
@@ -674,7 +675,7 @@ if (_action == 15) exitWith
 		_displayname = format ["%1",_x select 0];
 		_comboBox lbAdd _displayname;
 	} foreach MCC_grass_array;
-	_comboBox lbSetCurSel MCC_grass_index;
+	_comboBox lbSetCurSel (MCC_terrainPref select 0);
 
 	_comboBox = _mccdialog displayCtrl MCCVIEWDISTANCE;		//fill combobox View distance
 	lbClear _comboBox;
@@ -682,7 +683,7 @@ if (_action == 15) exitWith
 		_displayname = format ["%1",_x];
 		_comboBox lbAdd _displayname;
 	} foreach MCC_view_array;
-	_comboBox lbSetCurSel ((round ((viewdistance)/500)) - 2); // set viewdistance index to current vd
+	_comboBox lbSetCurSel (MCC_terrainPref select 1); // set viewdistance index to current vd
 	
 	sleep 1; 
 	MCC_GUI1initDone = true; 

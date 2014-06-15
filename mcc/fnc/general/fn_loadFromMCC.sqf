@@ -7,7 +7,7 @@
 //     <Nothing>
 //==============================================================================================================================================================================	
  private ["_arrayGroups","_arrayVehicles","_objectData","_side","_array","_pos","_newString","_finalString","_isKindofUnit","_vehicle","_unitData",
-          "_allCuratorObjectives","_class","_group","_indecator","_tempArray","_arrayWeather","_arrayTime","_savedZones"];
+          "_allCuratorObjectives","_class","_group","_indecator","_tempArray","_arrayWeather","_arrayTime"];
 
  _input 				= _this;
 _allCuratorObjectives 	= _input select 0;
@@ -16,9 +16,6 @@ _arrayVehicles 			= _input select 2;
 _arrayWeather 			= _input select 3;
 _arrayTime 				= _input select 4;
 _savedZones				= _input select 5;
-
-//Zones 
-[_savedZones] call MCC_fn_loadZones;
 
 //Groups
 if (count _arrayGroups > 0) then 
@@ -34,6 +31,7 @@ if (count _arrayGroups > 0) then
 				case "east": {_side =  east};
 				case "guer": {_side =  resistance};
 				case "civ": {_side =  civilian};
+				default {_side =  civilian};
 			};
 			
 		_group 		= createGroup _side;
@@ -140,6 +138,8 @@ if ((count _arrayVehicles) > 0) then
 		
 		MCC_curator addCuratorEditableObjects [[_vehicle],false];
 		_vehicle setpos _pos;
+		sleep 0.01;
+		_vehicle setpos _pos;
 		_vehicle setDir (_objectData select 3);
 		
 		if (_objectData select 4 != "") then
@@ -153,7 +153,6 @@ if ((count _arrayVehicles) > 0) then
  
 if ((count _allCuratorObjectives) > 0) then
 {
-	
 	{ 
 		private ["_sector","_areas","_size","_trigger","_attachedUnit"]; 
 		_objectData = _x;
@@ -196,18 +195,21 @@ if ((count _allCuratorObjectives) > 0) then
 				_vehicle setvariable ["updated",false];
 			};
 			
-			case ("ModuleObjective_F"): 
+			case (_class in ["ModuleObjective_F"]): 
 			{
 				_attachedUnit = _objectData select 2;
 				if (typeName (_attachedUnit) == "STRING" ) then {while {isnil _attachedUnit} do {sleep 0.2}};
 
 				_vehicle =  _group createunit ["ModuleObjective_F", _pos,[],0.5,"NONE"]; 
 				_vehicle setvariable ["RscAttributeOwners",call compile _side]; 
+
 				if (typeName _attachedUnit == "STRING" ) then {_vehicle setvariable ["bis_fnc_curatorAttachObject_object",call compile _attachedUnit]};
 				
 				_vehicle setvariable ["RscAttributeTaskState",_objectData select 4];
 				_vehicle setvariable ["RscAttributeTaskDestination",_objectData select 5];
+				_vehicle setvariable ["customTask",_objectData select 7,true];
 				[_vehicle,"RscAttributeTaskDescription",_objectData select 6] call bis_fnc_setServerVariable;
+				[_vehicle] spawn MCC_fnc_customTasks;
 			};
 			
 			case (_class in ["ModuleObjectiveGetIn_F","ModuleObjectiveMove_F","ModuleObjectiveNeutralize_F","ModuleObjectiveProtect_F"]): 

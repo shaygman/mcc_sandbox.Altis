@@ -115,6 +115,46 @@ MCC_fnc_mapDrawWP =
 		};
 	} foreach allgroups; 
 	
+	//Draw IEDs
+	{
+		if (_x getVariable ["armed",false]) then
+		{
+			_texture =	if (_x getVariable ["isAmbush",false]) then
+						{
+							 gettext (configfile >> "CfgMarkers" >> "mil_ambush" >> "icon");
+						}
+						else
+						{
+							gettext (configfile >> "CfgMarkers" >> "selector_selectedMission" >> "icon");
+						};
+			
+			_map drawIcon [
+								_texture,
+								[1,0,0,1],
+								getpos _x,
+								24,
+								24,
+								_x getvariable ["dir",0],
+								_x getvariable ["iedMarkerName", ""],
+								0,
+								0.04,
+								"PuristaBold",
+								"right"
+							];
+			
+			//Draw synced IED lines
+			_syncedObject = _x getVariable ["syncedObject",[0,0,0]];
+			if (str _syncedObject != "[0,0,0]") then
+			{
+				_map drawLine [
+								getpos _x,
+								_syncedObject,
+								[1,0,0,1]
+							  ];
+			};
+		};
+	} foreach (allMissionObjects MCC_dummy);
+	
 	//Show towns name up to2Km
 	if (!isnil "MCC_3D_CAM") then
 	{

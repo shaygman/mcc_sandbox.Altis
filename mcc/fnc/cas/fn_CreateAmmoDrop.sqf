@@ -5,32 +5,38 @@
 // _spawnkind = string, vehiclecClass to drop
 // _pilot = plane's pilot
 //==================================================================================================================================================================================
-private ["_pos","_spawnkind","_pilot","_para", "_drop","_dir","_time","_smoke","_class","_paras"];
+private ["_pos","_spawnkind","_pilot","_para", "_drop","_dir","_time","_smoke","_class","_paras","_objectData"];
 _pos = _this select 0;
 _spawnkind = _this select 1;
 _pilot = _this select 2;
 _class = format ["%1_parachute_02_F",  toString [(toArray faction _pilot) select 0]];
+_paras = [];
  
  _drop = createVehicle [_spawnkind,  [_pos select 0,_pos select 1,(_pos select 2) -50], [], 0, 'NONE'];
  _drop setPos [_pos select 0,_pos select 1,(_pos select 2) -50];
+_objectData = (_drop call bis_fnc_objectType) select 1;
 
 _para = createVehicle [_class, getpos _drop,[],0,"none"];
-_drop attachto [_para,[0,0,(abs ((boundingbox _drop select 1) select 2))]];
 
-_para setDir getDir _drop;
-_paras =  [_para];
-
-//Thanks to KKid for this part
-if ((_drop isKindOf "Car") || (_drop isKindOf "Tank") || (_drop isKindOf "Ship"))
-then 
+if (_objectData in ["Ship","Submarine","TrackedAPC","Tank","WheeledAPC","Car"]) then
 {
+	_drop attachto [_para,[0,0,(abs ((boundingbox _drop select 0) select 2))]];
+	
+	//Thanks to KKid for this part
 	{
 		_p = createVehicle [_class, getpos _para,[],0,"none"];
 		_paras set [count _paras, _p];
 		_p attachTo [_para, [0,0,0]];
 		_p setVectorUp _x;
 	} count [[0.5,0.4,0.6],[-0.5,0.4,0.6],[0.5,-0.4,0.6],[-0.5,-0.4,0.6]];
+}
+else
+{
+	_drop attachto [_para,[0,0,1]];
+	_paras =  [_para];
 };
+
+_para setvelocity [0,0,-1];
 
 0 = [_drop, _paras] spawn 
 {

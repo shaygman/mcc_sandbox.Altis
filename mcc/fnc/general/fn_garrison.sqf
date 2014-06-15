@@ -36,6 +36,7 @@ if(count _vehiclesArray < 4) then
 {
 	_vehiclesArray = [_faction,"carx"] call MCC_fnc_makeUnitsArray;
 }; 
+
 _buildingsArray	= nearestObjects  [_center,["House","Ruins","Church","FuelStation","Strategic"],_radius];	//Let's find the buildings in the area
 
 _unitsCount		= count _unitsArray;
@@ -131,8 +132,15 @@ if (_action == 1) then	{	//vehicles
 			//Make sure the vehicle is not in a wall on the road side
 			_spawnPos = _spawnPos findEmptyPosition [0.1,10];
 			
-			_type = _vehiclesArray select (floor (random (_vehiclesCount)));
-			_vehicle= (_type select 0) createVehicle _spawnPos;
+			//Why the hell we have karts in a milsim?!
+			_type = "";
+			while {_type in ["","C_Kart_01_Blu_F","C_Kart_01_F","C_Kart_01_F_Base","C_Kart_01_Fuel_F","C_Kart_01_Red_F","C_Kart_01_Vrana_F"]} do
+			{
+				_type = (_vehiclesArray select (floor (random (_vehiclesCount)))) select 0;
+				sleep 0.1;
+			};
+			
+			_vehicle= _type createVehicle _spawnPos;
 			waituntil {alive _vehicle}; 
 			
 			_vehicle setpos _spawnPos;

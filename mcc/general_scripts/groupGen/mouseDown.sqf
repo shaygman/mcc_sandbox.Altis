@@ -290,7 +290,7 @@ if (mcc_missionmaker == (name player)) then
 	if (_ctrlKey && _pressed!=1) then 
 	{
 		MCC_pointA = _ctrl ctrlmapscreentoworld [_posX,_posY];
-		_nearObjects = MCC_pointA nearObjects ["Bomb",40];
+		_nearObjects = MCC_pointA nearObjects [MCC_dummy,40];
 		{_x setvariable ["iedTrigered", true, true]} forEach _nearObjects;
 	};
 	

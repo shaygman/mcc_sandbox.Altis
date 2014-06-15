@@ -131,19 +131,6 @@ if (isServer) then
 //==============================================================================================================================================================================
 	MCC_fnc_mineSingle = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3)] execVM MCC_path + "mcc\general_scripts\traps\put_mine.sqf"};
 
-//===================================================================MCC_fnc_SBSingle======================================================================================
-// Create a suiside bombers  that will randomly run ove and explode himself on target faction's units
-//Example:[[pos,vehicleClass,explosionSize,explosionType,side,markerName],"MCC_fnc_SBSingle",true,false] call BIS_fnc_MP;
-// Params: 
-// 	pos: array, armerd civilian position.
-//	vehicleClass: string, unit vehicle class
-//	explodionSize:  stirng, explosion radius - "small","medium","large"
-//	explosionType:  number, explosion type: 0-deadly, 1 - disabling (will cripple vehicles and soldiers but will not kill) 2 - Fake, will not or lightly wound soldiers.  
-//	side: side, [west, east, resistance, civilian]
-//	markerName: string, the name of the marker that will be deleted once the unit will die
-//==============================================================================================================================================================================	
-	MCC_fnc_SBSingle = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5)] execVM MCC_path + "mcc\general_scripts\traps\put_sb.sqf"};
-
 //===================================================================MCC_fnc_iedSync======================================================================================
 //Note to be used outside MCC
 //==============================================================================================================================================================================

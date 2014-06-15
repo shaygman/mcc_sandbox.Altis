@@ -203,7 +203,7 @@ _comboBox lbSetCurSel 0;
 if (_type == 4) then //Generate
 {
 	_string = ctrlText MCC_INITBOX;
-	_string = _string + format [';if (isServer) then {[[_this, %1, %2, %3, %4],"MCC_fnc_boxGenerator",_this,false] spawn BIS_fnc_MP};',tempBoxWeapons, tempBoxMagazine, tempBoxItems, tempBoxRucks];
+	_string = _string + format [';if (isServer) then {clearMagazineCargo _this; clearWeaponCargo _this;	clearItemCargo _this; clearBackpackCargo _this;[[_this, %1, %2, %3, %4],"MCC_fnc_boxGenerator",_this,false] spawn BIS_fnc_MP};',tempBoxWeapons, tempBoxMagazine, tempBoxItems, tempBoxRucks];
 	ctrlSetText [MCC_INITBOX,_string];
 	_null = [1] execVM format["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
 };

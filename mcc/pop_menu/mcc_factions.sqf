@@ -1,8 +1,9 @@
 private ["_mcc_config","_mcc_faction_idx","_mcc_sides","_unitCfg","_cfgname","_cfgdisplayname","_side","_sidename", "_check"];
-_mcc_config =configFile >> "CfgFactionClasses";
-_mcc_faction_idx = 0;
-_mcc_sides       = ["EAST","WEST","GUER","CIV"];
-u_factions=[];
+_mcc_config 		= configFile >> "CfgFactionClasses";
+_mcc_faction_idx 	= 0;
+_mcc_sides      	= ["EAST","WEST","GUER","CIV"];
+u_factions			= [];
+U_FACTIONSCIV 		= [];
 
 for "_i" from 1 to ((count _mcc_config) - 1) do 
 { 
@@ -15,10 +16,6 @@ for "_i" from 1 to ((count _mcc_config) - 1) do
 	{
 	   _cfgname        = (configName(_unitcfg));
 	   
-	  // _check = ["_", _cfgname] call BIS_fnc_inString;
-	   
-	  /* if ( _check ) then 
-	   {*/
 		_cfgdisplayname = (gettext(_unitCfg >> "displayname"));
 		_side           = (getnumber((_unitCfg >> "side")));
 		_sidename       = (_mcc_sides select _side);   
@@ -26,8 +23,13 @@ for "_i" from 1 to ((count _mcc_config) - 1) do
 	   //------------------------------------------------------------------- 
 		diag_log format ["factions: [%1] - [%2] - [%3] - [%4] - [%5] - [%6]", _unitCfg, _cfgname, _cfgdisplayname, _side, _sidename];  //DEBUG    
 	   //-------------------------------------------------------------------    
+	   
 		U_FACTIONS set [_mcc_faction_idx,[_cfgdisplayname, _sidename, _cfgname ]];
+		if (_sidename == "CIV") then
+		{
+			U_FACTIONSCIV set [count U_FACTIONSCIV, [_cfgdisplayname, _sidename, _cfgname ]]; 
+		};
 		_mcc_faction_idx = _mcc_faction_idx + 1;
-	  // };
+
 	}; 
 };

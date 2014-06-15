@@ -13,14 +13,16 @@
 //	IEDside: side, [west, east, resistance, civilian]
 //	IEDMarkerName: string, custom marker name for the IED
 // 	IEDDir: number, direction of the IED
-// 	_groupArray: ARRAY, array of groups configs to spawn an ambush push empty array for no ambush
+// 	_groupArray: Boolean, spawn an ambush
 //	_ambushSide: side, ambush side
 //==============================================================================================================================================================================	
 
 //Made by Shay_Gman (c) 09.10
 private ["_pos", "_trapkind", "_trapvolume", "_IEDExplosionType", "_IEDDisarmTime", "_IEDJammable", "_IEDTriggerType", "_IEDAmbushGroup",
- "_trapdistance", "_iedside", "_iedMarkerName", "_fakeIed", "_dummy", "_eib_marker","_ok","_iedDir","_init","_groupArray","_ambushSide"]; 
+ "_trapdistance", "_iedside", "_iedMarkerName", "_fakeIed", "_dummy","_ok","_iedDir","_init","_time","_range","_ambushPos","_groupDir","_ambush"]; 
 disableSerialization;
+
+if (!isServer) exitWIth {}; 
 
 _pos 				= _this select 0; 
 _trapkind 			= _this select 1; 
@@ -34,58 +36,53 @@ _iedside 			= _this select 8;
 _iedMarkerName 		= _this select 9;
 _iedDir 			= _this select 10;
 _groupArray			= _this select 11;
-if (count _groupArray >0 ) then {_ambushSide = _this select 12};
+if (isnil "_groupArray") then {_groupArray = false}; 
+_ambushSide 		= if (_groupArray) then { _this select 12} else {east};
 
-_eib_marker = createMarkerlocal ["traps",_pos];
+_init = "";
 
-_fakeIed = _trapkind createVehicle _pos; 
-_fakeIed setposatl _pos;
-
-_init ='_this addaction ["<t color=""#FF9900"">" + "Disarm IED" + "</t>","' + MCC_path + 'mcc\general_scripts\traps\ied_disarm.sqf","",6,false,true,"_target distance _this < 10"];';
-[[[netid _fakeIed,_fakeIed], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-_fakeIed setdir _iedDir;
-
-_dummy = "Bomb" createVehicle _pos;
-_dummy addEventHandler ["handleDamage",{_this call MCC_fnc_iedHit;0}];
-_init = '_this hideobject true;';
-[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-
-_fakeIed setdir _iedDir;
-_dummy attachto [_fakeIed,[0,0,0]];
-
-[_fakeIed, _dummy] spawn
-{
-	private ["_fakeIedS"];
-	_fakeIedS 	= _this select 0;
-	_dummy 		= _this select 1;
-	waituntil {!alive _fakeIedS || isnull _fakeIedS};
-	sleep 1;
-	deletevehicle _dummy;
-};
-	
-_dummy setvariable ["fakeIed", _fakeIed ,true];
-_dummy setvariable ["armed", true, true];
-_dummy setvariable ["disarmTime", _IEDDisarmTime, true];
-_dummy setvariable ["iedMarkerName", _iedMarkerName, true];
-_dummy setvariable ["iedTrigered", false, true]; 
-_dummy setvariable ["iedAmbush", false, true];
-
-//If it is radio IED
-if (_IEDTriggerType == 1) then 
-{
-	_dummy setvariable ["iedTrigereRadio", true, true];
+//Ammo?
+if ( _trapkind in MCC_MWIED) then 
+{ 
+	_fakeIed = MCC_dummy createVehicle _pos;
+	_fakeIed setposatl _pos;
+	_init = FORMAT [";_this setVariable ['IEDClass','%1',true];_this hideobject true;",_trapkind];
 }
 else
 {
-	_dummy setvariable ["iedTrigereRadio", false, true];
-};	
-	
-_fakeIed setvariable ["realIed", _dummy ,true];
+	_fakeIed = _trapkind createVehicle _pos; 
+	_fakeIed setposatl _pos;
+};
+
+_init = _init + format [";_this setVariable ['isIED',true,true];[_this,'%2',%3,%4,%5,%6,%7,%8] spawn MCC_fnc_createIED;"
+                 ,MCC_path
+				 ,_trapvolume
+				 ,_IEDExplosionType
+				 ,_IEDDisarmTime
+				 ,_IEDJammable
+				 ,_IEDTriggerType
+				 ,_trapdistance
+				 ,_iedside
+				 ];
+				 
+[[[netid _fakeIed,_fakeIed], _init], "MCC_fnc_setVehicleInit", false, true] spawn BIS_fnc_MP;
+_fakeIed setdir _iedDir;
+
+MCC_curator addCuratorEditableObjects [[_fakeIed],false]; 
 
 //Spawn AMBUSH
-private ["_groupArray","_time","_range","_ambushPos","_groupDir","_ambush"];
-if (count _groupArray > 0) then 
+if (_groupArray) then 
 {
+	//Ambush Group 
+	_groupArray = if (count MCC_MWGroupArrayMenRecon > 0) then 
+	{
+		if (random 1 > 0.5) then {MCC_MWGroupArrayMenRecon} else {MCC_MWGroupArrayMen};
+	} 
+	else 
+	{
+		MCC_MWGroupArrayMen
+	};
+	
 	//Choose group
 	_groupName = (_groupArray call BIS_fnc_selectRandom) select 2;
 	
@@ -107,14 +104,9 @@ if (count _groupArray > 0) then
 	
 	waituntil {alive _ambush};
 	
+	sleep 2; 
 	//Sync the IED and the ambush group
-	[[_ambushPos , _pos, 9999],"MCC_fnc_iedSync",false,false] call BIS_fnc_MP;
+	[[_ambushPos , _pos],"MCC_fnc_iedSync",false,false] call BIS_fnc_MP;
 };
 
-//Spawn the IED script
-_ok = [_dummy,_trapvolume,_IEDExplosionType,_IEDJammable,_IEDTriggerType,_trapdistance,_iedside] execVM MCC_path +"mcc\general_scripts\traps\IED.sqf";
-
-sleep 0.01;
-deletemarker "traps";
-
-[_dummy,_fakeIed];
+_fakeIed

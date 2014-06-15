@@ -146,9 +146,6 @@ if !mcc_isloading then
 			waituntil {!isnil "_answer"};
 			if (_answer) then 
 			{
-				[["everyonelost"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
-			
-				
 				CP_activated = missionnamespace getVariable ["CP_activated", false];
 				missionnamespace setVariable ["CP_activated", !CP_activated];
 				publicVariable "CP_activated";
