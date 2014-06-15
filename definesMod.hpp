@@ -624,7 +624,7 @@ class CfgFunctions
 			class quickAttachment {};
 			class accList {};
 		};
-	}
+	};
 };
 
 //=====================DOC=========================
@@ -1170,4 +1170,4 @@ class CfgNotifications
 		sound = "communicationMenuItemAdded";
 		title = "NEW SUPPORT AVAILABLE";
 	};
-}
+};

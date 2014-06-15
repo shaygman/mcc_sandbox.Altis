@@ -549,11 +549,11 @@ class KEGsRscSpectate {
 				border = "\A3\ui_f\data\ui_border_scroll_ca.paa";
 			
 			};
-			onMouseMoving = "[""MouseMoving"",_this] call spectate_events";
-			onMouseButtonDown = "[""MouseButtonDown"",_this] call spectate_events";
-			onMouseButtonUp = "[""MouseButtonUp"",_this] call spectate_events";
-			onMouseZChanged = "[""MouseZChanged"",_this] call spectate_events";
-			onMapClick ="[""MapClick"",_this] call spectate_events";
+			onMouseMoving = "[""MouseMoving"",_this] call KEGs_fnc_spectateEvents";
+			onMouseButtonDown = "[""MouseButtonDown"",_this] call KEGs_fnc_spectateEvents";
+			onMouseButtonUp = "[""MouseButtonUp"",_this] call KEGs_fnc_spectateEvents";
+			onMouseZChanged = "[""MouseZChanged"",_this] call KEGs_fnc_spectateEvents";
+			onMapClick ="[""MapClick"",_this] call KEGs_fnc_spectateEvents";
 			idc = 123;
 			x = SafeZoneX; y = SafeZoneY;
 			w = SafeZoneW; h = SafeZoneH;
@@ -616,7 +616,7 @@ class KEGsRscSpectate {
 			colorSelectBackground[] = COL_GRAY;
 			colorSelectBackground2[] = COL_GRAY;
 			sizeEx = 0.025;
-			onMouseButtonUp  = "['*Dialog*'] spawn CameraMenuHandler;";
+			onMouseButtonUp  = "['*Dialog*'] spawn KEGs_fnc_cameraMenuHandler;";
 		};
 
 		// Targets menu
@@ -656,7 +656,7 @@ class KEGsRscSpectate {
 			colorText[] = {1, 1, 1, 1};
 			sizeEx = 0.025;
 			period = 0;
-			onMouseButtonUp  = "[true] spawn PlayerMenuHandler;";
+			onMouseButtonUp  = "[true] spawn KEGs_fnc_playerMenuHandler;";
 		};
 
 		// Top texts
@@ -669,13 +669,13 @@ class KEGsRscSpectate {
 			color[] = {1.0, 1.0, 1.0, 0.9};
 			shadow = true;
 			font = "PuristaMedium";
-			onMouseButtonUp = "[""ToggleCameraMenu"",0] call spectate_events";
+			onMouseButtonUp = "[""ToggleCameraMenu"",0] call KEGs_fnc_spectateEvents";
 		};
 		class tTarget : tCamera {
 			idc = IDC_TARGET;
 			text = "Target";
 			style = 1;
-			onMouseButtonUp = "[""ToggleTargetMenu"",0] call spectate_events";
+			onMouseButtonUp = "[""ToggleTargetMenu"",0] call KEGs_fnc_spectateEvents";
 		};
 
 		// Bottom texts
@@ -756,7 +756,7 @@ class KEGsRscSpectate {
 			sizeExLevel = MAPTXTSIZE;
 			showCountourInterval = "false";
 
-			onMouseZChanged = "[""MouseZChangedminimap"",_this] call spectate_events";
+			onMouseZChanged = "[""MouseZChangedminimap"",_this] call KEGs_fnc_spectateEvents";
 
 			class Command : Command {
 				icon = "#(argb,8,8,3)color(1,1,1,1)";

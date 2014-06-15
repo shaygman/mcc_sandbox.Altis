@@ -108,13 +108,16 @@ KEGs_CTRL_PRESS = false;
 
 CameraLoop_count = 0;
 
-spectate_events = compile preprocessFileLineNumbers format ["%1spectator\specta_events.sqf",MCC_path];
-RefreshPlayerList = compile preprocessFileLineNumbers format ["%1spectator\RefreshPlayerList.sqf",MCC_path];
-FreeLookMovementHandler = compile preprocessFileLineNumbers format ["%1spectator\FreeLookMovementHandler.sqf",MCC_path];
-CameraMenuHandler = compile preprocessFileLineNumbers format ["%1spectator\CameraMenuHandler.sqf",MCC_path];
-PlayerMenuHandler = compile preprocessFileLineNumbers format ["%1spectator\PlayerMenuHandler.sqf",MCC_path];
-KEGsShowCombatMode = compile preprocessFileLineNumbers format ["%1spectator\specta_combatmode.sqf",MCC_path];
-KEGsShowUnitLocator = compile preprocessFileLineNumbers format ["%1spectator\specta_locator.sqf",MCC_path];
+if (isNil "MCC_path" ) then { MCC_path = ""; };
+
+KEGs_fnc_spectateEvents = compile preprocessFileLineNumbers format ["%1spectator\specta_events.sqf",MCC_path];
+KEGs_fnc_refreshPlayerList = compile preprocessFileLineNumbers format ["%1spectator\RefreshPlayerList.sqf",MCC_path];
+KEGs_fnc_freeLookMovementHandler = compile preprocessFileLineNumbers format ["%1spectator\FreeLookMovementHandler.sqf",MCC_path];
+KEGs_fnc_cameraMenuHandler = compile preprocessFileLineNumbers format ["%1spectator\CameraMenuHandler.sqf",MCC_path];
+KEGs_fnc_playerMenuHandler = compile preprocessFileLineNumbers format ["%1spectator\PlayerMenuHandler.sqf",MCC_path];
+KEGs_fnc_showCombatMode = compile preprocessFileLineNumbers format ["%1spectator\specta_combatmode.sqf",MCC_path];
+KEGs_fnc_showUnitLocator = compile preprocessFileLineNumbers format ["%1spectator\specta_locator.sqf",MCC_path];
+KEGs_fnc_trackUnits = compile preprocessFileLineNumbers format ["%1spectator\specta_display.sqf",MCC_path];
 
 // Unit sides shown - Show all if sides not set
 if(isNil "KEGsShownSides") then {
@@ -148,14 +151,14 @@ deathCam = [];
 // Create dialog & assign keyboard handler
 createDialog "KEGsRscSpectate";
 _disp = (findDisplay 55001);
-_disp displaySetEventHandler["KeyDown", "[""KeyDown"",_this] call spectate_events"];
-_disp displaySetEventHandler["KeyUp", "[""KeyUp"",_this] call spectate_events"];
+_disp displaySetEventHandler["KeyDown", "[""KeyDown"",_this] call KEGs_fnc_spectateEvents"];
+_disp displaySetEventHandler["KeyUp", "[""KeyUp"",_this] call KEGs_fnc_spectateEvents"];
 
 // hide menus by default
-["ToggleCameraMenu",0] call spectate_events;
-["ToggleTargetMenu",0] call spectate_events;
-["ToggleHelp",0] call spectate_events;
-["ToggleMap",0] call spectate_events;
+["ToggleCameraMenu",0] call KEGs_fnc_spectateEvents;
+["ToggleTargetMenu",0] call KEGs_fnc_spectateEvents;
+["ToggleHelp",0] call KEGs_fnc_spectateEvents;
+["ToggleMap",0] call KEGs_fnc_spectateEvents;
 
 // IDC's from rsc
 _cCamera = 55002;
@@ -226,7 +229,7 @@ KEGs_tgtIdx = 0;
 KEGs_cameraIdx = 0;
 showCinemaBorder false;
 lbClear KEGs_cLBTargets;
-onMapSingleClick "[""MapClick"",_pos] call spectate_events";
+onMapSingleClick "[""MapClick"",_pos] call KEGs_fnc_spectateEvents";
 
 // Spawn thread to display help reminder after a few seconds
 [] spawn {sleep(3);if(dialog) then {cutText["\n\n\n\n\nPress F1 for help","PLAIN DOWN", 0.75]}};
@@ -361,13 +364,13 @@ KEGs_fnc_MovementCameraLoop =
 				KEGs_target = KEGs_AutoTarget;
 				_nextTarget = time + (random 10 max 4 min 6);
 				// set camera focus name lower left corner
-				[false] spawn PlayerMenuHandler;
+				[false] spawn KEGs_fnc_playerMenuHandler;
 				_actionCam = true;
 				
-				if((KEGs_cameras select KEGs_cameraIdx) == KEGscam_1stperson) then 
-				{
-					[] spawn CameraMenuHandler;
-				};
+				//if((KEGs_cameras select KEGs_cameraIdx) == KEGscam_1stperson) then 
+				//{
+					[] spawn KEGs_fnc_cameraMenuHandler;
+				//};
 			};
 	
 			//while { sleep 0.05; ( ( !(isPlayer KEGs_target) || ((isPlayer KEGs_target) && { (alive KEGs_target) } )) && { KEGsNextRun } ); } do  
@@ -470,7 +473,7 @@ KEGs_fnc_MovementCameraLoop =
 
 				diag_log format ["KEGs_target found - switching to new target: %1 (%2) (%3 - %4)", KEGs_target, KEGs_targetName, _CameraLoop_count, CameraLoop_count];
 
-				[] call RefreshPlayerList;
+				[] call KEGs_fnc_refreshPlayerList;
 			};
 		};
 		
@@ -552,9 +555,9 @@ KEGs_fnc_MovementCameraLoop =
 				} count _newUnits;						
 			};
 			
-			[] call RefreshPlayerList;
-			["Init"] call CameraMenuHandler;
-			[true] call PlayerMenuHandler;
+			[] call KEGs_fnc_refreshPlayerList;
+			["Init"] call KEGs_fnc_cameraMenuHandler;
+			[true] call KEGs_fnc_playerMenuHandler;
 			
 			if(count deathCam > 0 and !KEG_Spect_Init) then 
 			{ 
@@ -568,7 +571,6 @@ KEGs_fnc_MovementCameraLoop =
 EndLoadingScreen;		
 
 		
-		
 while{ dialog } do 
 {
 		// Request listbox update every 20 seconds to update dead units or jip player names (
@@ -580,7 +582,7 @@ while{ dialog } do
 	
 		if(KEGsNeedUpdateLB && RefreshListReady && (CheckNewUnitsReady)) then 
 		{
-			[] spawn RefreshPlayerList;
+			[] spawn KEGs_fnc_refreshPlayerList;
 		};
 	
 		// Check for new units every 20 seconds
@@ -753,6 +755,8 @@ VM_SpectatorCamerasEnabled = False;
 terminate KEGs_mainLoop;
 waitUntil { scriptDone KEGs_mainLoop };
 //diag_log format ["Exiting Spectator mode: script running: %1", !(scriptDone KEGs_mainLoop)];
+
+if (!isnil "KEGs_trackMarkerHandler") then {(findDisplay 55001 displayCtrl 55013) ctrlRemoveEventHandler ["draw",KEGs_trackMarkerHandler]}; 
 
 // Dialog closed with esc key
 titleText["","BLACK IN", 0.5];

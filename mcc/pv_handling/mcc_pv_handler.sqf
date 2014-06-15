@@ -64,6 +64,7 @@ if (isServer) then
 
 if ( MCC_isLocalHC ) then 
 {
+	if (isnil "MCC_Chat") then {MCC_Chat = true}; 	
 	mcc_setup_hc ={_this call my_pv_handler};
 	if (isnil "MCC_Chat") then {MCC_Chat = true};
 	diag_log format ["Added 'mcc_setup_hc' EventHandler for HeadLess Client"];
@@ -557,7 +558,7 @@ my_pv_handler =
 												};
 											};
 										
-										if ( MCC_trackdetail_units ) then {  [leader _unitspawned, "GROUP","WP"] execVm format ["%1scripts\track.sqf",MCC_path] };
+										//if ( MCC_trackdetail_units ) then {  [leader _unitspawned, "GROUP","WP"] execVm format ["%1scripts\track.sqf",MCC_path] };
 										
 										if (MCC_Chat) then
 										{
