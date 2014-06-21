@@ -206,6 +206,13 @@ lbClear _comboBox;
 } foreach ["No","Yes","Random"];
 _comboBox lbSetCurSel (profileNamespace getVariable ["MCC_MWRoadBlockIndex",2]);
 
+_comboBox = _mccdialog displayCtrl MCC_MWAnimalsIDC;		
+lbClear _comboBox;
+{
+	_displayname = _x;
+	_comboBox lbAdd _displayname;
+} foreach ["Yes","No"];
+_comboBox lbSetCurSel (profileNamespace getVariable ["MCC_MWAnimalsIndex",0]);
 
 _comboBox = _mccdialog displayCtrl MCC_MWWeatherComboIDC;		
 lbClear _comboBox;

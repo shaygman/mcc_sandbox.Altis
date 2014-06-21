@@ -36,8 +36,10 @@ else
 	_perSpawn = 1; 
 };
 
-_availablePos = selectBestPlaces [_missionCenter, _radius, "meadow + 2*hills", 1, 5];	
-//availablePos = _availablePos;
+diag_log format["MCC: %1",_arrayUnits]; 
+
+_availablePos = selectBestPlaces [_missionCenter, _radius, "meadow * (2*hills)", 10, 5];	
+diag_log format["MCC: %1",_availablePos]; 
 if (count _arrayUnits > 0) then 
 {
 	while {(_unitPlaced < (_totalEnemyUnits)) && (count _availablePos > 0)} do
@@ -50,15 +52,17 @@ if (count _arrayUnits > 0) then
 		for "_x" from 1 to _perSpawn step 1 do 
 		{ 
 			_radius = 40;
-			_spawnPos = _pos findEmptyPosition [20,_radius,_vehicleClass]; 
+			_spawnPos = _pos findEmptyPosition [20,_radius,_vehicleClass];
+			
 			while {count _spawnPos == 0} do 
 			{
 				_radius = _radius +40;
 				_spawnPos = _pos findEmptyPosition [20,_radius,_vehicleClass]; 
 				sleep 0.1; 
 			};
-			
+			diag_log format["MCC: %1",_vehicleClass];
 			_vehicle = [_spawnPos, (random 360), _vehicleClass, _group] call bis_fnc_spawnvehicle; 
+			MCC_curator addCuratorEditableObjects [[_vehicle select 0],true];
 			(_vehicle select 2) setVariable ["GAIA_ZONE_INTEND",[str _zone,"NOFOLLOW"], true];
 		};
 

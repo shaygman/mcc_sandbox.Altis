@@ -658,7 +658,7 @@ class MCC_MWControls: MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		
+		/*
 		//BattleGround		
 		class MCC_MWBattleGroundText: MCC_RscText
 		{
@@ -685,7 +685,7 @@ class MCC_MWControls: MCC_RscControlsGroup
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
 		
-		
+		*/
 		//Area
 		class MCC_MWAreaText: MCC_RscText
 		{
@@ -693,7 +693,7 @@ class MCC_MWControls: MCC_RscControlsGroup
 
 			text = "Area:"; //--- ToDo: Localize;
 			x = 0.372396 * safezoneW;
-			y = 0.28589 * safezoneH;
+			y = 0.252902 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
@@ -706,7 +706,7 @@ class MCC_MWControls: MCC_RscControlsGroup
 			onKillFocus = "((uiNamespace getVariable 'MCC_MWDialog') displayCtrl 0) ctrlSetText ''";
 			
 			x = 0.446875 * safezoneW;
-			y = 0.28589 * safezoneH;
+			y = 0.252902 * safezoneH;
 			w = 0.0859375 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";

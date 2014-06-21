@@ -20,6 +20,9 @@
 
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCCMW_briefingMap.hpp"
 
+#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_curatorInitDefines.hpp"
+#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_curatorInit.hpp"
+
 #include "\mcc_sandbox_mod\mcc\Dialogs\compass.hpp"
 //--------------------------------CP------------------------------------------------
 
@@ -286,6 +289,11 @@ class CfgFunctions
 			{
 				description = "Show player OSD";
 			};
+			
+			class curatorInitLine
+			{
+				description = "Handle MCC's curator init line";
+			};
 		};
 		
 		class ied
@@ -548,6 +556,11 @@ class CfgFunctions
 			{
 				description = "Manage custom tasks.";
 			};
+			
+			class MWspawnAnimals
+			{
+				description = "spawn animals in the area.";
+			};
 		};
 		
 		class ai
@@ -572,6 +585,11 @@ class CfgFunctions
 			class setUnitPos
 			{
 				description = "Sets units pos.";
+			};
+			
+			class populateVehicle
+			{
+				description = "Populate a not empty vehicle with antoher group contains units acording to its faction and cargo space.";
 			};
 		};
 		

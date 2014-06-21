@@ -58,14 +58,6 @@ lbClear _comboBox;
 } foreach MCC_spawn_empty;
 _comboBox lbSetCurSel MCC_empty_index;
 
-_comboBox = _mccdialog displayCtrl MCC_PRESETS;		//fill combobox Presets
-lbClear _comboBox;
-{
-	_displayname = _x select 0;
-	_comboBox lbAdd _displayname;
-} foreach mccPresets;
-_comboBox lbSetCurSel 0;
-
 _comboBox = _mccdialog displayCtrl MCC_ZONE_LOC;		//fill zone locations
 lbClear _comboBox;
 {

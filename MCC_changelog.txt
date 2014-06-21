@@ -1,4 +1,5 @@
 Change log r6:
+- Added: Change object name, Init line and MCC's init presets are now availabe in Zeus when editing a unit. 
 - Added: Set MCC keys from the login menu - for players who are not the mission maker.
 - Added: Two more levels of terrain detail (grass).
 - Added: Terrain detail and view distance preferences will be saved to user profile automatically.  
@@ -7,6 +8,8 @@ Change log r6:
 - Added: Save to SQM will save Zeus or MCC Mission Wizard objectives (the zeus sector and attack defends objectives not included). 
 - Added: Mission Wizards will completely save including objectives reinforcment exc, objectives can be edited by Zeus in game.
 - Added: You can now select the civilians faction in Mission Wizard. 
+- Added: Animal spawning in Mission Wizard. 
+- Added: 3D editor preset - "Add Cargo Units" will populate the vehicle cargo with units from the vehicle's faction. 
 
 - Changed: Zones can be loaded changed and re-saved again and again. 
 - Changed: MCC Mission Wizard objectives added: "Destroy Vehicle","Destroy AA", "Destroy Artillery", "Destroy Weapon Cahce", "Destroy Fuel Depot", "Destroy Radar/Radio",
@@ -15,7 +18,9 @@ Change log r6:
 	- Open MCC Console: Ctrl + End
 	- Teleport 2 Team: Alt + T
 - Changed: Traps, IED, suicide bombers, armed civilians and ambushes will be under Zeus control and can be edited and moved and saved/loaded after they have been edited. 
+- Changed: Presets are defined by object type.
 	
+- Fixed: MCC will not show group's markers while they are in another group's vehicle (so you can set troops unload). 
 - Fixed: Failing the mission if enabling roles.
 - Fixed: Groups respawn after loading a mission. 
 - Fixed: Zeus respawn template makes AI hostile to player. 

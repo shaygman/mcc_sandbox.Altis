@@ -192,6 +192,7 @@ private ["_group","_blackListVehicles","_refinedGroup","_tempArray","_groupArray
 			_init 	= _object getvariable ["vehicleinit",""];
 			if (_object getVariable ["isIED",false]) then {_init = _init + FORMAT [";_this setVariable ['syncedObject', %1];",_object getVariable ["syncedObject", [0,0,0]]]}; 
 			
+			_init = [_init, '"', "'"] call MCC_fnc_replaceString;
 			_tempArray = [typeof _object, _pos, getDir _object, rank _object,skill _object, damage _object, fuel vehicle _object, _init];
 
 			if (count crew _object > 0) then
@@ -283,6 +284,7 @@ if ((count _arrayVehicles) > 0) then
 		
 		if (!isnil "_type") then
 		{
+			_init = [_init, '"', "'"] call MCC_fnc_replaceString;
 			_tempArray = [_side, _type, _pos, getDir _object, _init];
 			MCC_output = MCC_output + format ["%1",_tempArray];
 		};

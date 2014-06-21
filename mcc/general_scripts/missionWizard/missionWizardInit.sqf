@@ -23,12 +23,13 @@
 
 #define FACTIONCOMBO 1001
 #define CIVILIANFACTIONCOMBO 6022
+#define MCC_MWAnimalsIDC 6023
 #define MCC_MCC_MWMusicIDC 6024
 
 private ["_missionCenter","_missionCenterTrigger","_playersNumber","_difficulty","_totalEnemyUnits","_isCQB","_objType","_objArray","_check","_objFirstTime",
          "_minObjectivesDistance","_objPos","_timeStart","_side","_faction","_sidePlayer","_factionPlayer","_obj1","_obj2","_obj3","_pos","_center","_wholeMap",
 		 "_armor","_vehicles","_stealth","_roadPositions","_script_handler","_isIED","_isAS","_spawnbehavior","_isRoadblocks","_objectives","_isCiv","_weatherChange",
-		 "_preciseMarkers","_reinforcement","_artillery","_civFaction","_playMusic"];
+		 "_preciseMarkers","_reinforcement","_artillery","_civFaction","_playMusic","_animals"];
 
 //MCC_MWAnimalsIndex MCC_MWBattleGroundIndex MCC_MWMusicIndex
 if (isnil "MCC_MWisGenerating") then {MCC_MWisGenerating = false}; 
@@ -103,7 +104,8 @@ _vehicles 			= if ((lbCurSel MCC_MWVehiclesIDC)==3) then
 						{
 							if ((lbCurSel MCC_MWVehiclesIDC)==0) then {false} else {true};
 						};
-						
+
+_animals			= if ((lbCurSel MCC_MWAnimalsIDC)==0) then {true} else {false};						
 _weatherChange		= if ((lbCurSel MCC_MWWeatherComboIDC)==0) then {true} else {false};
 _wholeMap			= if ((lbCurSel MCC_MCC_MWAreaComboIDC)==0) then {true} else {false};
 MW_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
@@ -482,7 +484,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 		
 		if (_isSB) then 
 		{
-			for [{_i = 0},{_i <=(_totalEnemyUnits/10)},{_i = _i+1}] do		
+			for [{_i = 0},{_i <=(_totalEnemyUnits/30)},{_i = _i+1}] do		
 			{
 				if (random 1 >0.5) then
 				{
@@ -510,7 +512,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 		//Armed Civilans
 		if (_isAS) then 
 		{
-			for [{_i = 0},{_i <=(_totalEnemyUnits/5)},{_i = _i+1}] do		
+			for [{_i = 0},{_i <=(_totalEnemyUnits/15)},{_i = _i+1}] do		
 			{
 				if (random 1 >0.5) then
 				{
@@ -599,6 +601,13 @@ _spawnbehavior	= ["MOVE","MOVE","MOVE","NOFOLLOW"] call BIS_fnc_selectRandom;
 _factor = if (_isCQB) then {0.3} else {0.6}; 
 _unitPlaced = [(_totalEnemyUnits * _factor),_zoneNumber,_spawnbehavior] call MCC_fnc_MWSpawnInfantry; 
 if (MW_debug) then {diag_log format ["Total enemy's infantry Spawned in main zone: %1", _unitPlaced]};
+
+//Animals
+if (_animals) then
+{
+	[[_zoneNumber],"MCC_fnc_MWspawnAnimals",false,false] spawn BIS_fnc_MP;
+	if (MW_debug) then {diag_log format ["MCC: MW - Animals Spawned in Zone: %1", _unitPlaced]};
+};
 
 //Vehicles
 if (_vehicles) then

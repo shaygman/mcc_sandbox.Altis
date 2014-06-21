@@ -1,4 +1,5 @@
-private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class", "_type", "_magazines", "_muzzles", "_cfg", "_count","_string"];
+private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class", "_type", "_magazines", "_muzzles", "_cfg", "_count","_string","_target","_isMCC3D"];
+#define MCCCuratorInit_IDD 10000
 #define ALLGEAR_IDD 8500
 #define BOXGEAR_IDD 8501
 #define GEARCLASS_IDD 8502
@@ -6,9 +7,22 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_c
 
 disableSerialization;
 
-_type = _this select 0;
+_type 		= _this select 0;
+_ctrl 		= (_this select 1) select 0;
+_mccdialog 	= ctrlParent _ctrl;
 
-_mccdialog = uiNamespace getVariable "MCC3D_Dialog";
+//Curator or MCC 3D editor?
+if (_mccdialog == findDisplay MCCCuratorInit_IDD) then
+{
+	_target = missionnamespace getvariable ["BIS_fnc_initCuratorAttributes_target",objnull];
+	_isMCC3D = false;
+}
+else
+{
+	_target = tempBox;
+	_isMCC3D = true;
+};
+
 MCC_gearDialogClassIndex = lbCurSel GEARCLASS_IDD;
 
 if (_type == 0) exitWith 	//Change class
@@ -104,12 +118,12 @@ if (_type == 0) exitWith 	//Change class
 if (_type == 1) then //Add weapon + mags
 {
 	_class = lbData [ALLGEAR_IDD, (lbCurSel ALLGEAR_IDD)];
-	if (MCC_gearDialogClassIndex > 9) then	{tempBox addMagazineCargo [_class,1]};
-	if (MCC_gearDialogClassIndex == 1  || MCC_gearDialogClassIndex == 9 || MCC_gearDialogClassIndex == 2) then	{tempBox addItemCargo [_class,1]};
-	if (MCC_gearDialogClassIndex == 8) then	{tempBox addBackpackCargo [_class,1]};
+	if (MCC_gearDialogClassIndex > 9) then	{_target addMagazineCargo [_class,1]};
+	if (MCC_gearDialogClassIndex == 1  || MCC_gearDialogClassIndex == 9 || MCC_gearDialogClassIndex == 2) then	{_target addItemCargo [_class,1]};
+	if (MCC_gearDialogClassIndex == 8) then	{_target addBackpackCargo [_class,1]};
 	if ((MCC_gearDialogClassIndex != 1)&& (MCC_gearDialogClassIndex != 2) && (MCC_gearDialogClassIndex < 8))  then
 	{
-		tempBox addWeaponCargo [_class,1];
+		_target addWeaponCargo [_class,1];
 		_cfg = configFile >> "CfgWeapons" >> _class;
 		_muzzles = getArray (_cfg >> "muzzles");
 		_magazines = [];
@@ -128,83 +142,88 @@ if (_type == 1) then //Add weapon + mags
 					};
 				} forEach _muzzles;
 			};
-		tempBox addmagazineCargo [_magazines select 0,6];
+		_target addmagazineCargo [_magazines select 0,6];
 	};
 };
 
 if (_type == 2) then //Add weapon/mag without mags
 {
 	_class = lbData [ALLGEAR_IDD, (lbCurSel ALLGEAR_IDD)];
-	if (MCC_gearDialogClassIndex > 9) then	{tempBox addMagazineCargo [_class,1]};
-	if (MCC_gearDialogClassIndex == 1  || MCC_gearDialogClassIndex == 9 || MCC_gearDialogClassIndex == 2) then	{tempBox addItemCargo [_class,1]};
-	if (MCC_gearDialogClassIndex == 8) then	{tempBox addBackpackCargo [_class,1]};
-	if ((MCC_gearDialogClassIndex != 1)&& (MCC_gearDialogClassIndex != 2) && (MCC_gearDialogClassIndex < 8))  then	{tempBox addWeaponCargo [_class,1]};
+	if (MCC_gearDialogClassIndex > 9) then	{_target addMagazineCargo [_class,1]};
+	if (MCC_gearDialogClassIndex == 1  || MCC_gearDialogClassIndex == 9 || MCC_gearDialogClassIndex == 2) then	{_target addItemCargo [_class,1]};
+	if (MCC_gearDialogClassIndex == 8) then	{_target addBackpackCargo [_class,1]};
+	if ((MCC_gearDialogClassIndex != 1)&& (MCC_gearDialogClassIndex != 2) && (MCC_gearDialogClassIndex < 8))  then	{_target addWeaponCargo [_class,1]};
 };
 
 if (_type == 3) then //Clear
 {
-	clearMagazineCargo tempBox;
-	clearWeaponCargo tempBox;
-	clearItemCargo tempBox;
-	clearBackpackCargo tempBox;
+	player sidechat str (getpos tempBox);
+	clearMagazineCargo _target;
+	clearWeaponCargo _target;
+	clearItemCargo _target;
+	clearBackpackCargo _target;
 };	
 	
-tempBoxWeapons 	= getWeaponCargo tempBox;	//Update box
-tempBoxMagazine = getMagazineCargo tempBox;
-tempBoxItems	= getItemCargo tempBox;
-tempBoxRucks	= getBackpackCargo tempBox;
+_targetWeapons 	= getWeaponCargo _target;	//Update box
+_targetMagazine = getMagazineCargo _target;
+_targetItems	= getItemCargo _target;
+_targetRucks	= getBackpackCargo _target;
 
 _count = 0;
 _comboBox = _mccdialog displayCtrl BOXGEAR_IDD; 
 lbClear _comboBox;
 {
 	_cfg = configFile >> "CfgWeapons" >> _x;
-	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (tempBoxWeapons select 1) select _count];
+	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (_targetWeapons select 1) select _count];
 	_pic = getText(_cfg >> "picture");
 	_index = _comboBox lbAdd _displayname;
 	_comboBox lbSetPicture [_index, _pic];
 	_count = _count+ 1;
-} foreach (tempBoxWeapons select 0);
+} foreach (_targetWeapons select 0);
 
 _count = 0;
 {
 	_cfg = configFile >> "CfgMagazines" >> _x;
-	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (tempBoxMagazine select 1) select _count];
+	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (_targetMagazine select 1) select _count];
 	_pic = getText(_cfg >> "picture");
 	_index = _comboBox lbAdd _displayname;
 	_comboBox lbSetPicture [_index, _pic];
 	_count = _count+ 1;
-} foreach (tempBoxMagazine select 0);
+} foreach (_targetMagazine select 0);
 _comboBox lbSetCurSel 0;
 
 _count = 0;
 {
 	_cfg = configFile >> "CfgWeapons" >> _x;
-	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (tempBoxItems select 1) select _count];
+	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (_targetItems select 1) select _count];
 	_pic = getText(_cfg >> "picture");
 	_index = _comboBox lbAdd _displayname;
 	_comboBox lbSetPicture [_index, _pic];
 	_count = _count+ 1;
-} foreach (tempBoxItems select 0);
+} foreach (_targetItems select 0);
 _comboBox lbSetCurSel 0;
 
 _count = 0;
 {
 	_cfg = configFile >> "CfgVehicles" >> _x;
-	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (tempBoxRucks select 1) select _count];
+	_displayname = format ["%2 X %1 ", getText(_cfg >> "displayname"), (_targetRucks select 1) select _count];
 	_pic = getText(_cfg >> "picture");
 	_index = _comboBox lbAdd _displayname;
 	_comboBox lbSetPicture [_index, _pic];
 	_count = _count+ 1;
-} foreach (tempBoxRucks select 0);
+} foreach (_targetRucks select 0);
 _comboBox lbSetCurSel 0;
 	
 
 if (_type == 4) then //Generate
 {
 	_string = ctrlText MCC_INITBOX;
-	_string = _string + format [';if (isServer) then {clearMagazineCargo _this; clearWeaponCargo _this;	clearItemCargo _this; clearBackpackCargo _this;[[_this, %1, %2, %3, %4],"MCC_fnc_boxGenerator",_this,false] spawn BIS_fnc_MP};',tempBoxWeapons, tempBoxMagazine, tempBoxItems, tempBoxRucks];
+	_string = _string + format [';if (isServer) then {clearMagazineCargo _this; clearWeaponCargo _this;	clearItemCargo _this; clearBackpackCargo _this;[[_this, %1, %2, %3, %4],"MCC_fnc_boxGenerator",_this,false] spawn BIS_fnc_MP};',_targetWeapons, _targetMagazine, _targetItems, _targetRucks];
 	ctrlSetText [MCC_INITBOX,_string];
-	_null = [1] execVM format["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
+	
+	if (_isMCC3D) then
+	{
+		_null = [1] execVM format["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
+	};
 };
 	

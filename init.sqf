@@ -130,53 +130,89 @@ MCCConvoyGueEscort = "GUE_Soldier_1"; MCCConvoyGueDriver = "GUE_Soldier_CO";
 MCCConvoyCivEscort = "C_man_1_1_F"; MCCConvoyCivDriver = "C_man_1_1_F";
 
 //----------------------------Presets---------------------------------------------------------
-mccPresets = [ 
-		 ['======= Artillery =======','']
-		,['Ambient Artillery - Cannon', '[0,_this] spawn MCC_fnc_amb_Art;']
-		,['Ambient Artillery - Rockets', '[1,_this] spawn MCC_fnc_amb_Art;']
-		,['Forward Observer Artillery', '[0,_this] execVM "'+MCC_path+'mcc\general_scripts\artillery\bon_art.sqf";']
-		,['Ambient AA - Cannon/Rockets', '[2,_this] spawn MCC_fnc_amb_Art;']
-		,['Ambient AA - Search Light', '[3,_this] spawn MCC_fnc_amb_Art;']
-		,['', '']
-		,['======= Units =======','']
-		,['Recruitable', '_this addAction [format ["Recruit %1", name _this], "'+MCC_path+'mcc\general_scripts\hostages\hostage.sqf",[2],6,false,true];']
-		,['Make Hostage', '_this execVM "'+MCC_path+'mcc\general_scripts\hostages\create_hostage.sqf";']
-		,['Join player', '[_this] join (group player);']
-		,['Set Renegade', '_this addrating -2001;']
-		,['Stand Up', '_this setUnitPos "UP";']
-		,['Kneel', '_this setUnitPos "Middle";']
-		,['Prone', '_this setUnitPos "DOWN";']
-		,['Remove All Weapons', 'removeAllWeapons _this;']
-		,['Remove All Items', 'removeAllItems _this;']
-		,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
-		,['', '']
-		,['======= Vehicles =======','']
-		,['Set Empty (Fuel)', '_this setfuel 0;']
-		,['Set Empty (Ammo)', '_this setvehicleammo 0;']
-		,['Set Empty (Cargo)', 'clearMagazineCargoGlobal _this; clearWeaponCargoGlobal _this; clearItemCargoGlobal _this;']
-		,['Set Locked', '_this setVehicleLock "LOCKED";']
-		,['Clear Cargo', 'clearMagazineCargo _this; clearWeaponCargo _this; clearItemCargo _this;']
-		,['Add Crew (UAV)','createVehicleCrew _this;group _this setvariable ["MCC_canbecontrolled",true,true];']
-		,['ECM - can jamm IED','if (isServer) then {_this setvariable ["MCC_ECM",true,true]};']
-		,['HQ Vehicle - create FOB','_this addAction ["<t color=""#99FF00"">Create FOB </t>", "'+MCC_path+'scripts\player\createFOB.sqf",[],6,false, false,"teamSwitch","(driver vehicle _target == _this) && (speed (vehicle _target) == 0)"];']
-		,['', '']
-		,['======= Objects =======','']
-		,['Pickable Object','_this call MCC_fnc_pickItem;']
-		,['Disable Simulation','_this enableSimulation false;']
-		,['Destroy Object', '_this setdamage 1;']
-		,['Flip Object', '[_this ,0, 90] call bis_fnc_setpitchbank;']
-		,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "'+MCC_path+'VAS\open.sqf"];']
-		,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
-		,['', '']
-		,['======= Effects =======','']
-		,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
-		,['Flies','[getposatl _this] call BIS_fnc_flies;']
-		,['Smoke','if (isServer) then {_effect = "test_EmptyObjectForSmoke" createVehicle (getpos _this);_effect setpos (getpos _this)};']
-		,['Fire','if (isServer) then {_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _this);_effect setpos (getpos _this)};']
-		,['', '']
-		,['======= Misc =======','']
-		,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
-	];
+mccPresetsVehicle = [ 
+					 ['Set Empty (Fuel)', '_this setfuel 0;']
+					,['Set Empty (Ammo)', '_this setvehicleammo 0;']
+					,['Set Empty (Cargo)', 'clearMagazineCargoGlobal _this; clearWeaponCargoGlobal _this; clearItemCargoGlobal _this;']
+					,['Set Locked', '_this setVehicleLock "LOCKED";']
+					,['Clear Cargo', 'clearMagazineCargo _this; clearWeaponCargo _this; clearItemCargo _this;']
+					,['Add Crew (UAV)','createVehicleCrew _this;group _this setvariable ["MCC_canbecontrolled",true,true];']
+					,['Add Cargo Units', '[_this] call MCC_fnc_populateVehicle;']
+					,['ECM - can jamm IED','if (isServer) then {_this setvariable ["MCC_ECM",true,true]};']
+					,['HQ Vehicle - create FOB','_this addAction ["<t color=""#99FF00"">Create FOB </t>", "'+MCC_path+'scripts\player\createFOB.sqf",[],6,false, false,"teamSwitch","(driver vehicle _target == _this) && (speed (vehicle _target) == 0)"];']
+					,['Disable Simulation','_this enableSimulation false;']
+					,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
+					,['Recruitable', '_this addAction [format ["Recruit %1", name _this], "'+MCC_path+'mcc\general_scripts\hostages\hostage.sqf",[2],6,false,true];']
+					,['Join player', '[_this] join (group player);']
+					,['Set Renegade', '_this addrating -2001;']
+					,['', '']
+					,['======= Artillery =======','']
+					,['Ambient Artillery - Cannon', '[0,_this] spawn MCC_fnc_amb_Art;']
+					,['Ambient Artillery - Rockets', '[1,_this] spawn MCC_fnc_amb_Art;']
+					,['Forward Observer Artillery', '[0,_this] execVM "'+MCC_path+'mcc\general_scripts\artillery\bon_art.sqf";']
+					,['Ambient AA - Cannon/Rockets', '[2,_this] spawn MCC_fnc_amb_Art;']
+					,['Ambient AA - Search Light', '[3,_this] spawn MCC_fnc_amb_Art;']
+					,['======= General =======','']
+					,['Destroy Vehicles', '_this setdamage 1;']
+					,['Flip Vehicles', '[_this ,0, 90] call bis_fnc_setpitchbank;']
+					,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "'+MCC_path+'VAS\open.sqf"];']
+					,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
+					,['', '']
+					,['======= Effects =======','']
+					,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
+					,['Flies','[getposatl _this] call BIS_fnc_flies;']
+					,['Smoke','if (isServer) then {_effect = "test_EmptyObjectForSmoke" createVehicle (getpos _this);_effect setpos (getpos _this)};']
+					,['Fire','if (isServer) then {_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _this);_effect setpos (getpos _this)};']
+					,['', '']
+					,['======= Misc =======','']
+					,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
+					];
+
+mccPresetsUnits = [					
+					 ['Recruitable', '_this addAction [format ["Recruit %1", name _this], "'+MCC_path+'mcc\general_scripts\hostages\hostage.sqf",[2],6,false,true];']
+					,['Make Hostage', '_this execVM "'+MCC_path+'mcc\general_scripts\hostages\create_hostage.sqf";']
+					,['Join player', '[_this] join (group player);']
+					,['Set Renegade', '_this addrating -2001;']
+					,['Stand Up', '_this setUnitPos "UP";']
+					,['Kneel', '_this setUnitPos "Middle";']
+					,['Prone', '_this setUnitPos "DOWN";']
+					,['Remove All Weapons', 'removeAllWeapons _this;']
+					,['Remove All Items', 'removeAllItems _this;']
+					,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
+					,['', '']
+					,['======= General =======','']
+					,['Kill Unit', '_this setdamage 1;']
+					,['Flip Unit', '[_this ,0, 90] call bis_fnc_setpitchbank;']
+					,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "'+MCC_path+'VAS\open.sqf"];']
+					,['Kille by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
+					,['', '']
+					,['======= Effects =======','']
+					,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
+					,['Flies','[getposatl _this] call BIS_fnc_flies;']
+					,['Smoke','if (isServer) then {_effect = "test_EmptyObjectForSmoke" createVehicle (getpos _this);_effect setpos (getpos _this)};']
+					,['Fire','if (isServer) then {_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _this);_effect setpos (getpos _this)};']
+					,['', '']
+					,['======= Misc =======','']
+					,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
+					];
+
+mccPresetsObjects = [						
+					 ['Pickable Object','_this call MCC_fnc_pickItem;']
+					,['Disable Simulation','_this enableSimulation false;']
+					,['Destroy Object', '_this setdamage 1;']
+					,['Flip Object', '[_this ,0, 90] call bis_fnc_setpitchbank;']
+					,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "'+MCC_path+'VAS\open.sqf"];']
+					,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
+					,['', '']
+					,['======= Effects =======','']
+					,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
+					,['Flies','[getposatl _this] call BIS_fnc_flies;']
+					,['Smoke','if (isServer) then {_effect = "test_EmptyObjectForSmoke" createVehicle (getpos _this);_effect setpos (getpos _this)};']
+					,['Fire','if (isServer) then {_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _this);_effect setpos (getpos _this)};']
+					,['', '']
+					,['======= Misc =======','']
+					,['Create Local Marker', '_this execVM "'+MCC_path+'mcc\general_scripts\create_local_marker.sqf";']
+					];
 
 
 //**********************************************************************************************************************
@@ -437,7 +473,7 @@ MCC_currentSide = 0; //0- west 1 - east 2- resistance 3 - civilian
 MCC_saveIndex = 0;
 
 // Mission Wizard
-MCC_MWmaxPlayers = 100;
+MCC_MWmaxPlayers = 30;
 MCC_MWDifficulty = ["Easy","Medium","Hard"];
 MCC_MWMissionType = ["None",
                      "Random",
@@ -621,6 +657,9 @@ if ( isServer ) then
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 	
+	//Add eventHandler when editing object
+	//_dummy addEventHandler ["CuratorObjectDoubleClicked", {if (MCC_CuratorKeyPressed) then {_this spawn MCC_fnc_curatorInitLine}}];   
+	_dummy addEventHandler ["CuratorObjectDoubleClicked", {_this execVM "mcc\fnc\ui\fn_curatorInitLine.sqf"}];   
 	//west
 	_dummy = _dummyGroup createunit ["SideBLUFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_sideWest";
@@ -1006,8 +1045,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	// Teleport to team on Alt + T
 	MCC_teleportToTeam = true;
 	_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1 ==((MCC_keyBinds select 2) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 2) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 2) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 2) select 2))) then {player execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
-	//_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1)==20 && (_this select 4)) then {player execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
-
+	
 	// Add to the action menu
 	if (getplayerUID player in MCC_allowedPlayers || "all" in MCC_allowedPlayers || serverCommandAvailable "#logout" || isServer) then 
 	{
@@ -1032,9 +1070,6 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	{
 		[compile format ["MCC_curator addCuratorEditableObjects [[%1],false]", player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 	};
-	
-	//Default viewDistance
-	setviewDistance 3000;
 };
 
 //========= player Loops (for saving gear/name tag exc)=================================

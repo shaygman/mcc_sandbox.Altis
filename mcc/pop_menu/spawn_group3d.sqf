@@ -435,8 +435,14 @@ if (mcc_missionmaker == (name player)) then
 		
 	if (_3d == 2) then //Case we adding presets
 	{	
+		_type = lbCurSel MCC_UNIT_TYPE;
+		_presets = [];
+		if (_type in [0]) then {_presets = mccPresetsUnits};
+		if (_type in [1,2,3,4,5,6]) then {_presets = mccPresetsVehicle}; 
+		if (_type > 7) then {_presets = mccPresetsObjects};
+		
 		_tempText = ctrlText MCC_INITBOX;
-		_presetText = (mccPresets select(lbCurSel MCC_PRESETS)) select 1; 
+		_presetText = (_presets select(lbCurSel MCC_PRESETS)) select 1; 
 		ctrlSetText [MCC_INITBOX,format ["%1 %2",_tempText,_presetText]];
 		_null = [1] execVM format["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
 	};

@@ -81,7 +81,7 @@ class MCC_3DCargoGenControls:MCC_RscControlsGroup
 			colorSelect[] = { 1.0, 0.35, 0.3, 1 };
 			colorBackground[]={0,0,0,1};
 			colorSelectBackground[] = { 0, 0, 0, 1 };
-			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
+			onLBSelChanged = __EVAL("[0,_this] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
 			
 			x = 0.0458336 * safezoneW;
 			y = 0.0439828 * safezoneH;
@@ -123,7 +123,7 @@ class MCC_3DCargoGenControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = ">>";
-			action =  __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
+			onButtonClick =  __EVAL("[1,_this] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
 			tooltip = "Add current weapon and 6 magazines"; 
 			
 			x = 0.183334 * safezoneW;
@@ -136,7 +136,7 @@ class MCC_3DCargoGenControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = ">";
-			action =  __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
+			onButtonClick =  __EVAL("[2,_this] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
 			tooltip = "Add current weapon"; 
 			
 			x = 0.183334 * safezoneW;
@@ -149,7 +149,7 @@ class MCC_3DCargoGenControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 			text = "Clear";
-			action =  __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
+			onButtonClick =  __EVAL("[3,_this] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
 			
 			x = 0.183334 * safezoneW;
 			y = 0.274893 * safezoneH;
@@ -162,7 +162,7 @@ class MCC_3DCargoGenControls:MCC_RscControlsGroup
 			idc = -1;
 			text = "Add";
 			tooltip = "Add the selected items to the object init line"; 
-			action =  __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
+			onButtonClick =  __EVAL("[4,_this] execVM '"+MCCPATH+"mcc\general_scripts\boxGen\mcc_boxGen_change.sqf'");
 			
 			x = 0.332292 * safezoneW;
 			y = 0.472816 * safezoneH;

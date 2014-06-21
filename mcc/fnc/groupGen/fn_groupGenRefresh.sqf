@@ -80,31 +80,34 @@ MCC_fnc_mapDrawWP =
 						
 						if (!isnil "MCC_3D_CAM") then
 						{
-							private ["_size"];
-							_size =if ((1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001)) < 0) then {0} else {(1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001))};
-							
-							if (_size>0) then
+							if ((MCC_3D_CAM distance vehicle _leader) < 1000) then
 							{
-								drawIcon3D [
-										_texture,
-										[0,1,1,0.6],
-										[_wPos select 0,_wPos select 1,2],
-										_size,
-										_size,
-										0,
-										_wType,
-										0,
-										(_size*0.03),
-										"PuristaBold",
-										"center"
-									];
+								private ["_size"];
+								_size =if ((1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001)) < 0) then {0} else {(1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001))};
 								
-								
-									drawLine3D [
-										[MCC_lastPos select 0, MCC_lastPos select 1, (MCC_lastPos select 2)+2],
-										[_wPos select 0, _wPos select 1, (_wPos select 2)+2],
-										[0,1,1,0.8]
-									];
+								if (_size>0) then
+								{
+									drawIcon3D [
+											_texture,
+											[0,1,1,0.6],
+											[_wPos select 0,_wPos select 1,2],
+											_size,
+											_size,
+											0,
+											_wType,
+											0,
+											(_size*0.03),
+											"PuristaBold",
+											"center"
+										];
+									
+									
+										drawLine3D [
+											[MCC_lastPos select 0, MCC_lastPos select 1, (MCC_lastPos select 2)+2],
+											[_wPos select 0, _wPos select 1, (_wPos select 2)+2],
+											[0,1,1,0.8]
+										];
+								};
 							};
 						};
 						
@@ -155,7 +158,7 @@ MCC_fnc_mapDrawWP =
 		};
 	} foreach (allMissionObjects MCC_dummy);
 	
-	//Show towns name up to2Km
+	//Show towns name up to1.5Km
 	if (!isnil "MCC_3D_CAM") then
 	{
 		{
@@ -172,10 +175,10 @@ MCC_fnc_mapDrawWP =
 							2,
 							0.05
 						];
-		} foreach (nearestlocations [getpos MCC_3D_CAM,["nameVillage","nameCity","nameCityCapital"],2000]);
+		} foreach (nearestlocations [getpos MCC_3D_CAM,["nameVillage","nameCity","nameCityCapital"],1500]);
 		
 		{
-			if (markerType _x != "") then
+			if ((markerType _x != "") && ((markerPos _x distance MCC_3D_CAM) < 1000)) then
 			{
 				private "_color"; 
 				
@@ -338,35 +341,39 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 			
 			_icon = (_x getvariable "MCCgroupIconData"); 
 			if (!isnil "_icon") then {_x removeGroupIcon _icon};
-			_icon = _x addGroupIcon [_markerType,[0,0]];
-			_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
-			_x setvariable ["MCCgroupIconData",_icon,false];
 			
-			_icon = (_x getvariable "MCCgroupIconSize") select 0; 
-			if (!isnil "_icon") then {_x removeGroupIcon _icon};
-			_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
-			_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
-				
-			if (! isnil "_groupStatus") then 					//Draw group status
+			if !(_leader in (assignedCargo vehicle _leader)) then
 			{
-				private ["_time","_status"];
-				_time 		= _groupStatus select 1; 
-				_status 	= _groupStatus select 0; 
+				_icon = _x addGroupIcon [_markerType,[0,0]];
+				_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
+				_x setvariable ["MCCgroupIconData",_icon,false];
 				
-				if (abs (time - _time) < 180) then
-					{
+				_icon = (_x getvariable "MCCgroupIconSize") select 0; 
+				if (!isnil "_icon") then {_x removeGroupIcon _icon};
+				_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
+				_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
+				
+				if (! isnil "_groupStatus") then 					//Draw group status
+				{
+					private ["_time","_status"];
+					_time 		= _groupStatus select 1; 
+					_status 	= _groupStatus select 0; 
 					
-						_x setGroupIconParams [_markerColor,format ["%1%2%3",_IsGaiaControlled,groupID _x,_status],1,true];
-					}
-					else
-					{
-						_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
-					};
-			};
-				
-			if (_behaviour == "COMBAT") then				//Show in combat
-			{
-				_x setGroupIconParams [[1,1,1,1],format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
+					if (abs (time - _time) < 180) then
+						{
+						
+							_x setGroupIconParams [_markerColor,format ["%1%2%3",_IsGaiaControlled,groupID _x,_status],1,true];
+						}
+						else
+						{
+							_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
+						};
+				};
+					
+				if (_behaviour == "COMBAT") then				//Show in combat
+				{
+					_x setGroupIconParams [[1,1,1,1],format ["%1%2",_IsGaiaControlled,groupID _x],1,true];
+				};
 			};
 		};
 	} foreach allgroups; 

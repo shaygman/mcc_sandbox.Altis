@@ -3,14 +3,29 @@
 
 #define MCC_UNIT_TYPE 8001
 #define MCC_UNIT_CLASS 8002
+#define MCC_PRESETS 8005
 
-private ["_type", "_comboBox", "_mccdialog", "_groupArray","_displayname","_index", "_spawn"];
+private ["_type", "_comboBox", "_mccdialog", "_groupArray","_displayname","_index", "_spawn","_presets"];
 disableSerialization;
 
 _mccdialog = findDisplay MCC3D_IDD;	
 _spawn = _this select 0; 
 _type = lbCurSel MCC_UNIT_TYPE;
 MCC_class_index = lbCurSel MCC_UNIT_TYPE;
+
+//Which perset do we use?
+_presets = [];
+if (_type in [0]) then {_presets = mccPresetsUnits};
+if (_type in [1,2,3,4,5,6]) then {_presets = mccPresetsVehicle}; 
+if (_type > 7) then {_presets = mccPresetsObjects}; 
+
+_comboBox = _mccdialog displayCtrl MCC_PRESETS;		//fill combobox Presets
+lbClear _comboBox;
+{
+	_displayname = _x select 0;
+	_comboBox lbAdd _displayname;
+} foreach _presets;
+_comboBox lbSetCurSel 0;
 
 if (_type<=6) then 	//If not doc or object
 	{

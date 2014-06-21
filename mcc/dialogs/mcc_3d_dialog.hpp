@@ -305,7 +305,7 @@ class MCC3D_Dialog
 			h = 0.03 * safezoneH;
 		};
 		
-
+		/*
 		class MCC3DOpenTask: MCC_RscButton
 		{
 			idc = -1;
@@ -320,7 +320,7 @@ class MCC3D_Dialog
 			w = 0.0714583 * safezoneW;
 			h = 0.03 * safezoneH;
 		};
-
+		*/
 		#include "mcc_boxGen.hpp"
 		#include "mcc_3dDOC.hpp"
 		#include "mcc_3dTasks.hpp"

@@ -1,20 +1,52 @@
-private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class","_null"];
+private ["_display","_comboBox","_displayname","_pic", "_index", "_array", "_class","_null","_ctrl","_target","_isMCC3D","_ctrlButtton"];
+#define MCC3D_IDD 8000
 #define ALLGEAR_IDD 8500
 #define BOXGEAR_IDD 8501
 #define GEARCLASS_IDD 8502
 #define MCC_3dTasksControlsIDC 8020
+#define MCCCuratorInit_IDD 10000
+#define MCC_3DCargoGen 8018
 
 disableSerialization;
-_mccdialog = uiNamespace getVariable "MCC3D_Dialog";
 
-if (isnil "Object3D") exitWith {}; 
-if !(Object3D isKindof "CAR" || Object3D isKindof "TANK" || Object3D isKindof "Air" || Object3D isKindof "ReammoBox_F") exitWith {}; 
+_ctrlButtton 	= _this select 0;
+_display 		= ctrlParent _ctrlButtton;
+_ctrl			= _display displayCtrl MCC_3DCargoGen;
 
-(_mccdialog displayCtrl 8018) ctrlShow !(ctrlShown (_mccdialog displayCtrl 8018));
-if (ctrlShown (_mccdialog displayCtrl 8018)) then 
+//Curator or MCC 3D editor?
+if (_display != findDisplay MCC3D_IDD) then
 {
-	 if (ctrlShown (_mccdialog displayCtrl 8017)) then {_null = [0] execVM MCC_path + "mcc\general_scripts\docobject\compositionManager.sqf"};
-	 ctrlShow [MCC_3dTasksControlsIDC,false];
+	_target = missionnamespace getvariable ["BIS_fnc_initCuratorAttributes_target",objnull];
+	_isMCC3D = false;
+}
+else
+{
+	_target = Object3D;
+	_isMCC3D = true;
+};
+
+if (isnil "_target") exitWith {}; 
+if !(_target isKindof "CAR" || _target isKindof "TANK" || _target isKindof "Air" || _target isKindof "ReammoBox_F") exitWith {};
+_ctrl ctrlShow !(ctrlShown _ctrl);
+
+//Align it for the Curator interface
+if !(_isMCC3D) then
+{
+	private ["_ctrlPos"];
+	_ctrlPos = ctrlposition _ctrl;
+	_ctrlPos set [0,-0.5];
+	_ctrl ctrlsetposition _ctrlPos;
+	_ctrl ctrlcommit 0; 
+};
+
+if (ctrlShown _ctrl) then 
+{
+	if (_isMCC3D) then
+	{
+		if (ctrlShown (_display displayCtrl 8017)) then {_null = [0] execVM MCC_path + "mcc\general_scripts\docobject\compositionManager.sqf"};
+		ctrlShow [MCC_3dTasksControlsIDC,false];
+	};
+	
 	(_this select 0) ctrlSetText "<-- Cargo";
 } 
 else 
@@ -22,18 +54,9 @@ else
 	(_this select 0) ctrlSetText "Cargo -->";
 };
 
-if !(ctrlShown (_mccdialog displayCtrl 8018)) exitWith {};
+if !(ctrlShown _ctrl) exitWith {};
 
-tempBox = Object3D;
-/*
-tempBox = "B_supplyCrate_F" createvehicle [0,0,0];
-clearMagazineCargo tempBox;
-clearWeaponCargo tempBox;
-clearItemCargo tempBox;
-clearBackpackCargo tempBox;
-*/
-
-_comboBox = _mccdialog displayCtrl GEARCLASS_IDD; 
+_comboBox = _display displayCtrl GEARCLASS_IDD; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
@@ -41,75 +64,52 @@ _comboBox = _mccdialog displayCtrl GEARCLASS_IDD;
 	} foreach ["Binoculars", "Items","Uniforms", "Launchers", "Machine Guns", "Pistols", "Rifles","Sniper Rifles","Rucks","Glasses","Magazines","Under Barrel","Grenades","Explosive"];
 _comboBox lbSetCurSel MCC_gearDialogClassIndex;
 
-switch (MCC_gearDialogClassIndex) do 
-		{
-		case 0: //Binos
+_array = switch (MCC_gearDialogClassIndex) do 
 			{
-			_array = W_BINOS;
-			}; 
-			
-		case 1: //Items
-			{
-			_array = W_ITEMS;
-			};
-			
-		case 2: //Uniforms
-			{
-			_array = U_UNIFORM;
-			};
-			
-		case 3: //Launchers
-			{
-			_array = W_LAUNCHERS;
-			};
-		
-		case 4: //MG
-			{
-			_array = W_MG;
-			};
-		
-		case 5: //Pistols			
-			{
-			_array = W_PISTOLS;
-			};
-			
-		case 6: //Rifles			
-			{
-			_array = W_RIFLES;
-			};
-		
-		case 7: //Sniper Rifles			
-			{
-			_array = W_SNIPER;
-			};
-			
-		case 8: //Rucks			
-			{
-			_array = W_RUCKS;
-			};
-		case 9: //Glasses			
-			{
-			_array = U_GLASSES;
-			};
-		case 10: //Magazines			
-			{
-			_array = U_MAGAZINES;
-			};
-		case 11: //Under Barrel			
-			{
-			_array = U_UNDERBARREL;
-			};
-		case 12: //Grenades		
-			{
-			_array = U_GRENADE;
-			};
-		case 13: //Explosive			
-			{
-			_array = U_EXPLOSIVE;
-			};
+				//Binos
+				case 0: {W_BINOS}; 
+				
+				//Items
+				case 1: {W_ITEMS};
+				
+				//Uniforms
+				case 2: {U_UNIFORM};
+				
+				//Launchers
+				case 3: {W_LAUNCHERS};
+				
+				//MG
+				case 4: {W_MG};
+				
+				//Pistols
+				case 5: {W_PISTOLS};
+	
+				//Rifles		
+				case 6: {W_RIFLES};
+	
+				//Sniper Rifles	
+				case 7: {W_SNIPER};
+	
+				//Rucks	
+				case 8: {W_RUCKS};
+	
+				//Glasses		
+				case 9: {U_GLASSES};
+				
+				//Magazines		
+				case 10: {U_MAGAZINES};
+	
+				//Under Barrel		
+				case 11: {U_UNDERBARREL};
+	
+				//Grenades			
+				case 12: {U_GRENADE};
+				
+				//Explosive	
+				case 13: {U_EXPLOSIVE};
 		};
 
-_comboBox = _mccdialog displayCtrl ALLGEAR_IDD; 
+_comboBox = _display displayCtrl ALLGEAR_IDD; 
 	lbClear _comboBox;
 	{
 		_class = _x select 0;
@@ -121,13 +121,14 @@ _comboBox = _mccdialog displayCtrl ALLGEAR_IDD;
 	} foreach _array;
 _comboBox lbSetCurSel 0;
 
+tempBox = _target;
 tempBoxWeapons 	= getWeaponCargo tempBox;	//Update box
 tempBoxMagazine = getMagazineCargo tempBox;
 tempBoxItems	= getItemCargo tempBox;
 tempBoxRucks	= getBackpackCargo tempBox;
 
 _count = 0;
-_comboBox = _mccdialog displayCtrl BOXGEAR_IDD; 
+_comboBox = _display displayCtrl BOXGEAR_IDD; 
 lbClear _comboBox;
 {
 	_cfg = configFile >> "CfgWeapons" >> _x;

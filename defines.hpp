@@ -18,6 +18,9 @@
 
 #include "mcc\Dialogs\MCCMW_briefingMap.hpp"
 
+#include "mcc\Dialogs\mcc_curatorInitDefines.hpp"
+#include "mcc\Dialogs\mcc_curatorInit.hpp"
+
 //---- test I should delete it at the end
 #include "mcc\dialogs\test.hpp"
 //--------------------------------CP------------------------------------------------
@@ -274,6 +277,11 @@ class CfgFunctions
 			class camp_showOSD
 			{
 				description = "Show player OSD";
+			};
+			
+			class curatorInitLine
+			{
+				description = "Handle MCC's curator init line";
 			};
 		};
 		
@@ -537,6 +545,11 @@ class CfgFunctions
 			{
 				description = "Manage custom tasks.";
 			};
+			
+			class MWspawnAnimals
+			{
+				description = "spawn animals in the area.";
+			};
 		};
 		
 		class ai
@@ -561,6 +574,11 @@ class CfgFunctions
 			class setUnitPos
 			{
 				description = "Sets units pos.";
+			};
+			
+			class populateVehicle
+			{
+				description = "Populate a not empty vehicle with antoher group contains units acording to its faction and cargo space.";
 			};
 		};
 	};

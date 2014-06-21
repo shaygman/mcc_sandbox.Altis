@@ -380,6 +380,38 @@ class MCC_RscButtonMenu : MCC_RscButton
 	};
 };
 
+class RscButtonMenuOK : MCC_RscButtonMenu
+{
+  idc = 1;
+  color2[] = {0,0,0,1};
+  color[] = {1,1,1,1};
+  colorBackground2[] = {0.75,0.75,0.75,1};
+  colorBackground[] = {0,0,0,0.8};
+  colorBackgroundFocused[] = {1,1,1,1};
+  colorDisabled[] = {1,1,1,0.25};
+  colorFocused[] = {0,0,0,1};
+  colorText[] = {1,1,1,1};
+  default = 1;
+  shortcuts[] = {"0x00050000 + 0",28,57,156};
+  text = "OK";
+};
+
+class RscButtonMenuCancel : RscButtonMenuOK
+{
+  idc = 2;
+  color2[] = {0,0,0,1};
+  color[] = {1,1,1,1};
+  colorBackground2[] = {0.75,0.75,0.75,1};
+  colorBackground[] = {0,0,0,0.8};
+  colorBackgroundFocused[] = {1,1,1,1};
+  colorDisabled[] = {1,1,1,0.25};
+  colorFocused[] = {0,0,0,1};
+  colorText[] = {1,1,1,1};
+  default = 0;
+  shortcuts[] = {"0x00050000 + 1"};
+  text = "Cancel";
+};
+
 class MCC_RscListbox 
 	{
 	access = 0;
@@ -952,6 +984,28 @@ class MCC_RscSlider
 		type = 3;
 		w = 0.3;
 	};
+
+class MCC_RscXSliderH
+	{
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\slider\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\slider\arrowFull_ca.paa";
+		border = "\A3\ui_f\data\gui\cfg\slider\border_ca.paa";
+		color[] = {1,1,1,0.6};
+		colorActive[] = {1,1,1,1};
+		colorDisable[] = {1,1,1,0.4};
+		colorDisabled[] = {1,1,1,0.2};
+		h = 0.029412;
+		shadow = 0;
+		style = "0x400	+ 0x10";
+		thumb = "\A3\ui_f\data\gui\cfg\slider\thumb_ca.paa";
+		tooltipColorBox[] = {1,1,1,1};
+		tooltipColorShade[] = {0,0,0,0.65};
+		tooltipColorText[] = {1,1,1,1};
+		type = 43;
+		w = 0.4;
+		x = 0;
+		y = 0;
+	};
 	
 class MCC_RscPicture
 	{
@@ -968,6 +1022,33 @@ class MCC_RscPicture
 		text = "";
 		type = 0;
 		w = 0.2;
+		x = 0;
+		y = 0;
+	};
+
+class MCC_RscActivePicture
+	{
+		access = 0;
+		color[] = {1,1,1,0.5};
+		colorActive[] = {1,1,1,1};
+		colorText[] = {0,0,0,1};
+		default = 0;
+		font = "PuristaMedium";
+		h = 0.035;
+		idc = -1;
+		shadow = 2;
+		sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		soundClick[] = {"",0.1,1};
+		soundEnter[] = {"",0.1,1};
+		soundEscape[] = {"",0.1,1};
+		soundPush[] = {"",0.1,1};
+		style = 48;
+		text = "";
+		tooltipColorBox[] = {1,1,1,1};
+		tooltipColorShade[] = {0,0,0,0.65};
+		tooltipColorText[] = {1,1,1,1};
+		type = 11;
+		w = 0.035;
 		x = 0;
 		y = 0;
 	};
