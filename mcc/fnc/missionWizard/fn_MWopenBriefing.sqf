@@ -1,4 +1,4 @@
-/*
+/* 
 	Open breifing map for mission wizard based on script by Author: Karel Moricky
 
 	Description:
@@ -35,13 +35,16 @@ disableserialization;
 
 if (isDedicated) exitWith {};
 
-_mapCenter = _this select 0; 
-_mapCenter = _mapCenter call bis_fnc_position;
-_missions = _this select 1; 
-_overcast = ([_this,2,overcast,[0]] call bis_fnc_param) max 0 min 1;
-_isNight = [_this,3,false,[false]] call bis_fnc_param;
-_defaultScale = [_this,4,1,[0]] call bis_fnc_param;
-_brief = _this select 5; 
+_mapCenter 			= _this select 0; 
+_missions 			= _this select 1; 
+_defaultScale 		= _this select 2; 
+_brief 				= _this select 3; 
+
+_mapCenter 			= _mapCenter call bis_fnc_position;
+_overcast 			= overcast;
+_isNight 			= if ((date select 3)>19 || (date select 3)<6) then {true} else {false}; 
+
+
 _simulationEnabled = true;
 
 //--- Calculate terrain size and outside color

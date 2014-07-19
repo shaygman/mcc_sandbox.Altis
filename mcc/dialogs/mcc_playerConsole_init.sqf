@@ -351,10 +351,6 @@ MCC_fnc_mapDrawWPConsole =
 		}; 
 		
 	//Clear stuff after exiting
-	{deletemarkerlocal _x} foreach MCC_groupGenTempWP;
-	MCC_groupGenTempWP = []; 
-	{deletemarkerlocal _x} foreach MCC_groupGenTempWPLines;
-	MCC_groupGenTempWPLines = []; 
 	{
 		_leader = (leader _x); 
 		if ((side _leader == side player) && alive _leader) then
@@ -362,6 +358,7 @@ MCC_fnc_mapDrawWPConsole =
 				clearGroupIcons _x; 
 			}; 
 	} foreach allgroups;
+	
 	setGroupIconsVisible [false,false];
 	setGroupIconsSelectable false;
 	

@@ -68,10 +68,10 @@ if (_isCQB) then
 				{
 					//Hostage
 					_unitsArray	= [_factionPlayer ,"soldier"] call MCC_fnc_makeUnitsArray;		//Let's build the faction unit's array
-					_type = "";
+					_type = [""];
 					
 					//Karts again?!   
-					while {_type iskindof "C_Driver_1_F" || _type == ""} do
+					while {(_type select 0) in ["C_Driver_1_F"] || (_type select 0) == ""} do
 					{
 						_type = _unitsArray call BIS_fnc_selectRandom;	
 					};

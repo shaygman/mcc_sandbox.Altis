@@ -12,21 +12,21 @@ _map = _this select 0;
 		{
 		case "EAST": //East
 			{
-				_markerColor = [1,0,0,0.8];
+				_markerColor = [0.6,0,0,0.6];
 			}; 
 			
 		case "WEST": //West
 			{
-				_markerColor = [0,0,1,0.8];
+				_markerColor = [0,0,0.6,0.6];
 			};
 			
 		case "GUER": //Resistance
 			{
-				_markerColor = [0,1,0,0.8];
+				_markerColor = [0,0.6,0,0.6];
 			};
 		case "CIVILIAN": //Civilian
 			{
-				_markerColor = [1,1,1,0.8];
+				_markerColor = [0.6,0.6,0.6,0.6];
 			};	
 		}; 
 			
@@ -39,6 +39,7 @@ _map = _this select 0;
 			_mapsize = if ((vehicle _unit) == _unit) then {20} else {30}; 
 			
 			if (isPlayer _unit) then {_markerColor = [1, 0, 1,0.8]}; 
+			
 			_map drawIcon [
 				_texture,
 				_markerColor,
@@ -93,8 +94,6 @@ _map = _this select 0;
 					};
 				};
 			};
-			
-
 		};
 	} foreach (units _group); 
 	

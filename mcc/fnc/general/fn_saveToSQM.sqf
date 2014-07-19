@@ -175,8 +175,8 @@ if (count _allCuratorObjectives > 0) then
 		{
 			_attachedUnitInit = _attachedUnit getvariable ["vehicleinit",""]; 
 			_newName = format ["MCC_objectUnits_%1", ["MCC_objectUnitsCounter",1] call bis_fnc_counter];
-			_init = format [";%1 = _this;", _newName];
-			_attachedUnit setVariable ["vehicleinit",_attachedUnitInit + _init]; 
+			_init = format [";%2;%1 = _this;", _newName, _attachedUnitInit];
+			_attachedUnit setVariable ["vehicleinit", _init]; 
 		}
 		else
 		{
@@ -197,21 +197,21 @@ if (count _allCuratorObjectives > 0) then
 		
 		if (_class in ["ModuleObjective_F"]) then
 		{
-			_init = 		format ["this setVariable ['RscAttributeTaskState','%1'];", _object getVariable ["RscAttributeTaskState","created"]] 
-						+ 	format ["this setVariable ['RscAttributeTaskDestination',%1];", _object getVariable ["RscAttributeTaskDestination",0]];
+			_init = _init +		format ["this setVariable ['RscAttributeTaskState','%1'];", _object getVariable ["RscAttributeTaskState","created"]] 
+						  + 	format ["this setVariable ['RscAttributeTaskDestination',%1];", _object getVariable ["RscAttributeTaskDestination",0]];
 		};
 		
 		if ((_object getVariable ["customTask",""]) != "") then
 		{
 			_init = _init +	format ["this setVariable ['customTask','%1'];", _object getVariable ["customTask",""]] 
-				          +     	"[this] spawn MCC_fnc_customTasks;"
+				          +         "[this] spawn MCC_fnc_customTasks;";
 		};
 		
 		if (!isnull _attachedUnit) then 
 		{
-			_init = _init +	format ["waituntil {alive %1};", _newName]
-						  +	format ["this setVariable ['bis_fnc_curatorAttachObject_object',%1];",_newName]
-						  + 	    "this setVariable ['updated',true];";
+			_init = _init + format ["0 = this spawn {waituntil {!isnil '%1'};",_newName]
+						  +	format ["_this setVariable ['bis_fnc_curatorAttachObject_object',%1];",_newName]
+						  + 	    "_this setVariable ['updated',true]};";
 		}
 		else
 		{

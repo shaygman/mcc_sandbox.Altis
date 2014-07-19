@@ -4,7 +4,7 @@
 // Params:
 // 	NONE
 //==============================================================================================================================================================================	
-private ["_ok"];
+private ["_ok","_briefings","_logics"];
 if (!isnil "MCC_Overcast") then {0 setOvercast MCC_Overcast};
 if (!isnil "MCC_WindForce") then {0 setWindForce MCC_WindForce};
 if (!isnil "MCC_Waves") then {0 setWaves MCC_Waves};
@@ -25,6 +25,23 @@ if (!isnil "MCC_sync") then
 // force weather change
 skipTime -24;
 sleep 2;
+
+
+//Sync Briefings
+_logics = allMissionObjects "logic"; 
+
+{
+	if ((_x getVariable ["missions",0]) > 0) then
+	{
+		_briefings = _x getVariable ["briefings",[]];
+		if (count _briefings > 0) then
+		{
+			player createDiaryRecord ["diary", [_briefings select 0,(toString (_briefings select 2)) + str (_briefings select 1)]]
+		}; 
+	};
+} foreach _logics; 
+
+publicvariable "MCC_sync"; 
 
 // finalyze sync
 mcc_sync_status = true;

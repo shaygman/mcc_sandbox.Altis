@@ -157,7 +157,6 @@ if (_type == 2) then //Add weapon/mag without mags
 
 if (_type == 3) then //Clear
 {
-	player sidechat str (getpos tempBox);
 	clearMagazineCargo _target;
 	clearWeaponCargo _target;
 	clearItemCargo _target;
@@ -218,7 +217,7 @@ _comboBox lbSetCurSel 0;
 if (_type == 4) then //Generate
 {
 	_string = ctrlText MCC_INITBOX;
-	_string = _string + format [';if (isServer) then {clearMagazineCargo _this; clearWeaponCargo _this;	clearItemCargo _this; clearBackpackCargo _this;[[_this, %1, %2, %3, %4],"MCC_fnc_boxGenerator",_this,false] spawn BIS_fnc_MP};',_targetWeapons, _targetMagazine, _targetItems, _targetRucks];
+	_string = _string + format [';if (isServer) then {clearMagazineCargoGlobal _this; clearWeaponCargoGlobal _this;	clearItemCargoGlobal _this; clearBackpackCargoGlobal _this;[[_this, %1, %2, %3, %4],"MCC_fnc_boxGenerator",_this,false] spawn BIS_fnc_MP};',_targetWeapons, _targetMagazine, _targetItems, _targetRucks];
 	ctrlSetText [MCC_INITBOX,_string];
 	
 	if (_isMCC3D) then

@@ -31,7 +31,7 @@ if !(isServer || isDedicated) exitWith {};
 if (isnil "mcc_mwunitsarraycar") then
 {
 	//Build the faction's unitsArrays and send it to the server. 
-	_check = [] call MCC_fnc_MWCreateUnitsArray;
+	_check = [_faction, _side] call MCC_fnc_MWCreateUnitsArray;
 	waituntil {_check};	
 };
 

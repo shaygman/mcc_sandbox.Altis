@@ -35,129 +35,15 @@ MCC_fnc_mapDrawWP =
 {
 	_map = _this select 0;
 	
+	//Draw WP
 	{
-		_leader = (leader _x);
-		_players = if ("players" in MCC_groupGenGroupStatus && (count MCC_groupGenGroupStatus == 1)) then {alive _leader && isPlayer _leader} else {alive _leader}; 
-		
-		if (((side _leader in MCC_groupGenGroupStatus) || ("players" in MCC_groupGenGroupStatus && (count MCC_groupGenGroupStatus == 1))) && _players) then
-		{
-			_wpArray = waypoints (group _leader);
-			if (count _wpArray > 0)then
-			{
-				private ["_wp","_wPos","_wType"];
-				MCC_lastPos = nil; 
-				_texture = gettext (configfile >> "CfgMarkers" >> "waypoint" >> "icon");
-				for [{_i= currentWaypoint (group _leader)},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
-				{			
-					_wp = (_wpArray select _i);
-					_wPos  = waypointPosition _wp;
-					if ((_wPos  distance [0,0,0]) > 50) then
-					{
-						_wType = waypointType _wp;
-						
-						
-						_map drawIcon [
-							_texture,
-							[0,0,1,1],
-							_wPos,
-							24,
-							24,
-							0,
-							_wType,
-							0,
-							0.04,
-							"PuristaBold",
-							"center"
-						];
-						
-						if (isnil "MCC_lastPos" || _i== currentWaypoint (group _leader) ) then {MCC_lastPos = getpos _leader}; 
-						
-						_map drawLine [
-							[MCC_lastPos select 0, MCC_lastPos select 1],
-							_wPos,
-							[0,0,1,1]
-						];
-						
-						if (!isnil "MCC_3D_CAM") then
-						{
-							if ((MCC_3D_CAM distance vehicle _leader) < 1000) then
-							{
-								private ["_size"];
-								_size =if ((1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001)) < 0) then {0} else {(1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001))};
-								
-								if (_size>0) then
-								{
-									drawIcon3D [
-											_texture,
-											[0,1,1,0.6],
-											[_wPos select 0,_wPos select 1,2],
-											_size,
-											_size,
-											0,
-											_wType,
-											0,
-											(_size*0.03),
-											"PuristaBold",
-											"center"
-										];
-									
-									
-										drawLine3D [
-											[MCC_lastPos select 0, MCC_lastPos select 1, (MCC_lastPos select 2)+2],
-											[_wPos select 0, _wPos select 1, (_wPos select 2)+2],
-											[0,1,1,0.8]
-										];
-								};
-							};
-						};
-						
-						MCC_lastPos = _wPos; 
-					};
-				};
-			};
-		};
-	} foreach allgroups; 
+		_map drawIcon _x;
+	} foreach MCC_GGIcons;
 	
-	//Draw IEDs
 	{
-		if (_x getVariable ["armed",false]) then
-		{
-			_texture =	if (_x getVariable ["isAmbush",false]) then
-						{
-							 gettext (configfile >> "CfgMarkers" >> "mil_ambush" >> "icon");
-						}
-						else
-						{
-							gettext (configfile >> "CfgMarkers" >> "selector_selectedMission" >> "icon");
-						};
-			
-			_map drawIcon [
-								_texture,
-								[1,0,0,1],
-								getpos _x,
-								24,
-								24,
-								_x getvariable ["dir",0],
-								_x getvariable ["iedMarkerName", ""],
-								0,
-								0.04,
-								"PuristaBold",
-								"right"
-							];
-			
-			//Draw synced IED lines
-			_syncedObject = _x getVariable ["syncedObject",[0,0,0]];
-			if (str _syncedObject != "[0,0,0]") then
-			{
-				_map drawLine [
-								getpos _x,
-								_syncedObject,
-								[1,0,0,1]
-							  ];
-			};
-		};
-	} foreach (allMissionObjects MCC_dummy);
-	
+		_map drawLine _x;
+	} foreach MCC_GGLines;
+
 	//Show towns name up to1.5Km
 	if (!isnil "MCC_3D_CAM") then
 	{
@@ -236,15 +122,79 @@ _handler = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ct
 
 while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupGenRefreshTerminate} do 		//Draw WP
 {
+	private ["_tempArray1","_tempArray2"];
+	_tempArray1 = [];
+	_tempArray2 = [];
+	
 	{
 		_leader = (leader _x);
 		_groupStatus = _x getvariable "MCC_support";
 		_wpArray = waypoints (group _leader);
 		_behaviour = behaviour _leader;
 		_players = if ("players" in MCC_groupGenGroupStatus && (count MCC_groupGenGroupStatus == 1)) then {alive _leader && isPlayer _leader} else {alive _leader}; 
-
+		
+		//Draw loop
 		if (((side _leader in MCC_groupGenGroupStatus) || ("players" in MCC_groupGenGroupStatus && (count MCC_groupGenGroupStatus == 1))) && _players) then
 		{
+			//Draw WP
+			if (count _wpArray > 0)then
+			{
+				private ["_wp","_wPos","_wType"];
+				MCC_lastPos = nil; 
+				_texture = gettext (configfile >> "CfgMarkers" >> "waypoint" >> "icon");
+				for [{_i= currentWaypoint (group _leader)},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
+				{			
+					_wp = (_wpArray select _i);
+					_wPos  = waypointPosition _wp;
+					if ((_wPos  distance [0,0,0]) > 50) then
+					{
+						_wType = waypointType _wp;
+						_tempArray1 set [count _tempArray1, [_texture,[0,0,1,1],_wPos,24,24,0,_wType,0,0.04,"PuristaBold","center"]];
+						
+						if (isnil "MCC_lastPos" || _i== currentWaypoint (group _leader) ) then {MCC_lastPos = getpos _leader}; 
+						
+						_tempArray2 set [count _tempArray2, [[MCC_lastPos select 0, MCC_lastPos select 1],_wPos,[0,0,1,1]]];
+						
+						/*								//We don't need it on the 3D editor too much UI lag
+						if (!isnil "MCC_3D_CAM") then
+						{
+							if ((MCC_3D_CAM distance vehicle _leader) < 1000) then
+							{
+								private ["_size"];
+								_size =if ((1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001)) < 0) then {0} else {(1.5 - ((MCC_3D_CAM distance vehicle _leader)*0.001))};
+								
+								if (_size>0) then
+								{
+									drawIcon3D [
+											_texture,
+											[0,1,1,0.6],
+											[_wPos select 0,_wPos select 1,2],
+											_size,
+											_size,
+											0,
+											_wType,
+											0,
+											(_size*0.03),
+											"PuristaBold",
+											"center"
+										];
+									
+									
+										drawLine3D [
+											[MCC_lastPos select 0, MCC_lastPos select 1, (MCC_lastPos select 2)+2],
+											[_wPos select 0, _wPos select 1, (_wPos select 2)+2],
+											[0,1,1,0.8]
+										];
+								};
+							};
+						};
+						*/
+						MCC_lastPos = _wPos; 
+					};
+				};
+			};
+		
+			//Draw group markers
 			switch (side _leader) do 	
 			{
 				case east: //East
@@ -334,6 +284,7 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 				if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
 				if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
 			};
+			
 			//How big is the squad
 			_unitsSize = floor (_unitsSize/4); 
 			if (_unitsSize > 10) then {_unitsSize = 10};
@@ -378,17 +329,40 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 		};
 	} foreach allgroups; 
 	
+	//Draw IEDs
+	{
+		if (_x getVariable ["armed",false]) then
+		{
+			_texture =	if (_x getVariable ["isAmbush",false]) then
+						{
+							 gettext (configfile >> "CfgMarkers" >> "mil_ambush" >> "icon");
+						}
+						else
+						{
+							gettext (configfile >> "CfgMarkers" >> "selector_selectedMission" >> "icon");
+						};
+			
+			_tempArray1 set [count _tempArray1, [_texture, [1,0,0,1], getpos _x, 24, 24, _x getvariable ["dir",0], _x getvariable ["iedMarkerName", ""],0,0.04,"PuristaBold","right"]];
+			
+			//Draw synced IED lines
+			_syncedObject = _x getVariable ["syncedObject",[0,0,0]];
+			if (str _syncedObject != "[0,0,0]") then
+			{
+				_tempArray2 set [count _tempArray2, [getpos _x,	_syncedObject,[1,0,0,1]]];
+			};
+		};
+	} foreach (allMissionObjects MCC_dummy);
+	
+	MCC_GGIcons = _tempArray1;
+	MCC_GGLines = _tempArray2;
+	
 	//Refresh UM list
 	[] call MCC_fnc_groupGenUMRefresh;
 	
-	sleep 1; 
+	sleep 1.5; 
 }; 
 	
 //Clear stuff after exiting
-{deletemarkerlocal _x} foreach MCC_groupGenTempWP;
-MCC_groupGenTempWP = []; 
-{deletemarkerlocal _x} foreach MCC_groupGenTempWPLines;
-MCC_groupGenTempWPLines = []; 
 {
 	_leader = (leader _x); 
 	if ((side _leader in MCC_groupGenGroupStatus) && alive _leader) then

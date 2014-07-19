@@ -1,25 +1,58 @@
+Change log r8:
+- Changed: Zeus edit object dialog is now moveable. 
+- Changed: Mission Wizard process moved to the server side. 
+- Added: Mission Wizard mission: Secure HVT now requires to bring back the HVT to base alive (need MCC start location present).
+
+- Fixed: Custom Cargo didn't show for all clients. 
+- Fixed: Hight of objects/units isn't loaded currectlly. 
+- Improved: Custom zeus edit dialogs response time. 
+
+TODO secure HVT side player or civ
+TODO Full campaign
+Change log r7:
+- Fixed: AI loaded from profile always facing north. 
+- Fixed: Cargo menu in Zeus glitched when monitor ratio is 5:4.
+- Fixed: Missing Role Selection button.
+- Tweaked: MCC UI and 3D to icrease performance.
+
+- Added: Object oriented save for MCC's briefings so you can load them when saving to SQM. 
+- Added: Mission Generator briefings will be added to map's briefings and will be saved. 
+
+FYI You can now generate a campaign by making seperate mission generator's missions each will have it own breifings and markers and you can save
+it all to SQM. 
+
 Change log r6:
+Zeus:
 - Added: Change object name, Init line and MCC's init presets are now availabe in Zeus when editing a unit. 
+- Added: Save to SQM will save Zeus or MCC Mission Wizard objectives (the zeus sector and attack defends objectives not included). 
+- Changed: Traps, IED, suicide bombers, armed civilians and ambushes will be under Zeus control and can be edited and moved and saved/loaded after they have been edited. 
+
+UI:
 - Added: Set MCC keys from the login menu - for players who are not the mission maker.
 - Added: Two more levels of terrain detail (grass).
 - Added: Terrain detail and view distance preferences will be saved to user profile automatically.  
+
+Mission Wizard:
 - Added: Mission Wizard presets will be saved to profile name. 
-- Added: Armed civilians will patrol the area and be much more aggressive also they now have SMG. 
-- Added: Save to SQM will save Zeus or MCC Mission Wizard objectives (the zeus sector and attack defends objectives not included). 
 - Added: Mission Wizards will completely save including objectives reinforcment exc, objectives can be edited by Zeus in game.
 - Added: You can now select the civilians faction in Mission Wizard. 
-- Added: Animal spawning in Mission Wizard. 
-- Added: 3D editor preset - "Add Cargo Units" will populate the vehicle cargo with units from the vehicle's faction. 
-
-- Changed: Zones can be loaded changed and re-saved again and again. 
+- Added: Animal spawning in Mission Wizard.
 - Changed: MCC Mission Wizard objectives added: "Destroy Vehicle","Destroy AA", "Destroy Artillery", "Destroy Weapon Cahce", "Destroy Fuel Depot", "Destroy Radar/Radio",
+
+Engine:
+- Changed: Zones can be loaded changed and re-saved again and again. 
 - Changed: By default MCC keys will be: 
 	- Open MCC: Ctrl + Delete
 	- Open MCC Console: Ctrl + End
 	- Teleport 2 Team: Alt + T
-- Changed: Traps, IED, suicide bombers, armed civilians and ambushes will be under Zeus control and can be edited and moved and saved/loaded after they have been edited. 
 - Changed: Presets are defined by object type.
 	
+Misc:
+- Added: Armed civilians will patrol the area and be much more aggressive also they now have SMG. 
+- Added: 3D editor preset - "Add Cargo Units" will populate the vehicle cargo with units from the vehicle's faction. 
+
+Bug Fix:
+- Fixed: Remove some of the load in 3D editor to save CPU. 	
 - Fixed: MCC will not show group's markers while they are in another group's vehicle (so you can set troops unload). 
 - Fixed: Failing the mission if enabling roles.
 - Fixed: Groups respawn after loading a mission. 
@@ -31,7 +64,6 @@ Change log r6:
 
 
 TODO save markers
-TODO Populate car preset
 TODO civilians behavior
 
 Change log r5:

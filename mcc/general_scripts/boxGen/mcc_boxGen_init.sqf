@@ -34,7 +34,7 @@ if !(_isMCC3D) then
 {
 	private ["_ctrlPos"];
 	_ctrlPos = ctrlposition _ctrl;
-	_ctrlPos set [0,-0.5];
+	_ctrlPos set [0,safezoneW - ((safezoneW)+(safezoneW/5))];
 	_ctrl ctrlsetposition _ctrlPos;
 	_ctrl ctrlcommit 0; 
 };

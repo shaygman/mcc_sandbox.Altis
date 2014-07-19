@@ -3,7 +3,7 @@
 // Example:[_logic] spawn MCC_fnc_customTasks; 
 // Return - nothing
 //========================================================================================================================================================================================
-private ["_logic","_attachedUnit","_owners","_taskState","_taskStateDestination","_taskDescription","_taskType","_trg","_name"];
+private ["_logic","_attachedUnit","_owners","_taskState","_taskStateDestination","_taskDescription","_taskType","_trg","_name","_desc","_missionDone"];
 _logic			= _this select 0;
 
 waituntil {!alive _logic || _logic getvariable ["updated",false]};
@@ -28,10 +28,53 @@ switch (true) do
 		
 		if (alive _attachedUnit) then 
 		{
+			_desc 	= format ["Get %1 back to base alive",name _attachedUnit];
 			_logic setvariable ["RscAttributeTaskState","Succeeded", true];
 			_logic setvariable ["updated",true];
-			waituntil {!alive _attachedUnit};
-			_logic setvariable ["RscAttributeTaskState","Failed", true];
+			sleep 1;
+			[_logic,"RscAttributeTaskDescription",[_desc, _desc, _desc]] call bis_fnc_setServerVariable;
+			sleep 1;
+			_logic setvariable ["RscAttributeTaskState","assigned", true];
+			_logic setvariable ["updated",true];
+			
+			_missionDone = false; 
+			while {! _missionDone} do
+			{
+				if (!isnil "MCC_START_WEST") then 
+				{
+					if (MCC_START_WEST distance _attachedUnit < 100) then 
+					{
+						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
+						_missionDone = true;
+					};
+				};
+				
+				if (!isnil "MCC_START_EAST") then 
+				{
+					if (MCC_START_EAST distance _attachedUnit < 100) then 
+					{
+						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
+						_missionDone = true;
+					};
+				};
+				
+				if (!isnil "MCC_START_GUER") then 
+				{
+					if (MCC_START_GUER distance _attachedUnit < 100) then 
+					{
+						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
+						_missionDone = true;
+					};
+				};
+				
+				if (!alive _attachedUnit) then 
+				{
+					_logic setvariable ["RscAttributeTaskState","Failed", true];
+					_missionDone = true;
+				};
+				
+				sleep 5;
+			};
 		}
 		else
 		{
@@ -75,7 +118,8 @@ switch (true) do
 };
 
 _logic setvariable ["updated",true];
-
+sleep 10;
+deletevehicle _logic;
 
 
 

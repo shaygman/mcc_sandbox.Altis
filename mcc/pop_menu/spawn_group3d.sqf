@@ -45,23 +45,6 @@ if (mcc_missionmaker == (name player)) then
 				}	
 				else
 				{
-					/*
-					 mcc_safe = mcc_safe + FORMAT ["
-									[[%1, %2, '%3', '%4', '%5', %6, '%7', '%8', %9],'MCC_fnc_simpleSpawn',true,false] spawn BIS_fnc_MP;		
-									MCC_mccFunctionDone = false; 
-									waitUntil {MCC_mccFunctionDone};
-									"
-									,MCC3DValue select 0
-									,MCC3DValue select 1
-									,mcc_spawnname
-									,mcc_spawntype
-									,mcc_spawnfaction
-									,mcc_spawnwithcrew
-									,MCC_unitInit
-									,MCC_unitName
-									,mcc_hc
-									];
-					*/
 					_pos = MCC3DValue select 0; 
 					
 					if (!isnil "Object3D" && (mcc_spawntype=="VEHICLE")) then 

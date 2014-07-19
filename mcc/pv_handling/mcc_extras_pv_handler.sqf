@@ -2,7 +2,6 @@
 MCC_3D_PLACER = compile preProcessFileLineNumbers format["%1mcc\pop_menu\3rd_placer.sqf",MCC_path];
 
 MCC_fnc_makeMarker = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7), (_this select 8)] execVM MCC_path + "mcc\pop_menu\markers_add.sqf"};
-MCC_fnc_makeBriefing = {[(_this select 0), (_this select 1)] execVM MCC_path + "mcc\pop_menu\briefing_add.sqf"};
 MCC_fnc_makeTaks = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)] execVM MCC_path + "mcc\pop_menu\tasks_add.sqf"};
 MCC_fnc_MusicTrigger = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7)] execVM MCC_path + "mcc\general_scripts\jukebox\jukebox_execute.sqf"};
 /*

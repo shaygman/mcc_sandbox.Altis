@@ -27,20 +27,27 @@ disableSerialization;
 
 _curator 		= _this select 0;
 _target 		= _this select 1;
-_time 			= time +1;
+_time 			= time +0.2;
 MCC_unitInit 	= "";
 MCC_unitName 	= "";
 
 if (!alive _target || isNull _target || isplayer _target || (_target isKindof "Module_F")) exitWith {};
  
-waituntil {dialog || (time > _time)}; 
-closeDialog 0; 
-
 //What are we dealing here
 _targetData = _target call bis_fnc_objectType;
 _targetCategory = _targetData select 0;
 _targetType = _targetData select 1;
 
+if (_targetCategory != "Object") then
+{
+	waituntil {dialog}; 
+}
+else
+{
+	waituntil {(time > _time)}; 	
+}; 
+
+closeDialog 0;
 
 switch (_targetCategory) do
 {

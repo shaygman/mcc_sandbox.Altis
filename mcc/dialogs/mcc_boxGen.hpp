@@ -6,7 +6,7 @@
 class MCC_3DCargoGenControls:MCC_RscControlsGroup
 {
 	idc = MCC_3DCargoGen;
-	 
+	moving = 1;
 	x = 0.195 * safezoneW + safezoneX;
 	y = 0.214111 * safezoneH + safezoneY;
 	w = 0.401042 * safezoneW;
@@ -18,7 +18,7 @@ class MCC_3DCargoGenControls:MCC_RscControlsGroup
 		{
 			idc = -1; 
 			colorBackground[] = {0,0,0,0.6};
-			
+			moving = 1;
 			w = 0.401042 * safezoneW;
 			h = 0.505803 * safezoneH;
 			text = "";
@@ -30,7 +30,7 @@ class MCC_3DCargoGenControls:MCC_RscControlsGroup
 			colorBackground[] = { 0, 0, 0, 0.9 };
 			colorText[] = { 1, 1, 1, 0 };
 			text = "";
-			
+			moving = 1;
 			x = 0.00572965 * safezoneW;
 			y = 0.0769698 * safezoneH;
 			w = 0.171875 * safezoneW;

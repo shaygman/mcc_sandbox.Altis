@@ -13,6 +13,18 @@ _iedside			= _this select 1;
 _trapvolume			= _this select 2;
 _IEDExplosionType	= _this select 3;
 
+if (typeName _iedside == "STRING") then
+{
+	_iedside = switch (tolower _iedside) do
+				{
+				   case "west":	{west};
+				   case "east":	{east};
+				   case "guer":	{resistance}; 
+				   case "civ":	{civilian};
+				   default {west};
+				};
+};
+			
 _sound		=1; //choose 0 for no sounds
 _targ 		= ["Car","Tank","Man"];
 _sbspeed 	= ["LIMITED","NORMAL","FULL"];

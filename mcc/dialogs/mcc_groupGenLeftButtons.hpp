@@ -159,16 +159,16 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			h = 0.0329871 * safezoneH;
 		};
 		
-		class MCC_3DeditorButton: MCC_RscButton
+		class MCC_curatorButton: MCC_RscButton
 		{
 			idc = -1;
-			text = "3D Editor"; //--- ToDo: Localize;
+			text = "Zeus"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			tooltip = "Click on map to open the 3D editor"; 
-			onButtonClick = "uiNameSpace setVariable ['MCC_3DOpen',true]";
+			tooltip = "Click on map to open BIS Zeus"; 
+			onButtonClick = "uiNameSpace setVariable ['MCC_ZeusOpen',true]";
 			
 			x = 0.0057 * safezoneW;
-			y = 0.4068354875775886 * safezoneH;
+			y = 0.4508172566785238 * safezoneH;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};

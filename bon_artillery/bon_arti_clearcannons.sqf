@@ -47,7 +47,7 @@ _requestor setVariable ["requesting_cannons",_cannons_to_clear,true];
 
 ctrlSetText [BON_ARTY_SUMMARY,format["\n\nCannons %1 resetted.",_cannons_cleared]];
 
-if(arty_CurrNrShellsTotal > (Server getVariable format["Arti_%1_shellsleft",playerSide])) then{
+if(arty_CurrNrShellsTotal > (MCC_server getVariable format["Arti_%1_shellsleft",playerSide])) then{
 	ctrlEnable [BON_ARTY_REQUESTBUTTON,false];
 	(_dlg displayCtrl BON_ARTY_SHELLSLEFT) ctrlSetTextColor [1,0,0,1];
 } else{

@@ -27,6 +27,18 @@ _IEDTriggerType 	= _this select 5;
 _trapdistance 		= _this select 6;
 _iedside 			= _this select 7;
 
+if (typeName _iedside == "STRING") then
+{
+	_iedside = switch (tolower _iedside) do
+				{
+				   case "west":	{west};
+				   case "east":	{east};
+				   case "guer":	{resistance}; 
+				   case "civ":	{civilian};
+				   default {west};
+				};
+};
+			
 _pos 	= getposatl _fakeIed;
 _iedDir =  getdir _fakeIed;
 
@@ -52,7 +64,7 @@ if (_isAmmo) then
 	
 	_dummy addaction ["<t color=""#FF0000"">- Disarm IED -</t>",MCC_path + "mcc\general_scripts\traps\ied_disarm.sqf","",6,true,true,"_target distance _this < 5"];
 	_fakeIed attachto [_dummy,[0,0,0]];
-	MCC_curator addCuratorEditableObjects [[_dummy],false]; 
+	if (!isnil "MCC_curator") then {MCC_curator addCuratorEditableObjects [[_dummy],false]}; 
 }
 else
 {

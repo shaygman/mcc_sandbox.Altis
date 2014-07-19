@@ -462,8 +462,6 @@ MCC_groupGenCurrenGroupArray = [];
 MCC_groupGenGroupArray = []; 
 
 MCC_groupGenGroupselectedIndex = 0;
-MCC_groupGenTempWP = [];
-MCC_groupGenTempWPLines = [];
 MCC_currentSide = 0; //0- west 1 - east 2- resistance 3 - civilian
 
 //Bon artillery
@@ -638,11 +636,13 @@ if ( isServer ) then
 
 	//create logics
 	
-	//server
+	
 	_dummyGroup = creategroup sideLogic; 
+	
+	//server
 	_dummy = _dummyGroup createunit ["Logic", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
-	_name = "server";
-	_dummy setvariable ["text","server"];
+	_name = "MCC_server";
+	_dummy setvariable ["text","MCC_server"];
 	_dummy setvariable ["mccIgnore",true];
 	call compile (_name + " = _dummy");
 	publicVariable _name;
@@ -657,9 +657,6 @@ if ( isServer ) then
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 	
-	//Add eventHandler when editing object
-	//_dummy addEventHandler ["CuratorObjectDoubleClicked", {if (MCC_CuratorKeyPressed) then {_this spawn MCC_fnc_curatorInitLine}}];   
-	_dummy addEventHandler ["CuratorObjectDoubleClicked", {_this execVM "mcc\fnc\ui\fn_curatorInitLine.sqf"}];   
 	//west
 	_dummy = _dummyGroup createunit ["SideBLUFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_sideWest";
@@ -875,6 +872,10 @@ else
 	}; 
 };
 
+//Curator custom menus
+//Add eventHandler when editing object
+MCC_curator addEventHandler ["CuratorObjectDoubleClicked", {_this spawn MCC_fnc_curatorInitLine}];   
+	
 // Handler code for the server for MP purpose
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_pv_handler.sqf";
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_extras_pv_handler.sqf";
@@ -1066,9 +1067,9 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && ("Medikit" in (items(_this select 1)))) then {(_this select 1) addrating 200; false}}];};
 	
 	//Curator
-	if(local player) then 
+	if(local player && (isMultiplayer)) then 
 	{
-		[compile format ["MCC_curator addCuratorEditableObjects [[%1],false]", player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
+		[compile format ["MCC_curator addCuratorEditableObjects [[objectFromNetID '%1'],false]", netID player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 	};
 };
 

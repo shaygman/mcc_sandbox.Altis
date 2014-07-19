@@ -59,17 +59,17 @@ if (isServer || isDedicated) then {
 	//server globalchat "bon arti execution - on"; 
 	"bon_arti_execution" addPublicVariableEventHandler {(_this select 1) execVM (BON_ARTI_PATH+"bon_arti_fire.sqf")};
 	
-	waituntil {! isnil "server"};
+	waituntil {! isnil "MCC_server"};
 	for "_i" from 1 to HW_Arti_CannonNumber do{
-		Server setVariable [format["Arti_WEST_Cannon%1_available",_i],true,true];
-		Server setVariable [format["Arti_EAST_Cannon%1_available",_i],true,true];
-		Server setVariable [format["Arti_GUER_Cannon%1_available",_i],true,true];
-		Server setVariable [format["Arti_CIV_Cannon%1_available",_i],true,true];
+		MCC_server setVariable [format["Arti_WEST_Cannon%1_available",_i],true,true];
+		MCC_server setVariable [format["Arti_EAST_Cannon%1_available",_i],true,true];
+		MCC_server setVariable [format["Arti_GUER_Cannon%1_available",_i],true,true];
+		MCC_server setVariable [format["Arti_CIV_Cannon%1_available",_i],true,true];
 	};
-	Server setVariable ["Arti_WEST_requestor",ObjNull,true];
-	Server setVariable ["Arti_EAST_requestor",ObjNull,true];
-	Server setVariable ["Arti_GUER_requestor",ObjNull,true];
-	Server setVariable ["Arti_CIV_requestor",ObjNull,true];
+	MCC_server setVariable ["Arti_WEST_requestor",ObjNull,true];
+	MCC_server setVariable ["Arti_EAST_requestor",ObjNull,true];
+	MCC_server setVariable ["Arti_GUER_requestor",ObjNull,true];
+	MCC_server setVariable ["Arti_CIV_requestor",ObjNull,true];
 };
 //server globalchat "so far so good"; 
 if(isDedicated) exitWith{};

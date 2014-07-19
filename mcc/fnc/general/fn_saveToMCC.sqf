@@ -188,7 +188,7 @@ private ["_group","_blackListVehicles","_refinedGroup","_tempArray","_groupArray
 		_groupArrayUnits = [];
 		{
 			_object = _x; 
-			_pos 	= getPos _object;
+			_pos 	= getPosATL _object;
 			_init 	= _object getvariable ["vehicleinit",""];
 			if (_object getVariable ["isIED",false]) then {_init = _init + FORMAT [";_this setVariable ['syncedObject', %1];",_object getVariable ["syncedObject", [0,0,0]]]}; 
 			
@@ -276,7 +276,7 @@ if ((count _arrayVehicles) > 0) then
 	{
 		_object = _x select 0;
 		_side 	= _x select 1;
-		_pos 	= getPos _object;
+		_pos 	= getPosATL _object;
 		_type 	= typeof _object;
 		_init 	= _object getvariable ["vehicleinit",""];
 		

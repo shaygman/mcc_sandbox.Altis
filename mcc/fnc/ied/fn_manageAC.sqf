@@ -12,6 +12,17 @@ _suspect 		= _this select 0;
 _side 			= _this select 1;
 _rad  			= _this select 2;
 
+if (typeName _side == "STRING") then
+{
+	_side = switch (tolower _side) do
+				{
+				   case "west":	{west};
+				   case "east":	{east};
+				   case "guer":	{resistance}; 
+				   case "civ":	{civilian};
+				   default {west};
+				};
+};			
 _weaponList = [
                 ["hgun_P07_F", "16Rnd_9x21_Mag"],
 				["hgun_Rook40_F", "16Rnd_9x21_Mag"],

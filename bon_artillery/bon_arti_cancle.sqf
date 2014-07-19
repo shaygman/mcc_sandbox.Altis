@@ -6,7 +6,7 @@ _requestor = _this;
 CloseDialog 0;
 
 // clean up
-Server setVariable [format["Arti_%1_requestor",playerSide],ObjNull,true];
+MCC_server setVariable [format["Arti_%1_requestor",playerSide],ObjNull,true];
 _requestor setVariable ["requesting_cannons",nil,true];
 
 for "_i" from 1 to HW_Arti_CannonNumber do {

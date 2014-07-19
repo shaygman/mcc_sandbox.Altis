@@ -34,31 +34,31 @@ if (mcc_missionmaker == (name player)) then
 		hintsilent "";
 	};		
 	
-	//Open 3D
-	if ((_pressed == 0) && (uiNameSpace getVariable ["MCC_3DOpen",false]))  exitWith 								
+	//Open Curator
+	if ((_pressed == 0) && (uiNameSpace getVariable ["MCC_ZeusOpen",false]))  exitWith 								
 	{
-		uiNameSpace setVariable ["MCC_3DOpen",false];
+		uiNameSpace setVariable ["MCC_ZeusOpen",false];
+		
 		//worldPos
 		MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
 		
-		[0,MCC_ConsoleWPpos] execVM format ["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
+		cutText ["","BLACK",0.1];
+		while {dialog} do {closeDialog 0; sleep 0.01};
+		while {(isnull curatorcamera)} do {openCuratorInterface; sleep 0.5};
+		
+		MCC_ConsoleWPpos set [2,50];
+		sleep 1; 
+		[MCC_ConsoleWPpos, MCC_ConsoleWPpos, 0] call BIS_fnc_setCuratorCamera; 
+		cutText ["","BLACK IN",0.5];
 	};	
 	
-	//Curator
+	//Open 3D
 	if ((_pressed == 0) && _alt)  exitWith 								
 	{
 		//worldPos
 		MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
-		cutText ["","BLACK",0.1];
-		while {dialog} do {closeDialog 0; sleep 0.01};
-		while {str findDisplay 312 == "No display"} do {sleep 0.05; openCuratorInterface};
 		
-		MCC_ConsoleWPpos set [2,50];
-
-		waituntil {!(isnull curatorcamera)};
-		sleep 1; 
-		[MCC_ConsoleWPpos, 90, 0] call BIS_fnc_setCuratorCamera; 
-		cutText ["","BLACK IN",0.5];
+		[0,MCC_ConsoleWPpos] execVM format ["%1mcc\pop_menu\spawn_group3d.sqf",MCC_path];
 	};
 	
 	//Select zone 

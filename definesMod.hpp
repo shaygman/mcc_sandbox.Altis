@@ -254,6 +254,11 @@ class CfgFunctions
 			{
 				description = "get idkKey and return string with his name";
 			};
+			
+			class makeBriefing
+			{
+				description = "Server Only - create a Logic based briefing";
+			};
 		};
 		
 		class ui
@@ -560,6 +565,11 @@ class CfgFunctions
 			class MWspawnAnimals
 			{
 				description = "spawn animals in the area.";
+			};
+			
+			class MWinitMission
+			{
+				description = "Init generated mission.";
 			};
 		};
 		

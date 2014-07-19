@@ -61,7 +61,7 @@ if (count _arrayGroups > 0) then
 			
 			//TempArray [class, pos, dir, rank, skill, damage, fuel, init,leader, locked,  fly];
 			
-			_vehicle setpos (_objectData select 1);
+			_vehicle setposATL (_objectData select 1);
 			_vehicle setDir (_objectData select 2);
 			_vehicle setRank (_objectData select 3);
 			_vehicle setSkill (_objectData select 4);
@@ -77,6 +77,7 @@ if (count _arrayGroups > 0) then
 			if (_objectData select 8) then
 			{
 				_group selectLeader _vehicle;
+				_group setFormDir (_objectData select 2);
 			};
 			
 			if (_objectData select 9) then
@@ -137,9 +138,10 @@ if ((count _arrayVehicles) > 0) then
 		};	 
 		
 		MCC_curator addCuratorEditableObjects [[_vehicle],false];
-		_vehicle setpos _pos;
+		_vehicle setposATL _pos;
 		sleep 0.01;
-		_vehicle setpos _pos;
+		_vehicle setposATL _pos;
+		sleep 0.01;
 		_vehicle setDir (_objectData select 3);
 		
 		if (_objectData select 4 != "") then

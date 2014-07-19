@@ -13,6 +13,7 @@ if !mcc_isloading then
 		nshell 			= MCC_artilleryNumberArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 32));
 		MCC_artyDelay 	=(lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 33))*20;
 		
+		if (isnil "MCC_artyDelay") then {MCC_artyDelay = 0};
 		switch (_type) do
 		{
 		   case 0:		//Request
@@ -48,10 +49,10 @@ if !mcc_isloading then
 						publicVariable "HW_arti_types"; 
 						HW_arti_number_shells_per_hour = HW_arti_number_shells_per_hour + nshell;
 						publicVariable "HW_arti_number_shells_per_hour";
-						Server setVariable ["Arti_WEST_shellsleft",HW_arti_number_shells_per_hour,true];
-						Server setVariable ["Arti_EAST_shellsleft",HW_arti_number_shells_per_hour,true];
-						Server setVariable ["Arti_GUER_shellsleft",HW_arti_number_shells_per_hour,true];
-						Server setVariable ["Arti_CIV_shellsleft",HW_arti_number_shells_per_hour,true];
+						MCC_server setVariable ["Arti_WEST_shellsleft",HW_arti_number_shells_per_hour,true];
+						MCC_server setVariable ["Arti_EAST_shellsleft",HW_arti_number_shells_per_hour,true];
+						MCC_server setVariable ["Arti_GUER_shellsleft",HW_arti_number_shells_per_hour,true];
+						MCC_server setVariable ["Arti_CIV_shellsleft",HW_arti_number_shells_per_hour,true];
 						[[2,compile format ['["MCCNotifications",["%2 %1 shells added","%3data\ammo_icon.paa",""]] call bis_fnc_showNotification;',nshell,_shellName,MCC_path]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 						//["MCCNotifications",[format ["%2 %1 shells added",nshell,_shellName],format ["%1data\ammo_icon.paa",MCC_path],""]] call bis_fnc_showNotification;
 				};

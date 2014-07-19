@@ -11,11 +11,11 @@ _cannons_available = _cannons_to_fire;
 diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _cannons_available];	//debug
 
 {//foreach _cannons_to_fire
-	_available = server getVariable format["Arti_%2_Cannon%1_available",_x,_side];
+	_available = MCC_server getVariable format["Arti_%2_Cannon%1_available",_x,_side];
 	diag_log format["Acailable cannon: %1",_available];	//debug
 	if(_available) then{
 		_cannonsetup = _requestor getVariable format["Arti_%2_Cannon%1",_x,_side];
-		Server setVariable [format["Arti_%2_Cannon%1_available",_x,_side],false,true];
+		MCC_server setVariable [format["Arti_%2_Cannon%1_available",_x,_side],false,true];
 		
 		[_x,_cannonsetup,_requestor,BON_salvo] spawn {
 			private ["_cannon","_splashpos","_firedelay","_artitype","_nrshells","_spread","_salvo"];
@@ -39,10 +39,10 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 			_side = side _requestor;
 			_requestor setVariable [format["Arti_%2_Cannon%1",_cannon,_side],nil,true];
 			_requestor setVariable [format["Arti_%2_Cannon%1summary",_cannon,_side],nil,true];
-			_shellsleft = Server getVariable format["Arti_%1_shellsleft",_side];
+			_shellsleft = MCC_server getVariable format["Arti_%1_shellsleft",_side];
 			diag_log format["Cannon: %1,_splashpos: %2, _firedelay: %3, _artitype: %4, _nrshells: %5, _spread: %6, _requestor: %7, _shellsleft: %8",_cannon,_splashpos,_firedelay,_artitype,
 							_nrshells,_spread,_requestor,_shellsleft];	//debug
-			Server setVariable [format["Arti_%1_shellsleft",_side],_shellsleft - _nrshells, true];
+			MCC_server setVariable [format["Arti_%1_shellsleft",_side],_shellsleft - _nrshells, true];
 			
 			sleep (5 + (random 5) + _firedelay);
 			
@@ -114,7 +114,7 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 					};
 
 				sleep (10 * _nrshells);
-				Server SetVariable [format["Arti_%2_Cannon%1_available",_cannon,_side],true,true];
+				MCC_server SetVariable [format["Arti_%2_Cannon%1_available",_cannon,_side],true,true];
 			};
 		};
 	}
@@ -130,5 +130,5 @@ for "_i" from 1 to HW_Arti_CannonNumber do {
 
 if(true) exitWith{
 	_requestor setVariable ["requesting_cannons",nil,true];
-	Server setVariable [format["Arti_%1_requestor",_side],ObjNull,true];
+	MCC_server setVariable [format["Arti_%1_requestor",_side],ObjNull,true];
 };

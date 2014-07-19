@@ -72,7 +72,7 @@ class mcc_groupGen
 			idc = -1;
 			
 			text = "Close";
-			action = "closeDialog 0; {deletemarkerlocal _x;} foreach MCC_groupGenTempWP;{deletemarkerlocal _x;} foreach MCC_groupGenTempWPLines;";
+			action = "closeDialog 0;";
 			
 			x = 0.84375 * safezoneW + safezoneX;
 			y = 0.796884 * safezoneH + safezoneY;

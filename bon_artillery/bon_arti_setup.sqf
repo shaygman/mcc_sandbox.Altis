@@ -89,7 +89,7 @@ if(isNil "_req_cannons") then{_req_cannons = []};
 	_requestor setVariable [format["Arti_%2_Cannon%1Summary",_x+1,playerSide],_arty_cannonsummary,false];
 } foreach lbSelection _listbox;
 
-if(arty_CurrNrShellsTotal > (Server getVariable format["Arti_%1_shellsleft",playerSide])) then{
+if(arty_CurrNrShellsTotal > (MCC_server getVariable format["Arti_%1_shellsleft",playerSide])) then{
 	ctrlEnable [BON_ARTY_REQUESTBUTTON,false];
 	(_dlg displayCtrl BON_ARTY_SHELLSLEFT) ctrlSetTextColor [1,0,0,1];
 } else{
