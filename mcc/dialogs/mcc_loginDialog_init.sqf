@@ -37,7 +37,7 @@ lbClear _comboBox;
 _comboBox lbSetCurSel (MCC_terrainPref select 1); // set viewdistance index to current vd
 
 //Show key Binds
-for [{_x=8415},{_x<=8417},{_x=_x+1}]  do 
+for [{_x=8415},{_x<=8418},{_x=_x+1}]  do 
 {
 	_key = MCC_keyBinds select (_x-8415);
 

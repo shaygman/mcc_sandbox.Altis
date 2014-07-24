@@ -9,13 +9,15 @@ _code = _this select 5;
 _targetIsHeliEmpty = false; 
 
 _perSecondChecks = 25; //direction checks per second
-if (typeName _primaryTarget == "OBJECT") then {
+if (typeName _primaryTarget == "OBJECT") then 
+{
 	_target = _primaryTarget;
-	} else
-		{
-		_target = "O_TargetSoldier" createVehicle _primaryTarget;
-		_targetIsHeliEmpty = true;
-		};
+} 
+else
+{
+	_target = "O_TargetSoldier" createVehicle _primaryTarget;
+	_targetIsHeliEmpty = true;
+};
 
 _missile = _missileType createVehicle [_missileStart select 0, _missileStart select 1,(_missileStart select 2)-5];
 _missile setPos [_missileStart select 0, _missileStart select 1,(_missileStart select 2)-5];
@@ -37,8 +39,8 @@ _homeMissile = {
 				_velocityY = (((getPosASL _target) select 1) - ((getPosASL _missile) select 1)) / _travelTime;
 				_velocityZ = (((getPosASL _target) select 2) - ((getPosASL _missile) select 2)) / _travelTime;
 				
-[_velocityX, _velocityY, _velocityZ]
-};
+				[_velocityX, _velocityY, _velocityZ]
+			};
 
 
 if (_light) then
@@ -52,11 +54,12 @@ if (_light) then
 	};
 
 //missile flying
-while {alive _missile} do {
+while {alive _missile && ((_missile distance _target) > 10)} do 
+{
 	_velocityForCheck = call _homeMissile;
 	if ({(typeName _x) == (typeName 0)} count _velocityForCheck == 3) then {_missile setVelocity _velocityForCheck};
 	sleep (1 / _perSecondChecks)
-	};
+};
 	
 if (_light) then {deleteVehicle _fireLight}; //delete ligh source
 if (_targetIsHeliEmpty) then {deleteVehicle _target};

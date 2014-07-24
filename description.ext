@@ -8,7 +8,8 @@ loadScreen = "data\mcc_loadingScreen.paa";
 onLoadMission = MCC Sandbox stands for Mission Control Centre. With it you can create mission (on the fly) and generate missions (on the fly).;
 
 respawn      = "BASE";
-respawndelay = 4;
+respawnTemplates[] = {"Wave","counter"};
+respawndelay = 5;
 disabledAI   = 1;
 
 class Header

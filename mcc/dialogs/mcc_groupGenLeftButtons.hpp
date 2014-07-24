@@ -172,5 +172,19 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
+		
+		class MCC_arsenalButton: MCC_RscButton
+		{
+			idc = -1;
+			text = "Arsenal"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			tooltip = "Click to open BIS arsenal"; 
+			onButtonClick = "closeDialog 0; ['Open',true] call BIS_fnc_arsenal;";
+			
+			x = 0.0057 * safezoneW;
+			y = 0.494799025779459 * safezoneH;
+			w = 0.06875 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
 	};
 };

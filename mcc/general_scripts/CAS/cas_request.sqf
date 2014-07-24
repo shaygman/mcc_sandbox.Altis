@@ -1,7 +1,15 @@
 disableSerialization;
-private ["_type","_indecator"];
+private ["_type","_indecator","_array","_arrayName","_side"];
 _type = _this select 0;
 
+_side = switch (toLower mcc_sidename) do
+		{
+			case "west": {west};
+			case "east": {east};
+			case "guer": {resistance};
+			case "civ": {civilian};
+		};
+							
 switch (_type) do
 	{
 	   case 0:		//AirDrop Car
@@ -39,49 +47,67 @@ switch (_type) do
 									_indecator = _indecator - (count U_GEN_AIRPLANE);
 									[(U_GEN_HELICOPTER select _indecator) select 1];
 								};
-								
-			if (MCC_capture_state) then	{
-				MCC_capture_var = MCC_capture_var + FORMAT ['MCC_CASConsoleArray set [count MCC_CASConsoleArray,[%1, %2]];
-					publicVariable "MCC_CASConsoleArray";
+			_arrayName		= format ["MCC_CASConsoleArray%1",mcc_sidename];	
+			
+			if (MCC_capture_state) then	
+			{
+				MCC_capture_var = MCC_capture_var + FORMAT ['%5 set [count %5,[%1, %2]];
+					publicVariable "%5";
 					[[2,{["MCCNotifications",["%4 CAS available","%3data\ammo_icon.paa",""]] call bis_fnc_showNotification;}], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 					'
 					,MCC_spawnkind
 					,MCC_planeType
 					,MCC_path
 					,MCC_spawnkind select 0
+					,_arrayName
 					];
-				} else {
-					mcc_safe = mcc_safe + FORMAT ['MCC_CASConsoleArray set [count MCC_CASConsoleArray,[%1, %2]];
-					publicVariable "MCC_CASConsoleArray";'
+			} 
+			else 
+			{
+					mcc_safe = mcc_safe + FORMAT ['%3 set [count %3,[%1, %2]];
+					publicVariable "%3";'
 					,MCC_spawnkind
 					,MCC_planeType
+					,_arrayName
 					];
-					MCC_CASConsoleArray set [count MCC_CASConsoleArray,[MCC_spawnkind, MCC_planeType]]; 
-					publicVariable "MCC_CASConsoleArray"; 
-					[[2,compile format ['["MCCNotifications",["%1 CAS available","%2data\ammo_icon.paa",""]] call bis_fnc_showNotification;',MCC_spawnkind select 0,MCC_path]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-					//["MCCNotifications",[format ['"%1 CAS available","%2data\ammo_icon.paa"',MCC_spawnkind select 0,MCC_path],""]] call bis_fnc_showNotification;
-					};
+					
+					_array = missionNameSpace getVariable [_arrayName,[]];
+					_array set [count _array,[MCC_spawnkind, MCC_planeType]]; 
+					missionNameSpace setVariable [_arrayName,_array];
+					
+					[[2,compile format ['["MCCNotifications",["%1 CAS available","%2data\ammo_icon.paa",""]] call bis_fnc_showNotification;',MCC_spawnkind select 0,MCC_path]], "MCC_fnc_globalExecute", _side, false] spawn BIS_fnc_MP;
+			};
 		};
 		
 		 case 3:	//Airdrop Add		
 		{
 			MCC_spawnkind		= [MCC_airDropArray];
 			MCC_planeType		= ["I_Heli_Transport_02_F"];
-			if (MCC_capture_state) then	{
-				MCC_capture_var = MCC_capture_var + FORMAT ['MCC_ConsoleAirdropArray set [count MCC_ConsoleAirdropArray,[%1, %2]];
-					publicVariable "MCC_ConsoleAirdropArray";'
+			
+			_arrayName		= format ["MCC_ConsoleAirdropArray%1",mcc_sidename];
+			
+			if (MCC_capture_state) then	
+			{
+				MCC_capture_var = MCC_capture_var + FORMAT ['%3 set [count %3,[%1, %2]];
+					publicVariable "%3";'
 					,MCC_spawnkind
 					,MCC_planeType
+					,_arrayName
 					];
-				} else {
-					mcc_safe = mcc_safe + FORMAT ['MCC_ConsoleAirdropArray set [count MCC_ConsoleAirdropArray,[%1, %2]];
-					publicVariable "MCC_ConsoleAirdropArray";'
-					,MCC_spawnkind
-					,MCC_planeType
-					];
-					MCC_ConsoleAirdropArray set [count MCC_ConsoleAirdropArray,[MCC_spawnkind, MCC_planeType]]; 
-					publicVariable "MCC_ConsoleAirdropArray"; 
-					};
+			} 
+			else 
+			{
+				mcc_safe = mcc_safe + FORMAT ['%3 set [count %3,[%1, %2]];
+				publicVariable "%3";'
+				,MCC_spawnkind
+				,MCC_planeType
+				,_arrayName
+				];
+				
+				_array = missionNameSpace getVariable [_arrayName,[]];
+				_array set [count _array,[MCC_spawnkind, MCC_planeType]]; 
+				missionNameSpace setVariable [_arrayName,_array];
+			};
 		};
 	};
 

@@ -59,10 +59,22 @@ if (isnil "MCC_nameTags") then {MCC_nameTags = false};
 if (isnil "MCC_saveGear") then {MCC_saveGear = false};
 
 //--------------------Gain XP (in role selection)--------------------------------
-if (isnil "CP_saveGear") then {CP_saveGear = true};
+if (isnil "CP_gainXP") then {CP_gainXP = true};						//Gain XP from killing, leading, healing, driving, flying or completing objectives?
+if (isnil "CP_XPperLevel") then {CP_XPperLevel = 3000};				//Xp needed for each level, Exp will raise by 5% each level	
+if (isnil "CP_expNotifications") then {CP_expNotifications = true};	//Show Exp gaining notifications
 
 //-------------------- Group Markers (Role Selection) --------------------------------------------------
-if (isnil "MCC_groupMarkers") then {MCC_groupMarkers = true};
+if (isnil "MCC_groupMarkers") then {MCC_groupMarkers = true};		//Show group markers on map
+
+//--------------------Default flags (Role selection)-------------------------------------------------------
+if (isnil "CP_flagWest") then {CP_flagWest = "\a3\Data_f\Flags\flag_nato_co.paa"}; 
+if (isnil "CP_flagEast") then {CP_flagEast = "\a3\Data_f\Flags\flag_CSAT_co.paa"}; 
+if (isnil "CP_flagGUER") then {CP_flagGUER = "\a3\Data_f\Flags\flag_AAF_co.paa"}; 
+
+//--------------------Default Tickets (Role selection)-------------------------------------------------------
+if (isnil "MCC_ticketsWest") then {MCC_ticketsWest = 200};
+if (isnil "MCC_ticketsEast") then {MCC_ticketsEast = 200};
+if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
 
 //Bon artillery (moved up to avoid potential error messages)
 MCC_bonCannons = [];
@@ -156,6 +168,7 @@ mccPresetsVehicle = [
 					,['Destroy Vehicles', '_this setdamage 1;']
 					,['Flip Vehicles', '[_this ,0, 90] call bis_fnc_setpitchbank;']
 					,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "'+MCC_path+'VAS\open.sqf"];']
+					,['Virtual Arsenal (BIS)', 'if (isServer) then {["AmmoboxInit",[_this,true]] call BIS_fnc_arsenal};']
 					,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
 					,['', '']
 					,['======= Effects =======','']
@@ -202,6 +215,7 @@ mccPresetsObjects = [
 					,['Destroy Object', '_this setdamage 1;']
 					,['Flip Object', '[_this ,0, 90] call bis_fnc_setpitchbank;']
 					,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "'+MCC_path+'VAS\open.sqf"];']
+					,['Virtual Arsenal (BIS)', 'if (isServer) then {["AmmoboxInit",[_this,true]] call BIS_fnc_arsenal};']
 					,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
 					,['', '']
 					,['======= Effects =======','']
@@ -375,7 +389,6 @@ MCC_ConsoleUAVMouseButtonDown = false;
 MCC_ConsoleUAVCameraMod = 0;
 MCC_ConsoleUAVmissiles = 0; 
 MCC_ConsoleUAVvision = "VIDEO"; 
-MCC_ConsoleOperator = ""; 
 MCC_ConsoleRuler = false; 
 MCC_ConsoleRulerData = [0,0];
 MCC_ConsoleGroups1 = [];
@@ -404,9 +417,17 @@ MCC_airDropArray = [];
 MCC_CASBombs = ["Gun-run short","Gun-run long","Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)","S&D","Rockets-run","AT run","AA run","JDAM","LGB","Bombing-run"];
 MCC_GunRunBusy = [0,0,0,0,0,0,0];
 MCC_CASrequestMarker = false;
-MCC_CASConsoleArray	= []; 
+
+MCC_CASConsoleArrayWest	= []; 
+MCC_CASConsoleArrayEast	= []; 
+MCC_CASConsoleArrayGUER	= []; 
+
+MCC_ConsoleAirdropArrayWest	= []; 
+MCC_ConsoleAirdropArrayEast	= []; 
+MCC_ConsoleAirdropArrayGUER	= []; 
+
 MCC_CASConsoleFirstTime = true; 
-MCC_ConsoleAirdropArray	= []; 
+
 
 MCC_evacFlyInHight_array = [["50m",50],["100m",100],["150m",150],["200m",200],["300m",300],["400m",400],["500m",500]];
 MCC_evacFlyInHight_index = 1;
@@ -1033,7 +1054,7 @@ if (!isServer && !(MCC_isLocalHC)) then
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 {
 	waituntil {!(IsNull (findDisplay 46))};
-	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20]]];
+	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25]]];
 	
 	//Opening status radio
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 2) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Medic)',time],true]}"];
@@ -1045,7 +1066,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 
 	// Teleport to team on Alt + T
 	MCC_teleportToTeam = true;
-	_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1 ==((MCC_keyBinds select 2) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 2) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 2) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 2) select 2))) then {player execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
+	_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1 ==((MCC_keyBinds select 2) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 2) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 2) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 2) select 2))) then {[] execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
 	
 	// Add to the action menu
 	if (getplayerUID player in MCC_allowedPlayers || "all" in MCC_allowedPlayers || serverCommandAvailable "#logout" || isServer) then 
@@ -1057,6 +1078,10 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 0) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 0) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 0) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 0) select 2))) then {null = [nil,nil,nil,nil,0] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 1) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 1) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 1) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 1) select 2))) then {null = [nil,nil,nil,nil,1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 	
+	//Squad Dialog
+	MCC_squadDialogOpen = false; 
+	MCC_squadDialogOpenEH = (findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 3) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 3) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 3) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 3) select 2))) then {null = [nil,nil,nil,nil,2] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
+	
 	//Add MCC Console action menu
 	_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
 			
@@ -1064,7 +1089,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	if(local player) then {player addEventHandler ["killed",{player execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};
 	
 	//Handle Heal
-	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && ("Medikit" in (items(_this select 1)))) then {(_this select 1) addrating 200; false}}];};
+	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && (_this select 1 != _this select 0) && (tolower (player getvariable ["CP_role","n/a"]) == "corpsman") ) then {(_this select 1) addrating 200; _string = "<t font='puristaMedium' size='0.5' color='#FFFFFF '>+200 Exp For Healing</t>"; [_string,0,1,2,1,0,4] spawn BIS_fnc_dynamicText; false}}];};
 	
 	//Curator
 	if(local player && (isMultiplayer)) then 
@@ -1110,8 +1135,6 @@ if (isServer || MCC_isLocalHC) then
 					missionNamespace setVariable ["GAIA_RESPAWN_" + str(_x), nil];
 					
 					deleteGroup _x;
-					
-
 				};
 				
 				sleep .1;

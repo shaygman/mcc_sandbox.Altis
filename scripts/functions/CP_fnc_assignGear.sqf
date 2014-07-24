@@ -46,7 +46,7 @@ if ((CP_playerUniforms select 4) != "") then {player addBackpack (CP_playerUnifo
 
 //add uniforms
 if ((Uniform player) != "") then {removeUniform player};
-if ((CP_playerUniforms select 5) != "") then {player addUniform (CP_playerUniforms select 5)};
+if ((CP_playerUniforms select 5) != "") then {player forceAddUniform  (CP_playerUniforms select 5)};
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Primary Weapon
 _currentWeapon = missionNamespace getVariable format ["CP_player%1Weapon_%2_%3",_role, getplayerUID player, side player];

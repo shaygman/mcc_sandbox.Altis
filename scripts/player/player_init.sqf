@@ -10,6 +10,9 @@ cutText ["","BLACK",0.1];
 //******************************************************************************************************************************
 waituntil {alive player};
 
+//Remove Squad event handler
+(findDisplay 46) displayRemoveEventHandler ["KeyUp", MCC_squadDialogOpenEH];
+
 //Get rank from the server
 [["MCCplayerRank", player, "PRIVATE", "STRING"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "MCCplayerRank"};
@@ -52,38 +55,6 @@ if (CP_debug) then {player sidechat format ["crewLevel : %1",crewLevel]};
 waituntil {! isnil "pilotLevel"};
 if (CP_debug) then {player sidechat format ["pilotLevel : %1",pilotLevel]};
 
-//---------------------------------------------
-//		group markers
-//---------------------------------------------
-[] spawn {
-			private ["_groups","_mkr","_mkrArray"]; 
-			_mkrArray = [];
-			while {alive player && MCC_groupMarkers} do	
-			{
-					waituntil {side player in [west, east, resistance]};
-					_groups	 = switch (side player) do	
-							{
-								case west:			{CP_westGroups};
-								case east:			{CP_eastGroups};
-								case resistance:	{CP_guarGroups};
-								case civilian:		{CP_guarGroups};
-							};
-					{
-						_mkr = createMarkerLocal [(_x select 1),[(getPos leader (_x select 0) select 0),(getPos leader (_x select 0) select 1)]];
-						_mkr setMarkerShapeLocal "ICON";
-						(_x select 1) setMarkerTypeLocal "b_hq";
-						(_x select 1) setMarkerColorLocal "ColorGreen";
-						(_x select 1) setMarkerSizeLocal [0.8, 0.8];
-						(_x select 1) setMarkerTextLocal (_x select 1);
-						_mkrArray set [count _mkrArray ,(_x select 1)];
-					} foreach _groups;
-					
-					sleep 6;
-					{deletemarkerlocal _x} foreach _mkrArray;
-					_mkrArray = [];
-			};
-		  };
-		  
 //******************************************************************************************************************************
 //											Start camera
 //******************************************************************************************************************************
@@ -110,7 +81,6 @@ _camLight = "FirePlace_burning_F" createvehiclelocal _logicPos;
 _camLight attachto [_camLogic,[1,2,0]];
 //_camLight setpos [(_logicPos select 0) - 2, (_logicPos select 1) - 3,(_logicPos select 2)]; 
 player attachto [_camLogic,[0,4,0]];
-player setvariable ["CPCenter", _camLogic]; 
 
 //--- Camera
 setviewdistance 3;
@@ -122,6 +92,7 @@ CP_gearCam camSetFov CP_gearCamFOV;
 CP_gearCam camcommitprepared 0;
 cameraEffectEnableHUD true;
 showcinemaborder false;
+player setvariable ["CPCenter", _camLogic]; 
 
 //handle NV
 _nvgstate = if (daytime > 19 || daytime < 5.5) then {[1]} else {[3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]]};
@@ -153,8 +124,13 @@ detach CP_gearCam;
 CP_gearCam cameraeffect ["Terminate","back"];
 player setpos playerDeployPos;
 
+//If an officer and not leader make him the leader
+if ( ( (tolower (player getvariable ["CP_role","n/a"])) == "officer" ) && (player != leader player)) then {group player selectLeader player};	
+
 camDestroy CP_gearCam;
 deleteVehicle CP_gearCam;
+CP_gearCam = nil; 
+
 deleteVehicle _camLogic; 
 deleteVehicle _camBuildings; 
 deleteVehicle _camLight;
@@ -164,3 +140,7 @@ waituntil {!dialog};
 //Respawning
 
 cutText ["Deploying ....","BLACK IN",5];
+
+sleep 6;
+//Add Squad event handler
+MCC_squadDialogOpenEH = (findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 3) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 3) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 3) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 3) select 2))) then {null = [nil,nil,nil,nil,2] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];

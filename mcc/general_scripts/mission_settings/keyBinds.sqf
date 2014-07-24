@@ -5,6 +5,8 @@
 #define MCC_keyBindsOpenMCCButtonIDC 8415
 #define MCC_keyBindsOpenConsoleButtonIDC 8416
 #define MCC_keyBindsT2TButtonIDC 8417
+#define MCC_keyBindsGroupsButtonIDC 8418
+
 private ["_type","_keyDown","_ctrl","_display"];
 disableSerialization;
 
@@ -61,6 +63,12 @@ switch (_type) do
 	{
 		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsT2TButtonIDC;
 		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,2] call MCC_functionName_keyDown"];
+	};
+	
+	case 3:	
+	{
+		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsGroupsButtonIDC;
+		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,3] call MCC_functionName_keyDown"];
 	};
 };
 	

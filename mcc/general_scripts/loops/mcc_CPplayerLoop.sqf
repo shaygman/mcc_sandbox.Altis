@@ -45,13 +45,46 @@ MCC_fnc_mapDrawPlayersWPConsole =
 			};
 		};
 	};
+	
+	//Custom Group Markers
+	if (MCC_groupMarkers) then
+	{
+		private ["_groups","_texture"]; 
+		_groups	 = switch (side player) do	
+				{
+					case west:			{CP_westGroups};
+					case east:			{CP_eastGroups};
+					case resistance:	{CP_guarGroups};
+					case civilian:		{CP_guarGroups};
+					default				{CP_guarGroups};
+				};
+				
+		_texture = gettext (configfile >> "CfgMarkers" >> "b_hq" >> "icon");
+		
+		{
+			_map drawIcon [
+						_texture,
+						[0,0,1,1],
+						getPos leader (_x select 0),
+						28,
+						28,
+						0,
+						(_x select 1),
+						0,
+						0.06,
+						"PuristaBold"
+					];
+		} foreach _groups;
+	};
 };
 
 findDisplay 12 displayCtrl 51 ctrlAddEventHandler ["Draw","_this call MCC_fnc_mapDrawPlayersWPConsole"];
 
 sleep 10; 
 //Loop 
-private ["_wpArray","_rating","_exp","_level","_role"]; 
+private ["_wpArray","_rating","_exp","_level","_role","_oldLeve","_newLevel","_nextCheck"]; 
+_nextCheck = time + 300;
+
 while {true} do 
 {
 	if (alive player) then 
@@ -66,10 +99,18 @@ while {true} do
 			//Check if in vehicle
 			[] call CP_fnc_allowedDrivers;
 			
-			if (CP_saveGear) then
+			//Manage XP
+			if (CP_gainXP) then
 			{
-				//Manage XP
-				_rating = rating player;
+				//Gain XP from roles check every 10 minutes
+				if (time > _nextCheck) then 
+				{
+					[] call MCC_fnc_gainXPfromRoles;
+					_nextCheck = time + 300;
+				};
+			
+				//No more then 500 exp per sec
+				_rating = rating player min 500;
 				
 				if (_rating != 0) then
 				{
@@ -77,15 +118,26 @@ while {true} do
 					
 					while {isnil "_role"} do {_role = player getvariable "CP_role";}; 
 					
-					_exp = call compile format  ["%1Level select 1",_role]; 
-								
+					_exp 	 = call compile format  ["%1Level select 1",_role]; 
+					
+					
 					if (!isnil "_exp") then 
 					{
 						if (_exp < 0) then {_exp = 0};
 						if (CP_debug) then {player sidechat format ["rating: %1", _exp]};
+						
+						_oldLeve = call compile format  ["%1Level select 0",_role]; 
+						
 						_exp = (_exp + _rating);
-						 
-						_level =[floor(_exp/2000)+1 ,_exp];
+						_level =[floor(_exp/(CP_XPperLevel + _oldLeve*100))+1 ,_exp];
+						
+						_newLevel = _level select 0;
+
+						 if (_oldLeve < _newLevel) then 		//<============= move it to function
+						 {
+							[_newLevel] call MCC_fnc_unlock;
+						 };
+						
 						if (CP_debug) then {player sidechat format ["level: %1",_level]};
 						
 						missionNameSpace setVariable [format ["%1Level",_role], _level]; 
@@ -104,5 +156,5 @@ while {true} do
 			};
 		}; 
 	};
-	sleep 10;
+	sleep 2;
 };

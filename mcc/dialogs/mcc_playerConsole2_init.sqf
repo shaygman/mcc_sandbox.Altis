@@ -62,11 +62,13 @@ if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && (isnil "MCC_Co
 	ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, "No UAV signal found, connection failed"];
 	};
 
-if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && !alive MCC_ConolseUAV && MCC_Console2Open) exitWith {
+if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && MCC_Console2Open && (!alive MCC_ConolseUAV || (alive MCC_ConolseUAV && (side MCC_ConolseUAV != (player getVariable ["CP_side", playerside]))))) exitWith {
 	ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, "UAV signal lost, connection failed"];
 	};
-	
-if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && (alive MCC_ConolseUAV) && MCC_Console2Open) then {				//Create the UAV
+
+//Create the UAV	
+if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && (alive MCC_ConolseUAV) && MCC_Console2Open) then 
+{				
 	//Get rid of the connecting text
 	ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, ""];
 	_control = _mccdialog displayCtrl MCC_CONSOLE_UAVPIP;
@@ -83,18 +85,19 @@ if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && (alive MCC_Con
 		MCC_fakeUAV camsetTarget MCC_fakeUAVCenter;
 		MCC_fakeUAV camsetFOV MCC_fakeUAVFOV;
 		MCC_fakeUAV camCommit 0;
-	};
+};
 	
 	ctrlSetText [MCC_CONSOLE_ZOOM_TEXT, format ["ZOOM X %1",(10-(10*MCC_fakeUAVFOV))]];
 	ctrlSetText [MCC_CONSOLE_VISION_TEXT, MCC_ConsoleUAVvision];
 	
 	//Check Ammo 
 	MCC_ConsoleUAVmissiles = ["",0,""];
-	if ("6Rnd_LG_scalpel" in (MCC_ConolseUAV magazinesTurret [-1])) then {MCC_ConsoleUAVmissiles = ["AGM",(driver MCC_ConolseUAV) ammo "missiles_SCALPEL","missiles_SCALPEL","M_Scalpel_AT"]};
-	if ("2Rnd_GBU12_LGB" in (MCC_ConolseUAV magazinesTurret [-1])) then {MCC_ConsoleUAVmissiles = ["GBU",(driver MCC_ConolseUAV) ammo "GBU12BombLauncher","GBU12BombLauncher","Bo_GBU12_LGB"]};
+	if ("6Rnd_LG_scalpel" in (MCC_ConolseUAV magazinesTurret [0])) then {MCC_ConsoleUAVmissiles = ["AGM",(MCC_ConolseUAV) ammo "missiles_SCALPEL","missiles_SCALPEL","M_Scalpel_AT"]};
+	if ("2Rnd_GBU12_LGB" in (MCC_ConolseUAV magazinesTurret [0])) then {MCC_ConsoleUAVmissiles = ["GBU",(MCC_ConolseUAV) ammo "GBU12BombLauncher","GBU12BombLauncher","Bo_GBU12_LGB"]};
 	if ((MCC_ConsoleUAVmissiles select 0) != "") then {ctrlSetText [MCC_CONSOLE_UAV_MISSILE_COUNT, format ["%1 #: %2",MCC_ConsoleUAVmissiles select 0,MCC_ConsoleUAVmissiles select 1]]};
 	
-	switch (MCC_ConsoleUAVCameraMod) do {
+	switch (MCC_ConsoleUAVCameraMod) do 
+	{
 		// Normal
 		case 0: {
 			_effectParams = [3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]];

@@ -23,8 +23,8 @@ if (_pressed==1) then //Control camera
 if (_pressed==0) then //Fire Missile
 	{
 		MCC_ConsoleUAVmissiles = ["",0];
-		if ("6Rnd_LG_scalpel" in (MCC_ConolseUAV magazinesTurret [-1])) then {MCC_ConsoleUAVmissiles = ["AGM",(driver MCC_ConolseUAV) ammo "missiles_SCALPEL","missiles_SCALPEL","M_Scalpel_AT"]};
-		if ("2Rnd_GBU12_LGB" in (MCC_ConolseUAV magazinesTurret [-1])) then {MCC_ConsoleUAVmissiles = ["GBU",(driver MCC_ConolseUAV) ammo "GBU12BombLauncher","GBU12BombLauncher","Bo_GBU12_LGB"]};
+		if ("6Rnd_LG_scalpel" in (MCC_ConolseUAV magazinesTurret [0])) then {MCC_ConsoleUAVmissiles = ["AGM",(MCC_ConolseUAV) ammo "missiles_SCALPEL","missiles_SCALPEL","M_Scalpel_AT"]};
+		if ("2Rnd_GBU12_LGB" in (MCC_ConolseUAV magazinesTurret [0])) then {MCC_ConsoleUAVmissiles = ["GBU",(MCC_ConolseUAV) ammo "GBU12BombLauncher","GBU12BombLauncher","Bo_GBU12_LGB"]};
 		if ((MCC_ConsoleUAVmissiles select 0) != "" && (MCC_ConsoleUAVmissiles select 1) > 0 && (abs(getdir MCC_ConolseUAV - getdir MCC_fakeUAV) <=90)) then 
 			{
 				playSound "missileLunch";

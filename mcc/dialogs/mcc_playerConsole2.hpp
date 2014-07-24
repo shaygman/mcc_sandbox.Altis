@@ -205,7 +205,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		colorDisabled[] = {0,0,0,0};
 		colorBackgroundDisabled[] = {0,0,0,0};
 		tooltip = "Close the conosle"; 
-		onButtonClick = "closedialog 0; MCC_ConsoleOperator =''; publicVariable 'MCC_ConsoleOperator'";
+		onButtonClick = "closedialog 0;";
 };
 	//=============================UAV========================================================
 	class MCC_ConsoleUAVFeed: MCC_RscPicture

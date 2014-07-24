@@ -218,7 +218,7 @@ while {dialog} do {closedialog 0; sleep 0.2};
 		};
 	};
 
-//Build the mission
+//Build the mission on the server
 [
 	[
 		[_wholeMap, _totalEnemyUnits,  _minObjectivesDistance, _maxObjectivesDistance, _weatherChange, _preciseMarkers, _playMusic],
@@ -228,13 +228,3 @@ while {dialog} do {closedialog 0; sleep 0.2};
 		[_reinforcement, _artillery]
 	],"MCC_fnc_MWinitMission",false,false
 ] call BIS_fnc_MP;
-
-/*
-[
-	[_wholeMap, _totalEnemyUnits,  _minObjectivesDistance, _weatherChange, _preciseMarkers, _playMusic],
-	[_enemySide, _enemyfaction, _sidePlayer, _factionPlayer, _civFaction], 
-	[_obj1, _obj2, _obj3],  
-	[_isCQB, _isCiv, _armor, _vehicles, _stealth, _isIED, _isAS, _isSB, _isRoadblocks, _animals],
-	[_reinforcement, _artillery]
-] call MCC_fnc_MWinitMission; 
-*/

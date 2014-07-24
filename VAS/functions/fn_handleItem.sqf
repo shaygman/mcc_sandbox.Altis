@@ -209,7 +209,7 @@ if(_bool) then
 										removeUniform player;
 									};
 									
-									player addUniform _item;
+									player forceAddUniform  _item;
 									
 									if(!isNil {_items}) then
 									{

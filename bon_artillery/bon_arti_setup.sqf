@@ -76,7 +76,7 @@ _listbox = _dlg displayCtrl BON_ARTY_CANNONLIST;
 _req_cannons = _requestor getVariable "requesting_cannons";
 if(isNil "_req_cannons") then{_req_cannons = []};
 {
-	_shells2subtract = _requestor getVariable format["Arti_%2_Cannon%1",_x+1,playerSide];
+	_shells2subtract = _requestor getVariable format["Arti_%2_Cannon%1",_x+1,side player];
 	if(not isNil "_shells2subtract") then{
 		_shells2subtract = _shells2subtract select 3;
 		if(not isNil "arty_CurrNrShellsTotal") then{arty_CurrNrShellsTotal = arty_CurrNrShellsTotal - _shells2subtract};
@@ -85,11 +85,11 @@ if(isNil "_req_cannons") then{_req_cannons = []};
 
 	_req_cannons = (_req_cannons - [_x+1]) + [_x+1];
 	_requestor setVariable ["requesting_cannons",_req_cannons,true];
-	_requestor setVariable [format["Arti_%2_Cannon%1",_x+1,playerSide],[_splashpos,_firedelay,_artitype,_arty_nrshells,_artispread_value],true];
-	_requestor setVariable [format["Arti_%2_Cannon%1Summary",_x+1,playerSide],_arty_cannonsummary,false];
+	_requestor setVariable [format["Arti_%2_Cannon%1",_x+1,side player],[_splashpos,_firedelay,_artitype,_arty_nrshells,_artispread_value],true];
+	_requestor setVariable [format["Arti_%2_Cannon%1Summary",_x+1,side player],_arty_cannonsummary,false];
 } foreach lbSelection _listbox;
 
-if(arty_CurrNrShellsTotal > (MCC_server getVariable format["Arti_%1_shellsleft",playerSide])) then{
+if(arty_CurrNrShellsTotal > (MCC_server getVariable format["Arti_%1_shellsleft",side player])) then{
 	ctrlEnable [BON_ARTY_REQUESTBUTTON,false];
 	(_dlg displayCtrl BON_ARTY_SHELLSLEFT) ctrlSetTextColor [1,0,0,1];
 } else{

@@ -39,7 +39,7 @@ if (_halo) then
 		removeBackpack _unit;
 
 		_unit addHeadgear "H_CrewHelmetHeli_B";
-		_unit addUniform "U_B_HeliPilotCoveralls";
+		_unit forceAddUniform  "U_B_HeliPilotCoveralls";
 
 		if ( isPlayer _unit ) then 
 		{
@@ -126,7 +126,7 @@ if (_halo) then
 			cutText ["Changing Gear","BLACK OUT",0.5];	
 
 			if (_headgear != "") then { removeHeadgear _unit; _unit addHeadgear _headgear };
-			if (_uniform != "") then { removeUniform _unit; _unit addUniform _uniform };
+			if (_uniform != "") then { removeUniform _unit; _unit forceAddUniform  _uniform };
 			
 			{
 				switch (true) do
@@ -142,7 +142,7 @@ if (_halo) then
 		else 
 		{
 			if (_headgear != "") then { removeHeadgear _unit; _unit addHeadgear _headgear };
-			if (_uniform != "") then { removeUniform _unit; _unit addUniform _uniform };
+			if (_uniform != "") then { removeUniform _unit; _unit forceAddUniform  _uniform };
 			
 			{
 				switch (true) do

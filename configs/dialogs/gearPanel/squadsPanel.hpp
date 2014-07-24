@@ -17,28 +17,41 @@ class CP_SQUADPANEL {
 	  
 	  controls[] = 
 	  {
-	  CP_exitButton,
-	  CP_respawnPanelButton,
-	  CP_squadPanelButton,
-	  CP_gearPanelButton,
-	  CP_squadPanelSquadList,
-	  CP_squadsPanelSquadsTittle,
-	  CP_squadPanelPlayersList,
-	  CP_squadsPanelActiveSquadTittle,
-	  CP_squadPanelJoinButton,
-	  CP_squadPanelSwitchSidesButton,
-	  CP_squadPanelCreateSquadButton,
-	  CP_squadPanelCreateSquadTittle,
-	  CP_squadPanelCreateSquadText,
-	  CP_gearPanelPiP,
-	  CP_gearPanelPiPFake,
-	  CP_InfoText,
-	  CP_tittle
+		CP_exitButton,
+		CP_respawnPanelButton,
+		CP_squadPanelButton,
+		CP_gearPanelButton,
+		CP_squadPanelSquadList,
+		CP_squadsPanelSquadsTittle,
+		CP_squadPanelPlayersList,
+		CP_squadsPanelActiveSquadTittle,
+		CP_squadPanelJoinButton,
+		CP_squadPanelSwitchSidesButton,
+		CP_squadPanelCreateSquadButton,
+		CP_squadPanelCreateSquadTittle,
+		CP_squadPanelCreateSquadText,
+		CP_gearPanelPiP,
+		CP_gearPanelPiPFake,
+		CP_InfoText,
+		CP_tittle,
+		CP_LockSquadPic,
+		CP_LockSquad,
+		CP_Teleport,
+		CP_Mutiny,
+		CP_commanderName,
+		CP_commander,
+		CP_flag,
+		CP_side1,
+		CP_side1Score,
+		CP_side2,
+		CP_side2Score,
+		CP_side3,
+		CP_side3Score
 	  };
 	  
 		class CP_exitButton: CP_RscButtonMenu
 		{
-			idc = -1;
+			idc = 8;
 
 			text = "Exit"; //--- ToDo: Localize;
 			x = 0.872396 * safezoneW + safezoneX;
@@ -50,7 +63,7 @@ class CP_SQUADPANEL {
 		};
 		class CP_respawnPanelButton: CP_RscButtonMenu
 		{
-			idc = -1;
+			idc = 9;
 			text = "Respawn"; //--- ToDo: Localize;
 			x = 0.15625 * safezoneW + safezoneX;
 			y = 0.225107 * safezoneH + safezoneY;
@@ -61,7 +74,7 @@ class CP_SQUADPANEL {
 		};
 		class CP_squadPanelButton: CP_RscButtonMenu
 		{
-			idc = -1;
+			idc = 10;
 			text = "Squad"; //--- ToDo: Localize;
 			x = 0.259375 * safezoneW + safezoneX;
 			y = 0.225107 * safezoneH + safezoneY;
@@ -71,7 +84,7 @@ class CP_SQUADPANEL {
 		};
 		class CP_gearPanelButton: CP_RscButtonMenu
 		{
-			idc = -1;
+			idc = 11;
 			text = "Gear"; //--- ToDo: Localize;
 			x = 0.3625 * safezoneW + safezoneX;
 			y = 0.225107 * safezoneH + safezoneY;
@@ -93,7 +106,7 @@ class CP_SQUADPANEL {
 		};
 		class CP_respawnPanelBckg: CP_RscText
 		{
-			idc = -1;
+			idc = 13;
 			x = 0 * safezoneW + safezoneX;
 			y = 0.2 * safezoneH + safezoneY;
 			w = 1 * safezoneW;
@@ -118,6 +131,7 @@ class CP_SQUADPANEL {
 			w = 0.194792 * safezoneW;
 			h = 0.241906 * safezoneH;
 			colorBackground[] = {0,0,0,0.7};
+			onLBSelChanged = __EVAL("[4] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
 		class CP_squadsPanelActiveSquadTittle: CP_RscText
@@ -145,7 +159,7 @@ class CP_SQUADPANEL {
 		};
 		class CP_squadPanelSwitchSidesButton: CP_RscButtonMenu
 		{
-			idc = -1;
+			idc = 12;
 			text = "Switch Side"; //--- ToDo: Localize;
 			x = 0.15625 * safezoneW + safezoneX;
 			y = 0.664936 * safezoneH + safezoneY;
@@ -171,10 +185,10 @@ class CP_SQUADPANEL {
 		{
 			idc = -1;
 			text = "Squad Name:"; //--- ToDo: Localize;
-			x = 0.15625 * safezoneW + safezoneX;
-			y = 0.719914 * safezoneH + safezoneY;
-			w = 0.0744792 * safezoneW;
-			h = 0.0439828 * safezoneH;
+			x = 0.158542 * safezoneW + safezoneX;
+			y = 0.626011 * safezoneH + safezoneY;
+			w = 0.0630208 * safezoneW;
+			h = 0.0329871 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
 		class CP_squadPanelCreateSquadText: CP_RscText
@@ -182,10 +196,11 @@ class CP_SQUADPANEL {
 			idc = 4;
 			type = CPCT_EDIT;
 			style = CPST_MULTI;
-			x = 0.236458 * safezoneW + safezoneX;
-			y = 0.719914 * safezoneH + safezoneY;
+			x = 0.22374 * safezoneW + safezoneX;
+			y = 0.62733 * safezoneH + safezoneY;
 			w = 0.126042 * safezoneW;
-			h = 0.0439828 * safezoneH;
+			h = 0.0329871 * safezoneH;
+
 			colorBackground[] = {0,0,0,0.7};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
@@ -237,5 +252,151 @@ class CP_SQUADPANEL {
 			h = 0.142944 * safezoneH;
 			text = __EVAL(CPPATH+"configs\data\sgLogo.paa");
 			colorText[] = {1,1,1,1.8};
+		};
+		
+		class CP_LockSquadPic: CP_RscPicture
+		{
+			idc = 14;
+			colorBackground[] = {0,0,0,0};
+
+			x = 0.528646 * safezoneW + safezoneX;
+			y = 0.335064 * safezoneH + safezoneY;
+			w = 0.0229167 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		};
+		
+		class CP_LockSquad: CP_RscButtonMenu
+		{
+			idc = -1;
+			colorBackground[] = {0,0,0,0};
+			action =  __EVAL("[5] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
+
+			x = 0.528646 * safezoneW + safezoneX;
+			y = 0.335064 * safezoneH + safezoneY;
+			w = 0.0229167 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		};
+		
+		class CP_Teleport: CP_RscButtonMenu
+		{
+			idc = 15;
+			action =  __EVAL("[6] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
+
+			text = "Teleport"; //--- ToDo: Localize;
+			x = 0.3625 * safezoneW + safezoneX;
+			y = 0.631949 * safezoneH + safezoneY;
+			w = 0.0916667 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			tooltip = "Teleport to squad leader position or vehicle"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		};
+		
+		class CP_commander: CP_RscText 
+		{
+			idc = -1;
+			text = "Commander:";
+			colorBackground[] = {0,0,0,0.7};
+			x = 0.15625 * safezoneW + safezoneX;
+			y = 0.741906 * safezoneH + safezoneY;
+			w = 0.0859375 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		class CP_commanderName: CP_RscText 
+		{
+			idc = 16;
+			colorBackground[] = {0,0,0,0.7};
+			x = 0.242188 * safezoneW + safezoneX;
+			y = 0.741906 * safezoneH + safezoneY;
+			w = 0.108854 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		class CP_Mutiny: CP_RscButtonMenu
+		{
+			idc = 17;
+			action =  __EVAL("[7] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
+
+			text = "Mutiny"; //--- ToDo: Localize;
+			x = 0.3625 * safezoneW + safezoneX;
+			y = 0.741906 * safezoneH + safezoneY;
+			w = 0.0973958 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		
+		class CP_flag: CP_RscPicture
+		{
+			idc = 20;
+
+			x = 0.614583 * safezoneW + safezoneX;
+			y = 0.207514 * safezoneH + safezoneY;
+			w = 0.0916667 * safezoneW;
+			h = 0.07697 * safezoneH;
+		};
+		class CP_side1: CP_RscText
+		{
+			idc = 21;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			colorText[] = {0,1,1,1};
+			
+			x = 0.711979 * safezoneW + safezoneX;
+			y = 0.214111 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side1Score: CP_RscText
+		{
+			idc = 22;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			
+			x = 0.711979 * safezoneW + safezoneX;
+			y = 0.240501 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side2: CP_RscText
+		{
+			idc = 23;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			colorText[] = {0,1,1,1};
+			
+			x = 0.757813 * safezoneW + safezoneX;
+			y = 0.214111 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side2Score: CP_RscText
+		{
+			idc = 24;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			
+			x = 0.757813 * safezoneW + safezoneX;
+			y = 0.240501 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side3: CP_RscText
+		{
+			idc = 25;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			colorText[] = {0,1,1,1};
+			
+			x = 0.803646 * safezoneW + safezoneX;
+			y = 0.214111 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side3Score: CP_RscText
+		{
+			idc = 26;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			
+			x = 0.803646 * safezoneW + safezoneX;
+			y = 0.240501 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
 		};
 	};

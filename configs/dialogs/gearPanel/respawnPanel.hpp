@@ -18,21 +18,26 @@ class CP_RESPAWNPANEL {
 	  
 	  controls[] = 
 	  {
-	  CP_exitButton,
-	  CP_respawnPanelButton,
-	  CP_squadPanelButton,
-	  CP_gearPanelButton,
-	  CP_respawnPointsList,
-	  //CP_ticketsWestText,
-	  //CP_ticketsEastText,
-	  CP_deployPanelMiniMap,
-	  CP_deployPanelButton,
-	  CP_respawnPanelRoleTittle,
-	  CP_respawnPanelRoleCombo,
-	  CP_respawnPanelSpawnpointsTittle,
-	  CP_gearPanelPiP,
-	  CP_gearPanelPiPFake,
-	  CP_InfoText	  
+		CP_exitButton,
+		CP_respawnPanelButton,
+		CP_squadPanelButton,
+		CP_gearPanelButton,
+		CP_respawnPointsList,
+		CP_deployPanelMiniMap,
+		CP_deployPanelButton,
+		CP_respawnPanelRoleTittle,
+		CP_respawnPanelRoleCombo,
+		CP_respawnPanelSpawnpointsTittle,
+		CP_gearPanelPiP,
+		CP_gearPanelPiPFake,
+		CP_InfoText,
+		CP_flag,
+		CP_side1,
+		CP_side1Score,
+		CP_side2,
+		CP_side2Score,
+		CP_side3,
+		CP_side3Score	  
 	  };
 		class CP_exitButton: CP_RscButtonMenu
 		{
@@ -91,28 +96,6 @@ class CP_RESPAWNPANEL {
 			colorBackground[] = {0,0,0,0.8};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			onLBSelChanged = __EVAL("[0] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
-		};
-		class CP_ticketsWestText: CP_RscText
-		{
-			idc = 1;
-			text = "West: 200"; //--- ToDo: Localize;
-			x = 0.3625 * safezoneW + safezoneX;
-			y = 0.291081 * safezoneH + safezoneY;
-			w = 0.120313 * safezoneW;
-			h = 0.0439828 * safezoneH;
-			colorBackground[] = {0,0,1,0.5};
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
-		};
-		class CP_ticketsEastText: CP_RscText
-		{
-			idc = 2;
-			text = "East: 200"; //--- ToDo: Localize;
-			x = 0.482812 * safezoneW + safezoneX;
-			y = 0.291081 * safezoneH + safezoneY;
-			w = 0.120313 * safezoneW;
-			h = 0.0439828 * safezoneH;
-			colorBackground[] = {1,0,0,0.5};
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
 		};
 		class CP_deployPanelMiniMap: CP_RscMapControl
 		{
@@ -225,5 +208,78 @@ class CP_RESPAWNPANEL {
 			h = 0.142944 * safezoneH;
 			text = __EVAL(CPPATH+"configs\data\sgLogo.paa");
 			colorText[] = {1,1,1,1.8};
+		};
+		
+		class CP_flag: CP_RscPicture
+		{
+			idc = 20;
+
+			x = 0.614583 * safezoneW + safezoneX;
+			y = 0.207514 * safezoneH + safezoneY;
+			w = 0.0916667 * safezoneW;
+			h = 0.07697 * safezoneH;
+		};
+		class CP_side1: CP_RscText
+		{
+			idc = 21;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			colorText[] = {0,1,1,1};
+			
+			x = 0.711979 * safezoneW + safezoneX;
+			y = 0.214111 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side1Score: CP_RscText
+		{
+			idc = 22;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			
+			x = 0.711979 * safezoneW + safezoneX;
+			y = 0.240501 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side2: CP_RscText
+		{
+			idc = 23;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			colorText[] = {0,1,1,1};
+			
+			x = 0.757813 * safezoneW + safezoneX;
+			y = 0.214111 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side2Score: CP_RscText
+		{
+			idc = 24;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			
+			x = 0.757813 * safezoneW + safezoneX;
+			y = 0.240501 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side3: CP_RscText
+		{
+			idc = 25;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			colorText[] = {0,1,1,1};
+			
+			x = 0.803646 * safezoneW + safezoneX;
+			y = 0.214111 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class CP_side3Score: CP_RscText
+		{
+			idc = 26;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			
+			x = 0.803646 * safezoneW + safezoneX;
+			y = 0.240501 * safezoneH + safezoneY;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
 		};
 };

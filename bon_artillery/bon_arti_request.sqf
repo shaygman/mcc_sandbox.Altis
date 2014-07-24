@@ -23,6 +23,10 @@
 disableSerialization;
 
 _requestor = _this;
+if (isnil "MCC_bonFire") then {MCC_bonFire = false};
+if (isnil "MCC_bonSplash") then {MCC_bonSplash = false};
+
+if (MCC_bonFire || MCC_bonSplash) exitWith {};
 
 // read out the dialog input
 _dlg = findDisplay BON_ARTY_DIALOG;
@@ -48,7 +52,7 @@ _requestor spawn {
 	sleep (5 + random 2);
 	[[[netid _this,_this], "requestS1"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 	sleep (5 + random 2);
-	//[playerSide,"HQ"] sideChat format["%1, this is %2, Fire Mission, OUT",group player,HW_Arti_CallSign];
+	//[side player,"HQ"] sideChat format["%1, this is %2, Fire Mission, OUT",group player,HW_Arti_CallSign];
 
 };
 sleep (6 + random 6);
@@ -73,7 +77,7 @@ switch _missiontype do {
 		sleep (9 + random 2);
 		[[[netid _requestor,_requestor], "messegeO4"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 		sleep (9 + random 2);
-		//[playerSide,"HQ"] sideChat format["%1, this is %2, Adjustment Fire, %3 OUT",group _requestor,HW_Arti_CallSign,_message];
+		//[side player,"HQ"] sideChat format["%1, this is %2, Adjustment Fire, %3 OUT",group _requestor,HW_Arti_CallSign,_message];
 		[] execVM (BON_ARTI_PATH+"bon_arti_adjustfire.sqf");
 	};
 
@@ -89,8 +93,8 @@ switch _missiontype do {
 		sleep (3 + random 1);
 		[[[netid _requestor,_requestor], "splashS3"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 		sleep (2.5 + random 1);
-		if(isServer) then{[_requestor,playerSide] execVM (BON_ARTI_PATH+"bon_arti_fire.sqf")}
-		else{bon_arti_execution = [_requestor,playerSide]; publicVariable "bon_arti_execution";};
+		if(isServer) then{[_requestor,side player] execVM (BON_ARTI_PATH+"bon_arti_fire.sqf")}
+		else{bon_arti_execution = [_requestor,side player]; publicVariable "bon_arti_execution";};
 		arty_LastData = nil;
 	};
 };

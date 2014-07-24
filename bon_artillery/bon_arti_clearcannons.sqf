@@ -34,20 +34,20 @@ _cannons_cleared = [];
 	_cannons_to_clear = _cannons_to_clear - [_x+1];
 	_cannons_cleared = _cannons_cleared + [_x+1];
 
-	_old_conf = _requestor getVariable format["Arti_%2_Cannon%1",_x+1,playerSide];
+	_old_conf = _requestor getVariable format["Arti_%2_Cannon%1",_x+1,side player];
 	if(not isNil "_old_conf") then{
 		_old_shells = _old_conf select 3;
 		arty_CurrNrShellsTotal = arty_CurrNrShellsTotal - _old_shells;
 	};
 
-	_requestor setVariable [format["Arti_%2_Cannon%1Summary",_x+1,playerSide],nil,false];
-	_requestor setVariable [format["Arti_%2_Cannon%1",_x+1,playerSide],nil,true];
+	_requestor setVariable [format["Arti_%2_Cannon%1Summary",_x+1,side player],nil,false];
+	_requestor setVariable [format["Arti_%2_Cannon%1",_x+1,side player],nil,true];
 } foreach lbSelection _listbox;
 _requestor setVariable ["requesting_cannons",_cannons_to_clear,true];
 
 ctrlSetText [BON_ARTY_SUMMARY,format["\n\nCannons %1 resetted.",_cannons_cleared]];
 
-if(arty_CurrNrShellsTotal > (MCC_server getVariable format["Arti_%1_shellsleft",playerSide])) then{
+if(arty_CurrNrShellsTotal > (MCC_server getVariable format["Arti_%1_shellsleft",side player])) then{
 	ctrlEnable [BON_ARTY_REQUESTBUTTON,false];
 	(_dlg displayCtrl BON_ARTY_SHELLSLEFT) ctrlSetTextColor [1,0,0,1];
 } else{

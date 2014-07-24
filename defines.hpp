@@ -591,6 +591,31 @@ class CfgFunctions
 				description = "Populate a not empty vehicle with antoher group contains units acording to its faction and cargo space.";
 			};
 		};
+		
+		class mp
+		{
+			file = "mcc\fnc\mp";
+			
+			class vote
+			{
+				description = "Start a voting process.";
+			};
+			
+			class getActiveSides
+			{
+				description = "Return an array of the active sides in a role selection game.";
+			};
+			
+			class unlock
+			{
+				description = "Check for gear unlocks and notify the player.";
+			};
+			
+			class gainXPfromRoles
+			{
+				description = "gain XP from specific roles.";
+			};
+		};
 	};
 	
 	class VAS

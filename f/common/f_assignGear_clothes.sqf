@@ -16,7 +16,7 @@ switch (_typeofUnit) do
 			// if there is a pilotuniform defeined add it to the unit
 			if(!isnil "_pilotUniform" && _pilotUniform != "") then
 			{
-			_unit adduniform _pilotUniform;
+			_unit forceAddUniform  _pilotUniform;
 			};
 			// if there is ... etc.
 			if(!isnil "_pilotHelmet" && _pilotHelmet != "") then
@@ -32,7 +32,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_diverUniform" && _diverUniform != "") then
 			{
-			_unit adduniform _diverUniform;
+			_unit forceAddUniform  _diverUniform;
 			};
 			if(!isnil "_diverHelmet" && _diverHelmet != "") then
 			{
@@ -49,7 +49,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_baseUniform" && _baseUniform != "") then
 			{
-			_unit adduniform _lightUniform;
+			_unit forceAddUniform  _lightUniform;
 			};
 			if(!isnil "_baseHelmet" ) then
 			{
@@ -64,7 +64,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_baseUniform" && _baseUniform != "") then
 			{
-			_unit adduniform _lightUniform;
+			_unit forceAddUniform  _lightUniform;
 			};
 			if(!isnil "_baseHelmet" ) then
 			{
@@ -79,7 +79,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_baseUniform" && _baseUniform != "") then
 			{
-			_unit adduniform _baseUniform;
+			_unit forceAddUniform  _baseUniform;
 			};
 			if(!isnil "_baseHelmet" ) then
 			{
@@ -94,7 +94,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_baseUniform" && _baseUniform != "") then
 			{
-			_unit adduniform _baseUniform;
+			_unit forceAddUniform  _baseUniform;
 			};
 			if(!isnil "_baseHelmet" ) then
 			{
@@ -109,7 +109,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_baseUniform" && _baseUniform != "") then
 			{
-			_unit adduniform _baseUniform;
+			_unit forceAddUniform  _baseUniform;
 			};
 			if(!isnil "_baseHelmet" ) then
 			{
@@ -125,7 +125,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_SFlightUniform" && _SFlightUniform != "") then
 			{
-			_unit adduniform _SFlightUniform;
+			_unit forceAddUniform  _SFlightUniform;
 			};
 			if(!isnil "_SFlightHelmet" ) then
 			{
@@ -142,7 +142,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_SFlightUniform" && _SFlightUniform != "") then
 			{
-			_unit adduniform _SFlightUniform;
+			_unit forceAddUniform  _SFlightUniform;
 			};
 			if(!isnil "_lightHelmet" ) then
 			{
@@ -159,7 +159,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_SFlightUniform" && _SFlightUniform != "") then
 			{
-			_unit adduniform _SFlightUniform;
+			_unit forceAddUniform  _SFlightUniform;
 			};
 			if(!isnil "_SFbaseHelmet" ) then
 			{
@@ -177,7 +177,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_SFbaseUniform" && _SFbaseUniform != "") then
 			{
-			_unit adduniform _SFbaseUniform;
+			_unit forceAddUniform  _SFbaseUniform;
 			};
 			if(!isnil "_SFbaseHelmet" ) then
 			{
@@ -195,7 +195,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_SFbaseUniform" && _SFbaseUniform != "") then
 			{
-			_unit adduniform _SFbaseUniform;
+			_unit forceAddUniform  _SFbaseUniform;
 			};
 			if(!isnil "_lightHelmet" ) then
 			{
@@ -213,7 +213,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_SFlightUniform" && _SFlightUniform != "") then
 			{
-			_unit adduniform _SFlightUniform;
+			_unit forceAddUniform  _SFlightUniform;
 			};
 			if(!isnil "_SFbaseHelmet" ) then
 			{
@@ -231,7 +231,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_sfUniform" && _sfUniform != "") then
 			{
-			_unit adduniform _sfUniform;
+			_unit forceAddUniform  _sfUniform;
 			};
 			if(!isnil "_sfHelmet" ) then
 			{
@@ -249,7 +249,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_sfUniform" && _sfUniform != "") then
 			{
-			_unit adduniform _sfUniform;
+			_unit forceAddUniform  _sfUniform;
 			};
 			if(!isnil "_sfHelmet" ) then
 			{
@@ -267,7 +267,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_crewUniform" && _crewUniform != "") then
 			{
-			_unit adduniform _crewUniform;
+			_unit forceAddUniform  _crewUniform;
 			};
 			if(!isnil "_crewHelmet" ) then
 			{
@@ -283,7 +283,7 @@ switch (_typeofUnit) do
 		{
 			if(!isnil "_baseUniform" && _baseUniform != "") then
 			{
-			_unit adduniform _baseUniform;
+			_unit forceAddUniform  _baseUniform;
 			};
 			if(!isnil "_baseHelmet" ) then
 			{
@@ -299,7 +299,7 @@ switch (_typeofUnit) do
 if ((_typeofUnit in ["sftl","smrk","smmgg","sr","sexp","smed"]) && _isDiver) then {
 			if(!isnil "_diverUniform" && _diverUniform != "") then
 			{
-			_unit adduniform _diverUniform;
+			_unit forceAddUniform  _diverUniform;
 			};
 			if(!isnil "_diverHelmet" && _diverHelmet != "") then
 			{
@@ -316,7 +316,7 @@ if ((_typeofUnit in ["sftl","smrk","smmgg","sr","sexp","smed"]) && _isDiver) the
 if ((_typeofUnit in ["sftl","smrk","smmgg","sr","sexp","smed"]) && _isSF) then {
 			if(!isnil "_sfUniform" && _sfUniform != "") then
 			{
-			_unit adduniform _sfUniform;
+			_unit forceAddUniform  _sfUniform;
 			};
 			if(!isnil "_sfHelmet" && _sfHelmet != "") then
 			{

@@ -113,7 +113,7 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 						};
 					};
 
-				sleep (10 * _nrshells);
+				sleep (120 * _nrshells);
 				MCC_server SetVariable [format["Arti_%2_Cannon%1_available",_cannon,_side],true,true];
 			};
 		};

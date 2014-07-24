@@ -423,11 +423,9 @@ if (count _arrayGroups > 0) then
 		_count = _count + 1;
 	  
 	} forEach _arrayGroups;
-
-	_mission = _mission 
-					+ "    };" + _br;
 };
-
+_mission = _mission 
+					+ "    };" + _br;
 			
 if ((count _arrayVehicles) > 0) then
 {

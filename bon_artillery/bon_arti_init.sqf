@@ -9,7 +9,7 @@ BON_salvo = 0;
 HW_Arti_CallSign = "Steel Rain";
 
 // Number cannons
-HW_Arti_CannonNumber = if (count MCC_bonCannons== 0) then {5} else {count MCC_bonCannons};
+HW_Arti_CannonNumber = if (count MCC_bonCannons== 0) then {3} else {count MCC_bonCannons};
 
 // Number rounds per hour
 HW_arti_number_shells_per_hour = 0;
@@ -82,7 +82,7 @@ if(count _arti_cond_classes > 0) then {
 
 _arti_cond_side = "false";
 if(count _arti_cond_sides > 0) then {
-	{_arti_cond_side = _arti_cond_side + " || playerSide == " + str _x} foreach _arti_cond_sides;
+	{_arti_cond_side = _arti_cond_side + " || side player == " + str _x} foreach _arti_cond_sides;
 } else{_arti_cond_side = "true"};
 
 _arti_cond_weapon = "false";

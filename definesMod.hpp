@@ -603,6 +603,31 @@ class CfgFunctions
 			};
 		};
 		
+		class mp
+		{
+			file = "\mcc_sandbox_mod\mcc\fnc\mp";
+			
+			class vote
+			{
+				description = "Start a voting process.";
+			};
+			
+			class getActiveSides
+			{
+				description = "Return an array of the active sides in a role selection game.";
+			};
+			
+			class unlock
+			{
+				description = "Check for gear unlocks and notify the player.";
+			};
+			
+			class gainXPfromRoles
+			{
+				description = "gain XP from specific roles.";
+			};
+		};
+		
 	};
 	
 

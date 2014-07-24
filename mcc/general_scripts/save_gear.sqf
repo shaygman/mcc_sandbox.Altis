@@ -4,6 +4,29 @@ private ["_unit","_goggles","_headgear","_uniform","_uniformItems","_vest","_mag
 
 _unit = _this;
 
+//Case we in role selection and have tickets
+if (CP_activated) then
+{
+	private ["_side","_sideTickets","_tickets"];
+	
+	_side = _unit getVariable ["CP_side", playerside];
+	_sideTickets = format ["MCC_tickets%1", _side];
+	_tickets = missionNameSpace getVariable [_sideTickets,200];
+	if (_tickets > 1) then
+	{
+		_tickets = _tickets -1; 
+		missionNameSpace setVariable [_sideTickets, _tickets];
+	}
+	else	//Mission end
+	{
+		[west, missionNameSpace getVariable ["MCC_ticketsWest",200]] call BIS_fnc_respawnTickets;
+		[east, missionNameSpace getVariable ["MCC_ticketsEast",200]] call BIS_fnc_respawnTickets;
+		[resistance, missionNameSpace getVariable ["MCC_ticketsGUER",200]] call BIS_fnc_respawnTickets;
+		
+		[["sidetickets"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
+	};
+};
+
 if (MCC_saveGear) then 
 {
 	_goggles = goggles _unit; 			//Can't  save gear after killed EH
@@ -52,7 +75,7 @@ if (MCC_saveGear) then
 
 	if (_goggles != "") then {player addGoggles _goggles};
 	if (_headgear != "") then {player addHeadgear _headgear};
-	if (_uniform != "") then {player addUniform _uniform};
+	if (_uniform != "") then {player forceAddUniform  _uniform};
 	if (_vest != "") then {player addVest _vest};
 	if (_backpack != "") then {player addBackpack _backpack};
 

@@ -31,7 +31,7 @@ arty_ycorrection = 0;
 if (isnil "arti_already_adjusting") then {arti_already_adjusting = false};  
 _artidialog = findDisplay BON_ARTY_DIALOG;
 
-_shellsleft = MCC_server getVariable format["Arti_%1_shellsleft",playerSide];
+_shellsleft = MCC_server getVariable format["Arti_%1_shellsleft",side player];
 if (isNil "_shellsleft") then {_shellsleft = 0}; 
 ctrlSetText [BON_ARTY_SHELLSLEFT,format["Shells left for this hour: %1",_shellsleft]];
 ctrlSetText [BON_ARTY_XRAY,format["x-ray: %1",round (getPos player select 0)]];
@@ -51,14 +51,14 @@ if ((count MCC_bonCannons) != 0) then		//Remove dead cannons
 			
 for "_i" from 1 to HW_Arti_CannonNumber do{
 	_ctrlListBox lbAdd format["Cannon %1",_i];
-	_cannon_available = MCC_server getVariable format["Arti_%2_Cannon%1_available",_i,playerSide];
+	_cannon_available = MCC_server getVariable format["Arti_%2_Cannon%1_available",_i,side player];
 	if(not _cannon_available) then{_ctrlListBox lbSetColor [_i-1,[1.0, 0.35, 0.3, 1]];};
 	[_i,_ctrlListBox] spawn {
 		disableSerialization;
 		_cannon2update = _this select 0;
 		_ctrlListBox = _this select 1;
 		While{sleep 1; dialog} do {
-				_cannon_available = MCC_server getVariable format["Arti_%2_Cannon%1_available",_cannon2update,playerSide];
+				_cannon_available = MCC_server getVariable format["Arti_%2_Cannon%1_available",_cannon2update,side player];
 				if(_cannon_available) then{_ctrlListBox lbSetColor [_cannon2update-1,[1, 1, 1, 1]]};
 		};
 	};

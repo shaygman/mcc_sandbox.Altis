@@ -1,6 +1,6 @@
 private ["_mccdialog","_comboBox","_displayname","_pic", "_index","_planeName","_counter","_type","_group","_groupControl",
 		 "_insetionArray","_control","_unitsCount","_markerType","_markerColor","_leader","_markerInf","_markerMech","_markerArmor","_markerAir",
-		"_markerName","_icon","_wpArray","_haveGPS","_behaviour","_unitsSize","_unitsSizeMarker"];
+		"_markerName","_icon","_wpArray","_haveGPS","_behaviour","_unitsSize","_unitsSizeMarker","_arrayName"];
 // By: Shay_gman
 // Version: 1.1 (May 2012)
 #define mcc_playerConsole_IDD 2993
@@ -103,16 +103,20 @@ if (count MCC_evacVehicles > 0) then
 };
 
 //----------------------------------------------CAS--------------------------------------------------------------------------------------
+_arrayName	= format ["MCC_CASConsoleArray%1",side player];	
+
 _comboBox = _mccdialog displayCtrl MCC_ConsoleCASAvailableTextBox_IDD;		//fill list box for CAS Types
 lbClear _comboBox;
 {
 	_planeName = getText (configFile >> "CfgVehicles" >> (_x  select 1) select 0>> "displayname");
 	_displayname = format ["CAS:%1, Plane:%2",(_x  select 0) select 0,_planeName];
 	_index = _comboBox lbAdd _displayname;
-} foreach MCC_CASConsoleArray;
+} foreach (missionNameSpace getVariable [_arrayName,[]]);
 _comboBox lbSetCurSel 0;
 
 //----------------------------------------------Airdrop--------------------------------------------------------------------------------------
+_arrayName	= format ["MCC_ConsoleAirdropArray%1",side player];	
+
 _comboBox = _mccdialog displayCtrl MCC_ConsoleAirdropAvailableTextBox_IDD;		//fill list box for Airdrop Types
 lbClear _comboBox;
 _counter = 0; 
@@ -123,7 +127,7 @@ _counter = 0;
 		_displayname = format ["%1, %2",_displayname, getText(configFile >> "CfgVehicles" >> _x >> "displayname")];
 	} foreach ((_x select 0) select 0);
 	_index = _comboBox lbAdd _displayname;
-} foreach MCC_ConsoleAirdropArray;
+} foreach (missionNameSpace getVariable [_arrayName,[]]);
 _comboBox lbSetCurSel 0;
 
 //------------------------------------------Group Control-------------------------------------------------------------------------------------

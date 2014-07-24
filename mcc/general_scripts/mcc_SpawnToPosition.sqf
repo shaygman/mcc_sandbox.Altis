@@ -1,17 +1,46 @@
+private ["_unit","_Cargocount","_sucess"];
+_unit 	=  if (count _this > 0) then {_this select 0} else {objNull};
+_sucess = false; 
 if (MCC_teleportToTeam) then 
+{
+	
+	//spawn to a specific unit?
+	if (isNull _unit) then
+	{
+		_unit = if (player == (leader player)) then {(((units player) - [player]) select 0)} else {leader player};
+	};
+	
+	if (!alive _unit) exitWith {}; 
+	
+	//The unit is inside vehicle
+	if (vehicle _unit != _unit) then
+	{
+		_Cargocount = (vehicle _unit) emptyPositions "Cargo"; 
+		if (_Cargocount > 0) then
+		{
+			player assignAsCargo (vehicle _unit);
+			player moveInCargo (vehicle _unit);
+			_sucess = true; 
+		}
+		else
+		{
+			player sideChat "Unable to teleport - target unit in vehicle with no empty spaces"; 
+		};
+	}
+	else
+	{
+		
+		player setPos (getPos _unit); 
+		_sucess = true;
+	};
+	
+	if (_sucess) then
 	{
 		hint "Teleporting";
-		if (player == (leader player)) then 
-		   { 
-			 player setPos (getPos (((units player) - [player]) select 0));
-		   }
-		else
-			{
-			player setPos (getPos (leader player)); 
-			};
-		
 		if ( MCC_t2tIndex < 3 ) then // 3 = always allow teleport
 		{ 
 			MCC_teleportToTeam = false;
 		};
-	} else {hint "Telpeport is N/A"};
+	};
+	
+} else {hint "Telpeport is N/A"};

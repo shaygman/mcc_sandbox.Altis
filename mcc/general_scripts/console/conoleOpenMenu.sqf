@@ -71,18 +71,22 @@ if (_type == 0) then {											//Opening the conole
 		};
 	};
 
-	if (dialog && MCC_ConsoleOperator == "") then {MCC_ConsoleOperator = name player; publicVariable "MCC_ConsoleOperator"};	//First login 
+	_commander = (MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player;
 	
-	if (dialog && MCC_ConsoleOperator ==  name player) then {									//sign in 
+	//sign in 
+	if (dialog && _commander) then 
+	{									
 		closedialog 0; 
 		_ok = createDialog "MCC_playerConsole";
-		};
+	};
 	
-	if (dialog && MCC_ConsoleOperator !=  name player) then {									//access denied
-		ctrlSetText [9105, format ["Access denied: %1 is signed in",MCC_ConsoleOperator]];
+	//access denied
+	if (dialog && !_commander) then 
+	{									
+		ctrlSetText [9105, "Access denied: Not commander"];
 		sleep 2;
 		closedialog 0; 
-		};
+	};
 	};
 
 if (_type == 1) then {											//Switching to Artillery

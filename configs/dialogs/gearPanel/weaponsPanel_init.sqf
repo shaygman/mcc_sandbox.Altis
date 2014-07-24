@@ -27,7 +27,8 @@ CP_disableEsc = CP_WEAPONSPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_th
 _array = [];
 for [{_i = 0},{_i < count CP_currentWeaponArray},{_i = _i+1}] do 
 	{
-		if (CP_currentLevel >= (CP_currentWeaponArray select _i)select 0) then {
+		if (CP_currentLevel >= (CP_currentWeaponArray select _i)select 0) then 
+		{
 			_array set [count _array, (CP_currentWeaponArray select _i) select 1];
 		};
 	};

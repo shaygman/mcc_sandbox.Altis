@@ -26,28 +26,37 @@ for "_i" from 0 to ((count CONFIG) - 1)  do
 {
 _Cfgside = (CONFIG select _i);  
 if (isClass(_cfgside)) then
-	{
+{
 	for "_j" from 0 to ((count _Cfgside) - 1) do
-		{
+	{
 		_Cfgfaction 	= (_cfgside select _j); 
 		if (isClass(_cfgfaction)) then
-			{
+		{
 			_CfgfactionName	= getText (_cfgfaction >> "name");
-			if ((_CfgfactionName == _factionDisplayName) || (configname(configFile >> "CfgFactionClasses" >> MCC_faction) == configname(_cfgfaction))) then 
-				{
+		//	if ((_CfgfactionName == _factionDisplayName) || (configname(configFile >> "CfgFactionClasses" >> MCC_faction) == configname(_cfgfaction))) then 
+			
 				for "_k" from 0 to ((count _Cfgfaction) - 1) do
-					{
+				{
 					_Cfgtype = (_cfgfaction select _k); 
 					if (isClass(_cfgtype)) then
-						{
+					{
 						_cfgname 		= configname(_cfgtype );
 						_cfgDisplayname = getText (_Cfgtype >> "name");
-						MCC_groupTypes set [count MCC_groupTypes, [_cfgname,_cfgDisplayname]]; 
+						_check = true;  
 						for "_l" from 0 to ((count _cfgtype) - 1) do //Let's divide the groups
-							{
+						{
 							_CfgGroup = (_cfgtype select _l); 
 							if (isClass(_CfgGroup)) then
-								{
+							{
+									//Work around to get units faction before putting them to types
+									if (_check) then
+									{
+										if ((getText (_CfgGroup >> "faction")) == (configname(configFile >> "CfgFactionClasses" >> MCC_faction))) then
+										{
+											MCC_groupTypes set [count MCC_groupTypes, [_cfgname,_cfgDisplayname]];
+											_check = false; 
+										};
+									};
 									_groupName 		  = configname(_CfgGroup );
 									_groupDisplayname = getText (_CfgGroup >> "name");
 									_cfgentry = format ["configFile >> ""CfgGroups"" >>""%1"">>""%2"">>""%3"">>""%4""",(configname (_Cfgside)),(configname (_Cfgfaction)),(configname (_Cfgtype)),(configname (_CfgGroup))];
@@ -69,10 +78,10 @@ if (isClass(_cfgside)) then
 									_static = 0; 
 									_count = 0; 
 									for "_n" from 0 to ((count _CfgGroup) - 1) do	//Lets scan the units and see who is who
-										{
+									{
 										_CfgUnit = (_CfgGroup select _n); 
 										if (isClass(_CfgUnit)) then
-											{
+										{
 												_unitName 	= getText (_CfgUnit >> "vehicle");
 												_unitClass 	= getText (configfile >> "CfgVehicles" >> _unitName  >> "vehicleClass");
 												_simulation	= getText (configfile >> "CfgVehicles" >> _unitName  >> "simulation");
@@ -225,7 +234,6 @@ if (isClass(_cfgside)) then
 							};
 						};
 					};
-				};
 			};
 		};
 	};

@@ -3,6 +3,7 @@
 #define MCC_keyBindsOpenMCCButtonIDC 8415
 #define MCC_keyBindsOpenConsoleButtonIDC 8416
 #define MCC_keyBindsT2TButtonIDC 8417
+#define MCC_keyBindsGroupsButtonIDC 8418
 
 class mcc_loginDialog
 {
@@ -30,7 +31,7 @@ class mcc_loginDialog
 			x = 0.29375 * safezoneW + safezoneX;
 			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.423958 * safezoneW;
-			h = 0.241906 * safezoneH;
+			h = 0.26 * safezoneH;
 		};
 		
 		class mcc_loginDialogFrame: MCC_RscText
@@ -41,7 +42,7 @@ class mcc_loginDialog
 			x = 0.299479 * safezoneW + safezoneX;
 			y = 0.236103 * safezoneH + safezoneY;
 			w = 0.4125 * safezoneW;
-			h = 0.219914 * safezoneH;
+			h = 0.24 * safezoneH;
 		};
 		class MCC_LoginTittle: MCC_RscText
 		{
@@ -107,7 +108,7 @@ class mcc_loginDialog
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.305208 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			y = 0.435 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			colorBackground[] = {0.219,0.147,0.112,1};
@@ -138,7 +139,7 @@ class mcc_loginDialog
 
 			text = "Client FPS:"; //--- ToDo: Localize;
 			x = 0.402604 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			y = 0.435 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
@@ -149,7 +150,7 @@ class mcc_loginDialog
 
 			text = "Server FPS:"; //--- ToDo: Localize;
 			x = 0.5 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			y = 0.435 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
@@ -159,7 +160,7 @@ class mcc_loginDialog
 			idc = 1021;
 
 			x = 0.454167 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			y = 0.435 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
@@ -169,7 +170,7 @@ class mcc_loginDialog
 			idc = 1022;
 
 			x = 0.551563 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			y = 0.435 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
@@ -204,6 +205,17 @@ class mcc_loginDialog
 			text = "Teleport to team:"; //--- ToDo: Localize;
 			x = 0.5 * safezoneW + safezoneX;
 			y = 0.368051 * safezoneH + safezoneY;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_keyBindsOpenGroupstext: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Squad Dialog:"; //--- ToDo: Localize;
+			x = 0.5 * safezoneW + safezoneX;
+			y = 0.401038 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
@@ -245,6 +257,19 @@ class mcc_loginDialog
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
+		
+		class MCC_keyBindsGroupsButton: MCC_RscButton
+		{
+			idc = MCC_keyBindsGroupsButtonIDC;
+			tooltip = "Click to change";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			action =  __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.603125 * safezoneW + safezoneX;
+			y = 0.401038 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
 	
 		class MCC_login: MCC_RscButtonMenu
 		{
@@ -253,7 +278,7 @@ class mcc_loginDialog
 
 			text = "Login"; //--- ToDo: Localize;
 			x = 0.6375 * safezoneW + safezoneX;
-			y = 0.412034 * safezoneH + safezoneY;
+			y = 0.435 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.0329871 * safezoneH;
 			colorBackground[] = {0.219,0.147,0.112,1};
