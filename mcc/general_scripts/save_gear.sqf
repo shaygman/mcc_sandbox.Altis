@@ -167,15 +167,23 @@ if (MCC_saveGear) then
 		player selectWeapon (_muzzles select 0);
 	}; 
 };
-	
+
+//-----------------------MCC-------------------------------------------------	
 if (player getvariable ["MCC_allowed",false]) then 
 {
 	mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 };
 
-_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
+//---------------------MCC Cosnole ------------------------------------------
+//Absolute
+//_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
 
+//------------T2T---------------------------------
+if (MCC_t2tIndex == 2) then {MCC_teleportToTeam = true}; 
+
+//-------------------Role selection -------------------------------------------
 if (CP_activated) exitWith 
 {
 	_null=[] execVM CP_path + "scripts\player\player_init.sqf";
 }; 
+

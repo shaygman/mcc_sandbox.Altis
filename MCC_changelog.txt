@@ -7,38 +7,40 @@ Squad dialog:
 	- Teleport to team from squad menu.
 
 Role Selection:
-- Added: Commander role. You can choose to be a commander for each side, or start a mutiny against your own side commadner. Commander will have access to the MCC_console
-- Added: Tickets to Role Selection. You can edit tickets by changing this variables: MCC_ticketsWest, MCC_ticketsEast, MCC_ticketsGUER
-- Added: Notifications for leveling, unlocking new gear and weapons or gaining experiance from role related actions such as: healing, taxing and leading, 
-- Changed: In Role Selection while pressing "Switch Side" will only scroll between active sides that have start locations. 
-- Changed: In Role Selection an officer will regain control on his group after respawning. 
-- Changed: Officers will automaticlly get to be the leaders of their group.
+	- Added: Commander role. You can choose to be a commander for each side, or start a mutiny against your own side commander. Commander will have access to the MCC_console
+	- Added: Tickets to Role Selection. You can edit tickets by changing this variables: MCC_ticketsWest, MCC_ticketsEast, MCC_ticketsGUER
+	- Added: Notifications for leveling, unlocking new gear and weapons or gaining experience from role related actions such as: healing, taxing and leading, 
+	- Changed: In Role Selection while pressing "Switch Side" will only scroll between active sides that have start locations. 
+	- Changed: In Role Selection an officer will regain control on his group after respawning. 
+	- Changed: Officers will automatically get to be the leaders of their group.
 
 MCC Console:
-- Removed: MCC Console is accsseable to the sides commanders only. 
-- Changed: Forward artillery in cannons in MCC Console reduced to 3 cannons and increased the dealy between shots. 
-- Changed: MCC Console is defined by side, so there can be up to 3 commanders from oposing sides and they will not share the same resources. 
-- Changed: When adding assets to the MCC Console such as CAS, airdrops or artillery the assets will be added to the choosen side.
-- Fixed: MCC Console had truble firing guided missiles from UAV
+	- Removed: MCC Console is accessible to the sides' commanders only. 
+	- Changed: Forward artillery in cannons in MCC Console reduced to 3 cannons and increased the delay between shots. 
+	- Changed: MCC Console is defined by side, so there can be up to 3 commanders from opposing sides and they will not share the same resources. 
+	- Changed: When adding assets to the MCC Console such as CAS, airdrops or artillery the assets will be added to the chosen side.
+	- Fixed: MCC Console had trouble firing guided missiles from UAV
 
 Engine:
-- Changed: Zeus edit object dialog is now moveable. 
-- Fixed: MCC couldn't read some groups' cofigs from addons. 
-- Fixed: Custom Cargo didn't show for all clients. 
-- Fixed: Hight of objects/units isn't loaded currectlly. 
-- Fixed: addUniforms changed to ForceUniforms so no more naked players. 
-- Fixed: Save to SQM file broken if no groups spawned. 
-- Improved: Custom zeus edit dialogs response time. 
+	- Changed: Zeus edit object dialog is now moveable. 
+	- Changed: Teleport to team will teleport you to an empty seat in the vehicle the unit you have teleported too is in. If there are no empty seats then you'll not be teleported. 
+	- Fixed: MCC couldn't read some groups' configs from addons. 
+	- Fixed: Custom Cargo didn't show for all clients. 
+	- Fixed: Height of objects/units isn't loaded correctly. 
+	- Fixed: addUniforms changed to ForceUniforms so no more naked players. 
+	- Fixed: Save to SQM file broken if no groups spawned. 
+	- Improved: Custom zeus edit dialogs response time. 
 
 Mission Wizard:
-- Changed: Mission Wizard process moved to the server side. 
-- Added: Mission Wizard mission: Secure HVT now requires to bring back the HVT to base alive (need MCC start location present).
+	- Changed: Mission Wizard process moved to the server side. 
+	- Added: Mission Wizard mission: Secure HVT now requires to bring back the HVT to base alive (need MCC start location present).
 
 BIS Arsenal
-- Added: BIS Arsenal button for mission makers.
-- Added: BIS Arsenal preset for ammobox. 
+	- Added: BIS Arsenal button for mission makers.
+	- Added: BIS Arsenal preset for ammobox. 
 
-TODO Full campaign
+Gaining levels from squad rules?
+TODO PvP gen
 
 Change log r7:
 - Fixed: AI loaded from profile always facing north. 

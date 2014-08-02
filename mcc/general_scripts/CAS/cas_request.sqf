@@ -74,6 +74,7 @@ switch (_type) do
 					_array = missionNameSpace getVariable [_arrayName,[]];
 					_array set [count _array,[MCC_spawnkind, MCC_planeType]]; 
 					missionNameSpace setVariable [_arrayName,_array];
+					publicvariable _arrayName;
 					
 					[[2,compile format ['["MCCNotifications",["%1 CAS available","%2data\ammo_icon.paa",""]] call bis_fnc_showNotification;',MCC_spawnkind select 0,MCC_path]], "MCC_fnc_globalExecute", _side, false] spawn BIS_fnc_MP;
 			};
@@ -107,6 +108,7 @@ switch (_type) do
 				_array = missionNameSpace getVariable [_arrayName,[]];
 				_array set [count _array,[MCC_spawnkind, MCC_planeType]]; 
 				missionNameSpace setVariable [_arrayName,_array];
+				publicvariable _arrayName;
 			};
 		};
 	};

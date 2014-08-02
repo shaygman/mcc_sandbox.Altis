@@ -9,8 +9,8 @@ if (count CP_pilotWeaponWest == 0) then
 {		
 	CP_pilotWeaponWest 	= call compileFinal str	[
 							[0,"hgun_PDW2000_F",["30Rnd_9x21_Mag",6]],
-							[5,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
-							[10,"SMG_02_F",["30Rnd_9x21_Mag",6]]		
+							[13,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
+							[26,"SMG_02_F",["30Rnd_9x21_Mag",6]]		
 						   ]; 
 	["SERVER_PILOT", "primary", "CP_pilotWeaponWest",CP_pilotWeaponWest, "ARRAY"] call iniDB_write;
 };
@@ -18,13 +18,15 @@ publicvariable "CP_pilotWeaponWest";
 
 {
 	_weapon = _x select 1;
+	_factor		= _forEachIndex * 13;
+	
 	if (!isnil "_weapon") then
 	{
 		_weaponAttachments = ["SERVER_PILOT", "primary_attachments_west", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read; 
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
-									[[0,""],[5,"optic_Aco_smg"],[10,"optic_Holosight_smg"]], //optics
+									[[0,""],[_factor+5,"optic_Aco_smg"],[_factor+10,"optic_Holosight_smg"]], //optics
 									[[0,""]], //Barrel
 									[[0,""]]	//Attach
 									];
@@ -44,8 +46,8 @@ if (count CP_pilotWeaponEast == 0) then
 {							   
 	CP_pilotWeaponEast 	= call compileFinal str 	[
 							[0,"hgun_PDW2000_F",["30Rnd_9x21_Mag",6]],
-							[5,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
-							[10,"SMG_02_F",["30Rnd_9x21_Mag",6]]						
+							[13,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
+							[26,"SMG_02_F",["30Rnd_9x21_Mag",6]]						
 							]; 
 	["SERVER_PILOT", "primary", "CP_pilotWeaponEast",CP_pilotWeaponEast, "ARRAY"] call iniDB_write;
 };
@@ -53,13 +55,15 @@ publicvariable "CP_pilotWeaponEast";
 
 {
 	_weapon = _x select 1;
+	_factor		= _forEachIndex * 13;
+	
 	if (!isnil "_weapon") then
 	{
 		_weaponAttachments = ["SERVER_PILOT", "primary_attachments_east", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read; 
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
-									[[0,""],[5,"optic_Aco_smg"],[10,"optic_Holosight_smg"]], //optics
+									[[0,""],[_factor+5,"optic_Aco_smg"],[_factor+10,"optic_Holosight_smg"]], //optics
 									[[0,""]], //Barrel
 									[[0,""]]	//Attach
 									];
@@ -78,8 +82,8 @@ if (count CP_pilotWeaponGuer == 0) then
 {
 	CP_pilotWeaponGuer 	= call compileFinal str	[
 							[0,"hgun_PDW2000_F",["30Rnd_9x21_Mag",6]],
-							[5,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
-							[10,"SMG_02_F",["30Rnd_9x21_Mag",6]]	
+							[13,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
+							[26,"SMG_02_F",["30Rnd_9x21_Mag",6]]	
 							];
 	["SERVER_PILOT", "primary", "CP_pilotWeaponGuer",CP_pilotWeaponGuer, "ARRAY"] call iniDB_write;
 };
@@ -87,13 +91,15 @@ publicvariable "CP_pilotWeaponGuer";
 
 {
 	_weapon = _x select 1;
+	_factor		= _forEachIndex * 13;
+	
 	if (!isnil "_weapon") then
 	{
 		_weaponAttachments = ["SERVER_PILOT", "primary_attachments_guer", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read; 
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
-									[[0,""],[5,"optic_Aco_smg"],[10,"optic_Holosight_smg"]], //optics
+									[[0,""],[_factor+5,"optic_Aco_smg"],[_factor+10,"optic_Holosight_smg"]], //optics
 									[[0,""]], //Barrel
 									[[0,""]]	//Attach
 									];
@@ -161,14 +167,16 @@ CP_pilotItmes3 = ["SERVER_PILOT", "items", "CP_pilotItmes3", "ARRAY"] call iniDB
 if (count CP_pilotItmes3 == 0) then
 {
 	CP_pilotItmes3		= call compileFinal str	[
-									[3,"SmokeShell",0],
-									[5,"HandGrenade",2],
-									[7,"SmokeShellRed",2],
-									[9,"SmokeShellGreen",2],
-									[11,"Chemlight_green",4],
-									[11,"Chemlight_red",4],
-									[11,"Chemlight_yellow",4],
-									[15,"B_IR_Grenade",2]];
+									[3,"MiniGrenade",2],
+									[0,"SmokeShell",0],
+									[7,"HandGrenade",2],
+									[11,"SmokeShellRed",2],
+									[11,"SmokeShellGreen",2],
+									[21,"Chemlight_green",4],
+									[21,"Chemlight_red",4],
+									[21,"Chemlight_yellow",4],
+									[31,"B_IR_Grenade",2]
+									];
 
 	["SERVER_PILOT", "items", "CP_pilotItmes3",CP_pilotItmes3, "ARRAY"] call iniDB_write;
 }; 

@@ -37,7 +37,7 @@ if (MCC_teleportToTeam) then
 	if (_sucess) then
 	{
 		hint "Teleporting";
-		if ( MCC_t2tIndex < 3 ) then // 3 = always allow teleport
+		if (MCC_t2tIndex !=3) then // 3 = always allow teleport
 		{ 
 			MCC_teleportToTeam = false;
 		};

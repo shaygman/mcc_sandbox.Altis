@@ -92,7 +92,7 @@ class missionSettings {
 		w = 0.464063 * safezoneW;
 		h = 0.549786 * safezoneH;
 		text = "";
-		colorBackground[] = { 0, 0, 0, 0.6 };
+		colorBackground[] = { 0, 0, 0, 0.8 };
 	};
 //Tittle
 	class missionSettingsTittle: MCC_RscText

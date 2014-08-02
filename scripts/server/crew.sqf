@@ -9,8 +9,8 @@ if (count CP_crewWeaponWest == 0) then
 {		
 	CP_crewWeaponWest 	= call compileFinal str	[
 							[0,"hgun_PDW2000_F",["30Rnd_9x21_Mag",6]],
-							[5,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
-							[10,"SMG_02_F",["30Rnd_9x21_Mag",6]]	
+							[13,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
+							[26,"SMG_02_F",["30Rnd_9x21_Mag",6]]	
 						   ]; 
 	["SERVER_Crew", "primary", "CP_crewWeaponWest",CP_crewWeaponWest, "ARRAY"] call iniDB_write;
 };
@@ -18,13 +18,15 @@ publicvariable "CP_crewWeaponWest";
 
 {
 	_weapon = _x select 1;
+	_factor		= _forEachIndex * 13;
+	
 	if (!isnil "_weapon") then
 	{
 		_weaponAttachments = ["SERVER_Crew", "primary_attachments_west", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read; 
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
-									[[0,""],[5,"optic_Aco_smg"],[10,"optic_Holosight_smg"]], //optics
+									[[0,""],[_factor+5,"optic_Aco_smg"],[_factor+10,"optic_Holosight_smg"]], //optics
 									[[0,""]], //Barrel
 									[[0,""]]	//Attach
 									];
@@ -44,8 +46,8 @@ if (count CP_crewWeaponEast == 0) then
 {							   
 	CP_crewWeaponEast 	= call compileFinal str 	[
 							[0,"hgun_PDW2000_F",["30Rnd_9x21_Mag",6]],
-							[5,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
-							[10,"SMG_02_F",["30Rnd_9x21_Mag",6]]
+							[13,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
+							[26,"SMG_02_F",["30Rnd_9x21_Mag",6]]
 							]; 
 	["SERVER_Crew", "primary", "CP_crewWeaponEast",CP_crewWeaponEast, "ARRAY"] call iniDB_write;
 };
@@ -53,13 +55,15 @@ publicvariable "CP_crewWeaponEast";
 
 {
 	_weapon = _x select 1;
+	_factor		= _forEachIndex * 13;
+	
 	if (!isnil "_weapon") then
 	{
 		_weaponAttachments = ["SERVER_Crew", "primary_attachments_east", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read; 
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
-									[[0,""],[5,"optic_Aco_smg"],[10,"optic_Holosight_smg"]], //optics
+									[[0,""],[_factor+5,"optic_Aco_smg"],[_factor+10,"optic_Holosight_smg"]], //optics
 									[[0,""]], //Barrel
 									[[0,""]]	//Attach
 									];
@@ -78,8 +82,8 @@ if (count CP_crewWeaponGuer == 0) then
 {
 	CP_crewWeaponGuer 	= call compileFinal str	[
 							[0,"hgun_PDW2000_F",["30Rnd_9x21_Mag",6]],
-							[5,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
-							[10,"SMG_02_F",["30Rnd_9x21_Mag",6]]
+							[13,"SMG_01_F",["30Rnd_45ACP_Mag_SMG_01",6]],
+							[26,"SMG_02_F",["30Rnd_9x21_Mag",6]]
 							];
 	["SERVER_Crew", "primary", "CP_crewWeaponGuer",CP_crewWeaponGuer, "ARRAY"] call iniDB_write;
 };
@@ -87,13 +91,15 @@ publicvariable "CP_crewWeaponGuer";
 
 {
 	_weapon = _x select 1;
+	_factor		= _forEachIndex * 13;
+	
 	if (!isnil "_weapon") then
 	{
 		_weaponAttachments = ["SERVER_Crew", "primary_attachments_guer", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read; 
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
-									[[0,""],[5,"optic_Aco_smg"],[10,"optic_Holosight_smg"]], //optics
+									[[0,""],[_factor+5,"optic_Aco_smg"],[_factor+10,"optic_Holosight_smg"]], //optics
 									[[0,""]], //Barrel
 									[[0,""]]	//Attach
 									];
@@ -139,8 +145,8 @@ if (count CP_crewItmes1 == 0) then
 {
 	CP_crewItmes1		= call compileFinal str	[
 									[0,"", []],
-									[10,"Binocular", []],
-									[20,"Rangefinder", []]
+									[20,"Binocular", []],
+									[40,"Rangefinder", []]
 									];
 
 	["SERVER_Crew", "items", "CP_crewItmes1",CP_crewItmes1, "ARRAY"] call iniDB_write;
@@ -163,14 +169,16 @@ CP_crewItmes3 = ["SERVER_Crew", "items", "CP_crewItmes3", "ARRAY"] call iniDB_re
 if (count CP_crewItmes3 == 0) then
 {
 	CP_crewItmes3		= call compileFinal str	[
-									[3,"SmokeShell",0],
-									[5,"HandGrenade",2],
-									[7,"SmokeShellRed",2],
-									[9,"SmokeShellGreen",2],
-									[11,"Chemlight_green",4],
-									[11,"Chemlight_red",4],
-									[11,"Chemlight_yellow",4],
-									[15,"B_IR_Grenade",2]];
+									[3,"MiniGrenade",2],
+									[0,"SmokeShell",0],
+									[7,"HandGrenade",2],
+									[11,"SmokeShellRed",2],
+									[11,"SmokeShellGreen",2],
+									[21,"Chemlight_green",4],
+									[21,"Chemlight_red",4],
+									[21,"Chemlight_yellow",4],
+									[31,"B_IR_Grenade",2]
+									];
 
 	["SERVER_Crew", "items", "CP_crewItmes3",CP_crewItmes3, "ARRAY"] call iniDB_write;
 }; 
@@ -185,7 +193,6 @@ if (count CP_crewGeneralItmes == 0) then
 									[0,"ItemCompass",1],
 									[0,"ItemWatch",1],
 									[0,"ItemRadio",1],
-									[0,"SmokeShell",2],
 									[0,"FirstAidKit",2]
 									];
 

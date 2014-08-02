@@ -1,4 +1,4 @@
-private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight"];
+private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight","_role","_exp","_level"];
 
 if (!MCC_iniDBenabled) exitWIth {player sidechat "iniDB isn't running. Can't access role selection"};
 
@@ -14,10 +14,9 @@ waituntil {alive player};
 (findDisplay 46) displayRemoveEventHandler ["KeyUp", MCC_squadDialogOpenEH];
 
 //Get rank from the server
-[["MCCplayerRank", player, "PRIVATE", "STRING"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["MCCplayerRank", player, "N/A", "STRING"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "MCCplayerRank"};
 if (CP_debug) then {player sidechat format ["player Rank : %1",MCCplayerRank]};
-player setRank MCCplayerRank; 
 
 [["officerLevel", player, CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "officerLevel"};
@@ -124,8 +123,20 @@ detach CP_gearCam;
 CP_gearCam cameraeffect ["Terminate","back"];
 player setpos playerDeployPos;
 
+while {isnil "_role"} do {_role = player getvariable "CP_role";};
+
 //If an officer and not leader make him the leader
-if ( ( (tolower (player getvariable ["CP_role","n/a"])) == "officer" ) && (player != leader player)) then {group player selectLeader player};	
+if ( (tolower _role == "officer" ) && (player != leader player)) then {group player selectLeader player};	
+
+//Set Rank
+_level 	 = call compile format  ["%1Level select 0",_role];
+if (MCCplayerRank == "N/A") then
+{
+	MCCplayerRank = [(floor (_level/10)) min 6,"classname"] call BIS_fnc_rankParams; 
+};
+
+player setRank MCCplayerRank; 
+ 
 
 camDestroy CP_gearCam;
 deleteVehicle CP_gearCam;

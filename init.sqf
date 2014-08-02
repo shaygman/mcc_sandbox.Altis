@@ -71,13 +71,28 @@ if (isnil "CP_flagWest") then {CP_flagWest = "\a3\Data_f\Flags\flag_nato_co.paa"
 if (isnil "CP_flagEast") then {CP_flagEast = "\a3\Data_f\Flags\flag_CSAT_co.paa"}; 
 if (isnil "CP_flagGUER") then {CP_flagGUER = "\a3\Data_f\Flags\flag_AAF_co.paa"}; 
 
+//--------------------PvP stuff--------------------------------------------------------------------------------------
+if (isnil "CP_weaponAttachments") then {CP_weaponAttachments = ["","",""]};	//Default weapons attachments for current primary weapon
+if (isnil "CP_defaultLevel") then {CP_defaultLevel = [1,0]};				//Default starting level and exp [level, exp]
+if (isnil "CP_activated") then {CP_activated = false};						//Is PvP acticated
+if (isnil "CP_defaultGroups") then {CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"]}; 	//Default squads names
+if (isnil "CP_maxPlayers") then {CP_maxPlayers = 30}; 									//Max players per side
+if (isnil "CP_maxSquads") then {CP_maxSquads = 10}; 									//Max squads per side
+if (isnil "CP_westSpawnPoints") then {CP_westSpawnPoints 	= []};	//Array containing all the objects that are WEST spawn points. Set object variable "type" - string "fob" or  "HQ";  Set object variable "side" - string "west" , "east" or "RESISTANCE";
+if (isnil "CP_eastSpawnPoints") then {CP_eastSpawnPoints	= []};	//Array containing all the objects that are EAST spawn points. Set object variable "type" - string "fob" or  "HQ";  Set object variable "side" - string "west" , "east" or "RESISTANCE";
+if (isnil "CP_guarSpawnPoints") then {CP_guarSpawnPoints	= []};	//Array containing all the objects that are GUER spawn points. Set object variable "type" - string "fob" or  "HQ";  Set object variable "side" - string "west" , "east" or "RESISTANCE";
+
 //--------------------Default Tickets (Role selection)-------------------------------------------------------
 if (isnil "MCC_ticketsWest") then {MCC_ticketsWest = 200};
 if (isnil "MCC_ticketsEast") then {MCC_ticketsEast = 200};
 if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
 
+//----------------- Teleport 2 Team -----------------------------------------------------------------------------
+if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- AfterRespawn, 3-Always
+
 //Bon artillery (moved up to avoid potential error messages)
 MCC_bonCannons = [];
+
 //----------------------IED settings---------------------------------------------
 // IED types the first one is display name the second is the classname [displayName, ClassName]
 MCC_ied_small = [["Plastic Crates","Land_CratesPlastic_F"],["Plastic Canister","Land_CanisterPlastic_F"],["Sack","Land_Sack_F"],["Road Cone","RoadCone"],["Tyre","Land_Tyre_F"],["Radio","Land_SurvivalRadio_F"],["Suitcase","Land_Suitcase_F"],["Grinder","Land_Grinder_F"],
@@ -116,6 +131,7 @@ if (isnil "MCC_ConsoleLiveFeedHelmets") then {MCC_ConsoleLiveFeedHelmets = ["H_H
 if (isnil "MCC_ConsoleCanCommandAI") then {MCC_ConsoleCanCommandAI = true}; 								//If set to false the console can only command non-AI groups
 if (isnil "MCC_ConsolePlayersCanSeeWPonMap") then {MCC_ConsolePlayersCanSeeWPonMap = true};					//If set to true players with GPS or UAVTerminal or MCC conosle can see WP assigned to them on the map
 
+/* 				Absolute
 //string that must return true inorder to open the MCC Console - str "MCC_Console" + "in (assignedItems player)"; 
 if (MCC_isMode) then 
 {
@@ -125,6 +141,8 @@ else
 {
 	MCC_consoleString = str "B_UavTerminal" + "in (assignedItems _this) && (vehicle _target == vehicle _this)"; 
 };
+
+*/
 //------------------------Artillery---------------------------------------------------
 MCC_artilleryTypeArray = [["DPICM","GrenadeHand",0,40],["HE 120mm","Sh_120mm_HE_Tracer_Red",1,30], ["HE 155mm","Sh_155mm_AMOS",1,120], ["Cluster AP","Mo_cluster_AP",3,32],["Mines 120mm","Mine_155mm_AMOS_range",3,120],
 						["HE Laser-guided","Bo_GBU12_LGB",3,50],["HE 82mm","Sh_82mm_AMOS",1,75], ["Incendiary 82mm","Fire_82mm_AMOS",1,35],
@@ -418,13 +436,13 @@ MCC_CASBombs = ["Gun-run short","Gun-run long","Gun-run (Zeus)","Rockets-run (Ze
 MCC_GunRunBusy = [0,0,0,0,0,0,0];
 MCC_CASrequestMarker = false;
 
-MCC_CASConsoleArrayWest	= []; 
-MCC_CASConsoleArrayEast	= []; 
-MCC_CASConsoleArrayGUER	= []; 
+if (isnil "MCC_CASConsoleArrayWest") then {MCC_CASConsoleArrayWest	= []}; 
+if (isnil "MCC_CASConsoleArrayEast") then {MCC_CASConsoleArrayEast	= []}; 
+if (isnil "MCC_CASConsoleArrayGUER") then {MCC_CASConsoleArrayGUER	= []}; 
 
-MCC_ConsoleAirdropArrayWest	= []; 
-MCC_ConsoleAirdropArrayEast	= []; 
-MCC_ConsoleAirdropArrayGUER	= []; 
+if (isnil "MCC_ConsoleAirdropArrayWest") then {MCC_ConsoleAirdropArrayWest	= []}; 
+if (isnil "MCC_ConsoleAirdropArrayEast") then {MCC_ConsoleAirdropArrayEast	= []}; 
+if (isnil "MCC_ConsoleAirdropArrayGUER") then {MCC_ConsoleAirdropArrayGUER	= []}; 
 
 MCC_CASConsoleFirstTime = true; 
 
@@ -467,7 +485,6 @@ MCC_aiAimIndex						= (MCC_AI_Aim*10)-1;    //0;
 MCC_aiSpotIndex						= (MCC_AI_Spot*10)-1;    //3;
 MCC_aiCommandIndex					= (MCC_AI_Command*10)-1;    //5;
 
-MCC_t2tIndex							= 1;
 MCC_consoleGPSIndex						= 0;
 MCC_consoleShowFriendsIndex				= 0;
 MCC_consoleCommandAIIndex				= 0;
@@ -714,6 +731,15 @@ if ( isServer ) then
 			mcc_missionmaker="";
 			publicVariable "mcc_missionmaker";
 		}; 
+		
+		if ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player) then
+		{
+			_str = "<t size='1' font = 'puristaLight' color='#FFFFFF'>" + format ["%1 is no longer the commander",name player] + "</t>";
+			_command = format ['["MCC_woosh",true] spawn BIS_fnc_playSound; ["%1",0,0.2,5,1,0.0] spawn bis_fnc_dynamictext;',_str];
+			[[2,compile _command], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+		
+			MCC_server setVariable [format ["CP_commander%1",(player getVariable ["CP_side",  playerside])],"", true];
+		};
 	};
 
 	private "_id";
@@ -790,7 +816,7 @@ if ( isServer ) then
 		CP_ARMinPlayersInGroup = ["SERVER_misc", "RoleSelectionDefinse", "CP_ARMinPlayersInGroup", "SCALAR"] call iniDB_read;
 		if (CP_ARMinPlayersInGroup == 0) then
 		{
-			CP_ARMinPlayersInGroup = 2;
+			CP_ARMinPlayersInGroup = 3;
 			["SERVER_misc", "RoleSelectionDefinse", "CP_ARMinPlayersInGroup",CP_ARMinPlayersInGroup, "SCALAR"] call iniDB_write;
 		};
 		publicVariable "CP_ARMinPlayersInGroup";
@@ -822,7 +848,7 @@ if ( isServer ) then
 		CP_ATMinPlayersInGroup = ["SERVER_misc", "RoleSelectionDefinse", "CP_ATMinPlayersInGroup", "SCALAR"] call iniDB_read;
 		if (CP_ATMinPlayersInGroup == 0) then
 		{
-			CP_ATMinPlayersInGroup = 2;
+			CP_ATMinPlayersInGroup = 4;
 			["SERVER_misc", "RoleSelectionDefinse", "CP_ATMinPlayersInGroup",CP_ATMinPlayersInGroup, "SCALAR"] call iniDB_write;
 		};
 		publicVariable "CP_ATMinPlayersInGroup";
@@ -838,7 +864,7 @@ if ( isServer ) then
 		CP_CorpsmanMinPlayersInGroup = ["SERVER_misc", "RoleSelectionDefinse", "CP_CorpsmanMinPlayersInGroup", "SCALAR"] call iniDB_read;
 		if (CP_CorpsmanMinPlayersInGroup == 0) then
 		{
-			CP_CorpsmanMinPlayersInGroup = 2;
+			CP_CorpsmanMinPlayersInGroup = 3;
 			["SERVER_misc", "RoleSelectionDefinse", "CP_CorpsmanMinPlayersInGroup",CP_CorpsmanMinPlayersInGroup, "SCALAR"] call iniDB_write;
 		};
 		publicVariable "CP_CorpsmanMinPlayersInGroup";
@@ -854,7 +880,7 @@ if ( isServer ) then
 		CP_MarksmanMinPlayersInGroup = ["SERVER_misc", "RoleSelectionDefinse", "CP_MarksmanMinPlayersInGroup", "SCALAR"] call iniDB_read;
 		if (CP_MarksmanMinPlayersInGroup == 0) then
 		{
-			CP_MarksmanMinPlayersInGroup = 3;
+			CP_MarksmanMinPlayersInGroup = 5;
 			["SERVER_misc", "RoleSelectionDefinse", "CP_MarksmanMinPlayersInGroup",CP_MarksmanMinPlayersInGroup, "SCALAR"] call iniDB_write;
 		};
 		publicVariable "CP_MarksmanMinPlayersInGroup";
@@ -912,17 +938,8 @@ diag_log format ["%1 - MCC Local Headless Client: %2", time, MCC_isLocalHC];
 //---------------------------------------------
 //		General
 //---------------------------------------------
-if (isnil "CP_maxPlayers") then {CP_maxPlayers		= 100}; 
-if (isnil "CP_maxSquads") then {CP_maxSquads		= 20}; 
-if (isnil "CP_westSpawnPoints") then {CP_westSpawnPoints 	= []};
-if (isnil "CP_eastSpawnPoints") then {CP_eastSpawnPoints	= []};
-if (isnil "CP_guarSpawnPoints") then {CP_guarSpawnPoints	= []};
-
 CP_dialogInitDone = true; 				//define if dialog is been initialize
-if (isnil "CP_weaponAttachments") then {CP_weaponAttachments = ["","",""]};	
-if (isnil "CP_defaultLevel") then {CP_defaultLevel = [1,0]};
-if (isnil "CP_activated") then {CP_activated = false};
-if (isnil "CP_defaultGroups") then {CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"]}; 
+
 "CP_activated" addPublicVariableEventHandler 
 {
 	if(CP_activated && !isDedicated) then
@@ -1065,7 +1082,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 7) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['',time],true]}"];
 
 	// Teleport to team on Alt + T
-	MCC_teleportToTeam = true;
+	if (isnil "MCC_teleportToTeam") then {MCC_teleportToTeam = true};
 	_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1 ==((MCC_keyBinds select 2) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 2) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 2) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 2) select 2))) then {[] execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
 	
 	// Add to the action menu
@@ -1082,14 +1099,14 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	MCC_squadDialogOpen = false; 
 	MCC_squadDialogOpenEH = (findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 3) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 3) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 3) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 3) select 2))) then {null = [nil,nil,nil,nil,2] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 	
-	//Add MCC Console action menu
-	_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
+	//Add MCC Console action menu --Absolute
+	//_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
 			
 	//Save gear EH
 	if(local player) then {player addEventHandler ["killed",{player execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};
 	
 	//Handle Heal
-	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && (_this select 1 != _this select 0) && (tolower (player getvariable ["CP_role","n/a"]) == "corpsman") ) then {(_this select 1) addrating 200; _string = "<t font='puristaMedium' size='0.5' color='#FFFFFF '>+200 Exp For Healing</t>"; [_string,0,1,2,1,0,4] spawn BIS_fnc_dynamicText; false}}];};
+	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && (_this select 1 != _this select 0) && (tolower ((_this select 1) getvariable ["CP_role","n/a"]) == "corpsman") ) then {(_this select 1) addrating 200; _string = "<t font='puristaMedium' size='0.5' color='#FFFFFF '>+200 Exp For Healing</t>"; [[_string,0,1,2,1,0,4], "bis_fnc_dynamictext", _this select 1, false] spawn BIS_fnc_MP; false}}]};
 	
 	//Curator
 	if(local player && (isMultiplayer)) then 

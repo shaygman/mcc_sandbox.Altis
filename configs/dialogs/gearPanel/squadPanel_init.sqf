@@ -78,7 +78,9 @@ else
 };
 
 //Set side flag
-CP_flag ctrlSetText call compile format ["CP_flag%1", (player getVariable ["CP_side", side player])];
+CP_flag ctrlSetText call compile format ["CP_flag%1", (player getVariable ["CP_side", playerside])];
+
+if (!MCC_teleportToTeam) then {CP_Teleport ctrlShow false};
 
 //Sets sides Tickets
 if (CP_activated) then
@@ -123,13 +125,17 @@ _groups	 = switch (side player) do
 			};
 				
 //Load active Groups
+_groupIndex = 0;
+
 _comboBox = CP_squadPanelSquadList; 
 lbClear _comboBox;
 	{
 		_displayname = _x select 1;
 		_index = _comboBox lbAdd _displayname;
+		if (player in units (_x select 0)) then {_groupIndex = _foreachIndex};
 	} foreach _groups;
-_comboBox lbSetCurSel 0;
+	
+_comboBox lbSetCurSel _groupIndex;
 
 [] spawn 
 {
@@ -166,7 +172,17 @@ _comboBox lbSetCurSel 0;
 		//Change leave/join squad
 		if ((group player) in _array) then 
 		{
-			CP_squadPanelJoinButton ctrlSetText "Leave Squad";
+			_unit = player getVariable ["MCC_selectedUnit", objnull];
+			
+			//Kick or leave
+			if (_unit != player && player == leader _unit) then
+			{
+				CP_squadPanelJoinButton ctrlSetText "Kick Player";
+			}
+			else
+			{ 
+				CP_squadPanelJoinButton ctrlSetText "Leave Squad";
+			};
 		} 
 		else 
 		{

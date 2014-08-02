@@ -4,7 +4,7 @@
 //roleNumber: 0-officer, 1-AR, 2-Rifleman, 3-AT, 4-medic, 5-marksman, 6- specialist, 7- crewman, 8-pilot
 // Gear: 0- select, 1-gear, 2-uniform 
 //==============================================================================================================================================================================	
-private ["_role","_select","_mag","_magazines","_muzzles","_ok","_wepItems"];
+private ["_role","_select","_mag","_magazines","_muzzles","_ok","_wepItems","_image"];
 _role 	= _this select 0;			
 _select	= _this select 1; 
 
@@ -345,7 +345,10 @@ if (isnil "CP_currentGeneralItems") then
 };
 	
 //Set player role
+_image = CP_classesPic select (CP_classes find _role);
+
 player setvariable ["CP_role", _role, true]; 
+player setvariable ["CP_roleImage", _image, true]; 
 player setvariable ["CP_roleLevel", call compile format ["%1Level select 0",_role], true]; 
 
 //Open subMenu if needed

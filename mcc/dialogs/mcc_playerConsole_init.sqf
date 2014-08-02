@@ -103,7 +103,7 @@ if (count MCC_evacVehicles > 0) then
 };
 
 //----------------------------------------------CAS--------------------------------------------------------------------------------------
-_arrayName	= format ["MCC_CASConsoleArray%1",side player];	
+_arrayName	= format ["MCC_CASConsoleArray%1",(player getVariable ["CP_side",  playerside])];	
 
 _comboBox = _mccdialog displayCtrl MCC_ConsoleCASAvailableTextBox_IDD;		//fill list box for CAS Types
 lbClear _comboBox;
@@ -115,7 +115,7 @@ lbClear _comboBox;
 _comboBox lbSetCurSel 0;
 
 //----------------------------------------------Airdrop--------------------------------------------------------------------------------------
-_arrayName	= format ["MCC_ConsoleAirdropArray%1",side player];	
+_arrayName	= format ["MCC_ConsoleAirdropArray%1",(player getVariable ["CP_side",  playerside])];	
 
 _comboBox = _mccdialog displayCtrl MCC_ConsoleAirdropAvailableTextBox_IDD;		//fill list box for Airdrop Types
 lbClear _comboBox;
@@ -214,7 +214,7 @@ MCC_fnc_mapDrawWPConsole =
 	
 [] call 
 {
-	private ["_handler","_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_haveGPS","_leader","_groupStatus","_wpArray","_behaviour","_groupControl","_haveGPS"]; 
+	private ["_handler","_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_haveGPS","_leader","_groupStatus","_wpArray","_behaviour","_groupControl","_haveGPS","_groupName"]; 
 
 	setGroupIconsVisible [true,false];	
 	setGroupIconsSelectable true;
@@ -289,7 +289,13 @@ MCC_fnc_mapDrawWPConsole =
 								_markerNaval	= "n_naval";
 								};
 						};
-						_x setGroupIconParams [_markerColor,groupID _x,1,true];
+						
+						_groupName = _x getVariable ["name",""];
+						
+						_groupName = if (_groupName == "") then	{groupID _groupName} else {_groupName};
+						
+						_x setGroupIconParams [_markerColor,_groupName ,1,true];	
+						
 						_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
 						_unitsSize = 0;
 						_markerType = nil; 
@@ -321,7 +327,7 @@ MCC_fnc_mapDrawWPConsole =
 						_icon = (_x getvariable "MCCgroupIconData"); 
 						if (!isnil "_icon") then {_x removeGroupIcon _icon};
 						_icon = _x addGroupIcon [_markerType,[0,0]];
-						_x setGroupIconParams [_markerColor,format ["%1",(groupID _x)],1,true];
+						_x setGroupIconParams [_markerColor,format ["%1",_groupName],1,true];
 						_x setvariable ["MCCgroupIconData",_icon,false];
 						
 						_icon = (_x getvariable "MCCgroupIconSize") select 0; 
@@ -337,17 +343,17 @@ MCC_fnc_mapDrawWPConsole =
 								
 								if (abs (time - _time) < 180) then
 									{
-										_x setGroupIconParams [_markerColor,format ["%1%2",groupID _x,_status],1,true];
+										_x setGroupIconParams [_markerColor,format ["%1%2",_groupName,_status],1,true];
 									}
 									else
 									{
-										_x setGroupIconParams [_markerColor,groupID _x,1,true];
+										_x setGroupIconParams [_markerColor,_groupName,1,true];
 									};
 							};
 							
 						if (_behaviour == "COMBAT") then				//Show in combat
 							{
-								_x setGroupIconParams [[1,1,1,1],groupID _x,1,true];
+								_x setGroupIconParams [[1,1,1,1],_groupName,1,true];
 							};
 					};
 			} foreach allgroups; 

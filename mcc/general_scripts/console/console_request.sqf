@@ -45,6 +45,7 @@ switch (_type) do
 				MCC_CASrequestMarker = true;
 				
 				missionNameSpace setVariable [_arrayName,_array];
+				publicvariable _arrayName;
 			};
 		};
 		
@@ -74,6 +75,7 @@ switch (_type) do
 				MCC_CASrequestMarker = true;
 				
 				missionNameSpace setVariable [_arrayName,_array];
+				publicvariable _arrayName;
 			};
 		};
 	};

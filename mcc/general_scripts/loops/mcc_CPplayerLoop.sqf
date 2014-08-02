@@ -82,7 +82,7 @@ findDisplay 12 displayCtrl 51 ctrlAddEventHandler ["Draw","_this call MCC_fnc_ma
 
 sleep 10; 
 //Loop 
-private ["_wpArray","_rating","_exp","_level","_role","_oldLeve","_newLevel","_nextCheck"]; 
+private ["_wpArray","_rating","_exp","_level","_role","_oldLevel","_newLevel","_nextCheck"]; 
 _nextCheck = time + 300;
 
 while {true} do 
@@ -112,10 +112,11 @@ while {true} do
 				//No more then 500 exp per sec
 				_rating = rating player min 500;
 				
-				if (_rating != 0) then
+				if (_rating > 0) then
 				{
 					if (CP_debug) then {player sidechat format ["rating add: %1", _rating]};
 					
+					_role = player getvariable "CP_role";
 					while {isnil "_role"} do {_role = player getvariable "CP_role";}; 
 					
 					_exp 	 = call compile format  ["%1Level select 1",_role]; 
@@ -126,16 +127,17 @@ while {true} do
 						if (_exp < 0) then {_exp = 0};
 						if (CP_debug) then {player sidechat format ["rating: %1", _exp]};
 						
-						_oldLeve = call compile format  ["%1Level select 0",_role]; 
+						_oldLevel = call compile format  ["%1Level select 0",_role]; 
 						
 						_exp = (_exp + _rating);
-						_level =[floor(_exp/(CP_XPperLevel + _oldLeve*100))+1 ,_exp];
+						_level =[floor(_exp/(CP_XPperLevel + _oldLevel*100))+1 ,_exp];
 						
 						_newLevel = _level select 0;
 
-						 if (_oldLeve < _newLevel) then 		//<============= move it to function
+						 if (_oldLevel < _newLevel) then 	
 						 {
 							[_newLevel] call MCC_fnc_unlock;
+							_oldLevel = _newLevel;
 						 };
 						
 						if (CP_debug) then {player sidechat format ["level: %1",_level]};
@@ -143,16 +145,10 @@ while {true} do
 						missionNameSpace setVariable [format ["%1Level",_role], _level]; 
 						[[format ["%1Level",_role], player, _level, "ARRAY"], "CP_fnc_setVariable", false, false] spawn BIS_fnc_MP;
 					};
-					
-					if (_rating > 0) then 
-					{
-						player addRating (-1 * _rating);
-					}
-					else
-					{
-						player addRating _rating;
-					};
 				};
+				
+				//Mark it zero again
+				player addRating (-1 * (rating player));
 			};
 		}; 
 	};

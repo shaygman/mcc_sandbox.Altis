@@ -15,11 +15,13 @@ HW_Arti_CannonNumber = if (count MCC_bonCannons== 0) then {3} else {count MCC_bo
 HW_arti_number_shells_per_hour = 0;
 
 // element: [displayname,config type-entry]
-HW_arti_types = [];
+if (isnil "HW_arti_types") then {HW_arti_types = []};
+
 				/*[["DPICM","GrenadeHand"],["HE 120mm","Sh_120_HE"], ["Cluster 120mm","Cluster_120mm_AMOS"], ["Cluster AP","Mo_cluster_AP"],["Mines 120mm","Mine_120mm_AMOS_range"],
 				["HE Laser-guided","Sh_120mm_AMOS_LG"],["HE 82mm","Sh_82mm_AMOS"], ["Incendiary 82mm","Fire_82mm_AMOS"],
 				["Smoke White 120mm","Smoke_120mm_AMOS_White"],["Smoke White 82mm","Smoke_82mm_AMOS_White"],["Smoke Green 40mm","G_40mm_SmokeGreen"], ["Smoke Red 40mm","G_40mm_SmokeRed"],
 				["Flare White","F_40mm_White"], ["Flare Green","F_40mm_Green"], ["Flare Red","F_40mm_Red"]];*/
+				
 
 // max. nr. shells each cannon can fire in one fire mission
 HW_arti_maxnrshells = 5;

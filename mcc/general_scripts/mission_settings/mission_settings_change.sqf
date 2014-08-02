@@ -28,6 +28,7 @@ if !mcc_isloading then
 	
 	_t2t = lbCurSel T2T_AD;	//Teleport2Team param
 	MCC_t2tIndex = lbCurSel T2T_AD;
+	publicVariable "MCC_t2tIndex"; 
 	if (_t2t == 0) then {_string = _string + "MCC_teleportToTeam = false;";MCC_teleportToTeam = false; publicvariable "MCC_teleportToTeam";};
 	
 	switch (_resistanceHostile) do	{

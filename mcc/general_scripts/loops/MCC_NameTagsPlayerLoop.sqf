@@ -1,5 +1,5 @@
 //====================== Name Tags Loop ==================================
-private ["_target","_distance","_string","_rank","_name","_picture","_driver","_gunner","_commander","_nameVehicle","_emptyPos"]; 
+private ["_target","_distance","_string","_rank","_name","_picture","_driver","_gunner","_commander","_nameVehicle","_emptyPos","_health","_bars"]; 
 _distance = 100;
 
 while {true} do 
@@ -17,7 +17,20 @@ while {true} do
 			{
 				_name = name _target;
 				_rank = [_target,"texture"] call BIS_fnc_rankParams;
-				_string = format ["<t font='puristaMedium' size='0.4' color='#a8e748'><img size='0.45' image='%1'/> %2</t>",_rank, _name];
+				
+				if (CP_activated) then
+				{
+					_health = floor (30 - (damage _target * 30));
+					_bars = "";
+					
+					for "_i" from 1 to _health do {_bars = _bars +"|"};
+					
+					_string = format ["<t font='puristaMedium' size='0.4' color='#a8e748'><img size='0.45' image='%3'/><br/><img size='0.45' image='%1'/> %2 <br/>%4</t>",_rank, _name, _target getvariable ["CP_roleImage", ""], _bars];
+				}
+				else
+				{
+					_string = format ["<t font='puristaMedium' size='0.4' color='#a8e748'><img size='0.45' image='%1'/> %2</t>",_rank, _name];
+				};
 			};
 			
 			//Vehicle show type name and name and rank of the commander or driver or gunner

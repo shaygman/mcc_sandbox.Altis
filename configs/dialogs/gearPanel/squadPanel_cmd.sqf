@@ -53,7 +53,7 @@ switch (_cmd) do
 	
 	case 1:				//Join/Leave button pressed
 	{ 
-		if ((ctrlText CP_squadPanelJoinButton) == "Join Squad") then 
+		if ((ctrlText CP_squadPanelJoinButton) == "Join Squad") exitWith 
 		{
 			_activeGroup = (CP_activeGroup select 0);
 			if (!isnull _activeGroup && !(_activeGroup getVariable ["locked",false])) then 
@@ -118,29 +118,32 @@ switch (_cmd) do
 				
 				//If we got this far lets switch
 				[player] join (CP_activeGroup select 0);
-				(CP_activeGroup select 0) setGroupId [(CP_activeGroup select 1),"GroupColor0"];
-				
+								
 				//If an officer and not leader make him the leader
 				if ( ( (tolower (player getvariable ["CP_role","n/a"])) == "officer" ) && (player != leader player)) then {group player selectLeader player};	
 			};
-		} 
-		else 
+		}; 
+		
+		if ((ctrlText CP_squadPanelJoinButton) == "Leave Squad") exitWith 
 		{
 			//Work around for destroying empty groups
 			if (count (units (group player)) == 1) then 
 			{			
 				_groupName 	=  if ((lbCurSel CP_squadPanelSquadList) < (count CP_defaultGroups)) then {(CP_activeGroup select 1)} else {"--Empty Squad--"}; 
+				_side = player getVariable ["CP_side", playerSide];
+				
 				[player] join grpNull;
-				_group = creategroup (side player); 
+				_group = creategroup _side; 
 				waituntil {!isnil "_group"};
 				_group setVariable ["MCC_CPGroup",true,true]; 
 				
 				//Unlock the group
 				_group setVariable ["locked",false,true];
+				_group setVariable ["name",(CP_activeGroup select 1),true];
 				
-				if ((side player)== west) then {CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]; publicVariable "CP_westGroups"};
-				if ((side player)== east) then {CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]; publicVariable "CP_eastGroups"};
-				if ((side player)== resistance) then {CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]; publicVariable "CP_guarGroups"};
+				if (_side == west) exitWith {CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]; publicVariable "CP_westGroups"};
+				if (_side == east) exitWith {CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]; publicVariable "CP_eastGroups"};
+				if (_side== resistance) exitWith {CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[_group,_groupName]]; publicVariable "CP_guarGroups"};
 			} 
 			else
 			{
@@ -149,11 +152,32 @@ switch (_cmd) do
 
 		}; 
 		
+		//Kick Player
+		if ((ctrlText CP_squadPanelJoinButton) == "Kick Player") exitWith 
+		{
+			_unit = player getVariable ["MCC_selectedUnit", objnull];
+			
+			//Kick 
+			if (_unit != player && player == leader _unit) then
+			{
+				_str = "<t size='0.6' font = 'puristaLight' color='#FFFFFF'>" + format ["%1 kicked %2 from the squad",name player, name _unit] + "</t>";
+				[[_str,0,0.2,5,1,0.0], "bis_fnc_dynamictext", group _unit, false] spawn BIS_fnc_MP;
+				[_unit] join grpNull;
+			};
+		}; 
+		
 		_null = [0] execVM format["%1configs\dialogs\gearPanel\squadPanel_cmd.sqf",CP_path];
 	};
 	
 	case 2:				//Switch side
 	{ 
+		//Find the active sides
+		_activeSides = [] call MCC_fnc_getActiveSides;
+				
+		if (count _activeSides <2) exitWith {};
+		
+		_side = _activeSides select (((_activeSides find (player getVariable ["CP_side", playerSide]))+1) mod (Count _activeSides));
+		
 		//check if player in group
 		if ((count (units (group player)) > 0) && ((group player) in _array)) exitWith 
 		{
@@ -161,23 +185,20 @@ switch (_cmd) do
 		}; 
 			
 		//check if there is room in the other side
-		if ((playersNumber (if ((side player)== west) then {east})) >= CP_maxPlayers) exitWith 
+		private "_counter";
+		_counter = 0;
 		{
-			player sidechat "East side is full"; 
-		};
-			
-		//check if there is room in the other side
-		if ((playersNumber (if ((side player)== east) then {resistance})) >= CP_maxPlayers) exitWith 
-		{
-			player sidechat "Resistance side is full"; 
-		};
-			
-		//check if there is room in the other side
-		if ((playersNumber (if ((side player)== resistance) then {west})) >= CP_maxPlayers) exitWith 
-		{
-			player sidechat "West side is full"; 
-		};
+			if (isPlayer _x) then
+			{
+				if ((_x getVariable ["CP_side", side _x]) == _side) then {_counter = _counter +1};
+			};
+		} foreach allUnits; 
 		
+		if (_counter >= CP_maxPlayers) exitWith 
+		{
+			player sidechat Format ["%1 side is full",_side]; 
+		};
+			
 		//check if the player is currently a commander for his side
 		if (_commander == getPlayerUID player) exitWith 
 		{
@@ -185,20 +206,12 @@ switch (_cmd) do
 		};		
 			
 		//Make the switch
-		
-		//Find the active sides
-		_activeSides = [] call MCC_fnc_getActiveSides;
-				
-		if (count _activeSides <2) exitWith {};
-		
-		_side = _activeSides select (((_activeSides find (side player))+1) mod (Count _activeSides));
-				
 		_group = creategroup _side;
 		
 		player setVariable ["CP_side", _side, true];
 		
 		//Set side flag
-		CP_flag ctrlSetText call compile format ["CP_flag%1", (player getVariable ["CP_side", side player])];
+		CP_flag ctrlSetText call compile format ["CP_flag%1", (player getVariable ["CP_side", playerSide])];
 		
 		[player] join _group;
 		_group = grpNull;
@@ -215,22 +228,26 @@ switch (_cmd) do
 	
 	case 3:				//Create Squad
 	{
-		if (ctrlText CP_squadPanelCreateSquadText == "") exitWith {player sidechat "Squad name can't be empty"}; 
+		private "_text";
+		_text = ctrlText CP_squadPanelCreateSquadText;
+		
+		if (_text == "") exitWith {player sidechat "Squad name can't be empty"}; 
 		
 		//Rename squad if it is not a predefined squad
 		if ((ctrlText CP_squadPanelCreateSquadButton ==  "Rename Squad")) then 
 		{
-			if  ((lbCurSel CP_squadPanelSquadList) <= (count CP_defaultGroups)) then
+			if  ((lbCurSel CP_squadPanelSquadList) < (count CP_defaultGroups)) then
 			{
 				player sidechat "Can't rename predefined squad name"; 
 			}
 			else
 			{
-				switch (side player) do	
+				group player setVariable ["name",_text,true];
+				switch (player getVariable ["CP_side",  playerside]) do	
 				{
-					case west:			{CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,ctrlText CP_squadPanelCreateSquadText]]};
-					case east:			{CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,ctrlText CP_squadPanelCreateSquadText]]};
-					case resistance:	{CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,ctrlText CP_squadPanelCreateSquadText]]};
+					case west:			{CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,_text]]};
+					case east:			{CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,_text]]};
+					case resistance:	{CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,_text]]};
 				};
 			};
 		} 
@@ -249,18 +266,22 @@ switch (_cmd) do
 					};
 					
 				//Create a new squad
-				_group = creategroup (side player);
+				_group = creategroup (player getVariable ["CP_side",  playerside]);
 				[player] join _group;
-				switch (side player) do	{
-						case west:			{CP_westGroups set [count CP_westGroups,[_group,ctrlText CP_squadPanelCreateSquadText]];
+				switch (player getVariable ["CP_side",  playerside]) do	
+					{
+						case west:			{CP_westGroups set [count CP_westGroups,[_group,_text]];
 												publicvariable "CP_westGroups";};
-						case east:			{CP_eastGroups set [count CP_eastGroups,[_group,ctrlText CP_squadPanelCreateSquadText]];
+						case east:			{CP_eastGroups set [count CP_eastGroups,[_group,_text]];
 												publicvariable "CP_eastGroups";};
-						case resistance:	{CP_guarGroups set [count CP_guarGroups,[_group,ctrlText CP_squadPanelCreateSquadText]];
+						case resistance:	{CP_guarGroups set [count CP_guarGroups,[_group,_text]];
 										publicvariable "CP_guarGroups";};
 					};
-				(CP_activeGroup select 0) setGroupId [(CP_activeGroup select 1),"GroupColor0"];
-				player sidechat format ["Squad %1 Created",ctrlText CP_squadPanelCreateSquadText, _group];
+				_group setVariable ["name",_text,true];
+				sleep 0.5;
+				CP_squadPanelSquadList lbSetCurSel (count _groups);
+				
+				player sidechat format ["Squad %1 Created", _text, _group];
 			};
 			
 		_null = [0] execVM format["%1configs\dialogs\gearPanel\squadPanel_cmd.sqf",CP_path];
@@ -268,40 +289,46 @@ switch (_cmd) do
 	
 	case 4:				//Focuse on Player
 	{
-		//Only work if we didn't came here after respawn
-		if (!MCC_squadDialogOpen) exitWith {}; 
+		
 		private ["_unit","_nvgstate"];
-		
 		_unit = (units (CP_activeGroup select 0)) select (lbCurSel CP_squadPanelPlayersList);
+		player setVariable ["MCC_selectedUnit", _unit];
 		
-		if !(isnil "CP_gearCam") then
-		{
-			detach CP_gearCam; 
-			CP_gearCam cameraeffect ["Terminate","back"];
-			camDestroy CP_gearCam;
-			deleteVehicle CP_gearCam;
-			CP_gearCam = nil; 
+		//Only work if we didn't came here after respawn
+		if (!MCC_squadDialogOpen || isnil "_unit") exitWith {}; 
+		
+		//Set camera on squad member
+		if (_unit in units player) exitWith
+		{		
+			if !(isnil "CP_gearCam") then
+			{
+				detach CP_gearCam; 
+				CP_gearCam cameraeffect ["Terminate","back"];
+				camDestroy CP_gearCam;
+				deleteVehicle CP_gearCam;
+				CP_gearCam = nil; 
+			};
+
+			//--- Camera
+			CP_gearCamFOV = 0.15;
+			CP_gearCam = "camera" camcreate [0,0,0];
+			CP_gearCam cameraeffect ["internal", "BACK", "rendertarget7"];
+			CP_gearCam campreparefocus [-1,-1];
+			CP_gearCam camSetFov CP_gearCamFOV;
+			CP_gearCam camcommitprepared 0;
+			cameraEffectEnableHUD true;
+			showcinemaborder false;
+			player setvariable ["CPCenter", _unit]; 
+			
+			//handle NV
+			_nvgstate = if (daytime > 19 || daytime < 5.5) then {[1]} else {[3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]]};
+			"rendertarget7" setPiPEffect _nvgstate;
+
+			CP_gearCam attachto [_unit,[0.5,-12,2.8],""];
+			CP_gearCam campreparetarget _unit;
+			CP_gearCam camcommitprepared 0;
+			CP_gearCam camcommit 0;
 		};
-
-		//--- Camera
-		CP_gearCamFOV = 0.15;
-		CP_gearCam = "camera" camcreate [0,0,0];
-		CP_gearCam cameraeffect ["internal", "BACK", "rendertarget7"];
-		CP_gearCam campreparefocus [-1,-1];
-		CP_gearCam camSetFov CP_gearCamFOV;
-		CP_gearCam camcommitprepared 0;
-		cameraEffectEnableHUD true;
-		showcinemaborder false;
-		player setvariable ["CPCenter", _unit]; 
-		
-		//handle NV
-		_nvgstate = if (daytime > 19 || daytime < 5.5) then {[1]} else {[3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]]};
-		"rendertarget7" setPiPEffect _nvgstate;
-
-		CP_gearCam attachto [_unit,[0.5,-12,2.6],""];
-		CP_gearCam campreparetarget _unit;
-		CP_gearCam camcommitprepared 0;
-		CP_gearCam camcommit 0;
 	};
 	
 	case 5:				//Lock/Unlock Squad
@@ -338,6 +365,9 @@ switch (_cmd) do
 		{
 			[_unit] execVM format ["%1mcc\general_scripts\mcc_SpawnToPosition.sqf",MCC_path];
 		};
+		
+		sleep 1;
+		if (!MCC_teleportToTeam) then {CP_Teleport ctrlShow false};
 	};
 	
 	case 7:				//Mutiny
@@ -349,7 +379,7 @@ switch (_cmd) do
 			_command = format ['["MCC_woosh",true] spawn BIS_fnc_playSound; ["%1",0,0.2,5,1,0.0] spawn bis_fnc_dynamictext;',_str];
 			[[2,compile _command], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 			
-			MCC_server setVariable [format ["CP_commander%1",side player],getPlayerUID player, true];
+			MCC_server setVariable [format ["CP_commander%1",(player getVariable ["CP_side",  playerside])],getPlayerUID player, true];
 		}
 		else
 		{
@@ -360,22 +390,22 @@ switch (_cmd) do
 				_command = format ['["MCC_woosh",true] spawn BIS_fnc_playSound; ["%1",0,0.2,5,1,0.0] spawn bis_fnc_dynamictext;',_str];
 				[[2,compile _command], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 			
-				MCC_server setVariable [format ["CP_commander%1",side player],"", true];
+				MCC_server setVariable [format ["CP_commander%1",(player getVariable ["CP_side",  playerside])],"", true];
 			}
 			else	//Start Mutiny
 			{
 				private ["_lastMutiny","_numberPlayers"];
-				_lastMutiny = MCC_server getVariable [format ["CP_commander%1_lastMutiny",side player],time];
+				_lastMutiny = MCC_server getVariable [format ["CP_commander%1_lastMutiny",(player getVariable ["CP_side",  playerside])],time];
 				
 				if (_lastMutiny <= time) then
 				{
-					MCC_server setVariable [format ["CP_commander%1_lastMutiny",side player],(time + 300), true];
+					MCC_server setVariable [format ["CP_commander%1_lastMutiny",(player getVariable ["CP_side",  playerside])],(time + 300), true];
 					CP_mutiny = 0;
 					publicVariable "CP_mutiny";
 					sleep 1;
-					[format ["%1 have started a mutiny. do you want to kick the commander?", name player], "MUTINY" , "CP_mutiny"] call MCC_fnc_vote;
+					[[format ["%1 have started a mutiny. do you want to kick the commander?", name player], "MUTINY" , "CP_mutiny"] ,"MCC_fnc_vote",(player getVariable ["CP_side",  playerside]),false] spawn BIS_fnc_MP;
 					sleep 30;
-					_numberPlayers = (side player) countSide allunits;
+					_numberPlayers = (player getVariable ["CP_side",  playerside]) countSide allunits;
 					[[{publicVariable "CP_mutiny"}], "BIS_fnc_spawn", false, false] spawn BIS_fnc_MP;
 					sleep 2;
 					
@@ -385,7 +415,7 @@ switch (_cmd) do
 						_command = format ['["MCC_woosh",true] spawn BIS_fnc_playSound; ["%1",0,0.2,5,1,0.0] spawn bis_fnc_dynamictext;',_str];
 						[[2,compile _command], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 					
-						MCC_server setVariable [format ["CP_commander%1",side player],getPlayerUID player, true];
+						MCC_server setVariable [format ["CP_commander%1",(player getVariable ["CP_side",  playerside])],getPlayerUID player, true];
 					}
 					else
 					{

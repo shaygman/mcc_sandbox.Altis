@@ -3,7 +3,7 @@
 // Example: [[pos, dir, side,size,destructable], "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP;
 // pos: Array, position
 // dir; number, direction 
-// side: string, "west", "east"
+// side: string, "west", "east" or "RESISTANCE"
 // size: string  "FOB" or  "HQ"
 // destructable: Boolean
 //==============================================================================================================================================================================
@@ -25,7 +25,7 @@ if (isServer) then
 			
 			case "EAST":	//east
 			{ 
-				if (_size == "FOB") then {_building = "Land_Cargo_House_V2_F"} else {_building = "ProtectionZone_Invisible_F"}; 
+				if (_size == "FOB") then {_building = "Land_Cargo_House_V1_F"} else {_building = "ProtectionZone_Invisible_F"}; 
 			};
 			case "RESISTANCE":	//east
 			{ 

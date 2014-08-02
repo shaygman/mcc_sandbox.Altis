@@ -61,12 +61,12 @@ if (_mode == "mousemoving") then
 		//If we came here after respawn we want to limit view to the front only of the player
 		if !(MCC_squadDialogOpen) then
 		{
-			if (CP_camMouseMovingAttachposX < -1.5) then {CP_camMouseMovingAttachposX = -1.5};
-			if (CP_camMouseMovingAttachposX > 1.5) then {CP_camMouseMovingAttachposX = 1.5};
+			CP_camMouseMovingAttachposX = (-1.5 max CP_camMouseMovingAttachposX) min 1.5;
 			CP_gearCam attachto [player getvariable "CPCenter" ,[CP_camMouseMovingAttachposX,12,2.8],""];
 		}
 		else
 		{
+			CP_camMouseMovingAttachposX = (-10 max CP_camMouseMovingAttachposX) min 10;
 			CP_gearCam attachto [player getvariable "CPCenter" ,[CP_camMouseMovingAttachposX,-12,2.8],""];
 		};
 		

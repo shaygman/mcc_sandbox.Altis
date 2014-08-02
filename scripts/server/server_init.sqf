@@ -1,6 +1,5 @@
 private ["_string","_group","_weapon","_weaponAttachments"];
 
-if (!MCC_iniDBenabled) exitWIth {player sidechat "iniDB isn't running. Can't access role selection"};
 if (CP_debug) then {diag_log "CP server init started"};
 
 //---------------------------------------------
@@ -22,21 +21,21 @@ publicVariable "CP_guarGroups";
 publicVariable "CP_maxPlayers";
 publicVariable "CP_maxSquads";
 
-//Tickets number
-if (isnil "CP_eastTickets") then {CP_eastTickets = 200}; 
-if (isnil "CP_westTickets") then {CP_westTickets = 200}; 
-publicVariable "CP_eastTickets";
-publicVariable "CP_westTickets";
 
 //Default Groups
-CP_defaultGroups = ["SERVER_misc", "RoleSelectionDefinse", "CP_defaultGroups", "ARRAY"] call iniDB_read;
-
-if (count CP_defaultGroups == 0) then
+if (MCC_iniDBenabled) then
 {
-	CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"];
-	 ["SERVER_misc", "RoleSelectionDefinse", "CP_defaultGroups",CP_defaultGroups, "ARRAY"] call iniDB_write;
+	CP_defaultGroups = ["SERVER_misc", "RoleSelectionDefinse", "CP_defaultGroups", "ARRAY"] call iniDB_read;
+	
+	if (count CP_defaultGroups == 0) then
+	{
+		CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"];
+		 ["SERVER_misc", "RoleSelectionDefinse", "CP_defaultGroups",CP_defaultGroups, "ARRAY"] call iniDB_write;
+	};
+	
+	publicVariable "CP_defaultGroups";
 };
-publicVariable "CP_defaultGroups";
+
 
 
 //---------------------------------------------
@@ -48,6 +47,7 @@ if (count CP_westGroups == 0) then
 		_group = createGroup west;
 		waituntil {!isnil "_group"};
 		_group setVariable ["MCC_CPGroup",true,true]; 
+		_group setVariable ["name",_x,true];
 		CP_westGroups set [_forEachIndex,[_group,_x]];
 	} foreach CP_defaultGroups;
 	
@@ -60,6 +60,7 @@ if (count CP_eastGroups == 0) then
 		_group = createGroup east;
 		waituntil {!isnil "_group"};
 		_group setVariable ["MCC_CPGroup",true,true]; 
+		_group setVariable ["name",_x,true];
 		CP_eastGroups set [_forEachIndex,[_group,_x]];
 	} foreach CP_defaultGroups;
 	
@@ -72,6 +73,7 @@ if (count CP_guarGroups == 0) then
 		_group = createGroup resistance;
 		waituntil {!isnil "_group"};
 		_group setVariable ["MCC_CPGroup",true,true]; 
+		_group setVariable ["name",_x,true];
 		CP_guarGroups set [_forEachIndex,[_group,_x]];
 	} foreach CP_defaultGroups;
 	
@@ -86,6 +88,7 @@ if (count CP_guarGroups == 0) then
 //---------------------------------------------
 //		gears array
 //---------------------------------------------
+if (!MCC_iniDBenabled) exitWIth {diag_log format["MCC: %1 iniDB isn't running. Can't access role selection",time]};
 
 //HandGuns
 CP_handguns = ["SERVER_misc", "handguns", "CP_handguns", "ARRAY"] call iniDB_read;
@@ -94,10 +97,10 @@ if (count CP_handguns == 0) then
 {
 	CP_handguns	= 	call compileFinal str	[
 					[0,"",["",0]],
-					[3,"hgun_Rook40_F",["16Rnd_9x21_Mag",3]],
-					[6,"hgun_P07_F",["16Rnd_9x21_Mag",3]],
-					[10,"hgun_ACPC2_F",["9Rnd_45ACP_Mag",3]],
-					[15,"hgun_Pistol_heavy_02_F",["6Rnd_45ACP_Cylinder",3]],
+					[4,"hgun_Rook40_F",["16Rnd_9x21_Mag",3]],
+					[8,"hgun_P07_F",["16Rnd_9x21_Mag",3]],
+					[12,"hgun_ACPC2_F",["9Rnd_45ACP_Mag",3]],
+					[16,"hgun_Pistol_heavy_02_F",["6Rnd_45ACP_Cylinder",3]],
 					[20,"hgun_Pistol_heavy_01_F",["11Rnd_45ACP_Mag",3]]
 					]; 
 					

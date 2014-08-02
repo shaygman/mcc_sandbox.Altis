@@ -153,7 +153,6 @@ class CP_SQUADPANEL {
 			y = 0.631949 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
-			tooltip = "Join this squad"; //--- ToDo: Localize;
 			action = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
@@ -177,7 +176,7 @@ class CP_SQUADPANEL {
 			y = 0.664936 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
-			tooltip = "Create a new squad - up to 8 squads allowed. Type the name of your new squad bellow"; //--- ToDo: Localize;
+			tooltip = "Create a new squad. Type the name of your new squad bellow"; //--- ToDo: Localize;
 			action = __EVAL("[3] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
@@ -289,7 +288,7 @@ class CP_SQUADPANEL {
 			y = 0.631949 * safezoneH + safezoneY;
 			w = 0.0916667 * safezoneW;
 			h = 0.0439828 * safezoneH;
-			tooltip = "Teleport to squad leader position or vehicle"; //--- ToDo: Localize;
+			tooltip = "Teleport to the selected unit position or vehicle"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
 		};
 		
