@@ -39,6 +39,9 @@ BIS Arsenal
 	- Added: BIS Arsenal button for mission makers.
 	- Added: BIS Arsenal preset for ammobox. 
 
+PvP Gen
+	- Restricted zones: [[_markerName, _sides,_time,_insideTheZone, _airOnly ,_delete], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;
+	
 Gaining levels from squad rules?
 TODO PvP gen
 

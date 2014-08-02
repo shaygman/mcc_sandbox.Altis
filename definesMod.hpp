@@ -626,6 +626,16 @@ class CfgFunctions
 			{
 				description = "gain XP from specific roles.";
 			};
+			
+			class createRestrictedZones
+			{
+				description = "create restriction zone around a marker.";
+			};
+			
+			class RestrictZoneEffect
+			{
+				description = "Effect while inside a restricted zone.";
+			};
 		};
 		
 	};
