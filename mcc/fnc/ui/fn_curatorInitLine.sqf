@@ -1,6 +1,6 @@
 //==================================================================MCC_fnc_curatorInitLine===============================================================================================
 //manage curator init line
-// Example: [] call MCC_fnc_trackUnits; 
+// Example: [] call MCC_fnc_curatorInitLine; 
 // 	rank - 14769
 //	pos - 20276
 //	Damage - 17802

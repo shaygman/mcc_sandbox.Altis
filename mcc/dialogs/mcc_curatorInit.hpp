@@ -195,7 +195,7 @@ class MCC_RscDisplayAttributesVehicleEmpty: MCCCuratorInit_Dialog
 	};
 };
 
-class RscDisplayAttributesObject: MCCCuratorInit_Dialog
+class MCC_RscDisplayAttributesObject: MCCCuratorInit_Dialog
 {
 	class Controls: Controls
 	{

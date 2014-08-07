@@ -292,7 +292,7 @@ MCC_fnc_mapDrawWPConsole =
 						
 						_groupName = _x getVariable ["name",""];
 						
-						_groupName = if (_groupName == "") then	{groupID _groupName} else {_groupName};
+						_groupName = if (_groupName == "") then	{groupID _x} else {_groupName};
 						
 						_x setGroupIconParams [_markerColor,_groupName ,1,true];	
 						

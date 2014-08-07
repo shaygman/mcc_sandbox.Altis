@@ -1,170 +1,38 @@
-Change log r8:
-Squad dialog:
-- Added: Squad Dialog - you can change squads or create custom squads by pressing P or bind another key bind if you like, options in squads:
-	- Lock/unlock squads.
-	- Custom marker on map (can be turned off from mission settings).
-	- Spectate member of the squad before joining.
-	- Teleport to team from squad menu.
-
-Role Selection:
-	- Added: Commander role. You can choose to be a commander for each side, or start a mutiny against your own side commander. Commander will have access to the MCC_console
-	- Added: Tickets to Role Selection. You can edit tickets by changing this variables: MCC_ticketsWest, MCC_ticketsEast, MCC_ticketsGUER
-	- Added: Notifications for leveling, unlocking new gear and weapons or gaining experience from role related actions such as: healing, taxing and leading, 
-	- Changed: In Role Selection while pressing "Switch Side" will only scroll between active sides that have start locations. 
-	- Changed: In Role Selection an officer will regain control on his group after respawning. 
-	- Changed: Officers will automatically get to be the leaders of their group.
-
-MCC Console:
-	- Removed: MCC Console is accessible to the sides' commanders only. 
-	- Changed: Forward artillery in cannons in MCC Console reduced to 3 cannons and increased the delay between shots. 
-	- Changed: MCC Console is defined by side, so there can be up to 3 commanders from opposing sides and they will not share the same resources. 
-	- Changed: When adding assets to the MCC Console such as CAS, airdrops or artillery the assets will be added to the chosen side.
-	- Fixed: MCC Console had trouble firing guided missiles from UAV
-
-Engine:
-	- Changed: Zeus edit object dialog is now moveable. 
-	- Changed: Teleport to team will teleport you to an empty seat in the vehicle the unit you have teleported too is in. If there are no empty seats then you'll not be teleported. 
-	- Fixed: MCC couldn't read some groups' configs from addons. 
-	- Fixed: Custom Cargo didn't show for all clients. 
-	- Fixed: Height of objects/units isn't loaded correctly. 
-	- Fixed: addUniforms changed to ForceUniforms so no more naked players. 
-	- Fixed: Save to SQM file broken if no groups spawned. 
-	- Improved: Custom zeus edit dialogs response time. 
-
-Mission Wizard:
-	- Changed: Mission Wizard process moved to the server side. 
-	- Added: Mission Wizard mission: Secure HVT now requires to bring back the HVT to base alive (need MCC start location present).
-
-BIS Arsenal
-	- Added: BIS Arsenal button for mission makers.
-	- Added: BIS Arsenal preset for ammobox. 
-
-PvP Gen
-	- Restricted zones: [[_markerName, _sides,_time,_insideTheZone, _airOnly ,_delete], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;
-	
-Gaining levels from squad rules?
-- Add MCC Objectives
-TODO PvP gen
-
-Change log r7:
-- Fixed: AI loaded from profile always facing north. 
-- Fixed: Cargo menu in Zeus glitched when monitor ratio is 5:4.
-- Fixed: Missing Role Selection button.
-- Tweaked: MCC UI and 3D to icrease performance.
-
-- Added: Object oriented save for MCC's briefings so you can load them when saving to SQM. 
-- Added: Mission Generator briefings will be added to map's briefings and will be saved. 
-
-FYI You can now generate a campaign by making seperate mission generator's missions each will have it own breifings and markers and you can save
-it all to SQM. 
-
-Change log r6:
-Zeus:
-- Added: Change object name, Init line and MCC's init presets are now availabe in Zeus when editing a unit. 
-- Added: Save to SQM will save Zeus or MCC Mission Wizard objectives (the zeus sector and attack defends objectives not included). 
-- Changed: Traps, IED, suicide bombers, armed civilians and ambushes will be under Zeus control and can be edited and moved and saved/loaded after they have been edited. 
-
-UI:
-- Added: Set MCC keys from the login menu - for players who are not the mission maker.
-- Added: Two more levels of terrain detail (grass).
-- Added: Terrain detail and view distance preferences will be saved to user profile automatically.  
-
-Mission Wizard:
-- Added: Mission Wizard presets will be saved to profile name. 
-- Added: Mission Wizards will completely save including objectives reinforcment exc, objectives can be edited by Zeus in game.
-- Added: You can now select the civilians faction in Mission Wizard. 
-- Added: Animal spawning in Mission Wizard.
-- Changed: MCC Mission Wizard objectives added: "Destroy Vehicle","Destroy AA", "Destroy Artillery", "Destroy Weapon Cahce", "Destroy Fuel Depot", "Destroy Radar/Radio",
-
-Engine:
-- Changed: Zones can be loaded changed and re-saved again and again. 
-- Changed: By default MCC keys will be: 
-	- Open MCC: Ctrl + Delete
-	- Open MCC Console: Ctrl + End
-	- Teleport 2 Team: Alt + T
-- Changed: Presets are defined by object type.
-	
-Misc:
-- Added: Armed civilians will patrol the area and be much more aggressive also they now have SMG. 
-- Added: 3D editor preset - "Add Cargo Units" will populate the vehicle cargo with units from the vehicle's faction. 
-
-Bug Fix:
-- Fixed: Remove some of the load in 3D editor to save CPU. 	
-- Fixed: MCC will not show group's markers while they are in another group's vehicle (so you can set troops unload). 
-- Fixed: Failing the mission if enabling roles.
-- Fixed: Groups respawn after loading a mission. 
-- Fixed: Zeus respawn template makes AI hostile to player. 
-- Fixed: Supply drop for ammoboxes was buggy. 
-- Fixed: Karts and karts drivers spawns in garrison and mission wizard. 
-- Fixed: Cargo system didn't actually clear the box cargo when "Clear" pressed. 
-- Fixed: Hidden IED auto reveal for the mission maker side. 
-
-
-TODO save markers
-TODO civilians behavior
-
-Change log r5:
-- Fixed: MCC key bindings moved to MCC mission's settings so it can be binded from in game to profile and not hard coded. 
-
 Change log r4:
-Engine:
-- Added: Button: "Save MCC(SQM)" will save MCC/Zeus only missions' objects to SQM - will only save the new placed objects. 
-- Added: Reworked MCC save now will save all objects/units placesd with MCC or Zeus including waypoints, GAIA behavior, GAIA cashing status and disregard units that has been deleted. First step to persistence. 
-- Added: Save to SQM will save gaia behavior, cacheing and respawn.
-- Added: Disable global MCC messages in missions settings. 
-- Update: 500m increment to viewdistance setting
-- Update: improved check if zone exists before spawning AI units.
-- Update: Added VAS again with some safty changes so it won't override missions already using VAS. 
-- Fixed: When someone else taking control over MCC and trying to access Zeus he gets a black screen. 
-- Fixed: Added delay for laser target bombs. 
-- Fixed: After loading a mission from MCC creating a new zone will start from 1 again. 
-- Fixed: After HALO jump backpack on pelvis was not removed.
-- Fixed: Player were not assigned to Zeus in dedicated servers. 
-- Fixed: Save to SQM didn't saved WP type. 
-- Fixed: After respawning will not loose zues. 
-- Fixed: Error garrison group spawn for "AAF (GUE)" faction
-- Fixed: Floating rocks issue.
-- Fixed: Could not take control of same side UAV/UGV with MCC handheld console unless mission maker allowed it. 
+- Added: Save to SQM will save gaia behavior.
+- Fixed: Delete markers and all in delete brush won't delete MCC Zone. 
 
-Zeus:
-- Added: Save Zeus Objectives (persistence - will save the task status when pressed saved) .
-- Added: Save Zeus modules: Animals, Chem Lights, Effects, Environment, Objectives, Respawn, Scenario Name, Smoke Shells.
 
-GAIA:
-- Added: Respawns. It can now be set on GAIA groups (caching friendly) the group will respawn for number of times after all it's group members has been killed. (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
 
-Delete Brush:
-- Fixed: Delete "markers" won't delete MCC Zone's markers. 
-- Update: Delete "all" won't delete markers. 
-
-Cargo (Box Gen)
-- Update: Will not automatically clear all the cargo in the vehicle/Ammo box. 
-- Fixed: Scroll bars were buggy. 
-
-UI:
-- Added: "Are you sure?" dialogs to mission's end buttons. 
-- Added: Open or close MCC with the Custom user "action key 2". 
-- Added: Open or close MCC handheld console with the Custom user "action key 3". 
-- Added: Towns names and map markers in 3D editor. 
-- Fixed: 3D icons size will be depending on the distance from the camera. 
-
-CAS:
+- Added: "Are you sure?" dialogs to mission end buttons. 
+- Added: Open or close MCC with the Custom user action key 2. 
+- Added: Button: Save MCC/Zeus only missions object to SQM - will only save new placed objects to SQM file. 
+- Added: Reworked MCC save now will save all objects/units placesd with MCC or Zeus including waypoints, GAIA behavior, GAIA cashing status and disregard units that has been deleted.
 - Added: new ModuleCAS_F to MCC's CAS - means 3 new CAS (the Zeus one). 
-
-Spectator:
 - Added: 1st person spectator support (including 'auto combat focus')
 - Added: set spectator focus to last selected group on MCC map (so after selecting icon, open spectator will focus on the group leader)
+- Added: Respawn can now be set on GAIA groups (caching friendly) (group  setVariable ["MCC_GAIA_RESPAWN", <nr of respawns>];)
+
+<<<<<<< HEAD
+- Fixed: 3D icons size will depends on the distance from the camera. 
+=======
+- Update: 500m increment to viewdistance setting
+- Update: improved check if zone exists before spawning AI units
+
+- Fixed: after HALO jump backpack on pelvis was not removed
 - Fixed: spectator log file error messages
+- Fixed: 3D icons size will be depending on the distance from the camera. 
+>>>>>>> 94892ac000bd5e8f8aaf5ba1d11ab2b2751b58b5
+- Fixed: after respawning will not loose zues. 
+- Fixed: Error garrison group spawn for "AAF (GUE)" faction
+- Fixed: Floating rocks issue.
+- Fixed: Save to SQM didn't saved WP type. 
+- Fixed: Could not take control of same side UAV/UGV with MCC handheld console unless mission maker allowed it. 
 
-Misc:
-- Added: In Unit Managment realistic paradrop (runing up the ramp exc). 
-- Updated: 3D editor smooth place smoothen by half :) and fixed the 3D placment.
-- Fixed: Mission version and template missions revive for JIP. 
 
-
-TASK LIST
 
 Change log r3
+
 Zeus Support:
 - MCC now have built in Zeus support:
 	- Once mission maker log in he will have Zeus key enabled once he logged out he'll lose it. 

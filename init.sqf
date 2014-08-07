@@ -682,7 +682,7 @@ if ( isServer ) then
 	_name = "MCC_server";
 	_dummy setvariable ["text","MCC_server"];
 	_dummy setvariable ["mccIgnore",true];
-	call compile (_name + " = _dummy");
+	call compile (_name + " = _dummy");  
 	publicVariable _name;
 	
 	//CURATOR
@@ -696,26 +696,35 @@ if ( isServer ) then
 	publicVariable _name;
 	
 	//west
+	_dummyGroup = createGroup west; 
 	_dummy = _dummyGroup createunit ["SideBLUFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_sideWest";
 	_dummy setvariable ["text","MCC_sideWest"];
 	_dummy setvariable ["mccIgnore",true];
+	_dummy setvariable ["callsign","HQ",true];
+	_dummy call BIS_fnc_moduleHQ;
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 	
 	//East
+	_dummyGroup = createGroup east; 
 	_dummy = _dummyGroup createunit ["SideOPFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_sideEast";
 	_dummy setvariable ["text","MCC_sideEast"];
 	_dummy setvariable ["mccIgnore",true];
+	_dummy setvariable ["callsign","HQ",true];
+	_dummy call BIS_fnc_moduleHQ;
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 	
 	//Resistance
+	_dummyGroup = createGroup resistance; 
 	_dummy = _dummyGroup createunit ["SideResistance_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_sideResistance";
 	_dummy setvariable ["text","MCC_sideResistance"];
 	_dummy setvariable ["mccIgnore",true];
+	_dummy setvariable ["callsign","HQ",true];
+	_dummy call BIS_fnc_moduleHQ;
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 	

@@ -8,7 +8,9 @@ Sets effects for a player enters/or leaving a resrict zone/fighting area
 Example: [trigger,10,true,false] call PRA3_fnc_RestrictZoneEffect
 
 ************************************************************/
-
+/*
+{[[_x, [west,east],10,false,false, false], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;} foreach ["r1","r2","r3","r4"]
+*/
 #define var(x) private #x; x
 
 var(_trigger)  = _this select 0;	//Trigger that call this fnc
@@ -49,8 +51,9 @@ while {_i <= _waitTime && !_exit} do
 	};
 
 	["MCC_restrictWarning"] call BIS_fnc_rscLayer cutText [format ["GET BACK TO THE FIGHT! %1s",_waitTime - _i], "PLAIN DOWN", 1];
+	if (_i mod 5 == 0) then {((player getVariable ["CP_side", playerside]) call bis_fnc_moduleHQ) sideradio "SentGenLeavingAO"};
 	_i = _i + 1;
-	sleep 1;
+	sleep 1;	
 };
 
 ["MCC_restrictWarning"] call BIS_fnc_rscLayer cutText ["", "PLAIN DOWN"];

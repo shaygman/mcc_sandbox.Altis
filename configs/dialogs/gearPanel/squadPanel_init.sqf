@@ -78,6 +78,7 @@ else
 };
 
 //Set side flag
+//gettext (configfile >> "cfgfactionclasses" >> _ownerFaction >> "flag");
 CP_flag ctrlSetText call compile format ["CP_flag%1", (player getVariable ["CP_side", playerside])];
 
 if (!MCC_teleportToTeam) then {CP_Teleport ctrlShow false};

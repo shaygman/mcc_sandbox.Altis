@@ -299,6 +299,16 @@ class CfgFunctions
 			{
 				description = "Handle MCC's curator init line";
 			};
+			
+			class initDispaly
+			{
+				description = "Handle MCC's displays init";
+			};
+			
+			class makeMarker
+			{
+				description = "Create a marker";
+			};
 		};
 		
 		class ied
@@ -635,6 +645,11 @@ class CfgFunctions
 			class RestrictZoneEffect
 			{
 				description = "Effect while inside a restricted zone.";
+			};
+			
+			class moduleSector
+			{
+				description = "Handles Sectors built on BIS Sector by  Karel Moricky.";
 			};
 		};
 		

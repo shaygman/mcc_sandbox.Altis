@@ -1,0 +1,285 @@
+/*%FSM<COMPILE "C:\Users\shay\Desktop\arma tools\Poseidon Tools\Poseidon\Data\Packages\Bin\fsmEditor\scriptedFSM.cfg, BIS_fnc_moduleObjectiveSector">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"START",0,4346,-200.000000,-375.000000,-100.000000,-325.000000,0.000000,"START"};
+item1[] = {"Continue",8,218,-200.000000,-150.000000,-100.000000,-100.000000,0.000000,"Continue"};
+item2[] = {"Pending",2,250,-200.000000,-75.000000,-100.000000,-25.000000,0.000000,"Pending"};
+item3[] = {"Updated",4,218,-75.000000,-75.000000,25.000000,-25.000000,0.000000,"Updated"};
+item4[] = {"Update",2,250,50.000000,-75.000000,150.000000,-25.000000,0.000000,"Update"};
+item5[] = {"Deleted",4,218,-275.000000,0.000000,-175.000000,50.000000,2.000000,"Deleted"};
+item6[] = {"Cancel",1,250,-275.000000,75.000000,-175.000000,125.000000,0.000000,"Cancel"};
+item7[] = {"Server",8,218,-200.000000,-300.000000,-100.000000,-250.000000,0.000000,"Server"};
+item8[] = {"Init",2,250,-200.000000,-225.000000,-100.000000,-175.000000,0.000000,"Init"};
+item9[] = {"Seized",4,218,-125.000000,0.000000,-25.000000,50.000000,1.000000,"Seized"};
+item10[] = {"Complete",1,250,-125.000000,75.000000,-25.000000,125.000000,0.000000,"Complete"};
+item11[] = {"Sides_registered",4,218,50.000000,-150.000000,150.000000,-100.000000,0.000000,"Sides" \n "registered"};
+item12[] = {"Set_tasks",2,250,-75.000000,-150.000000,25.000000,-100.000000,0.000000,"Set tasks"};
+link0[] = {0,7};
+link1[] = {1,2};
+link2[] = {2,3};
+link3[] = {2,5};
+link4[] = {2,9};
+link5[] = {3,4};
+link6[] = {4,11};
+link7[] = {5,6};
+link8[] = {7,8};
+link9[] = {8,1};
+link10[] = {9,10};
+link11[] = {11,12};
+link12[] = {12,1};
+globals[] = {25.000000,1,0,0,16777215,640,480,1,28,6316128,1,-401.665466,203.986740,180.712204,-590.952148,724,881,1};
+window[] = {2,-1,-1,-1,-1,795,25,1108,25,3,742};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "BIS_fnc_moduleObjectiveSector";
+  class States
+  {
+    /*%FSM<STATE "START">*/
+    class START
+    {
+      name = "START";
+      init = /*%FSM<STATEINIT""">*/"_logic = _this select 0;" \n
+       "_units = _this select 1;" \n
+       "_activated = _this select 2;" \n
+       ""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Server">*/
+        class Server
+        {
+          priority = 0.000000;
+          to="Init";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Pending">*/
+    class Pending
+    {
+      name = "Pending";
+      init = /*%FSM<STATEINIT""">*/"_pos = position _logic;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Deleted">*/
+        class Deleted
+        {
+          priority = 2.000000;
+          to="Cancel";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"isnull _logic"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Seized">*/
+        class Seized
+        {
+          priority = 1.000000;
+          to="Complete";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"!_attackersOnly && (_sector getvariable [""owner"",sideunknown]) in _attackers"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Updated">*/
+        class Updated
+        {
+          priority = 0.000000;
+          to="Update";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_logic getvariable [""updated"",false]" \n
+           "||" \n
+           "_pos distance (position _logic) > 0"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Update">*/
+    class Update
+    {
+      name = "Update";
+      init = /*%FSM<STATEINIT""">*/"//--- Set sector owners" \n
+       "_owners = _logic getvariable ""RscAttributeOwners2"";" \n
+       "if (isnil ""_owners"") then {_owners = [_logic getvariable [""RscAttributeOwners"",[]],[]];};" \n
+       "" \n
+       "//_owners = _logic getvariable [""RscAttributeOwners2"",[[],[]]];" \n
+       "_attackers = _owners select 0;" \n
+       "_defenders = _owners select 1;" \n
+       "_ownersAll = _attackers + _defenders;" \n
+       "_sector setvariable [""sides"",_ownersAll,true];" \n
+       "_sector setposatl getposatl _logic;" \n
+       "" \n
+       "//--- Mark objective owners for outside use" \n
+       "_logic setvariable [""sides"",_ownersAll];" \n
+       "" \n
+       "//--- Defenders to own the sector instantly" \n
+       "if (count _defenders > 0) then {" \n
+       "	[_sector,_defenders select 0] call bis_fnc_modulesector;" \n
+       "};" \n
+       "" \n
+       "_taskTitles = [];" \n
+       "{" \n
+       "	_title = if (_x in _attackers) then {""Seize %1""} else {""Defend %1""};" \n
+       "	_taskTitles set [_foreachindex,_title];" \n
+       "} foreach [east,west,resistance,civilian];" \n
+       "_sector setvariable [""taskTitle"",_taskTitles,true];" \n
+       "" \n
+       "//--- Unmark as updated" \n
+       "_logic setvariable [""updated"",false];" \n
+       "" \n
+       "_nameLogic = _logic getvariable [""name"",""""];" \n
+       "_name = _sector getvariable [""name"",""""];" \n
+       "if (_nameLogic == _nameDefault) then {" \n
+       "	//--- Use sector name in entity list" \n
+       "	_logic setname _name;" \n
+       "} else {" \n
+       "	//--- Apply custom name" \n
+       "	if (_nameLogic != _name) then {" \n
+       "		_sector setvariable [""name"",_nameLogic];" \n
+       "	};" \n
+       "};" \n
+       "" \n
+       "_step = _sector getvariable [""step"",-1];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Sides_registered">*/
+        class Sides_registered
+        {
+          priority = 0.000000;
+          to="Set_tasks";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(_sector getvariable [""step"",-1]) > (_step + 1)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Cancel">*/
+    class Cancel
+    {
+      name = "Cancel";
+      init = /*%FSM<STATEINIT""">*/"_tasks = _sector getvariable [""tasks"",["""","""","""","""","""",""""]];" \n
+       "{" \n
+       "	_x call bis_fnc_deletetask;" \n
+       "} foreach _tasks;" \n
+       "" \n
+       "deletevehicle _sector;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Init">*/
+    class Init
+    {
+      name = "Init";
+      init = /*%FSM<STATEINIT""">*/"_sector = createagent [""ModuleSector_F"",position _logic,[],0,""none""];" \n
+       "_sector setvariable [""TaskOwner"",1];" \n
+       "_sector setposatl getposatl _logic;" \n
+       "_sector setvariable [""curatorObject"",_logic];" \n
+       "_logic setvariable [""sector"",_sector,true];" \n
+       "" \n
+       "_nameDefault = name _logic;" \n
+       "" \n
+       "_attackersOnly = true;" \n
+       "_attackers = [];" \n
+       "_defenders = [];" \n
+       "" \n
+       "_textCapture = [""%1"",""Capture %1"",""%1""];" \n
+       "_textSeize = [""%1"",""Seize %1"",""%1""];" \n
+       "_textDefend = [""%1"",""Defend %1"",""%1""];" \n
+       "" \n
+       "" \n
+       "" \n
+       "_time = 0;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Continue">*/
+        class Continue
+        {
+          priority = 0.000000;
+          to="Pending";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Complete">*/
+    class Complete
+    {
+      name = "Complete";
+      init = /*%FSM<STATEINIT""">*/"_sector enablesimulation false;" \n
+       "deletevehicle _logic;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Set_tasks">*/
+    class Set_tasks
+    {
+      name = "Set_tasks";
+      init = /*%FSM<STATEINIT""">*/"_name = _sector getvariable [""name"",""""];" \n
+       "_tasks = _sector getvariable [""tasks"",["""","""","""","""","""",""""]];" \n
+       "" \n
+       "_attackersOnly = count _defenders == 0;" \n
+       "" \n
+       "{" \n
+       "	if (_x != """") then {" \n
+       "		_side = _foreachindex call bis_fnc_sidetype;" \n
+       "" \n
+       "		if (_side in (_attackers + _defenders)) then {" \n
+       "			_text = if (_attackersOnly) then {" \n
+       "				_textCapture" \n
+       "			} else {" \n
+       "				if (_side in _attackers) then {_textSeize} else {_textDefend};" \n
+       "			};" \n
+       "			_text = +_text;" \n
+       "			{" \n
+       "				_text set [_foreachindex,format [_x,_name]];" \n
+       "			} foreach _text;" \n
+       "			[_x,nil,_text] call bis_fnc_settask;" \n
+       "		};" \n
+       "	};" \n
+       "} foreach _tasks;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Continue">*/
+        class Continue
+        {
+          priority = 0.000000;
+          to="Pending";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="START";
+  finalStates[] =
+  {
+    "Cancel",
+    "Complete",
+  };
+};
+/*%FSM</COMPILE>*/
