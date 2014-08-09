@@ -291,7 +291,9 @@ else
 		if ( (isServer) && ( (mcc_hc == 0) || !(MCC_isHC) ) ) then 
 		{
 			[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
-
+			
+			diag_log "MCC: attemping to spawn"; 
+			
 			if ( ( mcc_hc == 1 ) && (MCC_isHC) ) then 
 			{
 				// mcc_hc zone defined but no HC found

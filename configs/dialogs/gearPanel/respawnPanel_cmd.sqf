@@ -44,14 +44,17 @@ switch (_cmd) do
 			if (!alive CP_activeSpawn) exitWith {player sidechat "Spawn Point has been destroyed, select another spawn point."};
 			
 			//Check if player assigned to group
-			_groups	 = switch (side player) do	{
-								case west:			{CP_westGroups};
-								case east:			{CP_eastGroups};
-								case resistance:	{CP_guarGroups};
-								case civilian:		{CP_guarGroups};
-							};
+			_groups	 = switch (side player) do	
+						{
+							case west:			{CP_westGroups};
+							case east:			{CP_eastGroups};
+							case resistance:	{CP_guarGroups};
+							case civilian:		{CP_guarGroups};
+						};
+						
 			_deployAvailable = false; 				
-			for [{_i=0},{_i < count _groups},{_i=_i+1}] do {
+			for [{_i=0},{_i < count _groups},{_i=_i+1}] do 
+			{
 				if ((group player) == (_groups select _i) select 0) then {_deployAvailable = true}; 
 			};
 			if (!_deployAvailable) exitWith {player sidechat "You must join a group first."};
@@ -122,17 +125,26 @@ switch (_cmd) do
 			if (count (units (group player)) < _minPlayersForRole) exitWith {player sidechat format ["You need %1 players in your squad to use this kit! Choose another kit.",_minPlayersForRole]};
 			
 			//Check if no enemy is close by
+			
 			_spawnAvailable = true;
-			_targets = ["Car","Tank","Man"]; 
-			_nearObjects = (getpos CP_activeSpawn) nearObjects 100;
-			if ((count _nearObjects) > 0) then {
-								{
-									_target = _x; 
-									{
-										if ((_target isKindOf _x) && (side _target != civilian) && (side _target !=side player)) then {_spawnAvailable = false};
-									} foreach _targets; 
-								} foreach _nearObjects;
-							};
+			
+			if ((CP_activeSpawn getvariable ["type","FOB"]) != "HQ") then
+			{
+				
+				_targets = ["Car","Tank","Man"]; 
+				_nearObjects = (getpos CP_activeSpawn) nearObjects 100;
+				
+				if ((count _nearObjects) > 0) then 
+				{
+					{
+						_target = _x; 
+						{
+							if ((_target isKindOf _x) && (side _target != civilian) && (side _target !=side player)) then {_spawnAvailable = false};
+						} foreach _targets; 
+					} foreach _nearObjects;
+				};
+			};
+			
 			if (!_spawnAvailable) exitWith {player sidechat "Spawn Point is being overrun, select another spawn point."};
 			
 			//looking for a spawn point
@@ -153,8 +165,8 @@ switch (_cmd) do
 		
 		case 2:				//Change role
 		{ 
-		[(lbCurSel CP_respawnPanelRoleCombo),0] call CP_fnc_setGear; 
-		[CP_gearPanelPiP] call MCC_fnc_pipOpen;
-		CP_gearPanelPiP ctrlSetText "#(argb,512,512,1)r2t(rendertarget7,1.0);";
+			[(lbCurSel CP_respawnPanelRoleCombo),0] call CP_fnc_setGear; 
+			[CP_gearPanelPiP] call MCC_fnc_pipOpen;
+			CP_gearPanelPiP ctrlSetText "#(argb,512,512,1)r2t(rendertarget7,1.0);";
 		};
 	};

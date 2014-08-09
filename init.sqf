@@ -741,9 +741,9 @@ if ( isServer ) then
 			publicVariable "mcc_missionmaker";
 		}; 
 		
-		if ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player) then
+		if ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == _uid) then
 		{
-			_str = "<t size='1' font = 'puristaLight' color='#FFFFFF'>" + format ["%1 is no longer the commander",name player] + "</t>";
+			_str = "<t size='1' font = 'puristaLight' color='#FFFFFF'>" + format ["%1 is no longer the commander",_name] + "</t>";
 			_command = format ['["MCC_woosh",true] spawn BIS_fnc_playSound; ["%1",0,0.2,5,1,0.0] spawn bis_fnc_dynamictext;',_str];
 			[[2,compile _command], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 		

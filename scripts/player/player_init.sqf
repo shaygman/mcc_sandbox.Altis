@@ -76,8 +76,9 @@ _camLogic setdir 180;
 _camBuildings = "Land_u_Addon_01_V1_F" createvehiclelocal _logicPos; 
 _camBuildings attachto [_camLogic,[3.5,4.5,0]];
 _camBuildings setdir (getdir _camLogic);
-_camLight = "FirePlace_burning_F" createvehiclelocal _logicPos; 
+_camLight = "Land_PortableLight_double_F" createvehiclelocal _logicPos; 
 _camLight attachto [_camLogic,[1,2,0]];
+_camLight setdir 140;
 //_camLight setpos [(_logicPos select 0) - 2, (_logicPos select 1) - 3,(_logicPos select 2)]; 
 player attachto [_camLogic,[0,4,0]];
 
@@ -94,9 +95,10 @@ showcinemaborder false;
 player setvariable ["CPCenter", _camLogic]; 
 
 //handle NV
+/*
 _nvgstate = if (daytime > 19 || daytime < 5.5) then {[1]} else {[3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]]};
 "rendertarget7" setPiPEffect _nvgstate;
-
+*/
 //CP_gearCampos = [[0,0,1.5],12,0] call bis_fnc_relpos;
 CP_gearCam attachto [_camLogic,[0.5,12,2.6],""];
 player setvariable ["attachObject",_camLogic];

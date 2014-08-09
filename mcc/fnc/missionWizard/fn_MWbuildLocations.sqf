@@ -51,7 +51,7 @@ switch (tolower _type) do
 	};
 };
 
-if (isnil "_locations") exitWith (diag_log "MCC MW: fn_MWbuildLocations no type of location was selected"); 
+if (isnil "_locations") exitWith (diag_log format["MCC MW: fn_MWbuildLocations %1 no type of location was selected",_type]); 
 		
 {	
 	_type = type _x;

@@ -30,6 +30,9 @@ uiNamespace setVariable ["CP_side2Score", _disp displayCtrl 24];
 uiNamespace setVariable ["CP_side3", _disp displayCtrl 25];
 uiNamespace setVariable ["CP_side3Score", _disp displayCtrl 26];
 
+uiNamespace setVariable ["CP_respawnPanelRoleCombo", _disp displayCtrl 99];
+uiNamespace setVariable ["CP_deployPanelButton", _disp displayCtrl 98];
+
 #define CP_SQUADPANEL_IDD (uiNamespace getVariable "CP_SQUADPANEL_IDD") 
 #define CP_squadPanelSquadList (uiNamespace getVariable "CP_squadPanelSquadList")
 #define CP_squadPanelPlayersList (uiNamespace getVariable "CP_squadPanelPlayersList")
@@ -58,14 +61,19 @@ uiNamespace setVariable ["CP_side3Score", _disp displayCtrl 26];
 #define CP_side3 (uiNamespace getVariable "CP_side3")
 #define CP_side3Score (uiNamespace getVariable "CP_side3Score")
 
+#define CP_respawnPanelRoleCombo (uiNamespace getVariable "CP_respawnPanelRoleCombo")
+#define CP_deployPanelButton (uiNamespace getVariable "CP_deployPanelButton")
+
 CP_respawnPanelOpen = false;
 
 
 
-//If we got here not after respawn
+//If we did not got here after respawn
 if (MCC_squadDialogOpen) then
 {
 	CP_Exit ctrlShow false;
+	CP_respawnPanelRoleCombo ctrlShow false;
+	CP_deployPanelButton ctrlShow false;
 	CP_respawnButton ctrlShow false;
 	CP_squadButton ctrlShow false;
 	CP_gearButton ctrlShow false;
@@ -74,6 +82,7 @@ if (MCC_squadDialogOpen) then
 }
 else
 {
+	CP_respawnPanelRoleCombo ctrlAddEventHandler ["LBSelChanged","[2] execVM '"+CP_PATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'"];
 	CP_Teleport ctrlShow false;
 };
 
@@ -137,6 +146,17 @@ lbClear _comboBox;
 	} foreach _groups;
 	
 _comboBox lbSetCurSel _groupIndex;
+
+//Load Classes
+_comboBox = CP_respawnPanelRoleCombo; 
+lbClear _comboBox;
+	{
+		_displayname = _x;
+		_pic = CP_classesPic select _forEachIndex;
+		_index = _comboBox lbAdd _displayname;
+		_comboBox lbsetpicture [_index,_pic];
+	} foreach CP_classes;
+_comboBox lbSetCurSel CP_classesIndex;
 
 [] spawn 
 {

@@ -102,7 +102,9 @@ _objArray			 	= ["Secure HVT",
 						   "Clear Area",
 						   "Disarm IED"
 						  ];
-						  
+
+//For handling spawn
+mcc_sidename = _enemySide;						  
 //-------------- Whole map or zone locations?
 if (_wholeMap) then
 {
@@ -434,7 +436,9 @@ waituntil {_script_handler};
 
 //Spawn some Infantry groups
 _spawnbehavior	= ["MOVE","MOVE","MOVE","NOFOLLOW"] call BIS_fnc_selectRandom; 
-_factor = if (_isCQB) then {0.3} else {0.6}; 
+_factor = if (_isCQB) then {0.1} else {0.2}; 
+if (!isnil "_objectives") then {_factor = _factor * (((count _objectives) mod 3)+1)};	//If we have less objectives it dosen't mean less enemy
+
 _unitPlaced = [(_totalEnemyUnits * _factor),_zoneNumber,_spawnbehavior] call MCC_fnc_MWSpawnInfantry; 
 if (MW_debug) then {diag_log format ["Total enemy's infantry Spawned in main zone: %1", _unitPlaced]};
 
@@ -803,6 +807,16 @@ if (_playMusic) then
 	[[2,compile format ["playMusic '%1'",_music]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 };
 
+//Lets find the mission maker owner and make sure he'll get the zone markers too. 
+private ["_missionMaker"];
+{
+	if (name _x == mcc_missionmaker) then {_missionMaker = owner _x}; 
+} foreach playableUnits;
+
+if (!isnil "_missionMaker") then
+{
+	[[],"MCC_fnc_createMCCZones",_missionMaker,false] spawn BIS_fnc_MP;
+};
 
 //Clear up
 MCC_MWisGenerating = false; 

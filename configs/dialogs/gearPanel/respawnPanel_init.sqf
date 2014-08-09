@@ -6,7 +6,7 @@ uiNamespace setVariable ["CP_RESPAWNPANEL_IDD", _disp];
 uiNamespace setVariable ["CP_respawnPointsList", _disp displayCtrl 0];
 uiNamespace setVariable ["CP_ticketsWestText", _disp displayCtrl 1];
 uiNamespace setVariable ["CP_ticketsEastText", _disp displayCtrl 2];
-uiNamespace setVariable ["CP_respawnPanelRoleCombo", _disp displayCtrl 3];
+uiNamespace setVariable ["CP_respawnPanelRoleCombo", _disp displayCtrl 99];
 uiNamespace setVariable ["CP_deployPanelMiniMap", _disp displayCtrl 4];
 uiNamespace setVariable ["CP_gearPanelPiP", _disp displayCtrl 5];
 uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 6];
@@ -121,7 +121,7 @@ _comboBox lbSetCurSel CP_classesIndex;
 			_comboBox = CP_respawnPointsList; 
 			lbClear _comboBox;
 				{
-					_displayname = format ["(%1) - %2",_x getvariable "side", _x getvariable "type"];
+					_displayname = format ["(%1) - %2",_x getvariable ["side","N/A"], _x getvariable ["type","FOB"]];
 					//_pic = _x select 2;
 					_index = _comboBox lbAdd _displayname;
 				} foreach _spawnArray;

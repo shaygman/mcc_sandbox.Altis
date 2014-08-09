@@ -14,8 +14,10 @@ if ((count MCC_MWGroupArrayMenSniper)>0) then {_menArraySpecial = _menArraySpeci
 if ((count MCC_MWGroupArrayMenSupport)>0) then {_menArraySpecial = _menArraySpecial + MCC_MWGroupArrayMenSupport};
 	
 _unitPlaced = 0;
+if (isnil "MCC_customGroupsSaveMW") then {MCC_customGroupsSaveMW = []};
 
 _unitsArray = MCC_MWGroupArrayMen + MCC_customGroupsSaveMW;
+
 if (count _unitsArray > 0) then 
 {
 	//Infantry

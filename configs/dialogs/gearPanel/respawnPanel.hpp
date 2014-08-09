@@ -92,7 +92,7 @@ class CP_RESPAWNPANEL {
 			x = 0.15625 * safezoneW + safezoneX;
 			y = 0.335064 * safezoneH + safezoneY;
 			w = 0.194792 * safezoneW;
-			h = 0.285889 * safezoneH;
+			h = 0.373854 * safezoneH;
 			colorBackground[] = {0,0,0,0.8};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			onLBSelChanged = __EVAL("[0] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
@@ -110,8 +110,10 @@ class CP_RESPAWNPANEL {
 		{
 			idc = -1;
 			text = "Deploy"; //--- ToDo: Localize;
+			colorBackground[] = {1,0,0,0.3};
+			
 			x = 0.505729 * safezoneW + safezoneX;
-			y = 0.73091 * safezoneH + safezoneY;
+			y = 0.741906 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			tooltip = "Press Deploy to get into the action"; //--- ToDo: Localize;
@@ -122,18 +124,18 @@ class CP_RESPAWNPANEL {
 		{
 			idc = -1;
 			text = "Role:"; //--- ToDo: Localize;
-			x = 0.15625 * safezoneW + safezoneX;
-			y = 0.664936 * safezoneH + safezoneY;
+			x = 0.3625 * safezoneW + safezoneX;
+			y = 0.280086 * safezoneH + safezoneY;
 			w = 0.0572917 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
 		};
 		class CP_respawnPanelRoleCombo: CP_RscCombo
 		{
-			idc = 3;
-			x = 0.219271 * safezoneW + safezoneX;
-			y = 0.664936 * safezoneH + safezoneY;
-			w = 0.131771 * safezoneW;
+			idc = 99;
+			x = 0.425521 * safezoneW + safezoneX;
+			y = 0.280086 * safezoneH + safezoneY;
+			w = 0.177604 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			tooltip = "Select your role in the battlefield"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";

@@ -40,6 +40,9 @@ class CP_SQUADPANEL {
 		CP_Mutiny,
 		CP_commanderName,
 		CP_commander,
+		CP_respawnPanelRoleTittle,
+		CP_respawnPanelRoleCombo,
+		CP_deployPanelButton,
 		CP_flag,
 		CP_side1,
 		CP_side1Score,
@@ -128,7 +131,7 @@ class CP_SQUADPANEL {
 			idc = 1;
 			x = 0.3625 * safezoneW + safezoneX;
 			y = 0.379047 * safezoneH + safezoneY;
-			w = 0.194792 * safezoneW;
+			w = 0.240625 * safezoneW;
 			h = 0.241906 * safezoneH;
 			colorBackground[] = {0,0,0,0.7};
 			onLBSelChanged = __EVAL("[4] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
@@ -140,7 +143,7 @@ class CP_SQUADPANEL {
 			text = "Active Squad:"; //--- ToDo: Localize;
 			x = 0.3625 * safezoneW + safezoneX;
 			y = 0.335064 * safezoneH + safezoneY;
-			w = 0.194792 * safezoneW;
+			w = 0.240625 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			colorBackground[] = {0.7,0.3,0.3,0.7};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
@@ -149,7 +152,7 @@ class CP_SQUADPANEL {
 		{
 			idc = 3;
 			text = "Join Squad"; //--- ToDo: Localize;
-			x = 0.459896 * safezoneW + safezoneX;
+			x = 0.505729 * safezoneW + safezoneX;
 			y = 0.631949 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
@@ -258,7 +261,7 @@ class CP_SQUADPANEL {
 			idc = 14;
 			colorBackground[] = {0,0,0,0};
 
-			x = 0.528646 * safezoneW + safezoneX;
+			x = 0.574479 * safezoneW + safezoneX;
 			y = 0.335064 * safezoneH + safezoneY;
 			w = 0.0229167 * safezoneW;
 			h = 0.0439828 * safezoneH;
@@ -271,7 +274,7 @@ class CP_SQUADPANEL {
 			colorBackground[] = {0,0,0,0};
 			action =  __EVAL("[5] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
 
-			x = 0.528646 * safezoneW + safezoneX;
+			x = 0.574479 * safezoneW + safezoneX;
 			y = 0.335064 * safezoneH + safezoneY;
 			w = 0.0229167 * safezoneW;
 			h = 0.0439828 * safezoneH;
@@ -324,6 +327,43 @@ class CP_SQUADPANEL {
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		
+		class CP_respawnPanelRoleTittle: CP_RscText
+		{
+			idc = -1;
+			text = "Role:"; //--- ToDo: Localize;
+			x = 0.3625 * safezoneW + safezoneX;
+			y = 0.280086 * safezoneH + safezoneY;
+			w = 0.0572917 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		};
+		class CP_respawnPanelRoleCombo: CP_RscCombo
+		{
+			idc = 99;
+			x = 0.425521 * safezoneW + safezoneX;
+			y = 0.280086 * safezoneH + safezoneY;
+			w = 0.177604 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			tooltip = "Select your role in the battlefield"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			//onLBSelChanged = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
+		};
+		
+		class CP_deployPanelButton: CP_RscButtonMenu
+		{
+			idc = 98;
+			text = "Deploy"; //--- ToDo: Localize;
+			colorBackground[] = {1,0,0,0.3};
+			
+			x = 0.505729 * safezoneW + safezoneX;
+			y = 0.741906 * safezoneH + safezoneY;
+			w = 0.0973958 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			tooltip = "Press Deploy to get into the action"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
 		};
 		
 		class CP_flag: CP_RscPicture

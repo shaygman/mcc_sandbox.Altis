@@ -298,6 +298,11 @@ class CfgFunctions
 			{
 				description = "Create a marker";
 			};
+			
+			class createMCCZones
+			{
+				description = "Create MCC zones localy";
+			}
 		};
 		
 		class ied

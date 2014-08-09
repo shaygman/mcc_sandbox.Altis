@@ -33,8 +33,9 @@ if (isClass(_cfgside)) then
 		if (isClass(_cfgfaction)) then
 		{
 			_CfgfactionName	= getText (_cfgfaction >> "name");
-		//	if ((_CfgfactionName == _factionDisplayName) || (configname(configFile >> "CfgFactionClasses" >> MCC_faction) == configname(_cfgfaction))) then 
-			
+			if ((_CfgfactionName == _factionDisplayName) || (configname(configFile >> "CfgFactionClasses" >> MCC_faction) == configname(_cfgfaction))) then 
+		//	if (configname(_cfgfaction) == MCC_faction) then
+			{
 				for "_k" from 0 to ((count _Cfgfaction) - 1) do
 				{
 					_Cfgtype = (_cfgfaction select _k); 
@@ -57,9 +58,11 @@ if (isClass(_cfgside)) then
 											_check = false; 
 										};
 									};
+									
 									_groupName 		  = configname(_CfgGroup );
 									_groupDisplayname = getText (_CfgGroup >> "name");
 									_cfgentry = format ["configFile >> ""CfgGroups"" >>""%1"">>""%2"">>""%3"">>""%4""",(configname (_Cfgside)),(configname (_Cfgfaction)),(configname (_Cfgtype)),(configname (_CfgGroup))];
+									
 									private ["_man","_diver","_recon","_sniper","_menSupport","_story","_car","_armored","_air","_extreme","_simulation",
 											 "_autonomos","_carSuppory","_ship","_submarine","_static","_CfgUnit","_unitName","_unitClass","_count"];
 									_man = 0;
@@ -77,6 +80,7 @@ if (isClass(_cfgside)) then
 									_submarine = 0;
 									_static = 0; 
 									_count = 0; 
+									
 									for "_n" from 0 to ((count _CfgGroup) - 1) do	//Lets scan the units and see who is who
 									{
 										_CfgUnit = (_CfgGroup select _n); 
@@ -234,6 +238,7 @@ if (isClass(_cfgside)) then
 							};
 						};
 					};
+				};
 			};
 		};
 	};
