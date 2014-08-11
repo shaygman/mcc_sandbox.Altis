@@ -323,11 +323,11 @@ class cfgVehicles
 	{
 		author = "shay_gman";
 		_generalMacro = "ModuleSector_F";
-		scope = 2;
 		displayName = "MCC Sector";
 		category = "MCC";
 		icon = "\a3\Modules_f\data\iconSector_ca.paa";
 		function = "MCC_fnc_moduleSector";
+		scope = 2;
 		isGlobal = 1;
 		isTriggerActivated = 1;
 		class Arguments
@@ -474,17 +474,17 @@ class cfgVehicles
 		};
 	};
 	
-	class mcc_sandbox_module : Logic
+	class mcc_sandbox_module : Module_F
 	{
 		category = "MCC";
+		author = "shay_gman";
 		displayName = "Access Rights";
 		icon = "\mcc_sandbox_mod\data\mcc_access.paa";
 		picture = "\mcc_sandbox_mod\data\mcc_access.paa";
 		vehicleClass = "Modules";
-		class Eventhandlers 
-		{
-			init = "_ok = _this execVM '\mcc_sandbox_mod\init_moduleAcess.sqf'";
-		};
+		function = "MCC_fnc_accessRights";
+		scope = 2;
+		isGlobal = 1;
 		
 		class Arguments
 		{
@@ -497,13 +497,17 @@ class cfgVehicles
 		};
 	};
 	
-	class mcc_sandbox_moduleSF : Logic
+	class mcc_sandbox_moduleSF : Module_F
 	{
 		category = "MCC";
+		author = "shay_gman";
 		displayName = "Special Forces";
 		icon = "\mcc_sandbox_mod\data\mcc_sf.paa";
 		picture = "\mcc_sandbox_mod\data\mcc_sf.paa";
 		vehicleClass = "Modules";
+		function = "MCC_fnc_SF";
+		scope = 2;
+		isGlobal = 1;
 		
 		class Arguments
 		{
@@ -520,11 +524,6 @@ class cfgVehicles
 				description = "Headger needed to broadcast the live feed camera by live empty to all or enter as array ['H_Cap_red',H_HelmetB'...]";
 				defaultValue = "[]";
 			};
-		};
-		
-		class Eventhandlers 
-		{
-			init = "_ok = _this execVM '\mcc_sandbox_mod\init_moduleSF.sqf'";
 		};
 	};
 };

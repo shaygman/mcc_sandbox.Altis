@@ -640,10 +640,31 @@ class CfgFunctions
 			{
 				description = "Effect while inside a restricted zone.";
 			};
+
+		};
+		
+		class MCCmodules
+		{
+			file = "mcc\fnc\MCCmodules";
 			
 			class moduleSector
 			{
 				description = "Handles Sectors built on BIS Sector by  Karel Moricky.";
+			};
+			
+			class accessRights
+			{
+				description = "Handles access rights to MCC.";
+			};
+			
+			class SF
+			{
+				description = "Defines units as SF.";
+			};
+			
+			class moduleObjectiveSectorMCC
+			{
+				ext = ".fsm";
 			};
 		};
 	};
