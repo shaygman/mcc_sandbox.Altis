@@ -155,8 +155,9 @@ MCC_GAIA_CA_DEBUG					= [];
 
 MCC_GAIA_CACHE						= false;
 GAIA_CACHE_SLEEP					= 0.5;
+
 GAIA_CACHE_STAGE_1				= 2000;
-GAIA_CACHE_STAGE_2				= 4000;
+GAIA_CACHE_STAGE_2				= (2*GAIA_CACHE_STAGE_1);
 MCC_GAIA_CACHE_STAGE2			= []; 
 
 
@@ -180,6 +181,9 @@ MCC_GAIA_MAX_ORDER_AGE				 = 5000;
 MCC_GAIA_MORTAR_TIMEOUT				 = 300;
 //This switch makes it possible for GAIA to send units into the attack she does not initialy control
 MCC_GAIA_ATTACKS_FOR_NONGAIA	 = false;
+
+MCC_GAIA_AMBIANT							 = true;
+MCC_GAIA_AMBIANT_CHANCE				 = 20;
 
 
 //Side specific
