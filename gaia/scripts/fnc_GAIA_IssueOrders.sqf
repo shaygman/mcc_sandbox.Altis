@@ -781,7 +781,9 @@ _StartTimeIssueOrders = time;
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
 {
 				
-			
+			if (MCC_GAIA_AMBIANT)
+			then
+			{
 				 if (
 			   			//The the one asking transport must be on our side
 			   			((side _x) == _HQ_side)
@@ -805,7 +807,7 @@ _StartTimeIssueOrders = time;
 		   	 {
 		   	 		 
 		   	 		 _IsNight			= (((selectBestPlaces [position (leader _x),2, "night", 1, 1]) select 0 select 1)>0.8);
-		   	 		 _LetsDoSome	= ((round(random(20)))==1);
+		   	 		 _LetsDoSome	= ((round(random(MCC_GAIA_AMBIANT_CHANCE)))==1);
 		   	 		 _ClosestCA		= ([_CA,leader _x] call BIS_fnc_nearestPosition);
 		   	 		 _PosLead			= position leader _x;
 		   	 		 
@@ -837,7 +839,7 @@ _StartTimeIssueOrders = time;
 					   };
 		   	 		 
 		   	 };
-
+			};
 }  forEach allgroups;
 
 true;

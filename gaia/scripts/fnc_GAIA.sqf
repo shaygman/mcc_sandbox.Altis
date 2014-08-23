@@ -61,6 +61,8 @@ while {true} do
 				publicVariable "MCC_GAIA_CYCLE" ;
 				//vlag setvariable ['gaia_cycle',MCC_GAIA_CYCLE,true];
 				
+				GAIA_CACHE_STAGE_2				= (2*GAIA_CACHE_STAGE_1);
+				
 				
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   
 				//									Phase: Analyze Enemy
