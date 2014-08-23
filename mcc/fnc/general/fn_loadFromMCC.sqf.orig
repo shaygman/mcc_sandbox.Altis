@@ -67,7 +67,7 @@ if (count _arrayGroups > 0) then
 			if (_objectData select 7 != "") then
 			{
 				_vehicle setVariable ["vehicleinit",(_objectData select 7),true]; 
-				[[[netID _vehicle,_vehicle], _objectData select 7], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+				[[[netID _vehicle,_vehicle], _objectData select 7], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
 			};
 			
 			if (_objectData select 8) then
@@ -139,7 +139,7 @@ if ((count _arrayVehicles) > 0) then
 		if (_objectData select 4 != "") then
 		{
 			_vehicle setVariable ["vehicleinit",(_objectData select 4),true]; 
-			[[[netID _vehicle,_vehicle], (_objectData select 4)], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+			[[[netID _vehicle,_vehicle], (_objectData select 4)], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
 		};
 	
 	} forEach _arrayVehicles;

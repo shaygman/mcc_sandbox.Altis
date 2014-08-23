@@ -16,11 +16,8 @@ switch (_cmd) do
 	{
 		case 0:				//LBL change on respawn marker
 		{ 
-			_spawnArray	 = switch (side player) do	{
-					case west:			{CP_westSpawnPoints};
-					case east:			{CP_eastSpawnPoints};
-					case resistance:	{CP_guarSpawnPoints};
-				};
+			_spawnArray	 = [side player] call BIS_fnc_getRespawnPositions;
+				
 			deletemarkerlocal "spawnSelected";
 			
 			if (count _spawnArray > 0) then {

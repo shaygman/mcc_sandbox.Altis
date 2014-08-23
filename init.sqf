@@ -78,9 +78,6 @@ if (isnil "CP_activated") then {CP_activated = false};						//Is PvP acticated
 if (isnil "CP_defaultGroups") then {CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"]}; 	//Default squads names
 if (isnil "CP_maxPlayers") then {CP_maxPlayers = 30}; 									//Max players per side
 if (isnil "CP_maxSquads") then {CP_maxSquads = 10}; 									//Max squads per side
-if (isnil "CP_westSpawnPoints") then {CP_westSpawnPoints 	= []};	//Array containing all the objects that are WEST spawn points. Set object variable "type" - string "fob" or  "HQ";  Set object variable "side" - string "west" , "east" or "RESISTANCE";
-if (isnil "CP_eastSpawnPoints") then {CP_eastSpawnPoints	= []};	//Array containing all the objects that are EAST spawn points. Set object variable "type" - string "fob" or  "HQ";  Set object variable "side" - string "west" , "east" or "RESISTANCE";
-if (isnil "CP_guarSpawnPoints") then {CP_guarSpawnPoints	= []};	//Array containing all the objects that are GUER spawn points. Set object variable "type" - string "fob" or  "HQ";  Set object variable "side" - string "west" , "east" or "RESISTANCE";
 
 //--------------------Default Tickets (Role selection)-------------------------------------------------------
 if (isnil "MCC_ticketsWest") then {MCC_ticketsWest = 200};
@@ -475,35 +472,12 @@ mcc_active_zone 		= 1;
 MCC_groupFormation	= ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","FILE","DIAMOND"];	//Group formations
 MCC_planeNameCount	= 0;
 
-//Mission Settings Index
-HW_arti_number_shells_per_hourIndex		= 0;
-MCC_resistanceHostileIndex				= 0;
-
-// autoadjust based on settings above or publicVariable
-MCC_aiSkillIndex					= (MCC_AI_Skill*10)-1;    //5;
-MCC_aiAimIndex						= (MCC_AI_Aim*10)-1;    //0;
-MCC_aiSpotIndex						= (MCC_AI_Spot*10)-1;    //3;
-MCC_aiCommandIndex					= (MCC_AI_Command*10)-1;    //5;
-
-MCC_consoleGPSIndex						= 0;
-MCC_consoleShowFriendsIndex				= 0;
-MCC_consoleCommandAIIndex				= 0;
-MCC_nameTagsIndex						= 0;
-MCC_artilleryComputerIndex				= 1;
-MCC_saveGearIndex						= 0;
-MCC_groupMarkersIndex					= 1;
-MCC_MessagesIndex						= 1;
-
-
 //Group Gen
 MCC_groupGenCurrenGroupArray = []; 
 MCC_groupGenGroupArray = []; 
 
 MCC_groupGenGroupselectedIndex = 0;
 MCC_currentSide = 0; //0- west 1 - east 2- resistance 3 - civilian
-
-//Bon artillery
-//MCC_bonCannons = []; 
 
 //MCC Save
 MCC_saveIndex = 0;
@@ -928,10 +902,11 @@ else
 	}; 
 };
 
+//----------------- CURATOR---------------------------------------------
 //Curator custom menus
 //Add eventHandler when editing object
 MCC_curator addEventHandler ["CuratorObjectDoubleClicked", {_this spawn MCC_fnc_curatorInitLine}];   
-	
+
 // Handler code for the server for MP purpose
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_pv_handler.sqf";
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_extras_pv_handler.sqf";

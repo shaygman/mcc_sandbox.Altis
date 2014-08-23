@@ -166,7 +166,18 @@ if !mcc_isloading then
 											,CP_activated
 											,CP_path
 											];
+											
 				if (CP_activated) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
+				
+				//Set tickets on server otherwise EH will be broadcast to the server
+				if (isServer) then
+				{
+					{
+						_sideTickets = format ["MCC_tickets%1", _x];
+						_tickets = missionNameSpace getVariable [_sideTickets,200];
+						[_x, _tickets] call BIS_fnc_respawnTickets;
+					} foreach [west, east, resistance];
+				};
 			};
 		};
 		

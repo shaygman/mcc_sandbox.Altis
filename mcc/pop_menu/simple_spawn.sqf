@@ -1,4 +1,4 @@
-private ["_pos", "_dir","_class","_type","_faction","_unitspawned","_dummy","_notEmpty","_init","_name","_dummyGroup","_loc","_vehicleClass"];
+private ["_pos", "_dir","_class","_type","_faction","_unitspawned","_dummy","_notEmpty","_init","_name","_dummyGroup","_loc","_vehicleClass","_tempInit"];
 _pos 	 = _this select 0;
 _dir 	 = _this select 1;
 _class	 = _this select 2;
@@ -25,7 +25,15 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_dummy setdir _dir;
 					sleep 0.01;
-					if (!MCC_align3D) then {_dummy setpos _pos; _init= _init +	FORMAT [";_this setpos %1;",_pos]};
+					
+					_tempInit = _init; 
+					if (!MCC_align3D) then 
+					{
+						_dummy setpos _pos; 
+						_tempInit= _tempInit +	FORMAT [";_this setpos %1;",_pos];
+					};
+					
+					_dummy setVariable ["vehicleinit", _tempInit, true];
 					
 					//setskill
 					_unitspawned setformdir _dir; 
@@ -42,7 +50,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					{
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 					};
-					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+					[[[netid _dummy,_dummy], _init, false], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 					
 					//Curator
 					MCC_curator addCuratorEditableObjects [[_dummy],false];
@@ -55,13 +63,22 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_dummy setdir _dir;
 					sleep 0.01;
-					if (!MCC_align3D) then {_dummy setpos _pos; _init= _init +	FORMAT [";_this setpos %1;",_pos]};
+					
+					_tempInit = _init; 
+					if (!MCC_align3D) then 
+					{
+						_dummy setpos _pos; 
+						_tempInit= _tempInit +	FORMAT [";_this setpos %1;",_pos];
+					};
+					
+					_dummy setVariable ["vehicleinit", _tempInit, true];
+					
 					_unitspawned setformdir _dir; 
 					if (_name != "") then 
 					{
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 					};
-					[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+					[[[netid _dummy,_dummy], _init, false], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 					
 					//Curator
 					MCC_curator addCuratorEditableObjects [[_dummy],false];
@@ -108,8 +125,17 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 						{
 							[[[netid (_dummy select 0),(_dummy select 0)], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 						};
-						_init= _init +	FORMAT [";group _this setFormDir %1;",_dir];
-						if (!MCC_align3D) then {(_dummy select 0) setpos _pos; _init= _init +	FORMAT [";_this setpos %1;",_pos]};
+						
+						_tempInit = _init +	FORMAT [";group _this setFormDir %1;",_dir]; 
+						if (!MCC_align3D) then 
+						{
+							(_dummy select 0) setpos _pos; 
+							_tempInit= _tempInit +	FORMAT [";_this setpos %1;",_pos];
+						};
+					
+						(_dummy select 0) setVariable ["vehicleinit", _tempInit, true];
+						
+						
 						[[[netid (_dummy select 0),(_dummy select 0)], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 						
 						//Curator
@@ -122,7 +148,16 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 						_dummy setpos _pos;
 						_dummy setdir _dir;
 						sleep 0.01;
-						if (!MCC_align3D) then {_dummy setpos _pos; _init= _init +	FORMAT [";_this setpos %1;",_pos]};
+						
+						_tempInit = _init; 
+						if (!MCC_align3D) then 
+						{
+							_dummy setpos _pos; 
+							_tempInit= _tempInit +	FORMAT [";_this setpos %1;",_pos];
+						};
+						
+						_dummy setVariable ["vehicleinit", _tempInit, true];
+					
 						if (_name != "") then 
 						{
 							[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
@@ -140,7 +175,16 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					_dummy setpos _pos;
 					_dummy setdir _dir;
 					sleep 0.01;
-					if (!MCC_align3D) then {_dummy setpos _pos; _init= _init +	FORMAT [";_this setpos %1;",_pos]};
+					
+					_tempInit = _init; 
+					if (!MCC_align3D) then 
+					{
+						_dummy setpos _pos; 
+						_tempInit= _tempInit +	FORMAT [";_this setpos %1;",_pos];
+					};
+					
+					_dummy setVariable ["vehicleinit", _tempInit, true];
+						
 					if (_name != "") then 
 					{
 						[[[netid _dummy,_dummy], _name], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;

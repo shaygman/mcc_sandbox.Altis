@@ -17,7 +17,6 @@ if (_action == 0) then {	//Save Hostage
 	sleep 1;
 	_hostage removeAction _index;
 	[_hostage] join _caller;
-	[[[netID _hostage,_hostage], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 	_nul = _caller addaction [format ["Disband %1", name _hostage],MCC_path + "mcc\general_scripts\hostages\hostage.sqf",[1,_hostage],6,false,true,"","_target == _this"];
 	};
 	

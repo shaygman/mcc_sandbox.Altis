@@ -10,12 +10,11 @@ if (CP_activated) then
 	private ["_side","_sideTickets","_tickets"];
 	
 	_side = _unit getVariable ["CP_side", playerside];
-	_sideTickets = format ["MCC_tickets%1", _side];
-	_tickets = missionNameSpace getVariable [_sideTickets,200];
+	_tickets = [_side] call BIS_fnc_respawnTickets;
 	if (_tickets > 1) then
 	{
 		_tickets = _tickets -1; 
-		missionNameSpace setVariable [_sideTickets, _tickets];
+		[_side, -1] call BIS_fnc_respawnTickets;
 	}
 	else	//Mission end
 	{
@@ -56,6 +55,9 @@ if (!isnil "mcc_actionInedx") then
 };
 
 WaitUntil {alive player};
+
+//Mark it zero again
+player addRating (-1 * (rating player));
 
 if (isnil ("MCC_TRAINING")) then {deleteVehicle _unit};
 

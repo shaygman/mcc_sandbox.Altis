@@ -228,251 +228,10 @@ class MCC_RscCuratorCheckBox: RscControlsGroupNoScrollbars
 	};
 };
 
-class MCC_RscDisplayAttributesModuleObjectiveSector: MCC_RscDisplayAttributes
-{
-	onLoad = "[""onLoad"",_this,""MCC_RscDisplayAttributesModuleObjectiveSector"",'MCC_CuratorDisplays'] call MCC_fnc_initDispaly";
-	onUnload = "[""onUnload"",_this,""MCC_RscDisplayAttributesModuleObjectiveSector"",'MCC_CuratorDisplays'] call MCC_fnc_initDispaly";
-
-	class Controls: Controls
-	{
-		class Background: Background{};
-		class Title: Title{};
-		class Content: Content
-		{
-			class Controls: controls
-			{
-				class Text: RscAttributeText
-				{
-					class Controls: controls
-					{
-						class Title: Title
-						{
-							text = "Set the side that control the sector by default";
-						};
-					};
-				};
-				class Owners: RscAttributeOwners
-				{
-					class Controls: controls
-					{
-						class Title: Title
-						{
-							text = "Default Owner";
-						};
-						class Background: Background{};
-						class TabSide: TabSide{};
-						class BLUFOR: BLUFOR{};
-						class OPFOR: OPFOR{};
-						class Independent: Independent{};
-						class Civilian: Civilian{};
-						class GroupList: GroupList{};
-						class UnitList: UnitList{};
-					};
-				};
-				
-				class AreaSize: RscAttributeAreaSize{};
-				class Name: RscAttributeName{};
-				class DependZone: MCC_RscCuratorCombo 
-				{
-					class Controls: controls
-					{
-						class Title: Title
-						{
-							text = "Previous sector needed";
-						};
-						class Value: Value{};
-					};
-				};
-				class bleedTickets: MCC_RscCuratorCheckBox 
-				{
-					class Controls: controls
-					{
-						class Title: Title
-						{
-							text = "Bleed ticket";
-						};
-						class Value: Value{};
-					};
-				};
-				
-			};
-		};
-		class ButtonOK: ButtonOK{};
-		class ButtonCancel: ButtonCancel{};
-	};
-};
-
 class cfgVehicles
 {
 	class Logic;
 	class Module_F;
-	class ModuleObjective_F;
-	
-	class ModuleObjectiveSector_MCC: ModuleObjective_F
-	{
-		author = "shay_gman";
-		category = "MCC";
-		_generalMacro = "ModuleObjectiveSector_F";
-		displayName = "MCC - Control Sector";
-		portrait = "\a3\Modules_F_Curator\Data\portraitObjectiveSector_ca.paa";
-		function = "MCC_fnc_moduleObjectiveSectorMCC";
-		curatorInfoType = "MCC_RscDisplayAttributesModuleObjectiveSector";
-	};
-	
-	class MCC_ModuleSector_F: Module_F
-	{
-		author = "shay_gman";
-		_generalMacro = "ModuleSector_F";
-		displayName = "MCC Sector";
-		category = "MCC";
-		icon = "\a3\Modules_f\data\iconSector_ca.paa";
-		function = "MCC_fnc_moduleSector";
-		scope = 2;
-		isGlobal = 1;
-		isTriggerActivated = 1;
-		class Arguments
-		{
-			class Name
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_Name_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_Name_1";
-				defaultValue = "";
-			};
-			class Designation
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_Designation_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_Designation_1";
-				defaultValue = "";
-			};
-			class ScoreReward
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_ScoreReward_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_ScoreReward_1";
-				defaultValue = "0";
-			};
-			class OnOwnerChange
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_OnOwnerChange_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_OnOwnerChange_1";
-				defaultValue = "";
-			};
-			class OwnerLimit
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_OwnerLimit_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_OwnerLimit_1";
-				defaultValue = "0";
-			};
-			class DefaultOwner
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_DefaultOwner_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_DefaultOwner_1";
-				class values
-				{
-					class None
-					{
-						name = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_DefaultOwner_values_None_0";
-						value = -1;
-						default = 1;
-					};
-					class BLUFOR
-					{
-						name = "$STR_WEST";
-						value = 1;
-					};
-					class OPFOR
-					{
-						name = "$STR_EAST";
-						value = 0;
-					};
-					class Independent
-					{
-						name = "$STR_GUERRILA";
-						value = 2;
-					};
-					class Civilian
-					{
-						name = "$STR_CIVILIAN";
-						value = 3;
-					};
-				};
-			};
-			class TaskOwner
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskOwner_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskOwner_1";
-				class values
-				{
-					class Nobody
-					{
-						name = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskOwner_values_Nobody_0";
-						value = 0;
-						default = 1;
-					};
-					class Everyone
-					{
-						name = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskOwner_values_Everyone_0";
-						value = 1;
-					};
-					class DefaultSides
-					{
-						name = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskOwner_values_Default_0";
-						value = 2;
-					};
-					class NotDefaultSides
-					{
-						name = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskOwner_values_NotDefault_0";
-						value = 3;
-					};
-				};
-			};
-			class TaskTitle
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskTitle_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskTitle_1";
-			};
-			class TaskDescription
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskDescription_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_TaskDescription_1";
-			};
-			class CostInfantry
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostInfantry_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostInfantry_1";
-				defaultValue = "1";
-			};
-			class CostWheeled
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostWheeled_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostWheeled_1";
-				defaultValue = "2";
-			};
-			class CostTracked
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostTracked_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostTracked_1";
-				defaultValue = "4";
-			};
-			class CostWater
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostWater_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostWater_1";
-				defaultValue = "0";
-			};
-			class CostAir
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostAir_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostAir_1";
-				defaultValue = "2";
-			};
-			class CostPlayers
-			{
-				displayName = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostPlayers_0";
-				description = "$STR_A3_CfgVehicles_ModuleSector_F_Arguments_CostPlayers_1";
-				defaultValue = "2";
-			};
-		};
-	};
 	
 	class mcc_sandbox_module : Module_F
 	{
@@ -523,6 +282,129 @@ class cfgVehicles
 				displayName = "Headger Needed";
 				description = "Headger needed to broadcast the live feed camera by live empty to all or enter as array ['H_Cap_red',H_HelmetB'...]";
 				defaultValue = "[]";
+			};
+		};
+	};
+	
+	class mcc_sandbox_moduleRestrictedZone : Module_F
+	{
+		category = "MCC";
+		author = "shay_gman";
+		displayName = "Restricted zones";
+		function = "MCC_fnc_createRestrictedZones";
+		scope = 2;
+		isGlobal = 1;
+		isTriggerActivated = 1;
+		
+		class Arguments
+		{
+			class markerNames
+			{
+				displayName = "Restricted Markers";
+				description = "Enter the markers' names controled by this module as array ['marker1',marker2'...]";
+				defaultValue = "[]";
+			};
+			
+			class sides
+			{
+				displayName = "Restricted Sides";
+				description = "Enter the restricted sides as array [west,east,resistance,civlian]";
+				class values
+				{
+					class All
+					{
+						name = "All";
+						value = -1;
+						default = 1;
+					};
+					class BLUFOR
+					{
+						name = "$STR_WEST";
+						value = 1;
+					};
+					class OPFOR
+					{
+						name = "$STR_EAST";
+						value = 0;
+					};
+					class Independent
+					{
+						name = "$STR_GUERRILA";
+						value = 2;
+					};
+					class Civilian
+					{
+						name = "$STR_CIVILIAN";
+						value = 3;
+					};
+				};
+			};
+			
+			class time
+			{
+				displayName = "Time Before Punishment";
+				description = "How much time in seconds should elapsed before the player will be punished";
+				defaultValue = "10";
+			};
+			
+			class inside
+			{
+				displayName = "Punished inside the zone";
+				description = "Should the players be punished for staying inside the zone or outside";
+				class values
+				{
+					class Enabled
+					{
+						name = "Inside";
+						value = 0;
+						default = 1;
+					};
+					class Disabled
+					{
+						name = "Outside";
+						value = 1;
+					};
+				};
+			};
+			
+			class air
+			{
+				displayName = "Air Vehicles";
+				description = "Should air vehicles be punished";
+				class values
+				{
+					class Enabled
+					{
+						name = "Yes";
+						value = 0;
+						default = 1;
+					};
+					class Disabled
+					{
+						name = "No";
+						value = 1;
+					};
+				};
+			};
+			
+			class hide
+			{
+				displayName = "Hide markers";
+				description = "Hide markers after mission init";
+				class values
+				{
+					class Disabled
+					{
+						name = "No";
+						value = 0;
+						default = 1;
+					};
+					class Enabled
+					{
+						name = "Yes";
+						value = 1;
+					};
+				};
 			};
 		};
 	};

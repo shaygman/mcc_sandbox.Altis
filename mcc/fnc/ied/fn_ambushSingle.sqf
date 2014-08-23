@@ -113,5 +113,5 @@ _init = format [";_this setVariable ['isIED',true,true];[_this,'%1',%2,%3,%4,%5]
 				 ,_targetSide
 				 ];
 				 
-[[[netid (leader _group), leader _group], _init], "MCC_fnc_setVehicleInit", false, true] spawn BIS_fnc_MP;
+[[[netid (leader _group), leader _group], _init], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
 (leader _group)

@@ -3,7 +3,7 @@
 //==================================================================================================================================================================================
 private ["_mode","_params","_class","_display","_ctrlGroup","_ctrlTitle","_h","_ctrlTitlePos","_ctrlGroupPos","_ctrlBackground","_ctrlContent","_ctrlButtonOK",
          "_ctrlButtonCancel","_ctrlButtonCustom","_ctrlBackgroundPos","_ctrlTitlePos","_ctrlContentPos","_ctrlButtonCancelPos","_ctrlButtonOKPos","_ctrlButtonCustomPos",
-		 "_ctrlTitleOffsetY","_ctrlContentOffsetY","_posY","_avtiveControls","_cfgControl","_idc","_control","_controlPos","_posH","_ctrlMap","_ctrlCuratorMap"]; 
+		 "_ctrlTitleOffsetY","_ctrlContentOffsetY","_posY","_avtiveControls","_cfgControl","_idc","_control","_controlPos","_posH","_ctrlMap","_ctrlCuratorMap","_fncFile","_classNames"]; 
 
 #define IDC_OK	1
 #define IDC_CANCEL 2
@@ -11,6 +11,8 @@ private ["_mode","_params","_class","_display","_ctrlGroup","_ctrlTitle","_h","_
 _mode = _this select 0;
 _params = _this select 1;
 _class = _this select 2;
+
+MCC_curatorOkButtonPressed = false; 
 
 switch _mode do 
 {
@@ -51,7 +53,7 @@ switch _mode do
 		
 		//Set the control groups
 		_avtiveControls = configfile >> _class >> "Controls" >> "Content" >> "Controls";
-			
+		
 		_posY = _ctrlContentOffsetY;
 		for "_i" from 0 to (count _avtiveControls - 1) do 
 		{
@@ -106,18 +108,73 @@ switch _mode do
 		//Set the tittle
 		_ctrlTitle ctrlsettext "MCC Sector";
 		
-		switch _class do 
-		{
-			case "MCC_RscDisplayAttributesModuleObjectiveSector": 
-			{
-			};
-		};
 		
-		//--- Close the display when entity is altered
-		[_display] spawn {
+		
+		//---Hnadle the display Close the display when entity is altered
+		[_display, _class] spawn 
+		{
+			private ["_display","_ctrlButtonOK","_comboBox","_index","_sides","_sectors","_class","_target","_defaultOwner"];
 			disableserialization;
-			_display = _this select 0;
+			_display 		= _this select 0;
+			_class			= _this select 1; 
+			_ctrlButtonOK = _display displayctrl 1;
+			
 			_target = missionnamespace getvariable ["BIS_fnc_initCuratorAttributes_target",objnull];
+			
+			switch _class do 
+			{
+				//Zone control
+				case "MCC_RscDisplayAttributesModuleObjectiveSector": 	
+				{
+					//Load sectors
+					_sectors = [true] call MCC_fnc_moduleSector; 
+					_comboBox = _display displayctrl 115003;
+					lbClear _comboBox;
+					_index = _comboBox lbAdd "None";
+					_comboBox lbSetData [_index,"none"];
+					{
+						_index = _comboBox lbAdd (_x getvariable ["name",""]);
+						_comboBox lbSetData [_index,str _x];
+					} foreach _sectors;
+					_comboBox lbSetCurSel 0;
+					
+					//Add and load event handler for default owner
+					_comboBox = _display displayctrl 115009;
+					_comboBox ctrladdeventhandler [
+							"LBSelChanged",
+							"(missionnamespace getvariable ['BIS_fnc_initCuratorAttributes_target',objnull]) setVariable ['Owner',(if ((_this select 1)< 4) then {_this select 1} else {4}) call bis_fnc_sidetype,true]; false"];
+					
+					lbClear _comboBox;
+					{
+						_index = _comboBox lbAdd str (_x call bis_fnc_sidetype); 
+						_comboBox lbSetData [_index,str _x];
+					} foreach [0, 1, 2, 3, 4];
+					_comboBox lbSetCurSel 4;
+					
+					waituntil {isnull _display};
+					
+					if (uinamespace getVariable ["MCC_curatorOkButtonPressed",false]) exitWith
+					{
+						_display closedisplay 2;
+						
+						//Vars: Name, DefaultOwner, areas, 
+						_target = missionnamespace getvariable ["BIS_fnc_initCuratorAttributes_target",objnull];
+						_sides = missionnamespace getvariable ["RscAttributeOwners_sides",[]];
+						
+						//Set default owner
+						//_defaultOwner = (if ((_target getVariable "DefaultOwner")== "-1") then {4} else {call compile (_target getVariable "DefaultOwner")}) call bis_fnc_sidetype;
+						//[_target] call MCC_fnc_moduleSector;
+						
+						//[_target, _defaultOwner] call MCC_fnc_moduleSector;
+					};
+				};
+			};
+			
+			
+			
+			
+			
+			//Close
 			switch (typename _target) do {
 				case (typename objnull): {
 					_isAlive = alive _target;

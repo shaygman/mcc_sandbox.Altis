@@ -7,8 +7,8 @@ if (!MCC_isBroadcasting) then	{
 	_source = "Sign_Sphere10cm_F" createvehicle [0,0,0];
 	waitUntil {_source != ObjNull};
 
-	hideObject _source;  
-
+	[[[netid _source,_source], "_this hideObjectGlobal true"], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
+	
 	_source attachTo [vehicle (_target),[5,5,5]]; 
 	 
 	[_source,vehicle _target,player,_mode] call BIS_fnc_liveFeed;

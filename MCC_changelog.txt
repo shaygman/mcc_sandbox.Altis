@@ -8,8 +8,9 @@ Squad dialog:
 
 Role Selection:
 	- Added: Commander role. You can choose to be a commander for each side, or start a mutiny against your own side commander. Commander will have access to the MCC_console
-	- Added: Tickets to Role Selection. You can edit tickets by changing this variables: MCC_ticketsWest, MCC_ticketsEast, MCC_ticketsGUER
+	- Added: BIS tickets support to Role Selection. You can predefine tickets by changing this variables: MCC_ticketsWest, MCC_ticketsEast, MCC_ticketsGUER or bu BIS module.
 	- Added: Notifications for leveling, unlocking new gear and weapons or gaining experience from role related actions such as: healing, taxing and leading, 
+	- Added: Support default BIS respawn points - no need to change the respawn template - just leave it on BASE. 
 	- Changed: In Role Selection while pressing "Switch Side" will only scroll between active sides that have start locations. 
 	- Changed: In Role Selection an officer will regain control on his group after respawning. 
 	- Changed: Officers will automatically get to be the leaders of their group.
@@ -22,13 +23,23 @@ MCC Console:
 	- Fixed: MCC Console had trouble firing guided missiles from UAV
 
 Engine:
+	- Added: Delete selected groups by pressing delete button.
+	- Added: Mission settings variables: 
+	            - Time Exceleration factor
+				- AI use smoke 
+				- AI use smoke frequency
+				- GAIA Caching distance
+				- GAIA unit controlls
+				- GAIA AI artillery Delay
 	- Changed: Zeus edit object dialog is now moveable. 
 	- Changed: Teleport to team will teleport you to an empty seat in the vehicle the unit you have teleported too is in. If there are no empty seats then you'll not be teleported. 
+	- Fixed: Vehicle spawned by MCC 3D editor teleport to their spawn position once a new player join in. 
 	- Fixed: MCC couldn't read some groups' configs from addons. 
 	- Fixed: Custom Cargo didn't show for all clients. 
 	- Fixed: Height of objects/units isn't loaded correctly. 
 	- Fixed: addUniforms changed to ForceUniforms so no more naked players. 
 	- Fixed: Save to SQM file broken if no groups spawned. 
+	- Fixed: Duplicating unit/vehicle if creating a unit/vehicle not in a zone and then creating a new zone. 
 	- Improved: Custom zeus edit dialogs response time. 
 
 Mission Wizard:
@@ -40,7 +51,7 @@ BIS Arsenal
 	- Added: BIS Arsenal preset for ammobox. 
 
 PvP Gen
-	- Restricted zones: [[_markerName, _sides,_time,_insideTheZone, _airOnly ,_delete], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;
+	- Restricted zones: [[objNull, _markerName, _sides,_time,_insideTheZone, _airOnly ,_delete], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;
 	
 Gaining levels from squad rules?
 - Add MCC Objectives

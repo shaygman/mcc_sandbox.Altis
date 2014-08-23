@@ -84,6 +84,7 @@ else
 {
 	CP_respawnPanelRoleCombo ctrlAddEventHandler ["LBSelChanged","[2] execVM '"+CP_PATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'"];
 	CP_Teleport ctrlShow false;
+	CP_switchSideButton ctrlShow false;		//Bugged for rating
 };
 
 //Set side flag
@@ -172,7 +173,7 @@ _comboBox lbSetCurSel CP_classesIndex;
 
 			_idc = 22;
 			{
-				ctrlSetText [_idc, str (missionNameSpace getVariable [format ["MCC_tickets%1",_x],""])];
+				ctrlSetText [_idc, str ([_x] call BIS_fnc_respawnTickets)];
 				_idc = _idc + 2;
 			} foreach _activeSides;	
 		};

@@ -86,7 +86,7 @@ for "_i" from 0 to ((count _objs) - 1) do
 		_newObj setDir (_azi + _azimuth);
 		if (!isNil "_fuel") then {_newObj setFuel _fuel};
 		if (!isNil "_damage") then {_newObj setDamage _damage};
-		if (!isNil "_vehicleinit") then {[[[netID _newObj,_newObj], _vehicleinit], "MCC_fnc_setVehicleInit", false, true] spawn BIS_fnc_MP};
+		if (!isNil "_vehicleinit") then {[[[netID _newObj,_newObj], _vehicleinit], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP};
 		if (!isNil "_vehicleTarget") then {_target = _newObj};
 		MCC_lastSpawn set [count MCC_lastSpawn,_newObj];
 		

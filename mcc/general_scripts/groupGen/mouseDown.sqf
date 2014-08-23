@@ -214,18 +214,7 @@ if (mcc_missionmaker == (name player)) then
 		else
 		{
 			hint "Spawned";
-			/*
-			mcc_safe = mcc_safe + FORMAT ["
-									[[%1 , %2, %3, %4, %5],'MCC_fnc_groupSpawn',false,false] spawn BIS_fnc_MP;
-									sleep 1;
-									"
-									, _ctrl ctrlMapScreenToWorld [_posX,_posY]
-									, MCC_groupBroadcast
-									, mcc_hc
-									, mcc_sidename
-									, MCC_isEmpty
-									];
-			*/						
+			
 			[[_ctrl ctrlMapScreenToWorld [_posX,_posY], MCC_groupBroadcast, mcc_hc, mcc_sidename, MCC_isEmpty],"MCC_fnc_groupSpawn",false,false] spawn BIS_fnc_MP;
 		};
 		sleep 0.5;

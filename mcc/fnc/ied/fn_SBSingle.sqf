@@ -29,7 +29,7 @@ _init = FORMAT [";[_this, %1,'%2',%3] spawn MCC_fnc_manageSB;"
 				, _IEDExplosionType
 				];
 				
-[[[netid _sb,_sb], _init], "MCC_fnc_setVehicleInit", false, true] spawn BIS_fnc_MP;
+[[[netid _sb,_sb], _init], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
 
 MCC_curator addCuratorEditableObjects [[_sb],false];
 

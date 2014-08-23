@@ -14,23 +14,13 @@ _preUnit = vehicle player;
 _hijackedSide = side _caller;
 
 
-switch (format ["%1", MCC_Prev_Side]) do 
-	{
-	case "EAST": //East
+_groupSide = switch (format ["%1", MCC_Prev_Side]) do 
 		{
-		_groupSide = east;
-		}; 
-		
-	case "WEST": //West
-		{
-		_groupSide = west;
+			case "EAST": {east}; 			
+			case "WEST": {west};			
+			case "GUER": {resistance};
+			default {civilian};
 		};
-		
-	case "GUER": //Resistance
-		{
-		_groupSide = resistance;
-		};
-	};
 	
 _group = creategroup _groupSide;
 [MCC_Prev_Player] joinSilent _group;

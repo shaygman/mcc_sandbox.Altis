@@ -93,8 +93,7 @@ ctrlShow [MCC_CONSOLEINFOLIVEFEEDNORMAL,true];
 
 //Create the target
 MCC_consoleLiveFeedTarget = "Sign_Sphere10cm_F" createvehiclelocal [0,0,0];	
-hideObject MCC_consoleLiveFeedTarget; 
-
+[[[netid MCC_consoleLiveFeedTarget,MCC_consoleLiveFeedTarget], "_this hideObjectGlobal true"], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
 
 // Create fake camera
 MCC_consoleLiveFeedCam = "Camera" camCreate [10,10,10];

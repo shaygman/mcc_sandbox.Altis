@@ -298,5 +298,5 @@ if (MCC_unitName != "") then
 
 if (MCC_unitInit != "" && (MCC_unitInit != (_target getVariable ["vehicleInit",""]))) then 
 {
-	[[[netid _target,_target], MCC_unitInit], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+	[[[netid _target,_target], MCC_unitInit], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
 };

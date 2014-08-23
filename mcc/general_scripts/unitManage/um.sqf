@@ -11,7 +11,7 @@ _mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 _comboBox = _mccdialog displayCtrl MCC_UM_LIST;
 _type = _this select 0;
 
-	switch (_type) do
+switch (_type) do
 	{
 		case 0: //Teleport
 		{
@@ -397,12 +397,24 @@ _type = _this select 0;
 		
 		case 12:	//Delete
 		{
+			
 			if (MCC_UMUnit==0) then 
+			{
 				{
-					{while {!(isnull _x) && !(isplayer _x)} do {deletevehicle vehicle _x}} foreach MCC_selectedUnits;
-					} else {
-						{{while {!(isnull _x) && !(isplayer _x)} do {deletevehicle vehicle _x};}foreach units _x} foreach MCC_selectedUnits;
-						};
+					while {!(isnull _x) && !(isplayer _x)} do {deletevehicle vehicle _x}
+				} foreach MCC_selectedUnits;
+			} 
+			else 
+			{
+				private ["_units"];
+				//Do we delete because we have pushed the delete button?
+				_units = if (MCC_UMUnit==3) then {MCC_GroupGenGroupSelected} else {MCC_selectedUnits};
+				{
+					{
+						while {!(isnull _x) && !(isplayer _x)} do {deletevehicle vehicle _x};
+					} foreach units _x
+				} foreach _units;
+			};
 		};
 		
 		case 13:	//Join

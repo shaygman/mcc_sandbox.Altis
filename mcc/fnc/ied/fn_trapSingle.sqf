@@ -65,7 +65,7 @@ _init = _init + format [";_this setVariable ['isIED',true,true];[_this,'%2',%3,%
 				 ,_iedside
 				 ];
 				 
-[[[netid _fakeIed,_fakeIed], _init], "MCC_fnc_setVehicleInit", false, true] spawn BIS_fnc_MP;
+[[[netid _fakeIed,_fakeIed], _init], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
 _fakeIed setdir _iedDir;
 
 MCC_curator addCuratorEditableObjects [[_fakeIed],false]; 

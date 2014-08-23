@@ -16,13 +16,11 @@ _unitsArray = _this select 1;
 _loc 		= _this select 2;
 _side		= if (typeName (_this select 3) == "STRING") then 
 				{
-					if (tolower (_this select 3) == "guer") then
+					switch (tolower (_this select 3)) do
 					{
-						resistance
-					}
-					else
-					{
-						call compile (_this select 3);
+						case "guer":{resistance};
+						case "civ":{civilian};
+						default {call compile (_this select 3)};
 					};
 				} 
 				else 
@@ -32,7 +30,14 @@ _side		= if (typeName (_this select 3) == "STRING") then
 
 _isEmpty	= _this select 4;
 
-
+mcc_isnewzone = false;
+mcc_grouptype = "";
+mcc_spawntype = "";
+mcc_classtype = "";
+mcc_spawnname = "";
+mcc_spawnfaction ="";
+mcc_resetmissionmaker = false;
+				
 if (surfaceIsWater _pos) then {_waterSpawn = 2} else {_waterSpawn = 0}; 
 
 if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_loc == 1) ) ) then 

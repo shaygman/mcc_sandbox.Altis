@@ -25,7 +25,7 @@ _pilot2 assignAsCargo _plane;
 _pilot2 MoveInCargo _plane;
 _plane setpos _spawn;
 _init =  format ["_this setBehaviour 'CARELESS';_this flyInHeight %1;",_flightHight];
-[[[netid _plane,_plane], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+[[[netid _plane,_plane], _init], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
 
 //Set plane variables
 _plane setVariable ["MCCJumperNumber",-1,true];																		//Number of unit to jump		
@@ -61,7 +61,7 @@ _count = 0;
 for [{_x=0},{_x < count _unitsArray},{_x=_x+1}] do {
 		_unit = _unitsArray select _x;
 		_init = format[" if (local _this) then {[%1,_this,%2,%3] execVM ""\mcc_sandbox_mod\mcc\general_scripts\unitManage\paraStart.sqf"";}",_planeName,_count,_pos];
-		[[[netid _unit,_unit], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+		[[[netid _unit,_unit], _init], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
 		_count = _count + 1;
 	};
 	

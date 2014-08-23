@@ -10,15 +10,16 @@ class Mission
 		"a3_characters_f_gamma",
 		"A3_Characters_F_INDEP",
 		"A3_Structures_F_Mil_Flags",
-		"a3_map_altis"
+		"a3_map_altis",
+		"a3_characters_f",
+		"A3_Modules_F"
 	};
 	addOnsAuto[]=
 	{
 		"A3_Characters_F_BLUFOR",
+		"a3_characters_f",
 		"A3_Characters_F_OPFOR",
-		"a3_characters_f_beta",
 		"A3_Characters_F_Civil",
-		"a3_characters_f_gamma",
 		"A3_Characters_F_INDEP",
 		"a3_map_altis"
 	};
@@ -90,16 +91,16 @@ class Mission
 				class Item0
 				{
 					position[]={14686.745,17.892328,16328.51};
-					azimut=55.854275;
+					azimut=55.854301;
 					id=2;
 					side="WEST";
 					vehicle="B_Soldier_SL_F";
-					player="PLAY CDG";
+					player="PLAYER COMMANDER";
 					leader=1;
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitNO_ASL_SL";
-					init="GrpNO_ASL = group this; nul = [""dc"",this] call f_fnc_assignGear;";
+					init="GrpNO_ASL = group this; nul = [""dc"",this] call f_fnc_assignGear; ";
 					description="NATO Alpha Squad Leader";
 				};
 				class Item1

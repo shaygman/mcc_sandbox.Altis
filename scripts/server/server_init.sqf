@@ -5,16 +5,11 @@ if (CP_debug) then {diag_log "CP server init started"};
 //---------------------------------------------
 //		Define Global variables
 //---------------------------------------------
-if (isnil "CP_eastSpawnPoints") then {CP_eastSpawnPoints 	= []};
-if (isnil "CP_westSpawnPoints") then {CP_westSpawnPoints 	= []};
-if (isnil "CP_guarSpawnPoints") then {CP_guarSpawnPoints  = []};
 if (isnil "CP_westGroups") then {CP_westGroups 		= []};
 if (isnil "CP_eastGroups") then {CP_eastGroups 		= []};
 if (isnil "CP_guarGroups") then {CP_guarGroups 		= []};
 
 
-publicVariable "CP_westSpawnPoints";
-publicVariable "CP_guarSpawnPoints";
 publicVariable "CP_westGroups";
 publicVariable "CP_eastGroups";
 publicVariable "CP_guarGroups";
@@ -80,6 +75,14 @@ if (count CP_guarGroups == 0) then
 	publicvariable "CP_guarGroups";
 };
 
+//Add event handler for tickets
+"CP_activated" addPublicVariableEventHandler {
+		{
+			_sideTickets = format ["MCC_tickets%1", _x];
+			_tickets = missionNameSpace getVariable [_sideTickets,200];
+			[_x, _tickets] call BIS_fnc_respawnTickets;
+		} foreach [west, east, resistance]; 
+	};
 
 //******************************************************************************************************************************
 //											You can edit between this line and the next

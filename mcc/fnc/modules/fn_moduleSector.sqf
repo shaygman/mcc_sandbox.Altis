@@ -51,7 +51,7 @@ if (typename _logic == typename sideunknown) exitwith {
 	private ["_side","_sideID"];
 	_side = _logic;
 	_sideID = _side call bis_fnc_sideID;
-	if (_sideID in [0,1,2,3,4]) then {MCC_fnc_moduleSector_sideSectors select _sideID} else {-1}
+	if (_sideID in [0,1,2,3,4]) then {BIS_fnc_moduleSector_sideSectors select _sideID} else {-1}
 };
 
 //--- Set side
@@ -67,14 +67,14 @@ _mode = [_this,3,"init",[""]] call bis_fnc_param;
 switch _mode do {
 
 	case "init": {
-		[_logic,[],_activated,"server"] spawn MCC_fnc_moduleSector;
+		[_logic,[],_activated,"server"] spawn BIS_fnc_moduleSector;
 	};
 
 	case "server": {
 		/////////////////////////////////////////////////////////////////////////////////////
 		// Server
 		/////////////////////////////////////////////////////////////////////////////////////
-		_loadingScreen = format ["MCC_fnc_moduleSector:%1",_logic];
+		_loadingScreen = format ["BIS_fnc_moduleSector:%1",_logic];
 		_loadingScreen call bis_fnc_startloadingscreen;
 
 		//--- Prepare error handling
@@ -100,7 +100,7 @@ switch _mode do {
 		};
 
 		//--- Load params
-		[_logic,"MCC_fnc_moduleSector_sector"] call bis_fnc_objectvar;
+		[_logic,"BIS_fnc_moduleSector_sector"] call bis_fnc_objectvar;
 		_name = _logic getvariable ["Name",""];
 		_designation = _logic getvariable ["Designation",""];
 		_ownerLimit = (_logicParent getvariable ["OwnerLimit","0"]) call bis_fnc_parsenumber;
@@ -125,7 +125,7 @@ switch _mode do {
 
 		//--- Load visuals
 		if (_name == "") then {
-			_nameID = ["MCC_fnc_moduleSector_nameID",1] call bis_fnc_counter;
+			_nameID = ["BIS_fnc_moduleSector_nameID",1] call bis_fnc_counter;
 			_nameID = ((_nameID - 1) % 26) + 1;
 			_name = _nameID call bis_fnc_phoneticalWord;
 			_logic setvariable ["name",_name];
@@ -184,7 +184,7 @@ switch _mode do {
 			_trigger settriggertype "none";
 
 			_triggerMarkers = _trigger getvariable ["markers",[]];
-			_markerArea = createmarker ["MCC_fnc_moduleSector_area" + str _trigger,position _trigger];
+			_markerArea = createmarker ["BIS_fnc_moduleSector_area" + str _trigger,position _trigger];
 			_markerArea setmarkerbrush "grid";
 			_markerArea setmarkercolor "colorwhite";
 			_markerArea setmarkeralpha 0.5;
@@ -192,14 +192,14 @@ switch _mode do {
 			_triggerMarkers set [count _triggerMarkers,_markerArea];
 
 			if (_markerIcon == "") then {
-				_markerIcon = createmarker ["MCC_fnc_moduleSector_icon" + str _logic,position _trigger];
+				_markerIcon = createmarker ["BIS_fnc_moduleSector_icon" + str _logic,position _trigger];
 				_markerIcon setmarkertype _icon;
 				_markerIcon setmarkercolor "colorwhite";
 				//_markerIcon setmarkertext _markerName;
 				_markerIcon setmarkersize [1.5,1.5];
 				_triggerMarkers set [count _triggerMarkers,_markerIcon];
 
-				_markerIconText = createmarker ["MCC_fnc_moduleSector_iconText" + str _logic,position _trigger];
+				_markerIconText = createmarker ["BIS_fnc_moduleSector_iconText" + str _logic,position _trigger];
 				_markerIconText setmarkertype "EmptyIcon";
 				_markerIconText setmarkercolor "colorblack";
 				_markerIconText setmarkertext _markerName;
@@ -310,7 +310,7 @@ switch _mode do {
 		_participantColor = {if (_this > 0) then {"#ffffff"} else {"#33ffffff"}};
 		_taskDescriptionCapture = format [
 			"<br /><br /><font size='18'>%1</font><br />%2 / %3 / %4 / %5 / %6",
-			localize "str_a3_cfgvehicles_MCC_ModuleSector_F_forces",
+			localize "str_a3_cfgvehicles_BIS_ModuleSector_F_forces",
 			format [_participant,gettext (configfile >> "CfgVehicleClasses" >> "Men" >> "displayName"),_costInfantry call _participantColor],
 			format [_participant,gettext (configfile >> "CfgVehicleClasses" >> "Car" >> "displayName"),_costWheeled call _participantColor],
 			format [_participant,gettext (configfile >> "CfgVehicleClasses" >> "Armored" >> "displayName"),_costTracked call _participantColor],
@@ -321,7 +321,7 @@ switch _mode do {
 
 		//--- Explain sector unlocks
 		if (_taskDescriptionUnlocks != "") then {
-			_taskDescriptionUnlocks = format ["<br /><br /><font size='18'>%1</font><br />%2",localize "str_a3_cfgvehicles_MCC_ModuleSector_F_rewards",_taskDescriptionUnlocks];
+			_taskDescriptionUnlocks = format ["<br /><br /><font size='18'>%1</font><br />%2",localize "str_a3_cfgvehicles_BIS_ModuleSector_F_rewards",_taskDescriptionUnlocks];
 		};
 
 		_taskPos = position (_areas select 0);
@@ -353,10 +353,10 @@ switch _mode do {
 		missionnamespace setvariable ["MCC_fnc_moduleSector_sectors",_sectors];
 		publicvariable "MCC_fnc_moduleSector_sectors";
 
-		if (isnil {MCC_fnc_moduleSector_sideSectors}) then {MCC_fnc_moduleSector_sideSectors = [0,0,0,0,0];};
+		if (isnil {BIS_fnc_moduleSector_sideSectors}) then {BIS_fnc_moduleSector_sideSectors = [0,0,0,0,0];};
 
 		//--- Execute local function
-		//[[_logic,[],true,"player"],"MCC_fnc_moduleSector",_sides - [sideunknown],true] call bis_fnc_mp;
+		//[[_logic,[],true,"player"],"BIS_fnc_moduleSector",_sides - [sideunknown],true] call bis_fnc_mp;
 
 		_fnc_conversion = {
 			_total = 0;
@@ -426,9 +426,10 @@ switch _mode do {
 		_sidesOld = [];
 		_sidesOldStr = str _sidesOld;
 		_step = 0;
-
+		
 		while {!(isnull _logic) && (simulationenabled _logic) && !(_logic getvariable ["finalized",false])} do {
-
+			
+			
 			//--- Load variables
 			_areas = _logic getvariable ["areas",_areas];
 			_sides = _logic getvariable ["sides",_sides];
@@ -441,7 +442,7 @@ switch _mode do {
 			if (str _sides != _sidesOldStr) then {
 
 				//--- Show MP progress HUD - disable HUD
-				//[[_logic,[],true,"player"],"MCC_fnc_moduleSector",_sides - _sidesOld,true] call bis_fnc_mp;
+				[[_logic,[],true,"player"],"BIS_fnc_moduleSector",_sides - _sidesOld,true] call bis_fnc_mp;
 
 				//--- Add sides
 				{
@@ -520,7 +521,8 @@ switch _mode do {
 			};
 
 			//--- Force owner
-			if (_ownerForced != _ownerOld && _ownerForced in _sides) then {
+			if (_ownerForced != _ownerOld && _ownerForced in _sides) then 
+			{
 				_ownerForcedID = _ownerForced call bis_fnc_sideID;
 				{
 					_sideScore set [_foreachindex,if (_foreachindex == _ownerForcedID) then {1} else {0}];
@@ -584,9 +586,9 @@ switch _mode do {
 				//--- Update total count
 				_ownerSideID = _owner call bis_fnc_sideID;
 				_ownerOldSideID = (_ownerOld call bis_fnc_sideID) min 4;
-				MCC_fnc_moduleSector_sideSectors set [_ownerSideID,(MCC_fnc_moduleSector_sideSectors select _ownerSideID) + 1];
-				MCC_fnc_moduleSector_sideSectors set [_ownerOldSideID,((MCC_fnc_moduleSector_sideSectors select _ownerOldSideID) - 1) max 0];
-				publicvariable "MCC_fnc_moduleSector_sideSectors";
+				BIS_fnc_moduleSector_sideSectors set [_ownerSideID,(BIS_fnc_moduleSector_sideSectors select _ownerSideID) + 1];
+				BIS_fnc_moduleSector_sideSectors set [_ownerOldSideID,((BIS_fnc_moduleSector_sideSectors select _ownerOldSideID) - 1) max 0];
+				publicvariable "BIS_fnc_moduleSector_sideSectors";
 
 				//--- Update markers
 				//_iconColor = [0.25,0.25,0.25,0.5];

@@ -302,7 +302,12 @@ class CfgFunctions
 			class createMCCZones
 			{
 				description = "Create MCC zones localy";
-			}
+			};
+			
+			class initCuratorAttribute
+			{
+				description = "Init MCC's curato Attribute";
+			};
 		};
 		
 		class ied

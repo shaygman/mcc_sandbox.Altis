@@ -19,6 +19,14 @@
 #define MCC_keyBindsOpenConsoleButtonIDC 8416
 #define MCC_keyBindsT2TButtonIDC 8417
 
+#define MCC_timeExcelIDC 8419
+#define MCC_AISmokeIDC 8420
+#define MCC_AISmokeChanceIDC 8421
+#define MCC_GAIACacheDistanceIDC 8422
+#define MCC_GAIAControllIDC 8423
+#define MCC_GAIAArtilleryDelayIDC 8424
+
+
 MCC_aiSkillIndex		= (MCC_AI_Skill*10)-1;
 MCC_aiAimIndex			= (MCC_AI_Aim*10)-1;
 MCC_aiSpotIndex			= (MCC_AI_Spot*10)-1;
@@ -27,117 +35,185 @@ private ["_mccdialog","_comboBox","_displayname"];
 disableSerialization;
 _mccdialog = findDisplay missionSettings_IDD;
 
-_comboBox = _mccdialog displayCtrl RESISTANCE_HOSTILE; //Resistance Hostile To
+//Resistance Hostile To
+_comboBox = _mccdialog displayCtrl RESISTANCE_HOSTILE; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["All","East","West"];
-_comboBox lbSetCurSel MCC_resistanceHostileIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["RESISTANCE_HOSTILE_index",0]);
 
-_comboBox = _mccdialog displayCtrl T2T_AD; //Teleport To Team
+//Teleport To Team
+_comboBox = _mccdialog displayCtrl T2T_AD; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","JIP Only","After Respawn","Always"];
-_comboBox lbSetCurSel MCC_t2tIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_t2tIndex",1]);
 
-_comboBox = _mccdialog displayCtrl AI_SKILL; //AI Skill
+//AI Skill
+_comboBox = _mccdialog displayCtrl AI_SKILL; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Rookie","20","30","40","50","60","70","80","90","Veteran"];
-_comboBox lbSetCurSel MCC_aiSkillIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_aiSkillIndex",(MCC_AI_Skill*10)-1]);
 
-_comboBox = _mccdialog displayCtrl AI_AIM; //AI Aim
+//AI Aim
+_comboBox = _mccdialog displayCtrl AI_AIM;
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Rookie","20","30","40","50","60","70","80","90","Veteran"];
-_comboBox lbSetCurSel MCC_aiAimIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_aiAimIndex",(MCC_AI_Aim*10)-1]);
 
-_comboBox = _mccdialog displayCtrl AI_SPOT; //AI Spot
+//AI Spot
+_comboBox = _mccdialog displayCtrl AI_SPOT; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Rookie","20","30","40","50","60","70","80","90","Veteran"];
-_comboBox lbSetCurSel MCC_aiSpotIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_aiSpotIndex",(MCC_AI_Spot*10)-1]);
 
-_comboBox = _mccdialog displayCtrl AI_COMMAND; //AI Command
+//AI Command
+_comboBox = _mccdialog displayCtrl AI_COMMAND; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Rookie","20","30","40","50","60","70","80","90","Veteran"];
-_comboBox lbSetCurSel MCC_aiCommandIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_aiCommandIndex",(MCC_AI_Command*10)-1]);
 
-_comboBox = _mccdialog displayCtrl MCC_MSCONSOLEGPS; //Console GPS
+//Console GPS
+_comboBox = _mccdialog displayCtrl MCC_MSCONSOLEGPS; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Enabled","Disabled"];
-_comboBox lbSetCurSel MCC_consoleGPSIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_consoleGPSIndex",0]);
 
-_comboBox = _mccdialog displayCtrl MCC_MSCONSOLESHOWFRIENDS; //Console Show Friendly
+//Console Show Friendly
+_comboBox = _mccdialog displayCtrl MCC_MSCONSOLESHOWFRIENDS; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Enabled","Disabled"];
-_comboBox lbSetCurSel MCC_consoleShowFriendsIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_consoleShowFriendsIndex",0]);
 
-_comboBox = _mccdialog displayCtrl MCC_MSCONSOLECOMMANDAI; //Console Command AI
+//Console Command AI
+_comboBox = _mccdialog displayCtrl MCC_MSCONSOLECOMMANDAI; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Enabled","Disabled"];
-_comboBox lbSetCurSel MCC_consoleCommandAIIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_consoleCommandAIIndex",0]);
 
-_comboBox = _mccdialog displayCtrl MCC_IDCNAMETAGS; //Show name tags
+//Show name tags
+_comboBox = _mccdialog displayCtrl MCC_IDCNAMETAGS; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel MCC_nameTagsIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_nameTagsIndex",0]);
 
-_comboBox = _mccdialog displayCtrl mcc_artilleryTitleIDC; //Artillery Computer
+//Artillery Computer
+_comboBox = _mccdialog displayCtrl mcc_artilleryTitleIDC; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel MCC_artilleryComputerIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_artilleryComputerIndex",1]);
 
-_comboBox = _mccdialog displayCtrl mcc_saveGearComboIDC; //Save Gear
+//Save Gear
+_comboBox = _mccdialog displayCtrl mcc_saveGearComboIDC; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel MCC_saveGearIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_saveGearIndex",0]);
 
-_comboBox = _mccdialog displayCtrl mcc_showGRPMarkerComboIDC; //Save Gear
+//Group Markers
+_comboBox = _mccdialog displayCtrl mcc_showGRPMarkerComboIDC; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel MCC_groupMarkersIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_groupMarkersIndex",1]);
 
-_comboBox = _mccdialog displayCtrl mcc_showMessagesComboIDC; //Messages
+//Messages
+_comboBox = _mccdialog displayCtrl mcc_showMessagesComboIDC; 
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel MCC_MessagesIndex;
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_MessagesIndex",1]);
+
+//Time Excel
+_comboBox = _mccdialog displayCtrl MCC_timeExcelIDC; 
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Normal","x2","x3","x4","x5","x6","x7","x8","x9","x10","x11","x12"];
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_timeExcelIndex",0]);
+
+//AI use Smoke
+_comboBox = _mccdialog displayCtrl MCC_AISmokeIDC; 
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Disabled","Enabled"];
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_AISmokeIndex",1]);
+
+//AI use Smoke Chance
+_comboBox = _mccdialog displayCtrl MCC_AISmokeChanceIDC; 
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Low","Normal","High"];
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_AISmokeChanceIndex",1]);
+
+//GAIA Cache distance
+_comboBox = _mccdialog displayCtrl MCC_GAIACacheDistanceIDC; 
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["500","1,000","1,500","2,000","2,500","3,000","3,500","4,000","5,000"];
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_GAIACacheDistanceIndex",4]);
+
+//GAIA controlls
+_comboBox = _mccdialog displayCtrl MCC_GAIAControllIDC; 
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Only GAIA units","Everyone"];
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_GAIAControllIndex",0]);
+
+//GAIA Artillery
+_comboBox = _mccdialog displayCtrl MCC_GAIAArtilleryDelayIDC; 
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["1min","2min","3min","4min","5min","6min","7min","8min","9min","10min"];
+_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_GAIAArtilleryDelayIndex",4]);
 
 //Show key Binds
 private ["_text","_key","_textKey"];

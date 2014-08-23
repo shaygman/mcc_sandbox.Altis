@@ -64,7 +64,7 @@ if (dialog && MCC_ACConsoleUp) then {				//Create the AC
 			MCC_fakeAC 		= "Camera" camCreate [10,10,10];
 			if (!isnil "MCC_fakeACCenter") then {deletevehicle MCC_fakeACCenter};
 			MCC_fakeACCenter	= "Sign_Sphere10cm_F" createvehicle [MCC_consoleACpos select 0,MCC_consoleACpos select 1, 0];
-			hideobject MCC_fakeACCenter;
+			[[[netid MCC_fakeACCenter,MCC_fakeACCenter], "_this hideObjectGlobal true"], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
 			_rad	=	400;
 			_alt	=	300;
 			MCC_ACAng	= 	0;

@@ -1,4 +1,4 @@
-private ["_disp","_comboBox","_index","_displayname","_html","_spawnArray","_activeSides","_idc"];
+private ["_disp","_comboBox","_index","_displayname","_html","_spawnArray","_activeSides","_idc","_sidePlayer"];
 disableSerialization;
 
 _disp = _this select 0;
@@ -36,35 +36,23 @@ uiNamespace setVariable ["CP_side3Score", _disp displayCtrl 26];
 #define CP_side3 (uiNamespace getVariable "CP_side3")
 #define CP_side3Score (uiNamespace getVariable "CP_side3Score")
 
+_sidePlayer = player getVariable ["CP_side", side player];
 //Respawn panel indecator
 CP_respawnPanelOpen = true; 
 
 //Disable Esc while respawn is on
 CP_disableEsc = CP_RESPAWNPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"]; 
 
+//Find relevent spawn points
+_spawnArray = [_sidePlayer] call BIS_fnc_getRespawnPositions; 
+
 //Clear unavailable spawn points
 {
-	if (!alive _x) then {CP_westSpawnPoints =  CP_westSpawnPoints - [_x]; publicVariable "CP_westSpawnPoints"};
-} foreach CP_westSpawnPoints; 
-
-{
-	if (!alive _x) then {CP_eastSpawnPoints =  CP_eastSpawnPoints - [_x]; publicVariable "CP_eastSpawnPoints"};
-} foreach CP_eastSpawnPoints; 
-
-{
-	if (!alive _x) then {CP_guarSpawnPoints =  CP_guarSpawnPoints - [_x]; publicVariable "CP_guarSpawnPoints"};
-} foreach CP_guarSpawnPoints;
-
-//Find relevent groups
-_spawnArray	 = switch (side player) do	{
-					case west:			{CP_westSpawnPoints};
-					case east:			{CP_eastSpawnPoints};
-					case resistance:	{CP_guarSpawnPoints};
-					default				{CP_guarSpawnPoints};
-				};
+	if (_x getVariable ["dead",false]) then {[_sidePlayer, _x] call BIS_fnc_removeRespawnPosition};
+} foreach _spawnArray;
 
 //Set side flag
-CP_flag ctrlSetText call compile format ["CP_flag%1", (player getVariable ["CP_side", side player])];
+CP_flag ctrlSetText call compile format ["CP_flag%1", _sidePlayer];
 
 //Sets sides Tickets
 if (CP_activated) then
@@ -82,7 +70,7 @@ if (CP_activated) then
 _comboBox = CP_respawnPointsList; 
 lbClear _comboBox;
 	{
-		_displayname = _x getvariable "type";
+		_displayname = _x getvariable ["type","FOB"];
 		//_pic = _x select 2;
 		_index = _comboBox lbAdd _displayname;
 	} foreach _spawnArray;
@@ -100,20 +88,22 @@ lbClear _comboBox;
 _comboBox lbSetCurSel CP_classesIndex;
 
 //Refresh	
-[_spawnArray] spawn 
+[] spawn 
 	{
 		private ["_comboBox","_displayname","_index","_spawnArray","_idc","_activeSides"];
 		disableSerialization;
-		_spawnArray = _this select 0;
+		
 
 		while {dialog && CP_respawnPanelOpen} do 
 		{
+			_spawnArray = [player getVariable ["CP_side", side player]] call BIS_fnc_getRespawnPositions;
+			
 			//Tickets
 			_activeSides = [] call MCC_fnc_getActiveSides;
 
 			_idc = 22;
 			{
-				ctrlSetText [_idc, str (missionNameSpace getVariable [format ["MCC_tickets%1",_x],""])];
+				ctrlSetText [_idc, str ([_x] call BIS_fnc_respawnTickets)];
 				_idc = _idc + 2;
 			} foreach _activeSides;	
 			
@@ -121,7 +111,7 @@ _comboBox lbSetCurSel CP_classesIndex;
 			_comboBox = CP_respawnPointsList; 
 			lbClear _comboBox;
 				{
-					_displayname = format ["(%1) - %2",_x getvariable ["side","N/A"], _x getvariable ["type","FOB"]];
+					_displayname = format ["( %1 ) - %2",(_foreachIndex +1), _x getvariable ["type","FOB"]];
 					//_pic = _x select 2;
 					_index = _comboBox lbAdd _displayname;
 				} foreach _spawnArray;
