@@ -11,7 +11,7 @@ _key = _this select 0;
 _shift = _this select 1;
 _ctrl = _this select 2;
 _alt = _this select 3;
-_hcam_key = actionKeys "User1";
+_hcam_key = actionKeys (format ["User%1",hcam_Key]);
 
 _units = hcam_units;
 

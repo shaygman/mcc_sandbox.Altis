@@ -23,6 +23,8 @@
 #define MCC_GAIAControllIDC 8423
 #define MCC_GAIAArtilleryDelayIDC 8424
 
+#define mcc_deletePlayerBodyIDC 8425
+
 private ["_string", "_resistanceHostile", "_AiSkill","_value","_ACEReviveTime","_ACESpectator","_t2t","_code"];
 disableSerialization;
 
@@ -40,7 +42,8 @@ if !mcc_isloading then
 	publicVariable "MCC_t2tIndex"; 
 	if (_t2t == 0) then {_string = _string + "MCC_teleportToTeam = false;";MCC_teleportToTeam = false; publicvariable "MCC_teleportToTeam";};
 	
-	switch (_resistanceHostile) do	{
+	switch (_resistanceHostile) do	
+	{
 		case 0:	
 		{
 		_string = _string + "
@@ -198,7 +201,12 @@ if !mcc_isloading then
 	MCC_GAIA_MORTAR_TIMEOUT = (MCC_GAIAArtilleryDelayIndex+1)*60;
 	publicvariable "MCC_GAIA_MORTAR_TIMEOUT";
 	
-	#define MCC_GAIAArtilleryDelayIDC 8424
+	//Delete players body
+	missionNamespace setVariable ["mcc_deletePlayerBodyIndex",lbCurSel mcc_deletePlayerBodyIDC];
+	publicvariable "mcc_deletePlayerBodyIndex";
+	MCC_deletePlayersBody = if ((lbCurSel mcc_deletePlayerBodyIDC) == 0) then {false} else {true};								
+	publicvariable "MCC_deletePlayersBody";
+
 	Hint "Mission Settings Saved";
     closedialog 0;
 };

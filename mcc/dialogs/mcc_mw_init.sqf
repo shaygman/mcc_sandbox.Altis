@@ -155,7 +155,7 @@ lbClear _comboBox;
 {
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
-} foreach ["Yes","No"];
+} foreach ["Music & Intro","Intro","None"];
 _comboBox lbSetCurSel (profileNamespace getVariable ["MCC_MWMusicIndex",0]);
 
 _comboBox = _mccdialog displayCtrl MCC_MWDebugComboIDC;		

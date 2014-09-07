@@ -38,7 +38,7 @@ MCC_MWisGenerating = true;
 //Get params
 _playersNumber 		= (lbCurSel MCC_MWPlayersIDC) + 1;
 _civFaction			= (U_FACTIONSCIV select (lbCurSel CIVILIANFACTIONCOMBO)) select 2;
-_playMusic			= if ((lbCurSel MCC_MCC_MWMusicIDC)==0) then {true} else {false};
+_playMusic			= lbCurSel MCC_MCC_MWMusicIDC;
 _difficulty 		= (lbCurSel MCC_MWDifficultyIDC+1)*1.5;		//each player == 3 enemy players multiply by difficulty
 _stealth 			= if ((lbCurSel MCC_MWStealthIDC)==3) then
 						{

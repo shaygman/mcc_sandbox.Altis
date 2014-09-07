@@ -16,148 +16,178 @@ switch (_cmd) do
 	{
 		case 0:				//LBL change on respawn marker
 		{ 
-			_spawnArray	 = [side player] call BIS_fnc_getRespawnPositions;
-				
-			deletemarkerlocal "spawnSelected";
-			
-			if (count _spawnArray > 0) then {
-				CP_respawnPointsIndex = (lbCurSel CP_respawnPointsList);
-				_spawn	 = _spawnArray select (lbCurSel CP_respawnPointsList);
-				_pos 		 = [(getpos _spawn) select 0, (getpos _spawn) select 1];
-				createMarkerLocal ["spawnSelected",_pos];	//Create group's marker
-				"spawnSelected" setMarkerColorLocal "ColorBlue";
-				"spawnSelected" setMarkerSizeLocal [50,50];
-				"spawnSelected" setMarkerShapeLocal  "ELLIPSE";
-				"spawnSelected" setMarkerBrushLocal  "SOLID";
-				CP_deployPanelMiniMap ctrlMapAnimAdd [0.4, 0.5, _pos];
-				ctrlMapAnimCommit CP_deployPanelMiniMap;
-				CP_activeSpawn = _spawn; 
-				} else {CP_activeSpawn = objnull};
+			if !(uinameSpace getVariable ["cpLoadingSpawnPoints",false]) then
+			{
+				_spawnArray	 = missionNamespace getVariable ["MCCActiveSpawnPosArray",[]];
+
+				if (count _spawnArray > 0) then 
+				{
+					CP_respawnPointsIndex = (lbCurSel CP_respawnPointsList);
+					_spawn	 = _spawnArray select (lbCurSel CP_respawnPointsList);
+					_pos 	 = if (typeName _spawn == "GROUP") then {getpos leader _spawn} else {[(getpos _spawn) select 0, (getpos _spawn) select 1]};
+					CP_deployPanelMiniMap ctrlMapAnimAdd [0.4, ctrlMapScale (uiNamespace getVariable "CP_deployPanelMiniMap"), _pos];
+					ctrlMapAnimCommit CP_deployPanelMiniMap;
+					CP_activeSpawn = _spawn; 
+				} 
+				else 
+				{
+					CP_activeSpawn = objnull
+				};
+			};
 		};
 		
 		case 1:				//==================================================Deploy pressed============================================================
 		{ 
+				
 			//Check if alive
-			if (!alive CP_activeSpawn) exitWith {player sidechat "Spawn Point has been destroyed, select another spawn point."};
+			if (isnull CP_activeSpawn) exitWith {player sidechat "Select new spawn point."};
+			if (typeName CP_activeSpawn == "GROUP") then {CP_activeSpawn = leader CP_activeSpawn};
+			if (!alive CP_activeSpawn) exitWith {CP_activeSpawn setVariable ["dead",true,true]; player sidechat "Spawn Point has been destroyed, select another spawn point."};
 			
-			//Check if player assigned to group
-			_groups	 = switch (side player) do	
-						{
-							case west:			{CP_westGroups};
-							case east:			{CP_eastGroups};
-							case resistance:	{CP_guarGroups};
-							case civilian:		{CP_guarGroups};
-						};
-						
-			_deployAvailable = false; 				
-			for [{_i=0},{_i < count _groups},{_i=_i+1}] do 
+		
+			if (CP_activated) then
 			{
-				if ((group player) == (_groups select _i) select 0) then {_deployAvailable = true}; 
-			};
-			if (!_deployAvailable) exitWith {player sidechat "You must join a group first."};
-			
-			//Check for roles 
-			_countRole 			= 0;
-			_minPlayersForRole	= 0;
-			_roleLimit			= 1;
-			switch (lbCurSel CP_respawnPanelRoleCombo) do	{
-								case 0:				{				//officer 
-														{
-															if ((_x getvariable "CP_role") == "Officer") then {_countRole = _countRole +1};
-														} foreach units (group player); 
-														_roleLimit 			= CP_officerPerGroup;
-														_minPlayersForRole 	= CP_officerMinPlayersInGroup;
-													};	
-													
-								case 1:				{				//AR 
-														{
-															if ((_x getvariable "CP_role") == "AR") then {_countRole = _countRole +1};
-														} foreach units (group player); 
-														_roleLimit 			= CP_ARPerGroup;
-														_minPlayersForRole 	= CP_ARMinPlayersInGroup;
-													};
-													
-								case 2:				{				//Rifleman
-														{
-															if ((_x getvariable "CP_role") == "Rifleman") then {_countRole = _countRole +1};
-														} foreach units (group player); 
-														_roleLimit 			= CP_riflemanPerGroup;
-														_minPlayersForRole 	= CP_riflemanMinPlayersInGroup;
-													};	
-
-								case 3:				{				//AT
-														{
-															if ((_x getvariable "CP_role") == "AT") then {_countRole = _countRole +1};
-														} foreach units (group player); 
-														_roleLimit 			= CP_ATPerGroup;
-														_minPlayersForRole 	= CP_ATMinPlayersInGroup;
-													};
-													
-								case 4:				{				//Corpsman
-														{
-															if ((_x getvariable "CP_role") == "Corpsman") then {_countRole = _countRole +1};
-														} foreach units (group player); 
-														_roleLimit 			= CP_CorpsmanPerGroup;
-														_minPlayersForRole 	= CP_CorpsmanMinPlayersInGroup;
-													};
-													
-								case 5:				{				//Marksman
-														{
-															if ((_x getvariable "CP_role") == "Marksman") then {_countRole = _countRole +1};
-														} foreach units (group player); 
-														_roleLimit 			= CP_MarksmanPerGroup;
-														_minPlayersForRole 	= CP_MarksmanMinPlayersInGroup;
-													};
-													
-								case 6:				{				//Specialist
-														{
-															if ((_x getvariable "CP_role") == "Specialist") then {_countRole = _countRole +1};
-														} foreach units (group player); 
-														_roleLimit 			= CP_SpecialistPerGroup;
-														_minPlayersForRole 	= CP_SpecialistMinPlayersInGroup;
-													};
+				
+				//Check if player assigned to group
+				_groups	 = switch (side player) do	
+							{
+								case west:			{CP_westGroups};
+								case east:			{CP_eastGroups};
+								case resistance:	{CP_guarGroups};
+								case civilian:		{CP_guarGroups};
 							};
-			
-			if (_countRole > _roleLimit) exitWith {player sidechat "All kit's have been taken! Choose another kit."}; 
-			if (count (units (group player)) < _minPlayersForRole) exitWith {player sidechat format ["You need %1 players in your squad to use this kit! Choose another kit.",_minPlayersForRole]};
-			
-			//Check if no enemy is close by
-			
-			_spawnAvailable = true;
-			
-			if ((CP_activeSpawn getvariable ["type","FOB"]) != "HQ") then
-			{
-				
-				_targets = ["Car","Tank","Man"]; 
-				_nearObjects = (getpos CP_activeSpawn) nearObjects 100;
-				
-				if ((count _nearObjects) > 0) then 
+						
+				_deployAvailable = false; 				
+				for [{_i=0},{_i < count _groups},{_i=_i+1}] do 
 				{
-					{
-						_target = _x; 
-						{
-							if ((_target isKindOf _x) && (side _target != civilian) && (side _target !=side player)) then {_spawnAvailable = false};
-						} foreach _targets; 
-					} foreach _nearObjects;
+					if ((group player) == (_groups select _i) select 0) then {_deployAvailable = true}; 
 				};
+				if (!_deployAvailable) exitWith {player sidechat "You must join a group first."};
+				
+				//Check for roles 
+				_countRole 			= 0;
+				_minPlayersForRole	= 0;
+				_roleLimit			= 1;
+				switch (lbCurSel CP_respawnPanelRoleCombo) do	{
+									case 0:				{				//officer 
+															{
+																if ((_x getvariable "CP_role") == "Officer") then {_countRole = _countRole +1};
+															} foreach units (group player); 
+															_roleLimit 			= CP_officerPerGroup;
+															_minPlayersForRole 	= CP_officerMinPlayersInGroup;
+														};	
+														
+									case 1:				{				//AR 
+															{
+																if ((_x getvariable "CP_role") == "AR") then {_countRole = _countRole +1};
+															} foreach units (group player); 
+															_roleLimit 			= CP_ARPerGroup;
+															_minPlayersForRole 	= CP_ARMinPlayersInGroup;
+														};
+														
+									case 2:				{				//Rifleman
+															{
+																if ((_x getvariable "CP_role") == "Rifleman") then {_countRole = _countRole +1};
+															} foreach units (group player); 
+															_roleLimit 			= CP_riflemanPerGroup;
+															_minPlayersForRole 	= CP_riflemanMinPlayersInGroup;
+														};	
+
+									case 3:				{				//AT
+															{
+																if ((_x getvariable "CP_role") == "AT") then {_countRole = _countRole +1};
+															} foreach units (group player); 
+															_roleLimit 			= CP_ATPerGroup;
+															_minPlayersForRole 	= CP_ATMinPlayersInGroup;
+														};
+														
+									case 4:				{				//Corpsman
+															{
+																if ((_x getvariable "CP_role") == "Corpsman") then {_countRole = _countRole +1};
+															} foreach units (group player); 
+															_roleLimit 			= CP_CorpsmanPerGroup;
+															_minPlayersForRole 	= CP_CorpsmanMinPlayersInGroup;
+														};
+														
+									case 5:				{				//Marksman
+															{
+																if ((_x getvariable "CP_role") == "Marksman") then {_countRole = _countRole +1};
+															} foreach units (group player); 
+															_roleLimit 			= CP_MarksmanPerGroup;
+															_minPlayersForRole 	= CP_MarksmanMinPlayersInGroup;
+														};
+														
+									case 6:				{				//Specialist
+															{
+																if ((_x getvariable "CP_role") == "Specialist") then {_countRole = _countRole +1};
+															} foreach units (group player); 
+															_roleLimit 			= CP_SpecialistPerGroup;
+															_minPlayersForRole 	= CP_SpecialistMinPlayersInGroup;
+														};
+								};
+				
+				if (_countRole > _roleLimit) exitWith {player sidechat "All kit's have been taken! Choose another kit."}; 
+				if (count (units (group player)) < _minPlayersForRole) exitWith {player sidechat format ["You need %1 players in your squad to use this kit! Choose another kit.",_minPlayersForRole]};
+				
+				//Check if no enemy is close by
+				
+				_spawnAvailable = true;
+				
+				if ((CP_activeSpawn getvariable ["type","FOB"]) != "HQ") then
+				{
+					_targets = ["Car","Tank","Man"]; 
+					_nearObjects = (getpos CP_activeSpawn) nearObjects 75;
+					
+					if ((count _nearObjects) > 0) then 
+					{
+						{
+							_target = _x; 
+							{
+								if ((_target isKindOf _x) && (side _target != civilian) && (side _target !=side player)) then {_spawnAvailable = false};
+							} foreach _targets; 
+						} foreach _nearObjects;
+					};
+				};
+				
+				if (!_spawnAvailable) exitWith {player sidechat "Spawn Point is being overrun, select another spawn point."};
+			
+			
+				//looking for a spawn point
+				playerDeployPos    =[(getpos CP_activeSpawn),1,30,1,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
+				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {player sidechat " No good position found! Try again."};
+				playerDeploy = true;
+				
+				//Is it a spawn tent and we spawned as the squad leader - delete the tent
+				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally Point") && (player == leader player)) then
+				{
+					CP_activeSpawn setDamage 1; 
+				};
+				
+				//Remove escape event handlers and reseting menu
+				if (!isnil "CP_RESPAWNPANEL_IDD") then {CP_RESPAWNPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_SQUADPANEL_IDD") then {CP_SQUADPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_GEARPANEL_IDD") then {CP_GEARPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_WEAPONSPANEL_IDD") then {CP_WEAPONSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_ACCESPANEL_IDD") then {CP_ACCESPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_UNIFORMSPANEL_IDD") then {CP_UNIFORMSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				CP_respawnPanelOpen = false; 
+			}
+			else
+			{
+				//looking for a spawn point
+				playerDeployPos    =[(getpos CP_activeSpawn),1,30,1,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
+				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {player sidechat " No good position found! Try again."};
+				playerDeploy = true;
+				
+				//Remove escape event handlers and reseting menu
+				if (!isnil "CP_RESPAWNPANEL_IDD") then {CP_RESPAWNPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_SQUADPANEL_IDD") then {CP_SQUADPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_GEARPANEL_IDD") then {CP_GEARPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_WEAPONSPANEL_IDD") then {CP_WEAPONSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_ACCESPANEL_IDD") then {CP_ACCESPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				if (!isnil "CP_UNIFORMSPANEL_IDD") then {CP_UNIFORMSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
+				CP_respawnPanelOpen = false; 
 			};
-			
-			if (!_spawnAvailable) exitWith {player sidechat "Spawn Point is being overrun, select another spawn point."};
-			
-			//looking for a spawn point
-			playerDeployPos    =[(getpos CP_activeSpawn),1,30,1,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
-			if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {player sidechat " No good position found! Try again."};
-			playerDeploy = true;
-			
-			//Remove escape event handlers and reseting menu
-			if (!isnil "CP_RESPAWNPANEL_IDD") then {CP_RESPAWNPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
-			if (!isnil "CP_SQUADPANEL_IDD") then {CP_SQUADPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
-			if (!isnil "CP_GEARPANEL_IDD") then {CP_GEARPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
-			if (!isnil "CP_WEAPONSPANEL_IDD") then {CP_WEAPONSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
-			if (!isnil "CP_ACCESPANEL_IDD") then {CP_ACCESPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
-			if (!isnil "CP_UNIFORMSPANEL_IDD") then {CP_UNIFORMSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
-			deletemarkerlocal "spawnSelected";
-			CP_respawnPanelOpen = false; 
 		};
 		
 		case 2:				//Change role

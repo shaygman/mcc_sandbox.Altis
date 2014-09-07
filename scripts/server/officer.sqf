@@ -114,7 +114,9 @@ publicvariable "CP_officerWeaponGuer";
 CP_officerWeaponSecWest = ["SERVER_officer", "secondery", "CP_officerWeaponSecWest", "ARRAY"] call iniDB_read;
 if (count CP_officerWeaponSecWest == 0) then
 {				   		   
-	CP_officerWeaponSecWest 	= call compileFinal str	[[0,"",["",0]]];
+	CP_officerWeaponSecWest 	= call compileFinal str	[
+									[0,"",["",0]],
+									[5,"MCC_TentDome",[]]];
 	["SERVER_officer", "secondery", "CP_officerWeaponSecWest",CP_officerWeaponSecWest, "ARRAY"] call iniDB_write;
 };
 publicvariable "CP_officerWeaponSecWest";
@@ -123,7 +125,9 @@ publicvariable "CP_officerWeaponSecWest";
 CP_officerWeaponSecEast = ["SERVER_officer", "secondery", "CP_officerWeaponSecEast", "ARRAY"] call iniDB_read;
 if (count CP_officerWeaponSecEast == 0) then
 {
-	CP_officerWeaponSecEast	= call compileFinal str 	[[0,"",["",0]]];
+	CP_officerWeaponSecEast	= call compileFinal str	[
+									[0,"",["",0]],
+									[5,"MCC_TentA",[]]];
 	["SERVER_officer", "secondery", "CP_officerWeaponSecEast",CP_officerWeaponSecEast, "ARRAY"] call iniDB_write;
 };
 publicvariable "CP_officerWeaponSecEast";
@@ -132,7 +136,9 @@ publicvariable "CP_officerWeaponSecEast";
 CP_officerWeaponSecGuer = ["SERVER_officer", "secondery", "CP_officerWeaponSecGuer", "ARRAY"] call iniDB_read;
 if (count CP_officerWeaponSecGuer == 0) then
 {
-	CP_officerWeaponSecGuer	= call compileFinal str	[[0,"",["",0]]];
+	CP_officerWeaponSecGuer	= call compileFinal str	[
+									[0,"",["",0]],
+									[5,"MCC_TentA",[]]];
 	["SERVER_officer", "secondery", "CP_officerWeaponSecGuer",CP_officerWeaponSecGuer, "ARRAY"] call iniDB_write;
 };
 publicvariable "CP_officerWeaponSecGuer";

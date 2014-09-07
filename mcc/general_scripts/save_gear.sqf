@@ -1,8 +1,8 @@
 private ["_unit","_goggles","_headgear","_uniform","_uniformItems","_vest","_magazines","_primMag","_secmMag","_handMag","_assigneditems",
-         "_vestItems","_handgunWeapon","_backpack","_primaryWeapon","_secondaryWeapon","_null"];
+         "_vestItems","_handgunWeapon","_backpack","_primaryWeapon","_secondaryWeapon","_null","_killer"];
 
-
-_unit = _this;
+_unit 	= _this select 0;
+_killer = if (count _this > 1) then {_this select 1} else {objnull};
 
 //Case we in role selection and have tickets
 if (CP_activated) then
@@ -59,7 +59,8 @@ WaitUntil {alive player};
 //Mark it zero again
 player addRating (-1 * (rating player));
 
-if (isnil ("MCC_TRAINING")) then {deleteVehicle _unit};
+//Delete dead body
+if (missionNameSpace getVariable ["MCC_deletePlayersBody",false]) then {deleteVehicle _unit};
 
 _null = [(compile format ["MCC_curator addCuratorEditableObjects [[%1],false];", player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 
@@ -170,22 +171,22 @@ if (MCC_saveGear) then
 	}; 
 };
 
-//-----------------------MCC-------------------------------------------------	
-if (player getvariable ["MCC_allowed",false]) then 
+//Handle add - action
+[] call MCC_fnc_handleAddaction;
+
+if (isnil "MCC_TRAINING") then
 {
-	mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+	//------------T2T---------------------------------
+	if (MCC_t2tIndex == 2) then {MCC_teleportToTeam = true}; 
+
+	//-------------------Role selection -------------------------------------------
+	if (CP_activated) then 
+	{
+		_null=[] execVM CP_path + "scripts\player\player_init.sqf";
+	}
+	else
+	{
+		 []  call MCC_fnc_startLocations;
+	};
 };
-
-//---------------------MCC Cosnole ------------------------------------------
-//Absolute
-//_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
-
-//------------T2T---------------------------------
-if (MCC_t2tIndex == 2) then {MCC_teleportToTeam = true}; 
-
-//-------------------Role selection -------------------------------------------
-if (CP_activated) exitWith 
-{
-	_null=[] execVM CP_path + "scripts\player\player_init.sqf";
-}; 
 

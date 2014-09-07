@@ -26,6 +26,8 @@
 #define MCC_GAIAControllIDC 8423
 #define MCC_GAIAArtilleryDelayIDC 8424
 
+#define mcc_deletePlayerBodyIDC 8425
+
 
 MCC_aiSkillIndex		= (MCC_AI_Skill*10)-1;
 MCC_aiAimIndex			= (MCC_AI_Aim*10)-1;
@@ -214,6 +216,15 @@ _comboBox = _mccdialog displayCtrl MCC_GAIAArtilleryDelayIDC;
 		_comboBox lbAdd _displayname;
 	} foreach ["1min","2min","3min","4min","5min","6min","7min","8min","9min","10min"];
 _comboBox lbSetCurSel (missionNamespace getVariable ["MCC_GAIAArtilleryDelayIndex",4]);
+
+//Delete Players body
+_comboBox = _mccdialog displayCtrl mcc_deletePlayerBodyIDC; 
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Disabled","Enabled"];
+_comboBox lbSetCurSel (missionNamespace getVariable ["mcc_deletePlayerBodyIndex",0]);
 
 //Show key Binds
 private ["_text","_key","_textKey"];

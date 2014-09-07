@@ -13,10 +13,12 @@ _synced = synchronizedobjects _logic;		//Who synced with the module
 
 _goggles = call compile (_logic getvariable ["hcam_goggles","[]"]); 
 _headGear = call compile (_logic getvariable ["hcam_headgear","[]"]); 
-
  
 if (player in _synced)then 
 {
+	//Action key
+	 hcam_Key = (_logic getvariable ["hcam_actionKey",1]);
+	 
 	//goggles to watch the live feed
 	hcam_goggles = if (count _goggles == 0) then {["G_Tactical_Clear"]} else {_goggles};
 	
@@ -38,10 +40,10 @@ if (player in _synced)then
 	sleep 1; 
 	waituntil {!(IsNull (findDisplay 46))};
 	
-	["<t font='TahomaB'>You have just been assigned as Special Forces member</t>
-	<br/><img size='9' img image='"+MCC_path+"data\sf.paa' />
-	<br/>You can access your group helmet camera using <t font='TahomaB'><t underline='true'>User key 1</t></t> key.
-	<br/>Press <t font='TahomaB'><t underline='true'>Shift + User key 1</t></t> to change video size.
-	<br/>Press <t font='TahomaB'><t underline='true'>Ctrl + User key 1</t></t> to change to thermal or night vision.
-	<br/>Press <t font='TahomaB'><t underline='true'>Alt + User key 1</t></t> to turn camera off.","MCC Special Forces",nil,false] spawn BIS_fnc_guiMessage;
+	["<t font='TahomaB'>You have just been assigned as Special Forces member</t>"
+	+"<br/><img size='9' img image='"+MCC_path+"data\sf.paa' />"
+	+format ["<br/>You can access your group helmet camera using <t font='TahomaB'><t underline='true'>User key %1</t></t> key.",hcam_Key]
+	+format ["<br/>Press <t font='TahomaB'><t underline='true'>Shift + User key %1</t></t> to change video size.",hcam_Key]
+	+format ["<br/>Press <t font='TahomaB'><t underline='true'>Ctrl + User key %1</t></t> to change to thermal or night vision.",hcam_Key]
+	+format ["<br/>Press <t font='TahomaB'><t underline='true'>Alt + User key %1</t></t> to turn camera off.",hcam_Key],"MCC Special Forces",nil,false] spawn BIS_fnc_guiMessage;
 	};

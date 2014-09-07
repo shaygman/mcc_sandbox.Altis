@@ -12,16 +12,25 @@
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_loginDialog.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_MWMainDialog.hpp"
 
+//----Console-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_playerConsole.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCC_playerConsole2.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCC_playerConsole3.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_playerConsoleLoading.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_missionSettings.hpp"
 
+//----PDA-----------------
+#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_SQLPDA.hpp"
+
+//----Mission Wizard-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCCMW_briefingMap.hpp"
 
+//----Curator-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_curatorInitDefines.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_curatorInit.hpp"
+
+//----Logistics-----------------
+#include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
 
 #include "\mcc_sandbox_mod\mcc\Dialogs\compass.hpp"
 //--------------------------------CP------------------------------------------------
@@ -259,6 +268,11 @@ class CfgFunctions
 			{
 				description = "Server Only - create a Logic based briefing";
 			};
+			
+			class handleAddaction
+			{
+				description = "Handle addactions after respawn - init";
+			};
 		};
 		
 		class ui
@@ -439,6 +453,16 @@ class CfgFunctions
 			class amb_Art
 			{
 				description = "Create ambient artillery barage.";
+			};
+			
+			class calcSolution
+			{
+				description = "calculate artillery solution high or low";
+			};
+			
+			class artyGetSolution
+			{
+				description = "Broadcast artillery solution high or low";
 			};
 			
 		};
@@ -647,19 +671,19 @@ class CfgFunctions
 				description = "gain XP from specific roles.";
 			};
 			
-			class createRestrictedZones
+			class createRespawnTent
 			{
-				description = "create restriction zone around a marker.";
+				description = "Creates a respawn tent";
 			};
 			
-			class RestrictZoneEffect
+			class PDAcreatemarker
 			{
-				description = "Effect while inside a restricted zone.";
+				description = "Creates markers on mp per side and delete them after a period of time";
 			};
 			
-			class moduleSector
+			class construction
 			{
-				description = "Handles Sectors built on BIS Sector by  Karel Moricky.";
+				description = "Constract a tactical building on the server side";
 			};
 		};
 		
@@ -685,6 +709,16 @@ class CfgFunctions
 			class moduleObjectiveSectorMCC
 			{
 				ext = ".fsm";
+			};
+			
+			class createRestrictedZones
+			{
+				description = "create restriction zone around a marker.";
+			};
+			
+			class RestrictZoneEffect
+			{
+				description = "Effect while inside a restricted zone.";
 			};
 		};
 	};

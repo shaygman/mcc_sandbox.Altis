@@ -14,7 +14,7 @@ _u_ace_ammo_idx			= 0;	//VK
 
 _faction = mcc_faction;
 if (isNil "_faction") exitWith {}; 
-_simTypesUnits 	= ["soldier", "car","carx", "motorcycle", "tank", "helicopter", "airplane", "ship", "parachute","helicopterX","shipx","shipX","tankX","submarinex","airplanex"];   
+_simTypesUnits 	= ["soldier", "car","carx", "motorcycle", "tank", "helicopter", "airplane", "ship", "parachute","helicopterX","helicopterrtd","shipx","shipX","tankX","submarinex","airplanex"];   
 _CfgVehicles 		= configFile >> "CfgVehicles" ;
 
 
@@ -86,6 +86,13 @@ for "_i" from 1 to (count _CfgVehicles - 1) do {
 									U_GEN_HELICOPTER set[_u_GEN_helicopter_idx,[_type,_cfgclass,mcc_sidename,_vehicleDisplayName]];
 									_u_GEN_helicopter_idx = _u_GEN_helicopter_idx + 1;
 								  };
+								  
+			case "helicopterrtd" : {
+									_type="AIR";
+									U_GEN_HELICOPTER set[_u_GEN_helicopter_idx,[_type,_cfgclass,mcc_sidename,_vehicleDisplayName]];
+									_u_GEN_helicopter_idx = _u_GEN_helicopter_idx + 1;
+								  };
+								  
 			case "airplane"		: {
 									_type="AIR";
 									U_GEN_AIRPLANE set[_u_GEN_airplane_idx,[_type,_cfgclass,mcc_sidename,_vehicleDisplayName]];

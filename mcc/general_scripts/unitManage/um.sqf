@@ -112,7 +112,7 @@ switch (_type) do
 				MCC_hijack_effect ppEffectEnable true;
 				
 				MCC_backToplayerIndex = _targetUnit addaction ["<t color=""#CC0000"">Back To Player</t>", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
-				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 				_ok = _targetUnit addEventHandler ["Killed", format ["[_this select 0] execVM '%1mcc\general_scripts\unitManage\backToPlayer.sqf'",MCC_path]];
 				
 				if (MCC_PrevHijacked_Group != "") then
@@ -397,7 +397,7 @@ switch (_type) do
 		
 		case 12:	//Delete
 		{
-			
+			if (!dialog) exitWith {}; //For some reason when closing MCC it fire type = 12
 			if (MCC_UMUnit==0) then 
 			{
 				{
@@ -409,6 +409,7 @@ switch (_type) do
 				private ["_units"];
 				//Do we delete because we have pushed the delete button?
 				_units = if (MCC_UMUnit==3) then {MCC_GroupGenGroupSelected} else {MCC_selectedUnits};
+				
 				{
 					{
 						while {!(isnull _x) && !(isplayer _x)} do {deletevehicle vehicle _x};

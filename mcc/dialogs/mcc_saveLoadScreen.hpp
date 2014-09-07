@@ -18,7 +18,7 @@ class MCC_SaveLoadScreen
 {
 	idd = MCC_SaveLoadScreen_IDD;
 	movingEnable = true;
-	onLoad = __EVAL("[] execVM '"+MCCPATH+"mcc\dialogs\MCC_SaveLoadScreenInit.sqf'");
+	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\MCC_SaveLoadScreenInit.sqf'");
 
 	controlsBackground[] = 
 	{
@@ -112,7 +112,7 @@ class MCC_SaveLoadScreen
 	//========================================= Buttons ========================================
 	class MCC_SaveButton: MCC_RscButton		//Save to clipboard
 	{
-		idc = -1;
+		idc = 0;
 		text = "Save To Clipboard";
 		sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		x = 0.288021 * safezoneW + safezoneX;

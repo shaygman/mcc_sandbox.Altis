@@ -126,7 +126,7 @@ publicvariable "CP_marksmanWeaponsSecWest";
 CP_marksmanWeaponsSecEast = ["SERVER_MARKSMAN", "secondery", "CP_marksmanWeaponsSecEast", "ARRAY"] call iniDB_read;
 if (count CP_marksmanWeaponsSecEast == 0) then
 {
-	CP_marksmanWeaponsSecEast	= call compileFinal str 	[[0,"",["",0]]];
+	CP_marksmanWeaponsSecEast	= call compileFinal str	[[0,"",["",0]]];
 	["SERVER_MARKSMAN", "secondery", "CP_marksmanWeaponsSecEast",CP_marksmanWeaponsSecEast, "ARRAY"] call iniDB_write;
 };
 publicvariable "CP_marksmanWeaponsSecEast";

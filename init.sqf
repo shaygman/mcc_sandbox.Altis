@@ -87,9 +87,6 @@ if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
 //----------------- Teleport 2 Team -----------------------------------------------------------------------------
 if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- AfterRespawn, 3-Always
 
-//Bon artillery (moved up to avoid potential error messages)
-MCC_bonCannons = [];
-
 //----------------------IED settings---------------------------------------------
 // IED types the first one is display name the second is the classname [displayName, ClassName]
 MCC_ied_small = [["Plastic Crates","Land_CratesPlastic_F"],["Plastic Canister","Land_CanisterPlastic_F"],["Sack","Land_Sack_F"],["Road Cone","RoadCone"],["Tyre","Land_Tyre_F"],["Radio","Land_SurvivalRadio_F"],["Suitcase","Land_Suitcase_F"],["Grinder","Land_Grinder_F"],
@@ -128,18 +125,6 @@ if (isnil "MCC_ConsoleLiveFeedHelmets") then {MCC_ConsoleLiveFeedHelmets = ["H_H
 if (isnil "MCC_ConsoleCanCommandAI") then {MCC_ConsoleCanCommandAI = true}; 								//If set to false the console can only command non-AI groups
 if (isnil "MCC_ConsolePlayersCanSeeWPonMap") then {MCC_ConsolePlayersCanSeeWPonMap = true};					//If set to true players with GPS or UAVTerminal or MCC conosle can see WP assigned to them on the map
 
-/* 				Absolute
-//string that must return true inorder to open the MCC Console - str "MCC_Console" + "in (assignedItems player)"; 
-if (MCC_isMode) then 
-{
-	MCC_consoleString = str "MCC_Console" + "in (assignedItems _this) && (vehicle _target == vehicle _this)"; 
-}
-else 
-{
-	MCC_consoleString = str "B_UavTerminal" + "in (assignedItems _this) && (vehicle _target == vehicle _this)"; 
-};
-
-*/
 //------------------------Artillery---------------------------------------------------
 MCC_artilleryTypeArray = [["DPICM","GrenadeHand",0,40],["HE 120mm","Sh_120mm_HE_Tracer_Red",1,30], ["HE 155mm","Sh_155mm_AMOS",1,120], ["Cluster AP","Mo_cluster_AP",3,32],["Mines 120mm","Mine_155mm_AMOS_range",3,120],
 						["HE Laser-guided","Bo_GBU12_LGB",3,50],["HE 82mm","Sh_82mm_AMOS",1,75], ["Incendiary 82mm","Fire_82mm_AMOS",1,35],
@@ -156,6 +141,10 @@ MCCConvoyEastEscort = "O_Soldier_F"; MCCConvoyEastDriver = "O_Soldier_SL_F";
 MCCConvoyGueEscort = "GUE_Soldier_1"; MCCConvoyGueDriver = "GUE_Soldier_CO";
 MCCConvoyCivEscort = "C_man_1_1_F"; MCCConvoyCivDriver = "C_man_1_1_F";
 
+//-------------------------MCC commander number of virtual cannons---------------------------------------------
+MCC_bonCannons = [];
+HW_Arti_CannonNumber = 1;
+
 //----------------------------Presets---------------------------------------------------------
 mccPresetsVehicle = [ 
 					 ['Set Empty (Fuel)', '_this setfuel 0;']
@@ -166,7 +155,7 @@ mccPresetsVehicle = [
 					,['Add Crew (UAV)','createVehicleCrew _this;group _this setvariable ["MCC_canbecontrolled",true,true];']
 					,['Add Cargo Units', '[_this] call MCC_fnc_populateVehicle;']
 					,['ECM - can jamm IED','if (isServer) then {_this setvariable ["MCC_ECM",true,true]};']
-					,['HQ Vehicle - create FOB','_this addAction ["<t color=""#99FF00"">Create FOB </t>", "'+MCC_path+'scripts\player\createFOB.sqf",[],6,false, false,"teamSwitch","(driver vehicle _target == _this) && (speed (vehicle _target) == 0)"];']
+					,['Logistic Vehicle - create FOB','_this addAction ["<t color=""#99FF00"">Create FOB </t>", "'+MCC_path+'scripts\player\createFOB.sqf",[],6,false, false,"teamSwitch","(driver vehicle _target == _this) && (speed (vehicle _target) == 0)"];']
 					,['Disable Simulation','_this enableSimulation false;']
 					,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
 					,['Recruitable', '_this addAction [format ["Recruit %1", name _this], "'+MCC_path+'mcc\general_scripts\hostages\hostage.sqf",[2],6,false,true];']
@@ -176,7 +165,6 @@ mccPresetsVehicle = [
 					,['======= Artillery =======','']
 					,['Ambient Artillery - Cannon', '[0,_this] spawn MCC_fnc_amb_Art;']
 					,['Ambient Artillery - Rockets', '[1,_this] spawn MCC_fnc_amb_Art;']
-					,['Forward Observer Artillery', '[0,_this] execVM "'+MCC_path+'mcc\general_scripts\artillery\bon_art.sqf";']
 					,['Ambient AA - Cannon/Rockets', '[2,_this] spawn MCC_fnc_amb_Art;']
 					,['Ambient AA - Search Light', '[3,_this] spawn MCC_fnc_amb_Art;']
 					,['======= General =======','']
@@ -250,7 +238,14 @@ mccPresetsObjects = [
 //====================================================================================================================
 //*********************************************************************************************************************
 
+//---------------------------General objects---------------------------------
 MCC_dummy = "bomb"; //Dummy object for OO saving
+MCC_supplyTracks = ["B_Truck_01_transport_F","O_Truck_03_transport_F","I_Truck_02_transport_F"];
+MCC_supplyAttachPoints = [
+							[[0,0,0],[0,-2,0],[0,-4,0]],
+							[[0,-1,0],[0,-2.5,0],[0,-4,0]],
+							[[0,0.2,0],[0,-1.3,0],[0,-2.8,0]]
+						 ];
 
 //----------------------gaia------------------------------------------------------
 call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];
@@ -471,6 +466,26 @@ mcc_active_zone 		= 1;
 
 MCC_groupFormation	= ["COLUMN","STAG COLUMN","WEDGE","ECH LEFT","ECH RIGHT","VEE","LINE","FILE","DIAMOND"];	//Group formations
 MCC_planeNameCount	= 0;
+
+//Mission Settings Index
+HW_arti_number_shells_per_hourIndex		= 0;
+MCC_resistanceHostileIndex				= 0;
+
+// autoadjust based on settings above or publicVariable
+MCC_aiSkillIndex					= (MCC_AI_Skill*10)-1;    //5;
+MCC_aiAimIndex						= (MCC_AI_Aim*10)-1;    //0;
+MCC_aiSpotIndex						= (MCC_AI_Spot*10)-1;    //3;
+MCC_aiCommandIndex					= (MCC_AI_Command*10)-1;    //5;
+
+MCC_consoleGPSIndex						= 0;
+MCC_consoleShowFriendsIndex				= 0;
+MCC_consoleCommandAIIndex				= 0;
+MCC_nameTagsIndex						= 0;
+MCC_artilleryComputerIndex				= 1;
+MCC_saveGearIndex						= 0;
+MCC_groupMarkersIndex					= 1;
+MCC_MessagesIndex						= 1;
+
 
 //Group Gen
 MCC_groupGenCurrenGroupArray = []; 
@@ -733,6 +748,9 @@ if ( isServer ) then
 	_dummyObject = "Land_Pier_F" createvehicle [-9999, -9999, -1];
 	_dummyObject setVariable ["mccIgnore",true];
 	_dummyObject setpos [-9999, -9999, -1];
+	_name = "MCC_respawnAnchor";
+	call compile (_name + " = _dummy");
+	publicVariable _name;
 	
 
 	//----------------------iniDB------------------------------------------------------
@@ -972,8 +990,10 @@ CP_fnc_allowedDrivers	= compileFinal preprocessFileLineNumbers (CP_path + "scrip
 //---------------------------------------------
 //		Server Init
 //---------------------------------------------
+MCC_isDedicated = false; 
 if (isServer || isdedicated) then 
 {
+	if (isDedicated) then {MCC_isDedicated = true; publicVariable "MCC_isDedicated"};
 	_null=[] execVM CP_path + "scripts\server\server_init.sqf";
 };
 
@@ -1069,13 +1089,6 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	if (isnil "MCC_teleportToTeam") then {MCC_teleportToTeam = true};
 	_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1 ==((MCC_keyBinds select 2) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 2) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 2) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 2) select 2))) then {[] execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
 	
-	// Add to the action menu
-	if (getplayerUID player in MCC_allowedPlayers || "all" in MCC_allowedPlayers || serverCommandAvailable "#logout" || isServer) then 
-	{
-		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
-		player setvariable ["MCC_allowed",true,true];
-	};
-	
 	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 0) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 0) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 0) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 0) select 2))) then {null = [nil,nil,nil,nil,0] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 1) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 1) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 1) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 1) select 2))) then {null = [nil,nil,nil,nil,1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 	
@@ -1083,11 +1096,8 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	MCC_squadDialogOpen = false; 
 	MCC_squadDialogOpenEH = (findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 3) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 3) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 3) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 3) select 2))) then {null = [nil,nil,nil,nil,2] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 	
-	//Add MCC Console action menu --Absolute
-	//_null = player addaction ["<t color=""#FFCC00"">Open MCC Console</t>", MCC_path + "mcc\general_scripts\console\conoleOpenMenu.sqf",[0],-1,false,true,"teamSwitch",MCC_consoleString];
-			
 	//Save gear EH
-	if(local player) then {player addEventHandler ["killed",{player execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};
+	if(local player) then {player addEventHandler ["killed",{[player] execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};
 	
 	//Handle Heal
 	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && (_this select 1 != _this select 0) && (tolower ((_this select 1) getvariable ["CP_role","n/a"]) == "corpsman") ) then {(_this select 1) addrating 200; _string = "<t font='puristaMedium' size='0.5' color='#FFFFFF '>+200 Exp For Healing</t>"; [[_string,0,1,2,1,0,4], "bis_fnc_dynamictext", _this select 1, false] spawn BIS_fnc_MP; false}}]};
@@ -1097,6 +1107,12 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	{
 		[compile format ["MCC_curator addCuratorEditableObjects [[objectFromNetID '%1'],false]", netID player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 	};
+	
+	//Handle add - action
+	[] call MCC_fnc_handleAddaction; 
+	
+	//Add start locations script
+	[]  spawn MCC_fnc_startLocations;
 };
 
 //========= player Loops (for saving gear/name tag exc)=================================

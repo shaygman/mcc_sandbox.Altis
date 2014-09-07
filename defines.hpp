@@ -10,16 +10,25 @@
 #include "mcc\Dialogs\mcc_loginDialog.hpp"
 #include "mcc\Dialogs\mcc_MWMainDialog.hpp"
 
+//----Console-----------------
 #include "mcc\Dialogs\mcc_playerConsole.hpp"
 #include "mcc\Dialogs\MCC_playerConsole2.hpp"
 #include "mcc\Dialogs\MCC_playerConsole3.hpp"
 #include "mcc\Dialogs\mcc_playerConsoleLoading.hpp"
 #include "mcc\Dialogs\mcc_missionSettings.hpp"
 
+//----PDA-----------------
+#include "mcc\Dialogs\mcc_SQLPDA.hpp"
+
+//----Mission Wizard-----------------
 #include "mcc\Dialogs\MCCMW_briefingMap.hpp"
 
+//----Curator-----------------
 #include "mcc\Dialogs\mcc_curatorInitDefines.hpp"
 #include "mcc\Dialogs\mcc_curatorInit.hpp"
+
+//----Logistics-----------------
+#include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
 
 //---- test I should delete it at the end
 #include "mcc\dialogs\test.hpp"
@@ -248,6 +257,11 @@ class CfgFunctions
 			{
 				description = "Server Only - create a Logic based briefing";
 			};
+			
+			class handleAddaction
+			{
+				description = "Handle addactions after respawn - init";
+			};
 		};
 		
 		class ui
@@ -430,6 +444,15 @@ class CfgFunctions
 				description = "Create ambient artillery barage.";
 			};
 			
+			class calcSolution
+			{
+				description = "calculate artillery solution high or low";
+			};
+			
+			class artyGetSolution
+			{
+				description = "Broadcast artillery solution high or low";
+			};
 		};
 		
 		class groupGen
@@ -636,16 +659,20 @@ class CfgFunctions
 				description = "gain XP from specific roles.";
 			};
 			
-			class createRestrictedZones
+			class createRespawnTent
 			{
-				description = "create restriction zone around a marker.";
+				description = "Creates a respawn tent";
 			};
 			
-			class RestrictZoneEffect
+			class PDAcreatemarker
 			{
-				description = "Effect while inside a restricted zone.";
+				description = "Creates markers on mp per side and delete them after a period of time";
 			};
-
+			
+			class construction
+			{
+				description = "Constract a tactical building on the server side";
+			};
 		};
 		
 		class MCCmodules
@@ -670,6 +697,16 @@ class CfgFunctions
 			class moduleObjectiveSectorMCC
 			{
 				ext = ".fsm";
+			};
+			
+			class createRestrictedZones
+			{
+				description = "create restriction zone around a marker.";
+			};
+			
+			class RestrictZoneEffect
+			{
+				description = "Effect while inside a restricted zone.";
 			};
 		};
 	};

@@ -114,7 +114,7 @@ if (_action == 2) exitWith
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["Primary","F.O.B"];
+	} foreach ["Primary","Primary - Respawn Screen","F.O.B"];
 	_comboBox lbSetCurSel 0;
 };
 

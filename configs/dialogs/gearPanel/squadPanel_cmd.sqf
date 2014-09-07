@@ -53,6 +53,7 @@ switch (_cmd) do
 	
 	case 1:				//Join/Leave button pressed
 	{ 
+		CP_activeSpawn = objNull; 
 		if ((ctrlText CP_squadPanelJoinButton) == "Join Squad") exitWith 
 		{
 			_activeGroup = (CP_activeGroup select 0);
@@ -290,8 +291,19 @@ switch (_cmd) do
 	case 4:				//Focuse on Player
 	{
 		
-		private ["_unit","_nvgstate"];
-		_unit = (units (CP_activeGroup select 0)) select (lbCurSel CP_squadPanelPlayersList);
+		private ["_unit","_units","_nvgstate"];
+		
+		//Make the leader first in list
+		_units = units (CP_activeGroup select 0);
+		
+		if (count _units > 1) then
+		{
+			_leader = [leader (CP_activeGroup select 0)];
+			_units = _units - _leader;
+			_units = _leader + _units;
+		};
+			
+		_unit = _units select (lbCurSel CP_squadPanelPlayersList);
 		player setVariable ["MCC_selectedUnit", _unit];
 		
 		//Only work if we didn't came here after respawn
@@ -360,7 +372,9 @@ switch (_cmd) do
 		if (isnil "CP_activeGroup" || isnull (CP_activeGroup select 0)) exitWith {};
 		if ((lbCurSel CP_squadPanelPlayersList) == -1) exitWith {};
 		
-		_unit = (units (CP_activeGroup select 0)) select (lbCurSel CP_squadPanelPlayersList);
+		
+		_unit = player getVariable ["MCC_selectedUnit", player];
+		
 		if (!isnil "_unit" && (_unit in (units group player))) then
 		{
 			[_unit] execVM format ["%1mcc\general_scripts\mcc_SpawnToPosition.sqf",MCC_path];

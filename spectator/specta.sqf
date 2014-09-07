@@ -809,5 +809,5 @@ if ( (name player) == mcc_missionmaker ) then
 {
 	// Close all dialogs and restart MCC
 	closeDialog 0;
-	[] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
+	[nil,nil,nil,nil,0] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
 };

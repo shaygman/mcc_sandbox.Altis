@@ -2,15 +2,15 @@ class CfgPatches {
 
 	class mcc_sandbox 
 	{
-		units[] = {};
+		units[] = {"mcc_sandbox_module","mcc_sandbox_moduleSF","mcc_sandbox_moduleRestrictedZone"};
 		weapons[] = {};
 		requiredVersion = 1.00;
-		requiredAddons[] = {};
+		requiredAddons[] = {"A3_Modules_F"};
 		author[] = {"shay_gman"};
 		versionDesc = "MCC Sandbox 4";
 		version = "1";
 	};
-	
+	/*
 	class A3_Modules_F_Curator_Objectives
 	{
 		requiredAddons[] = {"A3_Modules_F_Curator"};
@@ -18,6 +18,7 @@ class CfgPatches {
 		weapons[] = {};
 		requiredVersion = 1;
 	};
+	*/
 };	
 
 class CfgFactionClasses
@@ -231,7 +232,18 @@ class MCC_RscCuratorCheckBox: RscControlsGroupNoScrollbars
 class cfgVehicles
 {
 	class Logic;
-	class Module_F;
+	class Module_F: Logic
+	{
+		class ArgumentsBaseUnits
+		{
+			class Units;
+		};
+		class ModuleDescription
+		{
+			class AnyBrain;
+			class EmptyDetector; 
+		};
+	};
 	
 	class mcc_sandbox_module : Module_F
 	{
@@ -254,9 +266,27 @@ class cfgVehicles
 				defaultValue = "[]";
 			};
 		};
+		
+		class ModuleDescription: ModuleDescription
+		{
+			description = "Who will have MCC access. Enter the players UID as an array  Example ['123213',12312321','1322131231'] or sync with roles"; // Short description, will be formatted as structured text
+			sync[] = {"BLUFORunit"};
+	 
+			class BLUFORunit
+			{
+				description[] = { // Multi-line descriptions are supported
+					"Sync with any player's role that you want to have MCC access"
+				};
+				displayName = "MCC Contoller"; // Custom name
+				icon = "iconMan"; // Custom icon (can be file path or CfgVehicleIcons entry)
+				optional = 1; // Synced entity is optional
+				duplicate = 1; // Multiple entities of this type can be synced
+				synced[] = {"AnyBrain"}; // Pre-define entities like "AnyBrain" can be used. See the list below
+			};
+		};
 	};
 	
-	class mcc_sandbox_moduleSF : Module_F
+	class mcc_sandbox_moduleSF : Module_F 
 	{
 		category = "MCC";
 		author = "shay_gman";
@@ -270,6 +300,36 @@ class cfgVehicles
 		
 		class Arguments
 		{
+			class hcam_actionKey
+  			{
+				displayName = "User custom key:"; 
+				description = "Which user's custom key will activate the helmet cam"; 
+				typeName = "NUMBER"; // Value type, can be "NUMBER", "STRING" or "BOOL"
+				class values
+				{
+					class 1key	{name = "Use Action 1";	value = 1; default = 1;};
+					class 2key	{name = "Use Action 2"; value = 2;};
+					class 3key	{name = "Use Action 3"; value = 3;};
+					class 4key	{name = "Use Action 4"; value = 4;};
+					class 5key	{name = "Use Action 5"; value = 5;};
+					class 6key	{name = "Use Action 6"; value = 6;};
+					class 7key	{name = "Use Action 7"; value = 7;};
+					class 8key	{name = "Use Action 8"; value = 8;};
+					class 9key	{name = "Use Action 9"; value = 9;};
+					class 10key	{name = "Use Action 10"; value = 10;};
+					class 11key	{name = "Use Action 11"; value = 11;};
+					class 12key	{name = "Use Action 12"; value = 12;};
+					class 13key	{name = "Use Action 13"; value = 13;};
+					class 14key	{name = "Use Action 14"; value = 14;};
+					class 15key	{name = "Use Action 15"; value = 15;};
+					class 16key	{name = "Use Action 16"; value = 16;};
+					class 17key	{name = "Use Action 17"; value = 17;};
+					class 18key	{name = "Use Action 18"; value = 18;};
+					class 19key	{name = "Use Action 19"; value = 19;};
+					class 20key	{name = "Use Action 20"; value = 20;};
+				};
+			};
+			
 			class hcam_goggles
 			{
 				displayName = "Display Goggles";
@@ -284,31 +344,45 @@ class cfgVehicles
 				defaultValue = "[]";
 			};
 		};
+		
+		class ModuleDescription: ModuleDescription
+		{
+			description = "Sync to any player role to gain access to the helmet camera";
+			sync[] = {"BLUFORunit"};
+	 
+			class BLUFORunit
+			{
+				description[] = { 
+					"Sync with any player's role"
+				};
+				displayName = "SF Team camera"; 
+				icon = "iconMan"; 
+				optional = 1; 
+				duplicate = 1;
+				synced[] = {"AnyBrain"}; 
+			};
+		};
 	};
 	
-	class mcc_sandbox_moduleRestrictedZone : Module_F
+	class mcc_sandbox_moduleRestrictedZone : Module_F 
 	{
 		category = "MCC";
 		author = "shay_gman";
 		displayName = "Restricted zones";
 		function = "MCC_fnc_createRestrictedZones";
+		picture = "\mcc_sandbox_mod\data\mccModule.paa";
+		_generalMacro = "ModuleZoneRestriction_F";
 		scope = 2;
-		isGlobal = 1;
+		isGlobal = 2;
 		isTriggerActivated = 1;
 		
 		class Arguments
 		{
-			class markerNames
-			{
-				displayName = "Restricted Markers";
-				description = "Enter the markers' names controled by this module as array ['marker1',marker2'...]";
-				defaultValue = "[]";
-			};
-			
 			class sides
 			{
 				displayName = "Restricted Sides";
 				description = "Enter the restricted sides as array [west,east,resistance,civlian]";
+				typeName = "NUMBER";
 				class values
 				{
 					class All
@@ -344,25 +418,27 @@ class cfgVehicles
 			{
 				displayName = "Time Before Punishment";
 				description = "How much time in seconds should elapsed before the player will be punished";
-				defaultValue = "10";
+				typeName = "NUMBER";
+				defaultValue = 10;
 			};
 			
 			class inside
 			{
 				displayName = "Punished inside the zone";
 				description = "Should the players be punished for staying inside the zone or outside";
+				typeName = "BOOL";
 				class values
 				{
 					class Enabled
 					{
 						name = "Inside";
-						value = 0;
+						value = false;
 						default = 1;
 					};
 					class Disabled
 					{
 						name = "Outside";
-						value = 1;
+						value = true;
 					};
 				};
 			};
@@ -371,59 +447,110 @@ class cfgVehicles
 			{
 				displayName = "Air Vehicles";
 				description = "Should air vehicles be punished";
+				typeName = "BOOL";
 				class values
 				{
 					class Enabled
 					{
 						name = "Yes";
-						value = 0;
+						value = false;
 						default = 1;
 					};
 					class Disabled
 					{
 						name = "No";
-						value = 1;
+						value = true;
 					};
 				};
 			};
 			
 			class hide
 			{
-				displayName = "Hide markers";
-				description = "Hide markers after mission init";
+				displayName = "Create markers";
+				description = "Create markers on the triggers locations";
+				typeName = "BOOL";
 				class values
 				{
 					class Disabled
 					{
 						name = "No";
-						value = 0;
-						default = 1;
+						value = false;
 					};
 					class Enabled
 					{
 						name = "Yes";
-						value = 1;
+						value = true;
+						default = 1;
 					};
 				};
 			};
 		};
+		
+		class ModuleDescription: ModuleDescription
+		{
+			description = "Create restricted areas";
+			sync[] = {"LocationArea_F"};
+	 
+			class LocationArea_F
+			{
+				description[] = { 
+					"Sync with any trigger"
+				};
+				optional = 1; 
+				duplicate = 1;
+				synced[] = {"EmptyDetector"}; 
+			};
+		};
 	};
+	
+	/*
+	class B_Carryall_oli;
+	class MCC_respawnTentDome : B_Carryall_oli 
+	{
+		displayName = "(MCC) Respawn Tent Packed";
+		mass = 60;
+		maximumLoad = 0;
+		scope = 2;
+		class UserActions
+		{
+			class MCCAssembleTent
+			{
+				displayNameDefault = "Assemble Tent";
+                showWindow = 0;
+		        hideOnUse = 1;
+				displayName="Assemble Tent";
+				position="action";
+				radius=1;
+                onlyForPlayer = 1;
+				condition="(alive this) && (true)";
+				statement="this execVM ""test.sqf""";
+			};
+		};
+	};
+	*/
 };
 
 
 class cfgWeapons
 {
 	class Default;
-	
 	class itemCore;
 	
-	class B_UavTerminal;
-	
-	class MCC_Console : B_UavTerminal 
+	class MCC_TentDome : ItemCore 
 	{
-	displayName = "MCC Tactical Commander Console (M-Tac)";
-	picture = "\mcc_sandbox_mod\data\console_small.paa";
-	descriptionShort = "Tactical PDA";
-	scope = 2;
+		displayName = "Respawn Tent (khaki)";
+		descriptionShort = "Allow players from your group respawn near the tent if no enemies nearby for a limited time";
+		picture = "\mcc_sandbox_mod\data\tentFoldedKhaki.paa";
+		model = "\A3\Structures_F\Civ\Camping\Ground_sheet_folded_khaki_F.p3d";
+		type = 4; 
+		simulation = "Weapon";
+		scope = 2;
+	};
+	
+	class MCC_TentA : MCC_TentDome 
+	{
+		displayName = "Respawn Tent (OPFOR)";
+		picture = "\mcc_sandbox_mod\data\tentFoldedOPFOR.paa";
+		model = "\A3\Structures_F\Civ\Camping\Ground_sheet_folded_OPFOR_F.p3d";
 	};
 };

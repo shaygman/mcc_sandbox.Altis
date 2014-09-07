@@ -26,7 +26,7 @@ else
 //Close dialog 
 sleep 0.5; 
 closeDialog 0;
-_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
+_null = [nil,nil,nil,nil,0] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf";
 
 
 

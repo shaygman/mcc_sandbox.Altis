@@ -1,5 +1,3 @@
-#define ExtrasDialog3_IDD 2996
-
 private ["_type","_pos","_zoneX","_zoneY","_activate","_cond","_angle","_shape","_text","_capture","_trigger","_s","_timeMin","_timeMax","_stateCond","_stateDiac"];
 
 _type = _this select 0;

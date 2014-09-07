@@ -8,9 +8,6 @@ BON_salvo = 0;
 // Call sign for imaginary Artillery Operator
 HW_Arti_CallSign = "Steel Rain";
 
-// Number cannons
-HW_Arti_CannonNumber = if (count MCC_bonCannons== 0) then {3} else {count MCC_bonCannons};
-
 // Number rounds per hour
 HW_arti_number_shells_per_hour = 0;
 
@@ -24,7 +21,7 @@ if (isnil "HW_arti_types") then {HW_arti_types = []};
 				
 
 // max. nr. shells each cannon can fire in one fire mission
-HW_arti_maxnrshells = 5;
+HW_arti_maxnrshells = 10;
 
 // element: [displayname,splashdown dispersion in meters]; LASER must have dispersion < 0 to work
 HW_arti_spreads = [["PRECISE",50],["TIGHT",100],["SCATTERED",150],["WIDE",200],["LASER",-1]];

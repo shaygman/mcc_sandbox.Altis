@@ -7,8 +7,17 @@
 
 #define MCC_LOAD_INPUT 7001
 
-private ["_tempText","_comboBox","_mccdialog","_savesArray","_index"];
+private ["_tempText","_comboBox","_mccdialog","_savesArray","_index","_disp"];
 disableSerialization;
+
+_disp = _this select 0;
+uiNamespace setVariable ["MCC_SaveLoadScreen_IDD", _disp];
+uiNamespace setVariable ["MCC_SaveButton", _disp displayCtrl 0];
+
+#define MCC_SaveButton (uiNamespace getVariable "MCC_SaveButton")
+
+//Disable save to clipboard on dedicated
+if (MCC_isDedicated) then {MCC_SaveButton ctrlEnable false};  
 
 _mccdialog = findDisplay MCC_SaveLoadScreen_IDD;
 _tempText = ctrlText MCC_LOAD_INPUT;

@@ -798,9 +798,12 @@ if (_reinforcement in [1,2,3] || _stealth) then
 
 _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Go over your objectives, gear up and get ready.<br/>Mission is a go!</t>",_factionName];
 
-[[_html2, (_missionName1 +" " + _missionName2), _missionTittle, [_missionCenter,_objectives,1,_html]],"MCC_fnc_makeBriefing",false,false] spawn BIS_fnc_MP;
+if (_playMusic in [0,1] ) then
+{
+	[[_html2, (_missionName1 +" " + _missionName2), _missionTittle, [_missionCenter,_objectives,1,_html]],"MCC_fnc_makeBriefing",false,false] spawn BIS_fnc_MP;
+};
 
-if (_playMusic) then
+if (_playMusic == 0 ) then
 {
 	_music = ["LeadTrack01a_F","LeadTrack02_F","LeadTrack03_F","LeadTrack04a_F","LeadTrack05_F","LeadTrack06_F","AmbientTrack03_F","BackgroundTrack03_F","BackgroundTrack01_F",
 			   "BackgroundTrack01a_F","BackgroundTrack02_F","LeadTrack01_F_EPA","LeadTrack02_F_EPA","EventTrack01_F_EPA","EventTrack01a_F_EPA","EventTrack03_F_EPA"] call BIS_fnc_selectRandom; 

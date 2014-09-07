@@ -1,4 +1,4 @@
-private ["_item","_caller","_index","_pos","_dir","_side"];
+private ["_item","_caller","_index","_pos","_dir","_side","_finished"];
 // Who activated the action?
 _item = _this select 0;
 _caller = _this select 1;
@@ -12,9 +12,7 @@ _side	= str (side _caller);
 	 sleep 0.1;
 } foreach crew _item;
 
-
-
 deleteVehicle _item;
 waituntil {isnull _item};
 
-[[_pos,_dir, _side, "FOB" ,true], "CP_fnc_buildSpawnPoint", false, false] call BIS_fnc_MP;
+[[_pos,_dir, _side, "FOB" ,true, true], "CP_fnc_buildSpawnPoint", false, false] call BIS_fnc_MP;  

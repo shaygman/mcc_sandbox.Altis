@@ -9,6 +9,11 @@ cutText ["","BLACK",0.1];
 //											Get player levels
 //******************************************************************************************************************************
 waituntil {alive player};
+//Mark it zero again
+player addRating (-1 * (rating player));
+
+player setVariable ["cpReady",false,true];
+
 
 //Remove Squad event handler
 (findDisplay 46) displayRemoveEventHandler ["KeyUp", MCC_squadDialogOpenEH];
@@ -123,6 +128,7 @@ waituntil {playerDeploy};
 detach player;
 detach CP_gearCam; 
 CP_gearCam cameraeffect ["Terminate","back"];
+
 player setpos playerDeployPos;
 
 while {isnil "_role"} do {_role = player getvariable "CP_role";};
@@ -154,6 +160,7 @@ waituntil {!dialog};
 
 cutText ["Deploying ....","BLACK IN",5];
 
-sleep 6;
+sleep 2;
 //Add Squad event handler
 MCC_squadDialogOpenEH = (findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 3) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 3) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 3) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 3) select 2))) then {null = [nil,nil,nil,nil,2] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
+player setVariable ["cpReady",true,true];

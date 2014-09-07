@@ -285,6 +285,6 @@ GEN_DOC1 = [mcc_faction,0]  call mcc_make_array_comp;
 if (!mcc_firstTime) then 
 	{
 	closeDialog 0;
-	nul=[] execVM MCC_path + "mcc\Dialogs\mcc_PopupMenu.sqf";
+	nul=[nil,nil,nil,nil,0] execVM MCC_path + "mcc\Dialogs\mcc_PopupMenu.sqf";
 	}
 	else {mcc_firstTime=false}; //If it's not first time refresh the menu

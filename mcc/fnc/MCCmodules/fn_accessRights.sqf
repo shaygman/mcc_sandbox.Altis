@@ -36,7 +36,7 @@ if (_names || (count _synced > 0)) then 								//We have autorized personal onl
 {							
 	if (((getPlayerUID player) in _namesList) || (player in _synced) || (serverCommandAvailable "#logout"))then 
 		{
-			player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+			mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 			player setvariable ["MCC_allowed",true,true]; 
 		} 
 		else
@@ -50,7 +50,7 @@ while {true} do 												//Case Admin DC
 	sleep 5;
 	if (serverCommandAvailable "#logout" && (player getvariable ["MCC_allowed",false])) then 
 	{
-		player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
 		player setvariable ["MCC_allowed",true,true]; 
 	};
 };

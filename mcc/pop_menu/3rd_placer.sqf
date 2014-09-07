@@ -489,7 +489,7 @@ MCC_3D_CAM_Handler =
 		hintsilent "";
 		waituntil {isnil "MCC_3D_CAM"};
 		while {dialog} do {closeDialog 0; sleep 0.1};
-		if !(MCC_3DterminateNoMCC) then {_null = [] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
+		if !(MCC_3DterminateNoMCC) then {_null = [nil,nil,nil,nil,0] execVM MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf"};
 	};
 
 		//--- Camera no longer exists - terminate and start cleanup	

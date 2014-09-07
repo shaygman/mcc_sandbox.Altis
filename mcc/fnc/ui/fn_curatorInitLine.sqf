@@ -81,7 +81,7 @@ switch (_targetCategory) do
 		
 		case ("Object"):
 		{ 
-			_class = "RscDisplayAttributesObject";
+			_class = "MCC_RscDisplayAttributesObject";
 			_cargEnabled	= if (_targetType == "AmmoBox") then {true} else {false};
 			missionnamespace setvariable ["MCC_CuratorInitLine_presettype","object"];
 		};

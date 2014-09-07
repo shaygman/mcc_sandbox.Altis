@@ -28,6 +28,8 @@
 #define MCC_GAIAControllIDC 8423
 #define MCC_GAIAArtilleryDelayIDC 8424
 
+#define mcc_deletePlayerBodyIDC 8425
+
 //-----------------------------------------------------------------------------
 // Main dialog
 //-----------------------------------------------------------------------------
@@ -68,6 +70,8 @@ class missionSettings {
 	ConsoleShowFriendlyWP,
 	ConsoleCanCommandAI,
 	ConsoleCanCommandAITittle,
+	deletePlayerBody,
+	deletePlayerBodyTittle,
 	mcc_nameTags,
 	mcc_nameTagsCombo,
 	mcc_artilleryTitle,
@@ -301,6 +305,29 @@ class missionSettings {
 		text = "Console - Can Command AI:"; //--- ToDo: Localize;
 		x = 0.540104 * safezoneW + safezoneX;
 		y = 0.346 * safezoneH + safezoneY;
+		w = 0.177604 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
+	
+	class deletePlayerBody: MCC_RscCombo
+	{
+		idc = mcc_deletePlayerBodyIDC;
+		Tooltip = "Delete players body after respawn."; 
+		
+		x = 0.723438 * safezoneW + safezoneX;
+		y = 0.379 * safezoneH + safezoneY;
+		w = 0.06875 * safezoneW;
+		h = 0.0219914 * safezoneH;
+	};
+	
+	class deletePlayerBodyTittle: MCC_RscText
+	{
+		idc = -1;
+				
+		text = "Delete Players Body:"; //--- ToDo: Localize;
+		x = 0.540104 * safezoneW + safezoneX;
+		y = 0.379 * safezoneH + safezoneY;
 		w = 0.177604 * safezoneW;
 		h = 0.0219914 * safezoneH;
 	};

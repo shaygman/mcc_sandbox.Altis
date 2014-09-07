@@ -265,7 +265,7 @@ while {dialog && (str (finddisplay groupGen_IDD) != "no display") && !MCC_groupG
 			_x setGroupIconParams [_markerColor,format ["%1%2",_IsGaiaControlled,(groupID _x)],1,true];
 			_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
 			_unitsSize = 0;
-			_markerType = nil; 
+			_markerType = _markerInf; 
 			if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
 			if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
 			if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};

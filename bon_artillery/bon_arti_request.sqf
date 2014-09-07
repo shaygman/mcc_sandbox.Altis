@@ -23,10 +23,6 @@
 disableSerialization;
 
 _requestor = _this;
-if (isnil "MCC_bonFire") then {MCC_bonFire = false};
-if (isnil "MCC_bonSplash") then {MCC_bonSplash = false};
-
-if (MCC_bonFire || MCC_bonSplash) exitWith {};
 
 // read out the dialog input
 _dlg = findDisplay BON_ARTY_DIALOG;
@@ -34,6 +30,17 @@ _x_correction = parseNumber ctrlText (_dlg displayCtrl BON_ARTY_XCORRECTION);
 _y_correction = parseNumber ctrlText (_dlg displayCtrl BON_ARTY_YCORRECTION);
 _missiontype = lbText [BON_ARTY_MISSIONTYPE,lbCurSel BON_ARTY_MISSIONTYPE];
 _spreadtype = lbText [BON_ARTY_SPREAD,lbCurSel BON_ARTY_SPREAD];
+
+_cannons_to_fireVR 		= _requestor getVariable ["requesting_cannons",[]];
+_cannons_to_fireReal 	= _requestor getVariable ["requesting_cannonsReal",[]];
+
+if (count _cannons_to_fireReal > 0) then {[_requestor,_x_correction,_y_correction,_missiontype] execVM "fn_consoleFireArtillery.sqf"};
+if (count _cannons_to_fireVR == 0) exitWith {};
+
+if (isnil "MCC_bonFire") then {MCC_bonFire = false};
+if (isnil "MCC_bonSplash") then {MCC_bonSplash = false};
+
+if (MCC_bonFire || MCC_bonSplash) exitWith {};
 
 _message = "Polar,";
 if(_x_correction != 0 || _y_correction != 0) then{
@@ -62,8 +69,10 @@ MCC_bonSplash = true;
 publicVariable "MCC_bonFire"; 
 publicVariable "MCC_bonSplash"; 
 
-switch _missiontype do {
-	case "ADJUSTMENT" : {
+switch _missiontype do 
+{
+	case "ADJUSTMENT" : 
+	{
 		[[[netid _requestor,_requestor], "gridO2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 		sleep (10 + random 2);
 		//_requestor sideChat format["%1, this is %2, Adjustment Fire, %3 OVER",HW_Arti_CallSign,group _requestor,_message];
@@ -81,7 +90,8 @@ switch _missiontype do {
 		[] execVM (BON_ARTI_PATH+"bon_arti_adjustfire.sqf");
 	};
 
-	case "FOR EFFECT" : {
+	case "FOR EFFECT" : 
+	{
 		CloseDialog 0;	
 		// initiate fire mission
 		[[[netid _requestor,_requestor], "gridO2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;

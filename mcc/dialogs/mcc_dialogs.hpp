@@ -431,10 +431,10 @@ class MCC_RscListbox
 	colorShadow[] = {0,0,0,0.5};
 	colorText[] = {1,1,1,1};
 	font = "PuristaMedium";
-	h = 0.4;
+	h = 0.8;
 	maxHistoryDelay = 1;
 	period = 1.2;
-	rowHeight = 0;
+	rowHeight = 0.03;
 	shadow = 0;
 	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	soundSelect[] = {"",0.1,1};

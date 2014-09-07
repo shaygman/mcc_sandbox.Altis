@@ -13,11 +13,13 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 {//foreach _cannons_to_fire
 	_available = MCC_server getVariable format["Arti_%2_Cannon%1_available",_x,_side];
 	diag_log format["Acailable cannon: %1",_available];	//debug
-	if(_available) then{
+	if(_available) then
+	{
 		_cannonsetup = _requestor getVariable format["Arti_%2_Cannon%1",_x,_side];
 		MCC_server setVariable [format["Arti_%2_Cannon%1_available",_x,_side],false,true];
 		
-		[_x,_cannonsetup,_requestor,BON_salvo] spawn {
+		[_x,_cannonsetup,_requestor,BON_salvo] spawn 
+		{
 			private ["_cannon","_splashpos","_firedelay","_artitype","_nrshells","_spread","_salvo"];
 			_cannon = _this select 0;
 			_splashpos = (_this select 1) select 0;
@@ -26,14 +28,6 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 			_nrshells = (_this select 1) select 3;
 			_spread = (_this select 1) select 4;
 			_salvo = _this select 3;
-	
-			if (count MCC_bonCannons > 0) then 
-			{
-				[[[netid (MCC_bonCannons select (_cannon-1)),(MCC_bonCannons select (_cannon-1))], 0],"MCC_fnc_broadcast",true,false] spawn BIS_fnc_MP;
-
-				sleep 2;
-				[1, [_cannon,_splashpos]] execVM MCC_path+"mcc\general_scripts\artillery\bon_art.sqf";
-			};
 			
 			_requestor = _this select 2;
 			_side = side _requestor;
@@ -121,14 +115,16 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 	else {_cannons_available = _cannons_available - [_x]};
 } foreach _cannons_to_fire;
  
-for "_i" from 1 to HW_Arti_CannonNumber do {
+for "_i" from 1 to HW_Arti_CannonNumber do 
+{
 	if(not (_i in _cannons_to_fire)) then{
 		_requestor setVariable [format["Arti_%2_Cannon%1",_i,_side],nil,true];
 		_requestor setVariable [format["Arti_%2_Cannon%1summary",_i,_side],nil,true];
 	};
 };
 
-if(true) exitWith{
+if(true) exitWith
+{
 	_requestor setVariable ["requesting_cannons",nil,true];
 	MCC_server setVariable [format["Arti_%1_requestor",_side],ObjNull,true];
 };

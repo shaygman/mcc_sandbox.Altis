@@ -3,8 +3,10 @@ private ["_side","_null"];
 disableSerialization;
 
 _side = _this select 0;
-if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21)==1) then {_side = _side + 7};
+if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21)==2) then {_side = _side + 7};
 
+//Start respawn screen
+if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21)==1) then {MCC_openRespawnMenu = true; publicVariable "MCC_openRespawnMenu"};
 
 if !mcc_isloading then 
 {
@@ -23,7 +25,6 @@ if !mcc_isloading then
 					[[_pos, 0, 'west','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					
-					[[1], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 					mcc_safe=mcc_safe + FORMAT [""
 												MCC_START_WEST  = %1;
 												publicVariable 'MCC_START_WEST';
@@ -53,7 +54,6 @@ if !mcc_isloading then
 					[[_pos, 0, 'east','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					
-					[[0], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 					mcc_safe=mcc_safe + FORMAT [""
 												MCC_START_EAST  = %1;
 												publicVariable 'MCC_START_EAST';
@@ -80,10 +80,9 @@ if !mcc_isloading then
 					MCC_START_GUER  = _pos;
 					publicVariable ""MCC_START_GUER"";
 
-					[[_pos, 0, 'RESISTANCE','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'GUER','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					
-					[[2], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 					mcc_safe=mcc_safe + FORMAT [""
 												MCC_START_GUER  = %1;
 												publicVariable 'MCC_START_GUER';
@@ -91,7 +90,7 @@ if !mcc_isloading then
 												MCC_teleportAtStartGuer = %2;
 												publicVariable 'MCC_teleportAtStartGuer';
 												
-												[[MCC_START_GUER, 0, 'RESISTANCE','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+												[[MCC_START_GUER, 0, 'GUER','HQ',false], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 												""							  
 												,MCC_START_GUER
 												,MCC_teleportAtStartGuer
@@ -112,7 +111,6 @@ if !mcc_isloading then
 	
 					onMapSingleClick """";
 					
-					[[3], 'MCC_fnc_startLocations', true, false] spawn BIS_fnc_MP;
 					mcc_safe=mcc_safe + FORMAT [""
 												MCC_START_CIV  = %1;
 												publicVariable 'MCC_START_CIV';
@@ -215,7 +213,7 @@ if !mcc_isloading then
 		{ 
 			hint "click on map inorder to place the FOB"; 
 			onMapSingleClick "	
-					[[_pos, 0, 'RESISTANCE' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'GUER' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					mcc_safe=mcc_safe + FORMAT [""
 												[[%1, 0, 'RESISTANCE' ,'FOB',true], 'CP_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;

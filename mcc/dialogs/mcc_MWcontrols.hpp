@@ -475,7 +475,7 @@ class MCC_MWControls: MCC_RscControlsGroup
 		{
 			idc = -1;
 
-			text = "Music:"; //--- ToDo: Localize;
+			text = "Intro:"; //--- ToDo: Localize;
 			x = 0.189063 * safezoneW;
 			y = 0.28589 * safezoneH;
 			w = 0.06875 * safezoneW;

@@ -161,7 +161,7 @@ _comboBox lbSetCurSel CP_classesIndex;
 
 [] spawn 
 {
-	private ["_comboBox","_displayname","_index","_groups","_array","_oldCommander","_commander","_commanderName","_activeSides","_idc"];
+	private ["_comboBox","_displayname","_index","_groups","_array","_oldCommander","_commander","_commanderName","_activeSides","_idc","_units"];
 	disableSerialization;
 	_oldCommander = "";
 	while {(str (CP_SQUADPANEL_IDD displayCtrl 0) != "No control")} do 
@@ -291,7 +291,17 @@ _comboBox lbSetCurSel CP_classesIndex;
 				CP_squadPanelCreateSquadButton ctrlSetText "Create Squad";
 			};
 		
-		
+			
+			//Make the leader first in list
+			_units = units (CP_activeGroup select 0);
+			
+			if (count _units > 1) then
+			{
+				_leader = [leader (CP_activeGroup select 0)];
+				_units = _units - _leader;
+				_units = _leader + _units;
+			};
+			
 			_comboBox = CP_squadPanelPlayersList; 
 			lbClear _comboBox;
 			{
@@ -351,7 +361,7 @@ _comboBox lbSetCurSel CP_classesIndex;
 				_displayname = if (_x == leader (CP_activeGroup select 0)) then {format ["-=Leader=- %2 %1",name _x,_role]} else {format ["%2 %1",name _x,_role]};
 				_index = _comboBox lbAdd _displayname;
 				if (_x == player) then {_comboBox lbSetColor [_index, [0, 1, 0, 0.5]]};
-			} foreach units (CP_activeGroup select 0);
+			} foreach _units;
 		};
 		
 		sleep 0.1; 

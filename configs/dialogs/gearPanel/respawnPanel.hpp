@@ -53,7 +53,7 @@ class CP_RESPAWNPANEL {
 		};
 		class CP_respawnPanelButton: CP_RscButtonMenu
 		{
-			idc = -1;
+			idc = 27;
 			type = 16;
 			text = "Respawn"; //--- ToDo: Localize;
 			x = 0.15625 * safezoneW + safezoneX;
@@ -64,7 +64,7 @@ class CP_RESPAWNPANEL {
 		};
 		class CP_squadPanelButton: CP_RscButtonMenu
 		{
-			idc = -1;
+			idc = 28;
 			type = 16;
 			text = "Squad"; //--- ToDo: Localize;
 			x = 0.259375 * safezoneW + safezoneX;
@@ -76,7 +76,7 @@ class CP_RESPAWNPANEL {
 		};
 		class CP_gearPanelButton: CP_RscButtonMenu
 		{
-			idc = -1;
+			idc = 29;
 			type = 16;
 			text = "Gear"; //--- ToDo: Localize;
 			x = 0.3625 * safezoneW + safezoneX;
@@ -108,7 +108,7 @@ class CP_RESPAWNPANEL {
 		};
 		class CP_deployPanelButton: CP_RscButtonMenu
 		{
-			idc = -1;
+			idc = 32;
 			text = "Deploy"; //--- ToDo: Localize;
 			colorBackground[] = {1,0,0,0.3};
 			
@@ -122,7 +122,7 @@ class CP_RESPAWNPANEL {
 		};
 		class CP_respawnPanelRoleTittle: CP_RscText
 		{
-			idc = -1;
+			idc = 31;
 			text = "Role:"; //--- ToDo: Localize;
 			x = 0.3625 * safezoneW + safezoneX;
 			y = 0.280086 * safezoneH + safezoneY;
@@ -172,7 +172,7 @@ class CP_RESPAWNPANEL {
 		};
 		class CP_gearPanelPiPFake: CP_RscListBox
 		{
-			idc = -1;
+			idc = 30;
 			x = 0.614583 * safezoneW + safezoneX;
 			y = 0.291081 * safezoneH + safezoneY;
 			w = 0.275 * safezoneW;

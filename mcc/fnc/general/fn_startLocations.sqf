@@ -4,49 +4,74 @@
 // <IN>	side : integer - side number to take effect
 //<OUT>	Nothing
 //==============================================================================================================================================================================	
-private ["_playerClass","_playerSideNr","_safePos","_null","_side","_firstLoop"];
+private ["_playerClass","_playerSideNr","_safePos","_null","_side"];
 _side = _this select 0;
+if (!local player || missionNameSpace getVariable ["MCC_startLocationsRuning", false]) exitWith {};
 
 waituntil {alive player}; 
-sleep 1;
 
 _playerClass = typeOf player;
 _playerSideNr =  getNumber (configFile >> "CfgVehicles" >> _playerClass >> "side");
-_firstLoop = false; 
+
 if (isnil "_side") then 
 {
 	_side = _playerSideNr;
-	_firstLoop = true; 
 }; 
 
 if (_side !=  _playerSideNr) exitWith {};
 
+missionNameSpace setVariable ["MCC_startLocationsRuning", true];
+
 if (_playerSideNr == 1) then 
 { 
 	while {(isnil ("MCC_START_WEST"))} do {sleep 3};
+	missionNameSpace setVariable ["MCC_startLocationsRuning", false];
 	
-	if (MCC_teleportAtStartWest != 0) then
+	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",false]) then
 	{
-		if (surfaceIsWater (MCC_START_WEST)) then 
+		//Black Screen on mission startup
+		cutText ["","BLACK",0.1];
+		sleep 1;
+		player setVariable ["cpReady",false,true];
+		playerDeploy = false;
+		sleep 0.1;
+
+		_ok = createDialog "CP_RESPAWNPANEL";
+		if !(_ok) exitWith { hint "createDialog failed"; diag_log  "CP: create respawn Dialog failed";};
+
+		waituntil {playerDeploy};
+		closedialog 0; 
+		waituntil {!dialog};
+		//Respawning
+
+		player setVariable ["cpReady",true,true];
+	
+	
+	
+		if (MCC_teleportAtStartWest != 0) then
 		{
-			_safePos = [(MCC_START_WEST),1,50,1,2,900,0] call BIS_fnc_findSafePos;
-		} 
-		else 
-		{
-			_safePos = [(MCC_START_WEST),1,50,1,0,900,0] call BIS_fnc_findSafePos;
-		};
-		
-		//Teleport
-		if (MCC_teleportAtStartWest == 1) then
-		{
-			player setPosATL [_safepos select 0, _safepos select 1, 0];
-		}
-		else
-		{
-			private "_helo";
-			_helo = if (MCC_teleportAtStartWest ==2) then {false} else {true}; 
+			if (surfaceIsWater (playerDeployPos)) then 
+			{
+				_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+			} 
+			else 
+			{
+				_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+			};
 			
-			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
+			//Teleport
+			if (MCC_teleportAtStartWest == 1) then
+			{
+				cutText ["Deploying ....","BLACK IN",5];
+				player setPosATL [_safepos select 0, _safepos select 1, 0];
+			}
+			else
+			{
+				private "_helo";
+				_helo = if (MCC_teleportAtStartWest ==2) then {false} else {true}; 
+				
+				[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
+			};
 		};
 	};
 	
@@ -68,21 +93,42 @@ if (_playerSideNr == 0) then
   { 
 
 	while { (isnil ("MCC_START_EAST"))  } do {sleep 3};
+
+	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",false]) then
+	{
+		//Black Screen on mission startup
+		cutText ["","BLACK",0.1];
+		sleep 1;
+		player setVariable ["cpReady",false,true];
+		playerDeploy = false;
+		sleep 0.1;
+
+		_ok = createDialog "CP_RESPAWNPANEL";
+		if !(_ok) exitWith { hint "createDialog failed"; diag_log  "CP: create respawn Dialog failed";};
+
+		waituntil {playerDeploy};
+		closedialog 0; 
+		waituntil {!dialog};
+		//Respawning
+
+		player setVariable ["cpReady",true,true];
+	};
 	
 	if (MCC_teleportAtStartEast != 0) then
 	{
-		if (surfaceIsWater (MCC_START_EAST)) then 
+		if (surfaceIsWater (playerDeployPos)) then 
 		{
-			_safePos = [(MCC_START_EAST),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
 		} 
 		else 
 		{
-			_safePos = [(MCC_START_EAST),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
 		};
 		
 		//Teleport
 		if (MCC_teleportAtStartEast == 1) then
 		{
+			cutText ["Deploying ....","BLACK IN",5];
 			player setPosATL [_safepos select 0, _safepos select 1, 0];
 		}
 		else
@@ -112,20 +158,41 @@ if (_playerSideNr == 2) then
 	
 	while { (isnil ("MCC_START_GUER")) } do {sleep 3};
 
+	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",false]) then
+	{
+		//Black Screen on mission startup
+		cutText ["","BLACK",0.1];
+		sleep 1;
+		player setVariable ["cpReady",false,true];
+		playerDeploy = false;
+		sleep 0.1;
+
+		_ok = createDialog "CP_RESPAWNPANEL";
+		if !(_ok) exitWith { hint "createDialog failed"; diag_log  "CP: create respawn Dialog failed";};
+
+		waituntil {playerDeploy};
+		closedialog 0; 
+		waituntil {!dialog};
+		//Respawning
+
+		player setVariable ["cpReady",true,true];
+	};
+	
 	if (MCC_teleportAtStartGuer != 0) then
 	{
-		if (surfaceIsWater (MCC_START_GUER)) then 
+		if (surfaceIsWater (playerDeployPos)) then 
 		{
-			_safePos = [(MCC_START_GUER),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
 		} 
 		else 
 		{
-			_safePos = [(MCC_START_GUER),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
 		};
 		
 		//Teleport
 		if (MCC_teleportAtStartGuer == 1) then
 		{
+			cutText ["Deploying ....","BLACK IN",5];
 			player setPosATL [_safepos select 0, _safepos select 1, 0];
 		}
 		else
@@ -136,8 +203,6 @@ if (_playerSideNr == 2) then
 			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
 		};
 	};
-	
-	//if (CP_activated && !_firstLoop) then {_null=[] execVM CP_path + "scripts\player\player_init.sqf"};
 	
 	if (!isnil "MCC_StartMarkerG") then {deleteMarkerLocal MCC_StartMarkerG};
 	MCC_StartMarkerG = createMarkerLocal ["STARTLOCATIONG", (MCC_START_GUER)];
