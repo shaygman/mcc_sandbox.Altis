@@ -25,6 +25,7 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 		{
 			idc = MCC_UM_LIST;
 			rowHeight = 0.022;
+			style = MCCLB_MULTI;
 			colorBackground[] = { 0, 0, 0,1};
 			onSetFocus = "MCC_UMFocus = true";	
 			onKillFocus = "MCC_UMFocus = false";	
@@ -170,7 +171,7 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 
-			text = "*Hold Ctrl for multi-selection"; //--- ToDo: Localize;
+			text = "*Ctrl/Shift for multi-selection"; //--- ToDo: Localize;
 			x = 0.0791667 * safezoneW;
 			y = 0.0109958 * safezoneH;
 			w = 0.0916667 * safezoneW;

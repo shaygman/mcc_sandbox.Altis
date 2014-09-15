@@ -34,7 +34,7 @@ _cannonsObjects = [];
 	}
 	else
 	{
-		[_cannon,_splashpos,_firedelay,_artitype,_nrshells,_spread] spawn
+		[_cannon,_splashpos,_firedelay,_artitype,_nrshells,_spread,side _requestor] spawn
 		{
 			_cannon 	= _this select 0;
 			_splashpos 	= _this select 1;
@@ -42,10 +42,12 @@ _cannonsObjects = [];
 			_artitype 	= _this select 3;
 			_nrshells 	= _this select 4;
 			_spread 	= _this select 5;
+			_side	 	= _this select 6;
 			
 			_splashpos set [0, (_splashpos select 0) + (random _spread) - (random _spread)];
 			_splashpos set [1, (_splashpos select 1) + (random _spread) - (random _spread)];
 			
+			//[[[netid _cannon,_cannon], 0],"MCC_fnc_broadcast",_side, false] spawn BIS_fnc_MP;
 			for [{_i= 0},{_i < _nrshells},{_i = _i + 1}]  do
 			{
 				_splashpos set [0, (_splashpos select 0) + (random _spread) - (random _spread)];

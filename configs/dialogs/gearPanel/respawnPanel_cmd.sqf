@@ -10,6 +10,11 @@ disableSerialization;
 #define CP_deployPanelMiniMap (uiNamespace getVariable "CP_deployPanelMiniMap")
 #define CP_gearPanelPiP (uiNamespace getVariable "CP_gearPanelPiP")
 
+#define CP_RscMainXPUI (uiNamespace getVariable "CP_RscMainXPUI")
+#define messeges (uiNamespace getVariable "messeges")
+#define XPTitle (uiNamespace getVariable "XPTitle")
+#define XPValue (uiNamespace getVariable "XPValue")
+
 _cmd = _this select 0; 
 
 switch (_cmd) do
@@ -195,5 +200,22 @@ switch (_cmd) do
 			[(lbCurSel CP_respawnPanelRoleCombo),0] call CP_fnc_setGear; 
 			[CP_gearPanelPiP] call MCC_fnc_pipOpen;
 			CP_gearPanelPiP ctrlSetText "#(argb,512,512,1)r2t(rendertarget7,1.0);";
+			
+			//Set XP
+			_role = player getvariable "CP_role";
+			if (isnil "_role") exitWith {}; 
+			
+			_exp 	 = call compile format  ["%1Level select 1",_role]; 
+			if (isnil "_exp") exitWith {}; 	
+
+			if (_exp < 0) then {_exp = 0};
+			_oldLevel = call compile format  ["%1Level select 0",_role]; 
+			_html = "<t color='#818960' size='2' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
+			messeges ctrlSetStructuredText parseText _html;
+			
+			_level =[floor(_exp/(CP_XPperLevel + _oldLevel*100))+1 ,_exp];
+			_needXP =(CP_XPperLevel + _oldLevel*100)+_exp;
+
+			XPValue progressSetPosition (_exp/_needXP);
 		};
 	};

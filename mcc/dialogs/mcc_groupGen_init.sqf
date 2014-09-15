@@ -95,13 +95,18 @@ _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline
 _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Open 3D Editor: ALT + LMB on map. </t><br/><br/>";
 _html = _html + "<t color='#fefefe' size='1' shadow='1' align='center' underline='true'>GROUPS: </t><br/>";
 _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Assign Waypoint: Select a group and double Click on map. </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Assign Quick Waypoint: Select groups hold Ctrl + double Click on map. </t><br/>";
 _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Groups' multi-select: Hold and drag on map. </t><br/>";
 _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Group Info:  Righ Click on Group's icon. </t><br/><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Delete Selected Groups: Press the Delete button </t><br/><br/>";
 _html = _html + "<t color='#fefefe' size='1' shadow='1' align='center' underline='true'>ZONES: </t><br/>";
-_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Select Zone: Left Click on Zone's icon. </t><br/>";
-_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Move Zone: Click on Zone's icon and drag. </t><br/>";
-_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Resize Zone: Shift + click on Zone's icon and drag. </t><br/>";
-_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Rotate Zone: Ctrl + click on Zone's icon and rotate. </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Select Zone: Left Click on Zone's icon.</t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Move Zone: Click on Zone's icon and drag.</t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Resize Zone: Shift + click on Zone's icon and drag.</t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Rotate Zone: Ctrl + click on Zone's icon and rotate. </t><br/><br/>";
+_html = _html + "<t color='#fefefe' size='1' shadow='1' align='center' underline='true'>IED: </t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Manual Detonate: Ctrl + Left mouse button on an IED icon.</t><br/>";
+_html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Sync IEDs: Drag a line between two IEDs while holding Shift + Left mouse button.</t><br/>";
 		
 _comboBox ctrlSetStructuredText parseText _html;	
 

@@ -19,6 +19,14 @@ class MCC_GroupGenInfo:MCC_RscControlsGroup
 
 	class Controls
 	{
+		class MCC_GroupGenInfoText2: MCC_RscText
+		{
+			idc = 9013111;
+			colorBackground[] = {0,0,0,0.95};
+			w = 0.17 * safezoneW;
+			h = 0.23 * safezoneH;
+		};
+		
 		class MCC_GroupGenInfoText: MCC_RscStructuredText
 		{
 			idc = MCC_GroupGenInfoText_IDC;

@@ -27,7 +27,6 @@ if (("players" in MCC_groupGenGroupStatus) && (count MCC_groupGenGroupStatus == 
 			{
 				_displayname = format ["(Player) - %1",name _x];
 				_index = lbAdd [MCC_UM_LIST,_displayname];
-				if (_x in MCC_selectedUnits) then {lbSetColor [MCC_UM_LIST,_index, [0, 1, 1, 1]]};
 				MCC_UMunitsNames = MCC_UMunitsNames + [_x];
 			};
 		} forEach  allUnits;
@@ -39,7 +38,6 @@ if (("players" in MCC_groupGenGroupStatus) && (count MCC_groupGenGroupStatus == 
 			{
 				_displayname = format ["(Players) - %1",_x];
 				_index = lbAdd [MCC_UM_LIST,_displayname];
-				if (_x in MCC_selectedUnits) then {lbSetColor [MCC_UM_LIST,_index, [0, 1, 1, 1]]};
 				UMgroupNames = UMgroupNames + [_x];
 			};
 		} forEach  allgroups;
@@ -68,7 +66,6 @@ if (MCC_UMUnit==0) then
 				if ((_x != vehicle _x) && ((gunner (vehicle _x))==_x)) then {_displayname =  format ["%1 (Gunner)",_displayname]};
 				if ((_x != vehicle _x) && ((commander (vehicle _x))==_x)) then {_displayname =  format ["%1 (Commander)",_displayname]};
 				_index = lbAdd [MCC_UM_LIST,_displayname];
-				if (_x in MCC_selectedUnits) then {lbSetColor [MCC_UM_LIST,_index, [0, 1, 1, 1]]};
 				MCC_UMunitsNames = MCC_UMunitsNames + [_x];
 			};
 		} forEach units _group;
@@ -82,7 +79,6 @@ else
 			_displayname =  format ["%1", _x];
 			if (isPlayer leader _x) then {_displayname = format ["(Players) - %1",_displayname]};
 			_index = lbAdd [MCC_UM_LIST,_displayname];
-			if (_x in MCC_selectedUnits) then {lbSetColor [MCC_UM_LIST,_index, [0, 1, 1, 1]]};
 			UMgroupNames = UMgroupNames + [_x];
 		};
 	} forEach  MCC_GroupGenGroupSelected;

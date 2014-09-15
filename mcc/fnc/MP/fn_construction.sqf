@@ -1,7 +1,8 @@
 //==================================================================MCC_fnc_construction===============================================================================================
 // Example:[_question, _header , _variable] call MCC_fnc_construction;
 //==================================================================================================================================================================================
-private ["_conType","_pos","_time","_side","_reqCrates","_vehicleType","_baseAnchor","_markerName","_markerType","_text","_complete","_newObjects","_const","_bagFence","_dir"];
+private ["_conType","_pos","_time","_side","_reqCrates","_vehicleType","_baseAnchor","_markerName","_markerType","_text","_complete","_newObjects","_const",
+         "_bagFence","_dir"];
 		 
 _conType	=_this select 0;
 _pos	 	=_this select 1;
@@ -10,7 +11,6 @@ _dir	 	=call compile (_this select 3);
 
 #define REQUIRE_MEMBERS 3
 #define ANCHOR_ITEM "Land_FishingGear_01_F"
-#define SUPPLY_CRATEITEM "Land_PaperBox_closed_F"
 #define TIME_BEFORE_DELETE 1200
 
 switch (_conType) do 
@@ -72,6 +72,8 @@ _pos set [2,0];
 //Create the base item
 _time = time; 
 _baseAnchor = ANCHOR_ITEM createVehicle _pos;
+_baseAnchor setVariable ["MCC_conType",_conType,true]; 
+_baseAnchor setVariable ["MCC_side",_side,true]; 
 
 
 //Create marker
@@ -90,7 +92,7 @@ while {alive _baseAnchor && time < (_time + TIME_BEFORE_DELETE) && !_complete} d
 	//How many players from my side are near
 	if (floor time % 10 == 0) then
 	{
-		_nearbyCrates = getPosATL _baseAnchor nearObjects ["Land_PaperBox_closed_F", 50];
+		_nearbyCrates = getPosATL _baseAnchor nearObjects [MCC_SUPPLY_CRATEITEM, 50];
 		_nearbyMen = {alive _x && {side _x == _side}} count (getPosATL _baseAnchor nearEntities ["CAManBase", 50]);
 		
 		if (_nearbyMen > REQUIRE_MEMBERS && count _nearbyCrates > 0) then

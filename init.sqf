@@ -51,6 +51,9 @@ if (isnil "MCC_AI_Aim") then {MCC_AI_Aim = 0.1};
 if (isnil "MCC_AI_Spot") then {MCC_AI_Spot	= 0.3}; 
 if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5}; 
 
+//Allow start location dialog on JIP or after respawn
+MCC_openRespawnMenu = true; 
+
 //---------------------Name Tags---------------------------------------------------
 // Show friendly name tags and vhicles' crew info - default - off
 if (isnil "MCC_nameTags") then {MCC_nameTags = false}; 
@@ -83,6 +86,12 @@ if (isnil "CP_maxSquads") then {CP_maxSquads = 10}; 									//Max squads per si
 if (isnil "MCC_ticketsWest") then {MCC_ticketsWest = 200};
 if (isnil "MCC_ticketsEast") then {MCC_ticketsEast = 200};
 if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
+
+//--------------------Default resources -------------------------------------------------------
+//[East,West,Ind]
+if (isnil "MCC_sideAmmo") then {MCC_sideAmmo = [200,200,200]};
+if (isnil "MCC_sideRepair") then {MCC_sideRepair = [500,500,500]};
+if (isnil "MCC_sideFuel") then {MCC_sideFuel = [0,0,0]};
 
 //----------------- Teleport 2 Team -----------------------------------------------------------------------------
 if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- AfterRespawn, 3-Always
@@ -247,6 +256,7 @@ MCC_supplyAttachPoints = [
 							[[0,0.2,0],[0,-1.3,0],[0,-2.8,0]]
 						 ];
 
+MCC_SUPPLY_CRATEITEM = "Land_PaperBox_closed_F";
 //----------------------gaia------------------------------------------------------
 call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];
 

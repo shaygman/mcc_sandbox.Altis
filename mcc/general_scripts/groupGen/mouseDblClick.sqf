@@ -22,7 +22,7 @@ _alt = _params select 6;
 //Define which control
 _mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 if (isnil "MCC_GroupGenGroupSelected") then {MCC_GroupGenGroupSelected = []};
-if ((_button == 0) && (count MCC_GroupGenGroupSelected > 0))  then 								//Close Group info control
+if ((_button == 0) && (count MCC_GroupGenGroupSelected > 0) && !_ctrlKey)  then 								//Close Group info control
 {
 	//worldPos
 	MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
@@ -77,4 +77,15 @@ if ((_button == 0) && (count MCC_GroupGenGroupSelected > 0))  then 								//Clo
 	_comboBox lbSetCurSel 0;
 };	
 
+//Quick WP
+if (_button == 0 && _ctrlKey && (count MCC_GroupGenGroupSelected > 0)) then 			
+{
+	private "_pos";
+
+	_pos = _ctrl ctrlmapscreentoworld [_posX,_posY];	
+
+	//Call the server to handle WP
+	[[1,_pos,[0,"NO CHANGE","NO CHANGE","NO CHANGE","NO CHANGE","true","",0],MCC_GroupGenGroupSelected],"MCC_fnc_manageWp", false, false] spawn BIS_fnc_MP;	
+};
+	
 MCC_doubleClicked = false;				

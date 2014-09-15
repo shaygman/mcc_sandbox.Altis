@@ -10,7 +10,7 @@
 private ["_side","_size","_destructable","_building","_dummy","_sphere","_dir","_animate","_flag","_flagTex","_name"];
 _pos			= _this select 0; 
 _dir			= _this select 1; 
-_side 			= toupper (_this select 2);			
+_side 			= _this select 2;			
 _size 			= toupper (_this select 3);			
 _destructable	= _this select 4; 
 _animate		= if (count _this > 5) then {_this select 5} else {false};
@@ -20,14 +20,17 @@ _animate		= if (count _this > 5) then {_this select 5} else {false};
 
 if (isServer) then 
 {
-	_side = switch (_side) do	
-					{
-						case "WEST":		{west};
-						case "EAST":		{east};
-						case "GUER":	{resistance};
-						default     	{civilian};
-					};
-						
+	if (typeName _side == "STRING") then
+	{
+		_side = switch (toupper _side) do	
+						{
+							case "WEST":		{west};
+							case "EAST":		{east};
+							case "GUER":	{resistance};
+							default     	{civilian};
+						};
+	};
+	
 	//animate the process of building a FOB
 	if (_animate) then
 	{

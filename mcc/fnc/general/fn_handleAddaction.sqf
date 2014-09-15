@@ -20,7 +20,7 @@ _string = format ["(leader _this == _this) && ('ItemGPS' in (assignedItems _this
 _null = player addaction ["<t color=""#FFCC01"">Squad Leader - PDA</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,3],-1,false,true,"teamSwitch",_string];
 
 //Add MCC supply truck
-_string = format ["(_this == driver vehicle _this) && (typeof vehicle _this in %2) && ((vehicle _this distance MCC_START_%1) < 50)",side player,MCC_supplyTracks]; 
+_string = format ["(_this == driver vehicle _this) && (typeof vehicle _this in %2) && ((vehicle _this distance MCC_START_%1) < 50) && speed vehicle _this ==0",side player,MCC_supplyTracks]; 
 _null = player addaction ["<t color=""#0134ff"">Load Truck</t>", MCC_path + "mcc\general_scripts\logistics\load.sqf",[nil,nil,nil,nil,3],-1,false,true,"teamSwitch",_string];
 
 // Add MCC to the action menu

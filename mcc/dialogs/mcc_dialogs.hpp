@@ -237,6 +237,21 @@ class MCC_RscControlsGroup
 	};
 };
 
+class MCC_RscProgress
+{ 
+	access = 0;
+	colorBar[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])","(profilenamespace getvariable ['GUI_BCG_RGB_A',0.8])"};
+	colorFrame[] = {0,0,0,0};
+	h = 0.0261438;
+	shadow = 2;
+	style = 0;
+	texture = "\A3\ui_f\data\GUI\RscCommon\RscProgress\progressbar_ca.paa";
+	type = 8;
+	w = 0.313726;
+	x = 0.344;
+	y = 0.619;	
+};
+
 class MCC_RscButton 
 {
   access = 0;
@@ -413,7 +428,7 @@ class RscButtonMenuCancel : RscButtonMenuOK
 };
 
 class MCC_RscListbox 
-	{
+{
 	access = 0;
 	arrowEmpty = "#(argb,8,8,3)color(1,1,1,1)";
 	arrowFull = "#(argb,8,8,3)color(1,1,1,1)";
@@ -460,8 +475,59 @@ class MCC_RscListbox
 			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
 			width = 0;
 		};
-	};
+};
 
+class MCC_RscListNbox 
+{
+	access = 0;
+	arrowEmpty = "#(argb,8,8,3)color(1,1,1,1)";
+	arrowFull = "#(argb,8,8,3)color(1,1,1,1)";
+	autoScrollDelay = 5;
+	autoScrollRewind = 0;
+	autoScrollSpeed = -1;
+	color[] = {1,1,1,1};
+	colorBackground[] = {0,0,0,0.3};
+	colorDisabled[] = {1,1,1,0.25};
+	colorScrollbar[] = {1,0,0,0};
+	colorSelect2[] = {0,0,0,1};
+	colorSelect[] = {0,0,0,1};
+	colorSelectBackground2[] = {1,1,1,0.5};
+	colorSelectBackground[] = {0.95,0.95,0.95,1};
+	colorShadow[] = {0,0,0,0.5};
+	colorText[] = {1,1,1,1};
+	font = "PuristaMedium";
+	h = 0.8;
+	maxHistoryDelay = 1;
+	period = 1.2;
+	rowHeight = 0.03;
+	shadow = 0;
+	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	soundSelect[] = {"\A3\ui_f\data\sound\RscListbox\soundSelect",0.09,1};
+	type = 102; 
+	style = 16; 
+	w = 0.4;
+	blinkingPeriod = 0;
+	columns[] = {0.1,0.4};
+	
+	class ListScrollBar
+		{
+			arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+			arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+			autoScrollDelay = 5;
+			autoScrollEnabled = 0;
+			autoScrollRewind = 0;
+			autoScrollSpeed = -1;
+			border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+			color[] = {1,1,1,0.6};
+			colorActive[] = {1,1,1,1};
+			colorDisabled[] = {1,1,1,0.3};
+			height = 0;
+			scrollSpeed = 0.06;
+			shadow = 0;
+			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+			width = 0;
+		};
+};
 
 class MCC_RscTree 
 {
@@ -520,16 +586,20 @@ class MCC_RscCombo
 	colorScrollbar[] = {1,0,0,1};
 	colorSelect[] = {0,0,0,1};
 	colorSelectBackground[] = {1,1,1,0.7};
+	colorPictudeDisabled[] = {1,1,1,0.25};
+	colorPicture[] = {1,1,1,1};
 	colorText[] = {0.95,0.95,0.95,1};
+	colorPictureDisabled[] = {1,1,1,1};
+	colorPictureSelected[] = {1,1,1,1};
 	font = "PuristaMedium";
 	h = 0.035;
 	maxHistoryDelay = 1;
 	shadow = 0;
 	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	soundCollapse[] = {"",0.1,1};
-	soundExpand[] = {"",0.1,1};
-	soundSelect[] = {"",0.1,1};
-	style = 16;
+	soundCollapse[] = {"\A3\ui_f\data\sound\RscCombo\soundCollapse",0.1,1};
+	soundExpand[] = {"\A3\ui_f\data\sound\RscCombo\soundExpand",0.1,1};
+	soundSelect[] = {"\A3\ui_f\data\sound\RscCombo\soundSelect",0.1,1};
+	style = "0x10 + 0x200";
 	type = 4;
 	w = 0.12;
 	wholeHeight = 0.45;

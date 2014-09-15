@@ -4,12 +4,13 @@
 
 disableSerialization;
 
-private ["_type", "_name", "_worldPos","_dummy", "_unitpos", "_ok", "_markerColor", "_leader", "_markerType", "_tempMarkers", "_tempLines", "_tempVehicles",
+private ["_type", "_name", "_worldPos","_dummy", "_unitpos", "_ok", "_markerColor", "_leader", "_markerType", "_tempMarkers", "_tempLines", "_tempVehicles","_indices",
 		"_targetUnit","_oldUnit","_group","_params","_ctrl","_pressed","_shift","_ctrlKey","_mccdialog","_comboBox","_nul","_dummyUnit","_control","_cam","_side"];
 
 _mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
 _comboBox = _mccdialog displayCtrl MCC_UM_LIST;
 _type = _this select 0;
+_indices = lbSelection _comboBox;
 
 switch (_type) do
 	{
@@ -297,58 +298,19 @@ switch (_type) do
 
 		case 8:	//Multi-Selection
 		{
-			_params = _this select 1;
-
-			_ctrl = _params select 0;
-			_pressed = _params select 1;
-			_shift = _params select 4;
-			_ctrlKey = _params select 5;
-			
 			if (MCC_UMUnit==0) then // Units selection
 			{
-				if ((lbCurSel MCC_UM_LIST) == -1) exitWith {}; 
-				if (_ctrlKey) then 
+				MCC_selectedUnits = [];
 				{
-					if !((MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)) in MCC_selectedUnits) then
-					{
-						MCC_selectedUnits = MCC_selectedUnits + [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
-					} 
-					else 
-					{
-						MCC_selectedUnits = MCC_selectedUnits - [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
-					};
-				} 
-				else 
-				{
-					MCC_selectedUnits = [MCC_UMunitsNames select (lbCurSel MCC_UM_LIST)];
-				};
-			};
-						
-			if (MCC_UMUnit==1) then // Groups selection
+					MCC_selectedUnits set [count MCC_selectedUnits, MCC_UMunitsNames select _x];
+				} foreach _indices;
+			}
+			else
 			{
-				if (_ctrlKey && ((lbCurSel MCC_UM_LIST) != -1)) then 
+				MCC_selectedUnits = [];
 				{
-					if !((UMgroupNames select (lbCurSel MCC_UM_LIST)) in MCC_selectedUnits) then
-					{
-						MCC_selectedUnits = MCC_selectedUnits + [UMgroupNames select (lbCurSel MCC_UM_LIST)];
-						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
-					} 
-					else 
-					{
-						MCC_selectedUnits = MCC_selectedUnits - [UMgroupNames select (lbCurSel MCC_UM_LIST)];
-						lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [1, 1, 1, 1]];
-					};
-				}
-				else 
-				{
-					MCC_selectedUnits = [UMgroupNames select (lbCurSel MCC_UM_LIST)];
-					for [{_x=0},{_x<(lbSize MCC_UM_LIST)},{_x=_x+1}] do 
-					{
-						lbSetColor [MCC_UM_LIST, _x, [1, 1, 1, 1]];
-					};  //MCC BUG -> missing ;
-					lbSetColor [MCC_UM_LIST, (lbCurSel MCC_UM_LIST), [0, 1, 1, 1]];
-					//hint format ["%1", MCC_selectedUnits];
-				};
+					MCC_selectedUnits set [count MCC_selectedUnits, UMgroupNames select _x];
+				} foreach _indices;
 			};
 		};
 

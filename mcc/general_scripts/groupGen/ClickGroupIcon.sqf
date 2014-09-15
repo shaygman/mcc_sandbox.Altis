@@ -162,15 +162,16 @@ if (_button == 1) then 											//Right click - get info
 			};
 		};
 		
-		//Prase the text :)
-		(_mccdialog displayctrl MCC_GroupGenInfoText_IDC) ctrlSetStructuredText parseText _html;
-		
 		private ["_UIFactor","_ctrl","_displayname"]; 
+		
 		_UIFactor = (0.02 * _lineCounter)* safezoneH;
 		
-				
-	
-
+		//Prase the text :)
+		_ctrl = _mccdialog displayctrl MCC_GroupGenInfoText_IDC;
+		_ctrl ctrlSetStructuredText parseText _html;
+		_ctrl ctrlSetPosition [0, 0,0.17 * safezoneW, _UIFactor + (0.07 * safezoneH)];
+		_ctrl ctrlCommit 0;
+		
 		//Reveal GAIA Zone
 		_ctrl = _mccdialog displayctrl MCC_GroupGenInfo_zone_IDC;
 		_ctrl ctrlSetPosition [(0.002 * safezoneW), _UIFactor + (0.07 * safezoneH) ,0.0458333 * safezoneW,0.0219914 * safezoneH];

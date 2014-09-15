@@ -29,9 +29,15 @@ uiNamespace setVariable ["CP_side2", _disp displayCtrl 23];
 uiNamespace setVariable ["CP_side2Score", _disp displayCtrl 24];
 uiNamespace setVariable ["CP_side3", _disp displayCtrl 25];
 uiNamespace setVariable ["CP_side3Score", _disp displayCtrl 26];
+uiNamespace setVariable ["CP_respawnPanelRoleTittle", _disp displayCtrl 27];
 
 uiNamespace setVariable ["CP_respawnPanelRoleCombo", _disp displayCtrl 99];
 uiNamespace setVariable ["CP_deployPanelButton", _disp displayCtrl 98];
+
+uiNamespace setVariable ["CP_RscMainXPUI", _disp displayCtrl 101];
+uiNamespace setVariable ["messeges", _disp displayCtrl 102];
+uiNamespace setVariable ["XPTitle", _disp displayCtrl 103];
+uiNamespace setVariable ["XPValue", _disp displayCtrl 104];
 
 #define CP_SQUADPANEL_IDD (uiNamespace getVariable "CP_SQUADPANEL_IDD") 
 #define CP_squadPanelSquadList (uiNamespace getVariable "CP_squadPanelSquadList")
@@ -60,9 +66,15 @@ uiNamespace setVariable ["CP_deployPanelButton", _disp displayCtrl 98];
 #define CP_side2Score (uiNamespace getVariable "CP_side2Score")
 #define CP_side3 (uiNamespace getVariable "CP_side3")
 #define CP_side3Score (uiNamespace getVariable "CP_side3Score")
+#define CP_respawnPanelRoleTittle (uiNamespace getVariable "CP_respawnPanelRoleTittle")
 
 #define CP_respawnPanelRoleCombo (uiNamespace getVariable "CP_respawnPanelRoleCombo")
 #define CP_deployPanelButton (uiNamespace getVariable "CP_deployPanelButton")
+
+#define CP_RscMainXPUI (uiNamespace getVariable "CP_RscMainXPUI")
+#define messeges (uiNamespace getVariable "messeges")
+#define XPTitle (uiNamespace getVariable "XPTitle")
+#define XPValue (uiNamespace getVariable "XPValue")
 
 CP_respawnPanelOpen = false;
 
@@ -78,6 +90,7 @@ if (MCC_squadDialogOpen) then
 	CP_squadButton ctrlShow false;
 	CP_gearButton ctrlShow false;
 	CP_switchSideButton ctrlShow false;
+	CP_respawnPanelRoleTittle ctrlShow false;
 	CP_respawnPanelBckg ctrlSetBackgroundColor [0, 0, 0, 0.5];
 }
 else
@@ -103,6 +116,27 @@ if (CP_activated) then
 		ctrlSetText [_idc, str _x];
 		_idc = _idc + 2;
 	} foreach _activeSides;	
+	
+	//Set XP
+	_role = player getvariable "CP_role";
+	if (isnil "_role") exitWith {}; 
+	
+	_exp 	 = call compile format  ["%1Level select 1",_role]; 
+	if (isnil "_exp") exitWith {}; 	
+
+	if (_exp < 0) then {_exp = 0};
+	_oldLevel = call compile format  ["%1Level select 0",_role]; 
+	_html = "<t color='#818960' size='2' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
+	messeges ctrlSetStructuredText parseText _html;
+	
+	_level =[floor(_exp/(CP_XPperLevel + _oldLevel*100))+1 ,_exp];
+	_needXP =(CP_XPperLevel + _oldLevel*100)+_exp;
+
+	XPValue progressSetPosition (_exp/_needXP);
+}
+else
+{
+	CP_RscMainXPUI ctrlShow false;
 };
 
 //Commander

@@ -51,9 +51,12 @@ Engine:
 				- GAIA Caching distance
 				- GAIA unit controlls
 				- GAIA AI artillery Delay
+	- Added: Quick waypoint issuing in the MCC comander console and MCC - hold ctrl + double clicking on the map. 
 	- Added: New parameter for MCC to delete dead players body after respawn "MCC_deletePlayersBody" Boolean - by default false. - added to mission settings
 	- Changed: Zeus edit object dialog is now moveable. 
 	- Changed: Teleport to team will teleport you to an empty seat in the vehicle the unit you have teleported too is in. If there are no empty seats then you'll not be teleported. 
+	- Changed: Unit Managment multi selection moved to BIS default multi-selection list box = better performance. 
+	- Fixed: Missing pictures in the combobox.
 	- Fixed: Vehicle spawned by MCC 3D editor teleport to their spawn position once a new player join in. 
 	- Fixed: MCC couldn't read some groups' configs from addons. 
 	- Fixed: Custom Cargo didn't show for all clients. 

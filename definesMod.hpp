@@ -465,6 +465,11 @@ class CfgFunctions
 				description = "Broadcast artillery solution high or low";
 			};
 			
+			class consoleFireArtillery
+			{
+				description = "Broadcast artillery to artillery units";
+			};
+			
 		};
 		
 		class console

@@ -389,7 +389,7 @@ class mcc_groupGen
 				{
 					idc = 303;
 					w = 0.194792 * safezoneW;
-					h = 0.35 * safezoneH;
+					h = 0.5 * safezoneH;
 				};
 			};
 		};

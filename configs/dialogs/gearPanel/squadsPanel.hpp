@@ -49,7 +49,8 @@ class CP_SQUADPANEL {
 		CP_side2,
 		CP_side2Score,
 		CP_side3,
-		CP_side3Score
+		CP_side3Score,
+		CP_RscMainXPUI
 	  };
 	  
 		class CP_exitButton: CP_RscButtonMenu
@@ -331,7 +332,7 @@ class CP_SQUADPANEL {
 		
 		class CP_respawnPanelRoleTittle: CP_RscText
 		{
-			idc = -1;
+			idc = 27;
 			text = "Role:"; //--- ToDo: Localize;
 			x = 0.3625 * safezoneW + safezoneX;
 			y = 0.280086 * safezoneH + safezoneY;
@@ -437,5 +438,50 @@ class CP_SQUADPANEL {
 			y = 0.240501 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
 			h = 0.0219914 * safezoneH;
+		};
+		
+		class CP_RscMainXPUI: MCC_RscControlsGroupNoScrollbars
+		{
+			idc = 101;
+			x = "25 * 			(			((safezoneW / safezoneH) min 1.2) / 40) + 			(safezoneX)";
+			y = "(safezoneY + (safezoneH*0.9))";
+			w = "23 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
+			h = "6 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+			class controls
+			{
+				class messeges: MCC_RscStructuredText
+				{
+					idc =102;
+					text = "";
+					x = "2.1 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
+					y = "0.5 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					w = "20 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
+					h = "2 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					colorBackground[] = {0,0,0,0.3};
+				};
+				
+				class XPTitle: MCC_RscText
+				{
+					idc =103;
+					text = "XP";
+					x = "-0.2 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
+					y = "3 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					w = "2 * 			(			((safezoneW / safezoneH) min 1.2) / 60)";
+					h = "1 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					colorBackground[] = {0,0,0,0.3};
+				};
+				
+				class XPValue: MCC_RscProgress
+				{
+					idc = 104;
+					x = "2.1 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
+					y = "3 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					w = "20 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
+					h = "1 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					colorBar[] = {0,0,0.8,0.6};
+					colorFrame[] = {1,1,1,0.8};
+					colorBackground[] = {0,0,0,0.3};
+				};
+			};
 		};
 	};

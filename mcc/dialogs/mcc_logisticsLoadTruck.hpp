@@ -12,7 +12,6 @@ class MCC_LOGISTICS_LOAD_TRUCK
 
 	controlsBackground[] = 
 	{
-		MCC_loadTruckbckgs
 	};
 
 
@@ -26,91 +25,121 @@ class MCC_LOGISTICS_LOAD_TRUCK
 		class MCC_loadTruckbckgs: MCC_RscText
 		{
 			idc = -1;
-			colorBackground[] = { 0.051, 0.051, 0.051,1};
+			colorBackground[] = { 0.051, 0.051, 0.051,0.8};
 			x = 0.270833 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.458333 * safezoneW;
 			h = 0.55 * safezoneH;
 		};
-
-		class MCC_loadTruckC1: MCC_RscListbox
+		
+		class MCC_loadTruckC1Minus: MCC_RscButton
+		{
+			idc = 1000;
+			text = "-";
+			borderSize = 0;
+			colorShadow[] = {0,0,0,0};
+		};
+		
+		class MCC_loadTruckC1Plus: MCC_loadTruckC1Minus
+		{
+			idc = 1001;
+			text = "+";
+		};
+		
+		class MCC_loadTruckC1: MCC_RscListNbox
 		{
 			idc = 0;
-			x = 0.316667 * safezoneW + safezoneX;
-			y = 0.39 * safezoneH + safezoneY;
-			w = 0.0859375 * safezoneW;
-			h = 0.165 * safezoneH;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.131771 * safezoneW;
+			h = 0.176 * safezoneH;
+
+			drawSideArrows = 1; 
+			idcLeft = 1000;
+			idcRight = 1001; 
 		};
-		class MCC_loadTruckC2: MCC_RscListbox
-		{
-			idc = 1;
-			x = 0.448438 * safezoneW + safezoneX;
-			y = 0.39 * safezoneH + safezoneY;
-			w = 0.0859375 * safezoneW;
-			h = 0.165 * safezoneH;
-		};
-		class MCC_loadTruckC3: MCC_RscListbox
-		{
-			idc = 2;
-			x = 0.574479 * safezoneW + safezoneX;
-			y = 0.39 * safezoneH + safezoneY;
-			w = 0.0859375 * safezoneW;
-			h = 0.165 * safezoneH;
-		};
+
 		class MCC_loadTruckTittle: MCC_RscText
 		{
 			idc = -1;
 			text = "Load Truck"; //--- ToDo: Localize;
-			x = 0.43125 * safezoneW + safezoneX;
-			y = 0.291 * safezoneH + safezoneY;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.247 * safezoneH + safezoneY;
 			w = 0.131771 * safezoneW;
 			h = 0.066 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 2)";
 		};
-		class MCC_loadTruckSupplies: MCC_RscText
+		class MCC_loadTruckRepairText: MCC_RscText
+		{
+			idc = 1;
+
+			x = 0.488542 * safezoneW + safezoneX;
+			y = 0.335 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.033 * safezoneH;
+		};
+		class MCC_loadTruckSuppliesText: MCC_RscText
+		{
+			idc = 2;
+
+			x = 0.356771 * safezoneW + safezoneX;
+			y = 0.335 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
+			h = 0.033 * safezoneH;
+		};
+		class MCC_loadTruckFuelText: MCC_RscText
 		{
 			idc = 3;
-			text = "Supplies:"; //--- ToDo: Localize;
-			x = 0.436979 * safezoneW + safezoneX;
-			y = 0.236 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
+
+			x = 0.614583 * safezoneW + safezoneX;
+			y = 0.335 * safezoneH + safezoneY;
+			w = 0.0458333 * safezoneW;
 			h = 0.033 * safezoneH;
 		};
-		class MCC_loadTruckRepair: MCC_RscText
+		class MCC_loadTruckSupplies: MCC_RscPicture
 		{
-			idc = 4;
-			text = "Repair:"; //--- ToDo: Localize;
-			x = 0.574479 * safezoneW + safezoneX;
-			y = 0.236 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
+			idc = -1;
+			text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
+			x = 0.322396 * safezoneW + safezoneX;
+			y = 0.335 * safezoneH + safezoneY;
+			w = 0.03 * safezoneW;
 			h = 0.033 * safezoneH;
 		};
-		class MCC_loadTruckFuel: MCC_RscText
+		class MCC_loadTruckRepair: MCC_RscPicture
 		{
-			idc = 5;
-			text = "Fuel:"; //--- ToDo: Localize;
-			x = 0.299479 * safezoneW + safezoneX;
-			y = 0.236 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
+			idc = -1;
+			text =  __EVAL(MCCPATH +"data\IconRepair.paa");
+			x = 0.454167 * safezoneW + safezoneX;
+			y = 0.335 * safezoneH + safezoneY;
+			w = 0.03 * safezoneW;
+			h = 0.033 * safezoneH;
+		};
+		class MCC_loadTruckFuel: MCC_RscPicture
+		{
+			idc = -1;
+			text =  __EVAL(MCCPATH +"data\IconFuel.paa");
+			x = 0.580208 * safezoneW + safezoneX;
+			y = 0.335 * safezoneH + safezoneY;
+			w = 0.03 * safezoneW;
 			h = 0.033 * safezoneH;
 		};
 		class MCC_loadTruckLoadButton: MCC_RscButton
 		{
-			idc = 6;
+			idc = 4;
 			text = "Load"; //--- ToDo: Localize;
-			x = 0.414063 * safezoneW + safezoneX;
-			y = 0.599 * safezoneH + safezoneY;
-			w = 0.166146 * safezoneW;
-			h = 0.066 * safezoneH;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.61 * safezoneH + safezoneY;
+			w = 0.131771 * safezoneW;
+			h = 0.055 * safezoneH;
 		};
 		class MCC_loadTruckOutpot: MCC_RscText
 		{
-			idc = 7;
+			idc = 5;
 			text = ""; //--- ToDo: Localize;
 			x = 0.356771 * safezoneW + safezoneX;
-			y = 0.676 * safezoneH + safezoneY;
-			w = 0.263542 * safezoneW;
-			h = 0.066 * safezoneH;
+			y = 0.687 * safezoneH + safezoneY;
+			w = 0.257813 * safezoneW;
+			h = 0.044 * safezoneH;
 		};
 	};
 };

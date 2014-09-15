@@ -3,10 +3,7 @@ private ["_side","_null"];
 disableSerialization;
 
 _side = _this select 0;
-if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21)==2) then {_side = _side + 7};
-
-//Start respawn screen
-if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21)==1) then {MCC_openRespawnMenu = true; publicVariable "MCC_openRespawnMenu"};
+if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21)==1) then {_side = _side + 7};
 
 if !mcc_isloading then 
 {

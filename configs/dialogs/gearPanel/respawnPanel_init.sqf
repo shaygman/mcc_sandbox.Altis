@@ -19,6 +19,11 @@ uiNamespace setVariable ["CP_side2Score", _disp displayCtrl 24];
 uiNamespace setVariable ["CP_side3", _disp displayCtrl 25];
 uiNamespace setVariable ["CP_side3Score", _disp displayCtrl 26];
 
+uiNamespace setVariable ["CP_RscMainXPUI", _disp displayCtrl 101];
+uiNamespace setVariable ["messeges", _disp displayCtrl 102];
+uiNamespace setVariable ["XPTitle", _disp displayCtrl 103];
+uiNamespace setVariable ["XPValue", _disp displayCtrl 104];
+
 #define CP_RESPAWNPANEL_IDD (uiNamespace getVariable "CP_RESPAWNPANEL_IDD")
 #define CP_respawnPointsList (uiNamespace getVariable "CP_respawnPointsList")
 #define CP_ticketsWestText (uiNamespace getVariable "CP_ticketsWestText")
@@ -36,6 +41,10 @@ uiNamespace setVariable ["CP_side3Score", _disp displayCtrl 26];
 #define CP_side3 (uiNamespace getVariable "CP_side3")
 #define CP_side3Score (uiNamespace getVariable "CP_side3Score")
 
+#define CP_RscMainXPUI (uiNamespace getVariable "CP_RscMainXPUI")
+#define messeges (uiNamespace getVariable "messeges")
+#define XPTitle (uiNamespace getVariable "XPTitle")
+#define XPValue (uiNamespace getVariable "XPValue")
 
 //Roles enables or just after regular respawn
 if !(CP_activated) then
@@ -57,6 +66,7 @@ if !(CP_activated) then
 	
 	CP_deployPanelMiniMap  ctrlSetPosition [0.36 * safezoneW + safezoneX, 0.3 * safezoneH + safezoneY, 0.55 * safezoneW, 0.41 * safezoneH];
 	CP_deployPanelMiniMap ctrlCommit 0; 
+	CP_RscMainXPUI ctrlShow false;
 };
 
 MCC_CPMap_mouseMoving = 
@@ -175,6 +185,25 @@ if (CP_activated) then
 			_comboBox lbsetpicture [_index,_pic];
 		} foreach CP_classes;
 	_comboBox lbSetCurSel CP_classesIndex;
+	
+	//Set XP
+	_role = player getvariable "CP_role";
+	if (isnil "_role") exitWith {}; 
+	
+	_exp 	 = call compile format  ["%1Level select 1",_role]; 
+	if (isnil "_exp") exitWith {}; 	
+
+	if (_exp < 0) then {_exp = 0};
+	_oldLevel = call compile format  ["%1Level select 0",_role]; 
+	_html = "<t color='#818960' size='2' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
+	messeges ctrlSetStructuredText parseText _html;
+	
+	_level =[floor(_exp/(CP_XPperLevel + _oldLevel*100))+1 ,_exp];
+	_needXP =(CP_XPperLevel + _oldLevel*100)+_exp;
+
+	XPValue progressSetPosition (_exp/_needXP);
+	
+	
 };
 
 //Refresh	

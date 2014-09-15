@@ -13,6 +13,8 @@ uiNamespace setVariable ["MCC_sqlpdaMenu2", _disp displayCtrl 2];
 
 #define REQUIRE_SQL_CONSTRUCT_DISTANCE 200
 #define REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE 300
+#define REQUIRE_FOB_FOB_MIN_DISTANCE 1000
+#define REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE 300
 #define ANCHOR_ITEM "Dirthump_1_F"
 {
 	_x ctrlshow false;
@@ -27,7 +29,9 @@ MCC_fnc_SQLPDAMenuClear =
 
 MCC_fnc_SQLPDAMenuclicked =
 {
-	private ["_disp","_comboBox","_ctrlIDC","_index","_posX","_posY","_array","_child","_path","_markerName","_text"];
+	private ["_disp","_comboBox","_ctrlIDC","_index","_posX","_posY","_array","_child","_path","_markerName","_text","_respawPositions","_conType","_available",
+	         "_errorMessege","_errorMessegeIndex"];
+			 
 	_ctrl 		= _this select 0;
 	_index 		= _this select 1;
 	_ctrlData	= _ctrl lbdata _index;
@@ -193,26 +197,53 @@ MCC_fnc_SQLPDAMenuclicked =
 			//clear
 			[] call MCC_fnc_SQLPDAMenuClear; 
 			
-			//Check distance
-			if (MCC_ConsoleWPpos distance player < REQUIRE_SQL_CONSTRUCT_DISTANCE) then
+			_conType = uinamespace getVariable "MCC_sqlpdaMenu1Data";
+			
+			_available = true;
+			_errorMessegeIndex = 0; 
+			_errorMessege = [
+								format ["Can't order to build deployables further then %1m from the player",REQUIRE_SQL_CONSTRUCT_DISTANCE],
+								"Can't build on water",
+								format ["FOB must be build in a minimum distance of %1m from another FOB or HQ",REQUIRE_FOB_FOB_MIN_DISTANCE],
+								format ["Deployables must be build in a minimum distance of %1m from an FOB",REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE],
+								format ["Only one construction can be built at the same time in %1 meters radius",REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE]
+		                    ];
+							
+			//Check if no more then one construct from the same type is beeing build in the area and 
+			_check = ({alive _x} count (MCC_ConsoleWPpos nearObjects [ANCHOR_ITEM, REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE]));
+			if (_check != 0) then {_available = false; _errorMessegeIndex = 4};
+			
+			//Check Near FOB
+			_respawPositions = [player] call BIS_fnc_getRespawnPositions;
+			if (_conType == "fob") then 
 			{
-				//Check if no more then one construct from the same type is beeing build in the area and 
-				_check = ({alive _x} count (MCC_ConsoleWPpos nearObjects [ANCHOR_ITEM, REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE]));
-				if (_check == 0) then
-				{
-					//Create structure
-					_path = "";
-					[[uinamespace getVariable "MCC_sqlpdaMenu1Data", MCC_ConsoleWPpos, playerside, uinamespace getVariable "MCC_sqlpdaMenu2Data"] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
-				}
-				else
-				{
-					player sidechat format ["Only one construction can be built at the same time in %1 meters radius",REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE];
-				};
+				_check = {MCC_ConsoleWPpos distance _x < REQUIRE_FOB_FOB_MIN_DISTANCE} count _respawPositions;
+				_check = _check + ({((_x getVariable ["MCC_conType",""])=="fob") && (playerside == _x getVariable ["MCC_side",sidelogic])} count (MCC_ConsoleWPpos nearObjects [ANCHOR_ITEM, REQUIRE_FOB_FOB_MIN_DISTANCE]));
+				if (_check > 0) then {_available = false; _errorMessegeIndex = 2}; 
 			}
 			else
 			{
-				player sidechat format ["Construction must in %1 meters radius from the SQL",REQUIRE_SQL_CONSTRUCT_DISTANCE];
+				_check = {MCC_ConsoleWPpos distance _x < REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE} count _respawPositions;
+				if (_check == 0) then {_available = false; _errorMessegeIndex = 3};
 			};
+			
+			//Check if not on water 
+			if (surfaceIsWater MCC_ConsoleWPpos) then {_available = false; _errorMessegeIndex = 1}; 
+			
+			//Check if not too far
+			if (MCC_ConsoleWPpos distance player > REQUIRE_SQL_CONSTRUCT_DISTANCE) then {_available = false; _errorMessegeIndex = 0}; 
+			
+			
+			//Create structure
+			if (_available) then
+			{
+				_path = "";
+				[[_conType, MCC_ConsoleWPpos, playerside, uinamespace getVariable "MCC_sqlpdaMenu2Data"] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
+			}
+			else
+			{
+				player sidechat (_errorMessege select _errorMessegeIndex); 
+			}
 		};
 	};
 	

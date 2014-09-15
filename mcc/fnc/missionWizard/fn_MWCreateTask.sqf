@@ -46,7 +46,7 @@ _pos = if (typeName _obj == "OBJECT") then {getpos _obj} else {_obj};
  
 if !(_preciseMarker) then 
 {
-	_pos =  [(_pos select 0) + (random 150 - random 150),(_pos select 1) + (random 150 - random 150),(_pos select 2)];
+	_pos =  [(_pos select 0) + (random 300 - random 300),(_pos select 1) + (random 300 - random 300),(_pos select 2)];
 };
 		
 switch (_task) do

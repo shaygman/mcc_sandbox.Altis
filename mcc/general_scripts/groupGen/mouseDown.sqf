@@ -27,7 +27,7 @@ if (mcc_missionmaker == (name player)) then
 	if (isnil "MCC_doubleClicked") then {MCC_doubleClicked =false};	
 	
 	//Close Group info control
-	if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then 								
+	if (_pressed == 1 && !MCC_doubleClicked) then 								
 	{
 		ctrlShow [510,false];
 		ctrlShow [MCC_GroupGenInfo_IDC,false];

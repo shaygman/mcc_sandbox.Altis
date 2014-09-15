@@ -148,7 +148,7 @@ onGroupIconClick
     _ctrl = _this select 7;
     _alt = _this select 8;
     
-	[_group,_button,[_posx,_posy],_shift,_ctrl,_alt] execVm format ["%1mcc\fnc\console\fn_consoleClickGroupIcon.sqf",MCC_path];
+	[_group,_button,[_posx,_posy],_shift,_ctrl,_alt] call MCC_fnc_consoleClickGroupIcon;
 };
 
 //Add - Ctrl + number group selections handlers
