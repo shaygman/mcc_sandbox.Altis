@@ -15,6 +15,8 @@ fnc_GAIA_AnalyzeForces							= compile preprocessfilelinenumbers (GAIA_scripts +
 fnc_GAIA_ConflictAreas							= compile preprocessfilelinenumbers (GAIA_scripts + "fnc_GAIA_ConflictAreas.sqf");
 fnc_GAIA_Classify										= compile preprocessfilelinenumbers (GAIA_scripts + "fnc_GAIA_Classify.sqf");
 fnc_GAIA_IssueOrders								= compile preprocessfilelinenumbers (GAIA_scripts + "fnc_GAIA_IssueOrders.sqf");
+fnc_GAIA_occupy											= compile preprocessfilelinenumbers (GAIA_scripts + "fnc_GAIA_occupy.sqf");
+
 
 
 //Cache
@@ -156,7 +158,7 @@ MCC_GAIA_CA_DEBUG					= [];
 MCC_GAIA_CACHE						= false;
 GAIA_CACHE_SLEEP					= 0.5;
 
-GAIA_CACHE_STAGE_1				= 2000;
+GAIA_CACHE_STAGE_1				= 900;
 GAIA_CACHE_STAGE_2				= (2*GAIA_CACHE_STAGE_1);
 MCC_GAIA_CACHE_STAGE2			= []; 
 

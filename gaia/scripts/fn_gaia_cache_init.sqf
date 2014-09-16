@@ -2,7 +2,7 @@ if(!isServer ) exitWith {};
 private["_count"];
 
 
-while {!MCC_GAIA_CACHE} 
+while {(!MCC_GAIA_CACHE and !mcc_delayed_spawn)} 
 	do {
 					{
 						if (
@@ -24,7 +24,8 @@ while {!MCC_GAIA_CACHE}
 		  		 //player globalchat "we wachten";
 		 } ;
 
-
+// We might be here because of delay spawning. In that case caching is enabled also
+MCC_GAIA_CACHE = true;
 
 while {MCC_GAIA_CACHE} do	
 {
@@ -121,6 +122,33 @@ while {MCC_GAIA_CACHE} do
 	 
 	 // Delete respawned dudes
 	 MCC_GAIA_CACHE_STAGE2 = MCC_GAIA_CACHE_STAGE2 - ["delete_me"];
+	 
+	 
+	 //Delayed spawning
+	 	 _idx = 0;
+	 {
+	 						
+	 						
+	 						if ([_x,GAIA_CACHE_STAGE_2] call gaia_fn_nearPlayer)	 
+	 						then 
+	 						{
+	 							
+	 							_ar = (missionNamespace getVariable [ "MCC_DELAY" + str(_x),[0,0,0]]);
+	 							//Disable delayed (we are the delayed spawn)
+	 							_ar set [27,false];	 							
+	 							//Enable the caching no matter what, delayed WILL be cached
+	 							_ar set [26,true];	 							
+	 							[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
+	 							MCC_DELAYED_SPAWNS set [_idx, "delete_me"];
+	 							
+	 						};
+	 						_idx= _idx + 1;
+	 }  forEach MCC_DELAYED_SPAWNS;
+	 
+	 // Delete respawned dudes
+	 MCC_DELAYED_SPAWNS = MCC_DELAYED_SPAWNS - ["delete_me"];
+	 
+	 
 	 //We checked allgroups so we need a break
 	 sleep GAIA_CACHE_SLEEP;
 };

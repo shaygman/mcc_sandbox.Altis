@@ -1,9 +1,49 @@
 #define DEBUG
-private ["_ar","_diaryrecord","_behavior"];
+private ["_ar","_diaryrecord","_behavior","_safepos"];
 
 //time to request something so lets number it
 mcc_request=mcc_request+1;
 
+// What ever we do, we need a good position
+_p_mcc_zone_markposition = (mcc_zone_pos select (mcc_zone_number));
+_p_maxrange							 = ((mcc_zone_size select (mcc_zone_number)) select 1);
+
+
+switch (mcc_classtype) do
+		{
+			case "AIR":
+			{
+				if !mcc_spawnwithcrew then 
+				{mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos; }
+				else
+				{mcc_safe_pos     =[_p_mcc_zone_markposition ,1,_p_maxrange,2,1,10,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;};						
+			};
+			
+			case "Reinforcement":
+			{										
+				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,1,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+			};
+			
+			case "DIVER":
+			{										
+				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,1,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+			};
+			
+			case "LAND":
+			{
+				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+			};
+
+			case "WATER":
+			{					
+				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,2,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos; 
+			};
+			
+			default 
+			{
+				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+			};
+		};
 //safe that string man!
 if (MCC_capture_state) then
 {
@@ -28,6 +68,9 @@ if (MCC_capture_state) then
 			  mcc_sidename = '%15';
 			  mcc_hc = %16;
 			  mcc_spawn_dir = %18;
+			  mcc_safe_pos = %19;
+			  mcc_caching = %20;
+			  mcc_delayed_spawn = %21;
 			  script_handler = [0] execVM '%17mcc\general_scripts\mcc_SpawnStuff.sqf';"								 
 			  , mcc_spawntype
 			  , mcc_classtype
@@ -47,6 +90,9 @@ if (MCC_capture_state) then
 			  , mcc_hc
 			  , MCC_path
 			  , mcc_spawn_dir
+			  , mcc_safe_pos
+			  , mcc_caching
+			  , mcc_delayed_spawn
 			  ];
 	}
 	else
@@ -69,6 +115,9 @@ if (MCC_capture_state) then
 			  mcc_sidename = ["%15"] select 0;
 			  mcc_hc = %16;
 			  mcc_spawn_dir = %18;
+			  mcc_safe_pos = %19;
+			  mcc_caching = %20;
+			  mcc_delayed_spawn = %21;
 			  script_handler = [0] execVM "%17mcc\general_scripts\mcc_SpawnStuff.sqf";'								 
 			  , mcc_spawntype
 			  , mcc_classtype
@@ -88,6 +137,9 @@ if (MCC_capture_state) then
 			  , mcc_hc
 			  , MCC_path
 			  , mcc_spawn_dir
+			  , mcc_safe_pos
+			  , mcc_caching
+			  , mcc_delayed_spawn			  
 			  ];
 	};
 }
@@ -147,8 +199,10 @@ else
 		{
 			if !(mcc_isnewzone) then 
 			{
-				// Allright we are doing something else then making / updating zones, report that by hint				
+				// Allright we are doing something else then making / updating zones, report that by hint			
+				
 				player sideChat format["Request ID: %3. Spawn %1 in zone %2. Contacting server......", mcc_spawnname , mcc_zone_markername,mcc_request];
+				
 				 
 				//Set the behavior back from script understanding to human readable again											
 				switch (mcc_spawnbehavior) do
@@ -284,39 +338,42 @@ else
 				, 0 //(mcc_zonetype select 0 ) select 1
 				, 0 //(mcc_zonetypenr select 0 ) select 1
 				, mcc_marker_dir
+				,	mcc_safe_pos
+				, mcc_caching
+				, mcc_delayed_spawn
 				];
 		
 		// Send data over the network, or when on server, execute directly
 		
-		if ( (isServer) && ( (mcc_hc == 0) || !(MCC_isHC) ) ) then 
-		{
-			[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
-			
-			diag_log "MCC: attemping to spawn"; 
-			
-			if ( ( mcc_hc == 1 ) && (MCC_isHC) ) then 
-			{
-				// mcc_hc zone defined but no HC found
-				diag_log format ["Called 'mcc_setup' Local Event on Server - isServer [%1] - isHC: [%2] - MCC_HC: [%3]", isServer, MCC_isHC, mcc_hc];
-			};
-		}
-		else 
-		{
-			if ( ( mcc_hc == 0 ) || !(MCC_isHC) ) then
-			{
-				//[_ar, "mcc_setup", true, false] spawn BIS_fnc_MP;
-				[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
-				diag_log format ["Called 'mcc_setup' Remote Event on Server - isServer [%1] - isHC: [%2] - MCC_HC: [%3]", isServer, MCC_isHC, mcc_hc];
-			};
-			
-			if (( mcc_hc == 1 ) && (MCC_isHC)) then
-			{
-				//[_ar, "mcc_setup_hc", true, false] spawn BIS_fnc_MP;
-				[_ar, "mcc_setup_hc", MCC_ownerHC, false] spawn BIS_fnc_MP;
-				diag_log format ["Called 'mcc_setup_hc' Remote Event on Headless Client - isServer [%1] - isHC: [%2] - MCC_HC: [%3] - MCC_HC_Owner: [%4]", isServer, MCC_isHC, mcc_hc, MCC_ownerHC];
-			};					
-		};
-
+				if ( (isServer) && ( (mcc_hc == 0) || !(MCC_isHC) ) ) then 
+				{
+					[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
+					
+					diag_log "MCC: attemping to spawn"; 
+					
+					if ( ( mcc_hc == 1 ) && (MCC_isHC) ) then 
+					{
+						// mcc_hc zone defined but no HC found
+						diag_log format ["Called 'mcc_setup' Local Event on Server - isServer [%1] - isHC: [%2] - MCC_HC: [%3]", isServer, MCC_isHC, mcc_hc];
+					};
+				}
+				else 
+				{
+					if ( ( mcc_hc == 0 ) || !(MCC_isHC) ) then
+					{
+						//[_ar, "mcc_setup", true, false] spawn BIS_fnc_MP;
+						[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
+						diag_log format ["Called 'mcc_setup' Remote Event on Server - isServer [%1] - isHC: [%2] - MCC_HC: [%3]", isServer, MCC_isHC, mcc_hc];
+					};
+					
+					if (( mcc_hc == 1 ) && (MCC_isHC)) then
+					{
+						//[_ar, "mcc_setup_hc", true, false] spawn BIS_fnc_MP;
+						[_ar, "mcc_setup_hc", MCC_ownerHC, false] spawn BIS_fnc_MP;
+						diag_log format ["Called 'mcc_setup_hc' Remote Event on Headless Client - isServer [%1] - isHC: [%2] - MCC_HC: [%3] - MCC_HC_Owner: [%4]", isServer, MCC_isHC, mcc_hc, MCC_ownerHC];
+					};					
+				};
+		
 	//If we came out of here then we need reset some stuff empty
 	mcc_isnewzone = false;
 	mcc_grouptype = "";
