@@ -149,7 +149,7 @@ my_pv_handler =
 		_p_mcc_marker_zone_type 	= "RECTANGLE";
 		_p_mcc_patrol_wps			= [];
 		
-		if !(_p_mcc_delayed) then
+		if !(_p_mcc_delayed and !_p_mcc_iszone_update) then
 		{
 		
 				if (TypeName _p_mcc_grouptype != "STRING") then {_p_mcc_grouptype = str _p_mcc_grouptype}; 
