@@ -3,6 +3,7 @@ private ["_group"];
 
 _group 			= _this select 0; 
 _units  		= units _group;
+if (isNull _group) exitWith {};
 _vehicles		=  [_group] call  BIS_fnc_groupVehicles;
 _sf 				= [];
 _uv 				= [];

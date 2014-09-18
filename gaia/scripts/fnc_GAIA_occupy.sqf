@@ -1,6 +1,6 @@
 private ["_name","_type","_cityLocations","_militaryLocations","_natureLocations","_hillsLocations","_marineLocations","_pos","_radius","_type","_locations","_markerColor","_locationsArray"];
 _mcc_zone =  _this select 0;
-_mcc_gaia_density = 1;
+_mcc_gaia_density = 0.4;
 
 
 mcc_delayed_spawn		= TRUE;
@@ -14,7 +14,7 @@ _militaryLocations = ["BorderCrossing","Strategic","StrongpointArea"];
 _hillsLocations = ["Hill","Mount","RockArea","ViewPoint"]; 
 _marineLocations = ["NameMarine"]; 
 _natureLocations = ["Flag","FlatArea","Name","NameLocal","VegetationBroadleaf","VegetationFir","VegetationPalm","VegetationVineyard"]; 
-
+_all = ["Airport","CityCenter","FlatAreaCity","FlatAreaCitySmall","NameCity","NameCityCapital","NameVillage","BorderCrossing","Strategic","StrongpointArea","Hill","Mount","RockArea","ViewPoint","NameMarine","Flag","FlatArea","Name","NameLocal","VegetationBroadleaf","VegetationFir","VegetationPalm","VegetationVineyard"];
 //Make vehicles move around the big area
 _points = (round(((getmarkersize _mcc_zone select 0) max (getmarkersize _mcc_zone select 1))/100))*_mcc_gaia_density;
 //Ship
@@ -35,7 +35,7 @@ _zoneNumber = (count MCC_zones_numbers) + 1;
 _oc_size    = (((size _x)select 0) max ((size _x)select 1));
 
 //Occupy citylocations
-if ((((size _x)select 0)>50) and (((size _x)select 0)>50)) then
+if ((((size _x)select 0)>5) and (((size _x)select 0)>5)) then
 	{
 		_script_handler = [_zoneNumber,locationPosition _x,_oc_size] call MCC_fnc_MWUpdateZone; 
 		waituntil {_script_handler}; 
@@ -79,6 +79,6 @@ if ((((size _x)select 0)>50) and (((size _x)select 0)>50)) then
 	
 	
 	};
-} foreach	nearestLocations [(getmarkerpos _mcc_zone),_cityLocations, ((getmarkersize _mcc_zone select 0) max (getmarkersize _mcc_zone select 1))];
+} foreach	nearestLocations [(getmarkerpos _mcc_zone),(_all ), ((getmarkersize _mcc_zone select 0) max (getmarkersize _mcc_zone select 1))];
 
 //mcc_delayed_spawn		= _mcc_was_delayed;

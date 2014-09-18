@@ -2,6 +2,8 @@ if(!isServer) exitWith {};
 private ["_group","_units","_vehicles"];
 
 _group 			= _this select 0; 
+//We arrive here with an empty group
+if (isNull _group) exitWith {};
 _units  		= units _group;
 _vehicles		=  [_group] call  BIS_fnc_groupVehicles;
 _sf 				= [];
