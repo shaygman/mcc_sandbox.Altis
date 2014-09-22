@@ -585,6 +585,10 @@ if (!isDedicated && !MCC_isLocalHC) then
 	_null=[] execVM MCC_path + "mcc\pop_menu\mcc_init_menu.sqf";
 };
 
+mcc_delayed_spawn		= false;
+mcc_caching					= false;
+mcc_delayed_spawns	= [];
+mcc_safe_pos				= [];
 mcc_spawntype   		= "";
 mcc_classtype   		= "";
 mcc_isnewzone   		= false;

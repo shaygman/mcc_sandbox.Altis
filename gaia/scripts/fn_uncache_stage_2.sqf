@@ -43,7 +43,9 @@ _group  setVariable ["mcc_gaia_cache", true,true];
 			if ((_role select 0) == "Turret") then 
 				{_un moveInTurret [_cv, (_role select 1)]; };
 			if ((_role select 0) == "Cargo") then 
-				{_un assignAsCargo  _cv; };
+				{_un assignAsCargo  _cv; 
+					_un moveInCargo  _cv;					
+				};
 			
 		}	foreach (_veh select 4);
 			
