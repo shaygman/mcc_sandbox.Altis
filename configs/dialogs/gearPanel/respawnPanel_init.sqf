@@ -209,7 +209,7 @@ if (CP_activated) then
 //Refresh	
 [] spawn 
 	{
-		private ["_comboBox","_displayname","_index","_idc","_activeSides","_sidePlayer","_leader","_firstTime"];
+		private ["_comboBox","_displayname","_index","_idc","_activeSides","_sidePlayer","_leader","_firstTime","_array","_disp"];
 		disableSerialization;
 		
 		_firstTime = true; 
@@ -231,6 +231,13 @@ if (CP_activated) then
 				_array set [count _array, _x select 0]; 
 			} foreach _groups; 
 			
+			//Load available resources
+			_disp = CP_RESPAWNPANEL_IDD;
+			_array = call compile format ["MCC_res%1",playerside];
+			_disp displayCtrl 81 ctrlSetText str floor (_array select 1); 
+			_disp displayCtrl 82 ctrlSetText str floor (_array select 0); 
+			_disp displayCtrl 83 ctrlSetText str floor (_array select 2);
+		
 			/*
 			//Add group leader as spawn point
 			_leader = leader player; 

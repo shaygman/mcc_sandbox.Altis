@@ -1,6 +1,6 @@
 Change log r8:
 NEW: Squad dialog:
-	- Added: Squad Dialog - you can change squads or create custom squads by pressing P or bind another key bind if you like, options in squads:
+	- Added: In game Squad Dialog (no indbi required) - you can change squads or create custom squads by pressing P or bind another key bind if you like, options in squads:
 		- Lock/unlock squads.
 		- Custom marker on map (can be turned off from mission settings).
 		- Spectate member of the squad before joining.
@@ -15,8 +15,31 @@ NEW: Team leader PDA
 	PDA features (Double click to open the PDA menu): 
 			- Spot Enemy: Mark enemy forces, the marker will delete itself after 5 minutes.
 			- Call Support: place a support marker such as: CAS, area attack, support, transport, medic, ammo, repairs, fuel. 
-			- Construct: TBD
-
+			- Construct: Order building custom objects:
+					- FOB - Serve as spawn point for your side.
+					- Small Bunker - Fortification. 
+					- HMG Pit
+					- GMG Pit
+					- AT Pit
+					- AA Pit
+					- Mortar pit. 
+					
+					To build an object you need first to order a build point then have at least 3 units from the same side as you then you'll need supply crates (see logistics) inorder to build it.
+					Construct that will not fulfill the minimum requirements will be deleted after about 30 minutes. 
+					
+NEW: Logistics and resource management
+	- Resources: Fuel, Ammo and Supply so far only supply is supported for building construct while you can use the fuel and ammo crate to support vehicles on the battlefield.
+                 Mission makers change the array: MCC_resWest = [500,500,500] first element of the array is ammo second is supply and last is fuel as in [ammo,supply,fuel].
+				 Supported arrays: MCC_resWest, MCC_resEast, MCC_resGUER.
+				 So far the only ways to increase resources is by mission maker changing the arrays or by capturing supply/ammo/fuel crates and carrying them back for a refund at the start location. 
+				 Supply crates classes: 
+				                         mod version: ammo - "MCC_crateAmmo" ; supply - "MCC_crateSupply" ; fuel - "MCC_crateFuel"
+										 mission version: ammo - "Box_NATO_AmmoVeh_F" ; supply - "Land_PaperBox_closed_F" ; fuel - "Land_WaterBarrel_F"
+				 
+	- Supplly trucks - Classes:"B_Truck_01_transport_F","I_Truck_01_transport_F","O_Truck_01_transport_F" this trucks will server as support vehicle while the driver of the truck is less then
+					   50 meters away from it's side start location (flag) he can withdraw resources as crates and deliver them to were they needed. 
+					   
+	 
 NEW: Rally point
 	- Added: Rally points or respawn tents - objects in the MCC mod version (under lanuchers) or unlockable for officers at level 5 by default can be changed by the server.
              Rally points are spawn points for units from the same group as the player who assembeled it and can be used when there are no enemies around 100 meters from the rally point. 
@@ -24,6 +47,7 @@ NEW: Rally point
 			 There should be at least one more player by the officer to deploy the rally point. 
 			 
 Role Selection:
+	- Added: Allowed Weapons check - if a player pick a weapon out of his role as rifleman picking up a sniper rifle the player will suffer increased weapon sway.
 	- Added: Commander role. You can choose to be a commander for each side, or start a mutiny against your own side commander. Commander will have access to the MCC_console and MCC assets. 
 	- Added: BIS tickets support to Role Selection. You can predefine tickets by changing this variables: MCC_ticketsWest, MCC_ticketsEast, MCC_ticketsGUER or bu BIS module.
 	- Added: Notifications for leveling, unlocking new gear and weapons or gaining experience from role related actions such as: healing, taxing and leading, 
@@ -35,6 +59,8 @@ Role Selection:
 	- Changed: Officers will automatically get to be the leaders of their group.
 
 MCC Console:
+	- Added: Artillery Dialog - you can issue fire missions to any AI or player from your side. MCC will calculate the indirect and direct fire solution (if available) andd produce
+	         a fire mission to the given player. 
 	- Removed: MCC Console object - it is now available for the commander by default (commander is picked by voting)
 	- Changed: MCC Console is accessible to the sides' commanders only. 
 	- Changed: Forward artillery in cannons in MCC Console reduced to 3 cannons and increased the delay between shots. 
@@ -56,6 +82,7 @@ Engine:
 	- Changed: Zeus edit object dialog is now moveable. 
 	- Changed: Teleport to team will teleport you to an empty seat in the vehicle the unit you have teleported too is in. If there are no empty seats then you'll not be teleported. 
 	- Changed: Unit Managment multi selection moved to BIS default multi-selection list box = better performance. 
+	- Fixed: White map on mission wizard briefing screen. 
 	- Fixed: Missing pictures in the combobox.
 	- Fixed: Vehicle spawned by MCC 3D editor teleport to their spawn position once a new player join in. 
 	- Fixed: MCC couldn't read some groups' configs from addons. 
@@ -79,9 +106,14 @@ Modules:
 	- Reworked: Access module - added descriptions and combobx to fit arma3 standards.  
 	- Reworked: SF module - added descriptions and selection boxes to fit arma3 standards, add the a selection box to define user key to open the helemet camera. 
 	- Added: Restricted zones module: [[_logic, [east,west,resistance,civilian], _time, _insideTheZone, _airOnly , _delete], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;
-	
-Gaining levels from squad rules?
-- Add MCC Objectives
+
+TODO:
+remove tent from back and from world
+add missions settings for the new options
+
+Gaining levels from logistics
+Small resources type and resources box. 
+Some manufacture process. 
 TODO PvP gen
 
 Change log r7:

@@ -99,6 +99,9 @@ while {true} do
 			//Check if in vehicle
 			[] call CP_fnc_allowedDrivers;
 			
+			//Check if allowed weapons
+			[] call CP_fnc_allowedWeapons;			
+			
 			//Manage XP
 			if (CP_gainXP) then
 			{

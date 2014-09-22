@@ -68,8 +68,9 @@ if ((_index == 0) && (player getVariable ['MCC_allowed',false])) exitWith
 	};
 };  
 
+//Console
 _commander = MCC_server getVariable [format ["CP_commander%1",side player],""];
-if ((_index == 1) && (_commander == getPlayerUID player)) exitWith 
+if ((_index == 1) && (_commander == getPlayerUID player) && MCC_allowConsole) exitWith 
 {
 	if (dialog) then 
 	{
@@ -82,7 +83,7 @@ if ((_index == 1) && (_commander == getPlayerUID player)) exitWith
 }; 
 
 //Squad Dialog
-if (_index == 2) exitWith 
+if (_index == 2 && MCC_allowSquadDialog) exitWith 
 {
 	if (dialog) then 
 	{
@@ -108,7 +109,7 @@ if (_index == 2) exitWith
 };
 
 //SQL PDA
-if (_index == 3) exitWith 
+if (_index == 3 && MCC_allowsqlPDA) exitWith 
 {
 	createDialog "MCC_SQLPDA";
 };

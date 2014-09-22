@@ -1,4 +1,5 @@
 /* 
+	MCC_fnc_MWopenBriefing
 	Open breifing map for mission wizard based on script by Author: Karel Moricky
 
 	Description:
@@ -332,7 +333,8 @@ _map ctrladdeventhandler ["draw","_this call MCC_fnc_MWMapOpen_draw;"];
 _map ctrladdeventhandler ["mousemoving","_this call MCC_MWMap_mouse;"];
 _map ctrladdeventhandler ["mouseholding","_this call MCC_MWMap_mouse;"];
 
-if (_isNight) then {
+if (_isNight) then 
+{
 	_map ctrlsetbackgroundcolor [0,0,0,1];
 	_map ctrlcommit 0;
 };
@@ -365,4 +367,5 @@ _display displayaddeventhandler [
 cuttext ["","black in"];
 endloadingscreen;
 
+ctrlsetfocus (_display displayctrl MCC_MINIMAP);
 _display

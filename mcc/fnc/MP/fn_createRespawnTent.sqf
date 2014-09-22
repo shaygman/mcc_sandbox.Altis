@@ -22,7 +22,7 @@ if (isServer) then
 	_rally setDir _dir;
 	_rally setPosATL _pos;
 	
-	_rally setVariable ["type","Rally Point",true];
+	_rally setVariable ["type","Rally_Point",true];
 	_rally setVariable ["MCC_rally_deployTime", time, true];
 	_rally setVariable ["MCC_rally_squad", _squad, true];
 

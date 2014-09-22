@@ -92,7 +92,14 @@ while {alive _baseAnchor && time < (_time + TIME_BEFORE_DELETE) && !_complete} d
 	//How many players from my side are near
 	if (floor time % 10 == 0) then
 	{
-		_nearbyCrates = getPosATL _baseAnchor nearObjects [MCC_SUPPLY_CRATEITEM, 50];
+		_nearByCrates = [];
+		{
+			if (isNull attachedTo _x) then
+			{
+				_nearByCrates set [count _nearByCrates, _x];
+			};
+		} foreach (getPosATL _baseAnchor nearObjects [MCC_SUPPLY_CRATEITEM, 50]);
+				
 		_nearbyMen = {alive _x && {side _x == _side}} count (getPosATL _baseAnchor nearEntities ["CAManBase", 50]);
 		
 		if (_nearbyMen > REQUIRE_MEMBERS && count _nearbyCrates > 0) then

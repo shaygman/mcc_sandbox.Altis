@@ -50,6 +50,7 @@ class CP_SQUADPANEL {
 		CP_side2Score,
 		CP_side3,
 		CP_side3Score,
+		MCC_ResourcesControlsGroup,		
 		CP_RscMainXPUI
 	  };
 	  
@@ -440,6 +441,75 @@ class CP_SQUADPANEL {
 			h = 0.0219914 * safezoneH;
 		};
 		
+		class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
+		{
+			idc = 80;
+			x = 0.02 * safezoneW + safezoneX;
+			y = 0.22 * safezoneH + safezoneY;
+			w = 0.0916667 * safezoneW;
+			h = 0.143 * safezoneH;
+			class controls
+			{
+				class MCC_RepairText: MCC_RscText
+				{
+					idc = 81;
+
+					x = 0.310937 * safezoneW + safezoneX;
+					y = 0.28 * safezoneH + safezoneY;
+					w = 0.0458333 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_SuppliesText: MCC_RscText
+				{
+					idc = 82;
+
+					x = 0.310937 * safezoneW + safezoneX;
+					y = 0.236 * safezoneH + safezoneY;
+					w = 0.0458333 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_FuelText: MCC_RscText
+				{
+					idc = 83;
+
+					x = 0.310937 * safezoneW + safezoneX;
+					y = 0.324 * safezoneH + safezoneY;
+					w = 0.0458333 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_Supplies: MCC_RscPicture
+				{
+					idc = -1;
+
+					text =  __EVAL(MCCPATH +"data\IconAmmo.paa"); //--- ToDo: Localize;
+					x = 0.276563 * safezoneW + safezoneX;
+					y = 0.236 * safezoneH + safezoneY;
+					w = 0.03 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_Repair: MCC_RscPicture
+				{
+					idc = -1;
+
+					text = __EVAL(MCCPATH +"data\IconRepair.paa"); //--- ToDo: Localize;
+					x = 0.276563 * safezoneW + safezoneX;
+					y = 0.28 * safezoneH + safezoneY;
+					w = 0.03 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_Fuel: MCC_RscPicture
+				{
+					idc = -1;
+
+					text = __EVAL(MCCPATH +"data\IconFuel.paa"); //--- ToDo: Localize;
+					x = 0.276563 * safezoneW + safezoneX;
+					y = 0.324 * safezoneH + safezoneY;
+					w = 0.03 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+			};
+		};
+		
 		class CP_RscMainXPUI: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = 101;
@@ -449,6 +519,15 @@ class CP_SQUADPANEL {
 			h = "6 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 			class controls
 			{
+				class bckg: MCC_RscText
+				{
+					idc =-1;
+					text = "";
+					w = "23 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
+					h = "6 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					colorBackground[] = {0,0,0,0.4};
+				}
+				
 				class messeges: MCC_RscStructuredText
 				{
 					idc =102;
@@ -457,7 +536,6 @@ class CP_SQUADPANEL {
 					y = "0.5 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 					w = "20 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
 					h = "2 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-					colorBackground[] = {0,0,0,0.3};
 				};
 				
 				class XPTitle: MCC_RscText
@@ -468,7 +546,6 @@ class CP_SQUADPANEL {
 					y = "3 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 					w = "2 * 			(			((safezoneW / safezoneH) min 1.2) / 60)";
 					h = "1 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-					colorBackground[] = {0,0,0,0.3};
 				};
 				
 				class XPValue: MCC_RscProgress

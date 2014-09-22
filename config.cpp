@@ -503,31 +503,31 @@ class cfgVehicles
 		};
 	};
 	
-	/*
-	class B_Carryall_oli;
-	class MCC_respawnTentDome : B_Carryall_oli 
+	class Box_NATO_AmmoVeh_F;
+	class MCC_crateAmmo : Box_NATO_AmmoVeh_F
 	{
-		displayName = "(MCC) Respawn Tent Packed";
-		mass = 60;
-		maximumLoad = 0;
-		scope = 2;
-		class UserActions
-		{
-			class MCCAssembleTent
-			{
-				displayNameDefault = "Assemble Tent";
-                showWindow = 0;
-		        hideOnUse = 1;
-				displayName="Assemble Tent";
-				position="action";
-				radius=1;
-                onlyForPlayer = 1;
-				condition="(alive this) && (true)";
-				statement="this execVM ""test.sqf""";
-			};
-		};
+		displayName = "Ammo Crate";
+		maximumLoad = 600;
+		transportAmmo = 12000;
 	};
-	*/
+
+	class MCC_crateSupply : Box_NATO_AmmoVeh_F
+	{
+		displayName = "Supply Crate";
+		maximumLoad = 600;
+		transportAmmo = 0;
+		transportRepair = 90000;
+		model = "\A3\Structures_F_EPA\Mil\Scrapyard\PaperBox_closed_F.p3d";
+	};
+	
+	class MCC_crateFuel : Box_NATO_AmmoVeh_F
+	{
+		displayName = "Fuel Barrel";
+		maximumLoad = 600;
+		transportAmmo = 0;
+		transportFuel = 500;
+		model = "\A3\Structures_F\Items\Vessels\WaterBarrel_F.p3d";
+	};
 };
 
 
@@ -542,6 +542,10 @@ class cfgWeapons
 		descriptionShort = "Allow players from your group respawn near the tent if no enemies nearby for a limited time";
 		picture = "\mcc_sandbox_mod\data\tentFoldedKhaki.paa";
 		model = "\A3\Structures_F\Civ\Camping\Ground_sheet_folded_khaki_F.p3d";
+		canLock = 0;
+		tBody = 100;
+		weight = 0;
+		value = 4;
 		type = 4; 
 		simulation = "Weapon";
 		scope = 2;

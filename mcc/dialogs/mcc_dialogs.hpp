@@ -67,6 +67,7 @@
 #define MCCST_VPOS 0x0C 
 
 #define MCCST_LEFT 0x00 
+#define MCCLB_TEXTURES 0x10 
 #define MCCST_RIGHT 0x01 
 #define MCCST_CENTER 0x02 
 #define MCCST_DOWN 0x04 
@@ -480,53 +481,77 @@ class MCC_RscListbox
 class MCC_RscListNbox 
 {
 	access = 0;
-	arrowEmpty = "#(argb,8,8,3)color(1,1,1,1)";
-	arrowFull = "#(argb,8,8,3)color(1,1,1,1)";
-	autoScrollDelay = 5;
-	autoScrollRewind = 0;
-	autoScrollSpeed = -1;
-	color[] = {1,1,1,1};
-	colorBackground[] = {0,0,0,0.3};
-	colorDisabled[] = {1,1,1,0.25};
-	colorScrollbar[] = {1,0,0,0};
-	colorSelect2[] = {0,0,0,1};
-	colorSelect[] = {0,0,0,1};
-	colorSelectBackground2[] = {1,1,1,0.5};
-	colorSelectBackground[] = {0.95,0.95,0.95,1};
-	colorShadow[] = {0,0,0,0.5};
-	colorText[] = {1,1,1,1};
-	font = "PuristaMedium";
-	h = 0.8;
-	maxHistoryDelay = 1;
-	period = 1.2;
-	rowHeight = 0.03;
-	shadow = 0;
-	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	soundSelect[] = {"\A3\ui_f\data\sound\RscListbox\soundSelect",0.09,1};
-	type = 102; 
-	style = 16; 
-	w = 0.4;
+	idc = -1; 
+	type = 102;
+	style = MCCST_LEFT + MCCLB_TEXTURES; // Style
+	default = 0;
 	blinkingPeriod = 0;
-	columns[] = {0.1,0.4};
 	
+	x = 29 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
+	y = 15 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
+	w = 10 * GUI_GRID_CENTER_W; // Width
+	h = 3 * GUI_GRID_CENTER_H; // Height
+
+	colorSelectBackground[] = {1,0.5,0,1}; // Selected item fill color
+	colorSelectBackground2[] = {0,0,0,1}; // Selected item fill color (oscillates between this and colorSelectBackground)
+
+	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	font = "PuristaMedium";
+	shadow = 0; // Shadow (0 - none, 1 - directional, color affected by colorShadow, 2 - black outline)
+	colorText[] = {1,1,1,1}; // Text and frame color
+	colorDisabled[] = {1,1,1,0.5}; // Disabled text color
+	colorSelect[] = {1,1,1,1}; // Text selection color
+	colorSelect2[] = {1,1,1,1}; // Text selection color (oscillates between this and colorSelect)
+	colorShadow[] = {0,0,0,0.5}; // Text shadow color (used only when shadow is 1)
+
+	tooltip = "CT_LISTNBOX"; // Tooltip text
+	tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
+	tooltipColorText[] = {1,1,1,1}; // Tooltip text color
+	tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
+
+	columns[] = {0.1}; // Horizontal coordinates of columns (relative to list width, in range from 0 to 1)
+
+	drawSideArrows = 1; // 1 to draw buttons linked by idcLeft and idcRight on both sides of selected line. They are resized to line height
+	idcLeft = 1000; // Left button IDC
+	idcRight = 1001; // Right button IDC
+
+	period = 1; // Oscillation time between colorSelect/colorSelectBackground2 and colorSelect2/colorSelectBackground when selected
+
+	rowHeight = GUI_GRID_CENTER_H; // Row height
+	maxHistoryDelay = 1; // Time since last keyboard type search to reset it
+
+	soundSelect[] = {"\A3\ui_f\data\sound\RscListbox\soundSelect",0.09,1}; // Sound played when an item is selected
+
+	// Scrollbar configuration (applied only when LB_TEXTURES style is used)
 	class ListScrollBar
-		{
-			arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
-			arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
-			autoScrollDelay = 5;
-			autoScrollEnabled = 0;
-			autoScrollRewind = 0;
-			autoScrollSpeed = -1;
-			border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
-			color[] = {1,1,1,0.6};
-			colorActive[] = {1,1,1,1};
-			colorDisabled[] = {1,1,1,0.3};
-			height = 0;
-			scrollSpeed = 0.06;
-			shadow = 0;
-			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
-			width = 0;
-		};
+	{
+		width = 0; // width of ListScrollBar
+		height = 0; // height of ListScrollBar
+		scrollSpeed = 0.01; // scrollSpeed of ListScrollBar
+
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa"; // Arrow
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa"; // Arrow when clicked on
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa"; // Slider background (stretched vertically)
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa"; // Dragging element (stretched vertically)
+
+		color[] = {1,1,1,1}; // Scrollbar color
+	};
+	
+	/*
+	onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
+	onDestroy = "systemChat str ['onDestroy',_this]; false";
+	onSetFocus = "systemChat str ['onSetFocus',_this]; false";
+	onKillFocus = "systemChat str ['onKillFocus',_this]; false";
+	onKeyDown = "systemChat str ['onKeyDown',_this]; false";
+	onKeyUp = "systemChat str ['onKeyUp',_this]; false";
+	onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
+	onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
+	onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
+	onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
+	onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
+	onMouseMoving = "";
+	onMouseHolding = "";
+	*/
 };
 
 class MCC_RscTree 

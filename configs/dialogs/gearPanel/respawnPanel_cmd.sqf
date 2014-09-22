@@ -163,7 +163,7 @@ switch (_cmd) do
 				playerDeploy = true;
 				
 				//Is it a spawn tent and we spawned as the squad leader - delete the tent
-				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally Point") && (player == leader player)) then
+				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && (player == leader player)) then
 				{
 					CP_activeSpawn setDamage 1; 
 				};

@@ -15,7 +15,6 @@ class MCCMW_briefingMap {
 	  {
 	  MCC_background,
 	  MCC_map,
-	  MCC_mapBckg,
 	  MCC_backgroundFrame
 	  };
 	  
@@ -46,16 +45,6 @@ class MCCMW_briefingMap {
 		scaleMax = "(uinamespace getvariable ['MCC_MWMap_scale',0.3])*2.5";
 		scaleMin = "(uinamespace getvariable ['MCC_MWMap_scale',0.3])/2";
 		colorOutside[] = {"uinamespace getvariable ['MCC_MWMap_colorOutside_R',0]","uinamespace getvariable ['MCC_MWMap_colorOutside_G',0]","uinamespace getvariable ['MCC_MWMap_colorOutside_B',0]",1};
-	};
-	class MCC_mapBckg: MCC_RscText 
-	{
-		idc = -1;
-		text = "";	
-		x = 0.219271 * safezoneW + safezoneX;
-		y = 0.412034 * safezoneH + safezoneY;
-		w = 0.532813 * safezoneW;
-		h = 0.505803 * safezoneH;
-		colorBackground[] = {1,1,1,1};
 	};
 	class MCC_mapCover: MCC_RscPicture
 	{

@@ -12,15 +12,15 @@ _string = format ["secondaryWeapon _target in %1 && (vehicle _target == vehicle 
 _null = player addaction ["<t color=""#FFCC00"">Assemble respawn tent</t>", MCC_path + "mcc\general_scripts\respawnTents\DeployRespawnTents.sqf",[],-1,false,true,"teamSwitch",_string];
 
 //Add MCC Comander
-_string = format ["((MCC_server getVariable ['CP_commander%1','']) == getPlayerUID _this )&& (vehicle _target == vehicle _this)",side player]; 
+_string = format ["((MCC_server getVariable ['CP_commander%1','']) == getPlayerUID _this )&& (vehicle _target == vehicle _this) && MCC_allowConsole",side player]; 
 _null = player addaction ["<t color=""#FFCC01"">Commander - Console</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,1],-1,false,true,"teamSwitch",_string];
 
 //Add MCC Squad leader PDA  (count units _this > 1) &&
-_string = format ["(leader _this == _this) && ('ItemGPS' in (assignedItems _this)) && (vehicle _target == vehicle _this)",side player]; 
+_string = format ["(count units _this > 1) && (leader _this == _this) && ('ItemGPS' in (assignedItems _this)) && (vehicle _target == vehicle _this) && MCC_allowsqlPDA",side player]; 
 _null = player addaction ["<t color=""#FFCC01"">Squad Leader - PDA</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,3],-1,false,true,"teamSwitch",_string];
 
 //Add MCC supply truck
-_string = format ["(_this == driver vehicle _this) && (typeof vehicle _this in %2) && ((vehicle _this distance MCC_START_%1) < 50) && speed vehicle _this ==0",side player,MCC_supplyTracks]; 
+_string = format ["(_this == driver vehicle _this) && (typeof vehicle _this in %1) && speed vehicle _this ==0 && MCC_allowlogistics",MCC_supplyTracks]; 
 _null = player addaction ["<t color=""#0134ff"">Load Truck</t>", MCC_path + "mcc\general_scripts\logistics\load.sqf",[nil,nil,nil,nil,3],-1,false,true,"teamSwitch",_string];
 
 // Add MCC to the action menu

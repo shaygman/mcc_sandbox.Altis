@@ -179,6 +179,8 @@ if (_button == 1) then
 	_ctrl ctrlCommit 0.1;
 	waituntil {ctrlCommitted _ctrl};
 	
+	//ctrlsetFocus _ctrl; 
+	
 	//Reveal Live feed button
 	if (!MCC_ConsoleLiveFeedHelmetsOnly || (headgear (leader _group) in MCC_ConsoleLiveFeedHelmets) || (vehicle(leader _group) !=  (leader _group))) then
 	{
@@ -186,16 +188,20 @@ if (_button == 1) then
 		_ctrl ctrlShow true;
 		_ctrl ctrlSetPosition [_posX + (0.005 * safezoneW), _posY + (_UIFactor + (0.05 * safezoneH)),0.06 * safezoneW,0.03 * safezoneH];
 		_ctrl ctrlCommit 0;
+		//ctrlsetFocus _ctrl; 
 	};
 		
 	//Reveal UAV Control
 	if ((vehicle leader _group) in allUnitsUav) then
 	{
 		MCC_ConolseUAV = (vehicle leader _group); 
+		MCC_ConolseUAV disableAI "TARGET";
+		MCC_ConolseUAV disableAI "AUTOTARGET";
 		_ctrl = _mccdialog displayctrl MCC_CONSOLEINFOUAVCONTROL; 
 		_ctrl ctrlShow true;
 		_ctrl ctrlSetPosition [_posX + (0.07 * safezoneW), _posY + (_UIFactor + (0.05 * safezoneH)),0.07 * safezoneW,0.03 * safezoneH];
 		_ctrl ctrlCommit 0;
+		//ctrlsetFocus _ctrl; 
 	};
 };
 		

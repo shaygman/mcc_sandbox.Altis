@@ -195,11 +195,18 @@ _comboBox lbSetCurSel CP_classesIndex;
 
 [] spawn 
 {
-	private ["_comboBox","_displayname","_index","_groups","_array","_oldCommander","_commander","_commanderName","_activeSides","_idc","_units"];
+	private ["_comboBox","_displayname","_index","_groups","_array","_oldCommander","_commander","_commanderName","_activeSides","_idc","_units","_disp"];
 	disableSerialization;
 	_oldCommander = "";
 	while {(str (CP_SQUADPANEL_IDD displayCtrl 0) != "No control")} do 
 	{
+		//Load available resources
+		_disp = CP_SQUADPANEL_IDD;
+		_array = call compile format ["MCC_res%1",playerside];
+		_disp displayCtrl 81 ctrlSetText str floor (_array select 1); 
+		_disp displayCtrl 82 ctrlSetText str floor (_array select 0); 
+		_disp displayCtrl 83 ctrlSetText str floor (_array select 2); 
+
 		//Tickets
 		if (CP_activated) then
 		{

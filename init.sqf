@@ -87,11 +87,27 @@ if (isnil "MCC_ticketsWest") then {MCC_ticketsWest = 200};
 if (isnil "MCC_ticketsEast") then {MCC_ticketsEast = 200};
 if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
 
-//--------------------Default resources -------------------------------------------------------
-//[East,West,Ind]
-if (isnil "MCC_sideAmmo") then {MCC_sideAmmo = [200,200,200]};
-if (isnil "MCC_sideRepair") then {MCC_sideRepair = [500,500,500]};
-if (isnil "MCC_sideFuel") then {MCC_sideFuel = [0,0,0]};
+//--------------------logistics -------------------------------------------------------
+
+
+//Default resources
+//[ammo,supply,fuel]
+if (isnil "MCC_resWest") then {MCC_resWest = [500,500,500]};
+if (isnil "MCC_resEast") then {MCC_resEast = [500,200,0]};
+if (isnil "MCC_resGUER") then {MCC_resGUER = [500,200,0]};
+
+//--------------------Screens -------------------------------------------------------
+//allow SQL PDA
+if (isnil "MCC_allowsqlPDA") then {MCC_allowsqlPDA = true}; //false - disabled
+
+//allow Console
+if (isnil "MCC_allowConsole") then {MCC_allowConsole = true}; //false - disabled
+
+//allow squad menu
+if (isnil "MCC_allowSquadDialog") then {MCC_allowSquadDialog = true}; //false - disabled
+
+//allow MCC logistics
+if (isnil "MCC_allowlogistics") then {MCC_allowlogistics = true};  //false - disabled
 
 //----------------- Teleport 2 Team -----------------------------------------------------------------------------
 if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- AfterRespawn, 3-Always
@@ -249,14 +265,24 @@ mccPresetsObjects = [
 
 //---------------------------General objects---------------------------------
 MCC_dummy = "bomb"; //Dummy object for OO saving
-MCC_supplyTracks = ["B_Truck_01_transport_F","O_Truck_03_transport_F","I_Truck_02_transport_F"];
+MCC_supplyTracks = ["B_Truck_01_transport_F","O_Truck_03_transport_F","I_Truck_02_transport_F"]; //[west,east,guer];
 MCC_supplyAttachPoints = [
 							[[0,0,0],[0,-2,0],[0,-4,0]],
 							[[0,-1,0],[0,-2.5,0],[0,-4,0]],
 							[[0,0.2,0],[0,-1.3,0],[0,-2.8,0]]
 						 ];
 
-MCC_SUPPLY_CRATEITEM = "Land_PaperBox_closed_F";
+if (MCC_isMode) then
+{
+	MCC_logisticsCrates_Types = ["MCC_crateAmmo","MCC_crateSupply","MCC_crateFuel"];	
+}
+else
+{
+	MCC_logisticsCrates_Types = ["Box_NATO_AmmoVeh_F","Land_PaperBox_closed_F","Land_WaterBarrel_F"];	
+};
+
+MCC_SUPPLY_CRATEITEM = MCC_logisticsCrates_Types select 1;
+
 //----------------------gaia------------------------------------------------------
 call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];
 
@@ -996,6 +1022,7 @@ CP_fnc_addItem			= compileFinal preprocessFileLineNumbers (CP_path + "scripts\fu
 CP_fnc_setVehicleInit	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setVehicleInit.sqf");
 CP_fnc_setVariable		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setVariable.sqf");
 CP_fnc_allowedDrivers	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_allowedDrivers.sqf");
+CP_fnc_allowedWeapons	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_allowedWeapons.sqf");
 
 //---------------------------------------------
 //		Server Init

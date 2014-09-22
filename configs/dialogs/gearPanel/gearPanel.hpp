@@ -51,7 +51,8 @@ class CP_GEARPANEL {
 		CP_gearPanelPilotUni,
 		CP_gearPanelPiP,
 		CP_gearPanelPiPFake,
-		CP_InfoText
+		CP_InfoText,
+		MCC_ResourcesControlsGroup
 	  };
 
 	class CP_exitButton: CP_RscButtonMenu
@@ -461,5 +462,74 @@ class CP_GEARPANEL {
 		h = 0.142944 * safezoneH;
 		text = __EVAL(CPPATH+"configs\data\sgLogo.paa");
 		colorText[] = {1,1,1,1.8};
+	};
+	
+	class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
+	{
+		idc = 80;
+		x = 0.02 * safezoneW + safezoneX;
+		y = 0.22 * safezoneH + safezoneY;
+		w = 0.0916667 * safezoneW;
+		h = 0.143 * safezoneH;
+		class controls
+		{
+			class MCC_RepairText: MCC_RscText
+			{
+				idc = 81;
+
+				x = 0.310937 * safezoneW + safezoneX;
+				y = 0.28 * safezoneH + safezoneY;
+				w = 0.0458333 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_SuppliesText: MCC_RscText
+			{
+				idc = 82;
+
+				x = 0.310937 * safezoneW + safezoneX;
+				y = 0.236 * safezoneH + safezoneY;
+				w = 0.0458333 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_FuelText: MCC_RscText
+			{
+				idc = 83;
+
+				x = 0.310937 * safezoneW + safezoneX;
+				y = 0.324 * safezoneH + safezoneY;
+				w = 0.0458333 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_Supplies: MCC_RscPicture
+			{
+				idc = -1;
+
+				text =  __EVAL(MCCPATH +"data\IconAmmo.paa"); //--- ToDo: Localize;
+				x = 0.276563 * safezoneW + safezoneX;
+				y = 0.236 * safezoneH + safezoneY;
+				w = 0.03 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_Repair: MCC_RscPicture
+			{
+				idc = -1;
+
+				text = __EVAL(MCCPATH +"data\IconRepair.paa"); //--- ToDo: Localize;
+				x = 0.276563 * safezoneW + safezoneX;
+				y = 0.28 * safezoneH + safezoneY;
+				w = 0.03 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_Fuel: MCC_RscPicture
+			{
+				idc = -1;
+
+				text = __EVAL(MCCPATH +"data\IconFuel.paa"); //--- ToDo: Localize;
+				x = 0.276563 * safezoneW + safezoneX;
+				y = 0.324 * safezoneH + safezoneY;
+				w = 0.03 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+		};
 	};
 };

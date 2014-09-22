@@ -46,6 +46,6 @@ _safePos = ASLtoATL _pos;
 
 player playMovenow "AinvPknlMstpSlayWrflDnon_medic";
 sleep 2;
-_caller removeWeaponGlobal secondaryWeapon _caller; 
+player removeWeaponGlobal (secondaryWeapon player); 
 sleep 2;
-[[group _caller, _safePos, getDir _caller, secondaryWeapon _caller], "MCC_fnc_createRespawnTent", false] call BIS_fnc_mp;
+[[group player, _safePos, getDir player, secondaryWeapon player], "MCC_fnc_createRespawnTent", false] call BIS_fnc_mp;

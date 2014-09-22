@@ -43,3 +43,19 @@ CP_gearPanelMarksman ctrlsettext format ["Marksman Level: %1 Exp: %2",marksmanLe
 CP_gearPanelSpecialist ctrlsettext format ["Specialist Level: %1 Exp: %2",specialistLevel select 0,specialistLevel select 1];
 CP_gearPanelCrewman ctrlsettext format ["Crewman Level: %1 Exp: %2",crewLevel select 0,crewLevel select 1];
 CP_gearPanelPilot ctrlsettext format ["Pilot Level: %1 Exp: %2",pilotLevel select 0,pilotLevel select 1];
+
+[] spawn
+{
+	private ["_array","_disp"]; 
+	disableSerialization;
+	while {(str (CP_GEARPANEL_IDD displayCtrl 10) != "No control")} do 
+	{
+		//Load available resources
+		_disp = CP_GEARPANEL_IDD;
+		_array = call compile format ["MCC_res%1",playerside];
+		_disp displayCtrl 81 ctrlSetText str floor (_array select 1); 
+		_disp displayCtrl 82 ctrlSetText str floor (_array select 0); 
+		_disp displayCtrl 83 ctrlSetText str floor (_array select 2);
+		sleep 1; 
+	};
+};
