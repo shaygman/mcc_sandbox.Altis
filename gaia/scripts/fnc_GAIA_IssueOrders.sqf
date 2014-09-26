@@ -87,9 +87,15 @@ switch (_side) do
 			  case independent: {
 			  	                 _CA 	= MCC_GAIA_CA_INDEP;			  	                 
 			  	                 _zns	=	MCC_GAIA_ZONES_INDEP;			  	  
-			  	                 _tbc	= (MCC_GAIA_TARGETS_WEST select 3)               
+			  	                 _tbc	= (MCC_GAIA_TARGETS_INDEP select 3)               
 			  	                 
 			  	                };
+			  case civilian		: {
+			  	                 _CA 	= MCC_GAIA_CA_CIV;			  	                 
+			  	                 _zns	=	MCC_GAIA_ZONES_CIV;			  	  
+			  	                 _tbc	= (MCC_GAIA_TARGETS_CIV select 3)               
+			  	                 
+			  	                };			  	                
 			};
 			
 //Note the time, as this is the time where THIS round is running the show. 

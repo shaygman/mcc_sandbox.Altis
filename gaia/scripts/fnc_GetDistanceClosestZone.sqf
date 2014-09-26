@@ -13,6 +13,7 @@ Switch (_side) do
 			  case west				: {_Zones = MCC_GAIA_ZONES_WEST;};
 			  case east				: {_Zones = MCC_GAIA_ZONES_EAST;};
 			  case independent: {_Zones = MCC_GAIA_ZONES_INDEP;};
+			  case civilian		: {_Zones = MCC_GAIA_ZONES_CIV;};
 			};
 
 _ClosestZone=(([_Zones,[],{_pos distance (getMarkerPos _x)},"ASCEND"] call BIS_fnc_sortBy)select 0);

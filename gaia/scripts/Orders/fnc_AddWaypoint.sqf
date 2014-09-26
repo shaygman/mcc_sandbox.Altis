@@ -32,7 +32,8 @@ _Radius		= 40;
 			{
 			  case WEST				: {MCC_GAIA_WPPOS_WEST = MCC_GAIA_WPPOS_WEST + [[_position,_group]];};
 			  case EAST				: {MCC_GAIA_WPPOS_EAST = MCC_GAIA_WPPOS_EAST + [[_position,_group]];};
-			  case independent: {MCC_GAIA_WPPOS_INDEP = MCC_GAIA_WPPOS_INDEP + [[_position,_group]];};
+			  case independent: {MCC_GAIA_WPPOS_INDEP= MCC_GAIA_WPPOS_INDEP + [[_position,_group]];};
+			  case civilian		: {MCC_GAIA_WPPOS_CIV	 = MCC_GAIA_WPPOS_CIV + [[_position,_group]];};
 			};
 
 //Do what you say you do. Go there.

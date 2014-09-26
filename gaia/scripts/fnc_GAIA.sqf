@@ -13,6 +13,7 @@ switch (_HQ_side) do
 			  case west				: {MCC_GAIA_OPERATIONAL_WEST  = FALSE;};
 			  case east				: {MCC_GAIA_OPERATIONAL_EAST  = FALSE;};
 			  case independent: {MCC_GAIA_OPERATIONAL_INDEP = FALSE;};
+			  case civilian		: {MCC_GAIA_OPERATIONAL_CIV = FALSE;};
 			};
 
 // 
@@ -116,6 +117,7 @@ while {true} do
 				  case west				: {MCC_GAIA_OPERATIONAL_WEST  = TRUE;};
 				  case east				: {MCC_GAIA_OPERATIONAL_EAST  = TRUE;};
 				  case independent: {MCC_GAIA_OPERATIONAL_INDEP = TRUE;};
+				  case civilian		: {MCC_GAIA_OPERATIONAL_CIV		= TRUE;};
 				};
 		};		
 		
@@ -125,6 +127,7 @@ while {true} do
 				  case west				: {MCC_GAIA_OPERATIONAL_WEST  = FALSE;};
 				  case east				: {MCC_GAIA_OPERATIONAL_EAST  = FALSE;};
 				  case independent: {MCC_GAIA_OPERATIONAL_INDEP = FALSE;};
+				  case civilian		: {MCC_GAIA_OPERATIONAL_CIV = FALSE;};
 				};
 
 };

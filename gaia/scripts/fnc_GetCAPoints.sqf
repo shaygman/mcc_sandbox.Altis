@@ -49,6 +49,12 @@ switch (_side) do
 			  	                 _zns	=	MCC_GAIA_ZONES_INDEP;
 			  	                 _trg	= (MCC_GAIA_TARGETS_INDEP select 0)+(MCC_GAIA_TARGETS_INDEP select 1)+(MCC_GAIA_TARGETS_INDEP select 2);
 			  	                };
+			  case civilian: {
+			  	                 
+			  	                 _grp	= MCC_GAIA_GROUPS_CIV;
+			  	                 _zns	=	MCC_GAIA_ZONES_CIV;
+			  	                 _trg	= (MCC_GAIA_TARGETS_CIV select 0)+(MCC_GAIA_TARGETS_CIV select 1)+(MCC_GAIA_TARGETS_CIV select 2);
+			  	                };
 			};
 
 

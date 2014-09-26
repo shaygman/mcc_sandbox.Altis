@@ -52,6 +52,10 @@ switch (_side) do
 		  										_ZoneStatus = MCC_GAIA_ZONESTATUS_INDEP;
 		  										_Targets		=	MCC_GAIA_TARGETS_INDEP;
 		  									};
+		  case civilian		: {
+		  										_ZoneStatus = MCC_GAIA_ZONESTATUS_CIV;
+		  										_Targets		=	MCC_GAIA_TARGETS_CIV;
+		  									};
 		};
 
 		
@@ -277,6 +281,11 @@ switch (_side) do
 		  										MCC_GAIA_ZONES_INDEP		=_TempZones;
 		  										MCC_GAIA_ZONESTATUS_INDEP=_ZoneStatus;
 		  									};
+		  case civilian: {
+		  										MCC_GAIA_GROUPS_CIV		 	=_TempGroups;
+		  										MCC_GAIA_ZONES_CIV			=_TempZones;
+		  										MCC_GAIA_ZONESTATUS_CIV	=_ZoneStatus;
+		  									};		  									
 		};
 	
 	
