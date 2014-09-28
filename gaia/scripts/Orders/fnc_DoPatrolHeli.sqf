@@ -54,6 +54,12 @@ switch (side leader _group) do
 			  	                 
 			  	                 
 			  	                };
+			  case civilian		: {
+			  	                 
+			  	                 _zns	=	MCC_GAIA_ZONES_CIV;			  	  
+			  	                 
+			  	                 
+			  	                };			  	                
 			};
 
 

@@ -31,6 +31,7 @@ switch (side _group) do
 		  case west				: {_TempArray =MCC_GAIA_WPPOS_WEST; };
 		  case east				: {_TempArray =MCC_GAIA_WPPOS_EAST; };
 		  case independent: {_TempArray =MCC_GAIA_WPPOS_INDEP; };
+		  case civilian		: {_TempArray =MCC_GAIA_WPPOS_CIV; };
 		};
 
 // Clear all way points
@@ -80,6 +81,7 @@ switch (side _group) do
 		  case west				: {MCC_GAIA_WPPOS_WEST	=_TempArray ; };
 		  case east				: {MCC_GAIA_WPPOS_EAST	=_TempArray ; };
 		  case independent: {MCC_GAIA_WPPOS_INDEP	=_TempArray ; };
+		  case civilian		: {MCC_GAIA_WPPOS_CIV		=_TempArray ; };
 		};
 
 true

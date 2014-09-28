@@ -158,7 +158,7 @@ MCC_GAIA_CA_DEBUG					= [];
 MCC_GAIA_CACHE						= false;
 GAIA_CACHE_SLEEP					= 0.5;
 
-GAIA_CACHE_STAGE_1				= 900;
+GAIA_CACHE_STAGE_1				= 1000;
 GAIA_CACHE_STAGE_2				= (2*GAIA_CACHE_STAGE_1);
 MCC_GAIA_CACHE_STAGE2			= []; 
 
@@ -192,8 +192,11 @@ MCC_GAIA_AMBIANT_CHANCE				 = 20;
 MCC_GAIA_CA_WEST					= [];  
 MCC_GAIA_CA_EAST					= [];  
 MCC_GAIA_CA_INDEP					= [];  
+MCC_GAIA_CA_CIV						= [];  
 MCC_GAIA_ZONES_INDEP			= [];  
+MCC_GAIA_ZONES_CIV				= [];  
 MCC_GAIA_ZONES_POS_INDEP	= [];  
+MCC_GAIA_ZONES_POS_CIV		= [];  
 MCC_GAIA_ZONES_EAST				= [];  
 MCC_GAIA_ZONES_POS_EAST		= [];  
 MCC_GAIA_ZONES_WEST				= [];  
@@ -201,18 +204,23 @@ MCC_GAIA_ZONES_POS_WEST		= [];
 MCC_GAIA_GROUPS_WEST			= [];  
 MCC_GAIA_GROUPS_EAST			= [];  
 MCC_GAIA_GROUPS_INDEP			= [];  
+MCC_GAIA_GROUPS_CIV				= [];  
 MCC_GAIA_BREADCRUMBS_WEST	= []; 
 MCC_GAIA_BREADCRUMBS_EAST	= []; 
 MCC_GAIA_BREADCRUMBS_INDEP= []; 
+MCC_GAIA_BREADCRUMBS_CIV= []; 
 MCC_GAIA_WPPOS_WEST				= []; 
 MCC_GAIA_WPPOS_EAST				= []; 
 MCC_GAIA_WPPOS_INDEP			= []; 
+MCC_GAIA_WPPOS_CIV				= []; 
 MCC_GAIA_ZONESTATUS_WEST	=	[]; for "_i" from 0 to 90 do  { MCC_GAIA_ZONESTATUS_WEST set [_i,"0"];};  
 MCC_GAIA_ZONESTATUS_EAST	=	[]; for "_i" from 0 to 90 do  { MCC_GAIA_ZONESTATUS_EAST set [_i,"0"];};  
 MCC_GAIA_ZONESTATUS_INDEP	=	[]; for "_i" from 0 to 90 do  { MCC_GAIA_ZONESTATUS_INDEP set [_i,"0"];};  
+MCC_GAIA_ZONESTATUS_CIV		=	[]; for "_i" from 0 to 90 do  { MCC_GAIA_ZONESTATUS_INDEP set [_i,"0"];};  
 MCC_GAIA_TARGETS_WEST			= []; for "_i" from 0 to 90 do  { MCC_GAIA_TARGETS_WEST set [_i,[]];};  
 MCC_GAIA_TARGETS_EAST			= []; for "_i" from 0 to 90 do  { MCC_GAIA_TARGETS_EAST set [_i,[]];};  
 MCC_GAIA_TARGETS_INDEP		= []; for "_i" from 0 to 90 do  { MCC_GAIA_TARGETS_INDEP set [_i,[]];};  
+MCC_GAIA_TARGETS_CIV			= []; for "_i" from 0 to 90 do  { MCC_GAIA_TARGETS_INDEP set [_i,[]];};  
 
 
 
@@ -223,6 +231,8 @@ MCC_GAIA_TARGETS_INDEP		= []; for "_i" from 0 to 90 do  { MCC_GAIA_TARGETS_INDEP
 [WEST] 				spawn fnc_GAIA;
 [EAST] 				spawn fnc_GAIA;
 [independent] spawn fnc_GAIA;
+[civilian] 		spawn fnc_GAIA;
+
 
 [] spawn gaia_fn_gaia_cache_init;
 

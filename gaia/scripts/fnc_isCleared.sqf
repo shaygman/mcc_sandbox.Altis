@@ -26,6 +26,7 @@ switch (_side) do
 		  case west				: {_TempArray =MCC_GAIA_BREADCRUMBS_WEST; };
 		  case east				: {_TempArray =MCC_GAIA_BREADCRUMBS_EAST; };
 		  case independent: {_TempArray =MCC_GAIA_BREADCRUMBS_INDEP; };
+		  case civilian		: {_TempArray =MCC_GAIA_BREADCRUMBS_CIV; };
 		};
 
 

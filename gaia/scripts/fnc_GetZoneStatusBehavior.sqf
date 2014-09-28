@@ -33,6 +33,7 @@ switch (_side) do
 		  case west				: {_ZoneStatus = (MCC_GAIA_ZONESTATUS_WEST  select  (parseNumber _zone ));};
 		  case east				: {_ZoneStatus = (MCC_GAIA_ZONESTATUS_EAST  select  (parseNumber _zone ));};
 		  case independent: {_ZoneStatus = (MCC_GAIA_ZONESTATUS_INDEP select  (parseNumber _zone ));};
+		  case civilian		: {_ZoneStatus = (MCC_GAIA_ZONESTATUS_CIV		select  (parseNumber _zone ));};
 		};
 
 		

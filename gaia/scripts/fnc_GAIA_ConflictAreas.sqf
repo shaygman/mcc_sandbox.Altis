@@ -29,6 +29,11 @@ switch (_HQ_side) do
 			  	                 
 			  	                 _CA = MCC_GAIA_CA_INDEP;
 			  	                };
+				case civilian		: {_Targets = (MCC_GAIA_TARGETS_CIV select 0)+(MCC_GAIA_TARGETS_CIV select 1)+(MCC_GAIA_TARGETS_CIV select 2);
+			  									 _Spots		= (MCC_GAIA_TARGETS_CIV select 3);
+			  	                 
+			  	                 _CA = MCC_GAIA_CA_CIV;
+			  	                };			  	               
 			};
 // Delete all CA's that no longer hold any Targets + 
 // Removed spots from selection (we leave that up to clear patrols, no longer attacks
@@ -94,6 +99,9 @@ switch (_HQ_side) do
 			  									};
 			  case independent: {
 			  										MCC_GAIA_CA_INDEP = _CA;
+			  	                };
+			  case civilian		: {
+			  										MCC_GAIA_CA_CIV = _CA;
 			  	                };
 			};
 			

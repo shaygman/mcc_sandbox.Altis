@@ -71,6 +71,7 @@ _NewTargetInfo	= [];
 						  case west				: {MCC_GAIA_BREADCRUMBS_WEST = MCC_GAIA_BREADCRUMBS_WEST + [[(position _unit),time]];};
 						  case east				: {MCC_GAIA_BREADCRUMBS_EAST = MCC_GAIA_BREADCRUMBS_EAST + [[(position _unit),time]];};
 						  case independent: {MCC_GAIA_BREADCRUMBS_INDEP = MCC_GAIA_BREADCRUMBS_INDEP + [[(position _unit),time]];};
+						  case civilian		: {MCC_GAIA_BREADCRUMBS_CIV	 = MCC_GAIA_BREADCRUMBS_CIV + [[(position _unit),time]];};
 						};
       	
       };
@@ -175,6 +176,7 @@ switch (_HQ_side) do
 			  case west				: {MCC_GAIA_TARGETS_WEST = [_ActualTargets,_RecentTargets,_OldTargets,_ToBeCleared];};
 			  case east				: {MCC_GAIA_TARGETS_EAST = [_ActualTargets,_RecentTargets,_OldTargets,_ToBeCleared];};
 			  case independent: {MCC_GAIA_TARGETS_INDEP = [_ActualTargets,_RecentTargets,_OldTargets,_ToBeCleared];};
+			  case civilian		: {MCC_GAIA_TARGETS_CIV	 = [_ActualTargets,_RecentTargets,_OldTargets,_ToBeCleared];};
 			};
 
 
@@ -215,6 +217,17 @@ switch (_HQ_side) do
 																{
 																	MCC_GAIA_BREADCRUMBS_INDEP set [_i, "REMOVE"];
 																	MCC_GAIA_BREADCRUMBS_INDEP = MCC_GAIA_BREADCRUMBS_INDEP - ["REMOVE"];
+																}
+															};
+			  									};
+			  case civilian: {
+			  											for [{_i=0},{_i < count MCC_GAIA_BREADCRUMBS_CIV},{_i=_i+1}] do 
+															{
+																 
+																if ((time-((MCC_GAIA_BREADCRUMBS_CIV select _i) select 1))>_LiveTimeBreadcrumb) then
+																{
+																	MCC_GAIA_BREADCRUMBS_CIV set [_i, "REMOVE"];
+																	MCC_GAIA_BREADCRUMBS_CIV = MCC_GAIA_BREADCRUMBS_CIV - ["REMOVE"];
 																}
 															};
 			  									};

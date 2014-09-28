@@ -137,7 +137,7 @@ while {MCC_GAIA_CACHE} do
 	 							//Disable delayed (we are the delayed spawn)
 	 							_ar set [27,false];	 							
 	 							//Enable the caching no matter what, delayed WILL be cached
-	 							_ar set [26,true];	 							
+	 							//_ar set [26,true];	 							
 	 							[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
 	 							MCC_DELAYED_SPAWNS set [_idx, "delete_me"];
 	 							
