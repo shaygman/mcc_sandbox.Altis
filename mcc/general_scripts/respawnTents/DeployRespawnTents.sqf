@@ -5,7 +5,7 @@ Deploy respawn tents
 #define REQUIRE_MEMBERS 2
 #define REQUIRE_DISTANCE 10
 
-private ["_object","_caller","_index","_vars","_nearby","_pos","_safePos"];
+private ["_object","_caller","_index","_vars","_nearby","_pos","_safePos","_tentType","_obj"];
 
 // Who activated the action?
 _object 	= _this select 0;
@@ -20,7 +20,7 @@ if (_nearby < REQUIRE_MEMBERS) exitWith
 {
 	player sidechat format ["You require %1 more squad members within %2m",REQUIRE_MEMBERS-_nearby,REQUIRE_DISTANCE];
 };
-_pos = ATLtoASL(_caller modelToWorld [0,2,0]);
+_pos = ATLtoASL(_caller modelToWorld [0,3,0]);
 
 while {!lineIntersects [_pos, [_pos select 0, _pos select 1, (_pos select 2) + 1]] && _pos select 2 > getTerrainHeightASL _pos} do
 {
@@ -37,15 +37,18 @@ while {lineIntersects [_pos, [_pos select 0, _pos select 1, (_pos select 2) + 1]
 	_pos set [2, (_pos select 2) + 0.01];
 };
 
-if (lineIntersects [getPosASL player, _pos]) exitWith
+_obj = lineIntersectsObjs [_pos, getposASL player, player, player, true, 32];
+player sidechat str _obj;
+if (lineIntersects [getPosASL player, _pos] || count _obj > 0) exitWith
 {
 	player sideChat "No suitable position found";
 };
 
+_tentType = secondaryWeapon player;
 _safePos = ASLtoATL _pos;
 
 player playMovenow "AinvPknlMstpSlayWrflDnon_medic";
 sleep 2;
-player removeWeaponGlobal (secondaryWeapon player); 
+player removeWeaponGlobal _tentType; 
 sleep 2;
-[[group player, _safePos, getDir player, secondaryWeapon player], "MCC_fnc_createRespawnTent", false] call BIS_fnc_mp;
+[[group player, _safePos, getDir player, _tentType], "MCC_fnc_createRespawnTent", false] call BIS_fnc_mp;

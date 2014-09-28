@@ -30,7 +30,8 @@
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_curatorInit.hpp"
 
 //----Logistics-----------------
-#include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
+#include "\mcc_sandbox_mod\Dialogs\mcc_logisticsLoadTruck.hpp"
+#include "\mcc_sandbox_mod\Dialogs\mcc_logisticsBaseBuild.hpp"
 
 #include "\mcc_sandbox_mod\mcc\Dialogs\compass.hpp"
 //--------------------------------CP------------------------------------------------
@@ -689,6 +690,11 @@ class CfgFunctions
 			class construction
 			{
 				description = "Constract a tactical building on the server side";
+			};
+			
+			class construct_base
+			{
+				description = "Constract a building in base";
 			};
 		};
 		

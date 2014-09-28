@@ -8,7 +8,7 @@ private ["_string","_respawnItems"];
 
 //Add MCC respawn tent string
 _respawnItems = ["MCC_TentDome","MCC_TentA"];	//respawn items
-_string = format ["secondaryWeapon _target in %1 && (vehicle _target == vehicle _this)",_respawnItems]; 
+_string = format ["secondaryWeapon _target in %1 && (vehicle _target == vehicle _this) && (leader _this == _this)",_respawnItems]; 
 _null = player addaction ["<t color=""#FFCC00"">Assemble respawn tent</t>", MCC_path + "mcc\general_scripts\respawnTents\DeployRespawnTents.sqf",[],-1,false,true,"teamSwitch",_string];
 
 //Add MCC Comander

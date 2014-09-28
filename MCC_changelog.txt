@@ -103,13 +103,15 @@ BIS Arsenal
 	- Added: BIS Arsenal preset for ammobox. 
 
 Modules:
-	- Reworked: Access module - added descriptions and combobx to fit arma3 standards.  
+	- Reworked: Access module - added descriptions and combobox to fit arma3 standards.  
 	- Reworked: SF module - added descriptions and selection boxes to fit arma3 standards, add the a selection box to define user key to open the helemet camera. 
 	- Added: Restricted zones module: [[_logic, [east,west,resistance,civilian], _time, _insideTheZone, _airOnly , _delete], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;
 
 TODO:
-remove tent from back and from world
 add missions settings for the new options
+Fix deleting default groups
+no karts unit in MW
+MW delete task after a while
 
 Gaining levels from logistics
 Small resources type and resources box. 

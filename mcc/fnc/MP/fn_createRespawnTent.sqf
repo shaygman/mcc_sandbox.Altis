@@ -34,7 +34,7 @@ if (isServer) then
 	_rally addEventHandler [
 		"hit",
 		{
-			if (damage (_this select 0) > 0.1) then
+			if (damage (_this select 0) > 0.3) then
 			{
 				deleteVehicle (_this select 0);
 			};

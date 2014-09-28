@@ -29,6 +29,7 @@
 
 //----Logistics-----------------
 #include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
+#include "mcc\Dialogs\mcc_logisticsBaseBuild.hpp"
 
 //---- test I should delete it at the end
 #include "mcc\dialogs\test.hpp"
@@ -678,6 +679,11 @@ class CfgFunctions
 			class construction
 			{
 				description = "Constract a tactical building on the server side";
+			};
+			
+			class construct_base
+			{
+				description = "Constract a building in base";
 			};
 		};
 		

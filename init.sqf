@@ -704,10 +704,10 @@ if ( isServer ) then
 	//create logics
 	
 	
-	_dummyGroup = creategroup sideLogic; 
+	MCC_dummyLogicGroup = creategroup sideLogic; 
 	
 	//server
-	_dummy = _dummyGroup createunit ["Logic", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
+	_dummy = MCC_dummyLogicGroup createunit ["Logic", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_server";
 	_dummy setvariable ["text","MCC_server"];
 	_dummy setvariable ["mccIgnore",true];
@@ -715,7 +715,7 @@ if ( isServer ) then
 	publicVariable _name;
 	
 	//CURATOR
-	_dummy = _dummyGroup createunit ["ModuleCurator_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
+	_dummy = MCC_dummyLogicGroup createunit ["ModuleCurator_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_curator";
 	_dummy setvariable ["text","MCC_curator"];
 	_dummy setvariable ["mccIgnore",true];
@@ -725,8 +725,8 @@ if ( isServer ) then
 	publicVariable _name;
 	
 	//west
-	_dummyGroup = createGroup west; 
-	_dummy = _dummyGroup createunit ["SideBLUFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
+	MCC_dummyLogicGroup = createGroup west; 
+	_dummy = MCC_dummyLogicGroup createunit ["SideBLUFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_sideWest";
 	_dummy setvariable ["text","MCC_sideWest"];
 	_dummy setvariable ["mccIgnore",true];
@@ -736,8 +736,8 @@ if ( isServer ) then
 	publicVariable _name;
 	
 	//East
-	_dummyGroup = createGroup east; 
-	_dummy = _dummyGroup createunit ["SideOPFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
+	MCC_dummyLogicGroup = createGroup east; 
+	_dummy = MCC_dummyLogicGroup createunit ["SideOPFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_sideEast";
 	_dummy setvariable ["text","MCC_sideEast"];
 	_dummy setvariable ["mccIgnore",true];
@@ -747,8 +747,8 @@ if ( isServer ) then
 	publicVariable _name;
 	
 	//Resistance
-	_dummyGroup = createGroup resistance; 
-	_dummy = _dummyGroup createunit ["SideResistance_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
+	MCC_dummyLogicGroup = createGroup resistance; 
+	_dummy = MCC_dummyLogicGroup createunit ["SideResistance_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_sideResistance";
 	_dummy setvariable ["text","MCC_sideResistance"];
 	_dummy setvariable ["mccIgnore",true];
@@ -1174,13 +1174,15 @@ if (isServer || MCC_isLocalHC) then
 {
 	[] spawn 
 	{
+		//Let the mission load first
+		while {time <120} do {sleep 1};
+			
 		_gaia_respawn = [];
 		while {true} do
 		{
-			
-			
 			{
 				_gaia_respawn = (missionNamespace getVariable [ "GAIA_RESPAWN_" + str(_x),[] ]);
+				
 				//Store ALL original group setups
 				if (count(_gaia_respawn)==0) then {[(_x)] call fn_cache_original_group;};
 				

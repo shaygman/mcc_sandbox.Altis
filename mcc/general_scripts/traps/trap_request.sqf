@@ -90,10 +90,6 @@ if !mcc_isloading then
 					if (MCC_capture_state) then
 						{
 							onMapSingleClick format ["_nul=[""%1"",_pos] call MCC_3D_PLACER;closeDialog 0;onMapSingleClick """";",(trapkind select 0)];	
-							deletevehicle Object3D;
-							Object3D = (trapkind select 0) createvehicle [0,0,0];	
-							Object3D enableSimulation false;
-							Object3D AddEventHandler ["HandleDamage", {False}];
 							MCC3DRuning = true;
 							while {MCC3DRuning} do
 								{
@@ -123,10 +119,6 @@ if !mcc_isloading then
 						} else 
 						{
 							onMapSingleClick format ["_nul=[""%1"",_pos] call MCC_3D_PLACER;closeDialog 0;onMapSingleClick """";",(trapkind select 0)];	
-							if (!isnil "Object3D") then {deletevehicle Object3D};
-							Object3D = (trapkind select 0) createvehicle [0,0,0];	
-							Object3D enableSimulation false;
-							Object3D AddEventHandler ["HandleDamage", {False}];
 							MCC3DRuning = true;
 							
 							while {MCC3DRuning} do
@@ -182,10 +174,6 @@ if !mcc_isloading then
 					if (MCC_capture_state) then
 						{
 							onMapSingleClick format ["_nul=[""%1"",_pos] call MCC_3D_PLACER;closeDialog 0;onMapSingleClick """";",(trapkind select 0)];	
-							deletevehicle Object3D;
-							Object3D = (trapkind select 0) createvehicle [0,0,0];	
-							Object3D enableSimulation false;
-							Object3D AddEventHandler ["HandleDamage", {False}];
 							MCC3DRuning = true;
 							while {MCC3DRuning} do
 							{
@@ -214,10 +202,6 @@ if !mcc_isloading then
 						else 
 						{
 							onMapSingleClick format ["_nul=[""%1"",_pos] call MCC_3D_PLACER;closeDialog 0;onMapSingleClick """";",(trapkind select 0)];	
-							if (!isnil "Object3D") then {deletevehicle Object3D};
-							Object3D = (trapkind select 0) createvehicle [0,0,0];	
-							Object3D enableSimulation false;
-							Object3D AddEventHandler ["HandleDamage", {False}];
 							MCC3DRuning = true;
 							while {MCC3DRuning} do
 							{

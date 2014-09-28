@@ -55,6 +55,7 @@ _cannonsObjects = [];
 			
 				_cannon commandArtilleryFire [_splashpos, _artitype, 1];
 				waituntil {canfire _cannon};
+				sleep 3; 
 				sleep _firedelay; 
 			};
 		};

@@ -10,7 +10,7 @@ _side	 	=_this select 2;
 _dir	 	=call compile (_this select 3);
 
 #define REQUIRE_MEMBERS 3
-#define ANCHOR_ITEM "Land_FishingGear_01_F"
+#define ANCHOR_ITEM "Land_Rampart_F"
 #define TIME_BEFORE_DELETE 1200
 
 switch (_conType) do 

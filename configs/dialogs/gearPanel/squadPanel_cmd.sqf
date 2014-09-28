@@ -57,6 +57,34 @@ switch (_cmd) do
 		if ((ctrlText CP_squadPanelJoinButton) == "Join Squad") exitWith 
 		{
 			_activeGroup = (CP_activeGroup select 0);
+			
+			//If the group got deleted
+			if (isnull _activeGroup && ((lbCurSel CP_squadPanelSquadList) < (count CP_defaultGroups))) then
+			{
+				_activeGroup = createGroup playerside;
+				waituntil {!isnil "_activeGroup"};
+				_activeGroup setVariable ["MCC_CPGroup",true,true]; 
+				_activeGroup setVariable ["name",(CP_activeGroup select 1),true];
+				 switch (player getVariable ["CP_side", playerside]) do	
+				{
+					case west:			
+					{
+						CP_westGroups set [(lbCurSel CP_squadPanelSquadList),[_activeGroup,(CP_activeGroup select 1)]];
+						publicVariable "CP_westGroups"; 
+					};
+					case east:			
+					{
+						CP_eastGroups set [(lbCurSel CP_squadPanelSquadList),[_activeGroup,(CP_activeGroup select 1)]];
+						publicVariable "CP_eastGroups"; 
+					};
+					case resistance:	
+					{
+						CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[_activeGroup,(CP_activeGroup select 1)]];
+						publicVariable "CP_guarGroups"; 
+					};
+				}; 
+			};
+			
 			if (!isnull _activeGroup && !(_activeGroup getVariable ["locked",false])) then 
 			{
 				//Check for roles 

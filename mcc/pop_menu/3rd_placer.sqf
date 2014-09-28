@@ -12,14 +12,27 @@
 	Returned value(s):
 		position/direction
 */
-private ["_logic", "_camera","_logicGrp","_logicASL","_nvgstate","_preview","_pos","_GUIstate"];
+private ["_logic", "_camera","_logicGrp","_logicASL","_nvgstate","_preview","_pos","_GUIstate","_conMenu","_createBorder","_conType"];
 
 MCC_3Dterminate 		= false; 
 MCC_3DterminateNoMCC	= false; 
-preview3DClass 	= _this select 0;
-_pos 			= _this select 1;
+MCC_preview3DClass 		= _this select 0;
+_pos 					= _this select 1;
+_conMenu				= if (count _this >2) then {_this select 2} else {false};
+_conType				= if (count _this >3) then {_this select 3} else {""};
 
-if (isnil "MCC_Camera") then {
+if (isnil "Object3D" && !isnil "MCC_preview3DClass") then
+{
+	if (MCC_preview3DClass != "") then
+	{
+		Object3D = MCC_preview3DClass createVehicle [0,0,0];	
+		Object3D enableSimulation false;
+		Object3D AddEventHandler ["HandleDamage", {False}];
+	};
+};
+
+if (isnil "MCC_Camera") then 
+{
 	createcenter sidelogic;
 	_logicGrp = creategroup sidelogic;
 	_logicASL = _logicGrp createunit ["Logic",position player,[],0,"none"];
@@ -37,6 +50,8 @@ if !(isnil {player getvariable "3D_isRuning"}) exitwith {debuglog "Log: [3D] Cam
 player setvariable ["3D_isRuning",0];
 DOperator = player;
 DOperator setvariable ["MCC_3D_logic",_logic];
+DOperator setvariable ["MCC_3D_conDialog",_conMenu];
+DOperator setvariable ["MCC_3D_conDialogType",_conType];
 
 //////////////////////////////////////////////////
 startLoadingScreen ["3D Placing","RscDisplayLoadMission"];
@@ -44,9 +59,13 @@ startLoadingScreen ["3D Placing","RscDisplayLoadMission"];
 (["MCC_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_compass", "PLAIN"];
 
 //track Units
-MCC_trackMarkerHandler3D = ((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
+if (!_conMenu) then
+{
+	MCC_trackMarkerHandler3D = ((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
+};
 
-if (isnil "MCC_3D_CAM") then {
+if (isnil "MCC_3D_CAM") then 
+{
 	//_camera = "camCurator" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
 	_camera = "camconstruct" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
 	_camera cameraeffect ["internal","back"];
@@ -56,7 +75,17 @@ if (isnil "MCC_3D_CAM") then {
 	cameraEffectEnableHUD true;
 	_camera setdir direction player;
 	[_camera,-30,0] call BIS_fnc_setPitchBank;
-	_camera camConstuctionSetParams ([position _logic]+[200000,500]);
+	_camera camCommitPrepared 0;
+	
+	_pos set [2,0];
+	if (_conMenu) then
+	{
+		_camera camConstuctionSetParams ([_pos]+[150,50]);
+	}
+	else
+	{
+		_camera camConstuctionSetParams ([_pos]+[200000,500]);
+	}
 };
 
 //_camera camConstructionSetParams [[position player select 0,position player select 1,(position player select 2)+15],5000, 300];
@@ -75,7 +104,8 @@ MCC3DMouseZChanged		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddE
 
 MCC_3D_CAM_keys = [];
 
-if (isnil "MCC_3D_CAM_ASL") then {
+if (isnil "MCC_3D_CAM_ASL") then 
+{
 	createcenter sidelogic;
 	_logicGrp = creategroup sidelogic;
 	_logicASL = _logicGrp createunit ["Logic",position player,[],0,"none"];
@@ -109,8 +139,15 @@ _GUIstate = true;
 _logic setvariable ["MCC_3D_GUI",_GUIstate];
 
 //Create the placeholder
-MCC_dummyObject =  "Sign_Sphere25cm_F" createvehiclelocal (screentoworld [0.5,0.5]);
-MCC_dummyObject addEventHandler ["handleDamage",""];
+if (_conMenu) then
+{
+	MCC_dummyObject = Object3D;
+}
+else
+{
+	MCC_dummyObject =  "Sign_Sphere25cm_F" createvehiclelocal (screentoworld [0.5,0.5]);
+	MCC_dummyObject addEventHandler ["handleDamage",""];
+};
  
 z3DHight = (getpos MCC_dummyObject) select 2;
 if (z3DHight < 0) then {z3DHight = 0};
@@ -122,16 +159,71 @@ MCC_3DeditorMarker setMarkerColorLocal "ColorBlue";
 MCC_3DeditorMarker setMarkerDirLocal getdir MCC_3D_CAM;
 MCC_3DeditorMarker setMarkerSizeLocal [1, 1];
 
-if !(isnil "MCC_3D_CAM_Handler") exitwith {hint "MCC_3D_CAM_Handler is nill";endLoadingScreen};
-MCC_3D_CAM_Handler =
+//Create borders
+if (_conMenu) then
+{
+	_createBorder = 
 	{
+		_center = position _this;
+		
+		_oldBorder = missionnamespace getvariable "MCC_CON_border";
+		if (!isnil "_oldBorder") then 
+		{
+			{deletevehicle _x} foreach _oldBorder;
+		};
+		
+		missionnamespace setvariable ["MCC_CON_border",nil];
+
+		_border = [];
+			
+		_size = 150;
+		_width = 30;
+
+		_pi = 3.14159265358979323846;
+		_perimeter = (_size * _pi);
+		_perimeter = _perimeter + _width - (_perimeter % _width);
+		_size = (_perimeter / _pi);
+		_wallcount = _perimeter / _width * 2;
+		_total = _wallcount;
+
+		_centerObj = "VR_Area_01_circle_4_yellow_F" createvehiclelocal _center;
+		_centerObj setpos _center;
+		_centerObj hideObject true; 
+		_border = _border + [_centerObj];
+		
+		for "_i" from 1 to _total do 
+		{
+			_dir = (360 / _total) * _i;
+			_xpos = (_center select 0) + (sin _dir * _size);
+			_ypos = (_center select 1) + (cos _dir * _size);
+			_zpos = (_center select 2);
+
+			_a = "Land_VR_Block_01_F" createvehiclelocal [_xpos,_ypos,_zpos];
+			_a setpos [_xpos,_ypos,0];
+			_a setdir (_dir + 90);
+			_border = _border + [_a];
+		};
+		
+		missionnamespace setvariable ["MCC_CON_border",_border];
+	};
+	
+	_createBorderScope = MCC_3D_CAM call _createBorder;
+};
+
+if !(isnil "MCC_3D_CAM_Handler") exitwith {hint "MCC_3D_CAM_Handler is nill";endLoadingScreen};
+
+MCC_3D_CAM_Handler =
+{
 	private ["_mode", "_input", "_camera", "_logic", "_terminate", "_keysCancel", "_keysUpObj", "_keysDownObj", "_keysUp", "_keysDown" ,"_keysShift","_key","_keydelete","_offSet","_compassdDir","_compassdPos"
-			,"_keysBanned", "_keyNightVision","_finished", "_keyplace","_objectPos","_objectDir","_keyalt","_nearObjects", "_vehicleclass","_html","_ctrlKey","_gain","_keyGUI","_mapScale"];
+			,"_keysBanned", "_keyNightVision","_finished", "_keyplace","_objectPos","_objectDir","_keyalt","_nearObjects", "_vehicleclass","_html","_ctrlKey","_gain","_keyGUI","_mapScale","_conMenu","_center",
+			 "_conType"];
 			
 	_mode = _this select 0;
 	_input = _this select 1;
 	if (! isnil "MCC_3D_CAM") then {_camera = MCC_3D_CAM};
 	_logic = DOperator getvariable "MCC_3D_logic";
+	_conMenu = DOperator getvariable ["MCC_3D_conDialog",false];
+	_conType = DOperator getvariable ["MCC_3D_conDialogType",""];
 	_terminate = false;
 	if (isnil "_logic") exitwith {};
 
@@ -147,7 +239,10 @@ MCC_3D_CAM_Handler =
 	_keyalt 		= [56];
 	_keydelete 		= [211];
 	_keyGUI			= [35]; 
-		
+	 
+	_colorGreen = "#(argb,8,8,3)color(0,1,0,0.3,ca)";
+	_colorRed = "#(argb,8,8,3)color(1,0,0,0.3,ca)";
+			
 	//--- Mouse Moving/Holding
 	if (_mode in ["mousemoving", "mouseholding"]) then 
 	{
@@ -192,15 +287,51 @@ MCC_3D_CAM_Handler =
 		
 		if (! isnil "Object3D") then 
 		{
-			Object3D setpos [getpos MCC_dummyObject select 0, getpos MCC_dummyObject select 1, z3DHight];
-			Object3D setpos [getpos MCC_dummyObject select 0, getpos MCC_dummyObject select 1, z3DHight];
-			Object3D setdir (getdir MCC_dummyObject);
+			_color = _colorGreen;
+			
+			if (_conMenu) then
+			{
+				//--- No Place To Build
+				_isFlat = (position MCC_dummyObject) isflatempty [
+					(sizeof typeof Object3D)*0.8,	//--- Minimal distance from another object
+					0,				//--- If 0, just check position. If >0, select new one
+					0.5,				//--- Max gradient
+					(sizeof typeof Object3D),	//--- Gradient area
+					0,				//--- 0 for restricted water, 2 for required water,
+					false,				//--- True if some water can be in 25m radius
+					MCC_dummyObject			//--- Ignored object
+				];
+				
+				_center = (missionnamespace getvariable ["MCC_CON_border",[]]) select 0;
+				
+				
+				if ((count _isFlat == 0) || (([position MCC_dummyObject,_center] call BIS_fnc_distance2D) > 150)) then
+				{
+					_color = _colorRed;
+					Object3D setpos [0,0,0];
+					MCC_canSpawn3DConst = false; 
+				}
+				else
+				{
+					Object3D setpos [getpos MCC_dummyObject select 0, getpos MCC_dummyObject select 1, z3DHight];
+					Object3D setdir (getdir MCC_dummyObject);
+					MCC_canSpawn3DConst = true;
+				};
+
+				{Object3D setObjectTexture [_x,_color]} foreach [0,1,2];
+			}
+			else
+			{
+				Object3D setpos [getpos MCC_dummyObject select 0, getpos MCC_dummyObject select 1, z3DHight];
+				Object3D setpos [getpos MCC_dummyObject select 0, getpos MCC_dummyObject select 1, z3DHight];
+				Object3D setdir (getdir MCC_dummyObject);
+			};
 		};
 	};
 
 	//--- Key DOWN
 	if (_mode == "keydown") then
-		{
+	{
 		_key = _input select 1;
 		
 		//--- Terminate 
@@ -274,7 +405,7 @@ MCC_3D_CAM_Handler =
 		};
 		
 		//--- Hide GUI
-		if (_key in _keyGUI) then 
+		if (_key in _keyGUI && !_conMenu) then 
 		{
 			_GUIstate = !(_logic getvariable ["MCC_3D_GUI",true]);
 			_logic setvariable ["MCC_3D_GUI",_GUIstate];
@@ -292,94 +423,80 @@ MCC_3D_CAM_Handler =
 		};
 		
 		//Delete object
-		if (_key in _keydelete) then 
+		if (_key in _keydelete && !_conMenu) then 
+		{
+			if (!isnil "Object3D") then {deletevehicle Object3D};
+			_nearObjects = (getpos MCC_dummyObject) nearobjects 5; 
+			
+			if ((count _nearObjects)>1 && ((_nearObjects select 0) != MCC_dummyObject)) then 
 			{
-				if (!isnil "Object3D") then {deletevehicle Object3D};
-				_nearObjects = (getpos MCC_dummyObject) nearobjects 5; 
+				_nearObjects = [_nearObjects, [], {(getpos MCC_dummyObject) distance _x }, "descend"] call BIS_fnc_sortBy;
+				private ["_deletedObj","_index"];
+				_deletedObj = (_nearObjects select 0);
+				_inArray = false;
 				
-				if ((count _nearObjects)>1 && ((_nearObjects select 0) != MCC_dummyObject)) then 
 				{
-					_nearObjects = [_nearObjects, [], {(getpos MCC_dummyObject) distance _x }, "descend"] call BIS_fnc_sortBy;
-					private ["_deletedObj","_index"];
-					_deletedObj = (_nearObjects select 0);
-					_inArray = false;
-					
+					if (typeName _x == "ARRAY") then
 					{
-						if (typeName _x == "ARRAY") then
+						if (_deletedObj == _x select 0) exitWith 
 						{
-							if (_deletedObj == _x select 0) exitWith 
-							{
-								_index = _forEachIndex;
-							};
-							
-						}
-						else
-						{
-							if (_deletedObj == _x) then 
-							{
-								_index = _forEachIndex;
-							}
-						}
-					} foreach MCC_lastSpawn; 
-					
-					if (!isnil "_index") then 
-					{
-						if (typeName (MCC_lastSpawn select _index) == "ARRAY") then
-						{
-							/*
-							mcc_safe = mcc_safe + FORMAT ["
-						                                    deleteVehicle ((MCC_lastSpawn select %1) select 0);
-							                                {deleteVehicle _x} forEach ((MCC_lastSpawn select %1) select 1);
-								                          "
-								                          , _index
-								                          ];
-							*/
-							deleteVehicle ((MCC_lastSpawn select _index) select 0);
-							{deleteVehicle _x} forEach ((MCC_lastSpawn select _index) select 1);
-						}	
-						else	
-						{
-							/*
-							mcc_safe = mcc_safe + FORMAT ["
-						                                    deleteVehicle (MCC_lastSpawn select %1);
-								                          "
-								                          , _index
-								                          ];
-							*/
-							deleteVehicle (MCC_lastSpawn select _index);
+							_index = _forEachIndex;
 						};
 						
-						mcc_safe = mcc_safe + FORMAT ["
-						                                    MCC_lastSpawn set [%1, -1];
-								                            MCC_lastSpawn = MCC_lastSpawn - [-1];
-															publicVariable 'MCC_lastSpawn';
-								                      "
-								                      , _index
-								                      ];
-						MCC_lastSpawn set [_index, -1];
-						MCC_lastSpawn = MCC_lastSpawn - [-1];
-						publicVariable "MCC_lastSpawn";
 					}
 					else
 					{
-						deletevehicle _deletedObj;
+						if (_deletedObj == _x) then 
+						{
+							_index = _forEachIndex;
+						}
 					}
-				}; 
-			};
+				} foreach MCC_lastSpawn; 
+				
+				if (!isnil "_index") then 
+				{
+					if (typeName (MCC_lastSpawn select _index) == "ARRAY") then
+					{
+						deleteVehicle ((MCC_lastSpawn select _index) select 0);
+						{deleteVehicle _x} forEach ((MCC_lastSpawn select _index) select 1);
+					}	
+					else	
+					{
+						deleteVehicle (MCC_lastSpawn select _index);
+					};
+					
+					mcc_safe = mcc_safe + FORMAT ["
+														MCC_lastSpawn set [%1, -1];
+														MCC_lastSpawn = MCC_lastSpawn - [-1];
+														publicVariable 'MCC_lastSpawn';
+												  "
+												  , _index
+												  ];
+					MCC_lastSpawn set [_index, -1];
+					MCC_lastSpawn = MCC_lastSpawn - [-1];
+					publicVariable "MCC_lastSpawn";
+				}
+				else
+				{
+					deletevehicle _deletedObj;
+				}
+			}; 
 		};
+	};
 	
 	if (_mode == "MouseZChanged") then
 		{
 		_key = _input select 1;
 		_gain = if (MCC_smooth3D) then {0.025} else {0.3};
+		
 		//raise
-		if (_key < 0) then 
+		if (_key < 0 && !_conMenu) then 
 			{
 			z3DHight =z3DHight + _gain;
 			if (!isnil "Object3D") then {Object3D setpos [getpos Object3D select 0, getpos Object3D select 1,z3DHight]};
 			};
 		//Lower	
-		if (_key > 0) then 
+		if (_key > 0 && !_conMenu) then 
 			{
 			z3DHight =z3DHight - _gain;
 			if (!isnil "Object3D") then {Object3D setpos [getpos Object3D select 0, getpos Object3D select 1,z3DHight]};
@@ -391,17 +508,31 @@ MCC_3D_CAM_Handler =
 	{
 		_key = _input select 1;
 		_ctrlKey = _input select 3;
+		
 		if (_key in _keyplace) then 
+		{
+			_objectPos = [getpos Object3D select 0, getpos Object3D select 1, z3DHight] ;
+			_objectDir = getdir Object3D;
+			
+			if (_conMenu) then 
 			{
-				_objectPos = [getpos Object3D select 0, getpos Object3D select 1, z3DHight] ;
-				_objectDir = getdir Object3D;
+				if (MCC_canSpawn3DConst) then
+				{
+					_terminate = true;
+					[[_objectPos, _objectDir , _conType,3, playerside], "MCC_fnc_construct_base", false, false] spawn BIS_fnc_MP;
+					deletevehicle Object3D;
+				};
+			}
+			else
+			{
+			
 				deletevehicle Object3D;
 				sleep 0.2; 
 				MCC3DgotValue = true; 
 				MCC3DValue = [_objectPos,_objectDir];
 				hint "Object placed";
 				deletevehicle Object3D;
-
+				
 				if (mcc_spawntype == "MINES") then	
 					{
 						Object3D = createMine [mcc_spawnname,[0,0,500], [], 0];
@@ -417,35 +548,40 @@ MCC_3D_CAM_Handler =
 						Object3D AddEventHandler ["HandleDamage", {False}];
 					};
 			};
-		if (_key in _keyalt) then 		//Align
+		};
+		
+		if (_key in _keyalt && !_conMenu) then 		//Align
+		{
+			if (MCC_align3D) then 
 			{
-				if (MCC_align3D) then 
-				{
-					MCC_align3D=false;
-					publicVariable "MCC_align3D";
-					MCC_align3DText = "Enabled";
-				} 
-				else
-				{
-					MCC_align3D=true;
-					publicVariable "MCC_align3D";
-					MCC_align3DText = "Disabled";
-				};
+				MCC_align3D=false;
+				publicVariable "MCC_align3D";
+				MCC_align3DText = "Enabled";
+			} 
+			else
+			{
+				MCC_align3D=true;
+				publicVariable "MCC_align3D";
+				MCC_align3DText = "Disabled";
 			};
+		};
 
-		if (_key in _keysShift) then 			//Smooth
+		if (_key in _keysShift && !_conMenu) then 			//Smooth
+		{
+			if (MCC_smooth3D) then 
 			{
-			if (MCC_smooth3D) then {
 				MCC_smooth3D=false;
 				MCC_smooth3DText = "Disabled";
-				} else
-					{
-					MCC_smooth3D=true;
-					MCC_smooth3DText = "Enabled";
-					};		
-			};
+			} 
+			else
+			{
+				MCC_smooth3D=true;
+				MCC_smooth3DText = "Enabled";
+			};		
+		};
+		
 		//open menu
-		if (_key in _keysUpObj && !(_ctrlKey)) then 
+		if (_key in _keysUpObj && !(_ctrlKey) && !_conMenu) then 
 		{
 			if (!dialog) then 
 			{
@@ -458,19 +594,22 @@ MCC_3D_CAM_Handler =
 		};
 		
 		//Undo
-		if ((_key in _keysUpObj) && _ctrlKey) then 
-			{
-				_null = [1] execVM MCC_path +"mcc\general_scripts\delete\undo.sqf";
-			};
-		if (_key in MCC_3D_CAM_keys) then {MCC_3D_CAM_keys = MCC_3D_CAM_keys - [_key]};
+		if ((_key in _keysUpObj) && _ctrlKey && !_conMenu) then 
+		{
+			_null = [1] execVM MCC_path +"mcc\general_scripts\delete\undo.sqf";
+		};
+		
+		if (_key in MCC_3D_CAM_keys) then 
+		{
+			MCC_3D_CAM_keys = MCC_3D_CAM_keys - [_key]};
 		};
 	
 	//Mouse down
-	if (_mode == "mousedown") then 
-		{
-			_key = _input select 1;
-			if ((_key ==1) && ! isnil "Object3D") then {deletevehicle Object3D};
-		};
+	if (_mode == "mousedown" && !_conMenu) then 
+	{
+		_key = _input select 1;
+		if ((_key ==1) && ! isnil "Object3D") then {deletevehicle Object3D};
+	};
 
 	//--- Deselect or CloseTerminate 
 	if (_terminate || MCC_3Dterminate || MCC_3DterminateNoMCC) then 
@@ -532,16 +671,21 @@ MCC_3D_CAM_Handler =
 		if (!isnil "MCC_trackMarkerHandler3D") then {((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrlRemoveEventHandler ["draw",MCC_trackMarkerHandler3D]}; 
 		if (!isnil "MCC_trackMarkerHandler3DDialog") then {((uiNamespace getVariable "MCC3D_Dialog") displayCtrl 0) ctrlRemoveEventHandler ["draw",MCC_trackMarkerHandler3DDialog]}; 
 
-		missionnamespace setvariable ["BIS_COIN_border",nil];
+		//Clear borders
+		_border = missionnamespace getvariable ["MCC_CON_border",[]];
+		{deletevehicle _x} foreach _border;
+		missionnamespace setvariable ["MCC_CON_border",nil];
 		
 		//Clean 3D placer
 		(["MCC_compass"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
 		deleteMarkerLocal MCC_3DeditorMarker; 
 		
+		
+		
 		MCC_mcc_screen=2;
 		MCC3DRuning = false; 
-		if (! isnil "Object3D") then {deletevehicle Object3D};
-		if (! isnil "MCC_dummyObject") then {deletevehicle MCC_dummyObject};
+		if (! isnil "Object3D") then {deletevehicle Object3D; Object3D = nil};
+		if (! isnil "MCC_dummyObject") then {deletevehicle MCC_dummyObject; MCC_dummyObject = nil};
 		player setvariable ["3D_isRuning",nil];
 		hintsilent "";
 		
@@ -551,30 +695,35 @@ MCC_3D_CAM_Handler =
 		endLoadingScreen;
 		//////////////////////////////////////////////////
 	};
-	_html = "<t color='#818960' size='2' shadow='0' align='left' underline='true'>" + "Controls:" + "</t><br/><br/>";
-	_html = _html + "<t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left' >" + 
-			"Tab:        Close Editor" + "<br/>" +
-			"X:          Open/Close Menu" + "<br/>" + 
-			"Ctrl + X:   Undo last spawn" + "<br/>" +
-			"Delete:     Delete object" + "<br/>" +
-			"Space:      Place object" + "<br/>" +
-			"MouseWheel: Raise\Low object" + "<br/>" +
-			"Hold Ctrl:  Rotate object" + "<br/>" +
-			"Alt:        Terrain alignment" + "<br/>" +
-			"Shift:      Toggle smoothness" + "<br/>" +
-			"N:          Toggle vision" + "<br/>" + 
-			"H:          Hide/Show GUI" + "<br/>" + "<br/>" + 
-			"Double click(map): move camera" + "<br/>" +
-			"Alighn to terrain: " + MCC_align3DText + "<br/>" +
-			"Smooth placing: " + MCC_smooth3DText + "</t>";
-			
-	if (_logic getvariable "MCC_3D_GUI") then
-	{	
-		hintsilent parseText(_html);
-	}
-	else
+	
+	if (!_conMenu) then
 	{
-		hintsilent ""; 
+		_html = "<t color='#818960' size='2' shadow='0' align='left' underline='true'>" + "Controls:" + "</t><br/><br/>";
+		_html = _html + "<t color='#a9b08e' size='1' shadow='0' shadowColor='#312100' align='left' >" + 
+				"Tab:        Close Editor" + "<br/>" +
+				"X:          Open/Close Menu" + "<br/>" + 
+				"Ctrl + X:   Undo last spawn" + "<br/>" +
+				"Delete:     Delete object" + "<br/>" +
+				"Space:      Place object" + "<br/>" +
+				"MouseWheel: Raise\Low object" + "<br/>" +
+				"Hold Ctrl:  Rotate object" + "<br/>" +
+				"Alt:        Terrain alignment" + "<br/>" +
+				"Shift:      Toggle smoothness" + "<br/>" +
+				"N:          Toggle vision" + "<br/>" + 
+				"H:          Hide/Show GUI" + "<br/>" + "<br/>" + 
+				"Double click(map): move camera" + "<br/>" +
+				"Alighn to terrain: " + MCC_align3DText + "<br/>" +
+				"Smooth placing: " + MCC_smooth3DText + "</t>";
+				
+		if (_logic getvariable "MCC_3D_GUI") then
+		{	
+			hintsilent parseText(_html);
+		}
+		else
+		{
+			hintsilent ""; 
+		};
 	};
 };
+
 endLoadingScreen;

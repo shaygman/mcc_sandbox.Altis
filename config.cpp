@@ -535,13 +535,14 @@ class cfgWeapons
 {
 	class Default;
 	class itemCore;
-	
-	class MCC_TentDome : ItemCore 
+	class Launcher_Base_F; 
+	class MCC_TentDome : Launcher_Base_F 
 	{
 		displayName = "Respawn Tent (khaki)";
 		descriptionShort = "Allow players from your group respawn near the tent if no enemies nearby for a limited time";
 		picture = "\mcc_sandbox_mod\data\tentFoldedKhaki.paa";
 		model = "\A3\Structures_F\Civ\Camping\Ground_sheet_folded_khaki_F.p3d";
+		magazines[] = {};
 		canLock = 0;
 		tBody = 100;
 		weight = 0;

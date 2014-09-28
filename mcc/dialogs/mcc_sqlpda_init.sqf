@@ -15,7 +15,7 @@ uiNamespace setVariable ["MCC_sqlpdaMenu2", _disp displayCtrl 2];
 #define REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE 300
 #define REQUIRE_FOB_FOB_MIN_DISTANCE 1000
 #define REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE 300
-#define ANCHOR_ITEM "Dirthump_1_F"
+#define ANCHOR_ITEM "Land_Rampart_F"
 {
 	_x ctrlshow false;
 } foreach [MCC_sqlpdaMenu0,MCC_sqlpdaMenu1,MCC_sqlpdaMenu2];

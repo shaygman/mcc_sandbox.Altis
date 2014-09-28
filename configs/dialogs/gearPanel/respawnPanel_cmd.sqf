@@ -1,5 +1,5 @@
 private ["_cmd","_comboBox","_spawnArray","_pos","_spawn","_nearObjects","_spawnAvailable","_safepos","_targets","_target","_groups","_deployAvailable"
-		,"_countRole","_roleLimit"];
+		,"_countRole","_roleLimit","_role"];
 disableSerialization;
 
 #define CP_RESPAWNPANEL_IDD (uiNamespace getVariable "CP_RESPAWNPANEL_IDD")
@@ -67,69 +67,71 @@ switch (_cmd) do
 				{
 					if ((group player) == (_groups select _i) select 0) then {_deployAvailable = true}; 
 				};
+				
 				if (!_deployAvailable) exitWith {player sidechat "You must join a group first."};
 				
 				//Check for roles 
 				_countRole 			= 0;
 				_minPlayersForRole	= 0;
 				_roleLimit			= 1;
-				switch (lbCurSel CP_respawnPanelRoleCombo) do	{
-									case 0:				{				//officer 
-															{
-																if ((_x getvariable "CP_role") == "Officer") then {_countRole = _countRole +1};
-															} foreach units (group player); 
-															_roleLimit 			= CP_officerPerGroup;
-															_minPlayersForRole 	= CP_officerMinPlayersInGroup;
-														};	
-														
-									case 1:				{				//AR 
-															{
-																if ((_x getvariable "CP_role") == "AR") then {_countRole = _countRole +1};
-															} foreach units (group player); 
-															_roleLimit 			= CP_ARPerGroup;
-															_minPlayersForRole 	= CP_ARMinPlayersInGroup;
-														};
-														
-									case 2:				{				//Rifleman
-															{
-																if ((_x getvariable "CP_role") == "Rifleman") then {_countRole = _countRole +1};
-															} foreach units (group player); 
-															_roleLimit 			= CP_riflemanPerGroup;
-															_minPlayersForRole 	= CP_riflemanMinPlayersInGroup;
-														};	
+				switch (lbCurSel CP_respawnPanelRoleCombo) do	
+				{
+						case 0:				{				//officer 
+												{
+													if ((_x getvariable "CP_role") == "Officer") then {_countRole = _countRole +1};
+												} foreach units (group player); 
+												_roleLimit 			= CP_officerPerGroup;
+												_minPlayersForRole 	= CP_officerMinPlayersInGroup;
+											};	
+											
+						case 1:				{				//AR 
+												{
+													if ((_x getvariable "CP_role") == "AR") then {_countRole = _countRole +1};
+												} foreach units (group player); 
+												_roleLimit 			= CP_ARPerGroup;
+												_minPlayersForRole 	= CP_ARMinPlayersInGroup;
+											};
+											
+						case 2:				{				//Rifleman
+												{
+													if ((_x getvariable "CP_role") == "Rifleman") then {_countRole = _countRole +1};
+												} foreach units (group player); 
+												_roleLimit 			= CP_riflemanPerGroup;
+												_minPlayersForRole 	= CP_riflemanMinPlayersInGroup;
+											};	
 
-									case 3:				{				//AT
-															{
-																if ((_x getvariable "CP_role") == "AT") then {_countRole = _countRole +1};
-															} foreach units (group player); 
-															_roleLimit 			= CP_ATPerGroup;
-															_minPlayersForRole 	= CP_ATMinPlayersInGroup;
-														};
-														
-									case 4:				{				//Corpsman
-															{
-																if ((_x getvariable "CP_role") == "Corpsman") then {_countRole = _countRole +1};
-															} foreach units (group player); 
-															_roleLimit 			= CP_CorpsmanPerGroup;
-															_minPlayersForRole 	= CP_CorpsmanMinPlayersInGroup;
-														};
-														
-									case 5:				{				//Marksman
-															{
-																if ((_x getvariable "CP_role") == "Marksman") then {_countRole = _countRole +1};
-															} foreach units (group player); 
-															_roleLimit 			= CP_MarksmanPerGroup;
-															_minPlayersForRole 	= CP_MarksmanMinPlayersInGroup;
-														};
-														
-									case 6:				{				//Specialist
-															{
-																if ((_x getvariable "CP_role") == "Specialist") then {_countRole = _countRole +1};
-															} foreach units (group player); 
-															_roleLimit 			= CP_SpecialistPerGroup;
-															_minPlayersForRole 	= CP_SpecialistMinPlayersInGroup;
-														};
-								};
+						case 3:				{				//AT
+												{
+													if ((_x getvariable "CP_role") == "AT") then {_countRole = _countRole +1};
+												} foreach units (group player); 
+												_roleLimit 			= CP_ATPerGroup;
+												_minPlayersForRole 	= CP_ATMinPlayersInGroup;
+											};
+											
+						case 4:				{				//Corpsman
+												{
+													if ((_x getvariable "CP_role") == "Corpsman") then {_countRole = _countRole +1};
+												} foreach units (group player); 
+												_roleLimit 			= CP_CorpsmanPerGroup;
+												_minPlayersForRole 	= CP_CorpsmanMinPlayersInGroup;
+											};
+											
+						case 5:				{				//Marksman
+												{
+													if ((_x getvariable "CP_role") == "Marksman") then {_countRole = _countRole +1};
+												} foreach units (group player); 
+												_roleLimit 			= CP_MarksmanPerGroup;
+												_minPlayersForRole 	= CP_MarksmanMinPlayersInGroup;
+											};
+											
+						case 6:				{				//Specialist
+												{
+													if ((_x getvariable "CP_role") == "Specialist") then {_countRole = _countRole +1};
+												} foreach units (group player); 
+												_roleLimit 			= CP_SpecialistPerGroup;
+												_minPlayersForRole 	= CP_SpecialistMinPlayersInGroup;
+											};
+				};
 				
 				if (_countRole > _roleLimit) exitWith {player sidechat "All kit's have been taken! Choose another kit."}; 
 				if (count (units (group player)) < _minPlayersForRole) exitWith {player sidechat format ["You need %1 players in your squad to use this kit! Choose another kit.",_minPlayersForRole]};
@@ -163,7 +165,7 @@ switch (_cmd) do
 				playerDeploy = true;
 				
 				//Is it a spawn tent and we spawned as the squad leader - delete the tent
-				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && (player == leader player)) then
+				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && ((player == leader player) || ((player getvariable ["CP_role","n/a"]) == "Officer"))) then
 				{
 					CP_activeSpawn setDamage 1; 
 				};
@@ -182,6 +184,13 @@ switch (_cmd) do
 				//looking for a spawn point
 				playerDeployPos    =[(getpos CP_activeSpawn),1,30,1,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
 				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {player sidechat " No good position found! Try again."};
+				
+				//Is it a spawn tent and we spawned as the squad leader - delete the tent
+				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && (player == leader player)) then
+				{
+					CP_activeSpawn setDamage 1; 
+				};
+				
 				playerDeploy = true;
 				
 				//Remove escape event handlers and reseting menu
@@ -207,15 +216,14 @@ switch (_cmd) do
 			
 			_exp 	 = call compile format  ["%1Level select 1",_role]; 
 			if (isnil "_exp") exitWith {}; 	
-
+			
 			if (_exp < 0) then {_exp = 0};
 			_oldLevel = call compile format  ["%1Level select 0",_role]; 
 			_html = "<t color='#818960' size='2' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
 			messeges ctrlSetStructuredText parseText _html;
 			
-			_level =[floor(_exp/(CP_XPperLevel + _oldLevel*100))+1 ,_exp];
-			_needXP =(CP_XPperLevel + _oldLevel*100)+_exp;
-
-			XPValue progressSetPosition (_exp/_needXP);
+			_needXP 			= (CP_XPperLevel + _oldLevel*100) + ((CP_XPperLevel + _oldLevel*100)*(_oldLevel-1));
+			_needXPPrevLevel 	= (CP_XPperLevel + (_oldLevel-1)*100)*(_oldLevel-1);
+			XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel))); 
 		};
 	};

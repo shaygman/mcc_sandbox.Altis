@@ -192,16 +192,15 @@ if (CP_activated) then
 	
 	_exp 	 = call compile format  ["%1Level select 1",_role]; 
 	if (isnil "_exp") exitWith {}; 	
-
+	
 	if (_exp < 0) then {_exp = 0};
 	_oldLevel = call compile format  ["%1Level select 0",_role]; 
 	_html = "<t color='#818960' size='2' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
 	messeges ctrlSetStructuredText parseText _html;
 	
-	_level =[floor(_exp/(CP_XPperLevel + _oldLevel*100))+1 ,_exp];
-	_needXP =(CP_XPperLevel + _oldLevel*100)+_exp;
-
-	XPValue progressSetPosition (_exp/_needXP);
+	_needXP 			= (CP_XPperLevel + _oldLevel*100) + ((CP_XPperLevel + _oldLevel*100)*(_oldLevel-1));
+	_needXPPrevLevel 	= (CP_XPperLevel + (_oldLevel-1)*100)*(_oldLevel-1);
+	XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel))); 
 	
 	
 };
