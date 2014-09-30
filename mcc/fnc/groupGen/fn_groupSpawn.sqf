@@ -1,19 +1,22 @@
 //===================================================================MCC_fnc_groupSpawn=========================================================================================
 // Create a group on the server
-//[[_type,_pos,_unitsArray,_loc],"MCC_fnc_groupSpawn",false,false] spawn BIS_fnc_MP;
+//[[_type,_pos,_unitsArray,_loc, _cache],"MCC_fnc_groupSpawn",false,false] spawn BIS_fnc_MP;
 //	<in>
 //		_pos: Array		Position to spawn
 //		_unitsArray		Array of units or Cfg path
 //		_loc				Integer - 1 Headless Client
 //		_side			side name or string
+//		_cache			automaticlly cache the group
 //==============================================================================================================================================================================	
 //Made by Shay_Gman (c) 09.10
 
-private ["_pos","_unitsArray","_side","_group","_loc","_isEmpty","_unitClass","_unitSim","_unit","_safePos","_waterSpawn"];
+private ["_pos","_unitsArray","_side","_group","_loc","_isEmpty","_unitClass","_unitSim","_unit","_safePos","_waterSpawn","_cache"];
 
 _pos 		= _this select 0; 
 _unitsArray = _this select 1; 
 _loc 		= _this select 2;
+_cache		= if (count _this > 3) then { _this select 3}; 
+
 _side		= if (typeName (_this select 3) == "STRING") then 
 				{
 					switch (tolower (_this select 3)) do
@@ -54,11 +57,14 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 		if (typeName _unitsArray == "STRING") exitWith 
 		{
 			_group = [_pos, _side, (call compile _unitsArray)] call MCC_fnc_spawnGroup;
+			_group setVariable ["mcc_gaia_cache",true, true];
+
 		};
 
 		if (typeName _unitsArray == "CONFIG") exitWith 
 		{
 			_group = [_pos, _side, _unitsArray] call MCC_fnc_spawnGroup;
+			_group setVariable ["mcc_gaia_cache",true, true];
 		};	
 		
 		//Array group workAround
@@ -94,5 +100,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 			_x setSkill ["commanding", MCC_AI_Command];
 			_x setSkill ["general", MCC_AI_Skill];
 		} foreach units _group;
+		
+		_group setVariable ["mcc_gaia_cache",true, true];
 	};
 };

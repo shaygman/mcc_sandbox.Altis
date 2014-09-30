@@ -270,6 +270,50 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
+		
+		class MCC_delayedSpawnText: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Delayed:"; //--- ToDo: Localize;
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.045 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		};
+		
+		class MCC_delayedCacheText: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Cache:"; //--- ToDo: Localize;
+			x = 0.351042 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.045 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		};
+		
+		class MCC_delayedSpawn: MCC_RscCheckbox
+		{
+			idc = 3022;
+			tooltip = "Units will not spawn until players are nearby";
+			x = 0.322396 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.0171875 * safezoneW;
+			h = 0.022 * safezoneH;
+		};
+		
+		class MCC_CacheSpawn: MCC_RscCheckbox
+		{
+			idc = 3023;
+			tooltip = "Units will spawn and cache automatically";
+			x = 0.396875 * safezoneW + safezoneX;
+			y = 0.478 * safezoneH + safezoneY;
+			w = 0.0171875 * safezoneW;
+			h = 0.022 * safezoneH;
+		};
 
 		class mcc_groupGen_spawnCloseButton: MCC_RscButtonMenu
 		{

@@ -238,6 +238,9 @@ if (_action == 6) exitWith
 		_comboBox lbAdd _displayname;
 	} foreach MCC_ZoneLocation;
 	_comboBox lbSetCurSel mcc_hc;	//MCC_ZoneLocation_index;	
+	
+	if (mcc_delayed_spawn) then {(_mccdialog displayCtrl 3022) cbSetChecked true}; 
+	if (mcc_caching) then {(_mccdialog displayCtrl 3023) cbSetChecked true}; 
 };
 
 //-------------------------------------------------------------------------------------EVAC----------------------------------------------------------------------------------------------

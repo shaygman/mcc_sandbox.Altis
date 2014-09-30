@@ -7,7 +7,7 @@ uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD", _disp];
 waituntil {dialog};
 //Hide buttons
 for "_i" from 100 to 115 do {_disp displayCtrl _i ctrlShow false};
-_size = 150;
+_size = 300;
 
 if (isnil format ["MCC_START_%1",playerSide]) exitWith {closeDialog 0; player sidechat "You must have a base to expand"};
 _startPos = call compile format ["MCC_START_%1",playerSide];
@@ -30,6 +30,14 @@ if (isnil "MCC_CONST_CAM") then
 	MCC_CONST_CAM = _camera;
 };
 
+//Create Selector
+if (isnil "MCC_CONST_SELECTOR") then
+{
+	MCC_CONST_SELECTOR = "Sign_Circle_F" createVehicleLocal [0,0,0];
+};
+
+//Selected
+MCC_CONST_SELECTED = objnull; 
 //NV State
 _NVGstate = if ( sunOrMoon < 0.5 ) then {true} else {false};
 uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD_NVSTATE", _NVGstate];
@@ -83,49 +91,67 @@ _createBorder =
 _createBorderScope = MCC_CONST_CAM call _createBorder;
 
 //Create structures Icons
-_list = _startPos nearEntities ["logic", _size];
-player sidechat str _list; 
-for "_i" from 0 to (count _list-1) do 
-{
-	_obj = _list select _i;
-	if ((_obj getVariable ["mcc_constructionItemType",""]) == "") then {_list set [_i,-1]};
-};
-_list = _list - [-1];
-player sidechat str _list; 
 ["mcc_constBaseID", "onEachFrame", 
 {
 	disableSerialization;
+	private ["_startPos","_size","_list","_type","_pos","_sizeIcon","_icon","_text"]; 
+	_startPos 	= _this select 0;
+	_size		= _this select 1;
 	
-	_list = _this;
-	_disp = uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD";
-
+	_list = _startPos nearEntities ["logic", _size];
+	
 	{
-		_ctrl = _disp displayCtrl (_foreachIndex+100); 
-
-		_pos = worldToScreen getpos _x;
-		if (count _pos > 0) then
+		_type = _x getVariable ["mcc_constructionItemType",""];
+		if (_type != "") then 
 		{
-			_ctrl ctrlSetPosition [_pos select 0,_pos select 1,0.1,0.1];	
-			_ctrl ctrlShow true;
-			_ctrl ctrlCommit 0;
+			_pos = getpos _x;
+			_sizeIcon =if ((1.5 - ((MCC_CONST_CAM distance _x)*0.0005)) < 0) then {0} else {(1.5 - ((MCC_CONST_CAM distance _x)*0.0005))};
+			
+			switch _type do
+			{
+				case "hq": {_icon = "n_hq"; _text ="H.Q"};
+				case "storage": {_icon = "n_unknown"; _text ="Storage"};
+				case "barracks": {_icon = "n_inf"; _text ="Barracks"};
+				case "vehicleservice": {_icon = "n_service"; _text ="Service"};
+			};
+			
+			if (!isnil "_icon") then
+			{
+				_texture = gettext (configfile >> "CfgMarkers" >> _icon >> "icon");
+
+				drawIcon3D [
+								_texture,
+								[0,0,0.6,0.6],
+								[_pos select 0, _pos select 1,(_pos select 2)+ 10],
+								_sizeIcon,
+								_sizeIcon,
+								0,
+								_text
+							];
+			};
 		};
 	} foreach _list;
 
-},_list] call BIS_fnc_addStackedEventHandler;
+},[_startPos,_size]] call BIS_fnc_addStackedEventHandler;
 
 
 
 MCCCONSBASEKeyDown			=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["KeyDown",		"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['keydown',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
 MCCCONSBASEKeyUP			=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["KeyUp",		"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['KeyUp',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
-
+MCCCONSBASEMouseButtonDown	=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["MouseButtonDown",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['MouseButtonDown',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
+MCCCONSBASEMouseButtonUp	=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["MouseButtonUp",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['MouseButtonUp',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
+MCCCONSBASEmousemoving		=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["mousemoving",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['mousemoving',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
+MCCCONSBASEmouseholding		=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["mouseholding",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['mouseholding',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
 
 MCC_CONST_CAM_Handler =
 {
 	private ["_mode","_input","_camera","_terminate","_keysCancel","_keysUpObj","_keysDownObj","_keysUp","_keysDown","_keysShift","_keysBanned","_keyNightVision",
 	         "_keyplace","_keyalt","_keydelete","_keyGUI","_colorGreen","_colorRed","_NVGstate","_keyForward","_keyBack","_keyLeft","_keyRight","_pos","_factor",
-			 "_keyUp","_keyDown"];
+			 "_keyUp","_keyDown","_posX","_posY","_shiftK","_ctrlK","_altK","_disp"];
 	_mode = _this select 0;
 	_input = _this select 1;
+	
+	_disp = uinamespace getVariable "MCC_LOGISTICS_BASE_BUILD";
 	if (! isnil "MCC_CONST_CAM") then {_camera = MCC_CONST_CAM};
 
 	_terminate = false;
@@ -156,10 +182,11 @@ MCC_CONST_CAM_Handler =
 	if (_mode == "keydown") then
 	{
 		_key = _input select 1;
+		_factor = if (uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD_SHIFT",false]) then {3} else {1};
 		
 		if (_key in _keysShift) then
 		{
-			uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD_FACTOR",3];
+			uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD_SHIFT",true];
 		};
 		
 		//--- Terminate 
@@ -177,29 +204,28 @@ MCC_CONST_CAM_Handler =
 		//--- Forward
 		if (_key in _keyForward) then 
 		{
-			
-			_pos = [_camera, (((getpos _camera) select 2)/20 min 20)*(uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD_FACTOR",1]), getdir _camera] call BIS_fnc_relPos;
+			_pos = [_camera, (((getpos _camera) select 2)/40 min 20)* _factor, getdir _camera] call BIS_fnc_relPos;
 			MCC_CONST_CAM SetPos _pos;
 		};
 		
 		//--- Back
 		if (_key in _keyBack) then 
 		{
-			_pos = [_camera, (((getpos _camera) select 2)/20 min 20)*(uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD_FACTOR",1]), (getdir _camera)-180] call BIS_fnc_relPos;
+			_pos = [_camera, (((getpos _camera) select 2)/40 min 20)*_factor, (getdir _camera)-180] call BIS_fnc_relPos;
 			MCC_CONST_CAM SetPos _pos;
 		};
 		
 		//--- Left
 		if (_key in _keyLeft) then 
 		{
-			_pos = [_camera, (((getpos _camera) select 2)/20 min 20)*(uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD_FACTOR",1]), (getdir _camera)-90] call BIS_fnc_relPos;
+			_pos = [_camera, (((getpos _camera) select 2)/40 min 20)*_factor, (getdir _camera)-90] call BIS_fnc_relPos;
 			MCC_CONST_CAM SetPos _pos;
 		};
 		
 		//--- Right
 		if (_key in _keyRight) then 
 		{
-			_pos = [_camera, (((getpos _camera) select 2)/20 min 20)*(uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD_FACTOR",1]), (getdir _camera)+90] call BIS_fnc_relPos;
+			_pos = [_camera, (((getpos _camera) select 2)/40 min 20)*_factor, (getdir _camera)+90] call BIS_fnc_relPos;
 			MCC_CONST_CAM SetPos _pos;
 		};
 		
@@ -207,7 +233,7 @@ MCC_CONST_CAM_Handler =
 		if (_key in _keyUp) then 
 		{
 			_pos = getpos MCC_CONST_CAM;
-			_pos set [2, (_pos select 2) + (((getpos _camera) select 2)/20 min 10)*(uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD_FACTOR",1])];			
+			_pos set [2, (_pos select 2) + (((getpos _camera) select 2)/20 min 10)*_factor];			
 			MCC_CONST_CAM SetPos _pos;
 		};
 		
@@ -215,7 +241,7 @@ MCC_CONST_CAM_Handler =
 		if (_key in _keyDown) then 
 		{
 			_pos = getpos MCC_CONST_CAM;
-			_pos set [2, (_pos select 2) -(((getpos _camera) select 2)/20 min 10)*(uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD_FACTOR",1])];
+			_pos set [2, (_pos select 2) -(((getpos _camera) select 2)/20 min 10)*_factor];
 			MCC_CONST_CAM SetPos _pos;
 		};
 	};
@@ -226,8 +252,80 @@ MCC_CONST_CAM_Handler =
 		
 		if (_key in _keysShift) then
 		{
-			uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD_FACTOR",1];
+			uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD_SHIFT",false];
 		};
+	};
+	
+	if (_mode == "MouseButtonUp") then
+	{
+		_key	= _input select 1; 
+		_posX 	= _input select 2;
+		_posY 	= _input select 3;
+		_shiftK	= _input select 4;
+		_ctrlK 	= _input select 5;
+		_altK	= _input select 6;
+		
+		_list = (screenToWorld [_posX,_posY]) nearEntities ["logic", 20];
+		
+		if (_key == 0) then
+		{
+			if (count _list > 0) then
+			{
+				if (MCC_CONST_SELECTED != _list select 0) then
+				{
+					MCC_CONST_SELECTED = _list select 0;
+					MCC_CONST_SELECTOR setpos (getpos MCC_CONST_SELECTED);
+					MCC_CONST_SELECTOR setVectorDirAndUp [[0,0,1],[0,1,0]];
+				}
+			}
+			else
+			{
+				MCC_CONST_SELECTOR setpos [0,0,0];
+				MCC_CONST_SELECTED = objNull; 
+			};
+		};
+	};
+	
+	if (_mode == "MouseButtonDown") then
+	{
+		_key	= _input select 1; 
+		_posX 	= _input select 2;
+		_posY 	= _input select 3;
+		_shiftK	= _input select 4;
+		_ctrlK 	= _input select 5;
+		_altK	= _input select 6;
+		
+		
+	};
+	
+	if (_mode == "mousemoving") then
+	{
+		_ctrl 	= _input select 0;
+		_posX 	= _input select 1;
+		_posY 	= _input select 2;
+		
+		(_disp displayCtrl 100) ctrlshow true; 
+		(_disp displayCtrl 100) ctrlsetposition [_posX,_posY,1,1];
+		ctrlcommit (_disp displayCtrl 100) 0;
+		player setpos (screenToWorld [_posX,_posY]); 
+		
+		//MCC_CONST_SELECTOR setpos aslToATL (screenToWorld [_posX,_posY]);
+
+		
+		/*
+		if (count _list > 0) then
+		{
+			if (MCC_CONST_SELECTED != _list select 0) then
+			{
+				MCC_CONST_SELECTED = _list select 0;
+				MCC_CONST_SELECTOR setpos (getpos MCC_CONST_SELECTED);
+			}
+			else
+			{
+				MCC_CONST_SELECTOR setpos [0,0,0];
+			};
+		};
+		*/
 	};
 };
 //Clean up
@@ -244,9 +342,14 @@ _border = missionnamespace getvariable ["MCC_CON_border",[]];
 {deletevehicle _x} foreach _border;
 missionnamespace setvariable ["MCC_CON_border",nil];
 
+//Clear Selector
+if (!isnil "MCC_CONST_SELECTOR") then {deleteVehicle MCC_CONST_SELECTOR; MCC_CONST_SELECTOR = nil};
+
 //Remove the event handlers
 (uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayRemoveEventHandler ["KeyDown",MCCCONSBASEKeyDown];
 (uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayRemoveEventHandler ["KeyUp",MCCCONSBASEKeyUp];
+
+
 
 /*
 _disp = _this select 0;

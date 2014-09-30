@@ -215,7 +215,7 @@ if (mcc_missionmaker == (name player)) then
 		{
 			hint "Spawned";
 			
-			[[_ctrl ctrlMapScreenToWorld [_posX,_posY], MCC_groupBroadcast, mcc_hc, mcc_sidename, MCC_isEmpty],"MCC_fnc_groupSpawn",false,false] spawn BIS_fnc_MP;
+			[[_ctrl ctrlMapScreenToWorld [_posX,_posY], MCC_groupBroadcast, mcc_hc, mcc_sidename, MCC_isEmpty,missionNamespace getVariable ["mcc_caching",false]],"MCC_fnc_groupSpawn",false,false] spawn BIS_fnc_MP;
 		};
 		sleep 0.5;
 		deleteMarkerLocal "mcc_spawnMarker";

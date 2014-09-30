@@ -25,6 +25,7 @@ class MCC_LOGISTICS_BASE_BUILD
 		class bottomData: MCC_RscText
 		{
 			idc = 0;
+			colorBackground[] = { 0.051, 0.051, 0.051,0.9};
 			x = -0.00416669 * safezoneW + safezoneX;
 			y = 0.885 * safezoneH + safezoneY;
 			w = 1.0026 * safezoneW;
@@ -33,6 +34,7 @@ class MCC_LOGISTICS_BASE_BUILD
 		class rightData: MCC_RscText
 		{
 			idc = 1;
+			colorBackground[] = { 0.051, 0.051, 0.051,0.9};
 			x = -0.00416669 * safezoneW + safezoneX;
 			y = -0.00599999 * safezoneH + safezoneY;
 			w = 0.126042 * safezoneW;

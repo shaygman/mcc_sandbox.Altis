@@ -18,6 +18,9 @@ MCC_groupBroadcast = [];
 MCC_isEmpty = if (ctrlShown (_mccdialog displayCtrl MCC_GGUNIT_EMPTY) && (lbCurSel MCC_GGUNIT_EMPTY == 1) && (count MCC_groupGenCurrenGroupArray == 0)) then {true} else {false};  
 if !mcc_isloading then	
 {
+	//Delayed spawn
+	mcc_delayed_spawn = if (cbChecked  (_mccdialog displayctrl 3022)) then {true} else {false}; 
+	mcc_caching = if (cbChecked  (_mccdialog displayctrl 3023)) then {true} else {false}; 
 	
 	//Case we are spawning a cfg Group
 	if ((lbCurSel MCC_GGUNIT_TYPE) == 1) then
