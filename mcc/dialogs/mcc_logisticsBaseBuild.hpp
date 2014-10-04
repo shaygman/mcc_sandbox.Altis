@@ -41,6 +41,17 @@ class MCC_LOGISTICS_BASE_BUILD
 			h = 0.891 * safezoneH;
 		};
 		
+		class mouseArea: MCC_RscListBox
+		{
+			idc = 2;
+			colorBackground[] = {0,0,0,0};
+			x = 0.121875 * safezoneW + safezoneX;
+			y = -0.00599999 * safezoneH + safezoneY;
+			w = 0.882292 * safezoneW;
+			h = 0.891 * safezoneH;
+			onMouseMoving = "mousePos = [ _this select 1,_this select 2 ];";
+		};
+		
 		class button1: MCC_RscButton
 		{
 			idc = 100;
@@ -49,7 +60,7 @@ class MCC_LOGISTICS_BASE_BUILD
 			w = 0.0458333 * safezoneW;
 			h = 0.055 * safezoneH;
 		};
-		
+
 		class button2: button1 {idc = 101;};
 		class button3: button1 {idc = 102;};
 		class button4: button1 {idc = 103;};

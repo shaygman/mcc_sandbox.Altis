@@ -148,6 +148,8 @@ MCC_CONST_CAM_Handler =
 	private ["_mode","_input","_camera","_terminate","_keysCancel","_keysUpObj","_keysDownObj","_keysUp","_keysDown","_keysShift","_keysBanned","_keyNightVision",
 	         "_keyplace","_keyalt","_keydelete","_keyGUI","_colorGreen","_colorRed","_NVGstate","_keyForward","_keyBack","_keyLeft","_keyRight","_pos","_factor",
 			 "_keyUp","_keyDown","_posX","_posY","_shiftK","_ctrlK","_altK","_disp"];
+	disableSerialization;
+	
 	_mode = _this select 0;
 	_input = _this select 1;
 	
@@ -295,7 +297,7 @@ MCC_CONST_CAM_Handler =
 		_ctrlK 	= _input select 5;
 		_altK	= _input select 6;
 		
-		
+		player sidechat "down: " + str [_posX,_posY];
 	};
 	
 	if (_mode == "mousemoving") then
@@ -304,28 +306,10 @@ MCC_CONST_CAM_Handler =
 		_posX 	= _input select 1;
 		_posY 	= _input select 2;
 		
-		(_disp displayCtrl 100) ctrlshow true; 
-		(_disp displayCtrl 100) ctrlsetposition [_posX,_posY,1,1];
-		ctrlcommit (_disp displayCtrl 100) 0;
-		player setpos (screenToWorld [_posX,_posY]); 
-		
-		//MCC_CONST_SELECTOR setpos aslToATL (screenToWorld [_posX,_posY]);
-
-		
-		/*
-		if (count _list > 0) then
+		if (!isnil "mousePos") then
 		{
-			if (MCC_CONST_SELECTED != _list select 0) then
-			{
-				MCC_CONST_SELECTED = _list select 0;
-				MCC_CONST_SELECTOR setpos (getpos MCC_CONST_SELECTED);
-			}
-			else
-			{
-				MCC_CONST_SELECTOR setpos [0,0,0];
-			};
+			player sidechat "moving: " + str mousePos;
 		};
-		*/
 	};
 };
 //Clean up

@@ -229,6 +229,12 @@ _markerName =  FORMAT ["MCCMW_operationMarker_%1",["MCCMW_operationMarker",1] ca
 
 
 
+//Move to cache
+_mcc_delayed_spawnPlaceHolder = if (mcc_delayed_spawn) then {true} else {false};
+_mcc_cachingPlaceHolder = if (mcc_caching) then {true} else {false};
+
+mcc_delayed_spawn		= TRUE;
+mcc_caching				= TRUE;
 
 
 _objectives = [];
@@ -442,6 +448,18 @@ if (!isnil "_objectives") then {_factor = _factor * (((count _objectives) mod 3)
 _unitPlaced = [(_totalEnemyUnits * _factor),_zoneNumber,_spawnbehavior] call MCC_fnc_MWSpawnInfantry; 
 if (MW_debug) then {diag_log format ["Total enemy's infantry Spawned in main zone: %1", _unitPlaced]};
 
+//Garrison
+if (_isCQB) then 
+{
+	[[getmarkerpos str _zoneNumber,((getmarkersize str _zoneNumber) select 0) max ((getmarkersize str _zoneNumber) select 1),0,(_totalEnemyUnits*0.005),_enemyfaction,str _enemySide],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
+}; 
+
+// Is _isCiv
+if (_isCiv) then 
+{
+	[[getmarkerpos str _zoneNumber,((getmarkersize str _zoneNumber) select 0) max ((getmarkersize str _zoneNumber) select 1),1,(_totalEnemyUnits*0.005),_civFaction,"CIV"],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
+};
+		
 //Animals
 if (_animals) then
 {
@@ -689,11 +707,6 @@ _missionName2 = ["Storm","Lightning","Rain","Thunder","Tornado","Hurricane","Flo
 
 _factionName = getText (configfile >> "CfgFactionClasses" >> _enemyfaction >> "displayName");
 
-//Publish the name
-missionnamespace setvariable ["bis_fnc_moduleMissionName_name",(_missionName1 +" " + _missionName2)];
-publicvariable "bis_fnc_moduleMissionName_name";
-[true,"bis_fnc_moduleMissionName"] call bis_fnc_mp;
-
 //Location
 if ((_center select 1) != "") then
 {
@@ -801,6 +814,11 @@ _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Go over your objecti
 if (_playMusic in [0,1] ) then
 {
 	[[_html2, (_missionName1 +" " + _missionName2), _missionTittle, [_missionCenter,_objectives,1,_html]],"MCC_fnc_makeBriefing",false,false] spawn BIS_fnc_MP;
+	
+	//Publish the name
+	missionnamespace setvariable ["bis_fnc_moduleMissionName_name",(_missionName1 +" " + _missionName2)];
+	publicvariable "bis_fnc_moduleMissionName_name";
+	[true,"bis_fnc_moduleMissionName"] call bis_fnc_mp;
 };
 
 if (_playMusic == 0 ) then
@@ -829,3 +847,7 @@ deleteVehicle hsim_worldArea;
 hsim_worldArea = nil; 
 deleteVehicle MWMissionArea;
 MWMissionArea = nil; 
+
+sleep 10; 
+mcc_delayed_spawn		= _mcc_delayed_spawnPlaceHolder;
+mcc_caching				= _mcc_cachingPlaceHolder; 

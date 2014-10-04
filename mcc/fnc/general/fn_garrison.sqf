@@ -43,12 +43,15 @@ _unitsCount		= count _unitsArray;
 _vehiclesCount	= count _vehiclesArray;
 _buildingscount	= count _buildingsArray;
 
-switch (toLower _side) do	
+if (typeName _side == "STRING") then
 {
-	case "west": {_side =  west};
-	case "east": {_side =  east};
-	case "guer": {_side =  resistance};
-	case "civ": {_side =  civilian};
+	switch (toLower _side) do	
+	{
+		case "west": {_side =  west};
+		case "east": {_side =  east};
+		case "guer": {_side =  resistance};
+		case "civ": {_side =  civilian};
+	};
 };
 
 if (isnil "_side") exitWith {}; 
@@ -91,6 +94,7 @@ if (_action == 0 || _action == 1) then	//Garisson
 						
 						//Look somewhere randomly
 						_group setFormDir _dir;
+						_group setVariable ["mcc_gaia_cache",mcc_caching];	
 						
 						_static = if (random 1 > 0.1) then {true} else {false};
 						[_group, _static] spawn MCC_fnc_garrisonBehavior;

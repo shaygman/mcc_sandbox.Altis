@@ -240,12 +240,12 @@ if (_cargoNum > 0) then
 	// small
 	if ( ( (_paraType % 3) == 0 ) && ( _cargoNum >= 6 ) ) then 
 	{
-		_cargoEmtpy = 6; 
+		_cargoEmtpy = 5; 
 	};
 	// QRF
-	if ( ( (_paraType % 3) == 1 ) && ( _cargoNum >= 12 ) ) then 
+	if ( ( (_paraType % 3) == 1 ) && ( _cargoNum >= 7 ) ) then 
 	{
-		_cargoEmtpy = 12; 
+		_cargoEmtpy = 7; 
 	};
 
 	
@@ -415,8 +415,11 @@ if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 			
 			case 1: // drop-off
 			{
-				{
+				{	
+					_x allowDamage false;
 					unassignVehicle _x;
+					waituntil {isTouchingGround _x}; 
+					_x allowDamage true;
 				} foreach (units _paraGroup);
 			};
 			

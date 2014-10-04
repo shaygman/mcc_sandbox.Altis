@@ -266,6 +266,20 @@ class mcc_groupGen
 			h = 0.0219914 * safezoneH;		
 		};
 		
+		class MCC_occupyButton: MCC_RscButton
+		{
+			idc = -1;
+			onButtonClick = "if (str (getmarkerpos str mcc_active_zone) != str [0,0,0]) then {[str mcc_active_zone] spawn fnc_GAIA_occupy} else {player sidechat 'Create a zone first'}";
+			tooltip = "Occupy current selected zone with the selected faction's units";
+			text = "Occupy Zone"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			
+			x = 0.391146 * safezoneW + safezoneX;
+			y = 0.665 * safezoneH + safezoneY;
+			w = 0.0744792 * safezoneW;
+			h = 0.0219914 * safezoneH;		
+		};
+		
 		class MCC_saveLoad: MCC_RscButtonMenu 
 		{
 			idc = -1; 

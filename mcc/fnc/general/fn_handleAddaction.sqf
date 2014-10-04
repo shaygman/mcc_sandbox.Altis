@@ -4,7 +4,7 @@
 // <in> Nothing
 //<out> Nothing
 //==============================================================================================================================================================================	
-private ["_string","_respawnItems"];
+private ["_string","_respawnItems","_airports","_counter","_searchArray"];
 
 //Add MCC respawn tent string
 _respawnItems = ["MCC_TentDome","MCC_TentA"];	//respawn items
@@ -22,6 +22,27 @@ _null = player addaction ["<t color=""#FFCC01"">Squad Leader - PDA</t>", MCC_pat
 //Add MCC supply truck
 _string = format ["(_this == driver vehicle _this) && (typeof vehicle _this in %1) && speed vehicle _this ==0 && MCC_allowlogistics",MCC_supplyTracks]; 
 _null = player addaction ["<t color=""#0134ff"">Load Truck</t>", MCC_path + "mcc\general_scripts\logistics\load.sqf",[nil,nil,nil,nil,3],-1,false,true,"teamSwitch",_string];
+
+//Add MCC ILS
+_airports = []; 
+_counter = 0;
+_searchArray = if (MCC_isMode) then {allMissionObjects "mcc_sandbox_moduleILS"} else {allMissionObjects "logic"}; 
+
+{
+	_sides = _x getVariable ["MCC_runwaySide",-1];
+	_sides = if (_sides == -1) then {[east,west,resistance,civilian]} else {[_sides call bis_fnc_sideType]}; 
+	if (((_x getVariable ["MCC_runwayDis",0])>0) && (playerside in _sides))then
+	{
+		_airports set [_counter,[_x,(_x getVariable ["MCC_runwayName","Runway"]),(_x getVariable ["MCC_runwayDis",0]),(_x getVariable ["MCC_runwayAG",false])]]; 
+		_counter = _counter +1;
+	};
+} foreach _searchArray;
+
+if (count _airports > 0) then
+{
+	_string = "(vehicle _this isKindOf 'Plane') && (_this == Driver vehicle _this)";
+	_null = player addaction ["<t color=""#01ffcc"">ILS</t>", {_this call MCC_fnc_ilsMain},[],-1,false,true,"teamSwitch",_string];
+};
 
 // Add MCC to the action menu
 if (getplayerUID player in MCC_allowedPlayers || "all" in MCC_allowedPlayers || serverCommandAvailable "#logout" || isServer || (player getvariable ["MCC_allowed",false])) then 

@@ -56,11 +56,13 @@ _trigger = createTrigger ["emptydetector",_missionCenterTriggerPos];
 _trigger settriggerarea _missionCenterTriggerArea;
 _trigger setTriggerActivation [str _side, "PRESENT", true];
 sleep 5;
+
+//Wait untill player is nearby to work with cache and delayed spawn
+while {!([getposAtl _trigger,(GAIA_CACHE_STAGE_1/2)] call gaia_fn_nearPlayer)} do {sleep 10}; 
+
 _tlist = (_side countSide (list _trigger)); 
-
+player sidechat "captured:" + str _tlist;
 private ["_dir","_distance","_newPos","_script_handler","_rfc"];
-
-
 
 for "_i" from 0 to (count _cond) step 1 do 
 {
@@ -137,32 +139,35 @@ for "_i" from 0 to (count _cond) step 1 do
 	
 	//spawn
 	_ar =	[ "Reinforcement"
-			, _para
-			, false
-			, true
-			, _para
-			, _faction
-			, _zoneNumber
-			, "NOTHING"
-			, str _zoneNumber
-			, "MOVE"
-			, _missionCenterTriggerPos
-			, [_missionCenterTriggerArea select 0,_missionCenterTriggerArea select 1]
-			, _missionCenterTriggerArea select 0
-			, str _side
-			, server
-			, 0
-			, false
-			, false
-			, mcc_missionmaker
-			, "default"
-			, 0
-			, _newPos
-			, 0 //(mcc_zonetype select 0 ) select 1
-			, 0 //(mcc_zonetypenr select 0 ) select 1
-			, 0
-			];
-			
+				, _para
+				, false
+				, true
+				, _para
+				, _faction
+				, _zoneNumber
+				, "NOTHING"
+				, str _zoneNumber
+				, "MOVE"
+				, _missionCenterTriggerPos
+				, [_missionCenterTriggerArea select 0,_missionCenterTriggerArea select 1]
+				, _missionCenterTriggerArea select 0
+				, str _side
+				, MCC_server
+				, 0
+				, false
+				, false
+				, mcc_missionmaker
+				, "default"
+				, 0
+				, _newPos
+				, 0 //(mcc_zonetype select 0 ) select 1
+				, 0 //(mcc_zonetypenr select 0 ) select 1
+				, 0
+				, _newPos
+				, false
+				, false
+				];
+				
 	[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
 };
 	

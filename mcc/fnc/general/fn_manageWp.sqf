@@ -1,7 +1,8 @@
 //==================================================================MCC_fnc_manageWp===============================================================================================
 // Create and control AI WP on map
 // Example [] call MCC_fnc_manageWp or [[action,WPlocation,[WPType,WPcombat,WPformation,WPspeed,WPbehavior,WPcondition, WPstatment,WPtimeout],[selectedGroup1,selectedGroup2......] ]],"MCC_fnc_manageWp", group, false] spawn BIS_fnc_MP;
-// actrion: Integer, 0 - ADD WP,  1 - Replace WP, 2-Delete all WP
+// action: Integer, 0 - ADD WP,  1 - Replace WP, 2-Delete all WP
+// WPlocation: Array location
 //		WPType: Integer, a indecator from this array ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS"];
 //		WPcombat: string, ["NO CHANGE", "BLUE", "GREEN", "WHITE", "YELLOW", "RED"]
 //		WPformation: string, ["NO CHANGE", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"]
@@ -10,21 +11,23 @@
 //		WPcondition: string, condition for WP to be complete
 //		WPstatment: string, code will run after the WP is complete
 //		WPtimeout: number, waiting time  between condition is made till the WP is set to complete
-//WPlocation: Array location
+// SelectedGroups: Array containing all the groups to be effected
 //==============================================================================================================================================================================	
 private ["_wpArray","_wp","_wpType","_objects","_wpObject","_wp2","_groups","_wpLoc","_WPTypeIndecator","_wpTypes"];
 
 _action 			= _this select 0; 
 _wpLoc	 			= _this select 1; 
 _wpArray			= _this select 2; 
+_groups				= _this select 3; 
+
 if (count _wpArray > 0) then
-	{
-	_WPTypeIndecator 	= _wpArray select 0; 
-	
+{
+_WPTypeIndecator 	= _wpArray select 0; 
+
 	_wpTypes = ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS","Helicopter - Land","Helicopter - Get in","Artillery - Fire Mission"];
 	_wpType  = _wpTypes select _WPTypeIndecator; 
-	};
-_groups				= _this select 3; 
+};
+
 
 {
 	if (_action != 0) then {while {(count (waypoints _x)) > 0} do {deleteWaypoint ((waypoints _x) select 0)}};	//Delete WP

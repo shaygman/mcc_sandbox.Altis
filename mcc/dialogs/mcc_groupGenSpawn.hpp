@@ -318,7 +318,7 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		class mcc_groupGen_spawnCloseButton: MCC_RscButtonMenu
 		{
 			idc = -1;
-			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 506) ctrlShow false";
+			onButtonClick = "_mccdialog = (uiNamespace getVariable 'MCC_groupGen_Dialog');(_mccdialog displayCtrl 506) ctrlShow false; mcc_delayed_spawn = if (cbChecked  (_mccdialog displayctrl 3022)) then {true} else {false};mcc_caching = if (cbChecked  (_mccdialog displayctrl 3023)) then {true} else {false};";
 			text = "Close"; //--- ToDo: Localize;
 			
 			x = 0.166146 * safezoneW;

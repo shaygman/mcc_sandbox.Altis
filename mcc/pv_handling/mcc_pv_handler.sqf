@@ -143,9 +143,9 @@ my_pv_handler =
 		_p_mcc_zonetype				= 0; //_this select 22; if ( isNil "_p_mcc_zonetype"        ) then { _p_mcc_zonetype = 0;        };
 		_p_mcc_zonetypenr			= 0; //_this select 23; if ( isNil "_p_mcc_zonetypenr"      ) then { _p_mcc_zonetypenr = 0;      };
 		_p_mcc_marker_zone_dir		= _this select 24; if ( isNil "_p_mcc_marker_zone_dir" ) then { _p_mcc_marker_zone_dir = 0; };
-		_p_safepos									= _this select 25;
-		_p_mcc_cache								= _this select 26;
-		_p_mcc_delayed							= _this select 27;
+		_p_safepos					= _this select 25;
+		_p_mcc_cache				= if (count _this > 26) then {_this select 26} else {false};
+		_p_mcc_delayed				= if (count _this > 27) then {_this select 27} else {false};
 		_p_mcc_marker_zone_type 	= "RECTANGLE";
 		_p_mcc_patrol_wps			= [];
 		
@@ -306,7 +306,6 @@ my_pv_handler =
 					//Hey its a dude, lets get him out there 
 					if (_p_mcc_spawntype == "MAN") then
 						{
-							
 							if (_p_mcc_spawnfaction=="GUER") then
 								{_unitspawned = createGroup resistance;};
 							if (_p_mcc_spawnfaction=="WEST") then
@@ -375,6 +374,8 @@ my_pv_handler =
 									private ["_vehicleClass"];
 									//Some sort of vehicle, now if the config has any crew we spawn it with it, incase not, well its still empty
 									_vehicleClass = tolower (gettext (configFile >> "CfgVehicles" >> _p_mcc_spawnname >> "vehicleClass")); 
+									if (typeName _p_mcc_spawnfaction == "SIDE") then {_p_mcc_spawnfaction = str _p_mcc_spawnfaction}; 
+									
 									if (_p_mcc_spawnfaction=="GUER") then
 										{_unitspawned 	=	[_p_safepos, _spawndirection, _p_mcc_spawnname, resistance] call BIS_fnc_spawnVehicle;};										
 									if (_p_mcc_spawnfaction=="WEST") then

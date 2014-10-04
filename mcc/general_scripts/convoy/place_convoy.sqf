@@ -26,12 +26,13 @@ _y2 = _pos2 select 1;
 _angle = (_x2 - _x1) atan2 (_y2 - _y1);			//define convoy heading
 if (_angle < 0) then { _angle = 360 + _angle; };
 
-switch (toLower _side) do	{
+switch (toLower _side) do	
+{
 	case "west": {_side =  west; _escrot = MCCConvoyWestEscort; _escrotDriver = MCCConvoyWestDriver};
 	case "east": {_side =  east;  _escrot = MCCConvoyEastEscort; _escrotDriver = MCCConvoyEastDriver};
 	case "guer": {_side =  resistance;  _escrot = MCCConvoyGueEscort; _escrotDriver = MCCConvoyGueDriver};
 	case "civ": {_side =  civilian;  _escrot = MCCConvoyCivEscort; _escrotDriver = MCCConvoyCivDriver};
-	};
+};
 	
 _group = creategroup _side;	
 
@@ -40,6 +41,7 @@ sleep 0.5;
 _group setFormation "COLUMN";	
 (car1 select 0) lockdriver true;
 _pos = (car1 select 0) modelToWorld [0,-25,0];
+MCC_curator addCuratorEditableObjects [[(car1 select 0)],true];	
 
 sleep 0.05;
 
@@ -50,6 +52,7 @@ if !( isNil "_vehicle2" ) then
 	(car2 select 0) lockdriver true;
 	sleep 0.1;
 	(car2 select 1) joinsilent (car1 select 2);
+	MCC_curator addCuratorEditableObjects [[(car2 select 0)],true];	
 };
 
 sleep 0.05;
@@ -64,15 +67,20 @@ if (_vipclass=="0") then
 		(car3 select 0) lockdriver true;
 		sleep 0.1;
 		(car3 select 1) joinsilent (car1 select 2);
+		MCC_curator addCuratorEditableObjects [[(car3 select 0)],true];	
 	};
 }
 else 
 {
 	car3 = _vipcar createvehicle ((car1 select 0) modelToWorld [0,-50,0]);
 	car3 setdir (getdir (car1 select 0)); 
+	MCC_curator addCuratorEditableObjects [[car3],false];	
+	
 	_driver = _group createUnit [_escrotDriver, _pos1, [], 0, "CORPORAL"];
 	_driver assignAsDriver car3;
 	_driver moveindriver car3;
+	MCC_curator addCuratorEditableObjects [[_driver],false];	
+	
 	car3 lockdriver true;
 	_cargoNum = car3 emptyPositions "cargo";
 	
@@ -84,6 +92,7 @@ else
 	};
 	_dummy = _vipclass createunit [_pos1, _group,"this setcaptive true; this assignAsCargo car3;this MoveInCargo car3;_null = this addaction [""Secure HVT"",'"+MCC_path+"mcc\general_scripts\hostages\hostage.sqf',[0],6,true,false];
 	removeAllWeapons this ;this allowFleeing 0;"];
+	{MCC_curator addCuratorEditableObjects [[_x],false]} foreach (units _group);
 	sleep 0.3;
 	(units _group) joinsilent (car1 select 2);
 };
@@ -98,6 +107,7 @@ if !( isNil "_vehicle4" ) then
 	(car4 select 0) lockdriver true;
 	sleep 0.1;
 	(car4 select 1) joinsilent (car1 select 2);
+	MCC_curator addCuratorEditableObjects [[(car4 select 0)],true];
 };
 	
 sleep 0.05;
@@ -110,6 +120,7 @@ if !( isNil "_vehicle5" ) then
 	(car5 select 0) lockdriver true;
 	sleep 0.1;
 	(car5 select 1) joinsilent (car1 select 2);
+	MCC_curator addCuratorEditableObjects [[(car5 select 0)],true];
 };
 
 sleep 0.05;

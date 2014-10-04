@@ -33,8 +33,7 @@ if (count _arrayUnits > 0) then
 					_unitPlaced = (_unitPlaced + (_group select 1))*_priceGroup;
 					
 					//Spawn them
-					_script_handler = [_zoneNumber,"GROUP",_simType,true,_group select 0,_group select 2,_spawnbehavior,_group select 0] call MCC_fnc_MWSpawnInZone; 
-					waituntil {_script_handler};
+					[_zoneNumber,"GROUP",_simType,true,_group select 0,_group select 2,_spawnbehavior,_group select 0] call MCC_fnc_MWSpawnInZone; 
 				}; 
 			}
 			else
@@ -46,8 +45,7 @@ if (count _arrayUnits > 0) then
 					_unitPlaced = _unitPlaced + _priceUnit;
 					
 					//Spawn them
-					_script_handler = [_zoneNumber,"VEHICLE",_simType,true,_group select 1,_group select 2,_spawnbehavior,_group select 3] call MCC_fnc_MWSpawnInZone; 
-					waituntil {_script_handler};
+					[_zoneNumber,"VEHICLE",_simType,true,_group select 1,_group select 2,_spawnbehavior,_group select 3] call MCC_fnc_MWSpawnInZone; 
 				}
 				else
 				{

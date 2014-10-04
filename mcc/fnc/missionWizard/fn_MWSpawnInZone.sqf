@@ -3,7 +3,8 @@
 // Example:[_zoneNumber,_spawnType,_classtype,_spawnwithcrew,_spawnname,_spawnfaction,_spawnbehavior,_spawndisplayname] call MCC_fnc_MWSpawnInZone; 
 // Return - handler
 //========================================================================================================================================================================================
-private ["_zoneNumber","_script_handler","_spawnType","_classtype","_spawnwithcrew","_spawnname","_spawnfaction","_spawnbehavior","_spawndisplayname","_previusZone"];
+private ["_zoneNumber","_script_handler","_spawnType","_classtype","_spawnwithcrew","_spawnname","_spawnfaction","_spawnbehavior","_spawndisplayname",
+         "_previusZone","_mcc_delayed_spawnPlaceHolder","_mcc_cachingPlaceHolder"];
 
 _zoneNumber 		= _this select 0;
 _spawnType			= _this select 1; 
@@ -17,7 +18,7 @@ _spawndisplayname	= _this select 7;
 _previusZone = format ["%1", mcc_active_zone];
 _previusZone setMarkerColorLocal "colorBlack";
 _previusZone setMarkerBrushLocal "Solid";
-	
+
 mcc_spawntype			= _spawnType ; 		//'GROUP';
 mcc_classtype			= _classtype;		//'LAND';
 mcc_isnewzone			= false;
@@ -37,8 +38,3 @@ mcc_active_zone 		= mcc_zone_number;
 _script_handler 		= [0] execVM format ["%1mcc\general_scripts\mcc_SpawnStuff.sqf",MCC_path];
 waitUntil {scriptDone _script_handler};
 scriptDone _script_handler;
-
-
-
-				
-		

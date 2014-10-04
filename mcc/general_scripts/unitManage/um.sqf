@@ -359,7 +359,7 @@ switch (_type) do
 		
 		case 12:	//Delete
 		{
-			if (!dialog) exitWith {}; //For some reason when closing MCC it fire type = 12
+			if (!dialog || (count MCC_selectedUnits == 0 && isnil "MCC_GroupGenGroupSelected")) exitWith {}; //For some reason when closing MCC it fire type = 12
 			if (MCC_UMUnit==0) then 
 			{
 				{

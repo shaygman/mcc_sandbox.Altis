@@ -30,8 +30,8 @@
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_curatorInit.hpp"
 
 //----Logistics-----------------
-#include "\mcc_sandbox_mod\Dialogs\mcc_logisticsLoadTruck.hpp"
-#include "\mcc_sandbox_mod\Dialogs\mcc_logisticsBaseBuild.hpp"
+#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
+#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_logisticsBaseBuild.hpp"
 
 #include "\mcc_sandbox_mod\mcc\Dialogs\compass.hpp"
 //--------------------------------CP------------------------------------------------
@@ -730,6 +730,21 @@ class CfgFunctions
 			class RestrictZoneEffect
 			{
 				description = "Effect while inside a restricted zone.";
+			};
+		};
+		
+		class aircraft
+		{
+			file = "\mcc_sandbox_mod\mcc\fnc\aircraft";
+			
+			class ilsChilds
+			{
+				description = "Handles ILS childs";
+			};
+			
+			class ilsMain
+			{
+				description = "Handles ILS main dialog";
 			};
 		};
 	};

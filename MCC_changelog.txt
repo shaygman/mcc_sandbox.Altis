@@ -45,7 +45,11 @@ NEW: Rally point
              Rally points are spawn points for units from the same group as the player who assembeled it and can be used when there are no enemies around 100 meters from the rally point. 
 			 The rally point will disappear when the leader of the group spawn on it. 
 			 There should be at least one more player by the officer to deploy the rally point. 
-			 
+
+NEW: Modules (Mod version only)
+	- Added: Restricted zones module: [[_logic, [east,west,resistance,civilian], _time, _insideTheZone, _airOnly , _delete], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;
+	- Added: (ILS) Instrument Landing System Module - place it on any airport or runway and fixed wing's pilots will have ILS to any runway(based on ILS pro script from MCC2 by TiGGa).			 
+	
 Role Selection:
 	- Added: Allowed Weapons check - if a player pick a weapon out of his role as rifleman picking up a sniper rifle the player will suffer increased weapon sway.
 	- Added: Commander role. You can choose to be a commander for each side, or start a mutiny against your own side commander. Commander will have access to the MCC_console and MCC assets. 
@@ -82,6 +86,7 @@ Engine:
 	- Changed: Zeus edit object dialog is now moveable. 
 	- Changed: Teleport to team will teleport you to an empty seat in the vehicle the unit you have teleported too is in. If there are no empty seats then you'll not be teleported. 
 	- Changed: Unit Managment multi selection moved to BIS default multi-selection list box = better performance. 
+	- Fixed: Convoy and motorized reinforcements needed some twicks. 
 	- Fixed: White map on mission wizard briefing screen. 
 	- Fixed: Missing pictures in the combobox.
 	- Fixed: Vehicle spawned by MCC 3D editor teleport to their spawn position once a new player join in. 
@@ -95,6 +100,7 @@ Engine:
 
 Mission Wizard:
 	- Changed: Mission Wizard process moved to the server side. 
+	- Added: Objects created by the mission wizard will automatically cached or use delayed spawn to save CPU.  
 	- Added: Mission Wizard mission: Secure HVT now requires to bring back the HVT to base alive (need MCC start location present).
 	- Added: Disable popup intro window or just the music option. 
 
@@ -104,12 +110,9 @@ BIS Arsenal
 
 Modules:
 	- Reworked: Access module - added descriptions and combobox to fit arma3 standards.  
-	- Reworked: SF module - added descriptions and selection boxes to fit arma3 standards, add the a selection box to define user key to open the helemet camera. 
-	- Added: Restricted zones module: [[_logic, [east,west,resistance,civilian], _time, _insideTheZone, _airOnly , _delete], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;
+	- Reworked: SF module - added descriptions and selection boxes to fit arma3 standards, add the a selection box to define user key to open the helemet camera. 	
 
 TODO:
-add missions settings for the new options
-Fix deleting default groups
 no karts unit in MW
 MW delete task after a while
 

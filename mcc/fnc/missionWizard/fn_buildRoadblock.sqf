@@ -42,4 +42,4 @@ _unit setBehaviour "SAFE";
 _unit setUnitPos "UP";
 [_unit, "STAND"] call BIS_fnc_ambientAnimCombat;
 _group setFormDir _dir;
-		
+_group setVariable ["mcc_gaia_cache",mcc_caching];		

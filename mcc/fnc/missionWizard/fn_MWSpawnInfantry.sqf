@@ -37,8 +37,7 @@ if (count _unitsArray > 0) then
 		_unitPlaced = _unitPlaced + (_group select 1);
 		
 		//Spawn them
-		_script_handler = [_zoneNumber,"GROUP","LAND",true,_group select 0,_group select 2,_spawnbehavior,_group select 0] call MCC_fnc_MWSpawnInZone; 
-		waituntil {_script_handler};
+		[_zoneNumber,"GROUP","LAND",true,_group select 0,_group select 2,_spawnbehavior,_group select 0] call MCC_fnc_MWSpawnInZone; 
 	}; 
 }
 else

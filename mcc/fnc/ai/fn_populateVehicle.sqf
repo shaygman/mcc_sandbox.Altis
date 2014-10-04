@@ -70,12 +70,25 @@ if (_cargoNum > 0) then
 				_x assignAsCargo _vehicle; 
 				[_x] orderGetIn true;
 				_x moveInCargo _vehicle; 
+				MCC_curator addCuratorEditableObjects [[_x],false];	
 			} forEach units _group;
 			
 			_fillSlots = _fillSlots - (count units _group);
 			
 			// if only 1 seat left do not create a 1 man group but leave seat empty
 			if ( _fillSlots < 2 ) exitWith {}; 
+		};
+		
+		
+		[_vehicle, _group] spawn 
+		{
+			private ["_vehicle","_group"]; 
+			_vehicle = _this select 0;
+			_group = _this select 1;
+			
+			sleep 15; 
+			//Delete not needed units
+			{if ((_vehicle getCargoIndex _x) == -1) then {deleteVehicle _x}} foreach units _group;
 		};
 	};
 };

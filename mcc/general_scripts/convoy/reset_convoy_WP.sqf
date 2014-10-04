@@ -1,5 +1,6 @@
+if (isnil "car1") exitWith {player sidechat "You must spawn a convoy first"};
 if !mcc_isloading then 
-	{
+{
 	if (mcc_missionmaker == (name player)) then
 	{	
 	deletemarkerlocal "marker1";
@@ -94,5 +95,5 @@ if !mcc_isloading then
 	sleep 0.5;
 	
 	}	
-		else { player globalchat "Access Denied"};
-	};
+	else { player globalchat "Access Denied"};
+};

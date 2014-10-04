@@ -153,14 +153,16 @@ _totalEnemyUnits 		= if ((_playersNumber * _difficulty)>10) then {(_playersNumbe
 _minObjectivesDistance 	= if (_isCQB) then {100} else {200};
 _maxObjectivesDistance 	= (_minObjectivesDistance*1.5) + (10*_playersNumber);
 
-
 //What side and faction are we fighting here,
-switch (toLower _enemySide) do	
+if (typeName _enemySide == "STRING") then
 {
-	case "west": {_enemySide =  west};
-	case "east": {_enemySide =  east};
-	case "guer": {_enemySide =  resistance};
-	case "civ": {_enemySide =  civilian};
+	switch (toLower _enemySide) do	
+	{
+		case "west": {_enemySide =  west};
+		case "east": {_enemySide =  east};
+		case "guer": {_enemySide =  resistance};
+		case "civ": {_enemySide =  civilian};
+	};
 };
 	
 //What faction are we fighiting?

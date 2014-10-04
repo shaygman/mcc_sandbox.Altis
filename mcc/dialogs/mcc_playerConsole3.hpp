@@ -242,7 +242,8 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		w = 0.561458 * safezoneW;
 		h = 0.472816 * safezoneH;
 	};
-	class MCC_ConsoleACFeedFake: MCC_RscListBox {
+	class MCC_ConsoleACFeedFake: MCC_RscListBox 
+	{
 		idc = -1;
 		x = 0.219271 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;

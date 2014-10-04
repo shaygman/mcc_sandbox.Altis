@@ -10,40 +10,40 @@ _p_maxrange							 = ((mcc_zone_size select (mcc_zone_number)) select 1);
 
 
 switch (mcc_classtype) do
-		{
-			case "AIR":
-			{
-				if !mcc_spawnwithcrew then 
-				{mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos; }
-				else
-				{mcc_safe_pos     =[_p_mcc_zone_markposition ,1,_p_maxrange,2,1,10,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;};						
-			};
-			
-			case "Reinforcement":
-			{										
-				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,1,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
-			};
-			
-			case "DIVER":
-			{										
-				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,1,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
-			};
-			
-			case "LAND":
-			{
-				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
-			};
+{
+	case "AIR":
+	{
+		if !mcc_spawnwithcrew then 
+		{mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos; }
+		else
+		{mcc_safe_pos     =[_p_mcc_zone_markposition ,1,_p_maxrange,2,1,10,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;};						
+	};
+	
+	case "Reinforcement":
+	{										
+		mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,1,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+	};
+	
+	case "DIVER":
+	{										
+		mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,1,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+	};
+	
+	case "LAND":
+	{
+		mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+	};
 
-			case "WATER":
-			{					
-				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,2,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos; 
-			};
-			
-			default 
-			{
-				mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
-			};
-		};
+	case "WATER":
+	{					
+		mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,2,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos; 
+	};
+	
+	default 
+	{
+		mcc_safe_pos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;					
+	};
+};
 //safe that string man!
 if (MCC_capture_state) then
 {
@@ -338,7 +338,7 @@ else
 				, 0 //(mcc_zonetype select 0 ) select 1
 				, 0 //(mcc_zonetypenr select 0 ) select 1
 				, mcc_marker_dir
-				,	mcc_safe_pos
+				, mcc_safe_pos
 				, mcc_caching
 				, mcc_delayed_spawn
 				];

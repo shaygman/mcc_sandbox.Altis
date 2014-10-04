@@ -48,6 +48,7 @@ if (count _arrayUnits > 0) then
 		_availablePos set [0, -1];
 		_availablePos = _availablePos - [-1]; 
 		_group = createGroup _side; 
+		
 		//Spawn the static pieces
 		for "_x" from 1 to _perSpawn step 1 do 
 		{ 
@@ -65,7 +66,7 @@ if (count _arrayUnits > 0) then
 			MCC_curator addCuratorEditableObjects [[_vehicle select 0],true];
 			(_vehicle select 2) setVariable ["GAIA_ZONE_INTEND",[str _zone,"NOFOLLOW"], true];
 		};
-
+		_group setVariable ["mcc_gaia_cache",true];
 		_unitPlaced = _unitPlaced + (_priceUnit*_perSpawn);
 	}; 
 }

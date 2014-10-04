@@ -21,6 +21,7 @@ class Mission
 		"A3_Characters_F_OPFOR",
 		"A3_Characters_F_Civil",
 		"A3_Characters_F_INDEP",
+		"A3_Modules_F",
 		"a3_map_altis"
 	};
 	randomSeed=11823142;
@@ -42,7 +43,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=56;
+		items=60;
 		class Item0
 		{
 			side="WEST";
@@ -2479,6 +2480,82 @@ class Mission
 					text="UnitIGR_SN2_SP";
 					init="GrpGR_SN2 = group this; nul = [""sp"",this] call f_fnc_assignGear";
 					description="Green Sniper Team 2 Spotter";
+				};
+			};
+		};
+		class Item56
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14416.721,17.85,15957.673};
+					azimut=45;
+					id=151;
+					side="LOGIC";
+					vehicle="Logic";
+					leader=1;
+					skill=0.60000002;
+					init="this setVariable [""MCC_runwayDis"",400];this setVariable [""MCC_runwayName"",""Altis- central Runway#1""];this setVariable [""MCC_runwayAG"",false];this setVariable [""MCC_runwayCircles"",true];";
+				};
+			};
+		};
+		class Item57
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14256.995,17.98,15957.673};
+					azimut=45;
+					id=152;
+					side="LOGIC";
+					vehicle="Logic";
+					leader=1;
+					skill=0.60000002;
+					init="this setVariable [""MCC_runwayDis"",400];this setVariable [""MCC_runwayName"",""Altis- central Runway#2""];this setVariable [""MCC_runwayAG"",false];this setVariable [""MCC_runwayCircles"",true];";
+				};
+			};
+		};
+		class Item58
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={9267.5605,16.988403,21572.852};
+					azimut=234.756;
+					id=153;
+					side="LOGIC";
+					vehicle="Logic";
+					leader=1;
+					skill=0.60000002;
+					init="this setVariable [""MCC_runwayDis"",400];this setVariable [""MCC_runwayName"",""Krya Nera""];this setVariable [""MCC_runwayAG"",true];this setVariable [""MCC_runwayCircles"",true];this setVariable [""MCC_runwaySide"",-1];";
+				};
+			};
+		};
+		class Item59
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={11689.7,23.192858,11939.648};
+					azimut=215;
+					id=154;
+					side="LOGIC";
+					vehicle="Logic";
+					leader=1;
+					skill=0.60000002;
+					init="this setVariable [""MCC_runwayDis"",400];this setVariable [""MCC_runwayName"",""AAC Airfield""];this setVariable [""MCC_runwayAG"",false];this setVariable [""MCC_runwayCircles"",true];this setVariable [""MCC_runwaySide"",-1];";
 				};
 			};
 		};

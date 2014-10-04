@@ -721,6 +721,21 @@ class CfgFunctions
 				description = "Effect while inside a restricted zone.";
 			};
 		};
+		
+		class aircraft
+		{
+			file = "mcc\fnc\aircraft";
+			
+			class ilsChilds
+			{
+				description = "Handles ILS childs";
+			};
+			
+			class ilsMain
+			{
+				description = "Handles ILS main dialog";
+			};
+		};
 	};
 	
 	class VAS
