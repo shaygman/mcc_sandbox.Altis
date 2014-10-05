@@ -76,13 +76,14 @@ Engine:
   - Added: CIV side added to GAIA control
   - Added: Delayed spawning. The spawns can now be delayed until within caching distance. 
 	- Added: Delete selected groups by pressing delete button.
+	- Added: Occupy script (wip)
 	- Added: Mission settings variables: 
-	            - Global Time Exceleration Factor
-				- GAIA AI use smoke 
-				- GAIA AI use smoke frequency
-				- GAIA Caching distance
-				- GAIA unit controlls
-				- GAIA AI artillery Delay
+	- Global Time Exceleration Factor
+	- GAIA AI use smoke 
+	- GAIA AI use smoke frequency
+	- GAIA Caching distance
+	- GAIA unit controlls
+	- GAIA AI artillery Delay
 	- Added: Quick waypoint issuing in the MCC comander console and MCC - hold ctrl + double clicking on the map. 
 	- Added: New parameter for MCC to delete dead players body after respawn "MCC_deletePlayersBody" Boolean - by default false. - added to mission settings
 	- Changed: Zeus edit object dialog is now moveable. 
