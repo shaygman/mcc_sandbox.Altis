@@ -73,6 +73,8 @@ MCC Console:
 	- Fixed: MCC Console had trouble firing guided missiles from UAV
 
 Engine:
+  - Added: CIV side added to GAIA control
+  - Added: Delayed spawning. The spawns can now be delayed until within caching distance. 
 	- Added: Delete selected groups by pressing delete button.
 	- Added: Mission settings variables: 
 	            - Global Time Exceleration Factor
@@ -86,6 +88,7 @@ Engine:
 	- Changed: Zeus edit object dialog is now moveable. 
 	- Changed: Teleport to team will teleport you to an empty seat in the vehicle the unit you have teleported too is in. If there are no empty seats then you'll not be teleported. 
 	- Changed: Unit Managment multi selection moved to BIS default multi-selection list box = better performance. 
+	- Fixed: Caching distance bug
 	- Fixed: Convoy and motorized reinforcements needed some twicks. 
 	- Fixed: White map on mission wizard briefing screen. 
 	- Fixed: Missing pictures in the combobox.
