@@ -41,7 +41,7 @@ class GAIA
 
     class Control
     {
-        file = "\mcc_sandbox_mod\gaia\function\control";
+        file = "\mcc_sandbox_mod\gaia\functions\control";
 
         class addAttackWaypoint {};
         class addWaypoint {};
@@ -69,7 +69,6 @@ class GAIA
         class issueOrders {};
         class occupy {};
         class removeWaypoints {};
-        class sortGroupsByConflictArea {};
     };
 
     class Orders

@@ -41,7 +41,7 @@ class GAIA
 
     class Control
     {
-        file = "gaia\function\control";
+        file = "gaia\functions\control";
 
         class addAttackWaypoint {};
         class addWaypoint {};
@@ -69,7 +69,6 @@ class GAIA
         class issueOrders {};
         class occupy {};
         class removeWaypoints {};
-        class sortGroupsByConflictArea {};
     };
 
     class Orders
