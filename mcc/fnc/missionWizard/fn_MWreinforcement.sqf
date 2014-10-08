@@ -1,20 +1,20 @@
 //======================================================MCC_fnc_MWreinforcement=========================================================================================================
 // Create a reinforcment type
-// Example:[_reinforcement,_side, _missionCenterTriggerPos,_missionCenterTriggerArea,_cond] call MCC_fnc_MWreinforcement; 
+// Example:[_reinforcement,_side, _missionCenterTriggerPos,_missionCenterTriggerArea,_cond] call MCC_fnc_MWreinforcement;
 //
-//	<IN>	
+//	<IN>
 //	_reinforcement: 			Integer, 1 - Aerial, 2 - Motorized, 3 - Mixed
 // 	_side: 					side, reinforcment's side
 // 	_missionCenterTriggerPos: 	Array, Center Position
 //	_missionCenterTriggerArea	Trigger Area as in  [H, W, angle, rectangle (boolead)].
-// 	_cond: 					Array of conditions when the number of units at the start are less in precentage then the number in condition a reinforcment will occur. 
+// 	_cond: 					Array of conditions when the number of units at the start are less in precentage then the number in condition a reinforcment will occur.
 //
 // 	<OUT>
 //			Nothing
 //========================================================================================================================================================================================
 private ["_reinforcement","_side","_missionCenterTriggerPos","_missionCenterTriggerArea","_cond","_trigger","_tlist","_zoneNumber","_script_handler","_found",
          "_faction","_warning","_ar","_totalEnemyUnits","_size","_strDir","_command","_para","_check"];
-		 
+
 _reinforcement 				= _this select 0;
 _side 						= _this select 1;
 _missionCenterTriggerPos 	= _this select 2;
@@ -30,14 +30,14 @@ if !(isServer || isDedicated) exitWith {};
 
 if (isnil "mcc_mwunitsarraycar") then
 {
-	//Build the faction's unitsArrays and send it to the server. 
+	//Build the faction's unitsArrays and send it to the server.
 	_check = [_faction, _side] call MCC_fnc_MWCreateUnitsArray;
-	waituntil {_check};	
+	waituntil {_check};
 };
 
 if (typeName _side == "STRING") then
 {
-	_side = switch (_side) do	
+	_side = switch (_side) do
 			{
 				case "WEST":{west};
 				case "EAST":{east};
@@ -48,34 +48,34 @@ if (typeName _side == "STRING") then
 };
 
 //Size: 0 - small, 1 - medium, 2 - large
-_size = 0;	
+_size = 0;
 if (_totalEnemyUnits > 40) then {_size = 1};
 if (_totalEnemyUnits > 60) then {_size = 2};
 
-_trigger = createTrigger ["emptydetector",_missionCenterTriggerPos]; 
+_trigger = createTrigger ["emptydetector",_missionCenterTriggerPos];
 _trigger settriggerarea _missionCenterTriggerArea;
 _trigger setTriggerActivation [str _side, "PRESENT", true];
 sleep 5;
 
 //Wait untill player is nearby to work with cache and delayed spawn
-while {!([getposAtl _trigger,(GAIA_CACHE_STAGE_1/2)] call gaia_fn_nearPlayer)} do {sleep 10}; 
+while {!([getposAtl _trigger,(GAIA_CACHE_STAGE_1/2)] call GAIA_fnc_isNearPlayer)} do {sleep 10};
 
-_tlist = (_side countSide (list _trigger)); 
+_tlist = (_side countSide (list _trigger));
 player sidechat "captured:" + str _tlist;
 private ["_dir","_distance","_newPos","_script_handler","_rfc"];
 
-for "_i" from 0 to (count _cond) step 1 do 
+for "_i" from 0 to (count _cond) step 1 do
 {
 	//Create Zone
-	_found = false; 
-	
-	_rfc = if (_reinforcement == 3) then {[1,2] call BIS_fnc_selectRandom} else {_reinforcement}; 
+	_found = false;
+
+	_rfc = if (_reinforcement == 3) then {[1,2] call BIS_fnc_selectRandom} else {_reinforcement};
 	if (_rfc == 2 && (count MCC_MWunitsArrayCar) <= 0) then {_rfc = 1};
-	
+
 	while {!_found} do
 	{
 		_dir = floor random 360;
-		_distance = (floor (random 1000)) + (if (_rfc == 0) then {2000} else {1000}); 
+		_distance = (floor (random 1000)) + (if (_rfc == 0) then {2000} else {1000});
 		_newPos = [_missionCenterTriggerPos, _distance, _dir] call BIS_fnc_relPos;
 		_newPos = getposATL ((_newPos nearRoads 200) select 0);
 		if (!isNil "_newPos") then
@@ -83,13 +83,13 @@ for "_i" from 0 to (count _cond) step 1 do
 			_found = true;
 			{
 				if (isPlayer _x && (_x distance _newPos < 1000)) then {_found = false};
-			} forEach allUnits; 
+			} forEach allUnits;
 		};
 	};
-	
+
 	while {(1-(_side countSide (list _trigger))/_tlist) < (_cond select _i)} do {sleep 10};
-	
-	switch (_rfc) do	
+
+	switch (_rfc) do
 	{
 		case 1: 	//Aerial
 		{
@@ -98,20 +98,20 @@ for "_i" from 0 to (count _cond) step 1 do
 			{
 				case 0:
 				{
-					_para = [0,0,1,3,3,4,6,6,7] call BIS_fnc_selectRandom; 
+					_para = [0,0,1,3,3,4,6,6,7] call BIS_fnc_selectRandom;
 				};
-				
+
 				case 1:
 				{
-					_para = [1,1,2,4,4,5,7,7,8] call BIS_fnc_selectRandom; 
+					_para = [1,1,2,4,4,5,7,7,8] call BIS_fnc_selectRandom;
 				};
-				
+
 				case 2:
 				{
-					_para = [1,2,2,4,5,5,7,8,8] call BIS_fnc_selectRandom;  
+					_para = [1,2,2,4,5,5,7,8,8] call BIS_fnc_selectRandom;
 				};
 			};
-			
+
 			if (_warning) then
 			{
 				//Lets give the player some hint about movment
@@ -121,10 +121,10 @@ for "_i" from 0 to (count _cond) step 1 do
 				[[2,compile _command], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 			};
 		};
-		
+
 		case 2: 	//Motorized
 		{
-			_para = _size + 9; 
+			_para = _size + 9;
 			if (_warning) then
 			{
 				//Lets give the player some hint about movment
@@ -133,10 +133,10 @@ for "_i" from 0 to (count _cond) step 1 do
 				_command = format ['["%1",0,0.2,5,1,0.0] spawn bis_fnc_dynamictext;',_strDir];
 				[[2,compile _command], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
 			};
-			
+
 		};
 	};
-	
+
 	//spawn
 	_ar =	[ "Reinforcement"
 				, _para
@@ -167,9 +167,9 @@ for "_i" from 0 to (count _cond) step 1 do
 				, false
 				, false
 				];
-				
+
 	[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
 };
-	
+
 //Clean up
 deleteVehicle _trigger;

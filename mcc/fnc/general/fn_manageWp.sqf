@@ -12,20 +12,20 @@
 //		WPstatment: string, code will run after the WP is complete
 //		WPtimeout: number, waiting time  between condition is made till the WP is set to complete
 // SelectedGroups: Array containing all the groups to be effected
-//==============================================================================================================================================================================	
+//==============================================================================================================================================================================
 private ["_wpArray","_wp","_wpType","_objects","_wpObject","_wp2","_groups","_wpLoc","_WPTypeIndecator","_wpTypes"];
 
-_action 			= _this select 0; 
-_wpLoc	 			= _this select 1; 
-_wpArray			= _this select 2; 
-_groups				= _this select 3; 
+_action 			= _this select 0;
+_wpLoc	 			= _this select 1;
+_wpArray			= _this select 2;
+_groups				= _this select 3;
 
 if (count _wpArray > 0) then
 {
-_WPTypeIndecator 	= _wpArray select 0; 
+_WPTypeIndecator 	= _wpArray select 0;
 
 	_wpTypes = ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS","Helicopter - Land","Helicopter - Get in","Artillery - Fire Mission"];
-	_wpType  = _wpTypes select _WPTypeIndecator; 
+	_wpType  = _wpTypes select _WPTypeIndecator;
 };
 
 
@@ -53,9 +53,9 @@ _WPTypeIndecator 	= _wpArray select 0;
 								_wp setWaypointBehaviour (_wpArray select 4);
 								_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
 								_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-							}; 
+							};
 						//If transport isn't empty
-						if ({alive _x} count crew _wpObject != 0) then 
+						if ({alive _x} count crew _wpObject != 0) then
 							{
 								while {(count (waypoints (group _wpObject))) > 0} do {deleteWaypoint ((waypoints (group _wpObject)) select 0)};
 								_wp = _x addWaypoint [_wpLoc, 0];
@@ -69,7 +69,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 								_wp2 = (group _wpObject) addWaypoint [_wpLoc, 0];
 								_wp2 setWaypointType "LOAD";
 								_wp synchronizeWaypoint [_wp2];
-							} 
+							}
 							else
 							{
 								_wp = _x addWaypoint [_wpObject, 0];	//If transport empty
@@ -82,7 +82,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 								_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
 							};
 					};
-					
+
 				case "JOIN":
 					{
 						_group = _x;
@@ -101,7 +101,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 								_wp setWaypointBehaviour (_wpArray select 4);
 								_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
 								_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
-							}; 
+							};
 
 						//If group found
 						while {(count (waypoints _wpObject)) > 0} do {deleteWaypoint ((waypoints _wpObject) select 0)};
@@ -117,7 +117,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 						_wp2 setWaypointType "LEADER";
 						_wp synchronizeWaypoint [_wp2];
 					};
-					
+
 				case "LEADER":
 					{
 						_group = _x;
@@ -136,7 +136,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 								_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
 								_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
 
-							}; 
+							};
 
 						//If group found
 						while {(count (waypoints _wpObject)) > 0} do {deleteWaypoint ((waypoints _wpObject) select 0)};
@@ -151,7 +151,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 						_wp2 setWaypointType "JOIN";
 						_wp synchronizeWaypoint [_wp2];
 					};
-					
+
 				case "LOAD":
 					{
 						_group = _x;
@@ -159,7 +159,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 						{
 							if (((leader _x distance _wpLoc) < 50) &&(_x != _group) && (side _x == side _group))exitWith {_wpObject = _x};
 						} foreach allGroups;
-						
+
 						if (isnil "_wpObject") exitWith 			//Exit - no group found
 						{
 							_wp = _x addWaypoint [_wpLoc, 0];
@@ -170,8 +170,8 @@ _WPTypeIndecator 	= _wpArray select 0;
 							_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
 							_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
 
-						}; 
-							
+						};
+
 						//If group found
 						while {(count (waypoints _wpObject)) > 0} do {deleteWaypoint ((waypoints _wpObject) select 0)};
 						_wp = _group addWaypoint [_wpLoc, 0];
@@ -185,7 +185,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 						_wp2 setWaypointType "GETIN";
 						_wp synchronizeWaypoint [_wp2];
 					};
-					
+
 				case "Helicopter - Land":
 					{
 						_wp = _x addWaypoint [_wpLoc, 0];
@@ -196,7 +196,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 						_wp setWaypointStatements ["true",'vehicle this land "LAND"'];
 						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
 					};
-					
+
 				case "Helicopter - Get in":
 					{
 						_wp = _x addWaypoint [_wpLoc, 0];
@@ -207,18 +207,18 @@ _WPTypeIndecator 	= _wpArray select 0;
 						_wp setWaypointStatements ["true",'vehicle this land "GET IN"'];
 						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
 					};
-					
+
 				case "Artillery - Fire Mission":
 					{
-						private "_isArty"; 
-						_isArty= getNumber (configfile >> "CfgVehicles" >> typeof (vehicle leader _x) >> "artilleryScanner"); 
-						 if ((vehicle (leader _x) != leader _x) && (_isArty ==1)) then 
+						private "_isArty";
+						_isArty= getNumber (configfile >> "CfgVehicles" >> typeof (vehicle leader _x) >> "artilleryScanner");
+						 if ((vehicle (leader _x) != leader _x) && (_isArty ==1)) then
 						 {
 							_x setVariable ["GAIA_MortarRound",6];
-							[_x, _wpLoc] call fnc_DoMortar
+							[_x, _wpLoc] call GAIA_fnc_doMortar;
 						 };
 					};
-					
+
 				default
 					{
 						_wp = _x addWaypoint [_wpLoc, 0];
@@ -232,4 +232,4 @@ _WPTypeIndecator 	= _wpArray select 0;
 			};
 		};
 } foreach _groups;
-	
+
