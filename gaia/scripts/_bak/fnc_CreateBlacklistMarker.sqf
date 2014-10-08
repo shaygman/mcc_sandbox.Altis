@@ -6,7 +6,7 @@ Description:
 
 Parameters:
 	- Group
-		
+
 Optional:
 	- <NONE>
 
@@ -28,8 +28,8 @@ _from = format ["%1_from"	,_group];
 _to 	= format ["%1_to"		,_group];
 
 //Awesome not have the getmarkershape command
-_shape = _zone call fnc_getMarkerShape;
-if (_shape in ["SQUARE","RECTANGLE"]) then 
+_shape = _zone call GAIA_fnc_getMarkerShape;
+if (_shape in ["SQUARE","RECTANGLE"]) then
 	{_mshape = "RECTANGLE"}
 else
 	{_mshape = "ELLIPSE"};

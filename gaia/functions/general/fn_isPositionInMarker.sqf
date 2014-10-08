@@ -2,6 +2,10 @@
 // Out: boolean
 
 private ["_pos","_area","_return"];
+if (count(_this)<2) exitwith {false;};
+if (typename (_this select 0)!="ARRAY") exitwith {false;};
+if (typename (_this select 1)!="STRING") exitwith {false;};
+if (((getmarkerpos (_this select 1)) distance [0,0,0])==0) exitwith {false;};
 _pos = _this select 0;
 _area = _this select 1;
 _return = false;
@@ -71,6 +75,7 @@ if (_shape == "ICON") then {
     };
 
     // Check if the position is within the marker area.
+
     _return = [_pos,_corners] call GAIA_fnc_isInRectangle;
   } else {
     if (_shape == "CIRCLE") then {
