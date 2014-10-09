@@ -193,7 +193,7 @@ if (MW_debug) then {player sidechat format ["Total enemy's units: %1", _totalEne
 diag_log format ["MCC Mission Wizard total enemy Count = %1", _totalEnemyUnits];
 
 //Check if faction has groups in it if not exit
-if (count MCC_MWGroupArrayMen == 0) exitWith
+if (count MCC_MWGroupArrayMen == 0 && count MCC_customGroupsSaveMW == 0) exitWith
 {
 	diag_log "MCC: Mission Wizard Error: No group available in the selected enemy faction"; 
 	MCC_MWisGenerating = false;

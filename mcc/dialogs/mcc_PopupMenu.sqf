@@ -20,7 +20,7 @@ if ((_index == 0) && (player getVariable ['MCC_allowed',false])) exitWith
 {
 	if (str findDisplay 2994 != "No display") then 
 	{
-		closeDialog 0;
+		while {dialog} do {closeDialog 0};
 	}
 	else
 	{
@@ -41,8 +41,7 @@ if ((_index == 0) && (player getVariable ['MCC_allowed',false])) exitWith
 				//Close Dialog
 				if (dialog) exitWith
 				{
-					closeDialog 0;
-					waituntil {!dialog};
+					while {dialog} do {closeDialog 0};
 				};
 				_ok = createDialog "mcc_loginDialog";
 				if !(_ok) exitWith { hint "createDialog failed" };
@@ -74,7 +73,7 @@ if ((_index == 1) && (_commander == getPlayerUID player) && MCC_allowConsole) ex
 {
 	if (dialog) then 
 	{
-		closeDialog 0;
+		while {dialog} do {closeDialog 0};
 	}
 	else
 	{
@@ -89,7 +88,7 @@ if (_index == 2 && MCC_allowSquadDialog) exitWith
 	{
 		
 		if (str (CP_SQUADPANEL_IDD displayCtrl 0) != "No control") then {MCC_squadDialogOpen = false};
-		closeDialog 0;
+		while {dialog} do {closeDialog 0};
 		
 		if !(isnil "CP_gearCam") then
 		{

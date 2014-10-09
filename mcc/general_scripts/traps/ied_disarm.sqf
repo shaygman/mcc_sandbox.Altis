@@ -1,25 +1,19 @@
-private ["_ied","_fakeIed","_men","_index","_rand","_randsound","_disarmTime", "_footer", "_html", "_break","_dummyMarker","_isEngineer"];
-_fakeIed = _this select 0;
-_ied = _fakeIed getvariable "realIed";
-
-if (isnil "_ied") then
-{
-	_ied = _this select 0;
-	_fakeIed = _ied getvariable "fakeIed";
-}; 
-
-_men = _this select 1;
-_index = _this select 2;
-_rand= random 1;
-_randsound = random 10;
+private ["_ied","_fakeIed","_men","_index","_rand","_disarmTime", "_footer", "_html", "_break","_dummyMarker","_isEngineer"];
+_men 		= _this select 1;
+_ied 		= (_men nearObjects [MCC_dummy,5]) select 0;
+_fakeIed	= _ied getvariable "realIed";
+_index 		= _this select 2;
+_rand		= random 1;
 _isEngineer = getNumber(configFile >> "CfgVehicles" >> typeOf _men >> "canDeactivateMines");	//Check if is engineer
 
-if (!alive _ied) exitwith {_fakeIed removeaction _index};	//Remove the Disable IED action if it's allready disabled
+if (isnil "_ied") exitWith {};
+
 _disarmTime =  MCC_IEDDisarmTimeArray select (_ied getvariable "disarmTime"); 
 _pos=[((getposATL _ied) select 0),(getposATL _ied) select 1,((getPosATL _ied) select 2)];
 
 if (_men distance _ied <3) then 
 {
+	uiNameSpace setVariable ["MCC_isIEDDisarming",true]; 
 	player playMove "AinvPknlMstpSlayWrflDnon_medic";
 	_break = false; 
 	
@@ -41,7 +35,7 @@ if (_men distance _ied <3) then
 	
 	player playMoveNow "AmovPknlMstpSlowWrflDnon";	
 
-	if (_break) exitwith{};	//If moved to far from the IED
+	if (_break) exitwith{uiNameSpace setVariable ["MCC_isIEDDisarming",false]};	//If moved to far from the IED
 	
 	//If it is a bomb expert ;)
 	if (_isEngineer==1) then	
@@ -49,19 +43,12 @@ if (_men distance _ied <3) then
 		if (_rand > 0.20) then 
 		{
 			hint "disarmed";
-			if (_randsound > 5) then 
-			{
-				[[[netid _men,_men], "disarm1"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-			} 
-			else 
-			{
-				[[[netid _men,_men], "disarm2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP
-			};
+			[[[netid _men,_men], format ["disarm%1", (floor random 7)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 			
 			sleep 1;
 			_ied setvariable ["armed",false,true];
-			_fakeIed removeAction _index;
 			deletevehicle _ied;
+			uiNameSpace setVariable ["MCC_isIEDDisarming",false]; 
 		}
 		else 
 		{
@@ -69,28 +56,13 @@ if (_men distance _ied <3) then
 			{
 				hint "Fail to disarm";
 				
-				if (_randsound > 5) then 
-				{
-					[[[netid _men,_men], "disarmfail1"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-				} 
-				else 
-				{
-					[[[netid _men,_men], "disarmfail2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-				};
+				[[[netid _men,_men], format ["disarmfail%1", (floor random 3)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 			}
 			else 
 			{
 				hint "Critical fail start runing";
-				_fakeIed removeAction _index;
 				
-				if (_randsound > 5) then 
-				{
-					[[[netid _men,_men], "disarmcrit1"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-				} 
-				else 
-				{
-					[[[netid _men,_men], "disarmcrit2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-				};
+				[[[netid _men,_men], format ["disarmcrit%1", (floor random 2)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 				
 				_ied setvariable ["armed",false,true];
 				sleep 2 + random 3;
@@ -106,18 +78,10 @@ if (_men distance _ied <3) then
 		if (_rand > 0.70) then 
 		{	
 			hint "disarmed";
-			if (_randsound > 5) then 
-			{
-				[[[netid _men,_men], "disarm3"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-			} 
-			else 
-			{
-				[[[netid _men,_men], "disarm4"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-			};
+			[[[netid _men,_men], format ["disarm%1", (floor random 7)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 			
 			sleep 1;
 			_ied setvariable ["armed",false,true];
-			_fakeIed removeAction _index;
 			deletevehicle _ied;
 		}
 		else 
@@ -125,29 +89,13 @@ if (_men distance _ied <3) then
 			hint "Fail to disarm";
 			if (_rand >0.3) then 
 			{
-				if (_randsound > 7) then 
-				{
-					[[[netid _men,_men], "disarmfail1"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-				} 
-				else 
-				{
-					[[[netid _men,_men], "disarmfail2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-				};
+				[[[netid _men,_men], format ["disarmfail%1", (floor random 3)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 			} 
 			else 
 			{
 				hint "Critical fail start runing";
-				_fakeIed removeAction _index;
 				
-				if (_randsound > 5) then 
-				{
-					[[[netid _men,_men], "disarmcrit1"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP; 
-					player switchmove "";
-				} 
-				else 
-				{
-					[[[netid _men,_men], "disarmcrit2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-				};
+				[[[netid _men,_men], format ["disarmcrit%1", (floor random 2)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 				
 				_ied setvariable ["armed",false,true];
 				sleep 3 + random 3;
@@ -157,6 +105,8 @@ if (_men distance _ied <3) then
 			};
 		};
 	};
+	
+	uiNameSpace setVariable ["MCC_isIEDDisarming",false]; 
 }
 else {hint "To far to disarm"};
 						

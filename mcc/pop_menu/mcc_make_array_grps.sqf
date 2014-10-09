@@ -1,4 +1,5 @@
-private ["_Cfgside","_side", "_faction", "_type","_classtype","_cfgname", "_cfgclass", "_spawnside","_grp_array","_indexar","_Cfgfaction"];
+private ["_Cfgside","_side", "_faction", "_type","_classtype","_cfgname", "_cfgclass", "_spawnside","_grp_array","_indexar","_Cfgfaction","_factionClassName",
+         "_cfg","_unitCfg"];
 _side      = _this select 0; // Not used!
 _faction   = _this select 1;
 _type      = _this select 2;
@@ -10,6 +11,15 @@ if (isNil "_faction") exitWith {};
 dumtel    = 0;
 dumar     = [];
 
+//Work around to get groups by cfg name
+_factionClassName = "";
+_cfg = (configFile >> "CfgFactionClasses");
+for "_i" from 0 to ((count _cfg) - 1) do 
+{ 
+	_unitCfg = (_cfg select _i);
+   if (_faction == configname(_unitCfg)) exitWith { _factionClassName = configname(_unitCfg)};
+};
+
 #define CONFIG (configFile >> "CfgGroups" )
 
 for "_i" from 0 to ((count CONFIG) - 1)  do
@@ -18,15 +28,15 @@ for "_i" from 0 to ((count CONFIG) - 1)  do
     if (isClass(_cfgside)) then
 	{
         for "_j" from 0 to ((count _Cfgside) - 1) do
-		 {
+		{
 		    _Cfgfaction = (_cfgside select _j);  
 			
             if (isClass(_cfgfaction)) then
 			{
-				for "_k" from 0 to ((count _Cfgfaction) - 1) do
+				for "_k" from 0 to ((count _Cfgfaction) - 1) do		
 				{
-				_Cfgtype = (_cfgfaction select _k); 
-				if (isClass(_cfgtype)) then
+					_Cfgtype = (_cfgfaction select _k); 
+					if (isClass(_cfgtype)) then
 					{
 					    _cfgname = configname(_cfgtype );
 						if (_cfgname == _type) then
@@ -34,8 +44,9 @@ for "_i" from 0 to ((count CONFIG) - 1)  do
 							for "_m" from 0 to ((count _cfgtype) -1) do
 							{
 							   _cfgclasstype =( _cfgtype select _m);
+							   
 							   if (isClass(_cfgclasstype)) then
-								{
+							   {
 									if ((getText(_cfgclasstype >> "faction"))== _faction) then 
 									{									
 										_cfgname  =  getText(_cfgclasstype >> "name");

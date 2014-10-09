@@ -1202,12 +1202,31 @@ class CfgSounds	{
 	titles[] = {};
 	};
 	//================================Traps=======================================
-	class suicide
+	class suicide1
 	{
-	name = "suicide";
-	sound[] = {"sounds\suicide.ogg", 3, 1};
-	titles[] = {};
+		name = "suicide1";
+		sound[] = {"sounds\suicide1.ogg", 3, 1};
+		titles[] = {};
 	};
+	class suicide2
+	{
+		name = "suicide2";
+		sound[] = {"sounds\suicide2.ogg", 3, 1};
+		titles[] = {};
+	};
+	class suicide3
+	{
+		name = "suicide3";
+		sound[] = {"sounds\suicide3.ogg", 3, 1};
+		titles[] = {};
+	};
+	class suicide4
+	{
+		name = "suicide3";
+		sound[] = {"sounds\suicide3.ogg", 3, 1};
+		titles[] = {};
+	};
+	
 	class dontshot
 	{
 	name = "dontshot";
@@ -1270,10 +1289,29 @@ class CfgSounds	{
 	};
 	class disarm4
 	{
-	name = "disarm4";
-	sound[] = {"sounds\disarm4.ogg", 1, 1};
-	titles[] = {};
+		name = "disarm4";
+		sound[] = {"sounds\disarm4.ogg", 1, 1};
+		titles[] = {};
 	};
+	class disarm5
+	{
+		name = "disarm5";
+		sound[] = {"sounds\disarm5.ogg", 1, 1};
+		titles[] = {};
+	};
+	class disarm6
+	{
+		name = "disarm6";
+		sound[] = {"sounds\disarm6.ogg", 1, 1};
+		titles[] = {};
+	};
+	class disarm7
+	{
+		name = "disarm7";
+		sound[] = {"sounds\disarm7.ogg", 1, 1};
+		titles[] = {};
+	};
+	
 	class disarmfail1
 	{
 	name = "disarmfail1";
@@ -1282,27 +1320,503 @@ class CfgSounds	{
 	};
 	class disarmfail2
 	{
-	name = "disarmfail2";
-	sound[] = {"sounds\disarmfail2.ogg", 1, 1};
-	titles[] = {};
+		name = "disarmfail2";
+		sound[] = {"sounds\disarmfail2.ogg", 1, 1};
+		titles[] = {};
 	};
 	class disarmfail3
 	{
-	name = "disarmfail3";
-	sound[] = {"sounds\disarmfail3.ogg", 1, 1};
-	titles[] = {};
+		name = "disarmfail3";
+		sound[] = {"sounds\disarmfail3.ogg", 1, 1};
+		titles[] = {};
 	};
 	class disarmcrit1
 	{
-	name = "disarmcrit1";
-	sound[] = {"sounds\disarmcrit1.ogg", 1, 1};
-	titles[] = {};
+		name = "disarmcrit1";
+		sound[] = {"sounds\disarmcrit1.ogg", 1, 1};
+		titles[] = {};
 	};
 	class disarmcrit2
 	{
-	name = "disarmcrit2";
-	sound[] = {"sounds\disarmcrit2.ogg", 1, 1};
-	titles[] = {};
+		name = "disarmcrit2";
+		sound[] = {"sounds\disarmcrit2.ogg", 1, 1};
+		titles[] = {};
+	};
+	//================================Misison Wizard=======================================
+	class MWName_operation
+	{
+		name = "0_operation";
+		sound[] = {"sounds\mwSounds\missionNames\0_operation.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	//Mission Names
+	class MWName_desert
+	{
+		name = "1_desert";
+		sound[] = {"sounds\mwSounds\missionNames\1_desert.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_oversized
+	{
+		name = "1_oversized";
+		sound[] = {"sounds\mwSounds\missionNames\1_oversized.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_roguish
+	{
+		name = "1_roguish";
+		sound[] = {"sounds\mwSounds\missionNames\1_roguish.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_smoldering
+	{
+		name = "1_smoldering";
+		sound[] = {"sounds\mwSounds\missionNames\1_smoldering.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_cold
+	{
+		name = "1_cold";
+		sound[] = {"sounds\mwSounds\missionNames\1_cold.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_flaring
+	{
+		name = "1_flaring";
+		sound[] = {"sounds\mwSounds\missionNames\1_flaring.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_furious
+	{
+		name = "1_furious";
+		sound[] = {"sounds\mwSounds\missionNames\1_furious.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_silver
+	{
+		name = "1_silver";
+		sound[] = {"sounds\mwSounds\missionNames\1_silver.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_vengeance
+	{
+		name = "1_vengeance";
+		sound[] = {"sounds\mwSounds\missionNames\1_vengeance.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_yellow
+	{
+		name = "1_yellow";
+		sound[] = {"sounds\mwSounds\missionNames\1_yellow.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_red
+	{
+		name = "1_red";
+		sound[] = {"sounds\mwSounds\missionNames\1_red.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_blue
+	{
+		name = "1_blue";
+		sound[] = {"sounds\mwSounds\missionNames\1_blue.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_white
+	{
+		name = "1_white";
+		sound[] = {"sounds\mwSounds\missionNames\1_white.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_gold
+	{
+		name = "1_gold";
+		sound[] = {"sounds\mwSounds\missionNames\1_gold.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_dark
+	{
+		name = "1_dark";
+		sound[] = {"sounds\mwSounds\missionNames\1_dark.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_broken
+	{
+		name = "1_broken";
+		sound[] = {"sounds\mwSounds\missionNames\1_broken.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class MWName_morbid
+	{
+		name = "1_morbid";
+		sound[] = {"sounds\mwSounds\missionNames\1_morbid.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_flying
+	{
+		name = "1_flying";
+		sound[] = {"sounds\mwSounds\missionNames\1_flying.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_living
+	{
+		name = "1_living";
+		sound[] = {"sounds\mwSounds\missionNames\1_living.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_swift
+	{
+		name = "1_swift";
+		sound[] = {"sounds\mwSounds\missionNames\1_swift.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_evil
+	{
+		name = "1_evil";
+		sound[] = {"sounds\mwSounds\missionNames\1_evil.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_fallen
+	{
+		name = "1_fallen";
+		sound[] = {"sounds\mwSounds\missionNames\1_fallen.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_solitary
+	{
+		name = "1_solitary";
+		sound[] = {"sounds\mwSounds\missionNames\1_solitary.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_alpha
+	{
+		name = "1_alpha";
+		sound[] = {"sounds\mwSounds\missionNames\1_alpha.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_bravo
+	{
+		name = "1_bravo";
+		sound[] = {"sounds\mwSounds\missionNames\1_bravo.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_charlie
+	{
+		name = "1_charlie";
+		sound[] = {"sounds\mwSounds\missionNames\1_charlie.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_delta
+	{
+		name = "1_delta";
+		sound[] = {"sounds\mwSounds\missionNames\1_delta.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_echo
+	{
+		name = "1_echo";
+		sound[] = {"sounds\mwSounds\missionNames\1_echo.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_foxtrot
+	{
+		name = "1_foxtrot";
+		sound[] = {"sounds\mwSounds\missionNames\1_foxtrot.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	
+	//Mission Name 2
+	class MWName_storm
+	{
+		name = "2_storm";
+		sound[] = {"sounds\mwSounds\missionNames\2_storm.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_lightning
+	{
+		name = "2_lightning";
+		sound[] = {"sounds\mwSounds\missionNames\2_lightning.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_rain
+	{
+		name = "2_rain";
+		sound[] = {"sounds\mwSounds\missionNames\2_rain.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_thunder
+	{
+		name = "2_thunder";
+		sound[] = {"sounds\mwSounds\missionNames\2_thunder.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_tornado
+	{
+		name = "2_tornado";
+		sound[] = {"sounds\mwSounds\missionNames\2_tornado.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_hurricane
+	{
+		name = "2_hurricane";
+		sound[] = {"sounds\mwSounds\missionNames\2_hurricane.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_flood
+	{
+		name = "2_flood";
+		sound[] = {"sounds\mwSounds\missionNames\2_flood.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_dragonfly
+	{
+		name = "2_dragonfly";
+		sound[] = {"sounds\mwSounds\missionNames\2_dragonfly.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_ocelot
+	{
+		name = "2_ocelot";
+		sound[] = {"sounds\mwSounds\missionNames\2_ocelot.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_cobra
+	{
+		name = "2_cobra";
+		sound[] = {"sounds\mwSounds\missionNames\2_cobra.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_fiend
+	{
+		name = "2_fiend";
+		sound[] = {"sounds\mwSounds\missionNames\2_fiend.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_father
+	{
+		name = "2_father";
+		sound[] = {"sounds\mwSounds\missionNames\2_father.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_horse
+	{
+		name = "2_horse";
+		sound[] = {"sounds\mwSounds\missionNames\2_horse.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_thorn
+	{
+		name = "2_thorn";
+		sound[] = {"sounds\mwSounds\missionNames\2_thorn.ogg", 1, 1};
+		titles[] = {};
+	};
+	//----
+	class MWName_arrow
+	{
+		name = "2_arrow";
+		sound[] = {"sounds\mwSounds\missionNames\2_arrow.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_cage
+	{
+		name = "2_cage";
+		sound[] = {"sounds\mwSounds\missionNames\2_cage.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_contempt
+	{
+		name = "2_contempt";
+		sound[] = {"sounds\mwSounds\missionNames\2_contempt.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_dagger
+	{
+		name = "2_dagger";
+		sound[] = {"sounds\mwSounds\missionNames\2_dagger.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_famine
+	{
+		name = "2_famine";
+		sound[] = {"sounds\mwSounds\missionNames\2_famine.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_one
+	{
+		name = "2_one";
+		sound[] = {"sounds\mwSounds\missionNames\2_one.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_priest
+	{
+		name = "2_priest";
+		sound[] = {"sounds\mwSounds\missionNames\2_priest.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_serpent
+	{
+		name = "2_serpent";
+		sound[] = {"sounds\mwSounds\missionNames\2_serpent.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_snake
+	{
+		name = "2_snake";
+		sound[] = {"sounds\mwSounds\missionNames\2_snake.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_stranger
+	{
+		name = "2_stranger";
+		sound[] = {"sounds\mwSounds\missionNames\2_stranger.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_three
+	{
+		name = "2_three";
+		sound[] = {"sounds\mwSounds\missionNames\2_three.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_two
+	{
+		name = "2_two";
+		sound[] = {"sounds\mwSounds\missionNames\2_two.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_urgency
+	{
+		name = "2_urgency";
+		sound[] = {"sounds\mwSounds\missionNames\2_urgency.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_zero
+	{
+		name = "2_zero";
+		sound[] = {"sounds\mwSounds\missionNames\2_zero.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	//General
+	class general1
+	{
+		name = "1general1";
+		sound[] = {"sounds\mwSounds\1general1.ogg", 1, 1};
+		titles[] = {};
+	};
+	class general2
+	{
+		name = "1general2";
+		sound[] = {"sounds\mwSounds\1general2.ogg", 1, 1};
+		titles[] = {};
+	};
+	class general3
+	{
+		name = "1general3";
+		sound[] = {"sounds\mwSounds\1general3.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isCQB1
+	{
+		name = "2_isCQB1";
+		sound[] = {"sounds\mwSounds\2_isCQB1.ogg", 1, 1};
+		titles[] = {};
+	};
+	class isCQB2
+	{
+		name = "2_isCQB2";
+		sound[] = {"sounds\mwSounds\2_isCQB2.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class infantrypresent
+	{
+		name = "3infantrypresent";
+		sound[] = {"sounds\mwSounds\3infantrypresent.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isVehicles
+	{
+		name = "4_vehicles";
+		sound[] = {"sounds\mwSounds\4_vehicles.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isArmor
+	{
+		name = "5_armor";
+		sound[] = {"sounds\mwSounds\5_armor.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isArtillery
+	{
+		name = "6_artillery";
+		sound[] = {"sounds\mwSounds\6_artillery.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isRoadblocks
+	{
+		name = "7_isRoadblocks";
+		sound[] = {"sounds\mwSounds\7_isRoadblocks.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isIED
+	{
+		name = "8_isIED";
+		sound[] = {"sounds\mwSounds\8_isIED.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isAS
+	{
+		name = "9_isAS";
+		sound[] = {"sounds\mwSounds\9_isAS.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isReinforcement_generic
+	{
+		name = "10_reinforcement_generic";
+		sound[] = {"sounds\mwSounds\10_reinforcement_generic.ogg", 1, 1};
+		titles[] = {};
+	};
+	class isReinforcement1
+	{
+		name = "10_reinforcement1";
+		sound[] = {"sounds\mwSounds\10_reinforcement1.ogg", 1, 1};
+		titles[] = {};
+	};
+	class isReinforcement2
+	{
+		name = "10_reinforcement2";
+		sound[] = {"sounds\mwSounds\10_reinforcement2.ogg", 1, 1};
+		titles[] = {};
+	};
+	class isReinforcement3
+	{
+		name = "10_reinforcement3";
+		sound[] = {"sounds\mwSounds\10_reinforcement3.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isMissiongo
+	{
+		name = "11missiongo";
+		sound[] = {"sounds\mwSounds\11missiongo.ogg", 1, 1};
+		titles[] = {};
 	};
 	//======================================= AC sounds================================
 	class gun1

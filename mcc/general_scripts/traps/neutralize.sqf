@@ -17,7 +17,10 @@ if (!MCC_natureIsRuning) then
 		{
 			if (random 10 > 5) then {[[[netid _suspect,_suspect], "dontshot"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP} else {[[[netid _suspect,_suspect], "enough"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP};
 			removeAllWeapons _suspect;
-			_suspect playmove "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon";
+			[[2,getpos _suspect,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[(group _suspect)]],"MCC_fnc_manageWp", false, false] spawn BIS_fnc_MP;
+			doStop _suspect;
+			_suspect setUnitPos "DOWN";
+			_suspect setvariable ["armed",false,true];
 			sleep 1;
 			_suspect removeaction _index;
 			
@@ -25,7 +28,7 @@ if (!MCC_natureIsRuning) then
 			  deleteVehicle _x;
 			} forEach attachedObjects _suspect;
 			
-			_suspect addaction ["<t color=""#FF0000"">- Secure Suspect -</t>",MCC_path +"mcc\general_scripts\hostages\hostage.sqf",[],6,true,true,"","(_target distance _this) < 10"];
+			_suspect addaction ["<t color=""#FF0000"">- Secure Suspect -</t>",MCC_path +"mcc\general_scripts\hostages\hostage.sqf",[2],6,true,true,"","(_target distance _this) < 10"];
 		} 
 		else
 		{

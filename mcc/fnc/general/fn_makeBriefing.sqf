@@ -67,20 +67,23 @@ _init = format ["0 = _this spawn {if (!isDedicated) then {waituntil {alive playe
 
 MCC_curator addCuratorEditableObjects [[_dummy],false];
 
-//Lets wait till all the mission end --TODO presistance missions , or timed. 
-publicVariable "MCC_activeObjectives";
-while {count MCC_activeObjectives > 0} do
+if (count _missionInfo > 0) then
 {
+	//Lets wait till all the mission end --TODO presistance missions , or timed. 
+	publicVariable "MCC_activeObjectives";
+	while {count MCC_activeObjectives > 0} do
 	{
-		if (!alive _x) then 
 		{
-			MCC_activeObjectives set [_forEachIndex, -1];
-			MCC_activeObjectives = MCC_activeObjectives - [-1];
-			publicVariable "MCC_activeObjectives";
-		};
-	} foreach MCC_activeObjectives;
-	
-	sleep 5;
+			if (!alive _x) then 
+			{
+				MCC_activeObjectives set [_forEachIndex, -1];
+				MCC_activeObjectives = MCC_activeObjectives - [-1];
+				publicVariable "MCC_activeObjectives";
+			};
+		} foreach MCC_activeObjectives;
+		
+		sleep 5;
+	};
+	publicVariable "MCC_activeObjectives";
+	MCC_server globalChat "missions done"; 
 };
-publicVariable "MCC_activeObjectives";
-MCC_server globalChat "missions done"; 

@@ -49,7 +49,7 @@ class MCC_LOGISTICS_BASE_BUILD
 			y = -0.00599999 * safezoneH + safezoneY;
 			w = 0.882292 * safezoneW;
 			h = 0.891 * safezoneH;
-			onMouseMoving = "mousePos = [ _this select 1,_this select 2 ];";
+			onMouseMoving = "MCC_mousePos = [ _this select 1,_this select 2 ];";
 		};
 		
 		class button1: MCC_RscButton

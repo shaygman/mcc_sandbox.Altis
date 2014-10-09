@@ -7,6 +7,7 @@
 private ["_pos", "_volume","_bomb"];
 _pos = _this select 0;
 _volume = _this select 1; 
+
 switch (_volume) do
 {
    case "small":	

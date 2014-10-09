@@ -45,32 +45,10 @@ _iedDir =  getdir _fakeIed;
 //We have an ammo not an object 
 _isAmmo = if ((_fakeIed getVariable ["IEDClass",""]) != "") then {true} else {false};
 
-if (_isAmmo) then 
-{
-	_dummy 		= _fakeIed;
-	_fakeIed 	= (_fakeIed getVariable ["IEDClass",""]) createVehicle _pos; 
-} 
-else 
-{
-	_dummy = MCC_dummy createVehicle _pos;
-	_init = '_this hideobject true;';
-	[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-};
-
+_dummy = MCC_dummy createVehicle _pos;
+hideObjectGlobal _dummy;
 _dummy addEventHandler ["handleDamage",{_this call MCC_fnc_iedHit;0}];
-
-if (_isAmmo) then
-{
-	
-	_dummy addaction ["<t color=""#FF0000"">- Disarm IED -</t>",MCC_path + "mcc\general_scripts\traps\ied_disarm.sqf","",6,true,true,"_target distance _this < 5"];
-	_fakeIed attachto [_dummy,[0,0,0]];
-	if (!isnil "MCC_curator") then {MCC_curator addCuratorEditableObjects [[_dummy],false]}; 
-}
-else
-{
-	_fakeIed addaction ["<t color=""#FF0000"">- Disarm IED -</t>",MCC_path + "mcc\general_scripts\traps\ied_disarm.sqf","",6,true,true,"_target distance _this < 5"];
-	_dummy attachto [_fakeIed,[0,0,0]];
-};
+_dummy attachto [_fakeIed,[0,0,0]];
 
 [_fakeIed, _dummy] spawn
 {

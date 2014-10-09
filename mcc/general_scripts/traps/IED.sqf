@@ -70,7 +70,7 @@ if (_IEDTriggerType==2) then	{		//manual detonation
 		};
 _dummyMarker = _dummy getvariable "iedMarkerName"; 
 if (!isnil "_dummyMarker") then {[[2,compile format ["deletemarkerlocal '%1';",_dummyMarker]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP};	//delete IED marker 
-_fakeIed removeaction 0;
+
 _armed = _dummy getvariable "armed";
 if (isnil "_armed") then {_armed = false}; 
 _triggered = _dummy getvariable "iedTrigered";
@@ -79,59 +79,47 @@ if (isnil "_triggered") then {_triggered = false};
 _pos=[((getposATL _fakeIed) select 0),(getposATL _fakeIed) select 1,((getPosATL _fakeIed) select 2)];	//position of the IED
 
 switch (_IEDExplosionType) do
-		{
-		   case 0:	
-			{ 
-				_IedExplosion = MCC_fnc_IedDeadlyExplosion;
-			};
-			
-			case 1:	
-			{ 
-			   _IedExplosion = MCC_fnc_IedDisablingExplosion;
-			};
-			
-			case 2:	
-			{ 
-			   _IedExplosion = MCC_fnc_IedFakeExplosion;
-			};
-			
-			case 3:	
-			{ 
-			   _IedExplosion = {};
-			};
-		};
-
-if !((_IEDExplosionType == 0) && (typeof _fakeIed) in MCC_MWIED) then 
 {
-	if (_armed && _triggered) then	//If triger epxplosion
-		{	
-			[_pos,_trapvolume] spawn _IedExplosion; 
-			_explode = true;
-		};
+	case 0:	
+	{ 
+		_IedExplosion = MCC_fnc_IedDeadlyExplosion;
+	};
 
-	if (!alive _fakeIed && _armed ) then	//If IED is destroyed
-		{
-			[_pos,_trapvolume] spawn _IedExplosion;
-			_explode = true;
-		};
+	case 1:	
+	{ 
+	   _IedExplosion = MCC_fnc_IedDisablingExplosion;
+	};
 
-	if (!_armed ) then 	//If IED critical fail while trying to disarm it
-		{	
-			sleep 5; 
-			_triggered = _dummy getvariable "iedTrigered";
-			if (isnil "_triggered") then {_triggered = false};
-			if (_triggered) then {
-							[_pos,_trapvolume] spawn _IedExplosion;
-							_explode = true;
-							};
-		};
-}
-else
-{
+	case 2:	
+	{ 
+	   _IedExplosion = MCC_fnc_IedFakeExplosion;
+	};
+
+	case 3:	
+	{ 
+	   _IedExplosion = {};
+	};
+};
+
+if ((_armed && _triggered) || (!alive _fakeIed && _armed )) then	//If triger epxplosion or destroyed
+{	
+	[_pos,_trapvolume] spawn _IedExplosion; 
 	_explode = true;
-}; 
+};
 
-sleep 0.5;
+if (!_armed ) then 	//If IED critical fail while trying to disarm it
+{	
+	sleep 5; 
+	_triggered = _dummy getvariable "iedTrigered";
+	if (isnil "_triggered") then {_triggered = false};
+	if (_triggered) then 
+	{
+		[_pos,_trapvolume] spawn _IedExplosion;
+		_explode = true;
+	};
+};
+
+sleep 0.2;
 if (_explode) then 
 {
 	//If IED is a car lets make it burn
@@ -142,7 +130,7 @@ if (_explode) then
 	} 
 	else 
 	{
-		if (str _IedExplosion != str {}) then {_fakeIed setdamage 1; sleep 0.2; deletevehicle _fakeIed};
+		if (str _IedExplosion != str {}) then {deletevehicle _fakeIed};
 	};
 };
 

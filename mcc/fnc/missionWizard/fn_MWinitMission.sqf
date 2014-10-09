@@ -699,11 +699,75 @@ if (_weatherChange) then
 			
 // ------------------  CREATE BRIEFINGS --------------------------------------------------------------------------
 //-----------------  CREATE BRIEFINGS --------------------------------------------------------------------------
-private ["_factionName","_music","_missionName1","_missionName2","_html","_html2","_control","_tempText","_missionTittle"];
-_missionName1 = ["Desert","Oversized","Roguish","Smouldering","Cold","Flaring","Furious","Silver","Vengeance","Yellow","Red","Blue","White","Gold","Dark","Broken",
-                 "Morbid","Flying","Living","Swift","Evil","Fallen","False","Solitary","Broken","Alpha","Bravo","Charlie","Delta","Echo","Foxtrot"] call BIS_fnc_selectRandom; 
-_missionName2 = ["Storm","Lightning","Rain","Thunder","Tornado","Hurricane","Flood","Dragonfly","Ocelot","Cobra","Fiend","Father","Horse","Thorn",
-                 "Urgency","Snake","Serpent","Famine","Cage","Contempt","Priest","Stranger","Dagger","One","Two","Three","Zero","Arrow"] call BIS_fnc_selectRandom; 
+private ["_factionName","_music","_missionName1","_missionName2","_html","_html2","_control","_tempText","_missionTittle","_sounds"];
+_sounds = [];
+
+_missionName1 = [
+                  ["Desert",["MWName_desert",0.505]],
+				  ["Oversized",["MWName_oversized",0.745]],
+				  ["Roguish",["MWName_roguish",0.676]],
+				  ["Smouldering",["MWName_smoldering",0.781]],
+				  ["Cold",["MWName_cold",0.485]],
+				  ["Flaring",["MWName_flaring",0.66]],
+				  ["Furious",["MWName_furious",0.644]],
+				  ["Silver",["MWName_silver",0.595]],
+				  ["Vengeance",["MWName_vengeance",0.685]],
+				  ["Yellow",["MWName_yellow",0.534]],
+				  ["Red",["MWName_red",0.48]],
+				  ["Blue",["MWName_blue",0.525]],
+				  ["White",["MWName_white",0.31]],
+				  ["Gold",["MWName_gold",0.47]],
+				  ["Dark",["MWName_dark",0.425]],
+				  ["Broken",["MWName_broken",0.61]],
+				  ["Morbid",["MWName_morbid",0.67]],
+				  ["Flying",["MWName_flying",0.79]],
+				  ["Living",["MWName_living",0.62]],
+				  ["Swift",["MWName_swift",0.65]],
+				  ["Evil",["MWName_evil",0.54]],
+				  ["Fallen",["MWName_fallen",0.724]],
+				  ["Solitary",["MWName_solitary",1.05]],
+				  ["Alpha",["MWName_alpha",0.56]],
+				  ["Bravo",["MWName_bravo",0.55]],
+				  ["Charlie",["MWName_charlie",0.695]],
+				  ["Delta",["MWName_delta",0.665]],
+				  ["Echo",["MWName_echo",0.685]],
+				  ["Foxtrot",["MWName_foxtrot",0.93]]
+				] call BIS_fnc_selectRandom; 
+
+_missionName2 = [
+                  ["Storm",["MWName_storm",1.2]],
+				  ["Lightning",["MWName_lightning",1.2]],
+				  ["Rain",["MWName_rain",1.2]],
+				  ["Thunder",["MWName_thunder",1.2]],
+				  ["Tornado",["MWName_tornado",1.2]],
+				  ["Hurricane",["MWName_hurricane",1.2]],
+				  ["Flood",["MWName_flood",1.2]],
+				  ["Dragonfly",["MWName_dragonfly",1.2]],
+				  ["Ocelot",["MWName_ocelot",1.2]],
+				  ["Cobra",["MWName_cobra",1.2]],
+				  ["Fiend",["MWName_fiend",1.2]],
+				  ["Father",["MWName_father",1.2]],
+				  ["Horse",["MWName_horse",1.2]],
+				  ["Thorn",["MWName_thorn",1.2]],
+				  ["Urgency",["MWName_urgency",1.2]],
+				  ["Snake",["MWName_snake",1.2]],
+				  ["Serpent",["MWName_serpent",1.2]],
+				  ["Famine",["MWName_famine",1.2]],
+				  ["Cage",["MWName_cage",1.2]],
+				  ["Contempt",["MWName_contempt",1.2]],
+				  ["Priest",["MWName_priest",1.2]],
+				  ["Stranger",["MWName_stranger",1.2]],
+				  ["Dagger",["MWName_dagger",1.2]],
+				  ["One",["MWName_one",1.2]],
+				  ["Two",["MWName_two",1.2]],
+				  ["Three",["MWName_three",1.2]],
+				  ["Zero",["MWName_zero",1.2]],
+				  ["Arrow",["MWName_arrow",1.2]]
+				 ] call BIS_fnc_selectRandom; 
+				 
+_sounds set [count _sounds, ["MWName_operation",0.805]];
+_sounds set [count _sounds, _missionName1 select 1];
+_sounds set [count _sounds, _missionName2 select 1];
 
 _factionName = getText (configfile >> "CfgFactionClasses" >> _enemyfaction >> "displayName");
 
@@ -711,36 +775,49 @@ _factionName = getText (configfile >> "CfgFactionClasses" >> _enemyfaction >> "d
 if ((_center select 1) != "") then
 {
         _tempText = ["Attack On","The Battle For","Assault On","The Fight For"] call BIS_fnc_selectRandom; 
-        _html = format ["<t size='1.1' color='#a8e748' underline='true' align='center' >Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'>%1 %2. %3 %4</t>",toupper _missionName1,toupper _missionName2,_tempText,(_center select 1)];
-		_missionTittle = format ["<t size='1.1' color='#a8e748' underline='true' align='center' >Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'><marker name='%5'>%1 %2. %3 %4</marker></t>",toupper _missionName1,toupper _missionName2,_tempText,(_center select 1),_markerName];
+        _html = format ["<t size='1.1' color='#a8e748' underline='true' align='center' >Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'>%1 %2. %3 %4</t>",toupper (_missionName1 select 0),toupper (_missionName2 select 0),_tempText,(_center select 1)];
+		_missionTittle = format ["<t size='1.1' color='#a8e748' underline='true' align='center' >Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'><marker name='%5'>%1 %2. %3 %4</marker></t>",toupper (_missionName1 select 0),toupper (_missionName2 select 0),_tempText,(_center select 1),_markerName];
 }
 else
 {
-        _html = format ["<t size='1.1' color='#a8e748' underline='true' align='center'>Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'>%1 %2.</t>",toupper _missionName1,toupper _missionName2];
-		_missionTittle = format ["<t size='1.1' color='#a8e748' underline='true' align='center'>Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'><marker name='%3'>%1 %2.</marker></t>",toupper _missionName1,toupper _missionName2,_markerName];
+        _html = format ["<t size='1.1' color='#a8e748' underline='true' align='center'>Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'>%1 %2.</t>",toupper (_missionName1 select 0),toupper (_missionName2 select 0)];
+		_missionTittle = format ["<t size='1.1' color='#a8e748' underline='true' align='center'>Operation: </t><t size='1.1' color='#a8e748' underline='true' align='center'><marker name='%3'>%1 %2.</marker></t>",toupper (_missionName1 select 0),toupper (_missionName2 select 0),_markerName];
 };
 
-//General
-_tempText = ["presence in the area has been increasing","have established a foothold in the area","forces are active in the area"] call BIS_fnc_selectRandom; 
-_html = _html + format ["<br/><br/><t size='0.8' color='#E2EEE0'>%1 %2.</t>",_factionName,_tempText];
-_html2 = format ["<br/><br/><t>%1 %2.</t>",_factionName,_tempText];
 
+
+//General
+_tempText = [
+              ["presence in the area has been increasing",["general1",2.67]],
+			  ["have established a foothold in the area",["general2",2.73]],
+			  ["forces are active in the area",["general3",2.2]]
+			] call BIS_fnc_selectRandom; 
+_html = _html + format ["<br/><br/><t size='0.8' color='#E2EEE0'>%1 %2.</t>",_factionName, _tempText select 0];
+_html2 = format ["<br/><br/><t>%1 %2.</t>",_factionName,_tempText select 0];
+_sounds set [count _sounds, _tempText select 1];
 
 //_isCQB
 if (_isCQB) then
 {
-    _tempText = [" and they have taken up defensive positions inside buildings."," and they are using civilian buildings to fortify themselves."] call BIS_fnc_selectRandom; 
+    _tempText = [
+	              [" and they have taken up defensive positions inside buildings.",["isCQB1",3.49]],
+				  [" and they are using civilian buildings to fortify themselves.",["isCQB2",3.69]]
+				] call BIS_fnc_selectRandom; 
     _html = _html + format ["<t size='0.8' color='#E2EEE0'> %1.</t>",_tempText];
 	_html2 = _html2 + format ["%1",_tempText];
+	_sounds set [count _sounds, _tempText select 1];
 };
 
+
 _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>HQ informs us that infantry are present. </t>",_factionName];
+_sounds set [count _sounds, ["infantrypresent",3]];
 
 //_vehicles
 if (_vehicles) then
 {
     _html = _html + format ["<t size='0.8' color='#E2EEE0'>You may also encounter %1 technicals or soft vehicles. </t>",_factionName];
-	_html2 = _html2 + format ["%1",_tempText];
+	_html2 = _html2 + format ["<br/>You may also encounter %1 technicals or soft vehicles.",_factionName];
+	_sounds set [count _sounds, ["isVehicles",2.88]];
 };
 
 //_armor
@@ -748,6 +825,7 @@ if (_armor) then
 {
     _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Be aware that there may be %1 armored vehicles or even MBT's operating in the OP.</t>",_factionName];
 	_html2 = _html2 + format ["<br/>Be aware that there may be %1 armored vehicles or even MBT operating in the OP.",_factionName];
+	_sounds set [count _sounds, ["isArmor",4.68]];
 };
 
 //Artillery
@@ -755,6 +833,7 @@ if (_artillery != 0) then
 {
 	_html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>%1 may also have artillery operating in the area.</t>",_factionName];
 	_html2 = _html2 + format ["<br/>%1 may also have artillery operating in the area.",_factionName];
+	_sounds set [count _sounds, ["isArtillery",2.96]];
 };
 
 //_isRoadblocks
@@ -762,6 +841,7 @@ if (_isRoadblocks) then
 {
     _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>%1 forces have established hasty checkpoints on some of the roads leading in and out of the area.</t>",_factionName];
 	_html2 = _html2 + format ["<br/>%1 forces have established hasty checkpoints on some of the roads leading in and out of the area.",_factionName];
+	_sounds set [count _sounds, ["isRoadblocks",4.33]];
 };
 
 //_isIED
@@ -769,38 +849,44 @@ if (_isIED || _isSB) then
 {
     _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks.",_factionName];
+	_sounds set [count _sounds, ["isIED",6.4]];
 };
 //_isAS
 if (_isAS) then
 {
     _html = _html + format ["<t size='0.8' color='#E2EEE0'>The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass don't want to draw unnecessary attention.</t>",_factionName];
 	_html2 = _html2 + format ["The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass do not want to draw unnecessary attention.",_factionName];
+	_sounds set [count _sounds, ["isAS",10.77]];
 };
 
 //Reinforcment
 if (_reinforcement in [1,2,3] || _stealth) then 
 {
 	private "_text";
-	_text = switch (_reinforcement) do
+	switch (_reinforcement) do
 			{
 				case 0: 	
 				{ 
-					""
+					_text = "";
+					_sounds set [count _sounds, ["isReinforcement_generic",8.1]];
 				};
 				
 				case 1: 	
 				{ 
-					" aerial "
+					_text = " aerial ";
+					_sounds set [count _sounds, ["isReinforcement1",8.56]];
 				};
 				
 				case 2: 	
 				{ 
-					" motorized "
+					_text = " motorized ";
+					_sounds set [count _sounds, ["isReinforcement2",8.4]];
 				};
 				
 				case 3: 	
 				{ 
-					" aerial and motorized "
+					_text = " aerial and motorized ";
+					_sounds set [count _sounds, ["isReinforcement3",9.12]];
 				};
 			};
 			
@@ -810,13 +896,14 @@ if (_reinforcement in [1,2,3] || _stealth) then
 };
 
 _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Go over your objectives, gear up and get ready.<br/>Mission is a go!</t>",_factionName];
+_sounds set [count _sounds, ["isMissiongo",6.2]];
 
 if (_playMusic in [0,1] ) then
 {
-	[[_html2, (_missionName1 +" " + _missionName2), _missionTittle, [_missionCenter,_objectives,1,_html]],"MCC_fnc_makeBriefing",false,false] spawn BIS_fnc_MP;
+	[[_html2, ((_missionName1 select 0) +" " + (_missionName2  select 0)), _missionTittle, [_missionCenter,_objectives,1,_html,_sounds]],"MCC_fnc_makeBriefing",false,false] spawn BIS_fnc_MP;
 	
 	//Publish the name
-	missionnamespace setvariable ["bis_fnc_moduleMissionName_name",(_missionName1 +" " + _missionName2)];
+	missionnamespace setvariable ["bis_fnc_moduleMissionName_name",((_missionName1  select 0)+" " + (_missionName2  select 0))];
 	publicvariable "bis_fnc_moduleMissionName_name";
 	[true,"bis_fnc_moduleMissionName"] call bis_fnc_mp;
 };
@@ -825,7 +912,7 @@ if (_playMusic == 0 ) then
 {
 	_music = ["LeadTrack01a_F","LeadTrack02_F","LeadTrack03_F","LeadTrack04a_F","LeadTrack05_F","LeadTrack06_F","AmbientTrack03_F","BackgroundTrack03_F","BackgroundTrack01_F",
 			   "BackgroundTrack01a_F","BackgroundTrack02_F","LeadTrack01_F_EPA","LeadTrack02_F_EPA","EventTrack01_F_EPA","EventTrack01a_F_EPA","EventTrack03_F_EPA"] call BIS_fnc_selectRandom; 
-	[[2,compile format ["playMusic '%1'",_music]], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
+	[[2,compile format ["playMusic '%1'",_music]], "MCC_fnc_globalExecute", _sidePlayer, false] spawn BIS_fnc_MP;
 };
 
 //Lets find the mission maker owner and make sure he'll get the zone markers too. 

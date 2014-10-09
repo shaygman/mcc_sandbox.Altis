@@ -30,7 +30,7 @@
 #define MCC_MWBriefingText_IDC 9512
 
 private ["_mapCenter","_missions","_ok","_markers","_images","_overcast","_scale","_defaultScale","_simulationEnabled","_colorOutside","_maxSatelliteAlpha",
-         "_displayClass","_display","_playerIcon","_playerColor","_cloudTextures","_cloudsGrid","_cloudsMax","_cloudsSize","_map","_fade","_brief"];
+         "_displayClass","_display","_playerIcon","_playerColor","_cloudTextures","_cloudsGrid","_cloudsMax","_cloudsSize","_map","_fade","_brief","_sounds"];
 		 
 disableserialization;
 
@@ -40,6 +40,7 @@ _mapCenter 			= _this select 0;
 _missions 			= _this select 1; 
 _defaultScale 		= _this select 2; 
 _brief 				= _this select 3; 
+_sounds				= if (count _this >4) then {_this select 4} else {[]}; 
 
 _mapCenter 			= _mapCenter call bis_fnc_position;
 _overcast 			= overcast;
@@ -366,6 +367,16 @@ _display displayaddeventhandler [
 
 cuttext ["","black in"];
 endloadingscreen;
-
 ctrlsetfocus (_display displayctrl MCC_MINIMAP);
+
+//Sounds
+_stop = false; 
+for [{_x= 0},{(_x < count _sounds) && !_stop},{_x = _x + 1}] do 
+{
+	_sound 	= (_sounds select _x) select 0;
+	_wait 	= (_sounds select _x) select 1;
+	playSound _sound;
+	sleep _wait;
+} ;
+
 _display

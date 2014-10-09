@@ -1,3 +1,16 @@
+Change log r9:
+- Added: Complete voice narration for the Mission Wizard operation's names and briefings thanks to Zafjr. 
+- Added custom voices to IED, suicide bombers, armed civlians and more many thanks to Zafjr for making this AAA quality voice acting.
+
+- Fixed: Missing groups in MCC such as the one from FSF - now for real ;)
+- Fixed: Mission Wizard will use players' custom groups. 
+- Fixed: Mission Wizard dialog disappear after changing faction for the first time. 
+- Fixed: Armed Civilian behavior: the suspect will join players after disarming him. 
+- Fixed: BIS Arsenal doesn't show on objects. 
+
+
+createdialog "MCC_LOGISTICS_BASE_BUILD";
+
 Change log r8:
 NEW: Squad dialog:
 	- Added: In game Squad Dialog (no indbi required) - you can change squads or create custom squads by pressing P or bind another key bind if you like, options in squads:

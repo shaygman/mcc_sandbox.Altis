@@ -1,8 +1,12 @@
-private ["_disp","_comboBox","_index","_displayname","_array","_class","_pic","_camera","_startPos","_createBorder","_list","_obj","_NVGstate","_size"];
+private ["_disp","_comboBox","_index","_displayname","_array","_class","_pic","_camera","_startPos","_createBorder","_list","_obj","_NVGstate","_size",
+         "_ctrlEHarray","_ctrlEH"];
 disableSerialization;
 
 _disp = _this select 0;
 uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD", _disp];
+uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD_MOUSEAREA", _disp displayCtrl 2];
+
+#define MCC_LOGISTICS_BASE_BUILD_MOUSEAREA (uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD_MOUSEAREA")
 
 waituntil {dialog};
 //Hide buttons
@@ -138,10 +142,23 @@ _createBorderScope = MCC_CONST_CAM call _createBorder;
 
 MCCCONSBASEKeyDown			=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["KeyDown",		"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['keydown',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
 MCCCONSBASEKeyUP			=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["KeyUp",		"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['KeyUp',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
-MCCCONSBASEMouseButtonDown	=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["MouseButtonDown",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['MouseButtonDown',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
-MCCCONSBASEMouseButtonUp	=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["MouseButtonUp",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['MouseButtonUp',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
-MCCCONSBASEmousemoving		=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["mousemoving",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['mousemoving',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
-MCCCONSBASEmouseholding		=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["mouseholding",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['mouseholding',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
+
+
+//Add controls event handlers
+_ctrlEHarray = [];
+
+_ctrlEH	=	MCC_LOGISTICS_BASE_BUILD_MOUSEAREA ctrlAddEventHandler  ["MouseButtonDown",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['MouseButtonDown',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
+_ctrlEHarray set [count _ctrlEHarray, [MCC_LOGISTICS_BASE_BUILD_MOUSEAREA, ["MouseButtonDown",_ctrlEH]]];
+
+_ctrlEH		=	MCC_LOGISTICS_BASE_BUILD_MOUSEAREA ctrlAddEventHandler  ["MouseButtonUp",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['MouseButtonUp',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
+_ctrlEHarray set [count _ctrlEHarray, [MCC_LOGISTICS_BASE_BUILD_MOUSEAREA, ["MouseButtonUp",_ctrlEH]]];
+
+_ctrlEH		=	MCC_LOGISTICS_BASE_BUILD_MOUSEAREA ctrlAddEventHandler  ["mousemoving",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['mousemoving',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
+_ctrlEHarray set [count _ctrlEHarray, [MCC_LOGISTICS_BASE_BUILD_MOUSEAREA, ["mousemoving",_ctrlEH]]];
+
+_ctrlEH		=	MCC_LOGISTICS_BASE_BUILD_MOUSEAREA ctrlAddEventHandler  ["mouseholding",	"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['mouseholding',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
+_ctrlEHarray set [count _ctrlEHarray, [MCC_LOGISTICS_BASE_BUILD_MOUSEAREA, ["mouseholding",_ctrlEH]]];
+
 
 MCC_CONST_CAM_Handler =
 {
@@ -268,6 +285,7 @@ MCC_CONST_CAM_Handler =
 		_altK	= _input select 6;
 		
 		_list = (screenToWorld [_posX,_posY]) nearEntities ["logic", 20];
+		player sidechat str _list;
 		
 		if (_key == 0) then
 		{
@@ -300,15 +318,47 @@ MCC_CONST_CAM_Handler =
 		player sidechat "down: " + str [_posX,_posY];
 	};
 	
-	if (_mode == "mousemoving") then
+	if (_mode == "mouseholding") then
 	{
 		_ctrl 	= _input select 0;
 		_posX 	= _input select 1;
 		_posY 	= _input select 2;
 		
-		if (!isnil "mousePos") then
+		if (!isnil "MCC_mousePos") then
 		{
-			player sidechat "moving: " + str mousePos;
+			_ctrlPos 	= ctrlPosition _ctrl;
+			_ctrlPosX 	= _ctrlPos select 0;
+			_ctrlPosY 	= _ctrlPos select 1;
+			_ctrlPosW 	= _ctrlPos select 2;
+			_ctrlPosH 	= _ctrlPos select 3;
+			
+			//Mouse pan left
+			if ((MCC_mousePos select 0) < (_ctrlPosX + (_ctrlPosW * 0.04))) then 
+			{
+				_pos = [_camera, (((getpos _camera) select 2)/40 min 20), (getdir _camera)-90] call BIS_fnc_relPos;
+				MCC_CONST_CAM SetPos _pos;
+			};
+			
+			//Mouse pan right
+			if ((MCC_mousePos select 0) > (_ctrlPosX + (_ctrlPosW * 0.96))) then 
+			{
+				_pos = [_camera, (((getpos _camera) select 2)/40 min 20), (getdir _camera)+90] call BIS_fnc_relPos;
+				MCC_CONST_CAM SetPos _pos;
+			}; 
+			
+			//Mouse pan UP
+			if ((MCC_mousePos select 1) < (_ctrlPosY + (_ctrlPosH *0.04))) then 
+			{
+				_pos = [_camera, (((getpos _camera) select 2)/40 min 20), getdir _camera] call BIS_fnc_relPos;
+				MCC_CONST_CAM SetPos _pos;
+			};
+
+			//Mouse pan down
+			if ((MCC_mousePos select 1) > (_ctrlPosY + (_ctrlPosH *0.96))) then 
+			{
+				_pos = [_camera, (((getpos _camera) select 2)/40 min 20), (getdir _camera)-180] call BIS_fnc_relPos;
+				MCC_CONST_CAM SetPos _pos;
+			}; 			
 		};
 	};
 };
@@ -333,6 +383,8 @@ if (!isnil "MCC_CONST_SELECTOR") then {deleteVehicle MCC_CONST_SELECTOR; MCC_CON
 (uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayRemoveEventHandler ["KeyDown",MCCCONSBASEKeyDown];
 (uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayRemoveEventHandler ["KeyUp",MCCCONSBASEKeyUp];
 
+//Remove controls event handlers
+{(_x select 0) ctrlRemoveEventHandler (_x select 1)} foreach _ctrlEHarray;
 
 
 /*

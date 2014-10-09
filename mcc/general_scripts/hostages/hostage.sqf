@@ -5,7 +5,9 @@ _caller = _this select 1;
 _index = _this select 2; 
 _action = (_this select 3) select 0; 
 
-if (_action == 0) then {	//Save Hostage
+//Save Hostage
+if (_action == 0) then 
+{	
 	_init = "
 			_this setcaptive false; 
 			_this allowFleeing 1;
@@ -18,15 +20,21 @@ if (_action == 0) then {	//Save Hostage
 	_hostage removeAction _index;
 	[_hostage] join _caller;
 	_nul = _caller addaction [format ["Disband %1", name _hostage],MCC_path + "mcc\general_scripts\hostages\hostage.sqf",[1,_hostage],6,false,true,"","_target == _this"];
-	};
-	
-if (_action == 1) then {	//disabnd Hostage TODO no leave group while doing so
+};
+
+//disabnd Hostage TODO no leave group while doing so	
+if (_action == 1) then 
+{	
 	_hostage removeAction _index;
 	_hostage enableAI "MOVE";
 	[(_this select 3) select 1] join grpNull;
-	};
-	
-if (_action == 2) then {	//Join player
+};
+
+//Join player	
+if (_action == 2) then
+ {	
 	_hostage removeAction _index;
 	(units group _hostage) join _caller;
-	};
+	
+	_nul = _caller addaction [format ["Disband %1", name _hostage],MCC_path + "mcc\general_scripts\hostages\hostage.sqf",[1,_hostage],6,false,true,"","_target == _this"];
+};

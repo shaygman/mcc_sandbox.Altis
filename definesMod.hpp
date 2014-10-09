@@ -1166,12 +1166,31 @@ class CfgSounds	{
 	titles[] = {};
 	};
 	//================================Traps=======================================
-	class suicide
+	class suicide1
 	{
-	name = "suicide";
-	sound[] = {"\mcc_sandbox_mod\sounds\suicide.ogg", 1, 1};
-	titles[] = {0, ""};
+		name = "suicide1";
+		sound[] = {"\mcc_sandbox_mod\sounds\suicide1.ogg", 3, 1};
+		titles[] = {};
 	};
+	class suicide2
+	{
+		name = "suicide2";
+		sound[] = {"\mcc_sandbox_mod\sounds\suicide2.ogg", 3, 1};
+		titles[] = {};
+	};
+	class suicide3
+	{
+		name = "suicide3";
+		sound[] = {"\mcc_sandbox_mod\sounds\suicide3.ogg", 3, 1};
+		titles[] = {};
+	};
+	class suicide4
+	{
+		name = "suicide3";
+		sound[] = {"\mcc_sandbox_mod\sounds\suicide3.ogg", 3, 1};
+		titles[] = {};
+	};
+	
 	class dontshot
 	{
 	name = "dontshot";
@@ -1238,6 +1257,31 @@ class CfgSounds	{
 	sound[] = {"\mcc_sandbox_mod\sounds\disarm4.ogg", 1, 1};
 	titles[] = {0, ""};
 	};
+	class disarm4
+	{
+		name = "disarm4";
+		sound[] = {"\mcc_sandbox_mod\sounds\disarm4.ogg", 1, 1};
+		titles[] = {};
+	};
+	class disarm5
+	{
+		name = "disarm5";
+		sound[] = {"\mcc_sandbox_mod\sounds\disarm5.ogg", 1, 1};
+		titles[] = {};
+	};
+	class disarm6
+	{
+		name = "disarm6";
+		sound[] = {"\mcc_sandbox_mod\sounds\disarm6.ogg", 1, 1};
+		titles[] = {};
+	};
+	class disarm7
+	{
+		name = "disarm7";
+		sound[] = {"\mcc_sandbox_mod\sounds\disarm7.ogg", 1, 1};
+		titles[] = {};
+	};
+	
 	class disarmfail1
 	{
 	name = "disarmfail1";
@@ -1268,7 +1312,484 @@ class CfgSounds	{
 	sound[] = {"\mcc_sandbox_mod\sounds\disarmcrit2.ogg", 1, 1};
 	titles[] = {0, ""};
 	};
-		//======================================= AC sounds================================
+	
+	//================================Misison Wizard=======================================
+	class MWName_operation
+	{
+		name = "0_operation";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\0_operation.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	//Mission Names
+	class MWName_desert
+	{
+		name = "1_desert";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_desert.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_oversized
+	{
+		name = "1_oversized";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_oversized.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_roguish
+	{
+		name = "1_roguish";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_roguish.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_smoldering
+	{
+		name = "1_smoldering";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_smoldering.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_cold
+	{
+		name = "1_cold";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_cold.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_flaring
+	{
+		name = "1_flaring";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_flaring.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class MWName_furious
+	{
+		name = "1_furious";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_furious.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_silver
+	{
+		name = "1_silver";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_silver.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_vengeance
+	{
+		name = "1_vengeance";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_vengeance.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_yellow
+	{
+		name = "1_yellow";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_yellow.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_red
+	{
+		name = "1_red";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_red.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_blue
+	{
+		name = "1_blue";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_blue.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_white
+	{
+		name = "1_white";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_white.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_gold
+	{
+		name = "1_gold";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_gold.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_dark
+	{
+		name = "1_dark";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_dark.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_broken
+	{
+		name = "1_broken";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_broken.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	class MWName_morbid
+	{
+		name = "1_morbid";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_morbid.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_flying
+	{
+		name = "1_flying";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_flying.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_living
+	{
+		name = "1_living";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_living.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_swift
+	{
+		name = "1_swift";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_swift.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_evil
+	{
+		name = "1_evil";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_evil.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_fallen
+	{
+		name = "1_fallen";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_fallen.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_solitary
+	{
+		name = "1_solitary";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_solitary.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_alpha
+	{
+		name = "1_alpha";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_alpha.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_bravo
+	{
+		name = "1_bravo";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_bravo.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_charlie
+	{
+		name = "1_charlie";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_charlie.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_delta
+	{
+		name = "1_delta";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_delta.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_echo
+	{
+		name = "1_echo";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_echo.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_foxtrot
+	{
+		name = "1_foxtrot";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_foxtrot.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	//Mission Name 2
+	class MWName_storm
+	{
+		name = "2_storm";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_storm.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_lightning
+	{
+		name = "2_lightning";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_lightning.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_rain
+	{
+		name = "2_rain";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_rain.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_thunder
+	{
+		name = "2_thunder";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_thunder.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_tornado
+	{
+		name = "2_tornado";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_tornado.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_hurricane
+	{
+		name = "2_hurricane";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_hurricane.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_flood
+	{
+		name = "2_flood";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_flood.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_dragonfly
+	{
+		name = "2_dragonfly";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_dragonfly.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_ocelot
+	{
+		name = "2_ocelot";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_ocelot.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_cobra
+	{
+		name = "2_cobra";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_cobra.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_fiend
+	{
+		name = "2_fiend";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_fiend.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_father
+	{
+		name = "2_father";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_father.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_horse
+	{
+		name = "2_horse";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_horse.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_thorn
+	{
+		name = "2_thorn";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_thorn.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	//----
+	class MWName_arrow
+	{
+		name = "2_arrow";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_arrow.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_cage
+	{
+		name = "2_cage";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_cage.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_contempt
+	{
+		name = "2_contempt";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_contempt.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_dagger
+	{
+		name = "2_dagger";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_dagger.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_famine
+	{
+		name = "2_famine";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_famine.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_one
+	{
+		name = "2_one";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_one.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_priest
+	{
+		name = "2_priest";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_priest.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_serpent
+	{
+		name = "2_serpent";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_serpent.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_snake
+	{
+		name = "2_snake";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_snake.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_stranger
+	{
+		name = "2_stranger";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_stranger.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_three
+	{
+		name = "2_three";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_three.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_two
+	{
+		name = "2_two";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_two.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_urgency
+	{
+		name = "2_urgency";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_urgency.ogg", 1, 1};
+		titles[] = {};
+	};
+	class MWName_zero
+	{
+		name = "2_zero";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_zero.ogg", 1, 1};
+		titles[] = {};
+	};
+	//General
+	class general1
+	{
+		name = "1general1";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\1general1.ogg", 1, 1};
+		titles[] = {};
+	};
+	class general2
+	{
+		name = "1general2";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\1general2.ogg", 1, 1};
+		titles[] = {};
+	};
+	class general3
+	{
+		name = "1general3";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\1general3.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isCQB1
+	{
+		name = "2_isCQB1";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\2_isCQB1.ogg", 1, 1};
+		titles[] = {};
+	};
+	class isCQB2
+	{
+		name = "2_isCQB2";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\2_isCQB2.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class infantrypresent
+	{
+		name = "3infantrypresent";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\3infantrypresent.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isVehicles
+	{
+		name = "4_vehicles";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\4_vehicles.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isArmor
+	{
+		name = "5_armor";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\5_armor.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isArtillery
+	{
+		name = "6_artillery";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\6_artillery.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isRoadblocks
+	{
+		name = "7_isRoadblocks";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\7_isRoadblocks.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isIED
+	{
+		name = "8_isIED";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\8_isIED.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isAS
+	{
+		name = "9_isAS";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\9_isAS.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isReinforcement_generic
+	{
+		name = "10_reinforcement_generic";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\10_reinforcement_generic.ogg", 1, 1};
+		titles[] = {};
+	};
+	class isReinforcement1
+	{
+		name = "10_reinforcement1";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\10_reinforcement1.ogg", 1, 1};
+		titles[] = {};
+	};
+	class isReinforcement2
+	{
+		name = "10_reinforcement2";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\10_reinforcement2.ogg", 1, 1};
+		titles[] = {};
+	};
+	class isReinforcement3
+	{
+		name = "10_reinforcement3";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\10_reinforcement3.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	class isMissiongo
+	{
+		name = "11missiongo";
+		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\11missiongo.ogg", 1, 1};
+		titles[] = {};
+	};
+	
+	//======================================= AC sounds================================
 	class gun1
 	{
 	name = "gun1";

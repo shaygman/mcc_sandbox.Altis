@@ -86,7 +86,11 @@ while {alive _sb && _check} do
 								_sb setskill ["courage",1];
 								_sb domove (getpos _enemy);
 								_sb domove (getpos _enemy);
-								if (_sound == 1) then {[[[netid _sb,_sb], "suicide"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;_sound = 0};
+								if (_sound == 1) then 
+								{
+									[[[netid _sb,_sb], format ["suicide%1", (floor random 4)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
+									_sound = 0
+								};
 								if ((_sb distance _enemy) <=15) exitwith { _check= false;};
 							};
 						};

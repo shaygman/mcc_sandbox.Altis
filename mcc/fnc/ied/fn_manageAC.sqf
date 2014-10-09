@@ -74,6 +74,7 @@ _targ = ["Car","Man"];
 while {alive _suspect && _check} do 
 {  
 	sleep 1;
+	_check = _suspect getvariable ["armed",true];
 	_close = (getPos _suspect) nearObjects 50;
 	if(_side countSide _close > 0) then	
 	{
@@ -81,6 +82,7 @@ while {alive _suspect && _check} do
 		while {(alive _suspect) && (_check) && (_t > 0)} do	
 		{
 			sleep 1;
+			_check = _suspect getvariable ["armed",true];
 			_closeunit = [];
 			{
 				if(side _x == _side) then {_closeunit = _closeunit + [_x]}
@@ -97,6 +99,7 @@ while {alive _suspect && _check} do
 						while {alive _suspect && _check} do	
 						{
 							sleep 2;
+							_check = _suspect getvariable ["armed",true];
 							_rand = random 100;
 
 							if (((_suspect distance _enemy ) <=_rad) &&  (alive _enemy) && (_rand < 5)) then	

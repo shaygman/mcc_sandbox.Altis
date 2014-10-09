@@ -42,17 +42,8 @@ _ambushSide 		= if (_groupArray) then { _this select 12} else {east};
 _init = "";
 
 //Ammo?
-if ( _trapkind in MCC_MWIED) then 
-{ 
-	_fakeIed = MCC_dummy createVehicle _pos;
-	_fakeIed setposatl _pos;
-	_init = FORMAT [";_this setVariable ['IEDClass','%1',true];_this hideobject true;",_trapkind];
-}
-else
-{
-	_fakeIed = _trapkind createVehicle _pos; 
-	_fakeIed setposatl _pos;
-};
+_fakeIed = _trapkind createVehicle _pos; 
+_fakeIed setposatl _pos;
 
 _init = _init + format [";_this setVariable ['isIED',true,true];[_this,'%2',%3,%4,%5,%6,%7,%8] spawn MCC_fnc_createIED;"
                  ,MCC_path

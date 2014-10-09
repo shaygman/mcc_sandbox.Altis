@@ -21,7 +21,7 @@ if ((_task ==0) && (MCC_faction_index != lbCurSel FACTIONCOMBO)) then					//Chan
 };
 	
 if ((_task ==1)&& (MCC_type_index != lbCurSel SPAWNTYPE)) then																	//Change Type
-	{
+{
 	MCC_type_index = lbCurSel SPAWNTYPE;
 	if ((lbCurSel SPAWNTYPE) == 1) then {						//	Group
 	_comboBox = _mccdialog displayCtrl SPAWNBRANCH;		
@@ -42,7 +42,7 @@ if ((_task ==1)&& (MCC_type_index != lbCurSel SPAWNTYPE)) then																	/
 						"Market", "Misc", "Signs", "Warfare", "Wrecks", "Buildings", "Ruins","Garbage","Lamps","Container","Small Items","Structures","Helpers","Training"];
 			_comboBox lbSetCurSel 0; //MCC_class_index;	
 			};
-	};
+};
 
 if (_task ==2) then 											//Change Branch Units
 	{

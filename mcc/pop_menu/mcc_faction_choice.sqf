@@ -24,18 +24,15 @@ _factionDisplayName = getText (configFile >> "CfgFactionClasses" >> MCC_faction 
 
 for "_i" from 0 to ((count CONFIG) - 1)  do
 {
-_Cfgside = (CONFIG select _i);  
-if (isClass(_cfgside)) then
-{
-	for "_j" from 0 to ((count _Cfgside) - 1) do
+	_Cfgside = (CONFIG select _i);  
+	if (isClass(_cfgside)) then
 	{
-		_Cfgfaction 	= (_cfgside select _j); 
-		if (isClass(_cfgfaction)) then
+		for "_j" from 0 to ((count _Cfgside) - 1) do
 		{
-			_CfgfactionName	= getText (_cfgfaction >> "name");
-			if ((_CfgfactionName == _factionDisplayName) || (configname(configFile >> "CfgFactionClasses" >> MCC_faction) == configname(_cfgfaction))) then 
-		//	if (configname(_cfgfaction) == MCC_faction) then
+			_Cfgfaction = (_cfgside select _j); 
+			if (isClass(_cfgfaction)) then
 			{
+				_CfgfactionName	= getText (_cfgfaction >> "name");
 				for "_k" from 0 to ((count _Cfgfaction) - 1) do
 				{
 					_Cfgtype = (_cfgfaction select _k); 
@@ -47,16 +44,17 @@ if (isClass(_cfgside)) then
 						for "_l" from 0 to ((count _cfgtype) - 1) do //Let's divide the groups
 						{
 							_CfgGroup = (_cfgtype select _l); 
+							
 							if (isClass(_CfgGroup)) then
 							{
+								
+								if (((configname(configFile >> "CfgFactionClasses" >> MCC_faction) == configname(_cfgfaction)) || ((getText (_CfgGroup >> "faction")) == (configname(configFile >> "CfgFactionClasses" >> MCC_faction))) || getText (_CfgGroup >> "faction") == MCC_faction)) then 
+								{
 									//Work around to get units faction before putting them to types
 									if (_check) then
 									{
-										if ((getText (_CfgGroup >> "faction")) == (configname(configFile >> "CfgFactionClasses" >> MCC_faction))) then
-										{
-											MCC_groupTypes set [count MCC_groupTypes, [_cfgname,_cfgDisplayname]];
-											_check = false; 
-										};
+										MCC_groupTypes set [count MCC_groupTypes, [_cfgname,_cfgDisplayname]];
+										_check = false; 
 									};
 									
 									_groupName 		  = configname(_CfgGroup );
@@ -283,8 +281,8 @@ GEN_DOC1 = [];
 GEN_DOC1 = [mcc_faction,0]  call mcc_make_array_comp;
 
 if (!mcc_firstTime) then 
-	{
-	closeDialog 0;
+{
+	while {dialog} do {closeDialog 0};
 	nul=[nil,nil,nil,nil,0] execVM MCC_path + "mcc\Dialogs\mcc_PopupMenu.sqf";
-	}
-	else {mcc_firstTime=false}; //If it's not first time refresh the menu
+}
+else {mcc_firstTime=false}; //If it's not first time refresh the menu

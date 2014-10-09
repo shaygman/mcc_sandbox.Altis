@@ -6,16 +6,23 @@
 //==============================================================================================================================================================================	
 private ["_string","_respawnItems","_airports","_counter","_searchArray"];
 
+//IED
+_string = format ["(({_dir= [_this, _x] call BIS_fnc_relativeDirTo; if (_dir>320 || _dir < 40) then {true} else {false}} count (_this nearObjects ['%1',5]))>0) && !(uiNameSpace getVariable ['MCC_isIEDDisarming',false]); ",MCC_dummy]; 
+_null = player addaction ["<t color=""#FFCC00"">- Disarm IED -</t>", MCC_path + "mcc\general_scripts\traps\ied_disarm.sqf",[],-1,true,true,"teamSwitch",_string];
+	
 //Add MCC respawn tent string
-_respawnItems = ["MCC_TentDome","MCC_TentA"];	//respawn items
-_string = format ["secondaryWeapon _target in %1 && (vehicle _target == vehicle _this) && (leader _this == _this)",_respawnItems]; 
-_null = player addaction ["<t color=""#FFCC00"">Assemble respawn tent</t>", MCC_path + "mcc\general_scripts\respawnTents\DeployRespawnTents.sqf",[],-1,false,true,"teamSwitch",_string];
+if (MCC_isMode) then
+{
+	_respawnItems = ["MCC_TentDome","MCC_TentA"];	//respawn items
+	_string = format ["secondaryWeapon _target in %1 && (vehicle _target == vehicle _this) && (leader _this == _this)",_respawnItems]; 
+	_null = player addaction ["<t color=""#FFCC00"">Assemble respawn tent</t>", MCC_path + "mcc\general_scripts\respawnTents\DeployRespawnTents.sqf",[],-1,false,true,"teamSwitch",_string];
+};
 
 //Add MCC Comander
 _string = format ["((MCC_server getVariable ['CP_commander%1','']) == getPlayerUID _this )&& (vehicle _target == vehicle _this) && MCC_allowConsole",side player]; 
 _null = player addaction ["<t color=""#FFCC01"">Commander - Console</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,1],-1,false,true,"teamSwitch",_string];
 
-//Add MCC Squad leader PDA  (count units _this > 1) &&
+//Add MCC Squad leader PDA
 _string = format ["(count units _this > 1) && (leader _this == _this) && ('ItemGPS' in (assignedItems _this)) && (vehicle _target == vehicle _this) && MCC_allowsqlPDA",side player]; 
 _null = player addaction ["<t color=""#FFCC01"">Squad Leader - PDA</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,3],-1,false,true,"teamSwitch",_string];
 
