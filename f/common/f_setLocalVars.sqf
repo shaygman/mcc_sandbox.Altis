@@ -2,17 +2,20 @@
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
 
-// JIP CHECK
-// Prevents the script executing until the player has synchronised correctly:
+// Only run this component on the server
+if !(isServer) exitWith {};
 
-#include "f_waitForJIP.sqf"
+waitUntil {!isnil "f_var_debugMode"};
+
+_sleep = _this select 0;
+
+while {true} do {
 
 // ====================================================================================
-
 // DEBUG DEFINES
 
 #define SLV_NAME "(f\common\f_setLocalVars.sqf)"
-#define DEBUG_OUTPUT player sidechat 
+#define DEBUG_OUTPUT player sidechat
 
 // DECLARE VARIABLES AND FUNCTIONS
 private ["_str_f_var_units","_str_f_var_units_BLU","_str_f_var_units_RES","_str_f_var_units_OPF","_str_f_var_units_CIV","_str_f_var_men","_str_f_var_men_BLU","_str_f_var_men_RES","_str_f_var_men_OPF","_str_f_var_men_CIV","_str_f_var_groups_BLU","_str_f_var_groups_RES","_str_f_var_groups_OPF","_str_f_var_groups_CIV","_str_f_var_groups","_str_f_var_vehicles","_str_f_var_vehicles_BLU","_str_f_var_vehicles_RES","_str_f_var_vehicles_OPF","_str_f_var_vehicles_CIV"];
@@ -23,11 +26,7 @@ private ["_str_f_var_units","_str_f_var_units_BLU","_str_f_var_units_RES","_str_
 // We will create an array containing all units.
 
 f_var_units = allUnits + vehicles;
-if (!isnil "F2_Precompile_WEST") then {
-	f_var_units = f_var_units - [F2_Precompile_WEST,F2_Precompile_EAST];
-	};
 
-waituntil {!isnil "f_var_debugMode"}; 
 // DEBUG
 if (f_var_debugMode == 1) then
 {
@@ -41,9 +40,7 @@ if (f_var_debugMode == 1) then
 // Using f_var_units we will create an array containing all BLUFOR units.
 
 f_var_units_BLU = [];
-if (!isnil "F2_Precompile_WEST") then {
-	{if ((side _x) == west && _x != F2_Precompile_WEST ) then {f_var_units_BLU = f_var_units_BLU + [_x]}} forEach f_var_units;
-};
+{if ((side _x) == west ) then {f_var_units_BLU = f_var_units_BLU + [_x]}} forEach f_var_units;
 
 // DEBUG
 if (f_var_debugMode == 1) then
@@ -73,9 +70,8 @@ if (f_var_debugMode == 1) then
 // Using f_var_units we will create an array containing all OPFOR units.
 
 f_var_units_OPF = [];
-if (!isnil "F2_Precompile_EAST") then {
-	{if ((side _x) == east && _x != F2_Precompile_EAST) then {f_var_units_OPF = f_var_units_OPF + [_x]}} forEach f_var_units;
-};
+{if ((side _x) == east) then {f_var_units_OPF = f_var_units_OPF + [_x]}} forEach f_var_units;
+
 // DEBUG
 if (f_var_debugMode == 1) then
 {
@@ -104,20 +100,12 @@ if (f_var_debugMode == 1) then
 // Using the master trigger we will create an array containing all men.
 
 f_var_men = [];
-if (!isnil "F2_Precompile_WEST") then {
+{
+	if ((_x isKindOf "CAManBase")) then
 	{
-		if(_x != F2_Precompile_WEST && _x != F2_Precompile_EAST) then
-		{
-		if (_x isKindOf "CAManBase") then 
-		{
-			f_var_men = f_var_men + [_x]
-		} else
-		{
-			f_var_men = f_var_men + (crew _x)
-		};
-		};
-	} forEach f_var_units;
-};
+		f_var_men = f_var_men + [_x]
+	};
+} forEach f_var_units;
 
 // DEBUG
 if (f_var_debugMode == 1) then
@@ -132,7 +120,7 @@ if (f_var_debugMode == 1) then
 // Using f_var_men we will create an array containing all BLUFOR men.
 
 f_var_men_BLU = [];
-{if ((side _x) == west && _x != F2_Precompile_WEST) then {f_var_men_BLU = f_var_men_BLU + [_x]}} forEach f_var_men;
+{if ((side _x) == west) then {f_var_men_BLU = f_var_men_BLU + [_x]}} forEach f_var_men;
 
 // DEBUG
 if (f_var_debugMode == 1) then
@@ -162,7 +150,7 @@ if (f_var_debugMode == 1) then
 // Using f_var_men we will create an array containing all OPFOR men.
 
 f_var_men_OPF = [];
-{if ((side _x) == east && _x != F2_Precompile_EAST) then {f_var_men_OPF = f_var_men_OPF + [_x]}} forEach f_var_men;
+{if ((side _x) == east) then {f_var_men_OPF = f_var_men_OPF + [_x]}} forEach f_var_men;
 
 // DEBUG
 if (f_var_debugMode == 1) then
@@ -207,7 +195,7 @@ if (f_var_debugMode == 1) then
 // Using f_var_units_BLU we will create an array containing all BLUFOR groups.
 
 f_var_groups_BLU = [];
-{if (!((group _x) in f_var_groups_BLU) &&  leader _x != F2_Precompile_WEST) then {f_var_groups_BLU = f_var_groups_BLU + [group _x]}} forEach f_var_units_BLU;
+{if (!((group _x) in f_var_groups_BLU)) then {f_var_groups_BLU = f_var_groups_BLU + [group _x]}} forEach f_var_units_BLU;
 
 // DEBUG
 if (f_var_debugMode == 1) then
@@ -237,7 +225,7 @@ if (f_var_debugMode == 1) then
 // Using f_var_units_OPF we will create an array containing all OPFOR groups.
 
 f_var_groups_OPF = [];
-{if (!((group _x) in f_var_groups_OPF) && leader _x != F2_Precompile_EAST) then {f_var_groups_OPF = f_var_groups_OPF + [group _x]}} forEach f_var_units_OPF;
+{if (!((group _x) in f_var_groups_OPF)) then {f_var_groups_OPF = f_var_groups_OPF + [group _x]}} forEach f_var_units_OPF;
 
 // DEBUG
 if (f_var_debugMode == 1) then
@@ -266,8 +254,7 @@ if (f_var_debugMode == 1) then
 // COMMON VARIABLE: f_var_groups
 // We will create an array containing all groups.
 
-f_var_groups = [];
-f_var_groups = f_var_groups_BLU + f_var_groups_RES + f_var_groups_OPF + f_var_groups_CIV;
+f_var_groups = allGroups;
 
 // DEBUG
 if (f_var_debugMode == 1) then
@@ -278,11 +265,31 @@ if (f_var_debugMode == 1) then
 
 // ====================================================================================
 
+// COMMON VARIABLE: f_var_groups_players
+// We will create an array containing all groups with at least one player.
+
+f_var_groups_players = [];
+{
+	_units = units _x;
+	if ({isPlayer _x} count _units >= 1) then {
+		f_var_groups_players set [count f_var_groups_players,_x];
+	};
+} forEach f_var_groups;
+
+// DEBUG
+if (f_var_debugMode == 1) then
+{
+ 	_str_f_var_groups = str f_var_groups;
+ 	DEBUG_OUTPUT format ["DEBUG %2: f_var_groups = %1",_str_f_var_groups, SLV_NAME];
+};
+
+
+// ====================================================================================
+
 // COMMON VARIABLE: f_var_vehicles
 // We will create an array containing all vehicles.
 
-f_var_vehicles = [];
-{if (_x isKindOf "LandVehicle" || _x isKindOf "Air" || _x isKindOf "Ship") then {f_var_vehicles = f_var_vehicles + [_x]}} forEach f_var_units;
+f_var_vehicles = vehicles;
 
 // DEBUG
 if (f_var_debugMode == 1) then
@@ -353,4 +360,17 @@ if (f_var_debugMode == 1) then
 
 // ====================================================================================
 
-if (true) exitWith {};
+// MAKE VARIABLES PUBLIC
+// All variables are sent to the connecting clients using publicvariable
+
+{publicvariable _x} forEach [
+"f_var_units","f_var_units_BLU","f_var_units_RES","f_var_units_OPF","f_var_units_CIV",
+"f_var_men","f_var_men_BLU","f_var_men_RES","f_var_men_OPF","f_var_men_CIV","f_var_men_players",
+"f_var_groups_BLU","f_var_groups_RES","f_var_groups_OPF","f_var_groups_CIV","f_var_groups","f_var_groups_players",
+"f_var_vehicles","f_var_vehicles_BLU","f_var_vehicles_RES","f_var_vehicles_OPF","f_var_vehicles_CIV"
+];
+
+if (_sleep == 0) exitWith {};
+sleep _sleep;
+
+};

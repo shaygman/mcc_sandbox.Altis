@@ -46,6 +46,14 @@
 #include "configs\dialogs\gearPanel\accessoriesPanel.hpp"
 #include "configs\dialogs\gearPanel\uniformPanel.hpp"
 
+// F3 - Menu components
+
+// Menu components for the JIP Menu
+#include "f\JIP\f_JIP_kitpicker.h"
+#include "f\JIP\f_JIP_grppicker.h"
+
+// Menu components for the Spectator Script
+#include "f\spect\config.hpp"
 
 //--------------------------Others----------------------------------------------------
 #include "bon_artillery\dialog\Artillery.hpp"
@@ -739,6 +747,7 @@ class CfgFunctions
 	};
 
 	#include "gaia\cfgFunctions.hpp"
+	#include "f\cfgFunctions.hpp"
 
 	class VAS
 	{
@@ -1228,7 +1237,7 @@ class CfgSounds	{
 		sound[] = {"sounds\suicide3.ogg", 3, 1};
 		titles[] = {};
 	};
-	
+
 	class dontshot
 	{
 	name = "dontshot";
@@ -1313,7 +1322,7 @@ class CfgSounds	{
 		sound[] = {"sounds\disarm7.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class disarmfail1
 	{
 	name = "disarmfail1";
@@ -1351,7 +1360,7 @@ class CfgSounds	{
 		sound[] = {"sounds\mwSounds\missionNames\0_operation.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	//Mission Names
 	class MWName_desert
 	{
@@ -1359,42 +1368,42 @@ class CfgSounds	{
 		sound[] = {"sounds\mwSounds\missionNames\1_desert.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_oversized
 	{
 		name = "1_oversized";
 		sound[] = {"sounds\mwSounds\missionNames\1_oversized.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_roguish
 	{
 		name = "1_roguish";
 		sound[] = {"sounds\mwSounds\missionNames\1_roguish.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_smoldering
 	{
 		name = "1_smoldering";
 		sound[] = {"sounds\mwSounds\missionNames\1_smoldering.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_cold
 	{
 		name = "1_cold";
 		sound[] = {"sounds\mwSounds\missionNames\1_cold.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_flaring
 	{
 		name = "1_flaring";
 		sound[] = {"sounds\mwSounds\missionNames\1_flaring.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_furious
 	{
 		name = "1_furious";
@@ -1534,8 +1543,8 @@ class CfgSounds	{
 		sound[] = {"sounds\mwSounds\missionNames\1_foxtrot.ogg", 1, 1};
 		titles[] = {};
 	};
-	
-	
+
+
 	//Mission Name 2
 	class MWName_storm
 	{
@@ -1706,7 +1715,7 @@ class CfgSounds	{
 		sound[] = {"sounds\mwSounds\missionNames\2_zero.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	//General
 	class general1
 	{
@@ -1726,7 +1735,7 @@ class CfgSounds	{
 		sound[] = {"sounds\mwSounds\1general3.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isCQB1
 	{
 		name = "2_isCQB1";
@@ -1739,56 +1748,56 @@ class CfgSounds	{
 		sound[] = {"sounds\mwSounds\2_isCQB2.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class infantrypresent
 	{
 		name = "3infantrypresent";
 		sound[] = {"sounds\mwSounds\3infantrypresent.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isVehicles
 	{
 		name = "4_vehicles";
 		sound[] = {"sounds\mwSounds\4_vehicles.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isArmor
 	{
 		name = "5_armor";
 		sound[] = {"sounds\mwSounds\5_armor.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isArtillery
 	{
 		name = "6_artillery";
 		sound[] = {"sounds\mwSounds\6_artillery.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isRoadblocks
 	{
 		name = "7_isRoadblocks";
 		sound[] = {"sounds\mwSounds\7_isRoadblocks.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isIED
 	{
 		name = "8_isIED";
 		sound[] = {"sounds\mwSounds\8_isIED.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isAS
 	{
 		name = "9_isAS";
 		sound[] = {"sounds\mwSounds\9_isAS.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isReinforcement_generic
 	{
 		name = "10_reinforcement_generic";
@@ -1813,7 +1822,7 @@ class CfgSounds	{
 		sound[] = {"sounds\mwSounds\10_reinforcement3.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isMissiongo
 	{
 		name = "11missiongo";
@@ -1870,13 +1879,6 @@ class CfgSounds	{
 
 class CfgNotifications
 {
-	class MCCNotifications
-	{
-		description = "%1";
-		iconPicture = "%2";
-		iconText = "%3";
-		priority = 4;
-		sound = "communicationMenuItemAdded";
-		title = "NEW SUPPORT AVAILABLE";
-	};
+	#include "mcc\cfgNotifications.hpp"
+	#include "f\cfgNotifications.hpp"
 };
