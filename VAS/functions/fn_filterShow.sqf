@@ -1,7 +1,7 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	@version: 1.0
@@ -9,7 +9,7 @@
 	@file_author: TAW_Tonic
 	@file_edit: 5/9/2013
 	@file_description: Checks if we need to hide/show filters.
-	
+
 */
 private["_req"];
 _req = _this select 0;
@@ -24,14 +24,14 @@ switch(_req) do
 		ctrlSetText[VAS_filter_3,localize "STR_VAS_Main_Heavy"];
 		ctrlSetText[VAS_filter_4,localize "STR_VAS_Main_Launcher"];
 		ctrlSetText[VAS_filter_5,localize "STR_VAS_Main_Pistols"];
-		
+
 		ctrlShow[VAS_filter_1,true];
 		ctrlShow[VAS_filter_2,true];
 		ctrlShow[VAS_filter_3,true];
 		ctrlShow[VAS_filter_4,true];
 		ctrlShow[VAS_filter_5,true];
 	};
-	
+
 	case "items":
 	{
 		ctrlSetText[VAS_filter_1,localize "STR_VAS_Main_Uniforms"];
@@ -39,15 +39,15 @@ switch(_req) do
 		ctrlSetText[VAS_filter_3,localize "STR_VAS_Main_Headgear"];
 		ctrlSetText[VAS_filter_4,localize "STR_VAS_Main_Attachments"];
 		ctrlSetText[VAS_filter_5,localize "STR_VAS_Main_Misc"];
-		
+
 		ctrlShow[VAS_filter_1,true];
 		ctrlShow[VAS_filter_2,true];
 		ctrlShow[VAS_filter_3,true];
 		ctrlShow[VAS_filter_4,true];
 		ctrlShow[VAS_filter_5,true];
 	};
-	
-	default 
+
+	default
 	{
 		ctrlShow[VAS_filter_1,false];
 		ctrlShow[VAS_filter_2,false];
@@ -56,4 +56,3 @@ switch(_req) do
 		ctrlShow[VAS_filter_5,false];
 	};
 };
-		

@@ -1,12 +1,12 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	File: fn_updateLoad.sqf
 	Author: Bryan "Tonic" Boardwine
-	
+
 	Description:
 	A simple handler for updating the gear load displays.
 */
@@ -19,12 +19,12 @@ private["_cfgInfo"];
 		_cfgInfo = [_container] call VAS_fnc_fetchCfgDetails;
 		if(count _cfgInfo > 0) then
 		{
-			if(_container == backpack player) then 
+			if(_container == backpack player) then
 			{
 				_maxLoad = getNumber(configFile >> "CfgVehicles" >> _container >> "maximumload");
 				if(_maxLoad == 0) then {_load = 1;};
 			};
-			
+
 			(VAS_getControl(VAS_Main_Display,(_x select 2))) ctrlShow true;
 			(VAS_getControl(VAS_Main_Display,(_x select 3))) ctrlShow true;
 			(VAS_getControl(VAS_Main_Display,(_x select 4))) ctrlShow true;

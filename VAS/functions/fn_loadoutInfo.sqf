@@ -1,7 +1,7 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+    #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+    #include "macro.sqf"
 #endif
 /*
     @version: 2.0
@@ -52,7 +52,7 @@ if(_type == 0) then
                 _control lbSetPicture [(lbSize _control)-1,(_details select 2)];
             };
         };
-        
+
         case "ARRAY":
         {
             {

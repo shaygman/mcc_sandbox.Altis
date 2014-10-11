@@ -1,7 +1,7 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	@version: 2.0
@@ -72,7 +72,7 @@ if(_handgun != "") then {[_handgun,true,false,false,false] spawn VAS_fnc_handleI
 {[_x,true,true,false,false] call VAS_fnc_handleItem;} foreach (_bitems);
 {[_x,true,false,true,false] call VAS_fnc_handleItem;} foreach (_primitems);
 {[_x,true,false,true,false] call VAS_fnc_handleItem;} foreach (_secitems);
-{[_x,true,false,true,false] call VAS_fnc_handleItem;} foreach (_handgunitems);  
+{[_x,true,false,true,false] call VAS_fnc_handleItem;} foreach (_handgunitems);
 
 if(primaryWeapon player != "") then
 {

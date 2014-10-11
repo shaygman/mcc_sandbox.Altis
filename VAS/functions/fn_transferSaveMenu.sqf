@@ -1,12 +1,12 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	File: fn_transferSaveMenu.sqf
 	Author: Bryan "Tonic" Boardwine
-	
+
 	Description:
 	Blah blah allows the person to save the loadout sent to them from someone else.
 	Pretty redundant design but I just got lazy at this point.
