@@ -1,13 +1,19 @@
 Change log r9:
+- Changed: All CP functions renamed as MCC functions so if you are calling for example: CP_fnc_buildSpawnPoint you should now call MCC_fnc_buildSpawnPoint
 - Added: Complete voice narration for the Mission Wizard operation's names and briefings thanks to Zafjr. 
-- Added custom voices to IED, suicide bombers, armed civlians and more many thanks to Zafjr for making this AAA quality voice acting.
+- Added: more then 40 custom voices to IED, suicide bombers, armed civlians and more many thanks to Zafjr for making this AAA quality voice acting.
 
+- Fixed: Primary spawn point aka HQ can be destoyed. 
+- Fixed: Black screen on AC-130.
+- Added: Can now move AC-130 around. 
+- Fixed: IED and Armed Civilians disarm actions don't show on MP and JIP.
 - Fixed: Missing groups in MCC such as the one from FSF - now for real ;)
 - Fixed: Mission Wizard will use players' custom groups. 
 - Fixed: Mission Wizard dialog disappear after changing faction for the first time. 
 - Fixed: Armed Civilian behavior: the suspect will join players after disarming him. 
 - Fixed: BIS Arsenal doesn't show on objects. 
 
+TODO: delete building brush
 
 createdialog "MCC_LOGISTICS_BASE_BUILD";
 

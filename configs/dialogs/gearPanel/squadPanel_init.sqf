@@ -95,7 +95,7 @@ if (MCC_squadDialogOpen) then
 }
 else
 {
-	CP_respawnPanelRoleCombo ctrlAddEventHandler ["LBSelChanged","[2] execVM '"+CP_PATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'"];
+	CP_respawnPanelRoleCombo ctrlAddEventHandler ["LBSelChanged","[2] execVM '"+MCC_path+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'"];
 	CP_Teleport ctrlShow false;
 	CP_switchSideButton ctrlShow false;		//Bugged for rating
 };

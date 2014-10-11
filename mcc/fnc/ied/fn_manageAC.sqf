@@ -42,12 +42,9 @@ removeallweapons _suspect;
 _suspect setbehaviour "CARELESS"; 
 _suspect allowfleeing 0;
 
-_suspect addaction ["<t color=""#FF0000"">- Neutralize Suspect -</t>",MCC_path +"mcc\general_scripts\traps\neutralize.sqf",[],6,false,true,"","(_target distance _this) < 10"];
-
 _dummy = MCC_dummy createVehicle (getpos _suspect);
-_init = '_this hideobject true;';
-[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-
+_dummy setVariable ["fakeIed",_suspect];
+_dummy hideobjectGlobal true;
 _dummy attachto [_suspect,[0,0,0]];
 
 [_suspect, _dummy] spawn
@@ -146,6 +143,9 @@ while {alive _suspect && _check} do
 	};
 };
 
-if (!alive _suspect) then {_suspect removeaction 0;};
+if (!alive _suspect) then 
+{
+	{deleteVehicle _x} forEach attachedObjects _suspect;
+};
 
 if (true) exitWith {};

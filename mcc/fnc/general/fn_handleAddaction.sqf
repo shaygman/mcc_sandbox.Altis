@@ -7,8 +7,8 @@
 private ["_string","_respawnItems","_airports","_counter","_searchArray"];
 
 //IED
-_string = format ["(({_dir= [_this, _x] call BIS_fnc_relativeDirTo; if (_dir>320 || _dir < 40) then {true} else {false}} count (_this nearObjects ['%1',5]))>0) && !(uiNameSpace getVariable ['MCC_isIEDDisarming',false]); ",MCC_dummy]; 
-_null = player addaction ["<t color=""#FFCC00"">- Disarm IED -</t>", MCC_path + "mcc\general_scripts\traps\ied_disarm.sqf",[],-1,true,true,"teamSwitch",_string];
+_string = format ["(({_dir= [_this, _x] call BIS_fnc_relativeDirTo; if ((_dir>320 || _dir < 40) && !(isnull (_x getVariable ['fakeIed',objnull]))) then {true} else {false}} count (_this nearObjects ['%1',8]))>0) && !(uiNameSpace getVariable ['MCC_isIEDDisarming',false]); ",MCC_dummy]; 
+_null = player addaction ["<t color=""#FF0000"">-=Disarm=-</t>", MCC_path + "mcc\general_scripts\traps\ied_disarm.sqf",[],-1,true,true,"teamSwitch",_string];
 	
 //Add MCC respawn tent string
 if (MCC_isMode) then

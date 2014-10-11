@@ -195,7 +195,7 @@ switch (_cmd) do
 			};
 		}; 
 		
-		_null = [0] execVM format["%1configs\dialogs\gearPanel\squadPanel_cmd.sqf",CP_path];
+		_null = [0] execVM format["%1configs\dialogs\gearPanel\squadPanel_cmd.sqf",MCC_path];
 	};
 	
 	case 2:				//Switch side
@@ -252,7 +252,7 @@ switch (_cmd) do
 		CP_barrelIndex = 0;
 		CP_attachsIndex = 0;
 		CP_weaponAttachments =[]; 
-		[CP_classesIndex,0] call CP_fnc_setGear; 
+		[CP_classesIndex,0] call MCC_fnc_setGear; 
 	};
 	
 	case 3:				//Create Squad
@@ -313,7 +313,7 @@ switch (_cmd) do
 				player sidechat format ["Squad %1 Created", _text, _group];
 			};
 			
-		_null = [0] execVM format["%1configs\dialogs\gearPanel\squadPanel_cmd.sqf",CP_path];
+		_null = [0] execVM format["%1configs\dialogs\gearPanel\squadPanel_cmd.sqf",MCC_path];
 	};
 	
 	case 4:				//Focuse on Player

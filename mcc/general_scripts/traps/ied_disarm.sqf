@@ -1,12 +1,21 @@
 private ["_ied","_fakeIed","_men","_index","_rand","_disarmTime", "_footer", "_html", "_break","_dummyMarker","_isEngineer"];
 _men 		= _this select 1;
-_ied 		= (_men nearObjects [MCC_dummy,5]) select 0;
-_fakeIed	= _ied getvariable "realIed";
+_ied 		= (_men nearObjects [MCC_dummy,8]) select 0;
+if (isnil "_ied") exitWith {};
+
+_fakeIed	= _ied getVariable["fakeIed",objNull];
 _index 		= _this select 2;
+
+//If it is a suspect
+if (_fakeIed isKindof "man") exitWith 
+{
+	_null= [_fakeIed,_men,_index] execVM format ["%1mcc\general_scripts\traps\neutralize.sqf",MCC_path];
+};
+
 _rand		= random 1;
 _isEngineer = getNumber(configFile >> "CfgVehicles" >> typeOf _men >> "canDeactivateMines");	//Check if is engineer
 
-if (isnil "_ied") exitWith {};
+
 
 _disarmTime =  MCC_IEDDisarmTimeArray select (_ied getvariable "disarmTime"); 
 _pos=[((getposATL _ied) select 0),(getposATL _ied) select 1,((getPosATL _ied) select 2)];

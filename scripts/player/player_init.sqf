@@ -19,43 +19,43 @@ player setVariable ["cpReady",false,true];
 (findDisplay 46) displayRemoveEventHandler ["KeyUp", MCC_squadDialogOpenEH];
 
 //Get rank from the server
-[["MCCplayerRank", player, "N/A", "STRING"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["MCCplayerRank", player, "N/A", "STRING"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "MCCplayerRank"};
 if (CP_debug) then {player sidechat format ["player Rank : %1",MCCplayerRank]};
 
-[["officerLevel", player, CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["officerLevel", player, CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "officerLevel"};
 if (CP_debug) then {player sidechat format ["officerLevel : %1",officerLevel]};
 
-[["arLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["arLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "arLevel"};
 if (CP_debug) then {player sidechat format ["arLevel : %1",arLevel]};
 
-[["riflemanLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["riflemanLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "riflemanLevel"};
 if (CP_debug) then {player sidechat format ["riflemanLevel : %1",riflemanLevel]};
 
-[["ATLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["ATLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "ATLevel"};
 if (CP_debug) then {player sidechat format ["ATLevel : %1",ATLevel]};
 
-[["corpsmanLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["corpsmanLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "corpsmanLevel"};
 if (CP_debug) then {player sidechat format ["corpsmanLevel : %1",corpsmanLevel]};
 
-[["marksmanLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["marksmanLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "marksmanLevel"};
 if (CP_debug) then {player sidechat format ["marksmanLevel : %1",marksmanLevel]};
 
-[["specialistLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["specialistLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "specialistLevel"};
 if (CP_debug) then {player sidechat format ["specialistLevel : %1",specialistLevel]};
 
-[["crewLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["crewLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "crewLevel"};
 if (CP_debug) then {player sidechat format ["crewLevel : %1",crewLevel]};
 
-[["pilotLevel", player,CP_defaultLevel, "ARRAY"], "CP_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+[["pilotLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "pilotLevel"};
 if (CP_debug) then {player sidechat format ["pilotLevel : %1",pilotLevel]};
 

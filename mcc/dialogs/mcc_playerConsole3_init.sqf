@@ -59,12 +59,14 @@ if (dialog && MCC_ACConsoleUp) then {				//Create the AC
 		_control = _mccdialog displayCtrl MCC_CONSOLE_ACPIP;
 		[_control] call MCC_fnc_pipOpen;
 		ctrlSetText [MCC_CONSOLE_ACPIP, "#(argb,512,512,1)r2t(rendertarget8,1.0);"];
+		
 		// Create fake AC
-		if (isNil "MCC_fakeAC") then {
+		if (isNil "MCC_fakeAC") then 
+		{
 			MCC_fakeAC 		= "Camera" camCreate [10,10,10];
 			if (!isnil "MCC_fakeACCenter") then {deletevehicle MCC_fakeACCenter};
 			MCC_fakeACCenter	= "Sign_Sphere10cm_F" createvehicle [MCC_consoleACpos select 0,MCC_consoleACpos select 1, 0];
-			[[[netid MCC_fakeACCenter,MCC_fakeACCenter], "_this hideObjectGlobal true"], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
+			//MCC_fakeACCenter hideObjectGlobal true;
 			_rad	=	400;
 			_alt	=	300;
 			MCC_ACAng	= 	0;
@@ -134,7 +136,8 @@ if (dialog && MCC_ACConsoleUp) then {				//Create the AC
 			private ["_structured","_data","_mccdialog"];
 			disableSerialization;
 			
-			while {MCC_Console3Open && dialog} do {
+			while {MCC_Console3Open && dialog} do 
+			{
 				_mccdialog = findDisplay mcc_playerConsole3_IDD;
 				_structured = composeText [""];
 				_data = 
@@ -159,34 +162,35 @@ if (dialog && MCC_ACConsoleUp) then {				//Create the AC
 				};
 				sleep 0.1;
 			};
+			if !(isnil "MCC_fakeAC") then {MCC_fakeAC cameraeffect ["terminate","back"];camdestroy MCC_fakeAC;};
+			MCC_fakeAC = nil;
 		};
 	
 		MCC_ACcenter = getpos MCC_fakeACCenter;
 		
-		if (MCC_uavConsoleACFirstTime) then {
-			MCC_uavConsoleACFirstTime = false; 
-					// Move camera in a circle
-				[getpos MCC_fakeACCenter, _alt, _rad] spawn {
-					private ["_pos", "_alt", "_rad", "_coords"];
-					disableSerialization;
-					
-					_pos = _this select 0;
-					_alt = _this select 1;
-					_rad = _this select 2;
-										
-					while {alive MCC_fakeAC} do {
-						MCC_ACAng = MCC_ACAng - 0.5;
-						_coords = [_pos, _rad, MCC_ACAng] call BIS_fnc_relPos;
-						_coords set [2, _alt];
-						
-						MCC_fakeAC camPreparePos _coords;
-						MCC_fakeACCenter setdir getdir (MCC_fakeAC);
-						MCC_fakeAC camCommitPrepared 0.3;
-						waitUntil {camCommitted MCC_fakeAC};
-					
-						MCC_fakeAC camPreparePos _coords;
-						MCC_fakeAC camCommitPrepared 0;
-					};
-				};
+		// Move camera in a circle
+		[getpos MCC_fakeACCenter, _alt, _rad] spawn 
+		{
+			private ["_pos", "_alt", "_rad", "_coords"];
+			disableSerialization;
+			
+			_pos = _this select 0;
+			_alt = _this select 1;
+			_rad = _this select 2;
+								
+			while {!isnil "MCC_fakeAC"} do 
+			{
+				MCC_ACAng = MCC_ACAng - 0.5;
+				_coords = [_pos, _rad, MCC_ACAng] call BIS_fnc_relPos;
+				_coords set [2, _alt];
+				
+				if (!isnil "MCC_fakeAC") then {MCC_fakeAC camPreparePos _coords};
+				if (!isnil "MCC_fakeACCenter") then {MCC_fakeACCenter setdir getdir (MCC_fakeAC)};
+				if (!isnil "MCC_fakeAC") then {MCC_fakeAC camCommitPrepared 0.3};
+				sleep 0.3;
+				
+				if (!isnil "MCC_fakeAC") then {MCC_fakeAC camPreparePos _coords};
+				if (!isnil "MCC_fakeAC") then {MCC_fakeAC camCommitPrepared 0};
 			};
 		};
+	};

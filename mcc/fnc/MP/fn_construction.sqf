@@ -160,7 +160,7 @@ if (_complete) then
 	}
 	else
 	{
-		[[_pos, _dir, _side ,"FOB",true,false], "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP;
+		[[_pos, _dir, _side ,"FOB",true,false], "MCC_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP;
 	};
 };			
 

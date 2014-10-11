@@ -11,12 +11,12 @@ MW_debug = true;
 if (MCC_isMode) then
 {
 	MCC_path = "\mcc_sandbox_mod\";
-	CP_path	 = "\mcc_sandbox_mod\";
+	MCC_path	 = "\mcc_sandbox_mod\";
 }
 else
 {
 	MCC_path = "";
-	CP_path	 = "";
+	MCC_path	 = "";
 	[] execVM MCC_path +"init_mission.sqf";
 	enableSaving [false, false];
 };
@@ -986,7 +986,7 @@ CP_dialogInitDone = true; 				//define if dialog is been initialize
 {
 	if(CP_activated && !isDedicated) then
 	{
-		_null=[] execVM CP_path + "scripts\player\player_init.sqf"
+		_null=[] execVM MCC_path + "scripts\player\player_init.sqf"
 	};
 };
 
@@ -1011,31 +1011,13 @@ CP_attachsIndex			= 0;
 CP_currentGeneralItems	= 0;
 
 //---------------------------------------------
-//		Handle functions
-//---------------------------------------------
-CP_fnc_globalExecute 	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_globalExecute.sqf");
-CP_fnc_setValue 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setValue.sqf");
-CP_fnc_getVariable 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_getVariable.sqf");
-CP_fnc_buildSpawnPoint 	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_buildSpawnPoint.sqf");
-CP_fnc_setGroupID 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setGroupID.sqf");
-CP_fnc_getGroupID 		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_getGroupID.sqf");
-CP_fnc_setGear			= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setGear.sqf");
-CP_fnc_assignGear		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_assignGear.sqf");
-CP_fnc_addWeapon		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_addWeapon.sqf");
-CP_fnc_addItem			= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_addItem.sqf");
-CP_fnc_setVehicleInit	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setVehicleInit.sqf");
-CP_fnc_setVariable		= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_setVariable.sqf");
-CP_fnc_allowedDrivers	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_allowedDrivers.sqf");
-CP_fnc_allowedWeapons	= compileFinal preprocessFileLineNumbers (CP_path + "scripts\functions\CP_fnc_allowedWeapons.sqf");
-
-//---------------------------------------------
 //		Server Init
 //---------------------------------------------
 MCC_isDedicated = false;
 if (isServer || isdedicated) then
 {
 	if (isDedicated) then {MCC_isDedicated = true; publicVariable "MCC_isDedicated"};
-	_null=[] execVM CP_path + "scripts\server\server_init.sqf";
+	_null=[] execVM MCC_path + "scripts\server\server_init.sqf";
 };
 
 //---------------------------------------------
@@ -1064,15 +1046,15 @@ if (isServer || isdedicated) then
 //---------------------------------------------
 
 CP_classes = ["Officer","AR","Rifleman","AT","Corpsman","Marksman","Specialist","Crew","Pilot"];
-CP_classesPic = [	CP_path +"configs\data\Officer.paa",
-					CP_path +"configs\data\AR.paa",
-					CP_path +"configs\data\Rifleman.paa",
-					CP_path +"configs\data\AT.paa",
-					CP_path +"configs\data\Corpsman.paa",
-					CP_path +"configs\data\Marksman.paa",
-					CP_path +"configs\data\Specialist.paa",
-					CP_path +"configs\data\Crew.paa",
-					CP_path +"configs\data\Pilot.paa"
+CP_classesPic = [	MCC_path +"configs\data\Officer.paa",
+					MCC_path +"configs\data\AR.paa",
+					MCC_path +"configs\data\Rifleman.paa",
+					MCC_path +"configs\data\AT.paa",
+					MCC_path +"configs\data\Corpsman.paa",
+					MCC_path +"configs\data\Marksman.paa",
+					MCC_path +"configs\data\Specialist.paa",
+					MCC_path +"configs\data\Crew.paa",
+					MCC_path +"configs\data\Pilot.paa"
 				];
 
 
@@ -1259,7 +1241,7 @@ if (getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMine
 //============= Init MCC done===========================
 if(CP_activated && !isDedicated) then
 {
-	_null=[] execVM CP_path + "scripts\player\player_init.sqf"
+	_null=[] execVM MCC_path + "scripts\player\player_init.sqf"
 };
 MCC_initDone = true;
 finishMissionInit;
