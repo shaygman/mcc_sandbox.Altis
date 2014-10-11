@@ -7,14 +7,23 @@ onLoadName = MCC Sandbox;
 loadScreen = "data\mcc_loadingScreen.paa";
 onLoadMission = MCC Sandbox stands for Mission Control Centre. With it you can create mission (on the fly) and generate missions (on the fly).;
 
-respawn      = "BASE";
-respawndelay = 5;
-disabledAI   = 1;
+
+// F3 - Respawn Settings
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+respawn = "BASE";
+respawndelay = 3;
+respawnOnStart = 0;
+// respawnTemplates[] = {"f_spectator","f_JIP"};
+
+// ============================================================================================
+
+disabledAI = 1;
 
 //----- For PvP ---------
 //disableChannels[]={0,6};
-joinUnassigned = 1;	
-	
+joinUnassigned = 1;
+
 corpseLimit = 30;
 corpseRemovalMinTime = 60;
 corpseRemovalMaxTime = 300;
@@ -25,12 +34,14 @@ wreckRemovalMaxTime = 1200
 
 class Header
 {
-	gameType =sandbox;
+	gameType = sandbox;
 	minPlayers = 1;
 	maxPlayers = 149;
 };
 
-//================================================================F3=======================================================================
+// F3 - Start of Params code blocks.
+// WARNING: DO NOT DELETE OR COMMENT OUT THIS CODE BLOCK
+
 class Params
 {
 
@@ -38,72 +49,181 @@ class Params
 
 // F3 - Debug Mode
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
-// WARNING: DO NOT DISABLE THIS COMPONENT OR PLACE ANY OTHER PARAMETERS BEFORE OR AFTER IT
+// WARNING: DO NOT DISABLE THIS COMPONENT
 
-        class f_param_debugMode
-        {
-                title = "$STR_f_param_debugMode";
-                values[] = {0,1};
-                texts[] = {"Off","On"};
-                default = 0;
-                code = "f_var_debugMode = %1";
-        }; 
+    class f_param_debugMode
+    {
+        title = "$STR_f_param_debugMode";
+        values[] = {0,1};
+        texts[] = {"Off","On"};
+        default = 0;
+        code = "f_var_debugMode = %1";
+    };
 
 // ============================================================================================
 
 // F3 - Folk Assign Gear Script
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
-// WARNING: DO NOT DISABLE THIS COMPONENT OR PLACE ANY OTHER PARAMETERS BEFORE OR AFTER IT
 
-        class f_param_backpacks
-        {
-                title = "$STR_f_param_backpacks";
-                values[] = {0,1,2};
-                texts[] = {"Off","Light","Heavy"};
-                default = 1;
-                code = "f_param_backpacks = %1";
-        }; 
-		
-		 class f_param_divers
-        {
-                title = "SF Uniform";
-                values[] = {0,1,2,3};
-                texts[] = {"Recon","Divers","Ghillie Suit","Night Ops"};
-                default = 0;
-                code = "f_param_divers = %1";
-        }; 
-		
-		class f_param_nightvision
-        {
-                title = "Night Vision";
-                values[] = {0,1};
-                texts[] = {"Off","On"};
-                default = 1;
-                code = "f_param_nightvision = %1";
-        }; 
+    class f_param_backpacks
+    {
+        title = "$STR_f_param_loadouts";
+        values[] = {0,1,2};
+        texts[] = {"Light","Medium","Heavy"};
+        default = 1;
+        code = "f_param_backpacks = %1";
+    };
+
+// ============================================================================================
+
+// F3 - Radio Systems Support
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+    class f_param_radios
+    {
+        title = "Radio System";
+        values[] = {0,1,2};
+        texts[] = {"Off","ACRE","TFR"};
+        default = 0;
+        code = "f_var_radios = %1";
+    };
+
+// ============================================================================================
+
+// F3 - Medical Systems Support
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+    class f_param_medical
+    {
+        title = "Medical System";
+        values[] = {0,1,2};
+        texts[] = {"Arma 3 Default","F3 Simple Wounding System","Authentic Gameplay Mod"};
+        default = 0;
+        code = "f_var_medical = %1";
+    };
+
+// ============================================================================================
+
+// F3 - Mission Timer/Safe Start
+// Credits: Please see the F2 online manual (http://www.ferstaberinde.com/f3/en/)
+
+    class f_param_mission_timer
+    {
+        title = "$STR_f_param_mission_timer";
+        values[] = {0,1,2,3,4,5,6,7,8,9,10,15};
+        texts[] = {"$STR_f_param_mission_timer_off","1","2","3","4","5","6","7","8","9","10","15"};
+        default = 0;
+        code = "f_param_mission_timer = %1";
+    };
 
 // ============================================================================================
 
 // F3 - Mission Conditions Selector
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 
-        class f_param_timeOfDay
-        {
-                title = "$STR_f_param_timeOfDay";
-                values[] = {0,1,2,3,4,5,6,7};
-                texts[] = {$STR_f_param_timeOfDay_Option0,$STR_f_param_timeOfDay_Option1,$STR_f_param_timeOfDay_Option2,$STR_f_param_timeOfDay_Option3,$STR_f_param_timeOfDay_Option4,$STR_f_param_timeOfDay_Option5,$STR_f_param_timeOfDay_Option6,$STR_f_param_timeOfDay_Option7};
-                default = 3;
-                code = "f_param_timeOfDay = %1";
-        };   
-};
+    class f_param_weather
+    {
+        title = "$STR_f_param_weather";
+        values[] = {0,1,2,3,4,5,6,7,8};
+        texts[] = {$STR_f_param_weather_Option0,$STR_f_param_weather_Option1,$STR_f_param_weather_Option2,$STR_f_param_weather_Option3,$STR_f_param_weather_Option4,$STR_f_param_weather_Option5,$STR_f_param_weather_Option6,$STR_f_param_weather_Option7,$STR_f_param_weather_Option8};
+        default = 0;
+        function = "f_fnc_setWeather";          // This function is called to apply the values
+        isGlobal = 0;                                           // Execute this only on the server
+        code = "f_param_weather = %1";
+    };
 
+    class f_param_fog
+    {
+        title = "Fog";
+        values[] = {0,1,2};
+        texts[] = {"None","Light","Heavy"};
+        default = 0;
+        function = "f_fnc_SetFog";                      // This function is called to apply the values
+        isGlobal = 0;                                           // Execute this only on the server
+        code = "f_param_fog = %1";
+    };
+
+    class f_param_timeOfDay
+    {
+        title = "$STR_f_param_timeOfDay";
+        values[] = {0,1,2,3,4,5,6,7};
+        texts[] = {$STR_f_param_timeOfDay_Option0,$STR_f_param_timeOfDay_Option1,$STR_f_param_timeOfDay_Option2,$STR_f_param_timeOfDay_Option3,$STR_f_param_timeOfDay_Option4,$STR_f_param_timeOfDay_Option5,$STR_f_param_timeOfDay_Option6,$STR_f_param_timeOfDay_Option7};
+        default = 4;
+        function = "f_fnc_setTime";                     // This function is called to apply the values
+        isGlobal = 0;                                           // Execute this only on the server
+        code = "f_param_timeOfDay = %1";
+    };
 
 // ============================================================================================
 
-// F3 - Gear Snippets
+// F3 - AI Skill Selector
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 
-// #include "f\common\f_gearSnippets.hpp"
+//      class f_param_AISkill_BLUFOR
+//      {
+//              title = "$STR_f_param_AISkill_BLUFOR";
+//              values[] = {0,1,2,3};
+//              texts[] = {$STR_f_param_AISkill_Option0,$STR_f_param_AISkill_Option1,$STR_f_param_AISkill_Option2,$STR_f_param_AISkill_Option3};
+//              default = 1;
+//              code = "f_param_AISkill_BLUFOR = %1";
+//      };
+//
+//      class f_param_AISkill_OPFOR
+//      {
+//              title = "$STR_f_param_AISkill_OPFOR";
+//              values[] = {0,1,2,3};
+//              texts[] = {$STR_f_param_AISkill_Option0,$STR_f_param_AISkill_Option1,$STR_f_param_AISkill_Option2,$STR_f_param_AISkill_Option3};
+//              default = 1;
+//              code = "f_param_AISkill_OPFOR = %1";
+//      };
+//
+//      class f_param_AISkill_INDP
+//      {
+//              title = "$STR_f_param_AISkill_INDP";
+//              values[] = {0,1,2,3};
+//              texts[] = {$STR_f_param_AISkill_Option0,$STR_f_param_AISkill_Option1,$STR_f_param_AISkill_Option2,$STR_f_param_AISkill_Option3};
+//              default = 1;
+//              code = "f_param_AISkill_INDP = %1";
+//      };
 
 // ============================================================================================
 
+// F3 - Caching
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+    class f_param_caching
+    {
+        title = "Cache AI outside distance (m)";
+        values[] = {0,600,800,1000,1500,2000};
+        default = 0;
+        code = "f_param_caching = %1";
+    };
+
+// ============================================================================================
+
+// F3 - End of Params code blocks.
+// WARNING: DO NOT DELETE OR COMMENT OUT THIS CODE BLOCK
+
+};
+
+// ============================================================================================
+
+// F3 - Respawn Templates
+// Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+class CfgRespawnTemplates
+{
+    // F3 Spectator Script
+    class f_Spectator
+    {
+        onPlayerRespawn = "f_fnc_CamInit";
+    };
+
+    // F3 JIP Menu
+    class f_JIP
+    {
+        onPlayerRespawn = "f\JIP\f_JIP_playerRespawn.sqf";
+    };
+};
+
+// ============================================================================================

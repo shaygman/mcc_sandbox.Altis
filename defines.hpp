@@ -47,6 +47,15 @@
 #include "configs\dialogs\gearPanel\accessoriesPanel.hpp"
 #include "configs\dialogs\gearPanel\uniformPanel.hpp"
 
+// F3 - Menu components
+
+// Menu components for the JIP Menu
+#include "f\JIP\f_JIP_kitpicker.h"
+#include "f\JIP\f_JIP_grppicker.h"
+
+// Menu components for the Spectator Script
+#include "f\spect\config.hpp"
+
 //--------------------------Others----------------------------------------------------
 #include "bon_artillery\dialog\Artillery.hpp"
 #include "VAS\menu.hpp"
@@ -59,6 +68,9 @@
 class CfgFunctions
 {
 	#include "gaia\cfgFunctions.hpp"
+	#include "f\cfgFunctions.hpp"
+	#include "VAS\cfgfunctions.hpp"
+	#include "ais_injury\cfgFunctionsAIS.hpp"
 	#include "mcc\cfg\cfgFunctions.hpp"
 };
 
