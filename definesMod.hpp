@@ -749,7 +749,7 @@ class CfgFunctions
 		};
 	};
 
-	#include "\mcc_sandbox_mod\gaia\cfgFunctionsMod.hpp"
+	#include "\mcc_sandbox_mod\gaia\cfgFunctions.hpp"
 	#include "\mcc_sandbox_mod\f\cfgFunctions.hpp"
 
 	class VAS
