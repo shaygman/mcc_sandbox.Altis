@@ -4,26 +4,25 @@ _men = _this select 1;
 _index = _this select 2;
 _rand= random 10;
 
-if (!alive _suspect) exitWith {_suspect removeaction _index}; 
-
 if (!MCC_natureIsRuning) then
 {
-	MCC_natureIsRuning = true; 
+	uiNameSpace setVariable ["MCC_isIEDDisarming",true];  
 	if (_men distance _suspect <=10) then 
 	{
 		if (random 10 > 5) then {[[[netid _men,_men], "hands"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP} else {[[[netid _men,_men], "dontmove"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP};
+		[[2,getpos _suspect,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[(group _suspect)]],"MCC_fnc_manageWp", false, false] spawn BIS_fnc_MP;
+		_suspect doTarget _men;
+		(group _suspect) setFormDir ([_suspect,_men] call BIS_fnc_dirTo);
+		doStop _suspect;
+		
 		sleep 2;
-		if (_rand > 2) then 
+		if (_rand < (5 * ((_suspect skill "courage")+1))) then 
 		{
 			if (random 10 > 5) then {[[[netid _suspect,_suspect], "dontshot"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP} else {[[[netid _suspect,_suspect], "enough"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP};
 			removeAllWeapons _suspect;
-			[[2,getpos _suspect,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[(group _suspect)]],"MCC_fnc_manageWp", false, false] spawn BIS_fnc_MP;
-			doStop _suspect;
 			_suspect setUnitPos "DOWN";
 			_suspect setvariable ["armed",false,true];
 			sleep 1;
-			_suspect removeaction _index;
-			
 			{
 			  deleteVehicle _x;
 			} forEach attachedObjects _suspect;
@@ -36,7 +35,7 @@ if (!MCC_natureIsRuning) then
 			sleep 1;
 		};
 		
-		MCC_natureIsRuning = false;				
+		uiNameSpace setVariable ["MCC_isIEDDisarming",false]; 		
 	}
 	else {hint "To far to neutralize"};
 };

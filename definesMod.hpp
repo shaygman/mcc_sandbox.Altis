@@ -1248,16 +1248,11 @@ class CfgSounds	{
 	};
 	class disarm3
 	{
-	name = "disarm3";
-	sound[] = {"\mcc_sandbox_mod\sounds\disarm3.ogg", 1, 1};
-	titles[] = {0, ""};
+		name = "disarm3";
+		sound[] = {"\mcc_sandbox_mod\sounds\disarm3.ogg", 1, 1};
+		titles[] = {0, ""};
 	};
-	class disarm4
-	{
-	name = "disarm4";
-	sound[] = {"\mcc_sandbox_mod\sounds\disarm4.ogg", 1, 1};
-	titles[] = {0, ""};
-	};
+
 	class disarm4
 	{
 		name = "disarm4";
