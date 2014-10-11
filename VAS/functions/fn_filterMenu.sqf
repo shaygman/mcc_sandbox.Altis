@@ -1,7 +1,7 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	@version: 1.8
@@ -31,7 +31,7 @@ switch(_filter) do
 			case 4: {_data = [_filter,2] call VAS_fnc_fetchCfg; _myfilter = 2;};
 		};
 	};
-	
+
 	case "items":
 	{
 		switch(_req) do
@@ -39,7 +39,7 @@ switch(_filter) do
 			case 0: {_data = [_filter,801] call VAS_fnc_fetchCfg; _myfilter = 801;};
 			case 1: {_data = [_filter,701] call VAS_fnc_fetchCfg; _myfilter = 701;};
 			case 2: {_data = [_filter,605] call VAS_fnc_fetchCfg; _myfilter = 605;};
-			case 3: 
+			case 3:
 			{
 				_data = [_filter,[201,101,301]] call VAS_fnc_fetchCfg;
 				_myfilter = [201,101,301];
@@ -70,9 +70,11 @@ if(_return) then
 		};
 	} foreach _data;
 
+	lbSort _control;
+
 	_control = VAS_getControl(VAS_Main_Display,VAS_unit_list);
 	_info = [([] call VAS_fnc_fetchPlayerGear),_myfilter] call VAS_fnc_filter;
-			
+
 	{
 		_details = [_x] call VAS_fnc_fetchCfgDetails;
 		if(count _details > 0) then

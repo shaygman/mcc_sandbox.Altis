@@ -1,12 +1,12 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	File: fn_transferAction.sqf
 	Author: Bryan "Tonic" Boardwine
-	
+
 	Description:
 	Sends the transfer request to the selected user.
 */
