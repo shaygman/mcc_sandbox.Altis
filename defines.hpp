@@ -61,16 +61,13 @@
 #include "VAS\menu.hpp"
 #include "spectator\spectating.hpp"
 
-//---------------------------AIS Injury (Mission Only))-----------------------------------------------
-#include "ais_injury\cfgFunctionsAIS.hpp"
-
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
 {
 	#include "gaia\cfgFunctions.hpp"
 	#include "f\cfgFunctions.hpp"
 	#include "VAS\cfgfunctions.hpp"
-	#include "ais_injury\cfgFunctionsAIS.hpp"
+	#include "ais_injury\cfgFunctionsAIS.hpp"		//Mission only
 	#include "mcc\cfg\cfgFunctions.hpp"
 };
 
