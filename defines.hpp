@@ -58,6 +58,7 @@ class CfgFunctions
 	#include "gaia\cfgFunctions.hpp"
 	#include "ais_injury\cfgFunctionsAIS.hpp"		//Mission only
 	#include "mcc\cfg\cfgFunctions.hpp"
+	#include "VAS\cfgFunctions.hpp"
 };
 
 class CfgObjectCompositions

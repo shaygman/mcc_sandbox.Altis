@@ -58,6 +58,7 @@ class CfgFunctions
 {
 	#include "\mcc_sandbox_mod\gaia\cfgFunctions.hpp"
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgFunctions.hpp"
+	#include "\mcc_sandbox_mod\VAS\cfgFunctions.hpp"
 };
 
 class CfgObjectCompositions
