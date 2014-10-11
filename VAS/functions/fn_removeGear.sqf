@@ -1,7 +1,7 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	@version: 1.7
@@ -27,11 +27,11 @@ switch(_all) do
 		};
 		[] call VAS_fnc_updateLoad;
 	};
-	
+
 	case false:
 	{
 		[_data,false,false,false,false] call VAS_fnc_handleItem;
-		
+
 	};
 };
 

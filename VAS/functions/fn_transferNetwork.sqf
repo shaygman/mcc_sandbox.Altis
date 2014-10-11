@@ -1,15 +1,15 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	File: fn_transferNetwork.sqf
 	Author: Bryan "Tonic" Boardwine
-	
+
 	Description:
 	Receives information sent for a transfer request and prompts the user.
-	
+
 	STR_VAS_Transfer_Request
 */
 private["_from"];

@@ -31,11 +31,11 @@
 		["CfgMagazines"] call VAS_fnc_buildConfig;
 		["CfgVehicles"] call VAS_fnc_buildConfig;
 		["CfgGlasses"] call VAS_fnc_buildConfig;
-		
+
 		sleep 2.5;
 		if(!isNil "vas_r_weapons") then { VAS_init_complete = true; };
 	};
-	
+
 	waitUntil {!isNull player && player == player};
 	if(player diarySubjectExists "VAS")exitwith{};
 	player createDiarySubject ["VAS","Virtual Ammobox System (VAS)"];

@@ -1,13 +1,13 @@
 //Allow player to respawn with his loadout? If true unit will respawn with all ammo from initial save! Set to false to disable this and rely on other scripts!
-if (isnil "vas_onRespawn") then {vas_onRespawn = false};
+vas_onRespawn = true;
 //Preload Weapon Config?
-if (isnil "vas_preload") then {vas_preload = true};
+vas_preload = true;
 //If limiting weapons its probably best to set this to true so people aren't loading custom loadouts with restricted gear.
-if (isnil "vas_disableLoadSave") then {vas_disableLoadSave = false};
+vas_disableLoadSave = false;
 //Amount of save/load slots
-if (isnil "vas_customslots") then {vas_customslots = 9}; //9 is actually 10 slots, starts from 0 to whatever you set, so always remember when setting a number to minus by 1, i.e 12 will be 11.
+vas_customslots = 14; //14 is actually 15 slots, starts from 0 to whatever you set, so always remember when setting a number to minus by 1, i.e 12 will be 11.
 //Disable 'VAS hasn't finished loading' Check !!! ONLY RECOMMENDED FOR THOSE THAT USE ACRE AND OTHER LARGE ADDONS !!!
-if (isnil "vas_disableSafetyCheck") then {vas_disableSafetyCheck = false};
+vas_disableSafetyCheck = false;
 /*
 	NOTES ON EDITING!
 	YOU MUST PUT VALID CLASS NAMES IN THE VARIABLES IN AN ARRAY FORMAT, NOT DOING SO WILL RESULT IN BREAKING THE SYSTEM!
@@ -43,15 +43,15 @@ if (isnil "vas_disableSafetyCheck") then {vas_disableSafetyCheck = false};
 
 //If the arrays below are empty (as they are now) all weapons, magazines, items, backpacks and goggles will be available
 //Want to limit VAS to specific weapons? Place the classnames in the array!
-if (isnil "vas_weapons") then {vas_weapons = []};
+vas_weapons = [];
 //Want to limit VAS to specific magazines? Place the classnames in the array!
-if (isnil "vas_magazines") then {vas_magazines = []};
+vas_magazines = [];
 //Want to limit VAS to specific items? Place the classnames in the array!
-if (isnil "vas_items") then {vas_items = []};
+vas_items = [];
 //Want to limit backpacks? Place the classnames in the array!
-if (isnil "vas_backpacks") then {vas_backpacks = []};
+vas_backpacks = [];
 //Want to limit goggles? Place the classnames in the array!
-if (isnil "vas_glasses") then {vas_glasses = []};
+vas_glasses = [];
 
 
 /*
@@ -86,11 +86,11 @@ if (isnil "vas_glasses") then {vas_glasses = []};
 
 //Below are variables you can use to restrict certain items from being used.
 //Remove Weapon
-if (isnil "vas_r_weapons") then {vas_r_weapons = []};
-if (isnil "vas_r_backpacks") then {vas_r_backpacks = []};
+vas_r_weapons = [];
+vas_r_backpacks = [];
 //Magazines to remove from VAS
-if (isnil "vas_r_magazines") then {vas_r_magazines = []};
+vas_r_magazines = [];
 //Items to remove from VAS
-if (isnil "vas_r_items") then {vas_r_items = []};
+vas_r_items = [];
 //Goggles to remove from VAS
-if (isnil "vas_r_glasses") then {vas_r_glasses = []};
+vas_r_glasses = [];
