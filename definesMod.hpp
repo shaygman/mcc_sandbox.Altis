@@ -57,8 +57,6 @@
 class CfgFunctions
 {
 	#include "\mcc_sandbox_mod\gaia\cfgFunctions.hpp"
-	#include "\mcc_sandbox_mod\f\cfgFunctions.hpp"
-	#include "\mcc_sandbox_mod\VAS\cfgfunctions.hpp"
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgFunctions.hpp"
 };
 
@@ -80,7 +78,6 @@ class CfgSounds
 
 class CfgNotifications
 {
-	#include "\mcc_sandbox_mod\f\cfgNotifications.hpp"
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgNotifications.hpp"
 };
 

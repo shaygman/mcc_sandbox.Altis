@@ -52,13 +52,16 @@
 #include "VAS\menu.hpp"
 #include "spectator\spectating.hpp"
 
-//---------------------------AIS Injury (Mission Only))-----------------------------------------------
-#include "ais_injury\cfgFunctionsAIS.hpp"
-
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
 {
 	#include "gaia\cfgFunctions.hpp"
+<<<<<<< HEAD
+	#include "f\cfgFunctions.hpp"
+	#include "VAS\cfgfunctions.hpp"
+	#include "ais_injury\cfgFunctionsAIS.hpp"		//Mission only
+=======
+>>>>>>> parent of c6382f3... Merge pull request #25 from MikeMatrix/GAIA-Patch-3
 	#include "mcc\cfg\cfgFunctions.hpp"
 };
 
