@@ -749,7 +749,7 @@ class CfgFunctions
 		};
 	};
 
-	#include "\mcc_sandbox_mod\gaia\cfgFunctionsMod.hpp"
+	#include "\mcc_sandbox_mod\gaia\cfgFunctions.hpp"
 
 	class VAS
 	{
@@ -1191,7 +1191,7 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\suicide3.ogg", 3, 1};
 		titles[] = {};
 	};
-	
+
 	class dontshot
 	{
 	name = "dontshot";
@@ -1282,7 +1282,7 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\disarm7.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class disarmfail1
 	{
 	name = "disarmfail1";
@@ -1313,7 +1313,7 @@ class CfgSounds	{
 	sound[] = {"\mcc_sandbox_mod\sounds\disarmcrit2.ogg", 1, 1};
 	titles[] = {0, ""};
 	};
-	
+
 	//================================Misison Wizard=======================================
 	class MWName_operation
 	{
@@ -1321,7 +1321,7 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\0_operation.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	//Mission Names
 	class MWName_desert
 	{
@@ -1329,42 +1329,42 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_desert.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_oversized
 	{
 		name = "1_oversized";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_oversized.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_roguish
 	{
 		name = "1_roguish";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_roguish.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_smoldering
 	{
 		name = "1_smoldering";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_smoldering.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_cold
 	{
 		name = "1_cold";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_cold.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_flaring
 	{
 		name = "1_flaring";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_flaring.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class MWName_furious
 	{
 		name = "1_furious";
@@ -1504,7 +1504,7 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\1_foxtrot.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	//Mission Name 2
 	class MWName_storm
 	{
@@ -1590,7 +1590,7 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\missionNames\2_thorn.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	//----
 	class MWName_arrow
 	{
@@ -1695,7 +1695,7 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\1general3.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isCQB1
 	{
 		name = "2_isCQB1";
@@ -1708,56 +1708,56 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\2_isCQB2.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class infantrypresent
 	{
 		name = "3infantrypresent";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\3infantrypresent.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isVehicles
 	{
 		name = "4_vehicles";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\4_vehicles.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isArmor
 	{
 		name = "5_armor";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\5_armor.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isArtillery
 	{
 		name = "6_artillery";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\6_artillery.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isRoadblocks
 	{
 		name = "7_isRoadblocks";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\7_isRoadblocks.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isIED
 	{
 		name = "8_isIED";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\8_isIED.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isAS
 	{
 		name = "9_isAS";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\9_isAS.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isReinforcement_generic
 	{
 		name = "10_reinforcement_generic";
@@ -1782,14 +1782,14 @@ class CfgSounds	{
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\10_reinforcement3.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	class isMissiongo
 	{
 		name = "11missiongo";
 		sound[] = {"\mcc_sandbox_mod\sounds\mwSounds\11missiongo.ogg", 1, 1};
 		titles[] = {};
 	};
-	
+
 	//======================================= AC sounds================================
 	class gun1
 	{
