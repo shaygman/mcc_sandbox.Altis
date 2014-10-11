@@ -792,7 +792,7 @@ _tempText = [
 			  ["have established a foothold in the area",["general2",2.73]],
 			  ["forces are active in the area",["general3",2.2]]
 			] call BIS_fnc_selectRandom; 
-_html = _html + format ["<br/><br/><t size='0.8' color='#E2EEE0'>%1 %2.</t>",_factionName, _tempText select 0];
+_html = _html + format ["<br/><br/><t size='0.8' color='#E2EEE0'>%1 %2. </t>",_factionName, _tempText select 0];
 _html2 = format ["<br/><br/><t>%1 %2.</t>",_factionName,_tempText select 0];
 _sounds set [count _sounds, _tempText select 1];
 
@@ -800,16 +800,16 @@ _sounds set [count _sounds, _tempText select 1];
 if (_isCQB) then
 {
     _tempText = [
-	              [" and they have taken up defensive positions inside buildings.",["isCQB1",3.49]],
-				  [" and they are using civilian buildings to fortify themselves.",["isCQB2",3.69]]
+	              [" and they have taken up defensive positions inside buildings. ",["isCQB1",3.49]],
+				  [" and they are using civilian buildings to fortify themselves. ",["isCQB2",3.69]]
 				] call BIS_fnc_selectRandom; 
-    _html = _html + format ["<t size='0.8' color='#E2EEE0'> %1.</t>",_tempText];
+    _html = _html + format ["<t size='0.8' color='#E2EEE0'> %1.</t>",_tempText select 0];
 	_html2 = _html2 + format ["%1",_tempText];
 	_sounds set [count _sounds, _tempText select 1];
 };
 
 
-_html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>HQ informs us that infantry are present. </t>",_factionName];
+_html = _html + format ["<t size='0.8' color='#E2EEE0'>HQ informs us that infantry are present. </t>",_factionName];
 _sounds set [count _sounds, ["infantrypresent",3]];
 
 //_vehicles
@@ -823,7 +823,7 @@ if (_vehicles) then
 //_armor
 if (_armor) then
 {
-    _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Be aware that there may be %1 armored vehicles or even MBT's operating in the OP.</t>",_factionName];
+    _html = _html + format ["<t size='0.8' color='#E2EEE0'>Be aware that there may be %1 armored vehicles or even MBT's operating in the OP. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>Be aware that there may be %1 armored vehicles or even MBT operating in the OP.",_factionName];
 	_sounds set [count _sounds, ["isArmor",4.68]];
 };
@@ -831,7 +831,7 @@ if (_armor) then
 //Artillery
 if (_artillery != 0) then
 {
-	_html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>%1 may also have artillery operating in the area.</t>",_factionName];
+	_html = _html + format ["<t size='0.8' color='#E2EEE0'>%1 may also have artillery operating in the area. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>%1 may also have artillery operating in the area.",_factionName];
 	_sounds set [count _sounds, ["isArtillery",2.96]];
 };
@@ -839,7 +839,7 @@ if (_artillery != 0) then
 //_isRoadblocks
 if (_isRoadblocks) then
 {
-    _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>%1 forces have established hasty checkpoints on some of the roads leading in and out of the area.</t>",_factionName];
+    _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>%1 forces have established hasty checkpoints on some of the roads leading in and out of the area. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>%1 forces have established hasty checkpoints on some of the roads leading in and out of the area.",_factionName];
 	_sounds set [count _sounds, ["isRoadblocks",4.33]];
 };
@@ -847,14 +847,14 @@ if (_isRoadblocks) then
 //_isIED
 if (_isIED || _isSB) then
 {
-    _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks. </t>",_factionName];
+    _html = _html + format ["<t size='0.8' color='#E2EEE0'>Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks.",_factionName];
 	_sounds set [count _sounds, ["isIED",6.4]];
 };
 //_isAS
 if (_isAS) then
 {
-    _html = _html + format ["<t size='0.8' color='#E2EEE0'>The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass don't want to draw unnecessary attention.</t>",_factionName];
+    _html = _html + format ["<t size='0.8' color='#E2EEE0'>The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass don't want to draw unnecessary attention. </t>",_factionName];
 	_html2 = _html2 + format ["The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass do not want to draw unnecessary attention.",_factionName];
 	_sounds set [count _sounds, ["isAS",10.77]];
 };
@@ -891,11 +891,11 @@ if (_reinforcement in [1,2,3] || _stealth) then
 			};
 			
 
-	_html = _html +"<br/><t size='0.8' color='#E2EEE0'>The enemy have" + _text + "QRF forces nearby. Expect enemy reinforcements should they become aware of your presence.</t>";
+	_html = _html +"<br/><t size='0.8' color='#E2EEE0'>The enemy have" + _text + "QRF forces nearby. Expect enemy reinforcements should they become aware of your presence. </t>";
 	_html2 = _html2 +"<br/>The enemy have" + _text + "QRF forces nearby. Expect enemy reinforcements should they become aware of your presence.";
 };
 
-_html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Go over your objectives, gear up and get ready.<br/>Mission is a go!</t>",_factionName];
+_html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Go over your objectives, gear up and get ready. Mission is a go!</t>",_factionName];
 _sounds set [count _sounds, ["isMissiongo",6.2]];
 
 if (_playMusic in [0,1] ) then

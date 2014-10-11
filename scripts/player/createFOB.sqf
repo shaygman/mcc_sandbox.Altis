@@ -15,4 +15,4 @@ _side	= str (side _caller);
 deleteVehicle _item;
 waituntil {isnull _item};
 
-[[_pos,_dir, _side, "FOB" ,true, true], "CP_fnc_buildSpawnPoint", false, false] call BIS_fnc_MP;  
+[[_pos,_dir, _side, "FOB" ,true, true], "MCC_fnc_buildSpawnPoint", false, false] call BIS_fnc_MP;  

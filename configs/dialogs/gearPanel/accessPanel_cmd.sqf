@@ -43,4 +43,4 @@ switch (_cmd) do
 		};
 
 	};
-[CP_classesIndex,0] call CP_fnc_setGear; 
+[CP_classesIndex,0] call MCC_fnc_setGear; 

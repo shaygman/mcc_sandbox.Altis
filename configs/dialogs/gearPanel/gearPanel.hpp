@@ -117,7 +117,7 @@ class CP_GEARPANEL {
 		w = 0.25 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[0,0] call CP_fnc_setGear");
+		action = __EVAL("[0,0] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelAR: CP_RscButton
 	{
@@ -128,7 +128,7 @@ class CP_GEARPANEL {
 		w = 0.25 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[1,0] call CP_fnc_setGear");
+		action = __EVAL("[1,0] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelRifleman: CP_RscButton
 	{
@@ -139,7 +139,7 @@ class CP_GEARPANEL {
 		w = 0.25 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[2,0] call CP_fnc_setGear");
+		action = __EVAL("[2,0] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelAntitank: CP_RscButton
 	{
@@ -150,7 +150,7 @@ class CP_GEARPANEL {
 		w = 0.25 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[3,0] call CP_fnc_setGear");
+		action = __EVAL("[3,0] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelCorpsman: CP_RscButton
 	{
@@ -161,7 +161,7 @@ class CP_GEARPANEL {
 		w = 0.25 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[4,0] call CP_fnc_setGear");
+		action = __EVAL("[4,0] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelMarksman: CP_RscButton
 	{
@@ -172,7 +172,7 @@ class CP_GEARPANEL {
 		w = 0.25 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[5,0] call CP_fnc_setGear");
+		action = __EVAL("[5,0] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelSpecialist: CP_RscButton
 	{
@@ -183,7 +183,7 @@ class CP_GEARPANEL {
 		w = 0.25 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[6,0] call CP_fnc_setGear");
+		action = __EVAL("[6,0] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelCrewman: CP_RscButton
 	{
@@ -194,7 +194,7 @@ class CP_GEARPANEL {
 		w = 0.25 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[7,0] call CP_fnc_setGear");
+		action = __EVAL("[7,0] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelPilot: CP_RscButton
 	{
@@ -205,7 +205,7 @@ class CP_GEARPANEL {
 		w = 0.25 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[8,0] call CP_fnc_setGear");
+		action = __EVAL("[8,0] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelCommanderGear: CP_RscButtonMenu
 	{
@@ -216,7 +216,7 @@ class CP_GEARPANEL {
 		w = 0.08 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[0,1] call CP_fnc_setGear");
+		action = __EVAL("[0,1] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelCommanderUni: CP_RscButtonMenu
 	{
@@ -228,7 +228,7 @@ class CP_GEARPANEL {
 		h = 0.0439828 * safezoneH;
 		colorBackground[] = {1,0,0,0.3};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[0,2] call CP_fnc_setGear");
+		action = __EVAL("[0,2] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelARGear: CP_RscButtonMenu
 	{
@@ -239,7 +239,7 @@ class CP_GEARPANEL {
 		w = 0.08 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[1,1] call CP_fnc_setGear");
+		action = __EVAL("[1,1] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelRiflemanGear: CP_RscButtonMenu
 	{
@@ -250,7 +250,7 @@ class CP_GEARPANEL {
 		w = 0.08 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[2,1] call CP_fnc_setGear");
+		action = __EVAL("[2,1] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelAntitankGear: CP_RscButtonMenu
 	{
@@ -261,7 +261,7 @@ class CP_GEARPANEL {
 		w = 0.08 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[3,1] call CP_fnc_setGear");
+		action = __EVAL("[3,1] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelCorpsmanGear: CP_RscButtonMenu
 	{
@@ -272,7 +272,7 @@ class CP_GEARPANEL {
 		w = 0.08 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[4,1] call CP_fnc_setGear");
+		action = __EVAL("[4,1] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelMarksmanGear: CP_RscButtonMenu
 	{
@@ -283,7 +283,7 @@ class CP_GEARPANEL {
 		w = 0.08 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[5,1] call CP_fnc_setGear");
+		action = __EVAL("[5,1] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelSpecialistGear: CP_RscButtonMenu
 	{
@@ -294,7 +294,7 @@ class CP_GEARPANEL {
 		w = 0.08 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[6,1] call CP_fnc_setGear");
+		action = __EVAL("[6,1] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelCrewmanGear: CP_RscButtonMenu
 	{
@@ -305,7 +305,7 @@ class CP_GEARPANEL {
 		w = 0.08 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[7,1] call CP_fnc_setGear");
+		action = __EVAL("[7,1] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelPilotGear: CP_RscButtonMenu
 	{
@@ -316,7 +316,7 @@ class CP_GEARPANEL {
 		w = 0.08 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[8,1] call CP_fnc_setGear");
+		action = __EVAL("[8,1] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelARUni: CP_RscButtonMenu
 	{
@@ -328,7 +328,7 @@ class CP_GEARPANEL {
 		h = 0.0439828 * safezoneH;
 		colorBackground[] = {1,0,0,0.3};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[1,2] call CP_fnc_setGear");
+		action = __EVAL("[1,2] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelRiflemanUni: CP_RscButtonMenu
 	{
@@ -340,7 +340,7 @@ class CP_GEARPANEL {
 		h = 0.0439828 * safezoneH;
 		colorBackground[] = {1,0,0,0.3};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[2,2] call CP_fnc_setGear");
+		action = __EVAL("[2,2] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelAntitankUni: CP_RscButtonMenu
 	{
@@ -352,7 +352,7 @@ class CP_GEARPANEL {
 		h = 0.0439828 * safezoneH;
 		colorBackground[] = {1,0,0,0.3};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[3,2] call CP_fnc_setGear");
+		action = __EVAL("[3,2] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelCorpsmanUni: CP_RscButtonMenu
 	{
@@ -364,7 +364,7 @@ class CP_GEARPANEL {
 		h = 0.0439828 * safezoneH;
 		colorBackground[] = {1,0,0,0.3};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[4,2] call CP_fnc_setGear");
+		action = __EVAL("[4,2] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelMarksmanUni: CP_RscButtonMenu
 	{
@@ -376,7 +376,7 @@ class CP_GEARPANEL {
 		h = 0.0439828 * safezoneH;
 		colorBackground[] = {1,0,0,0.3};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[5,2] call CP_fnc_setGear");
+		action = __EVAL("[5,2] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelSpecialistUni: CP_RscButtonMenu
 	{
@@ -388,7 +388,7 @@ class CP_GEARPANEL {
 		h = 0.0439828 * safezoneH;
 		colorBackground[] = {1,0,0,0.3};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[6,2] call CP_fnc_setGear");
+		action = __EVAL("[6,2] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelCrewmanUni: CP_RscButtonMenu
 	{
@@ -400,7 +400,7 @@ class CP_GEARPANEL {
 		h = 0.0439828 * safezoneH;
 		colorBackground[] = {1,0,0,0.3};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[7,2] call CP_fnc_setGear");
+		action = __EVAL("[7,2] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelPilotUni: CP_RscButtonMenu
 	{
@@ -412,7 +412,7 @@ class CP_GEARPANEL {
 		h = 0.0439828 * safezoneH;
 		colorBackground[] = {1,0,0,0.3};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[8,2] call CP_fnc_setGear");
+		action = __EVAL("[8,2] call MCC_fnc_setGear");
 	};
 	class CP_gearPanelPiP: CP_RscPicture
 	{

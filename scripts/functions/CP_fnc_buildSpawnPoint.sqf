@@ -1,6 +1,6 @@
-//==================================================================CP_fnc_buildSpawnPoint======================================================================================
+//==================================================================MCC_fnc_buildSpawnPoint======================================================================================
 //Create a spawn point to the given side - SERVER ONLY
-// Example: [[pos, dir, side,size,destructable], "CP_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP;
+// Example: [[pos, dir, side,size,destructable], "MCC_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP;
 // pos: Array, position
 // dir; number, direction 
 // side: string, "west", "east" or "RESISTANCE"

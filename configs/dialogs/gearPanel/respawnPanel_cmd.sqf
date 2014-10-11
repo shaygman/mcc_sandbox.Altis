@@ -206,7 +206,7 @@ switch (_cmd) do
 		
 		case 2:				//Change role
 		{ 
-			[(lbCurSel CP_respawnPanelRoleCombo),0] call CP_fnc_setGear; 
+			[(lbCurSel CP_respawnPanelRoleCombo),0] call MCC_fnc_setGear; 
 			[CP_gearPanelPiP] call MCC_fnc_pipOpen;
 			CP_gearPanelPiP ctrlSetText "#(argb,512,512,1)r2t(rendertarget7,1.0);";
 			

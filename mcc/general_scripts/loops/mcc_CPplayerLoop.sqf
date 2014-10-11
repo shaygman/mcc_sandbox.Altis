@@ -97,10 +97,10 @@ while {true} do
 		if (CP_activated) then 
 		{
 			//Check if in vehicle
-			[] call CP_fnc_allowedDrivers;
+			[] call MCC_fnc_allowedDrivers;
 			
 			//Check if allowed weapons
-			[] call CP_fnc_allowedWeapons;			
+			[] call MCC_fnc_allowedWeapons;			
 			
 			//Manage XP
 			if (CP_gainXP) then
@@ -146,7 +146,7 @@ while {true} do
 						if (CP_debug) then {player sidechat format ["level: %1",_level]};
 						
 						missionNameSpace setVariable [format ["%1Level",_role], _level]; 
-						[[format ["%1Level",_role], player, _level, "ARRAY"], "CP_fnc_setVariable", false, false] spawn BIS_fnc_MP;
+						[[format ["%1Level",_role], player, _level, "ARRAY"], "MCC_fnc_setVariable", false, false] spawn BIS_fnc_MP;
 					};
 				};
 				
