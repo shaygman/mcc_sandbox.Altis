@@ -4,7 +4,11 @@ class GAIA
 
     class Cache
     {
+        #ifdef MCCMODE
+        file = "\mcc_sandbox_mod\gaia\functions\cache";
+        #else
         file = "gaia\functions\cache";
+        #endif
 
         class cache {};
         class cacheFar {};
@@ -19,7 +23,11 @@ class GAIA
 
     class General
     {
+        #ifdef MCCMODE
+        file = "\mcc_sandbox_mod\gaia\functions\general";
+        #else
         file = "gaia\functions\general";
+        #endif
 
         class controlGroup {};
         class findClosestPosition {};
@@ -41,7 +49,11 @@ class GAIA
 
     class Control
     {
+        #ifdef MCCMODE
+        file = "\mcc_sandbox_mod\gaia\functions\control";
+        #else
         file = "gaia\functions\control";
+        #endif
 
         class addAttackWaypoint {};
         class addWaypoint {};
@@ -73,7 +85,11 @@ class GAIA
 
     class Orders
     {
+        #ifdef MCCMODE
+        file = "\mcc_sandbox_mod\gaia\functions\control\orders";
+        #else
         file = "gaia\functions\control\orders";
+        #endif
 
         class doArtillery {};
         class doAttack {};
@@ -112,7 +128,11 @@ class GAIA
 
     class Fortify
     {
+        #ifdef MCCMODE
+        file = "\mcc_sandbox_mod\gaia\functions\control\fortify";
+        #else
         file = "gaia\functions\control\fortify";
+        #endif
 
         class taskDefend {};
     };
