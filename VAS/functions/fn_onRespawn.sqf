@@ -1,14 +1,14 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	File: fn_onRespawn.sqf
 	Author: Bryan "Tonic" Boardwine
-	
+
 	Description:
-	Used for 'Load On Respawn', if no selection was found it will remove the 
+	Used for 'Load On Respawn', if no selection was found it will remove the
 	current respawn handler if it exists.
 */
 VAS_slot = lbCurSel VAS_load_list;

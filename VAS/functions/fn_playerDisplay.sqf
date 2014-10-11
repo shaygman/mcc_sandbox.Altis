@@ -1,7 +1,7 @@
 #ifdef MCCMODE
- #include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
+	#include "\mcc_sandbox_mod\VAS\functions\macro.sqf"
 #else
- #include "macro.sqf"
+	#include "macro.sqf"
 #endif
 /*
 	@version: 1.2
