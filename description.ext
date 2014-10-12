@@ -1,3 +1,5 @@
+#define MCCPATH ""
+
 #include "defines.hpp"
 
 author = Shay_gman & Spirit;
@@ -13,8 +15,8 @@ disabledAI   = 1;
 
 //----- For PvP ---------
 //disableChannels[]={0,6};
-joinUnassigned = 1;	
-	
+joinUnassigned = 1;
+
 corpseLimit = 30;
 corpseRemovalMinTime = 60;
 corpseRemovalMaxTime = 300;
@@ -47,7 +49,7 @@ class Params
                 texts[] = {"Off","On"};
                 default = 0;
                 code = "f_var_debugMode = %1";
-        }; 
+        };
 
 // ============================================================================================
 
@@ -62,8 +64,8 @@ class Params
                 texts[] = {"Off","Light","Heavy"};
                 default = 1;
                 code = "f_param_backpacks = %1";
-        }; 
-		
+        };
+
 		 class f_param_divers
         {
                 title = "SF Uniform";
@@ -71,8 +73,8 @@ class Params
                 texts[] = {"Recon","Divers","Ghillie Suit","Night Ops"};
                 default = 0;
                 code = "f_param_divers = %1";
-        }; 
-		
+        };
+
 		class f_param_nightvision
         {
                 title = "Night Vision";
@@ -80,7 +82,7 @@ class Params
                 texts[] = {"Off","On"};
                 default = 1;
                 code = "f_param_nightvision = %1";
-        }; 
+        };
 
 // ============================================================================================
 
@@ -94,7 +96,7 @@ class Params
                 texts[] = {$STR_f_param_timeOfDay_Option0,$STR_f_param_timeOfDay_Option1,$STR_f_param_timeOfDay_Option2,$STR_f_param_timeOfDay_Option3,$STR_f_param_timeOfDay_Option4,$STR_f_param_timeOfDay_Option5,$STR_f_param_timeOfDay_Option6,$STR_f_param_timeOfDay_Option7};
                 default = 3;
                 code = "f_param_timeOfDay = %1";
-        };   
+        };
 };
 
 

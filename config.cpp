@@ -1,3 +1,8 @@
+#define MCCMODE
+#define MCCPATH "\mcc_sandbox_mod\"
+
+#include "\mcc_sandbox_mod\defines.hpp"
+
 class CfgPatches {
 
 	class mcc_sandbox 
@@ -62,8 +67,6 @@ class CfgMissions
 		};
 	};
 };
-
-#include "\mcc_sandbox_mod\definesMod.hpp"
 
 class RscMapControl;
 class RscText;

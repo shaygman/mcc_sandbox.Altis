@@ -1,21 +1,21 @@
 class CP_WEAPONSPANEL {
 	  idd = -1;
 	  movingEnable = false;
-	  onLoad =  __EVAL("_this execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_init.sqf'");
-	  
-	  controlsBackground[] = 
+	  onLoad =  __EVAL("_this execVM '"+MCCPATH+"configs\dialogs\gearPanel\weaponsPanel_init.sqf'");
+
+	  controlsBackground[] =
 	  {
 		CP_respawnPanelBckg,
 		CP_sglogo
 	  };
-	  
+
 
 	  //---------------------------------------------
-	  objects[] = 
-	  { 
+	  objects[] =
+	  {
 	  };
-	  
-	  controls[] = 
+
+	  controls[] =
 	  {
 		CP_weaponsPanelBackButton,
 		CP_weaponsPanelPrimary,
@@ -46,7 +46,7 @@ class CP_WEAPONSPANEL {
 		w = 0.0973958 * safezoneW;
 		h = 0.0439827 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\switchDialog.sqf'");
+		action = __EVAL("[2] execVM '"+MCCPATH+"configs\dialogs\switchDialog.sqf'");
 	};
 	class CP_respawnPanelBckg: CP_RscText
 	{
@@ -67,7 +67,7 @@ class CP_WEAPONSPANEL {
 		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		onLBSelChanged = __EVAL("[0] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
+		onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
 	class CP_weaponsPanelPrimaryAccessories: CP_RscButtonMenu
 	{
@@ -78,7 +78,7 @@ class CP_WEAPONSPANEL {
 		w = 0.199999 * safezoneW;
 		h = 0.0219914 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.3)";
-		action = __EVAL("[3] execVM '"+CPPATH+"configs\dialogs\switchDialog.sqf'");
+		action = __EVAL("[3] execVM '"+MCCPATH+"configs\dialogs\switchDialog.sqf'");
 	};
 	class CP_weaponsPanelSecondary: CP_RscCombo
 	{
@@ -90,7 +90,7 @@ class CP_WEAPONSPANEL {
 		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		onLBSelChanged = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
+		onLBSelChanged = __EVAL("[1] execVM '"+MCCPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
 	class CP_weaponsPanelHandgun: CP_RscCombo
 	{
@@ -102,7 +102,7 @@ class CP_WEAPONSPANEL {
 		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		onLBSelChanged = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
+		onLBSelChanged = __EVAL("[2] execVM '"+MCCPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
 	class CP_weaponsPanelItem1: CP_RscCombo
 	{
@@ -114,7 +114,7 @@ class CP_WEAPONSPANEL {
 		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		onLBSelChanged = __EVAL("[3] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
+		onLBSelChanged = __EVAL("[3] execVM '"+MCCPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
 	class CP_weaponsPanelItem2: CP_RscCombo
 	{
@@ -126,7 +126,7 @@ class CP_WEAPONSPANEL {
 		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		onLBSelChanged = __EVAL("[4] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
+		onLBSelChanged = __EVAL("[4] execVM '"+MCCPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
 	class CP_weaponsPanelItem3: CP_RscCombo
 	{
@@ -138,7 +138,7 @@ class CP_WEAPONSPANEL {
 		h = 0.0680031 * safezoneH;
 		colorBackground[] = {0,0,0,0.8};
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		onLBSelChanged = __EVAL("[5] execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
+		onLBSelChanged = __EVAL("[5] execVM '"+MCCPATH+"configs\dialogs\gearPanel\weaponsPanel_cmd.sqf'");
 	};
 	class CP_PrimaryTittle: CP_RscText
 	{
@@ -221,10 +221,10 @@ class CP_WEAPONSPANEL {
 		y = 0.291081 * safezoneH + safezoneY;
 		w = 0.250521 * safezoneW;
 		h = 0.47 * safezoneH;
-		onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
-		onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
-		onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
-		onMouseButtonUp = __EVAL("['MouseButtonUp',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+		onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+		onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+		onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+		onMouseButtonUp = __EVAL("['MouseButtonUp',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 	};
 	class CP_InfoText: CP_RscStructuredText
 	{
@@ -243,7 +243,7 @@ class CP_WEAPONSPANEL {
 		y = 0.0409789 * safezoneH + safezoneY;
 		w = 0.492927 * safezoneW;
 		h = 0.153007 * safezoneH;
-		text = __EVAL(CPPATH+"configs\data\chockpoints.paa");
+		text = __EVAL(MCCPATH+"configs\data\chockpoints.paa");
 	};
 	class CP_sglogo: CP_RscPicture
 	{
@@ -252,7 +252,7 @@ class CP_WEAPONSPANEL {
 		y = 0.65 * safezoneH + safezoneY;
 		w = 0.114583 * safezoneW;
 		h = 0.142944 * safezoneH;
-		text = __EVAL(CPPATH+"configs\data\sgLogo.paa");
+		text = __EVAL(MCCPATH+"configs\data\sgLogo.paa");
 		colorText[] = {1,1,1,1.8};
 	};
 };

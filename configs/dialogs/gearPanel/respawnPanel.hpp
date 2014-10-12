@@ -1,22 +1,22 @@
 class CP_RESPAWNPANEL {
 	  idd = -1;
 	  movingEnable = false;
-	  onLoad =  __EVAL("_this execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_init.sqf'");
-	  
-	  controlsBackground[] = 
+	  onLoad =  __EVAL("_this execVM '"+MCCPATH+"configs\dialogs\gearPanel\respawnPanel_init.sqf'");
+
+	  controlsBackground[] =
 	  {
 	  	  CP_respawnPanelBckg,
 		  CP_tittle,
 		  CP_sglogo
 	  };
-	  
+
 
 	  //---------------------------------------------
-	  objects[] = 
-	  { 
+	  objects[] =
+	  {
 	  };
-	  
-	  controls[] = 
+
+	  controls[] =
 	  {
 		CP_exitButton,
 		CP_respawnPanelButton,
@@ -39,7 +39,7 @@ class CP_RESPAWNPANEL {
 		CP_side3,
 		CP_side3Score,
 		MCC_ResourcesControlsGroup,
-		CP_RscMainXPUI		
+		CP_RscMainXPUI
 	  };
 		class CP_exitButton: CP_RscButtonMenu
 		{
@@ -74,7 +74,7 @@ class CP_RESPAWNPANEL {
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			action = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\switchDialog.sqf'");
+			action = __EVAL("[1] execVM '"+MCCPATH+"configs\dialogs\switchDialog.sqf'");
 		};
 		class CP_gearPanelButton: CP_RscButtonMenu
 		{
@@ -86,7 +86,7 @@ class CP_RESPAWNPANEL {
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			action = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\switchDialog.sqf'");
+			action = __EVAL("[2] execVM '"+MCCPATH+"configs\dialogs\switchDialog.sqf'");
 		};
 		class CP_respawnPointsList: CP_RscListbox
 		{
@@ -97,7 +97,7 @@ class CP_RESPAWNPANEL {
 			h = 0.373854 * safezoneH;
 			colorBackground[] = {0,0,0,0.8};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			onLBSelChanged = __EVAL("[0] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
+			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
 		};
 		class CP_deployPanelMiniMap: CP_RscMapControl
 		{
@@ -113,14 +113,14 @@ class CP_RESPAWNPANEL {
 			idc = 32;
 			text = "Deploy"; //--- ToDo: Localize;
 			colorBackground[] = {1,0,0,0.3};
-			
+
 			x = 0.505729 * safezoneW + safezoneX;
 			y = 0.741906 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			tooltip = "Press Deploy to get into the action"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			action = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
+			action = __EVAL("[1] execVM '"+MCCPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
 		};
 		class CP_respawnPanelRoleTittle: CP_RscText
 		{
@@ -141,7 +141,7 @@ class CP_RESPAWNPANEL {
 			h = 0.0439828 * safezoneH;
 			tooltip = "Select your role in the battlefield"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			onLBSelChanged = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
+			onLBSelChanged = __EVAL("[2] execVM '"+MCCPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
 		};
 		class CP_respawnPanelBckg: CP_RscText
 		{
@@ -179,10 +179,10 @@ class CP_RESPAWNPANEL {
 			y = 0.291081 * safezoneH + safezoneY;
 			w = 0.275 * safezoneW;
 			h = 0.46182 * safezoneH;
-			onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
-			onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
-			onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
-			onMouseButtonUp = __EVAL("['MouseButtonUp',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseButtonUp = __EVAL("['MouseButtonUp',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 		};
 		class CP_InfoText: CP_RscText
 		{
@@ -200,7 +200,7 @@ class CP_RESPAWNPANEL {
 			y = 0.0409789 * safezoneH + safezoneY;
 			w = 0.492927 * safezoneW;
 			h = 0.153007 * safezoneH;
-			text = __EVAL(CPPATH+"configs\data\chockpoints.paa");
+			text = __EVAL(MCCPATH+"configs\data\chockpoints.paa");
 			colorText[] = {1,1,1,1.8};
 		};
 		class CP_sglogo: CP_RscPicture
@@ -210,10 +210,10 @@ class CP_RESPAWNPANEL {
 			y = 0.65 * safezoneH + safezoneY;
 			w = 0.114583 * safezoneW;
 			h = 0.142944 * safezoneH;
-			text = __EVAL(CPPATH+"configs\data\sgLogo.paa");
+			text = __EVAL(MCCPATH+"configs\data\sgLogo.paa");
 			colorText[] = {1,1,1,1.8};
 		};
-		
+
 		class CP_flag: CP_RscPicture
 		{
 			idc = 20;
@@ -228,7 +228,7 @@ class CP_RESPAWNPANEL {
 			idc = 21;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			colorText[] = {0,1,1,1};
-			
+
 			x = 0.711979 * safezoneW + safezoneX;
 			y = 0.214111 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -238,7 +238,7 @@ class CP_RESPAWNPANEL {
 		{
 			idc = 22;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			
+
 			x = 0.711979 * safezoneW + safezoneX;
 			y = 0.240501 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -249,7 +249,7 @@ class CP_RESPAWNPANEL {
 			idc = 23;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			colorText[] = {0,1,1,1};
-			
+
 			x = 0.757813 * safezoneW + safezoneX;
 			y = 0.214111 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -259,7 +259,7 @@ class CP_RESPAWNPANEL {
 		{
 			idc = 24;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			
+
 			x = 0.757813 * safezoneW + safezoneX;
 			y = 0.240501 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -270,7 +270,7 @@ class CP_RESPAWNPANEL {
 			idc = 25;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			colorText[] = {0,1,1,1};
-			
+
 			x = 0.803646 * safezoneW + safezoneX;
 			y = 0.214111 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -280,13 +280,13 @@ class CP_RESPAWNPANEL {
 		{
 			idc = 26;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			
+
 			x = 0.803646 * safezoneW + safezoneX;
 			y = 0.240501 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
-		
+
 		class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = 80;
@@ -355,7 +355,7 @@ class CP_RESPAWNPANEL {
 				};
 			};
 		};
-		
+
 		class CP_RscMainXPUI: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = 101;
@@ -373,7 +373,7 @@ class CP_RESPAWNPANEL {
 					h = "6 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 					colorBackground[] = {0,0,0,0.4};
 				}
-				
+
 				class messeges: MCC_RscStructuredText
 				{
 					idc =102;
@@ -383,7 +383,7 @@ class CP_RESPAWNPANEL {
 					w = "20 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
 					h = "2 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 				};
-				
+
 				class XPTitle: MCC_RscText
 				{
 					idc =103;
@@ -393,7 +393,7 @@ class CP_RESPAWNPANEL {
 					w = "2 * 			(			((safezoneW / safezoneH) min 1.2) / 60)";
 					h = "1 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 				};
-				
+
 				class XPValue: MCC_RscProgress
 				{
 					idc = 104;

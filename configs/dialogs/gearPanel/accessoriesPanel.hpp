@@ -1,22 +1,22 @@
 class CP_ACCESPANEL {
 	  idd = -1;
 	  movingEnable = false;
-	  onLoad =  __EVAL("_this execVM '"+CPPATH+"configs\dialogs\gearPanel\accessPanel_init.sqf'");
-	  
-	  controlsBackground[] = 
+	  onLoad =  __EVAL("_this execVM '"+MCCPATH+"configs\dialogs\gearPanel\accessPanel_init.sqf'");
+
+	  controlsBackground[] =
 	  {
 		CP_respawnPanelBckg,
 		CP_tittle,
 		CP_sglogo
 	  };
-	  
+
 
 	  //---------------------------------------------
-	  objects[] = 
-	  { 
+	  objects[] =
+	  {
 	  };
-	  
-	  controls[] = 
+
+	  controls[] =
 	  {
 		CP_uniformPanelBackButton,
 		CP_accessoriesPanelOptics,
@@ -39,7 +39,7 @@ class CP_ACCESPANEL {
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			action = __EVAL("[4] execVM '"+CPPATH+"configs\dialogs\switchDialog.sqf'");
+			action = __EVAL("[4] execVM '"+MCCPATH+"configs\dialogs\switchDialog.sqf'");
 		};
 		class CP_respawnPanelBckg: CP_RscText
 		{
@@ -59,7 +59,7 @@ class CP_ACCESPANEL {
 			w = 0.300001 * safezoneW;
 			h = 0.0879658 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			onLBSelChanged = __EVAL("[0] execVM '"+CPPATH+"configs\dialogs\gearPanel\accessPanel_cmd.sqf'");
+			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"configs\dialogs\gearPanel\accessPanel_cmd.sqf'");
 		};
 		class CP_accessoriesPanelBarrel: CP_RscCombo
 		{
@@ -70,7 +70,7 @@ class CP_ACCESPANEL {
 			w = 0.300001 * safezoneW;
 			h = 0.0879658 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			onLBSelChanged = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\gearPanel\accessPanel_cmd.sqf'");
+			onLBSelChanged = __EVAL("[1] execVM '"+MCCPATH+"configs\dialogs\gearPanel\accessPanel_cmd.sqf'");
 		};
 		class CP_accessoriesPanelAttachment: CP_RscCombo
 		{
@@ -81,7 +81,7 @@ class CP_ACCESPANEL {
 			w = 0.300001 * safezoneW;
 			h = 0.0879658 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			onLBSelChanged = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\gearPanel\accessPanel_cmd.sqf'");
+			onLBSelChanged = __EVAL("[2] execVM '"+MCCPATH+"configs\dialogs\gearPanel\accessPanel_cmd.sqf'");
 		};
 		class CP_opticsTittle: CP_rscText
 		{
@@ -132,10 +132,10 @@ class CP_ACCESPANEL {
 			y = 0.291081 * safezoneH + safezoneY;
 			w = 0.250521 * safezoneW;
 			h = 0.47 * safezoneH;
-			onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
-			onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
-			onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
-			onMouseButtonUp = __EVAL("['MouseButtonUp',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
+			onMouseButtonUp = __EVAL("['MouseButtonUp',_this] execVM '"+MCCPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 		};
 		class CP_InfoText: CP_RscStructuredText
 		{
@@ -154,7 +154,7 @@ class CP_ACCESPANEL {
 			y = 0.0409789 * safezoneH + safezoneY;
 			w = 0.492927 * safezoneW;
 			h = 0.153007 * safezoneH;
-			text = __EVAL(CPPATH+"configs\data\chockpoints.paa");
+			text = __EVAL(MCCPATH+"configs\data\chockpoints.paa");
 		};
 		class CP_sglogo: CP_RscPicture
 		{
@@ -163,7 +163,7 @@ class CP_ACCESPANEL {
 			y = 0.65 * safezoneH + safezoneY;
 			w = 0.114583 * safezoneW;
 			h = 0.142944 * safezoneH;
-			text = __EVAL(CPPATH+"configs\data\sgLogo.paa");
+			text = __EVAL(MCCPATH+"configs\data\sgLogo.paa");
 			colorText[] = {1,1,1,1.8};
 		};
 };
