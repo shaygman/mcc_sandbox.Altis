@@ -1,6 +1,9 @@
 Change log r10:
-- Added: Interaction with ST Flashbang.
-- Added: Zip cuff restrained AI.
+- Added  : Interaction with ST Flashbang.
+- Added  : Zip cuff restrained AI.
+- Fixed  : Delayed Spawn and Caching working on dedicated server.
+- Fixed  : Blacklisting of known locations referred old function instead of CfgFunction
+- Changed: Refactored GAIA to use CfgFunctions (by MikeMatrix)
 
 Change log r9:
 General:

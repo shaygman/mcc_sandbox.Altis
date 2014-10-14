@@ -525,7 +525,7 @@ _StartTimeIssueOrders = time;
 						_GroupBusy				=	((_x getVariable  ["GAIA_Order",""]) in ["DoAttack","DoClear"]) ;
 
 						//Is somebody already moving over there?
-						_SpotIsBeingCleared				= [_SpotPos,_side] call fnc_isblacklisted;
+						_SpotIsBeingCleared				= [_SpotPos,_side] call GAIA_fnc_isBlacklisted;
 
 						//The dude should be hiding outside a CA (or we will already attack it)
 						_SpotIsOutsideCA					= !((count([_CA, {(_x distance (_SpotPos)<100)}] call BIS_fnc_conditionalSelect))>0);
