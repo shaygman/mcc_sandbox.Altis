@@ -1928,3 +1928,64 @@ class MCC_woosh
 	sound[] = {"mcc\sounds\woosh.ogg", 1, 1};
 	#endif
 };
+
+//--------wind
+class MCC_wind0
+{
+	name = "MCC_wind0";
+	titles[] = {};
+	
+	#ifdef MCCMODE
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind0.ogg", 0.5, 0.5};
+	#else
+	sound[] = {"mcc\sounds\wind0.ogg", 0.5, 0.5};
+	#endif
+};
+
+class MCC_wind1
+{
+	name = "MCC_wind1";
+	titles[] = {};
+	
+	#ifdef MCCMODE
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind0.5.ogg", 0.5, 0.5};
+	#else
+	sound[] = {"mcc\sounds\wind0.5.ogg", 0.5, 0.5};
+	#endif
+};
+
+class MCC_wind2
+{
+	name = "MCC_wind2";
+	titles[] = {};
+	
+	#ifdef MCCMODE
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind2.ogg", 0.5, 0.5};
+	#else
+	sound[] = {"mcc\sounds\wind2.ogg", 0.5, 0.5};
+	#endif
+};
+
+class MCC_wind3
+{
+	name = "MCC_wind0";
+	titles[] = {};
+	
+	#ifdef MCCMODE
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind3.ogg", 0.5, 0.5};
+	#else
+	sound[] = {"mcc\sounds\wind3.ogg", 0.5, 0.5};
+	#endif
+};
+
+class MCC_zip
+{
+	name = "MCC_zip";
+	titles[] = {};
+	
+	#ifdef MCCMODE
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\zip.ogg", 1, 1};
+	#else
+	sound[] = {"mcc\sounds\zip.ogg", 1, 1};
+	#endif
+};

@@ -52,8 +52,10 @@ _time = time + (2 + random 5);
 if (dialog && !MCC_ACConsoleUp) then {
 		ctrlSetText [MCC_CONSOLE_AC_BCKG, "Error connecting to AC-130, connection failed"];
 		};
-		
-if (dialog && MCC_ACConsoleUp) then {				//Create the AC
+
+//Create the AC		
+if (dialog && MCC_ACConsoleUp) then 
+{				
 		//Get rid of the connecting text
 		ctrlSetText [MCC_CONSOLE_AC_BCKG, ""];
 		_control = _mccdialog displayCtrl MCC_CONSOLE_ACPIP;
@@ -132,7 +134,8 @@ if (dialog && MCC_ACConsoleUp) then {				//Create the AC
 		ctrlShow [MCC_CONSOLE_AC_MAP,true];
 		
 		//Handle on screen data
-		[] spawn {
+		[] spawn 
+		{
 			private ["_structured","_data","_mccdialog"];
 			disableSerialization;
 			
@@ -143,7 +146,7 @@ if (dialog && MCC_ACConsoleUp) then {				//Create the AC
 				_data = 
 					[
 					format ["Time: %1:%2",[date select 3]call MCC_fnc_time2string,[date select 4]call MCC_fnc_time2string],
-					format ["Elapsed: %1",[time]call MCC_fnc_time],
+					format ["Remain: %1",[MCC_ConsoleACTime -(time - (missionNameSpace getVariable ["MCC_ConsoleACTimeStart",0]))] call MCC_fnc_time],
 					format ["X: %1 Y: %2",floor ((getpos MCC_fakeAC) select 0),floor ((getpos MCC_fakeAC) select 1)]
 					];
 				{_structured = composeText [_structured,_x,lineBreak]} forEach _data;
@@ -160,8 +163,17 @@ if (dialog && MCC_ACConsoleUp) then {				//Create the AC
 					(_mccdialog displayCtrl 9116+_j) ctrlCommit 0;
 
 				};
+				
+				if !(MCC_ACConsoleUp) exitWith 
+				{
+					MCC_ConsoleACMouseButtonDown = false; 
+					while {dialog} do {closeDialog 0};		
+					MCC_ConsoleACMouseButtonDown = false; 					
+				};
+				
 				sleep 0.1;
 			};
+			
 			if !(isnil "MCC_fakeAC") then {MCC_fakeAC cameraeffect ["terminate","back"];camdestroy MCC_fakeAC;};
 			MCC_fakeAC = nil;
 		};

@@ -5,7 +5,7 @@ removeallweapons _hostage;
 dostop _hostage; 
 _hostage allowFleeing 0;
 _hostage disableAI "MOVE"; 
-_hostage addAction ["Secure Hostage", format ["%1mcc\general_scripts\hostages\hostage.sqf",MCC_path],[0],6,false,true];
+_hostage setVariable ["MCC_disarmed",true,true];
 removeallweapons _hostage;
 _hostage setcaptive true;
 _init = "_this switchmove 'AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon';";

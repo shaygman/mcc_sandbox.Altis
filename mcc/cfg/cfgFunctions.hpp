@@ -6,6 +6,11 @@ class MCC
 	{
 		#ifdef MCCMODE
 		file = "\mcc_sandbox_mod\mcc\fnc\general";
+		class pre_init
+		{
+			preInit = 1;
+			description = "Pre init mod only";
+		};
 		#else
 		file = "mcc\fnc\general";
 		#endif
@@ -50,6 +55,7 @@ class MCC
 		class keyToName		{description = "get idkKey and return string with his name";};
 		class makeBriefing	{description = "Server Only - create a Logic based briefing";};
 		class handleAddaction	{description = "Handle addactions after respawn - init";};
+		class ppEffects	{description = "Create effects to all players";};
 	};
 
 	class ui
@@ -198,6 +204,8 @@ class MCC
 		class reinforcement		{description = "Contorol the motorized reinforcement spawn.";};
 		class setUnitPos		{description = "Sets units pos.";};
 		class populateVehicle	{description = "Populate a not empty vehicle with antoher group contains units acording to its faction and cargo space.";};
+		class disarmUnit		{description = "Disarm a unit and create a weapon holder";};
+		class setUnitAnim		{description = "Sets units Animation - and return it to default after a while";};
 	};
 
 	class mp

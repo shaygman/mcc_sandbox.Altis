@@ -49,7 +49,7 @@
 private ["_missionCenter","_missionCenterTrigger","_totalEnemyUnits","_isCQB","_objType","_objArray","_objFirstTime",
          "_minObjectivesDistance","_maxObjectivesDistance","_objPos","_timeStart","_enemySide","_enemyfaction","_sidePlayer","_factionPlayer","_obj1","_obj2","_obj3","_pos","_center","_wholeMap",
 		 "_armor","_vehicles","_stealth","_roadPositions","_script_handler","_isIED","_isAS","_isSB","_spawnbehavior","_isRoadblocks","_objectives","_isCiv","_weatherChange",
-		 "_preciseMarkers","_reinforcement","_artillery","_civFaction","_playMusic","_animals","_markerName"];
+		 "_preciseMarkers","_reinforcement","_artillery","_civFaction","_playMusic","_animals","_markerName","_missionMaker"];
 
 private ["_arrayGeneral","_arraySides","_arrayObjectives","_arrayDefines","_arrayAssets"];
 _arrayGeneral		= _this select 0;
@@ -89,7 +89,6 @@ _arrayAssets		= _this select 4;
 _reinforcement 			= _arrayAssets select 0;
 _artillery 				= _arrayAssets select 1;
 
-	 
 _objArray			 	= ["Secure HVT",
 						   "Kill HVT",
 						   "Destroy Vehicle",
@@ -103,6 +102,40 @@ _objArray			 	= ["Secure HVT",
 						   "Disarm IED"
 						  ];
 
+//Lets find the mission maker owner and make sure he'll get the zone markers too. 
+private ["_missionMaker"];
+{
+	if (name _x == mcc_missionmaker) exitWith {_missionMaker = owner _x}; 
+} foreach playableUnits;
+
+if (!isnil "_missionMaker") then
+{
+	[[],"MCC_fnc_createMCCZones",_missionMaker,false] spawn BIS_fnc_MP;
+};
+
+//Move to cache
+_mcc_delayed_spawnPlaceHolder = if (mcc_delayed_spawn) then {true} else {false};
+_mcc_cachingPlaceHolder = if (mcc_caching) then {true} else {false};
+
+mcc_delayed_spawn		= TRUE;
+mcc_caching				= TRUE;
+
+MCC_MWCleanup = 
+{
+	//Clear up
+	MCC_MWisGenerating = false; 
+	publicVariable "MCC_MWisGenerating";
+
+	if (!isnil "hsim_worldArea") then {deleteVehicle hsim_worldArea;	hsim_worldArea = nil};
+	if (!isnil "MWMissionArea") then {deleteVehicle MWMissionArea;	MWMissionArea = nil};
+	
+	sleep 10; 
+	mcc_delayed_spawn 	= _this select 0;
+	mcc_caching 		= _this select 1;
+	breakout "#all";
+};
+
+
 //For handling spawn
 mcc_sidename = _enemySide;						  
 //-------------- Whole map or zone locations?
@@ -115,11 +148,11 @@ if (_wholeMap) then
 	{
 		_worldPath = configfile >> "cfgworlds" >> worldname;
 		_mapSize = getnumber (_worldPath >> "mapSize");
-		if (_mapSize == 0) then 
+		if (_mapSize == 0) exitWith 
 		{
 			diag_log FORMAT ["MCC: Mission Wizard Error: mapSize param not defined for '%1'",worldname];
-			MCC_MWisGenerating = false;
-			["mapSize param not defined for '%1'",worldname] call bis_fnc_halt;
+			[["mapSize param not defined for '%1'",worldname],"bis_fnc_halt",_missionMaker, false] call BIS_fnc_MP;
+			[_mcc_delayed_spawnPlaceHolder, _mcc_cachingPlaceHolder] call MCC_MWCleanup;
 		};
 		
 		_mapSize = _mapSize / 2;
@@ -158,8 +191,8 @@ if (_wholeMap) then
 	if (isNil "_center") exitWith 
 	{
 		diag_log "MCC: Mission Wizard Error: Can't find mission center"; 
-		MCC_MWisGenerating = false;
-		["MCC: Mission Wizard Error: Can't find mission center try building your mission in a zone"] call bis_fnc_halt;
+		[["MCC: Mission Wizard Error: Can't find mission center try building your mission in a zone"],"bis_fnc_halt",_missionMaker, false] call BIS_fnc_MP;
+		[_mcc_delayed_spawnPlaceHolder, _mcc_cachingPlaceHolder] call MCC_MWCleanup;
 	}; 
 
 	_missionCenter = _center select 0; 
@@ -170,8 +203,8 @@ else
 	if (count mcc_zone_markposition == 0) exitWith 
 	{
 		diag_log "MCC: Mission Wizard Error: Create a zone first"; 
-		MCC_MWisGenerating = false;
-		["MCC: Mission Wizard Error: Create a zone first"] call bis_fnc_halt;
+		[["MCC: Mission Wizard Error: Create a zone first"],"bis_fnc_halt",_missionMaker, false] call BIS_fnc_MP;
+		[_mcc_delayed_spawnPlaceHolder, _mcc_cachingPlaceHolder] call MCC_MWCleanup;
 	};
 	
 	MWMissionArea = createtrigger ["emptydetector",mcc_zone_markposition];
@@ -227,14 +260,6 @@ diag_log format ["MCC Mission Wizard center = %1", _missionCenter];
 _markerName =  FORMAT ["MCCMW_operationMarker_%1",["MCCMW_operationMarker",1] call bis_fnc_counter]; 
 [1, "ColorRed",[_maxObjectivesDistance*3,_maxObjectivesDistance*3], "ELLIPSE", "Border", "Empty",_markerName, _missionCenter] call MCC_fnc_makeMarker;
 
-
-
-//Move to cache
-_mcc_delayed_spawnPlaceHolder = if (mcc_delayed_spawn) then {true} else {false};
-_mcc_cachingPlaceHolder = if (mcc_caching) then {true} else {false};
-
-mcc_delayed_spawn		= TRUE;
-mcc_caching				= TRUE;
 
 
 _objectives = [];
@@ -642,7 +667,7 @@ if (_reinforcement in [1,2,3]) then
 MCC_MWMissions set [count MCC_MWMissions, _objectives]; 
 publicVariable "MCC_MWMissions";
 
-if (_weatherChange) then
+if (_weatherChange != 0) then
 {
 	//------------------- Time ---------------------------------------------------------------------------------
 	private ["_hour"];
@@ -664,35 +689,45 @@ if (_weatherChange) then
 
 	//------------------- Weather ---------------------------------------------------------------------------------
 	
-	private "_monthFactor";
-	_monthFactor = [1,1,0.8,0.8,0.6,0.4,0.2,0.2,0.4,0.6,0.8,1] select ((MCC_date select 1)-1);
-				//     1 , 2,  3   , 4    , 5     , 6    , 7   , 8    , 9    , 10   , 11   , 12
-	
-	MCC_Overcast	= (random (_monthFactor/2)) + _monthFactor/2;
-	MCC_WindForce 	= (random (_monthFactor/2)) + _monthFactor/2;
-	MCC_Waves 		= (random (_monthFactor/2)) + _monthFactor/2;
-	
-	if (MCC_Overcast > 0.6) then
+	if !(_weatherChange in [2,3]) then 
 	{
-		MCC_Rain 		= (random (_monthFactor/2)) + _monthFactor/2;
-		MCC_Lightnings	= (random (_monthFactor/2)) + _monthFactor/2;
-		MCC_Fog 		= ((random (_monthFactor/2)) + _monthFactor/2)/5; 
+		private "_monthFactor";
+		[["clear",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
 		
-		publicVariable "MCC_Overcast";
-		publicVariable "MCC_WindForce";
-		publicVariable "MCC_Waves";
-		publicVariable "MCC_Rain";
-		publicVariable "MCC_Lightnings";
-		publicVariable "MCC_Fog";
+		_monthFactor = [1,1,0.8,0.8,0.6,0.4,0.2,0.2,0.4,0.6,0.8,1] select ((MCC_date select 1)-1);
+					//     1 , 2,  3   , 4    , 5     , 6    , 7   , 8    , 9    , 10   , 11   , 12
 		
-		[[[MCC_Overcast, MCC_WindForce, MCC_Waves, MCC_Rain, MCC_Lightnings, MCC_Fog]],"MCC_fnc_setWeather",true,false] call BIS_fnc_MP;
+		MCC_Overcast	= (random (_monthFactor/2)) + _monthFactor/2;
+		MCC_WindForce 	= (random (_monthFactor/2)) + _monthFactor/2;
+		MCC_Waves 		= (random (_monthFactor/2)) + _monthFactor/2;
+		
+		if (MCC_Overcast > 0.6) then
+		{
+			MCC_Rain 		= (random (_monthFactor/2)) + _monthFactor/2;
+			MCC_Lightnings	= (random (_monthFactor/2)) + _monthFactor/2;
+			MCC_Fog 		= ((random (_monthFactor/2)) + _monthFactor/2)/5; 
+			
+			publicVariable "MCC_Overcast";
+			publicVariable "MCC_WindForce";
+			publicVariable "MCC_Waves";
+			publicVariable "MCC_Rain";
+			publicVariable "MCC_Lightnings";
+			publicVariable "MCC_Fog";
+			
+			[[[MCC_Overcast, MCC_WindForce, MCC_Waves, MCC_Rain, MCC_Lightnings, MCC_Fog]],"MCC_fnc_setWeather",true,false] call BIS_fnc_MP;
+		}
+		else
+		{
+			[[[MCC_Overcast, MCC_WindForce, MCC_Waves]],"MCC_fnc_setWeather",true,false] call BIS_fnc_MP;
+			publicVariable "MCC_Overcast";
+			publicVariable "MCC_WindForce";
+			publicVariable "MCC_Waves";
+		};
 	}
 	else
 	{
-		[[[MCC_Overcast, MCC_WindForce, MCC_Waves]],"MCC_fnc_setWeather",true,false] call BIS_fnc_MP;
-		publicVariable "MCC_Overcast";
-		publicVariable "MCC_WindForce";
-		publicVariable "MCC_Waves";
+		if (_weatherChange == 2) then {[["sandstorm",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP};
+		if (_weatherChange == 3) then {[["storm",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP};
 	};
 };			
 			
@@ -915,26 +950,4 @@ if (_playMusic == 0 ) then
 	[[2,compile format ["playMusic '%1'",_music]], "MCC_fnc_globalExecute", _sidePlayer, false] spawn BIS_fnc_MP;
 };
 
-//Lets find the mission maker owner and make sure he'll get the zone markers too. 
-private ["_missionMaker"];
-{
-	if (name _x == mcc_missionmaker) then {_missionMaker = owner _x}; 
-} foreach playableUnits;
-
-if (!isnil "_missionMaker") then
-{
-	[[],"MCC_fnc_createMCCZones",_missionMaker,false] spawn BIS_fnc_MP;
-};
-
-//Clear up
-MCC_MWisGenerating = false; 
-publicVariable "MCC_MWisGenerating";
-
-deleteVehicle hsim_worldArea;
-hsim_worldArea = nil; 
-deleteVehicle MWMissionArea;
-MWMissionArea = nil; 
-
-sleep 10; 
-mcc_delayed_spawn		= _mcc_delayed_spawnPlaceHolder;
-mcc_caching				= _mcc_cachingPlaceHolder; 
+[_mcc_delayed_spawnPlaceHolder, _mcc_cachingPlaceHolder] call MCC_MWCleanup;

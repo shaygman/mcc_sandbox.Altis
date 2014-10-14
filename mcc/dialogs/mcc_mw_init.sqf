@@ -219,7 +219,7 @@ lbClear _comboBox;
 {
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
-} foreach ["Change","Don't change"];
+} foreach ["Don't change","Random","Sandstorm","Blizzard"];
 _comboBox lbSetCurSel (profileNamespace getVariable ["MCC_MWWeatherIndex",1]);
 
 _comboBox = _mccdialog displayCtrl MCC_MCC_MWAreaComboIDC;		

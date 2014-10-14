@@ -2,7 +2,7 @@ private ["_pos","_radius","_type","_nearObjects","_crew","_markers"];
 
 _pos = _this select 0;
 _radius = _this select 1;
-_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights","N/V","Bodies","Flashlights"] select (_this select 2); 
+_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","Buildings","sandstorm","storm","heatwave","clear","N/V","Flashlights"] select (_this select 2); 
 _nearObjects = []; 
 
 switch _type do
@@ -46,6 +46,57 @@ switch _type do
 					sleep 1;
 					{_x setDamage 1} forEach _lamps;
 				} foreach ["Lamps_Base_F", "PowerLines_base_F"];
+			};
+			
+		case "Buildings":	
+			{ 
+				private "_buildings";
+				
+				//Buildings
+				_buildings = [_pos select 0, _pos select 1, 0] nearObjects ["house", _radius];
+				sleep 1;
+				{if ((random 1) > 0.4) then {_x setDamage 1}} forEach _buildings;
+				
+				//Objects
+				_buildings = (nearestObjects [[_pos select 0, _pos select 1, 0],[], _radius]) - ([_pos select 0, _pos select 1, 0] nearObjects _radius);
+				sleep 1;
+				{if ((random 1) > 0.4) then {_x setDamage 1}} forEach _buildings;
+				
+				//create burning wrecks
+				for [{_x=0},{_x<1+(floor _radius/20)},{_x=_x+1}] do		
+				{
+					_wreck = (MCC_ied_wrecks select (random (count MCC_ied_wrecks-1))) select 1;
+					_tempPos = [(_pos select 0) + ((random _radius)-(random _radius)) ,(_pos select 1) + ((random _radius)-(random _radius)),0];
+					_dummy= _wreck createvehicle _tempPos;
+					_dummy setdir (floor random 360);
+					if ((random 1) > 0.5) then
+					{
+						_effect = (["test_EmptyObjectForFireBig","test_EmptyObjectForSmoke"]  call BIS_fnc_selectRandom)  createVehicle (getpos _dummy);
+						_effect setpos (getpos _dummy);
+					};
+				};
+				
+				[["bf",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
+			};
+		
+		case "sandstorm":	
+			{ 
+				[["sandstorm",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
+			};
+		
+		case "storm":	
+			{ 
+				[["storm",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
+			};
+			
+		case "heatwave":	
+			{ 
+				[["heatwave",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
+			};
+			
+		case "clear":	
+			{ 
+				[["clear",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
 			};
 			
 		case "N/V":	

@@ -51,9 +51,6 @@ if (isnil "MCC_AI_Aim") then {MCC_AI_Aim = 0.1};
 if (isnil "MCC_AI_Spot") then {MCC_AI_Spot	= 0.3};
 if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5};
 
-//Allow start location dialog on JIP or after respawn
-MCC_openRespawnMenu = true;
-
 //---------------------Name Tags---------------------------------------------------
 // Show friendly name tags and vhicles' crew info - default - off
 if (isnil "MCC_nameTags") then {MCC_nameTags = false};
@@ -88,8 +85,6 @@ if (isnil "MCC_ticketsEast") then {MCC_ticketsEast = 200};
 if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
 
 //--------------------logistics -------------------------------------------------------
-
-
 //Default resources
 //[ammo,supply,fuel]
 if (isnil "MCC_resWest") then {MCC_resWest = [500,500,500]};
@@ -97,6 +92,9 @@ if (isnil "MCC_resEast") then {MCC_resEast = [500,200,0]};
 if (isnil "MCC_resGUER") then {MCC_resGUER = [500,200,0]};
 
 //--------------------Screens -------------------------------------------------------
+//Allow start location dialog on JIP or after respawn
+if (isnil "MCC_openRespawnMenu") then {MCC_openRespawnMenu = true}; //false - disabled
+
 //allow SQL PDA
 if (isnil "MCC_allowsqlPDA") then {MCC_allowsqlPDA = true}; //false - disabled
 
@@ -105,6 +103,7 @@ if (isnil "MCC_allowConsole") then {MCC_allowConsole = true}; //false - disabled
 
 //allow squad menu
 if (isnil "MCC_allowSquadDialog") then {MCC_allowSquadDialog = true}; //false - disabled
+if (isnil "MCC_allowSquadDialogCamera") then {MCC_allowSquadDialogCamera = true}; //Allow camera on squad dialog
 
 //allow MCC logistics
 if (isnil "MCC_allowlogistics") then {MCC_allowlogistics = true};  //false - disabled
@@ -119,7 +118,10 @@ MCC_ied_small = [["Plastic Crates","Land_CratesPlastic_F"],["Plastic Canister","
 				 ,["Smart Phone","Land_MobilePhone_smart_F"],["Longrange Radio","Land_PortableLongRangeRadio_F"],["Satellite Phone","Land_SatellitePhone_F"],["Money","Land_Money_F"]];
 MCC_ied_medium = [["Wheel Cart","Land_WheelCart_F"],["Metal Barrel","Land_MetalBarrel_F"],["Plastic Barrel","Land_BarrelSand_F"],["Pipes","Land_Pipes_small_F"],["Wooden Crates","Land_CratesShabby_F"],["Wooden Box","Land_WoodenBox_F"],["Cinder Blocks","Land_Ytong_F"],
 				  ["Sacks Heap","Land_Sacks_heap_F"], ["Water Barrel","Land_WaterBarrel_F"],["Water Tank","Land_WaterTank_F"]];
-MCC_ied_wrecks = [["Car Wreck","Land_Wreck_Car3_F"],["BRDM Wreck","Land_Wreck_BRDM2_F"],["Offroad Wreck","Land_Wreck_Offroad_F"],["Truck Wreck","Land_Wreck_Truck_FWreck"]];
+MCC_ied_wrecks = [["MI-48","Land_UWreck_Heli_Attack_02_F"],["BMP2","Land_Wreck_BMP2_F"],["Car","Land_Wreck_Car_F"],["Car2","Land_Wreck_Car2_F"],["Car Dismantled","Land_Wreck_CarDismantled_F"],["Blackfoot","Land_Wreck_Heli_Attack_01_F"],["HMMW","Land_Wreck_HMMWV_F"],
+                  ["Hunter","Land_Wreck_Hunter_F"],["Offroad2","Land_Wreck_Offroad2_F"],["Skoda","Land_Wreck_Skodovka_F"],["Slammer","Land_Wreck_Slammer_F"],["T72","Land_Wreck_T72_hull_F"],["Truck","Land_Wreck_Truck_dropside_F"],["Truck2","Land_Wreck_Truck_F"],
+				  ["UAZ","Land_Wreck_UAZ_F"],["Van","Land_Wreck_Van_F"],["Car Wreck","Land_Wreck_Car3_F"],["BRDM Wreck","Land_Wreck_BRDM2_F"],["Offroad Wreck","Land_Wreck_Offroad_F"],["Truck Wreck","Land_Wreck_Truck_FWreck"]];
+
 MCC_ied_mine = [
                 ["Mine Field AP - Visable","apv"],
 				["Mine Field AP - Hidden","ap"],
@@ -140,7 +142,10 @@ MCC_convoyHVTcar = [["Hunter","B_Hunter_F"],["MRAP","I_MRAP_03_F"],["Quadbike","
 
 //------------------------MCC Console--------------------------------------------
 //AC-130 amo count by array [20mm,40mm,105mm]
-if (isnil "MCC_ConsoleOnlyShowUnitsWithGPS") then {MCC_ConsoleACAmmo = [500,80,20]};
+if (isnil "MCC_ConsoleACAmmo") then {MCC_ConsoleACAmmo = [500,80,20]};
+
+//How much time can an AC-130 stay in the air before he is RTB
+if (isnil "MCC_ConsoleACTime") then {MCC_ConsoleACTime = 180};
 
 //Group markers
 if (isnil "MCC_ConsoleOnlyShowUnitsWithGPS") then {MCC_ConsoleOnlyShowUnitsWithGPS = true}; 				//Show only units were the group leader have a GPS  or inside vehicle
@@ -168,7 +173,7 @@ MCCConvoyCivEscort = "C_man_1_1_F"; MCCConvoyCivDriver = "C_man_1_1_F";
 
 //-------------------------MCC commander number of virtual cannons---------------------------------------------
 MCC_bonCannons = [];
-HW_Arti_CannonNumber = 1;
+if (isnil "HW_Arti_CannonNumber") then {HW_Arti_CannonNumber = 1};
 
 //----------------------------Presets---------------------------------------------------------
 mccPresetsVehicle = [
@@ -264,7 +269,7 @@ mccPresetsObjects = [
 //*********************************************************************************************************************
 
 //---------------------------General objects---------------------------------
-MCC_dummy = "bomb"; //Dummy object for OO saving
+MCC_dummy = "bomb"; //Dummy object for OO saving "UserTexture_1x2_F"
 MCC_supplyTracks = ["B_Truck_01_transport_F","O_Truck_03_transport_F","I_Truck_02_transport_F"]; //[west,east,guer];
 MCC_supplyAttachPoints = [
 							[[0,0,0],[0,-2,0],[0,-4,0]],
@@ -409,7 +414,6 @@ MCC_IEDisSpotter = 0;
 
 //Draw Stuff triggers
 MCC_ambushPlacing = false;
-MCC_natureIsRuning = false;
 MCC_drawGunIsRuning =  false;
 MCC_drawMinefield = false;
 MCC_delete_drawing = false;
@@ -1098,7 +1102,14 @@ if (!isServer && !(MCC_isLocalHC)) then
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 {
 	waituntil {!(IsNull (findDisplay 46))};
-	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25]]];
+	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46]]];
+	
+	//Prevent error messages for backward comp
+	if (count MCC_keyBinds < 5) then
+	{
+		profileNamespace setVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46]]];
+		MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46]]];  
+	}; 
 
 	//Opening status radio
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 2) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Medic)',time],true]}"];
@@ -1114,6 +1125,10 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 
 	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 0) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 0) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 0) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 0) select 2))) then {null = [nil,nil,nil,nil,0] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 1) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 1) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 1) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 1) select 2))) then {null = [nil,nil,nil,nil,1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
+	
+	//Interaction key
+	(findDisplay 46) displayAddEventHandler ["KeyDown",format ["if ((_this select 1 ==((MCC_keyBinds select 4) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 4) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 4) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 4) select 2))) then {MCC_interactionKey_down = true; MCC_interactionKey_up = false; null = [] execVM '%1mcc\general_scripts\interaction\interaction.sqf'};",MCC_path]];
+	(findDisplay 46) displayAddEventHandler ["KeyUp","if ((_this select 1 ==((MCC_keyBinds select 4) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 4) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 4) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 4) select 2))) then {MCC_interactionKey_down = false; MCC_interactionKey_up = true};"];
 
 	//Squad Dialog
 	MCC_squadDialogOpen = false;

@@ -46,8 +46,6 @@ if (_playerSideNr == 1) then
 
 		player setVariable ["cpReady",true,true];
 	
-	
-	
 		if (MCC_teleportAtStartWest != 0) then
 		{
 			if (surfaceIsWater (playerDeployPos)) then 
@@ -73,6 +71,11 @@ if (_playerSideNr == 1) then
 				[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
 			};
 		};
+	};
+	
+	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",false])) then
+	{
+		player setpos MCC_START_WEST;
 	};
 	
 	if (!isnil "MCC_StartMarkerW") then {deleteMarkerLocal MCC_StartMarkerW};
@@ -112,32 +115,38 @@ if (_playerSideNr == 0) then
 		//Respawning
 
 		player setVariable ["cpReady",true,true];
+	
+	
+		if (MCC_teleportAtStartEast != 0) then
+		{
+			if (surfaceIsWater (playerDeployPos)) then 
+			{
+				_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+			} 
+			else 
+			{
+				_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+			};
+			
+			//Teleport
+			if (MCC_teleportAtStartEast == 1) then
+			{
+				cutText ["Deploying ....","BLACK IN",5];
+				player setPosATL [_safepos select 0, _safepos select 1, 0];
+			}
+			else
+			{
+				private "_helo";
+				_helo = if (MCC_teleportAtStartEast ==2) then {false} else {true}; 
+				
+				[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
+			};
+		};
 	};
 	
-	if (MCC_teleportAtStartEast != 0) then
+	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",false])) then
 	{
-		if (surfaceIsWater (playerDeployPos)) then 
-		{
-			_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
-		} 
-		else 
-		{
-			_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
-		};
-		
-		//Teleport
-		if (MCC_teleportAtStartEast == 1) then
-		{
-			cutText ["Deploying ....","BLACK IN",5];
-			player setPosATL [_safepos select 0, _safepos select 1, 0];
-		}
-		else
-		{
-			private "_helo";
-			_helo = if (MCC_teleportAtStartEast ==2) then {false} else {true}; 
-			
-			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
-		};
+		player setpos MCC_START_EAST;
 	};
 	
 	if (!isnil "MCC_StartMarkerE") then {deleteMarkerLocal MCC_StartMarkerE};
@@ -176,32 +185,38 @@ if (_playerSideNr == 2) then
 		//Respawning
 
 		player setVariable ["cpReady",true,true];
+	
+	
+		if (MCC_teleportAtStartGuer != 0) then
+		{
+			if (surfaceIsWater (playerDeployPos)) then 
+			{
+				_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+			} 
+			else 
+			{
+				_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+			};
+			
+			//Teleport
+			if (MCC_teleportAtStartGuer == 1) then
+			{
+				cutText ["Deploying ....","BLACK IN",5];
+				player setPosATL [_safepos select 0, _safepos select 1, 0];
+			}
+			else
+			{
+				private "_helo";
+				_helo = if (MCC_teleportAtStartGuer ==2) then {false} else {true}; 
+				
+				[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
+			};
+		};
 	};
 	
-	if (MCC_teleportAtStartGuer != 0) then
+	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",false])) then
 	{
-		if (surfaceIsWater (playerDeployPos)) then 
-		{
-			_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
-		} 
-		else 
-		{
-			_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
-		};
-		
-		//Teleport
-		if (MCC_teleportAtStartGuer == 1) then
-		{
-			cutText ["Deploying ....","BLACK IN",5];
-			player setPosATL [_safepos select 0, _safepos select 1, 0];
-		}
-		else
-		{
-			private "_helo";
-			_helo = if (MCC_teleportAtStartGuer ==2) then {false} else {true}; 
-			
-			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;			
-		};
+		player setpos MCC_START_GUER;
 	};
 	
 	if (!isnil "MCC_StartMarkerG") then {deleteMarkerLocal MCC_StartMarkerG};

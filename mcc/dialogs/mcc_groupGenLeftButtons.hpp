@@ -134,9 +134,9 @@ class MCC_leftButtonsControls: MCC_RscControlsGroup
 		class MCC_DeleteButton: MCC_RscButton
 		{
 			idc = -1;
-			text = "Delete"; //--- ToDo: Localize;
+			text = "Brushes"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			tooltip = "Open Delete Menu"; 
+			tooltip = "Brushes Menu"; 
 			onButtonClick = __EVAL("[17] execVM '"+MCCPATH+"mcc\general_scripts\groupGen\controlsHandle.sqf'");
 			
 			x = 0.0057 * safezoneW;

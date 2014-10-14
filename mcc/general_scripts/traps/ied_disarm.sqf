@@ -1,29 +1,20 @@
-private ["_ied","_fakeIed","_men","_index","_rand","_disarmTime", "_footer", "_html", "_break","_dummyMarker","_isEngineer"];
-_men 		= _this select 1;
-_ied 		= (_men nearObjects [MCC_dummy,8]) select 0;
+private ["_ied","_fakeIed","_men","_rand","_disarmTime", "_footer", "_html", "_break","_dummyMarker","_isEngineer"];
+_men 		= _this select 0;
+_ied 		= _this select 1;
 if (isnil "_ied") exitWith {};
 
 _fakeIed	= _ied getVariable["fakeIed",objNull];
-_index 		= _this select 2;
-
-//If it is a suspect
-if (_fakeIed isKindof "man") exitWith 
-{
-	_null= [_fakeIed,_men,_index] execVM format ["%1mcc\general_scripts\traps\neutralize.sqf",MCC_path];
-};
 
 _rand		= random 1;
 _isEngineer = getNumber(configFile >> "CfgVehicles" >> typeOf _men >> "canDeactivateMines");	//Check if is engineer
-
-
-
-_disarmTime =  MCC_IEDDisarmTimeArray select (_ied getvariable "disarmTime"); 
+_disarmTime =  _ied getvariable "MCC_disarmTime"; 
 _pos=[((getposATL _ied) select 0),(getposATL _ied) select 1,((getPosATL _ied) select 2)];
 
 if (_men distance _ied <3) then 
 {
-	uiNameSpace setVariable ["MCC_isIEDDisarming",true]; 
-	player playMove "AinvPknlMstpSlayWrflDnon_medic";
+	uiNameSpace setVariable ["MCC_interactionActive",true]; 
+	_ied setVariable ["MCC_isInteracted",true,true]; 
+	player playMove "Acts_carFixingWheel";
 	_break = false; 
 	
 	//Create progress bar
@@ -38,13 +29,19 @@ if (_men distance _ied <3) then
 		_html = _html + "<br/><br/><t color='#818960' size='0.85' shadow='0' align='right'>" + _footer + "</t>";
 		sleep 1; 
 		hintsilent parseText(_html);
-		if ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic") then {player playMove "AinvPknlMstpSlayWrflDnon_medic"};
-		if ((_ied distance _men) > 5) then {_x = _disarmTime; _break = true}; //check if still close to the IED
+		if ((animationState player)!="Acts_carFixingWheel") then {player playMove "Acts_carFixingWheel"};
+		if ((_ied distance _men) > 5) then {_x = _disarmTime; _break = true; hintSilent ""}; //check if still close to the IED
 	};
 	
+	player switchMove "AmovPknlMstpSlowWrflDnon";	
 	player playMoveNow "AmovPknlMstpSlowWrflDnon";	
-
-	if (_break) exitwith{uiNameSpace setVariable ["MCC_isIEDDisarming",false]};	//If moved to far from the IED
+	
+	//If moved to far from the IED
+	if (_break) exitwith
+	{
+		uiNameSpace setVariable ["MCC_interactionActive",false];
+		_ied setVariable ["MCC_isInteracted",false,true]; 
+	};	
 	
 	//If it is a bomb expert ;)
 	if (_isEngineer==1) then	
@@ -57,7 +54,8 @@ if (_men distance _ied <3) then
 			sleep 1;
 			_ied setvariable ["armed",false,true];
 			deletevehicle _ied;
-			uiNameSpace setVariable ["MCC_isIEDDisarming",false]; 
+			uiNameSpace setVariable ["MCC_interactionActive",false]; 
+			_ied setVariable ["MCC_isInteracted",false,true]; 
 		}
 		else 
 		{
@@ -115,8 +113,11 @@ if (_men distance _ied <3) then
 		};
 	};
 	
-	uiNameSpace setVariable ["MCC_isIEDDisarming",false]; 
+	uiNameSpace setVariable ["MCC_interactionActive",false]; 
+	_ied setVariable ["MCC_isInteracted",false,true]; 
 }
 else {hint "To far to disarm"};
+uiNameSpace setVariable ["MCC_interactionActive",false]; 
+_ied setVariable ["MCC_isInteracted",false,true]; 
 						
 																

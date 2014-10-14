@@ -62,10 +62,11 @@ _dummy attachto [_fakeIed,[0,0,0]];
 	
 _dummy setvariable ["fakeIed", _fakeIed ,true];
 _dummy setvariable ["armed", true, true];
-_dummy setvariable ["disarmTime", _IEDDisarmTime, true];
+_dummy setvariable ["MCC_disarmTime", MCC_IEDDisarmTimeArray select _IEDDisarmTime  , true];
 _dummy setvariable ["iedMarkerName", "IED", true];
 _dummy setvariable ["iedTrigered", false, true]; 
 _dummy setvariable ["iedAmbush", false, true];
+_dummy setvariable ["MCC_IEDtype", "ied", true];
 
 //If it is radio IED
 if (_IEDTriggerType == 1) then 
@@ -87,8 +88,5 @@ if (str (_fakeIed getVariable ["syncedObject", [0,0,0]]) != "[0,0,0]") then
 
 //Spawn the IED script
 _ok = [_dummy,_trapvolume,_IEDExplosionType,_IEDJammable,_IEDTriggerType,_trapdistance,_iedside] execVM MCC_path +"mcc\general_scripts\traps\IED.sqf";
-
-		
-
 
 [_dummy,_fakeIed];

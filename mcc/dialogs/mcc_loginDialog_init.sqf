@@ -11,6 +11,8 @@ MCC_GUI1initDone = false;
 #define MCC_keyBindsOpenMCCButtonIDC 8415
 #define MCC_keyBindsOpenConsoleButtonIDC 8416
 #define MCC_keyBindsT2TButtonIDC 8417
+#define MCC_keyBindsGroupsButtonIDC 8418
+#define MCC_keyBindsMCCinteractionIDC 8419
 
 //Mission Maker
 private ["_text","_key","_textKey","_mmName"];
@@ -37,7 +39,7 @@ lbClear _comboBox;
 _comboBox lbSetCurSel (MCC_terrainPref select 1); // set viewdistance index to current vd
 
 //Show key Binds
-for [{_x=8415},{_x<=8418},{_x=_x+1}]  do 
+for [{_x=8415},{_x<=8419},{_x=_x+1}]  do 
 {
 	_key = MCC_keyBinds select (_x-8415);
 

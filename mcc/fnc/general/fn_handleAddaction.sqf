@@ -4,12 +4,71 @@
 // <in> Nothing
 //<out> Nothing
 //==============================================================================================================================================================================	
-private ["_string","_respawnItems","_airports","_counter","_searchArray"];
+private ["_string","_respawnItems","_airports","_counter","_searchArray","_key","_textKey","_text"];
 
-//IED
-_string = format ["(({_dir= [_this, _x] call BIS_fnc_relativeDirTo; if ((_dir>320 || _dir < 40) && !(isnull (_x getVariable ['fakeIed',objnull]))) then {true} else {false}} count (_this nearObjects ['%1',8]))>0) && !(uiNameSpace getVariable ['MCC_isIEDDisarming',false]); ",MCC_dummy]; 
-_null = player addaction ["<t color=""#FF0000"">-=Disarm=-</t>", MCC_path + "mcc\general_scripts\traps\ied_disarm.sqf",[],-1,true,true,"teamSwitch",_string];
+//Interactive objects EH
+uiNameSpace setVariable ["MCC_interactionActive",false];  
+
+["MCC_interactionEH", "onEachFrame", {
+		_interactiveObjects = missionNameSpace getVariable ["MCC_interactionObjects",[]];
+		{
+			_obj 	= _x select 0;
+			_text 	= _x select 1;
+			_dist 	= (player distance _obj) / 10;
+			_color = [0,0,0.8,1 - _dist];
+			drawIcon3D [
+							"",
+							_color,
+							[
+								visiblePosition _obj select 0,
+								visiblePosition _obj select 1,
+								(visiblePosition _obj select 2) + 1 + _dist / 3
+							],
+							0,
+							0,
+							0,
+							_text,
+							2,
+							0.06,
+							"PuristaMedium"
+						];
+		} foreach _interactiveObjects;
+	}, ""] call BIS_fnc_addStackedEventHandler;
+
 	
+//Find out interaction key name
+waituntil {!isnil "MCC_keyBinds"};
+_key = MCC_keyBinds select 4;
+_text = "";
+if (_key select 0) then {_text = "Shift + "}; 
+if (_key select 1) then {_text = _text + "Ctrl + "}; 
+if (_key select 2) then {_text = _text + "Alt + "}; 
+_textKey = 	[(_key select 3)] call MCC_fnc_keyToName;
+_text = format ["%1%2",_text,_textKey];
+		
+_text spawn
+{
+	private ["_keyName","_interactiveObjects"];
+	_keyName = _this; 
+	
+	while {alive player} do
+	{
+		sleep 1;
+		if (vehicle player == player) then
+		{
+			_interactiveObjects = [];
+			{
+				if (((_x getVariable ["MCC_IEDtype",""]) == "ied") && !(_x getVariable ["MCC_isInteracted",false])) then
+				{
+					_interactiveObjects set [count _interactiveObjects, [_x, format ["Press %1 to disarm",_keyName]]];
+				};
+			} foreach (getpos player nearObjects [MCC_dummy,10]);
+			
+			missionNameSpace setVariable ["MCC_interactionObjects",_interactiveObjects];
+		};
+	};
+};
+
 //Add MCC respawn tent string
 if (MCC_isMode) then
 {
@@ -25,31 +84,6 @@ _null = player addaction ["<t color=""#FFCC01"">Commander - Console</t>", MCC_pa
 //Add MCC Squad leader PDA
 _string = format ["(count units _this > 1) && (leader _this == _this) && ('ItemGPS' in (assignedItems _this)) && (vehicle _target == vehicle _this) && MCC_allowsqlPDA",side player]; 
 _null = player addaction ["<t color=""#FFCC01"">Squad Leader - PDA</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,3],-1,false,true,"teamSwitch",_string];
-
-//Add MCC supply truck
-_string = format ["(_this == driver vehicle _this) && (typeof vehicle _this in %1) && speed vehicle _this ==0 && MCC_allowlogistics",MCC_supplyTracks]; 
-_null = player addaction ["<t color=""#0134ff"">Load Truck</t>", MCC_path + "mcc\general_scripts\logistics\load.sqf",[nil,nil,nil,nil,3],-1,false,true,"teamSwitch",_string];
-
-//Add MCC ILS
-_airports = []; 
-_counter = 0;
-_searchArray = if (MCC_isMode) then {allMissionObjects "mcc_sandbox_moduleILS"} else {allMissionObjects "logic"}; 
-
-{
-	_sides = _x getVariable ["MCC_runwaySide",-1];
-	_sides = if (_sides == -1) then {[east,west,resistance,civilian]} else {[_sides call bis_fnc_sideType]}; 
-	if (((_x getVariable ["MCC_runwayDis",0])>0) && (playerside in _sides))then
-	{
-		_airports set [_counter,[_x,(_x getVariable ["MCC_runwayName","Runway"]),(_x getVariable ["MCC_runwayDis",0]),(_x getVariable ["MCC_runwayAG",false])]]; 
-		_counter = _counter +1;
-	};
-} foreach _searchArray;
-
-if (count _airports > 0) then
-{
-	_string = "(vehicle _this isKindOf 'Plane') && (_this == Driver vehicle _this)";
-	_null = player addaction ["<t color=""#01ffcc"">ILS</t>", {_this call MCC_fnc_ilsMain},[],-1,false,true,"teamSwitch",_string];
-};
 
 // Add MCC to the action menu
 if (getplayerUID player in MCC_allowedPlayers || "all" in MCC_allowedPlayers || serverCommandAvailable "#logout" || isServer || (player getvariable ["MCC_allowed",false])) then 

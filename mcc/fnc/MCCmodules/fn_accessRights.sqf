@@ -16,9 +16,10 @@ _logic 		= _this select 0;
 _namesList = call compile (_logic getvariable ["names","[]"]); 
 _logic setpos [1000,10,0];
 
-waituntil {alive player && MCC_initDone};
+waituntil {isplayer player && alive player && MCC_initDone};
 
-player removeAction mcc_actionInedx;			//remove previously added action
+//remove previously added action
+player removeAction mcc_actionInedx;			
 
 //who autohrized to access the module
 if (count _namesList == 0) then 
@@ -32,32 +33,26 @@ else
 
 _synced = synchronizedobjects _logic;									//Who synced with the module
 
-if (_names || (count _synced > 0)) then 								//We have autorized personal only
+if (_names || (count _synced > 0) || (serverCommandAvailable "#logout")) then 								//We have autorized personal only
 {							
 	if (((getPlayerUID player) in _namesList) || (player in _synced) || (serverCommandAvailable "#logout"))then 
-		{
-			mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
-			player setvariable ["MCC_allowed",true,true]; 
-		} 
-		else
-		{
-			player setvariable ["MCC_allowed",false,true];
-		}
+	{
+		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+		player setvariable ["MCC_allowed",true,true];
+	} 
+	else
+	{
+		player setvariable ["MCC_allowed",false,true];
+	}
 };
-	
-while {true} do 												//Case Admin DC
+
+//Case Admin DC	
+while {true} do 												
 {														
 	sleep 5;
 	if (serverCommandAvailable "#logout") then
 	{
-		if ((player getvariable ["MCC_allowed",false]) == false) then 
-		{
-			mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
-			player setvariable ["MCC_allowed",true,true]; 
-		}
-		else
-		{
-			player removeAction mcc_actionInedx;
-		};
+		mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+		player setvariable ["MCC_allowed",true,true];
 	};
 };

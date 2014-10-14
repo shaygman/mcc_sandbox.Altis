@@ -1,9 +1,8 @@
-private ["_truck","_caller","_index","_vars","_startPos"];
+private ["_truck","_caller","_startPos"];
 _caller 	= _this select 0;
 _truck 		= vehicle _caller;
-_index 		= _this select 2; 
-_vars 		= _this select 3; 
 
+if (isnil format ["MCC_START_%1",playerside]) exitWith {}; 
 _startPos = call compile format ["MCC_START_%1",playerside];
 if (isnil "_startPos") then {_startPos = [0,0,0]};
 

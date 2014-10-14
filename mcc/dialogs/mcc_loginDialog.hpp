@@ -4,6 +4,7 @@
 #define MCC_keyBindsOpenConsoleButtonIDC 8416
 #define MCC_keyBindsT2TButtonIDC 8417
 #define MCC_keyBindsGroupsButtonIDC 8418
+#define MCC_keyBindsMCCinteractionIDC 8419
 
 class mcc_loginDialog
 {
@@ -29,9 +30,9 @@ class mcc_loginDialog
 			colorBackground[] = { 0.051, 0.051, 0.051,1};
 			
 			x = 0.29375 * safezoneW + safezoneX;
-			y = 0.225107 * safezoneH + safezoneY;
+			y = 0.225 * safezoneH + safezoneY;
 			w = 0.423958 * safezoneW;
-			h = 0.26 * safezoneH;
+			h = 0.319 * safezoneH;
 		};
 		
 		class mcc_loginDialogFrame: MCC_RscText
@@ -40,9 +41,9 @@ class mcc_loginDialog
 			
 			colorBackground[] = { 0.150, 0.150, 0.150,1};
 			x = 0.299479 * safezoneW + safezoneX;
-			y = 0.236103 * safezoneH + safezoneY;
+			y = 0.236 * safezoneH + safezoneY;
 			w = 0.4125 * safezoneW;
-			h = 0.24 * safezoneH;
+			h = 0.297 * safezoneH;
 		};
 		class MCC_LoginTittle: MCC_RscText
 		{
@@ -108,9 +109,9 @@ class mcc_loginDialog
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.305208 * safezoneW + safezoneX;
-			y = 0.435 * safezoneH + safezoneY;
+			y = 0.489 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			h = 0.032987 * safezoneH;
 			colorBackground[] = {0.219,0.147,0.112,1};
 		};
 		class MCC_MissionMakerTittle: MCC_RscText
@@ -138,10 +139,10 @@ class mcc_loginDialog
 			idc = -1;
 
 			text = "Client FPS:"; //--- ToDo: Localize;
-			x = 0.402604 * safezoneW + safezoneX;
-			y = 0.435 * safezoneH + safezoneY;
+			x = 0.305208 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			h = 0.032987 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		class MCC_ServerFPSTittle: MCC_RscText
@@ -149,30 +150,30 @@ class mcc_loginDialog
 			idc = -1;
 
 			text = "Server FPS:"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.435 * safezoneH + safezoneY;
+			x = 0.396875 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
 			w = 0.0515625 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			h = 0.032987 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		class MCC_clientFPS: MCC_RscText
 		{
 			idc = 1021;
 
-			x = 0.454167 * safezoneW + safezoneX;
-			y = 0.435 * safezoneH + safezoneY;
+			x = 0.356771 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			h = 0.032987 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		class MCC_ServerFPS: MCC_RscText
 		{
 			idc = 1022;
 
-			x = 0.551563 * safezoneW + safezoneX;
-			y = 0.435 * safezoneH + safezoneY;
+			x = 0.448438 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			h = 0.032987 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		
@@ -270,6 +271,29 @@ class mcc_loginDialog
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
+		
+		class MCC_keyBindsMCCinteractiontext: MCC_RscText
+		{
+			idc = -1;
+			
+			text = "Interaction Key:"; //--- ToDo: Localize;
+			x = 0.5 * safezoneW + safezoneX;
+			y = 0.434 * safezoneH + safezoneY;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsMCCinteractionButton: MCC_RscButton
+		{
+			idc = MCC_keyBindsMCCinteractionIDC;
+			tooltip = "Click to change";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			action =  __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.603125 * safezoneW + safezoneX;
+			y = 0.434 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
 	
 		class MCC_login: MCC_RscButtonMenu
 		{
@@ -278,9 +302,9 @@ class mcc_loginDialog
 
 			text = "Login"; //--- ToDo: Localize;
 			x = 0.6375 * safezoneW + safezoneX;
-			y = 0.435 * safezoneH + safezoneY;
+			y = 0.489 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			h = 0.032987 * safezoneH;
 			colorBackground[] = {0.219,0.147,0.112,1};
 			tooltip = "Login as the mission maker"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";

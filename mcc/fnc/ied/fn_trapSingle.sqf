@@ -45,8 +45,7 @@ _init = "";
 _fakeIed = _trapkind createVehicle _pos; 
 _fakeIed setposatl _pos;
 
-_init = _init + format [";_this setVariable ['isIED',true,true];[_this,'%2',%3,%4,%5,%6,%7,%8] spawn MCC_fnc_createIED;"
-                 ,MCC_path
+_init = _init + format [";_this setVariable ['isIED',true,true];[_this,'%1',%2,%3,%4,%5,%6,'%7'] spawn MCC_fnc_createIED;"
 				 ,_trapvolume
 				 ,_IEDExplosionType
 				 ,_IEDDisarmTime

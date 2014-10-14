@@ -14,6 +14,8 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_c
 
 #define MCC_UM_LIST 3069
 #define MCC_UM_PIC 3070
+#define MCC_UM_KICK 3076
+#define MCC_UM_BAN 3077
 
 disableSerialization;
 MCC_mcc_screen = 2;	//Group gen for poping up the same menu again
@@ -35,6 +37,13 @@ if (MCC_trackMarker) then
 //Hide GroupWP
 ctrlShow [510,false];
 ctrlShow [MCC_GroupGenInfo_IDC,false];
+
+//Hide admin buttons for no-admins
+if !(serverCommandAvailable "#logout") then
+{
+	ctrlShow [MCC_UM_KICK,false];
+	ctrlShow [MCC_UM_BAN,false];
+};
 
 for "_i" from 500 to 518 step 1 do 
 {

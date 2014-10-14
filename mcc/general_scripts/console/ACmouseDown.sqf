@@ -23,6 +23,7 @@ _control1 = _mccdialog displayCtrl MCC_CONSOLE_AC_MISSILE_COUNT;
 _control2 = _mccdialog displayCtrl MCC_CONSOLE_AC_MISSILE_COUNT2;
 _control3 = _mccdialog displayCtrl MCC_CONSOLE_AC_MISSILE_COUNT3;
 
+if !(MCC_ACConsoleUp) exitWith {}; 
 if (_pressed==1) then //Control camera
 	{
 		MCC_ACPos = [0.5,0.44];

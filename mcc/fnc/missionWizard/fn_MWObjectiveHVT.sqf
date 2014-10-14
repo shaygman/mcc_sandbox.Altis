@@ -19,33 +19,36 @@ _factionPlayer = _this select 6;
 _preciseMarkers = _this select 7;
 
 MCC_MWcreateHostage =
-	{
-		private ["_side","_spawnPos","_group","_unit","_type","_init","_rank"];
-		_side = _this select 0;
-		_spawnPos = _this select 1;
-		_type = _this select 2;
-		
-		_group = creategroup _side; 
-		_rank = ["PRIVATE","CORPORAL","SERGEANT","LIEUTENANT"] select (floor random 3); 
-		_unit = _group createUnit [_type select 0,_spawnPos,[],0.5,"NONE"];
-		waituntil {alive _unit}; 
-		_unit setrank _rank;
-		_unit setBehaviour "SAFE";
-		_unit setUnitPos "UP";
-		_unit setpos _spawnPos;
-		_unit setpos _spawnPos;
-		removeallweapons _unit; 
-		MCC_tempName = format ["MCC_objectUnits_%1", ["MCC_objectUnitsCounter",1] call bis_fnc_counter];
-		
-		_init = format [";%2 = _this;_this setcaptive true; _this allowFleeing 0;_this disableAI 'MOVE'; removeallweapons _this; _this switchmove 'AmovPercMstpSsurWnonDnon'; _this addaction ['Secure Hostage','%1mcc\general_scripts\hostages\hostage.sqf',[0],6,false,true]; dostop _this;"
-						,MCC_path
-						,MCC_tempName
-						];
-
-		[[[netID _unit,_unit], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-		MCC_curator addCuratorEditableObjects [[_unit],false];
-		_unit;
-	};	
+{
+	private ["_side","_spawnPos","_group","_unit","_type","_init","_rank"];
+	_side = _this select 0;
+	_spawnPos = _this select 1;
+	_type = _this select 2;
+	
+	_group = creategroup _side; 
+	_rank = ["PRIVATE","CORPORAL","SERGEANT","LIEUTENANT"] select (floor random 3); 
+	_unit = _group createUnit [_type select 0,_spawnPos,[],0.5,"NONE"];
+	waituntil {alive _unit}; 
+	_unit setrank _rank;
+	_unit setBehaviour "SAFE";
+	_unit setUnitPos "UP";
+	_unit setpos _spawnPos;
+	_unit setpos _spawnPos;
+	removeallweapons _unit; 
+	_unit setVariable ["MCC_disarmed",true,true];
+	
+	MCC_tempName = format ["MCC_objectUnits_%1", ["MCC_objectUnitsCounter",1] call bis_fnc_counter];
+	
+	_init = format [";%2 = _this;_this setcaptive true; _this allowFleeing 0;_this disableAI 'MOVE'; removeallweapons _this; _this switchmove 'AmovPercMstpSsurWnonDnon'; dostop _this;"
+					,MCC_path
+					,MCC_tempName
+					];
+	
+	
+	[[[netID _unit,_unit], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+	MCC_curator addCuratorEditableObjects [[_unit],false];
+	_unit;
+};	
 
 
 

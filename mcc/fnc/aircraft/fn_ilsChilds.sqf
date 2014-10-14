@@ -263,4 +263,3 @@ _ringarray=[];
 //Clear up
 _unit removeAction _null;
 [2,getpos _ring,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group _unit]] call MCC_fnc_manageWp;
-_null = player addaction ["<t color=""#01ffcc"">ILS</t>", {_this call MCC_fnc_ilsMain},[],-1,false,true,"teamSwitch",_string];

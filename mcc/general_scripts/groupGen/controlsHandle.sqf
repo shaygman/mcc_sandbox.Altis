@@ -734,7 +734,8 @@ if (_action == 17) exitWith
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Lights","N/V","Bodies","Flashlights Add/Delete"];
+	} foreach ["Delete All","Delete All Units", "Delete Men", "Delete Vehicles", "Delete Tanks", "Delete Air", "Delete Ammoboxs","Delete Markers","Delete dead bodies","Destroy Lights",
+	           "Atmosphere - Warzone","Atmosphere - Sandstorm","Atmosphere - Blizzard","Atmosphere - Heatwave","Atmosphere - Clear","Remove N/V from units","Add Flashlights to all units"];
 	_comboBox lbSetCurSel 0;
 };
 

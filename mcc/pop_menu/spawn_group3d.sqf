@@ -404,14 +404,14 @@ if (mcc_missionmaker == (name player)) then
 		if (mcc_spawntype == "MINES") then	
 		{
 				Object3D = createMine [mcc_spawnname,[0,0,500], [], 0];
-				Object3D enableSimulation false;
+				Object3D enableSimulationGlobal true;
 				Object3D AddEventHandler ["HandleDamage", {False}];
 		}
 		else	
 		{
 			Object3D = mcc_spawnname createvehicleLocal [0,0,500];	
 			if (isnull Object3D) then {Object3D = "Sign_Arrow_Direction_F" createvehicle [0,0,500]}; 
-			Object3D enableSimulation false;
+			Object3D enableSimulationGlobal true;
 			Object3D AddEventHandler ["HandleDamage", {False}];
 		};
 	};

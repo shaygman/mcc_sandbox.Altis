@@ -149,6 +149,9 @@ else
 	MCC_dummyObject addEventHandler ["handleDamage",""];
 };
  
+//Disable collision 
+if (!isnil "Object3D") then {Object3D enableSimulationGlobal true};
+
 z3DHight = (getpos MCC_dummyObject) select 2;
 if (z3DHight < 0) then {z3DHight = 0};
 
@@ -283,6 +286,12 @@ MCC_3D_CAM_Handler =
 			
 			MCC_3DeditorMarker setMarkerDirLocal getdir MCC_3D_CAM;
 			MCC_3DeditorMarker setMarkerPoslocal [getpos MCC_3D_CAM select 0,getpos MCC_3D_CAM select 1];
+			
+			//Disable Collision
+			if (!isnil "Object3D") then
+			{
+				Object3D disableCollisionWith (nearestObject (getPos Object3D));
+			};
 		};
 		
 		if (! isnil "Object3D") then 

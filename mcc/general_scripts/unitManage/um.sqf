@@ -403,6 +403,68 @@ switch (_type) do
 						};
 		};
 		
+		case 15:	//Kick
+		{
+			if (MCC_UMUnit==0) then 
+			{
+				if (count MCC_selectedUnits > 1) then
+				{
+					player sidechat "Select a single player unit";
+				}
+				else
+				{
+					if (isPlayer (MCC_selectedUnits select 0)) then
+					{
+						private ["_answer","_name","_playerUID"];
+						_name 		= name (MCC_selectedUnits select 0);
+						_playerUID	= getPlayerUID (MCC_selectedUnits select 0);
+						_answer = [format ["<t font='TahomaB'>Are you sure you want to kick %1?</t>",_name],"Kick Player" ,nil,true] call BIS_fnc_guiMessage;	
+						waituntil {!isnil "_answer"};
+						if (_answer) then 
+						{
+							 serverCommand format["#kick %1",_playerUID];
+							 player sidechat format["%1 has been kicked from the server",_name];
+						};
+					};
+				};
+			} 
+			else 
+			{
+				player sidechat "Select a single player unit";
+			};
+		};
+		
+		case 16:	//Ban
+		{
+			if (MCC_UMUnit==0) then 
+			{
+				if (count MCC_selectedUnits > 1) then
+				{
+					player sidechat "Select a single player unit";
+				}
+				else
+				{
+					if (isPlayer (MCC_selectedUnits select 0)) then
+					{
+						private ["_answer","_name","_playerUID"];
+						_name 		= name (MCC_selectedUnits select 0);
+						_playerUID	= getPlayerUID (MCC_selectedUnits select 0);
+						_answer = [format ["<t font='TahomaB'>Are you sure you want to ban %1?</t>",_name],"Ban Player" ,nil,true] call BIS_fnc_guiMessage;	
+						waituntil {!isnil "_answer"};
+						if (_answer) then 
+						{
+							 serverCommand format["#exec ban %1",_playerUID];
+							 player sidechat format["%1 has been ban from the server",_name];
+						};
+					};
+				};
+			} 
+			else 
+			{
+				player sidechat "Select a single player unit";
+			};
+		};
+		
 		default //default - no match
 		{
 			player globalchat format ["Access Denied: type %1", _type];

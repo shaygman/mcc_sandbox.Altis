@@ -30,7 +30,7 @@ if !mcc_isloading then
 		trapdistance = MCC_ied_proxArray select (lbCurSel MCC_TRAPS_PROXIMITY);	//The minimum distance to activate the IED
 		iedside = MCC_ied_targetArray select (lbCurSel MCC_TRAPS_TARGET_FACTION);	//The target faction
 		MCC_IEDCount = MCC_IEDCount +1;
-	
+		
 		switch (_IEDtype) do		//Which trap do we want
 		{
 			case 0:	

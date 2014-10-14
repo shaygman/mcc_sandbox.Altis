@@ -1,5 +1,7 @@
 #define MCC_UM_LIST 3069
 #define MCC_UM_PIC 3070
+#define MCC_UM_KICK 3076
+#define MCC_UM_BAN 3077
 
 class MCC_UMDialogControls:MCC_RscControlsGroup
 {
@@ -156,6 +158,32 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Parachute the currently selected units"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		class MCC_UMKick: MCC_RscButton
+		{
+			idc = MCC_UM_KICK;
+			onButtonClick = __EVAL ("[15] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
+
+			text = "Kick"; //--- ToDo: Localize;
+			x = 0.442708 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			tooltip = "Kick selected player from the server"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		};
+		class MCC_UMBan: MCC_RscButton
+		{
+			idc = MCC_UM_BAN;
+			onButtonClick = __EVAL ("[16] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
+
+			text = "Ban"; //--- ToDo: Localize;
+			x = 0.505729 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.0515625 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			tooltip = "Ban selected player from the server"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
 		class MCC_UMListFrame: MCC_RscFrame

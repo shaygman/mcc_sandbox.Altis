@@ -104,7 +104,7 @@ _vehicles 			= if ((lbCurSel MCC_MWVehiclesIDC)==3) then
 						};
 
 _animals			= if ((lbCurSel MCC_MWAnimalsIDC)==0) then {true} else {false};						
-_weatherChange		= if ((lbCurSel MCC_MWWeatherComboIDC)==0) then {true} else {false};
+_weatherChange		= lbCurSel MCC_MWWeatherComboIDC;
 _wholeMap			= if ((lbCurSel MCC_MCC_MWAreaComboIDC)==0) then {true} else {false};
 MW_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
 _preciseMarkers		= if ((lbCurSel MCC_MWPreciseMarkersComboIDC)==0) then {true} else {false};
@@ -188,6 +188,9 @@ MCC_customGroupsSaveMW = [];
 } foreach MCC_customGroupsSave;	
 
 publicVariableServer "MCC_customGroupsSaveMW";
+publicVariableServer "mcc_zone_markposition";
+publicVariableServer "mcc_zone_marker_X";
+publicVariableServer "mcc_zone_marker_Y";
 
 if (MW_debug) then {player sidechat format ["Total enemy's units: %1", _totalEnemyUnits]};
 diag_log format ["MCC Mission Wizard total enemy Count = %1", _totalEnemyUnits];
@@ -219,6 +222,7 @@ while {dialog} do {closedialog 0; sleep 0.2};
 			};
 		};
 	};
+
 
 //Build the mission on the server
 [

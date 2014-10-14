@@ -4,7 +4,7 @@ class VAS
 	class functions
 	{
 		#ifdef MCCMODE
-		file = "\mcc_sandbox_mod\VAS\fucntions";
+		file = "\mcc_sandbox_mod\VAS\functions";
 		#else
 		file = "VAS\functions";
 		#endif

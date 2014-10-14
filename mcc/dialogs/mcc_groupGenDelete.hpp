@@ -44,12 +44,12 @@ class MCC_deleteDialogControls:MCC_RscControlsGroup
 			idc = -1;
 			onButtonClick = "hint 'Mark the area you want to delete'; MCC_delete_drawing = true";
 
-			text = "Delete"; //--- ToDo: Localize;
+			text = "Brush"; //--- ToDo: Localize;
 			x = 0.160417 * safezoneW;
 			y = 0.0549788 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0329871 * safezoneH;
-			tooltip = "Delete the certain type of objects"; //--- ToDo: Localize;
+			tooltip = "Apply brush to an area"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
 		class MCC_deleteClose: MCC_RscButtonMenu

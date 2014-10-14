@@ -2,11 +2,9 @@
 // ILS for aircrafts based on ILS Pro II 1.0 (by TiGGa)
 //Call from an ILS logic
 //===========================================================================================================================================================================	
-private ["_unit","_caller","_id","_airports","_null","_string","_actionsIndex","_counter","_searchArray"]; 
+private ["_unit","_airports","_null","_string","_actionsIndex","_counter","_searchArray"]; 
 waituntil {alive player}; 
 _unit 		= _this select 0;
-_caller 	= _this select 1;
-_id 		= _this select 2;
 
 //Find all allegeable airports
 _airports = []; 
@@ -23,9 +21,6 @@ _searchArray = if (MCC_isMode) then {allMissionObjects "mcc_sandbox_moduleILS"} 
 	};
 } foreach _searchArray;
 
-//remove action
-_unit removeAction _id;
-
 //Add action to each runway
 _actionsIndex = []; 
 // && !(isTouchingGround vehicle _this)
@@ -36,9 +31,7 @@ _string = "(vehicle _this isKindOf 'Plane') && (_this == Driver vehicle _this)";
 } foreach _airports;
 
 // Add close action
-_null = _unit addaction ["<t color=""#006651"">Close ILS</t>", {{player removeAction _x} foreach (player getVariable ["MCC_ilsActionsIndex",[]]);
-																_null = player addaction ["<t color=""#01ffcc"">ILS</t>", {_this call MCC_fnc_ilsMain},_this select 3,-1,false,true,"teamSwitch","(vehicle _this isKindOf 'Plane') && (_this == Driver vehicle _this)"];
-                                                               },[],-1,false,true,"teamSwitch",_string];
+_null = _unit addaction ["<t color=""#006651"">Close ILS</t>", {{player removeAction _x} foreach (player getVariable ["MCC_ilsActionsIndex",[]])},[],-1,false,true,"teamSwitch",_string];
 _actionsIndex set [count _actionsIndex, _null];
 
 _unit setVariable ["MCC_ilsActionsIndex",_actionsIndex];
