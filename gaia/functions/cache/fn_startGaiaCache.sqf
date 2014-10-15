@@ -2,32 +2,8 @@ if(!isServer ) exitWith {};
 private["_count"];
 
 
-while {(!MCC_GAIA_CACHE and !mcc_delayed_spawn)}
-	do {
-					{
-						if (
-					   			//Seems like allgroups opens up with all sorts of empty groups, better check it
-					   			(count(units _x)>0)
-					   			and
-					   			(alive (leader _x))
-					   			and
-					   			((_x) getVariable ["MCC_GAIA_CACHE", false])
-			  				)
-			  		then {MCC_GAIA_CACHE=true;};
-			  		//stop
-			  		if (MCC_GAIA_CACHE) exitwith {true;};
-		  		 }  forEach allgroups;
 
-		  		 //if not found go sleep
-		  		 if !(MCC_GAIA_CACHE) then {sleep 20;};
-
-		  		 //player globalchat "we wachten";
-		 } ;
-
-// We might be here because of delay spawning. In that case caching is enabled also
-MCC_GAIA_CACHE = true;
-
-while {MCC_GAIA_CACHE} do
+while {true} do
 {
 	 {
 			if (
