@@ -123,10 +123,20 @@ sleep 0.2;
 if (_explode) then 
 {
 	//If IED is a car lets make it burn
-	if (_fakeIed isKindOf "Car") then	
+	if (_fakeIed isKindOf "Car" || _fakeIed isKindOf "Wreck_Base") then	
 	{	
 		_fakeIed setdamage 1;
-		_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _fakeIed); _effect attachto [_fakeIed,[0,0,0]];
+		_effect = "test_EmptyObjectForFireBig" createVehicle (getpos _fakeIed); 
+		_effect attachto [_fakeIed,[0,0,0]];
+		_effect spawn 
+		{
+			sleep 180 + random 360;
+			while {!isnull (attachedTo _this)} do {detach _this};
+			_nearObjects =  (getpos _this) nearObjects 3;
+			{
+				if (typeOf _x in ["test_EmptyObjectForFireBig","#particlesource","#lightpoint"]) then {deletevehicle _x}; 
+			} foreach _nearObjects;
+		};
 	} 
 	else 
 	{

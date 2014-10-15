@@ -275,4 +275,17 @@ class MCC
 		class allowedDrivers{};
 		class allowedWeapons{};		
 	};
+	
+	class interaction
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\interaction";
+		#else
+		file = "mcc\fnc\interaction";
+		#endif
+		
+		class interactMan	{description = " Interaction with man type";};
+		class interactIED	{description = " Interaction with IED type";};
+		class interactDoor	{description = " Interaction with door type";};
+	};
 };

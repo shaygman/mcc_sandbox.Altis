@@ -1,10 +1,10 @@
+//==================================================================MCC_fnc_interactMan===============================================================================================
+// Interaction with man type
+// Example: [_suspect,_men] spawn MCC_fnc_interactMan; 
+//=================================================================================================================================================================================
 private ["_suspect","_men","_rand","_factor","_null","_suspectCorage"];
 _suspect = _this select 0;
 _men = _this select 1;
-
-//shout
-[[[netid _men,_men], format ["dontmove%1",floor (random 20)]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-sleep 2;
 
 //If neturalize make hime follow you
 if ((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && !(lineIntersects [getposasl player, getposasl _suspect])) exitWith
@@ -16,6 +16,10 @@ if ((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group
 	
 	uiNameSpace setVariable ["MCC_interactionActive",false]; 
 };
+
+//shout
+[[[netid _men,_men], format ["dontmove%1",floor (random 20)]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
+sleep 2;
 
 //Zipcuff
 if ((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player)) exitWith
@@ -55,10 +59,10 @@ _rand= random 20;
 _suspectCorage = _suspect getVariable "MCC_courage";
 if (isnil "_suspectCorage") then
 {
-	_suspectCorage = (rankId _suspect + (random 10 + _factor) + count units group _suspect)* (1-(getdammage _suspect));
+	_suspectCorage = (rankId _suspect + (random 10 + _factor) + count units group _suspect);
 	_suspect setVariable ["MCC_courage",_suspectCorage,true];
 };
-
+_suspectCorage = _suspectCorage * (1-(getdammage _suspect));
 //If comply
 if (random 25 > _suspectCorage || (_suspect getVariable ["MCC_Stunned", false])) then 
 {
@@ -73,6 +77,22 @@ if (random 25 > _suspectCorage || (_suspect getVariable ["MCC_Stunned", false]))
 		{
 		  deleteVehicle _x;
 		} forEach attachedObjects _suspect;
+	};
+	
+	//If left unintended for long will break free
+	_suspect spawn 
+	{
+		private ["_escapeChance","_suspect"];
+		_suspect		= _this;
+		_escapeChance 	= 0.01;
+				
+		while {alive _suspect && !(_suspect getVariable ["MCC_neutralize",false])} do
+		{
+			if (random 1 < _escapeChance) exitWith {_suspect setVariable ["MCC_disarmed",false,true]}; 
+			_escapeChance = _escapeChance + 0.01;
+		};
+		
+		_suspect setVariable ["MCC_disarmed",false]
 	};
 } 
 else

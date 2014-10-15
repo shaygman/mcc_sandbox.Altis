@@ -1,6 +1,11 @@
 Change log r10:
-- Added: Interaction with ST Flashbang.
-- Added: Zip cuff restrained AI.
+- Added: ST Flashbang grenade integrated to MCC to work with neutralizing enemy units, stunned units will be more likely to surrender.
+- Added: AI units will not automaticlly neutralized firt they will drop their weapons and stand with their hands up the player should approch them and zip cuff them
+         to restrain them or they might run off or even take their weapons again. 
+- Added: Specialist in Role Selection will gain XP from disarming IEDs. 
+- Added: 2 new resources food and meds, what we'll do with them? time wil tell. 
+- Fixed: In the spawn UI the delayed and cache buttons were Offset
+- Fixed: Vehicle fire caused by IED will put off after some time. 
 
 Change log r9:
 General:

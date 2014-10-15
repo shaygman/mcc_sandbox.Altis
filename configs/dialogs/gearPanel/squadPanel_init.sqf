@@ -202,9 +202,7 @@ _comboBox lbSetCurSel CP_classesIndex;
 		//Load available resources
 		_disp = CP_SQUADPANEL_IDD;
 		_array = call compile format ["MCC_res%1",playerside];
-		_disp displayCtrl 81 ctrlSetText str floor (_array select 1); 
-		_disp displayCtrl 82 ctrlSetText str floor (_array select 0); 
-		_disp displayCtrl 83 ctrlSetText str floor (_array select 2); 
+		{_disp displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85]; 
 
 		//Tickets
 		if (CP_activated) then

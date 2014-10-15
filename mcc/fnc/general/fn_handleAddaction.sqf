@@ -60,7 +60,7 @@ _text spawn
 			{
 				if (((_x getVariable ["MCC_IEDtype",""]) == "ied") && !(_x getVariable ["MCC_isInteracted",false])) then
 				{
-					_interactiveObjects set [count _interactiveObjects, [_x, format ["Press %1 to disarm",_keyName]]];
+					_interactiveObjects set [count _interactiveObjects, [_x, format ["Hold %1 to disarm",_keyName]]];
 				};
 			} foreach (getpos player nearObjects [MCC_dummy,10]);
 			

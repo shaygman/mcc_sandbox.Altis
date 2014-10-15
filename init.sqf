@@ -87,9 +87,9 @@ if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
 //--------------------logistics -------------------------------------------------------
 //Default resources
 //[ammo,supply,fuel]
-if (isnil "MCC_resWest") then {MCC_resWest = [500,500,500]};
-if (isnil "MCC_resEast") then {MCC_resEast = [500,200,0]};
-if (isnil "MCC_resGUER") then {MCC_resGUER = [500,200,0]};
+if (isnil "MCC_resWest") then {MCC_resWest = [500,500,200,200,100]};
+if (isnil "MCC_resEast") then {MCC_resEast = [500,500,200,200,100]};
+if (isnil "MCC_resGUER") then {MCC_resGUER = [500,500,200,200,100]};
 
 //--------------------Screens -------------------------------------------------------
 //Allow start location dialog on JIP or after respawn
@@ -1128,7 +1128,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	
 	//Interaction key
 	(findDisplay 46) displayAddEventHandler ["KeyDown",format ["if ((_this select 1 ==((MCC_keyBinds select 4) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 4) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 4) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 4) select 2))) then {MCC_interactionKey_down = true; MCC_interactionKey_up = false; null = [] execVM '%1mcc\general_scripts\interaction\interaction.sqf'};",MCC_path]];
-	(findDisplay 46) displayAddEventHandler ["KeyUp","if ((_this select 1 ==((MCC_keyBinds select 4) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 4) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 4) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 4) select 2))) then {MCC_interactionKey_down = false; MCC_interactionKey_up = true};"];
+	(findDisplay 46) displayAddEventHandler ["KeyUp","if (_this select 1 ==((MCC_keyBinds select 4) select 3)) then {MCC_interactionKey_down = false; MCC_interactionKey_up = true; MCC_interactionKey_holding = false};"];
 
 	//Squad Dialog
 	MCC_squadDialogOpen = false;

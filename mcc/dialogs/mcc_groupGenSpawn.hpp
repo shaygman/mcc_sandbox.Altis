@@ -276,8 +276,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Delayed:"; //--- ToDo: Localize;
-			x = 0.276563 * safezoneW + safezoneX;
-			y = 0.478 * safezoneH + safezoneY;
+			x = 0.00572967 * safezoneW;
+			y = 0.26 * safezoneH;
 			w = 0.045 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -288,8 +288,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 			idc = -1;
 
 			text = "Cache:"; //--- ToDo: Localize;
-			x = 0.351042 * safezoneW + safezoneX;
-			y = 0.478 * safezoneH + safezoneY;
+			x = 0.09 * safezoneW;
+			y = 0.26 * safezoneH;
 			w = 0.045 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -299,8 +299,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		{
 			idc = 3022;
 			tooltip = "Units will not spawn until players are nearby";
-			x = 0.322396 * safezoneW + safezoneX;
-			y = 0.478 * safezoneH + safezoneY;
+			x = 0.05 * safezoneW;
+			y = 0.26 * safezoneH;
 			w = 0.0171875 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
@@ -309,8 +309,8 @@ class MCC_spawnDialogControls:MCC_RscControlsGroup
 		{
 			idc = 3023;
 			tooltip = "Units will spawn and cache automatically";
-			x = 0.396875 * safezoneW + safezoneX;
-			y = 0.478 * safezoneH + safezoneY;
+			x = 0.13 * safezoneW;
+			y = 0.26 * safezoneH;
 			w = 0.0171875 * safezoneW;
 			h = 0.022 * safezoneH;
 		};

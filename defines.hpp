@@ -32,6 +32,9 @@
 #include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
 #include "mcc\Dialogs\mcc_logisticsBaseBuild.hpp"
 
+//----Interaction-----------------
+#include "mcc\Dialogs\mcc_interactionMenu.hpp"
+
 //---- test I should delete it at the end
 #include "mcc\dialogs\test.hpp"
 //--------------------------------CP------------------------------------------------
@@ -107,6 +110,7 @@ class RscTitles
         };
 	};
 
+	#include "mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "mcc\dialogs\compass.hpp"
 	#include "ais_injury\dialogs\rscTitlesAIS.hpp"	//A3 wounding system
 };

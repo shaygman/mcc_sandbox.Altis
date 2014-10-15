@@ -43,21 +43,12 @@ _init = "";
 
 //Ammo?
 _fakeIed = _trapkind createVehicle _pos; 
-_fakeIed setposatl _pos;
-
-_init = _init + format [";_this setVariable ['isIED',true,true];[_this,'%1',%2,%3,%4,%5,%6,'%7'] spawn MCC_fnc_createIED;"
-				 ,_trapvolume
-				 ,_IEDExplosionType
-				 ,_IEDDisarmTime
-				 ,_IEDJammable
-				 ,_IEDTriggerType
-				 ,_trapdistance
-				 ,_iedside
-				 ];
-				 
-[[[netid _fakeIed,_fakeIed], _init], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
+_fakeIed setpos _pos;
 _fakeIed setdir _iedDir;
+_fakeIed setVariable ["isIED",true,true];
 
+			 
+[[_fakeIed,_trapvolume,_IEDExplosionType,_IEDDisarmTime,_IEDJammable,_IEDTriggerType,_trapdistance,_iedside], "MCC_fnc_createIED", false, false] spawn BIS_fnc_MP;
 MCC_curator addCuratorEditableObjects [[_fakeIed],false]; 
 
 //Spawn AMBUSH

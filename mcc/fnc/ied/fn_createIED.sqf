@@ -13,7 +13,7 @@
 
 //Made by Shay_Gman (c) 06.14
 private ["_pos", "_trapvolume", "_IEDExplosionType", "_IEDDisarmTime", "_IEDJammable", "_IEDTriggerType", "_IEDAmbushGroup",
- "_trapdistance", "_iedside", "_fakeIed", "_dummy","_ok","_iedDir","_init","_isAmmo"]; 
+ "_trapdistance", "_iedside", "_fakeIed", "_dummy","_ok","_iedDir","_init"]; 
 disableSerialization;
 
 if (!isServer) exitWIth {}; 
@@ -41,9 +41,6 @@ if (typeName _iedside == "STRING") then
 			
 _pos 	= getposatl _fakeIed;
 _iedDir =  getdir _fakeIed;
-
-//We have an ammo not an object 
-_isAmmo = if ((_fakeIed getVariable ["IEDClass",""]) != "") then {true} else {false};
 
 _dummy = MCC_dummy createVehicle _pos;
 hideObjectGlobal _dummy;

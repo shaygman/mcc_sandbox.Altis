@@ -53,9 +53,7 @@ CP_gearPanelPilot ctrlsettext format ["Pilot Level: %1 Exp: %2",pilotLevel selec
 		//Load available resources
 		_disp = CP_GEARPANEL_IDD;
 		_array = call compile format ["MCC_res%1",playerside];
-		_disp displayCtrl 81 ctrlSetText str floor (_array select 1); 
-		_disp displayCtrl 82 ctrlSetText str floor (_array select 0); 
-		_disp displayCtrl 83 ctrlSetText str floor (_array select 2);
+		{_disp displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85];
 		sleep 1; 
 	};
 };

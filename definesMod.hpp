@@ -33,7 +33,9 @@
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_logisticsBaseBuild.hpp"
 
-#include "\mcc_sandbox_mod\mcc\Dialogs\compass.hpp"
+//----Interaction-----------------
+#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_interactionMenu.hpp"
+
 
 //--------------------------------CP------------------------------------------------
 #define CPPATH "\mcc_sandbox_mod\"
@@ -84,6 +86,7 @@ class CfgNotifications
 
 class RscTitles
 {
+	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\compass.hpp"
 	#include "\mcc_sandbox_mod\hcam\hcam.hpp"
 };
