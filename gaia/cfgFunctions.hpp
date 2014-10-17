@@ -63,6 +63,7 @@ class GAIA
         class calculateOptimalPosition {};
         class classifySide {};
         class doTask {};
+        class event {};
         class fireFlare {};
         class generateBuildingPatrolWaypoints {};
         class generateWaypoints {};
@@ -81,6 +82,7 @@ class GAIA
         class issueOrders {};
         class occupy {};
         class removeWaypoints {};
+        
     };
 
     class Orders
