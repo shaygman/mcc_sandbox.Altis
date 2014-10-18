@@ -28,6 +28,7 @@ _gaia_zone_intend	= [];
 _zone							= "";
 _ZoneStatus				= [];
 _Targets					= [];
+_factions         = [];
 _TargetInZone			= false;
 _TargetNear				= false;
 _TempTargets			= [];
@@ -43,18 +44,22 @@ switch (_side) do
 		  case west				: {
 		  										_ZoneStatus = MCC_GAIA_ZONESTATUS_WEST;
 		  										_Targets		= MCC_GAIA_TARGETS_WEST;
+		  										_factions	  = MCC_GAIA_FACTIONS_WEST;
 		  									};
 		  case east				: {
 		  										_ZoneStatus = MCC_GAIA_ZONESTATUS_EAST;
-		  										_Targets		= MCC_GAIA_TARGETS_EAST
+		  										_Targets		= MCC_GAIA_TARGETS_EAST;
+		  										_factions	  = MCC_GAIA_FACTIONS_EAST;
 		  									};
 		  case independent: {
 		  										_ZoneStatus = MCC_GAIA_ZONESTATUS_INDEP;
 		  										_Targets		=	MCC_GAIA_TARGETS_INDEP;
+		  										_factions	  = MCC_GAIA_FACTIONS_INDEP;		  										
 		  									};
 		  case civilian		: {
 		  										_ZoneStatus = MCC_GAIA_ZONESTATUS_CIV;
 		  										_Targets		=	MCC_GAIA_TARGETS_CIV;
+		  										_factions	  = MCC_GAIA_FACTIONS_CIV;
 		  									};
 		};
 
@@ -74,7 +79,12 @@ switch (_side) do
  	 			_gaia_zone_intend = _x getVariable ["GAIA_ZONE_INTEND",[]];
  	 			if ((count _gaia_zone_intend)>0) then
  	 			{
+ 	 				//Lets build all active factions here
+ 	 				_faction = faction leader _x;
+ 	 				if  !(_faction in _factions) then {_factions=_factions + [ _faction];};
+ 	 				
  	 				_zone = _gaia_zone_intend select 0;
+ 	 				
  	 				if !(_zone in _TempZones) then
  	 					{
 
@@ -270,21 +280,25 @@ switch (_side) do
 		  										MCC_GAIA_GROUPS_WEST		=_TempGroups;
 		  										MCC_GAIA_ZONES_WEST			=_TempZones;
 		  										MCC_GAIA_ZONESTATUS_WEST=_ZoneStatus;
+		  										MCC_GAIA_FACTIONS_WEST  = _factions;
 		  									};
 		  case east				: {
 		  										MCC_GAIA_GROUPS_EAST		=_TempGroups;
 		  										MCC_GAIA_ZONES_EAST			=_TempZones;
 		  										MCC_GAIA_ZONESTATUS_EAST=_ZoneStatus;
+		  										MCC_GAIA_FACTIONS_EAST  = _factions;
 		  									};
 		  case independent: {
 		  										MCC_GAIA_GROUPS_INDEP 	=_TempGroups;
 		  										MCC_GAIA_ZONES_INDEP		=_TempZones;
 		  										MCC_GAIA_ZONESTATUS_INDEP=_ZoneStatus;
+		  										MCC_GAIA_FACTIONS_INDEP  = _factions;
 		  									};
 		  case civilian: {
 		  										MCC_GAIA_GROUPS_CIV		 	=_TempGroups;
 		  										MCC_GAIA_ZONES_CIV			=_TempZones;
 		  										MCC_GAIA_ZONESTATUS_CIV	=_ZoneStatus;
+		  										MCC_GAIA_FACTIONS_CIV   = _factions;
 		  									};
 		};
 
