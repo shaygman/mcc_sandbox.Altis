@@ -1,6 +1,42 @@
 class GAIA
 {
     tag = "GAIA";
+    
+    class ambient
+    {
+        #ifdef MCCMODE
+        file = "\mcc_sandbox_mod\gaia\functions\ambient";
+        #else
+        file = "gaia\functions\ambient";
+        #endif
+
+        class ambientCombat {};
+        class ACcleanUp {};
+        class ACpatrol {};
+        class ACskills {};
+        class AIcommunication {};
+        class closeDoors {};
+        class deleteOnDestination {};
+        class diveGroup {};
+        class findLandPosition {};
+        class follow {};
+        class fullAirVehicle {};
+        class fullLandVehicle {};
+        class fullWaterVehicle {};
+        class getPlayers {};
+        class isInMarker {};
+        class killAfterDelay {};
+        class menGroup {};
+        class nearestBuilding {};
+        class randomSpot {};
+        class removeAC {};
+        class removeDead {};
+        class removeGroupV2 {};
+        class simpleCache {};
+        class vehicleInit {};
+        
+    };
+
 
     class Cache
     {

@@ -28,10 +28,18 @@ if (count(_NearestEnemyGroups)>0) then
  	_side		 = side leader(_NearestEnemyGroups select 0);
  	// Can be a water pos
  	_pos = [getPos player, _min, _max, 30, 1, 20, 0] call BIS_fnc_findSafePos;
+ 	rrr=_pos;
  	//Did we get the world centerpos? Fuck it....
  	//"soldier", "car", "motorcycle", "tank", "helicopter", "airplane", "ship"
  	_simu="";
- 	if !((  (getArray(configFile >> "CfgWorlds" >> worldName >> "centerPosition")) distance _pos)==0) then
+ 	if (
+ 			!((  (getArray(configFile >> "CfgWorlds" >> worldName >> "centerPosition")) distance _pos)==0)
+ 			and
+ 			!([_pos,_min] call GAIA_fnc_isNearPlayer)
+ 			and
+ 			(_pos distance player)> _min
+ 		 )
+  then
  	{
  		if (surfaceIsWater _pos) then
  		{
@@ -86,8 +94,10 @@ if (count(_NearestEnemyGroups)>0) then
 	 {
 	 	
 	
-
+    ppp=[];
+    
 	 	[_spawnGrp, _pos, 200]call BIS_fnc_taskPatrol;
+	 	ppp=_pos;
 	 };
  		
  		
