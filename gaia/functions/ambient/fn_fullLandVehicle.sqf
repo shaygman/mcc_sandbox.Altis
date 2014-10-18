@@ -13,19 +13,19 @@ _veh = [];
 
 switch(_side)do{
 	case 0:{
-		_BLUhq = createCenter west;
+	//	_BLUhq = createCenter west;
 		_BLUgrp = createGroup west;
 		_veh = _BLUveh;
 		_grp = _BLUgrp;
 	};
 	case 1:{
-		_OPFhq = createCenter east;
+	//	_OPFhq = createCenter east;
 		_OPFgrp = createGroup east;
 		_veh = _OPFveh;
 		_grp = _OPFgrp;
 	};
 	case 2:{
-		_INDhq = createCenter resistance;
+	//	_INDhq = createCenter resistance;
 		_INDgrp = createGroup resistance;
 		_veh = _INDveh;
 		_grp = _INDgrp;

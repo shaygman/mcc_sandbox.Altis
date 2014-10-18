@@ -160,14 +160,21 @@ while{true}do{
 				
 			};
 
-		_IndepUnits 			= 0;
-		_WestUnits				= 0;
-		_EastUnits				= 0;
-		_TotInRangeWUnits = 0;
-		_TotInRangeEUnits = 0;
-		_TotInRangeIUnits = 0;
-		_TotUnits					= 0;
-		_TotInRangeUnits  = 0;
+		_IndepUnits 				= 0;
+		_WestUnits					= 0;
+		_EastUnits					= 0;
+		_TotInRangeWUnits 	= 0;
+		_TotInRangeEUnits 	= 0;
+		_TotInRangeIUnits 	= 0;
+		_TotUnits						= 0;
+		_TotInRangeUnits  	= 0;
+		_FactionsEast				= [];
+		_FactionsWest				= [];
+		_FactionsIndep			= [];
+		_FactionsEastRange	= [];
+		_FactionsWestRange	= [];
+		_FactionsIndepRange	= [];
+		_factions           = [];
 		
 		
 		{
@@ -194,29 +201,47 @@ while{true}do{
 				{
 			    case west:
 			    {
-			        if _inRange then {_TotInRangeUnits = _TotInRangeUnits + 1;_TotInRangeWUnits = _TotInRangeWUnits + 1;};
+			        if _inRange then 
+			        {
+			        	_TotInRangeUnits = _TotInRangeUnits + 1;
+			        	_TotInRangeWUnits = _TotInRangeWUnits + 1;
+			        	if !((faction _x) in _FactionsWestRange) then {_FactionsWestRange=_FactionsWestRange+ [(faction _x)]};
+			        };
+			        if !((faction _x) in _FactionsWest) then {_FactionsWest=_FactionsWest+ [(faction _x)]};
 			        _WestUnits = _WestUnits + 1;
 			        _TotUnits  = _TotUnits + 1;
-			        hint ("found a west dude"+ str _TotUnits);
+			        //hint ("found a west dude"+ str _TotUnits);
 			        
 			        
 			    };
 			
 			    case east:
 			    {
-			        if _inRange then {_TotInRangeUnits = _TotInRangeUnits + 1;_TotInRangeEUnits = _TotInRangeEUnits + 1;};
+			        if _inRange then 
+			        {
+			        	_TotInRangeUnits = _TotInRangeUnits + 1;
+			        	_TotInRangeEUnits = _TotInRangeEUnits + 1;
+			        	if !((faction _x) in _FactionsEastRange) then {_FactionsEastRange=_FactionsEastRange+ [(faction _x)]};
+			        };
+			        if !((faction _x) in _FactionsEast) then {_FactionsEast=_FactionsEast+ [(faction _x)]};
 			        _EastUnits = _EastUnits + 1;
 			        _TotUnits  = _TotUnits + 1;
-			        hint ("found a east dude"+ str _TotUnits);
+			        //hint ("found a east dude"+ str _TotUnits);
 			        
 			    };    
 			    
 			    case independent:
 			    {
-			        if _inRange then {_TotInRangeUnits = _TotInRangeUnits + 1;_TotInRangeIUnits = _TotInRangeIUnits + 1;};
+			        if _inRange then 
+			        {
+			        	_TotInRangeUnits = _TotInRangeUnits + 1;
+			        	_TotInRangeIUnits = _TotInRangeIUnits + 1;
+			        	if !((faction _x) in _FactionsIndepRange) then {_FactionsIndepRange=_FactionsIndepRange+ [(faction _x)]};
+			        };
+			       if !((faction _x) in _FactionsIndep) then {_FactionsIndep=_FactionsIndep+ [(faction _x)]};
 			        _IndepUnits	= _IndepUnits + 1;
 			        _TotUnits  	= _TotUnits + 1;
-			        hint ("found a indep dude" + str _TotUnits);
+			        //hint ("found a indep dude" + str _TotUnits);
 			        
 			    };    			    
 				};
@@ -225,6 +250,7 @@ while{true}do{
 		} foreach allUnits;
 		
 		_DoStuff = true;
+		
 		// In case we have no units found, make sure we dont devide by zero so set it to [0,0,0]
 		if (_TotUnits ==0) 
 		then
@@ -234,72 +260,42 @@ while{true}do{
 			// If we have units in range, make a ratio based on that
 			if (_TotInRangeUnits==0)
 			then
-				{_sideRatios = [(_WestUnits/_TotUnits),(_EastUnits/_TotUnits),(_IndepUnits/_TotUnits)];}
+				{
+					_sideRatios = [(_WestUnits/_TotUnits),(_EastUnits/_TotUnits),(_IndepUnits/_TotUnits)];
+					_factions =[_FactionsWest,_FactionsEast,_FactionsIndep];
+				}
 			//and in case we have nothing in range, go make it from total map (biggest dude wins)
 			else
-				{_sideRatios = [(_TotInRangeWUnits/_TotInRangeUnits),(_TotInRangeEUnits/_TotInRangeUnits),(_TotInRangeIUnits/_TotInRangeUnits)];}
+				{
+					_sideRatios = [(_TotInRangeWUnits/_TotInRangeUnits),(_TotInRangeEUnits/_TotInRangeUnits),(_TotInRangeIUnits/_TotInRangeUnits)];
+					_factions =[_FactionsWestRange,_FactionsEastRange,_FactionsIndepRange];
+				}
 		};
-		
-		/*
-		_fullRatio = (_sideRatios select 0) + (_sideRatios select 1) + (_sideRatios select 2);
-		_perRatio = _groupAmount / _fullRatio;
-		_westRatio = floor((_sideRatios select 0) * _perRatio);
-		_eastRatio = floor((_sideRatios select 1) * _perRatio);
-		_indeRatio = floor((_sideRatios select 2) * _perRatio);
-		_lossRatio = _groupAmount - _westRatio - _eastRatio - _indeRatio;
-		*/
-		
-		
-		/*
-		_westGroups = {(side _x) == west} count LV_ACS_activeGroups;
-		_eastGroups = {(side _x) == east} count LV_ACS_activeGroups;
-		_indeGroups = {(side _x) == resistance} count LV_ACS_activeGroups;
-		//hint format["w: %1, e: %2, i: %3",_westGroups,_eastGroups,_indeGroups];
-		if(_westGroups < _westRatio)then{
-			_side = 0;
-		}else{
-			if(_eastGroups < _eastRatio)then{
-				_side = 1;
-			}else{
-				if(_indeGroups < _indeRatio)then{
-					_side = 2;
-				}else{
-					_leftSides = [];
-					if((_sideRatios select 0) > 0)then{_leftSides set[(count _leftSides),0];};
-					if((_sideRatios select 1) > 0)then{_leftSides set[(count _leftSides),1];};
-					if((_sideRatios select 2) > 0)then{_leftSides set[(count _leftSides),2];};
-					if(count _leftSides > 1)then{
-						_side = _leftSides call BIS_fnc_selectRandom;
-						{
-							if(_x > _side)then{ _side = _x; };
-						}forEach _leftSides;
-					}else{_side = _leftSides select 0;};
-					//hint format["extra group's side: %1",_side];
-				};
-			};
-		};
-		*/
+		hint format ["%1 ratio: %2",_factions,_sideRatios];
+	
 		if _DoStuff then
 		{
-				_side = [[0,1,2],_sideRatios] call BIS_fnc_selectRandomweighted;
+				_side 		= [[0,1,2],_sideRatios] call BIS_fnc_selectRandomweighted;
+				_faction  = [(_factions select _side)] call BIS_fnc_selectRandom;
+				hint format["Found %1",_faction];
 					
 				_menOrVehicle = floor(random 10);
 				if(_menOrVehicle < 4)then{
 					if(surfaceIsWater _spawnPos)then{
-						_grp = [_spawnPos, _side] call GAIA_fnc_fullWaterVehicle;
+						_grp = [_spawnPos, _side,_faction] call GAIA_fnc_fullWaterVehicle;
 					}else{
 						_landOrAir = floor(random 3);
 						if(_landOrAir > 1)then{
-							_grp = [_spawnPos, _side] call GAIA_fnc_fullAirVehicle;
+							_grp = [_spawnPos, _side,_faction] call GAIA_fnc_fullAirVehicle;
 						}else{
-							_grp = [_spawnPos, _side] call GAIA_fnc_fullLandVehicle;
+							_grp = [_spawnPos, _side,_faction] call GAIA_fnc_fullLandVehicle;
 						};
 					};
 				}else{
 					if(surfaceIsWater _spawnPos)then{
-						_grp = [_spawnPos, _side, [10,3]] call GAIA_fnc_diveGroup;
+						_grp = [_spawnPos, _side, [10,3],_faction] call GAIA_fnc_diveGroup;
 					}else{
-						_grp = [_spawnPos, _side, [10,3]] call GAIA_fnc_menGroup;
+						_grp = [_spawnPos, _side, [10,3],_faction] call GAIA_fnc_menGroup;
 					};
 				};
 				if(typeName _skills != "STRING")then{_skls = [_grp,_skills] call GAIA_fnc_ACskills;};
