@@ -44,36 +44,21 @@
 if (!isServer)exitWith{};
 private ["_patrolType","_customInit","_communication","_eastGroups","_westGroups","_skills","_syncedUnit","_groupAmount","_grp","_minRange","_maxRange","_minTime","_maxTime","_centerPos","_range","_dir","_spawnPos","_side","_menOrVehicle","_timeDelay","_skls","_spotValid","_leftSides","_fullRatio","_perRatio","_westRatio","_eastRatio","_indeRatio","_lossRatio","_indeGroups","_sideRatios","_dissapearDistance","_waterUnitChance","_landOrAir","_mp","_tempPos","_isFlat","_d1","_m","_avoidArray"];
 
-_minRange = if(count _this > 0)then{_this select 0;} else {450};	 
-_maxRange = if(count _this > 1)then{_this select 1;} else {900};	 
-_minTime = if(count _this > 2)then{_this select 2;} else {30};	 
-_maxTime = if(count _this > 3)then{_this select 3;} else {300};	 
-_groupAmount = if(count _this > 4)then{_this select 4;} else {6};
-_sideRatios = if(count _this > 5)then{_this select 5;} else {[1,1,1]}; 
-_syncedUnit = if(count _this > 6)then{_this select 6;} else {player};	 
-_skills = if(count _this > 7)then{_this select 7;} else {"default"};	 
-_communication = if(count _this > 8)then{_this select 8;} else {0};	 
-_dissapearDistance = if(count _this > 9)then{_this select 9;} else {2500};	 
-_customInit = if(count _this > 10)then{_this select 10;} else {nil};	 
-_patrolType = if(count _this > 11)then{_this select 11;} else {1};	
-_mp = if(count _this > 12)then{_this select 12;} else {true};
+_minRange 				 = MCC_GAIA_AMBIENT_minRange;	 
+_maxRange 			   = MCC_GAIA_AMBIENT_maxRange;	 
+_minTime 					 = 3;	 
+_maxTime 					 = 10;	 
+_groupAmount 			 = 10;
+_sideRatios 			 = [0,1,0]; 
+_syncedUnit 			 = [];
+_skills 					 = "default";
+_communication 		 = 1;	 
+_dissapearDistance = _maxRange+200;
+_customInit 			 = nil;	 
+_patrolType 			 = 1;	
+_mp = true;
 
-/*
-if(isNil("LV_fullLandVehicle"))then{LV_fullLandVehicle = compile preprocessFile "LV\LV_functions\LV_fnc_fullLandVehicle.sqf";};
-if(isNil("LV_fullAirVehicle"))then{LV_fullAirVehicle = compile preprocessFile "LV\LV_functions\LV_fnc_fullAirVehicle.sqf";};
-if(isNil("LV_fullWaterVehicle"))then{LV_fullWaterVehicle = compile preprocessFile "LV\LV_functions\LV_fnc_fullWaterVehicle.sqf";};
-if(isNil("LV_menGroup"))then{LV_menGroup = compile preprocessFile "LV\LV_functions\LV_fnc_menGroup.sqf";};
-if(isNil("LV_diveGroup"))then{LV_diveGroup = compile preprocessFile "LV\LV_functions\LV_fnc_diveGroup.sqf";};
-//if(isNil("GAIA_fnc_ACpatrol"))then{GAIA_fnc_ACpatrol = compile preprocessFile "LV\LV_functions\LV_fnc_ACpatrol.sqf";};
-//if(isNil("LV_ACcleanUp"))then{LV_ACcleanUp = compile preprocessFile "LV\LV_functions\LV_fnc_ACcleanUp.sqf";};
-//if(isNil("LV_ACskills"))then{LV_ACskills = compile preprocessFile "LV\LV_functions\LV_fnc_ACskills.sqf";};
-//if(_communication == 1)then{if(isNil("LV_AIcommunication"))then{LV_AIcommunication = compile preprocessFile "LV\LV_functions\LV_fnc_AIcommunication.sqf";};};
-if(isNil("LV_vehicleInit"))then{LV_vehicleInit = compile preprocessFile "LV\LV_functions\LV_fnc_vehicleInit.sqf";};
-if(isNil("LV_RandomSpot"))then{LV_RandomSpot = compile preprocessFile "LV\LV_functions\LV_fnc_randomSpot.sqf";};
-if(_mp)then{if(isNil("LV_GetPlayers"))then{LV_GetPlayers = compile preprocessFile "LV\LV_functions\LV_fnc_getPlayers.sqf";};};
-if(isNil("LV_FindLandPosition"))then{LV_FindLandPosition = compile preprocessFile "LV\LV_functions\LV_fnc_findLandPosition.sqf";};
-if(isNil("LV_IsInMarker"))then{LV_IsInMarker = compile preprocessFile "LV\LV_functions\LV_fnc_isInMarker.sqf";};
-*/
+
 
 if(isNil("LV_ACS_activeGroups"))then{LV_ACS_activeGroups = [];}; 
 if(isNil("LV_AI_westGroups"))then{LV_AI_westGroups = [];}; 

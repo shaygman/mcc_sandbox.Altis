@@ -114,15 +114,13 @@ while{true}do{
 				//[(getPos _leader), "COLORBLUE"] call fnc_Create_Marker;
 				//nul = [_newPos, (getPos _leader), "COLORGREEN", 2, 2] call fn_drawLine;
 
-			if((typeName _pType) == "ARRAY")then{
+			
 				_wp1 = _wGroup addWaypoint [_newPos, 0];
-				_wp1 setWaypointType (_pType select 1);
-				_wp1 setWaypointBehaviour (_pType select 0);
+				_wp1 setWaypointType ([ "MOVE", "DESTROY" , "SAD", "HOLD","SENTRY","GUARD" ] CALL BIS_FNC_SELECTRANDOM);
+				_wp1 setWaypointBehaviour ([  "CARELESS" ,"SAFE", "AWARE" ,"COMBAT" , "STEALTH" ] CALL BIS_FNC_SELECTRANDOM);
 				_wp1 setWaypointCombatMode "RED";
 				_wp1 setWaypointSpeed "FULL";
-			}else{
-				{_x doMove _newPos;}forEach units _wGroup;
-			};
+			
 		};
 		sleep 1;
 		_i = _i + 1;
