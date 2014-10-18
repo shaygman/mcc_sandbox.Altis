@@ -54,7 +54,7 @@ while{true}do{
 			_nsUnit = _sUnit;
 		};
 		
-		if(unitReady _leader)then{
+		if((count (waypoints _wGroup ) == (currentWaypoint _wGroup)))then{
 			_angLe = 45;
 			_validSpot = false;
 			_range = _leader distance _nsUnit;
