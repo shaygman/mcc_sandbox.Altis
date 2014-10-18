@@ -1,20 +1,35 @@
-private ["_targets","_null","_selected","_waitTime","_objects","_dir","_target","_vehiclePlayer","_airports","_counter","_searchArray","_sides",
+private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePlayer","_airports","_counter","_searchArray","_sides",
 		 "_positionStart","_positionEnd","_pointIntersect","_break"];
-_waitTime = 1;
 _break = false; 
 
 //Do not fire while inside a dialog 
 if (dialog) exitWith {}; 
 sleep 0.3;
 MCC_interactionKey_holding =  if (MCC_interactionKey_down) then {true} else {false};
+//Fails safe if ui get stuck
+if (time > (player getVariable ["MCC_interactionActiveTime",time-5])) then {player setVariable ["MCC_interactionActive",false]};
 
 //If we are busy quit
-if (uiNameSpace getVariable ["MCC_interactionActive",false]) exitWith {};
-uiNameSpace setVariable ["MCC_interactionActive",true];   
+if ((player getVariable ["MCC_interactionActive",false]) || (time < (player getVariable ["MCC_interactionActiveTime",time-5])+2)) exitWith {};
+player setVariable ["MCC_interactionActive",true];   
+player setVariable ["MCC_interactionActiveTime",time];
 
 //Outside of vehicle
 if (vehicle player == player) then
 {
+	//Handle man
+	_target = cursorTarget;
+	player sidechat str _target;
+	if (_target isKindof "CAManBase" && (player distance _target < 30)) exitWith
+	{
+		//_null= [_target, player] call MCC_fnc_interactMan;
+		_null= [_target,player] execvm "mcc\fnc\interaction\fn_interactMan.sqf";
+		player setVariable ["MCC_interactionActive",false];  
+		_break = true;
+	};
+	
+	if (_break) exitWith {}; 
+	
 	_objects = player nearObjects [MCC_dummy,10];
 	
 	//Handle Objects
@@ -42,27 +57,14 @@ if (vehicle player == player) then
 	_pointIntersect = lineIntersectsWith [_positionStart, _positionEnd, player, objNull, true];
 	if (count _pointIntersect > 0) then
 	{
-		_target = _pointIntersect select ((count _pointIntersect)-1);
-		if (player distance _target < 3) exitWith
+		_selected = _pointIntersect select ((count _pointIntersect)-1);
+		if (player distance _selected < 3) exitWith
 		{
-			player sidechat str _target;
-			sleep _waitTime; 
-			uiNameSpace setVariable ["MCC_interactionActive",false];  
+			player sidechat str _selected;
+			copyToClipboard str _selected;
+			_null= [player,_selected] execvm "mcc\fnc\interaction\fn_interactObject.sqf";
 			_break = true;
 		};
-	};
-	
-	if (_break) exitWith {}; 
-	
-	//Handle man
-	_target = cursorTarget;
-	
-	if (_target isKindof "CAManBase" && (player distance _target < 20) && !MCC_interactionKey_holding) exitWith
-	{
-		_null= [_target, player] call MCC_fnc_interactMan;
-		sleep _waitTime; 
-		uiNameSpace setVariable ["MCC_interactionActive",false];  
-		_break = true;
 	};
 	
 	if (_break) exitWith {}; 
@@ -70,21 +72,17 @@ if (vehicle player == player) then
 	//Handle house
 	if (_target isKindof "house" || _target isKindof "AllVehicles") exitWith
 	{
-		[_target] execvm "mcc\fnc\interaction\fn_interactDoor.sqf";
-		//[_target] call MCC_fnc_interactDoor
-		sleep _waitTime; 
-		uiNameSpace setVariable ["MCC_interactionActive",false];  
-		_break = true;
+		//[_target] execvm "mcc\fnc\interaction\fn_interactDoor.sqf";
+		[_target] call MCC_fnc_interactDoor
 	};
 	
-	if (_break) exitWith {}; 
 	/*
 	//Shout around if no interaction found
 	if (!MCC_interactionKey_holding) then
 	{
 		[[[netid player,player], format ["dontmove%1",floor (random 20)]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 		sleep _waitTime; 
-		uiNameSpace setVariable ["MCC_interactionActive",false];  
+		player setVariable ["MCC_interactionActive",false];  
 	};
 	*/
 }
@@ -125,6 +123,5 @@ else
 };
 if !(_break) then
 {
-	sleep _waitTime; 
-	uiNameSpace setVariable ["MCC_interactionActive",false]; 
+	player setVariable ["MCC_interactionActive",false]; 
 };

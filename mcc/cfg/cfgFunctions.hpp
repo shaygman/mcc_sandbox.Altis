@@ -77,6 +77,7 @@ class MCC
 		class makeMarker		{description = "Create a marker";};
 		class createMCCZones	{description = "Create MCC zones localy";};
 		class initCuratorAttribute	{description = "Init MCC's curato Attribute";};
+		class interactProgress	{description = "Create a progress bar and anim for the player";};
 	};
 
 	class ied
@@ -206,6 +207,7 @@ class MCC
 		class populateVehicle	{description = "Populate a not empty vehicle with antoher group contains units acording to its faction and cargo space.";};
 		class disarmUnit		{description = "Disarm a unit and create a weapon holder";};
 		class setUnitAnim		{description = "Sets units Animation - and return it to default after a while";};
+		class stunBehav			{description = "Play unit stun behavior";};
 	};
 
 	class mp
@@ -287,5 +289,6 @@ class MCC
 		class interactMan	{description = " Interaction with man type";};
 		class interactIED	{description = " Interaction with IED type";};
 		class interactDoor	{description = " Interaction with door type";};
+		class interactObject	{description = " Interaction with containers object";};
 	};
 };

@@ -30,20 +30,17 @@ _group setSpeedMode "FULL";
 _group setCombatMode "GREEN";
 
 _dummyAmbush = MCC_dummy createVehicle (getpos _leader);
-_init = '_this hideobject true;';
-
-sleep 1; 
 waituntil {!isnil "_dummyAmbush"};
-
 _dummyAmbush setdir _groupDir;
 _dummyAmbush attachto [_leader,[0,0,0]];
-[[[netid _dummyAmbush,_dummyAmbush], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+_dummyAmbush hideobjectglobal true;
 
 _dummyAmbush setvariable ["iedTrigered", false, true]; 
 _dummyAmbush setvariable ["armed", true, true];
 _dummyAmbush setvariable ["iedMarkerName", _iedMarkerName,true];
 _dummyAmbush setvariable ["isAmbush", true,true];
 _dummyAmbush setvariable ["dir", _groupDir,true];
+_dummyAmbush setvariable ["fakeIed",_leader,true];
 
 sleep 1;
 	

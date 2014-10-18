@@ -269,8 +269,6 @@ private ["_group","_blackListVehicles","_refinedGroup","_tempArray","_groupArray
 MCC_output = MCC_output 
 	+ "],[";
 
-
-
 if ((count _arrayVehicles) > 0) then
 {
 	{

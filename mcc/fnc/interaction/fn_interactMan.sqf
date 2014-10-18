@@ -2,41 +2,100 @@
 // Interaction with man type
 // Example: [_suspect,_men] spawn MCC_fnc_interactMan; 
 //=================================================================================================================================================================================
-private ["_suspect","_men","_rand","_factor","_null","_suspectCorage"];
-_suspect = _this select 0;
-_men = _this select 1;
+private ["_suspect","_men","_rand","_factor","_null","_suspectCorage","_waitTime"];
+_suspect 	= _this select 0;
+_men 		= _this select 1;
+_waitTime 	= 1;
 
-//If neturalize make hime follow you
-if ((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && !(lineIntersects [getposasl player, getposasl _suspect])) exitWith
-{
-	if ((({_x getVariable ["MCC_neutralize",false]} count units group player)<2) && (player distance _suspect < 3)) then
-	{
-		_null = [_suspect, player, 0,[0]] execVM format ["%1mcc\general_scripts\hostages\hostage.sqf",MCC_path];
-	};
-	
-	uiNameSpace setVariable ["MCC_interactionActive",false]; 
-};
+disableSerialization;
+player setVariable ["MCC_interactionActive",true];
 
 //shout
-[[[netid _men,_men], format ["dontmove%1",floor (random 20)]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-sleep 2;
-
-//Zipcuff
-if ((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player)) exitWith
+if !(MCC_interactionKey_holding) then
 {
-	if (player distance _suspect < 3) then
-	{
-		playsound "MCC_zip";
-		_suspect setVariable ["MCC_disarmed",false,true];
-		sleep 1; 
-		[[_suspect, "AmovPercMstpSnonWnonDnon_Ease", false, -1],"MCC_fnc_setUnitAnim", false, false] spawn BIS_fnc_MP;
-		_suspect setVariable ["MCC_neutralize",true,true];
-	};
-	uiNameSpace setVariable ["MCC_interactionActive",false]
+	[[[netid _men,_men], format ["dontmove%1",floor (random 20)]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
+	sleep 2;
 };
 
+if (MCC_interactionKey_holding && (player distance  _suspect < 3) && !(lineIntersects [getposasl player, getposasl _suspect]) && !dialog) exitWith
+{
+	MCC_fnc_ManMenuClicked =
+	{
+		private ["_ctrl","_index","_ctrlData","_suspect"];
+		disableSerialization;
+
+		_ctrl 		= _this select 0;
+		_index 		= _this select 1;
+		_ctrlData	= _ctrl lbdata _index;
+		
+		_suspect = (player getVariable ["interactWith",[]]) select 0;
+		closeDialog 0;
+		
+		switch (_ctrlData) do
+		{	
+			case "zip":		
+			{
+				//Zipcuff
+				if ((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player)) exitWith
+				{
+					["Restraining suspect",5] call MCC_fnc_interactProgress; 
+					playsound "MCC_zip";
+					_suspect setVariable ["MCC_disarmed",false,true];
+					sleep 1.5;
+					[[_suspect, "AmovPercMstpSnonWnonDnon_Ease", false, -1],"MCC_fnc_setUnitAnim", _suspect, false] spawn BIS_fnc_MP;
+					_suspect setVariable ["MCC_neutralize",true,true];
+				};
+			};
+			
+			case "follow":		
+			{
+				if ((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && ((({_x getVariable ["MCC_neutralize",false]} count units group player)<2))) exitWith
+				{
+						_null = [_suspect, player, 0,[0]] execVM format ["%1mcc\general_scripts\hostages\hostage.sqf",MCC_path];
+				};
+			};
+		};
+	};
+	
+	_array = [["zip","Restrain Suspect",""],
+			  ["follow","Order Suspect",""],
+			  ["close","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"]];
+	
+
+	//Manage array
+	if !((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player)) then {_array set [0,-1]};
+	if !((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && ((({_x getVariable ["MCC_neutralize",false]} count units group player)<2))) then {_array set [1,-1]};
+	_array = _array - [-1];
+	
+	if (count _array == 1) exitWith {}; 
+	_ok = createDialog "MCC_INTERACTION_MENU";
+	waituntil {dialog};
+
+	_ctrl = ((uiNameSpace getVariable "MCC_INTERACTION_MENU") displayCtrl 0);
+	_ctrl ctrlSetPosition [0.4,0.4,0.15 * safezoneW, 0.025* count _array* safezoneH];	
+	_ctrl ctrlCommit 0;
+	
+	_ctrl ctrlRemoveAllEventHandlers "LBSelChanged";
+
+	lbClear _ctrl;
+	{
+		_class			= _x select 0;
+		_displayname 	= _x select 1;
+		_pic 			= _x select 2;
+		_index 			= _ctrl lbAdd _displayname;
+		_ctrl lbSetPicture [_index, _pic];
+		_ctrl lbSetData [_index, _class];
+	} foreach _array;
+	_ctrl lbSetCurSel 0;
+	
+	player setVariable ["interactWith",[_suspect]];
+	_ctrl ctrlAddEventHandler ["LBSelChanged","_this spawn MCC_fnc_ManMenuClicked"];
+	waituntil {!dialog};
+	sleep _waitTime; 
+	player setVariable ["MCC_interactionActive",false];  
+};
 //Cant neturalize friendly units
-if (((side _suspect != civilian && (side _suspect getFriend  side player)>0.6)) || isPlayer _suspect || (_suspect getVariable ["MCC_neutralize",false])) exitWith {uiNameSpace setVariable ["MCC_interactionActive",false]};
+if (((side _suspect != civilian && (side _suspect getFriend  side player)>0.6)) || isPlayer _suspect || (_suspect getVariable ["MCC_neutralize",false]) || (_suspect getVariable ["MCC_disarmed",false])) exitWith {player setVariable ["MCC_interactionActive",false]};
 
 _factor = if (side _suspect == civilian) then {6} else {11};
 if (primaryWeapon player == "") then {_factor = _factor*2}; 
@@ -63,6 +122,7 @@ if (isnil "_suspectCorage") then
 	_suspect setVariable ["MCC_courage",_suspectCorage,true];
 };
 _suspectCorage = _suspectCorage * (1-(getdammage _suspect));
+
 //If comply
 if (random 25 > _suspectCorage || (_suspect getVariable ["MCC_Stunned", false])) then 
 {
@@ -105,4 +165,4 @@ else
 };
 
 [[[_suspect],{(_this select 0) enableAI "MOVE";}],"BIS_fnc_spawn", _suspect, false] spawn BIS_fnc_MP;
-uiNameSpace setVariable ["MCC_interactionActive",false]; 
+player setVariable ["MCC_interactionActive",false]; 

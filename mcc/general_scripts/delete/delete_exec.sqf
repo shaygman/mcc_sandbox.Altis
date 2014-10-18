@@ -2,7 +2,7 @@ private ["_pos","_radius","_type","_nearObjects","_crew","_markers"];
 
 _pos = _this select 0;
 _radius = _this select 1;
-_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","Buildings","sandstorm","storm","heatwave","clear","N/V","Flashlights"] select (_this select 2); 
+_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","doorsAll","doorsRandom","Buildings","sandstorm","storm","heatwave","clear","N/V","Flashlights"] select (_this select 2); 
 _nearObjects = []; 
 
 switch _type do
@@ -46,6 +46,33 @@ switch _type do
 					sleep 1;
 					{_x setDamage 1} forEach _lamps;
 				} foreach ["Lamps_Base_F", "PowerLines_base_F"];
+			};
+		
+		case "doorsAll":	
+			{ 
+				private "_buildings";
+				//Buildings
+				_buildings = [_pos select 0, _pos select 1, 0] nearObjects ["house", _radius];
+				
+				{
+					for [{_i=1},{_i<=15},{_i=_i+1}] do
+					{
+						_x setVariable [format ["bis_disabled_door_%1",_i],1,true];
+					};
+				} foreach _buildings;
+			};		
+		
+		case "doorsRandom":	
+			{ 
+				private "_buildings";
+				//Buildings
+				_buildings = [_pos select 0, _pos select 1, 0] nearObjects ["house", _radius];
+				{
+					for [{_i=1},{_i<=15},{_i=_i+1}] do
+					{
+						if (random 1 > 0.5) then {_x setVariable [format ["bis_disabled_door_%1",_i],1,true]};
+					};
+				} foreach _buildings;
 			};
 			
 		case "Buildings":	

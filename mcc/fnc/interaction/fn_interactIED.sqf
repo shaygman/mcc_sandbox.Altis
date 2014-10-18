@@ -20,7 +20,7 @@ if (_men distance _ied <4) then
 {
 	disableSerialization;
 	
-	uiNameSpace setVariable ["MCC_interactionActive",true]; 
+	player setVariable ["MCC_interactionActive",true]; 
 	_ied setVariable ["MCC_isInteracted",true,true]; 
 	
 	//Open dialog
@@ -40,22 +40,7 @@ if (_men distance _ied <4) then
 			{
 				closedialog 0;
 				player removeMagazine MCC_CHARGE;
-				player playMove "AinvPknlMstpSlayWrflDnon_medic";
-				(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutRsc ["MCC_interactionPB", "PLAIN"];
-				_ctrl = ((uiNamespace getVariable "MCC_interactionPB") displayCtrl 2);
-				_ctrl ctrlSetText "Placing Charge";
-				_ctrl = ((uiNamespace getVariable "MCC_interactionPB") displayCtrl 1);
-				
-				for [{_x=1},{_x<10},{_x=_x+0.1}]  do 
-				{
-					_ctrl progressSetPosition (_x/10); 
-					if ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic") then {player playMove "AinvPknlMstpSlayWrflDnon_medic"};
-					sleep 0.1;
-				};
-				
-				(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
-				//player switchMove "AmovPknlMstpSlowWrflDnon";	
-				player playMoveNow "AmovPknlMstpSlowWrflDnon";	
+				["Placing Charge",10] call MCC_fnc_interactProgress; 
 					
 				_c4 = "DemoCharge_Remote_Ammo_Scripted" createVehicle position player;
 				player addAction ["<t color=""#FF0000"">Detonate Charge</t>", {
@@ -72,7 +57,7 @@ if (_men distance _ied <4) then
 		
 		_ok = createDialog "MCC_INTERACTION_MENU";
 		waituntil {dialog};
-		_ctrl = ((uiNamespace getVariable "MCC_INTERACTION_MENU") displayCtrl 0);
+		_ctrl = ((uiNameSpace getVariable "MCC_INTERACTION_MENU") displayCtrl 0);
 		_ctrl ctrlSetPosition [0.4,0.4,0.15 * safezoneW, 0.05* safezoneH];	
 		_ctrl ctrlCommit 0;
 		
@@ -93,23 +78,23 @@ if (_men distance _ied <4) then
 		_ctrl ctrlAddEventHandler ["LBSelChanged","_this spawn MCC_fnc_IEDMenuClicked"];
 		waituntil {!dialog};
 		sleep 1; 
-		uiNameSpace setVariable ["MCC_interactionActive",false];
+		player setVariable ["MCC_interactionActive",false];
 	};
 
-	player playMove "AinvPknlMstpSlayWrflDnon_medic";
+	player playMoveNow "AinvPknlMstpSlayWrflDnon_medic";
 	_break = false; 
 	
 	//Create progress bar
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutRsc ["MCC_interactionPB", "PLAIN"];
-	_ctrl = ((uiNamespace getVariable "MCC_interactionPB") displayCtrl 2);
+	_ctrl = ((player getVariable "MCC_interactionPB") displayCtrl 2);
 	_ctrl ctrlSetText "Disarming";
-	_ctrl = ((uiNamespace getVariable "MCC_interactionPB") displayCtrl 1);
+	_ctrl = ((player getVariable "MCC_interactionPB") displayCtrl 1);
 	
 	for [{_x=1},{_x<_disarmTime},{_x=_x+0.1}]  do 
 	{
 		
 		_ctrl progressSetPosition (_x/_disarmTime); 
-		if ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic") then {player playMove "AinvPknlMstpSlayWrflDnon_medic"};
+		if ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic") then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
 		if ((_ied distance _men) > 5 || !MCC_interactionKey_holding) then {_x = _disarmTime; _break = true; hintSilent ""}; //check if still close to the IED
 		sleep 0.1;
 	};
@@ -122,7 +107,7 @@ if (_men distance _ied <4) then
 	if (_break) exitwith
 	{
 		sleep 0.5; 
-		uiNameSpace setVariable ["MCC_interactionActive",false];
+		player setVariable ["MCC_interactionActive",false];
 		_ied setVariable ["MCC_isInteracted",false,true]; 
 	};	
 	
@@ -137,8 +122,7 @@ if (_men distance _ied <4) then
 			sleep 1;
 			if (_isEngineer) then {player addrating 500};
 			_ied setvariable ["armed",false,true];
-			deletevehicle _ied;
-			uiNameSpace setVariable ["MCC_interactionActive",false]; 
+			player setVariable ["MCC_interactionActive",false]; 
 			_ied setVariable ["MCC_isInteracted",false,true]; 
 		}
 		else 
@@ -173,7 +157,6 @@ if (_men distance _ied <4) then
 			
 			sleep 1;
 			_ied setvariable ["armed",false,true];
-			deletevehicle _ied;
 		}
 		else 
 		{
@@ -197,10 +180,10 @@ if (_men distance _ied <4) then
 		};
 	};
 	
-	uiNameSpace setVariable ["MCC_interactionActive",false]; 
+	player setVariable ["MCC_interactionActive",false]; 
 	_ied setVariable ["MCC_isInteracted",false,true]; 
 }
 else {hint "To far to disarm"};
 _ied setVariable ["MCC_isInteracted",false,true]; 
 sleep _waitTime; 
-uiNameSpace setVariable ["MCC_interactionActive",false];  
+player setVariable ["MCC_interactionActive",false];  

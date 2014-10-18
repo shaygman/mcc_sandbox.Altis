@@ -15,14 +15,14 @@ uiNameSpace setVariable ["MCC_interactionActive",false];
 			_obj 	= _x select 0;
 			_text 	= _x select 1;
 			_dist 	= (player distance _obj) / 10;
-			_color = [0,0,0.8,1 - _dist];
+			_color = [1,1,1,1 - _dist];
 			drawIcon3D [
 							"",
 							_color,
 							[
-								visiblePosition _obj select 0,
-								visiblePosition _obj select 1,
-								(visiblePosition _obj select 2) + 1 + _dist / 3
+								_obj select 0,
+								_obj select 1,
+								(_obj select 2) + _dist / 5
 							],
 							0,
 							0,
@@ -48,22 +48,45 @@ _text = format ["%1%2",_text,_textKey];
 		
 _text spawn
 {
-	private ["_keyName","_interactiveObjects"];
+	private ["_keyName","_interactiveObjects","_objects","_selected","_dir","_positionStart","_positionEnd","_pointIntersect"];
 	_keyName = _this; 
 	
 	while {alive player} do
 	{
 		sleep 1;
+		_interactiveObjects = [];
 		if (vehicle player == player) then
 		{
-			_interactiveObjects = [];
+			_objects = player nearObjects [MCC_dummy,5];
+	
+			//Handle Objects
+			if (count _objects > 0) then
 			{
-				if (((_x getVariable ["MCC_IEDtype",""]) == "ied") && !(_x getVariable ["MCC_isInteracted",false])) then
+				_selected = ([_objects,[],{player distance _x},"ASCEND"] call BIS_fnc_sortBy) select 0;
+				_dir	  = [player, _selected] call BIS_fnc_relativeDirTo;
+				if (_dir>340 || _dir < 20) then 
 				{
-					_interactiveObjects set [count _interactiveObjects, [_x, format ["Hold %1 to disarm",_keyName]]];
+					//IED
+					if (((_selected getVariable ["MCC_IEDtype",""]) == "ied") && !(_selected getVariable ["MCC_isInteracted",false])) then
+					{
+						_interactiveObjects set [count _interactiveObjects, [getpos _selected,format ["Hold %1 to disarm",_keyName]]];
+					};
 				};
-			} foreach (getpos player nearObjects [MCC_dummy,10]);
+			};
 			
+			//Not MCC object
+			_positionStart 	= eyePos player;
+			_positionEnd 	= ATLtoASL screenToWorld [0.5,0.5];
+			_pointIntersect = lineIntersectsWith [_positionStart, _positionEnd, player, objNull, true];
+			if (count _pointIntersect > 0) then
+			{
+				_selected = _pointIntersect select ((count _pointIntersect)-1);
+				if (player distance _selected < 5 && (typeOf _selected == "")) then
+				{
+					_interactiveObjects set [count _interactiveObjects, [getpos _selected,format ["Hold %1 to search",_keyName]]];
+				};
+			};
+	
 			missionNameSpace setVariable ["MCC_interactionObjects",_interactiveObjects];
 		};
 	};

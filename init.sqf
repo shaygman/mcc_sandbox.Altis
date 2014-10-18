@@ -111,6 +111,10 @@ if (isnil "MCC_allowlogistics") then {MCC_allowlogistics = true};  //false - dis
 //----------------- Teleport 2 Team -----------------------------------------------------------------------------
 if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- AfterRespawn, 3-Always
 
+//----------------- non-lethal ammo ---------------------------------------------
+//Define non-lethal ammunition player using this ammunition on units closer then 30 meters will not kill them but stun them. Leave "" to none
+MCC_nonLeathal = "prpl_6Rnd_12Gauge_Slug";
+
 //----------------------IED settings---------------------------------------------
 // IED types the first one is display name the second is the classname [displayName, ClassName]
 MCC_ied_small = [["Plastic Crates","Land_CratesPlastic_F"],["Plastic Canister","Land_CanisterPlastic_F"],["Sack","Land_Sack_F"],["Road Cone","RoadCone"],["Tyre","Land_Tyre_F"],["Radio","Land_SurvivalRadio_F"],["Suitcase","Land_Suitcase_F"],["Grinder","Land_Grinder_F"],
@@ -164,6 +168,7 @@ MCC_artillerySpreadArray = [["On-target",0], ["Precise",100], ["Tight",200], ["W
 MCC_artilleryNumberArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 MCC_artilleryEnabled	= false; //for artillery marker
 MCC_spawnEnabled		= false; //for spawn marker
+
 //-------------------------MCC Convoy presets---------------------------------------------
 //The Type of units, drivers and escort in the HVT car
 MCCConvoyWestEscort = "B_Soldier_F"; MCCConvoyWestDriver = "B_Soldier_SL_F";
@@ -1151,6 +1156,22 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 
 	//Add start locations script
 	[]  spawn MCC_fnc_startLocations;
+	
+	//Add beanbag ammo for shouguns
+	if (MCC_nonLeathal != "") then
+	{
+		player addEventHandler ["fired", {
+											if ((_this select 5) == MCC_nonLeathal) then
+											{
+												_unit 	= cursorTarget;
+												if (_unit isKindof "CAManBase" && ((_this select 0) distance _unit < 30)) then
+												{
+													deleteVehicle (_this select 6);
+													[_unit, 5] spawn MCC_fnc_stunBehav;
+												};
+											};
+										}];
+	};
 };
 
 //========= player Loops (for saving gear/name tag exc)=================================

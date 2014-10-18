@@ -36,7 +36,7 @@ if (_pos != "") then
 	{
 		if ((animationState _npc)!=_pos) then
 		{
-			[[[_npc,_pos],{(_this select 0) playMove (_this select 1)}],"BIS_fnc_spawn", true, false] spawn BIS_fnc_MP;
+			_npc playMoveNow _pos;
 		};
 		sleep 1; 
 	};

@@ -47,8 +47,6 @@ if (lineIntersects [getPosASL player, _pos] || count _obj > 0) exitWith
 _tentType = secondaryWeapon player;
 _safePos = ASLtoATL _pos;
 
-player playMovenow "AinvPknlMstpSlayWrflDnon_medic";
-sleep 2;
+["Deploying",10] call MCC_fnc_interactProgress; 
 player removeWeaponGlobal _tentType; 
-sleep 2;
 [[group player, _safePos, getDir player, _tentType], "MCC_fnc_createRespawnTent", false] call BIS_fnc_mp;
