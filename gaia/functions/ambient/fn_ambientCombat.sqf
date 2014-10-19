@@ -42,38 +42,39 @@
 					
 */
 if (!isServer)exitWith{};
+
+// Take it easy as long as the show has not started.
+while {!(MCC_GAIA_AMBIANT_COMBAT)} do {
+    sleep 5;
+};
+
 private ["_patrolType","_customInit","_communication","_eastGroups","_westGroups","_skills","_syncedUnit","_groupAmount","_grp","_minRange","_maxRange","_minTime","_maxTime","_centerPos","_range","_dir","_spawnPos","_side","_menOrVehicle","_timeDelay","_skls","_spotValid","_leftSides","_fullRatio","_perRatio","_westRatio","_eastRatio","_indeRatio","_lossRatio","_indeGroups","_sideRatios","_dissapearDistance","_waterUnitChance","_landOrAir","_mp","_tempPos","_isFlat","_d1","_m","_avoidArray"];
 
-_minRange = if(count _this > 0)then{_this select 0;} else {450};	 
-_maxRange = if(count _this > 1)then{_this select 1;} else {900};	 
-_minTime = if(count _this > 2)then{_this select 2;} else {30};	 
-_maxTime = if(count _this > 3)then{_this select 3;} else {300};	 
-_groupAmount = if(count _this > 4)then{_this select 4;} else {6};
-_sideRatios = if(count _this > 5)then{_this select 5;} else {[1,1,1]}; 
-_syncedUnit = if(count _this > 6)then{_this select 6;} else {player};	 
-_skills = if(count _this > 7)then{_this select 7;} else {"default"};	 
-_communication = if(count _this > 8)then{_this select 8;} else {0};	 
-_dissapearDistance = if(count _this > 9)then{_this select 9;} else {2500};	 
-_customInit = if(count _this > 10)then{_this select 10;} else {nil};	 
-_patrolType = if(count _this > 11)then{_this select 11;} else {1};	
-_mp = if(count _this > 12)then{_this select 12;} else {true};
+_minRange 				 = MCC_GAIA_AMBIENT_minRange;	 
+_maxRange 			   = MCC_GAIA_AMBIENT_maxRange;	 
+_minTime 					 = 2;	 
+_maxTime 					 = 5;	 
+_groupAmount 			 = 20;
+_ScanUnitRange		 = 2500;
+_sideRatios 			 = [0,0,0]; 
+_syncedUnit 			 = [];
+_InRange					 = false;
+_skills 					 = "default";
+_communication 		 = 1;	 
+_dissapearDistance = _maxRange+200;
+_customInit 			 = nil;	 
+_patrolType 			 = 1;	
+_mp 							 = true;
+_IndepUnits 			 = 0;
+_WestUnits				 = 0;
+_EastUnits				 = 0;
+_TotInRangeWUnits  = 0;
+_TotInRangeEUnits  = 0;
+_TotInRangeIUnits  = 0;
+_TotUnits					 = 0;
+_TotInRangeUnits   = 0;
 
-/*
-if(isNil("LV_fullLandVehicle"))then{LV_fullLandVehicle = compile preprocessFile "LV\LV_functions\LV_fnc_fullLandVehicle.sqf";};
-if(isNil("LV_fullAirVehicle"))then{LV_fullAirVehicle = compile preprocessFile "LV\LV_functions\LV_fnc_fullAirVehicle.sqf";};
-if(isNil("LV_fullWaterVehicle"))then{LV_fullWaterVehicle = compile preprocessFile "LV\LV_functions\LV_fnc_fullWaterVehicle.sqf";};
-if(isNil("LV_menGroup"))then{LV_menGroup = compile preprocessFile "LV\LV_functions\LV_fnc_menGroup.sqf";};
-if(isNil("LV_diveGroup"))then{LV_diveGroup = compile preprocessFile "LV\LV_functions\LV_fnc_diveGroup.sqf";};
-//if(isNil("GAIA_fnc_ACpatrol"))then{GAIA_fnc_ACpatrol = compile preprocessFile "LV\LV_functions\LV_fnc_ACpatrol.sqf";};
-//if(isNil("LV_ACcleanUp"))then{LV_ACcleanUp = compile preprocessFile "LV\LV_functions\LV_fnc_ACcleanUp.sqf";};
-//if(isNil("LV_ACskills"))then{LV_ACskills = compile preprocessFile "LV\LV_functions\LV_fnc_ACskills.sqf";};
-//if(_communication == 1)then{if(isNil("LV_AIcommunication"))then{LV_AIcommunication = compile preprocessFile "LV\LV_functions\LV_fnc_AIcommunication.sqf";};};
-if(isNil("LV_vehicleInit"))then{LV_vehicleInit = compile preprocessFile "LV\LV_functions\LV_fnc_vehicleInit.sqf";};
-if(isNil("LV_RandomSpot"))then{LV_RandomSpot = compile preprocessFile "LV\LV_functions\LV_fnc_randomSpot.sqf";};
-if(_mp)then{if(isNil("LV_GetPlayers"))then{LV_GetPlayers = compile preprocessFile "LV\LV_functions\LV_fnc_getPlayers.sqf";};};
-if(isNil("LV_FindLandPosition"))then{LV_FindLandPosition = compile preprocessFile "LV\LV_functions\LV_fnc_findLandPosition.sqf";};
-if(isNil("LV_IsInMarker"))then{LV_IsInMarker = compile preprocessFile "LV\LV_functions\LV_fnc_isInMarker.sqf";};
-*/
+
 
 if(isNil("LV_ACS_activeGroups"))then{LV_ACS_activeGroups = [];}; 
 if(isNil("LV_AI_westGroups"))then{LV_AI_westGroups = [];}; 
@@ -96,12 +97,20 @@ while{true}do{
 		_timeDelay = (random(_maxTime - _minTime)) + _minTime;
 	};
 	sleep _timeDelay;
-	if(count LV_ACS_activeGroups < _groupAmount)then{
+	if (
+				(count LV_ACS_activeGroups < _groupAmount)
+				and
+				MCC_GAIA_AMBIANT_COMBAT
+		 )
+	then
+	{
 		if(count LV_ACS_activeGroups == (_groupAmount - 1))then{sleep _timeDelay;};
 		
 			if(_mp)then{ _syncedUnit = call GAIA_fnc_GetPlayers;};
+			_groupAmount = (((count(_syncedUnit))/3) max 6);
 			_spotValid = false;
-			while{!_spotValid}do{
+			while{!_spotValid}do
+			{
 				_spotValid = true;
 				if(((typeName _syncedUnit) == "ARRAY")||(_mp))then{
 					_centerPos = getPos (_syncedUnit call BIS_fnc_selectRandom);
@@ -142,11 +151,8 @@ while{true}do{
 					}forEach _syncedUnit;
 				};
 				
-				_avoidArray = [];
-				for "_i" from 0 to 30 do {
-					if(_i == 0)then{_m = "ACavoid";}else{_m = ("ACavoid_" + str _i);};
-					if(_m in allMapMarkers)then{_avoidArray set[(count _avoidArray),_m];};
-				};
+				_avoidArray = MCC_GAIA_ZONES_EAST + MCC_GAIA_ZONES_WEST + MCC_GAIA_ZONES_EAST + MCC_GAIA_ZONES_INDEP;
+				
 				{
 					if([_spawnPos,_x] call GAIA_fnc_IsInMarker)exitWith{_spotValid = false;};
 				}forEach _avoidArray;
@@ -154,80 +160,164 @@ while{true}do{
 				
 			};
 
-		//Handle side ratios -> decide side:
-		_fullRatio = (_sideRatios select 0) + (_sideRatios select 1) + (_sideRatios select 2);
-		_perRatio = _groupAmount / _fullRatio;
-		_westRatio = floor((_sideRatios select 0) * _perRatio);
-		_eastRatio = floor((_sideRatios select 1) * _perRatio);
-		_indeRatio = floor((_sideRatios select 2) * _perRatio);
-		_lossRatio = _groupAmount - _westRatio - _eastRatio - _indeRatio;
-				//hint format["%1",(side (LV_ACS_activeGroups select (count LV_ACS_activeGroups - 1)))];
-		_westGroups = {(side _x) == west} count LV_ACS_activeGroups;
-		_eastGroups = {(side _x) == east} count LV_ACS_activeGroups;
-		_indeGroups = {(side _x) == resistance} count LV_ACS_activeGroups;
-		//hint format["w: %1, e: %2, i: %3",_westGroups,_eastGroups,_indeGroups];
-		if(_westGroups < _westRatio)then{
-			_side = 0;
-		}else{
-			if(_eastGroups < _eastRatio)then{
-				_side = 1;
-			}else{
-				if(_indeGroups < _indeRatio)then{
-					_side = 2;
-				}else{
-					_leftSides = [];
-					if((_sideRatios select 0) > 0)then{_leftSides set[(count _leftSides),0];};
-					if((_sideRatios select 1) > 0)then{_leftSides set[(count _leftSides),1];};
-					if((_sideRatios select 2) > 0)then{_leftSides set[(count _leftSides),2];};
-					if(count _leftSides > 1)then{
-						_side = _leftSides call BIS_fnc_selectRandom;
-						{
-							if(_x > _side)then{ _side = _x; };
-						}forEach _leftSides;
-					}else{_side = _leftSides select 0;};
-					//hint format["extra group's side: %1",_side];
-				};
-			};
-		};
-			
-		_menOrVehicle = floor(random 10);
-		if(_menOrVehicle < 4)then{
-			if(surfaceIsWater _spawnPos)then{
-				_grp = [_spawnPos, _side] call GAIA_fnc_fullWaterVehicle;
-			}else{
-				_landOrAir = floor(random 3);
-				if(_landOrAir > 1)then{
-					_grp = [_spawnPos, _side] call GAIA_fnc_fullAirVehicle;
-				}else{
-					_grp = [_spawnPos, _side] call GAIA_fnc_fullLandVehicle;
-				};
-			};
-		}else{
-			if(surfaceIsWater _spawnPos)then{
-				_grp = [_spawnPos, _side, [10,3]] call GAIA_fnc_diveGroup;
-			}else{
-				_grp = [_spawnPos, _side, [10,3]] call GAIA_fnc_menGroup;
-			};
-		};
-		if(typeName _skills != "STRING")then{_skls = [_grp,_skills] call GAIA_fnc_ACskills;};
-		LV_ACS_activeGroups set [(count LV_ACS_activeGroups), (group _grp)];
+		_IndepUnits 				= 0;
+		_WestUnits					= 0;
+		_EastUnits					= 0;
+		_TotInRangeWUnits 	= 0;
+		_TotInRangeEUnits 	= 0;
+		_TotInRangeIUnits 	= 0;
+		_TotUnits						= 0;
+		_TotInRangeUnits  	= 0;
+		_FactionsEast				= [];
+		_FactionsWest				= [];
+		_FactionsIndep			= [];
+		_FactionsEastRange	= [];
+		_FactionsWestRange	= [];
+		_FactionsIndepRange	= [];
+		_factions           = [];
 		
-		switch(_side)do{
-			case 0:{
-				LV_AI_eastGroups set [(count LV_AI_eastGroups), (group _grp)];
-			};
-			case 1:{
-				LV_AI_westGroups set [(count LV_AI_westGroups), (group _grp)];
-			};
-			case 2:{
-				LV_AI_indeGroups set [(count LV_AI_indeGroups), (group _grp)];
-			};
-		};
 		
-		if(!isNil("_customInit"))then{ 
+		{
+			if (
+						//The dude is alive
+						alive _x 
+						&& 
+						// He is a human 
+						_x isKindOf "man" 
+						&& 
+						// He is not part of the Ambient Combat
+						!(group _x in LV_ACS_activeGroups)
+						&&
+						// He is not a player
+						!(_x in _syncedUnit)
+					) 
+			then 
 			{
-				[_x,_customInit] spawn gaia_fnc_vehicleInit;
-			} forEach units group _grp;
+				_InRange= ((_centerPos distance _x)<_ScanUnitRange);
+				
+
+				
+				switch (side _x) do
+				{
+			    case west:
+			    {
+			        if _inRange then 
+			        {
+			        	_TotInRangeUnits = _TotInRangeUnits + 1;
+			        	_TotInRangeWUnits = _TotInRangeWUnits + 1;
+			        	if !((faction _x) in _FactionsWestRange) then {_FactionsWestRange=_FactionsWestRange+ [(faction _x)]};
+			        };
+			        if !((faction _x) in _FactionsWest) then {_FactionsWest=_FactionsWest+ [(faction _x)]};
+			        _WestUnits = _WestUnits + 1;
+			        _TotUnits  = _TotUnits + 1;
+			        //hint ("found a west dude"+ str _TotUnits);
+			        
+			        
+			    };
+			
+			    case east:
+			    {
+			        if _inRange then 
+			        {
+			        	_TotInRangeUnits = _TotInRangeUnits + 1;
+			        	_TotInRangeEUnits = _TotInRangeEUnits + 1;
+			        	if !((faction _x) in _FactionsEastRange) then {_FactionsEastRange=_FactionsEastRange+ [(faction _x)]};
+			        };
+			        if !((faction _x) in _FactionsEast) then {_FactionsEast=_FactionsEast+ [(faction _x)]};
+			        _EastUnits = _EastUnits + 1;
+			        _TotUnits  = _TotUnits + 1;
+			        //hint ("found a east dude"+ str _TotUnits);
+			        
+			    };    
+			    
+			    case independent:
+			    {
+			        if _inRange then 
+			        {
+			        	_TotInRangeUnits = _TotInRangeUnits + 1;
+			        	_TotInRangeIUnits = _TotInRangeIUnits + 1;
+			        	if !((faction _x) in _FactionsIndepRange) then {_FactionsIndepRange=_FactionsIndepRange+ [(faction _x)]};
+			        };
+			       if !((faction _x) in _FactionsIndep) then {_FactionsIndep=_FactionsIndep+ [(faction _x)]};
+			        _IndepUnits	= _IndepUnits + 1;
+			        _TotUnits  	= _TotUnits + 1;
+			        //hint ("found a indep dude" + str _TotUnits);
+			        
+			    };    			    
+				};
+		 	};
+		 	
+		} foreach allUnits;
+		
+		_DoStuff = true;
+		
+		// In case we have no units found, make sure we dont devide by zero so set it to [0,0,0]
+		if (_TotUnits ==0) 
+		then
+			{_sideRatios = [0,0,0];_DoStuff=false;}
+		else
+		{
+			// If we have units in range, make a ratio based on that
+			if (_TotInRangeUnits==0)
+			then
+				{
+					_sideRatios = [(_WestUnits/_TotUnits),(_EastUnits/_TotUnits),(_IndepUnits/_TotUnits)];
+					_factions =[_FactionsWest,_FactionsEast,_FactionsIndep];
+				}
+			//and in case we have nothing in range, go make it from total map (biggest dude wins)
+			else
+				{
+					_sideRatios = [(_TotInRangeWUnits/_TotInRangeUnits),(_TotInRangeEUnits/_TotInRangeUnits),(_TotInRangeIUnits/_TotInRangeUnits)];
+					_factions =[_FactionsWestRange,_FactionsEastRange,_FactionsIndepRange];
+				}
+		};
+		hint format ["%1 ratio: %2",_factions,_sideRatios];
+	
+		if _DoStuff then
+		{
+				_side 		= [[0,1,2],_sideRatios] call BIS_fnc_selectRandomweighted;
+				_faction  = [(_factions select _side)] call BIS_fnc_selectRandom;
+				hint format["Found %1",_faction];
+					
+				_menOrVehicle = floor(random 10);
+				if(_menOrVehicle < 4)then{
+					if(surfaceIsWater _spawnPos)then{
+						_grp = [_spawnPos, _side,_faction] call GAIA_fnc_fullWaterVehicle;
+					}else{
+						_landOrAir = floor(random 3);
+						if(_landOrAir > 1)then{
+							_grp = [_spawnPos, _side,_faction] call GAIA_fnc_fullAirVehicle;
+						}else{
+							_grp = [_spawnPos, _side,_faction] call GAIA_fnc_fullLandVehicle;
+						};
+					};
+				}else{
+					if(surfaceIsWater _spawnPos)then{
+						_grp = [_spawnPos, _side, [10,3],_faction] call GAIA_fnc_diveGroup;
+					}else{
+						_grp = [_spawnPos, _side, [10,3],_faction] call GAIA_fnc_menGroup;
+					};
+				};
+				if(typeName _skills != "STRING")then{_skls = [_grp,_skills] call GAIA_fnc_ACskills;};
+				LV_ACS_activeGroups set [(count LV_ACS_activeGroups), (group _grp)];
+				
+				switch(_side)do{
+					case 0:{
+						LV_AI_eastGroups set [(count LV_AI_eastGroups), (group _grp)];
+					};
+					case 1:{
+						LV_AI_westGroups set [(count LV_AI_westGroups), (group _grp)];
+					};
+					case 2:{
+						LV_AI_indeGroups set [(count LV_AI_indeGroups), (group _grp)];
+					};
+				};
+				
+				if(!isNil("_customInit"))then{ 
+					{
+						[_x,_customInit] spawn gaia_fnc_vehicleInit;
+					} forEach units group _grp;
+				};
 		};
 	};
 };

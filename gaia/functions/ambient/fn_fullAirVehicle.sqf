@@ -36,7 +36,7 @@ _pos1 = _pos;
 _veh1 = _veh select (floor(random(count _veh)));
 _vehSpots = getNumber (configFile >> "CfgVehicles" >> _veh1 >> "transportSoldier");
 
-_vehicle = createVehicle [_veh1, _pos1, [], 0, "FLY"];
+_vehicle = createVehicle [_veh1, _pos1, [], 10, "NONE"];
 
 _vCrew = [_vehicle, _grp] call BIS_fnc_spawnCrew;
 //_allUnitsArray set [(count _allUnitsArray), _vehicle];

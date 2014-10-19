@@ -42,6 +42,12 @@ MCC_GAIA_MORTAR_TIMEOUT				 = 300;
 //This switch makes it possible for GAIA to send units into the attack she does not initialy control
 MCC_GAIA_ATTACKS_FOR_NONGAIA	 = false;
 
+//Ambient Combat
+MCC_GAIA_AMBIANT_COMBAT				 = false;
+MCC_GAIA_AMBIENT_minRange			 = 1000;	 
+MCC_GAIA_AMBIENT_maxRange 		 = 1400;	 
+
+
 MCC_GAIA_AMBIANT							 = true;
 MCC_GAIA_AMBIANT_CHANCE				 = 20;
 
@@ -97,5 +103,7 @@ MCC_GAIA_TARGETS_CIV			= []; for "_i" from 0 to 90 do  { MCC_GAIA_TARGETS_INDEP 
 
 
 [] spawn GAIA_fnc_startGaiaCache;
+
+[] spawn GAIA_FNC_ambientCombat;
 
 GAIA_INIT = TRUE;
