@@ -113,7 +113,14 @@ if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- 
 
 //----------------- non-lethal ammo ---------------------------------------------
 //Define non-lethal ammunition player using this ammunition on units closer then 30 meters will not kill them but stun them. Leave "" to none
-MCC_nonLeathal = "prpl_6Rnd_12Gauge_Slug";
+if (isnil "MCC_nonLeathal") then {MCC_nonLeathal = "prpl_6Rnd_12Gauge_Slug"};
+
+//----------------- non-lethal ammo ---------------------------------------------
+// Set to true to activate survival mode - scavange for loot to survive
+if (isnil "MCC_surviveMod") then {MCC_surviveMod = true}; 
+
+//How long in days(24H-game time) will it take for spawn position to refresh
+if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1}; 
 
 //----------------------IED settings---------------------------------------------
 // IED types the first one is display name the second is the classname [displayName, ClassName]

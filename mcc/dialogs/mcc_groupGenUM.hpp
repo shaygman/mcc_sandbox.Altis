@@ -166,8 +166,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[15] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "Kick"; //--- ToDo: Localize;
-			x = 0.442708 * safezoneW + safezoneX;
-			y = 0.225 * safezoneH + safezoneY;
+			x = 0.171875 * safezoneW;
+			y = 1.63913e-008 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Kick selected player from the server"; //--- ToDo: Localize;
@@ -179,8 +179,8 @@ class MCC_UMDialogControls:MCC_RscControlsGroup
 			onButtonClick = __EVAL ("[16] execVM '"+MCCPATH+"mcc\general_scripts\unitManage\um.sqf'");
 
 			text = "Ban"; //--- ToDo: Localize;
-			x = 0.505729 * safezoneW + safezoneX;
-			y = 0.225 * safezoneH + safezoneY;
+			x = 0.234896 * safezoneW;
+			y = 1.63913e-008 * safezoneH;
 			w = 0.0515625 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			tooltip = "Ban selected player from the server"; //--- ToDo: Localize;

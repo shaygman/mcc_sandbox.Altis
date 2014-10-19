@@ -1,5 +1,5 @@
 //==================================================================MCC_fnc_construct_base===============================================================================================
-// Example:[_pos, _anchorDir , _anchorType,_BuildTime] call MCC_fnc_construct_base;
+// Example:[_pos, _anchorDir , _anchorType, _BuildTime, _side]  call  MCC_fnc_construct_base;
 //==================================================================================================================================================================================
 private ["_Type","_anchorType","_anchorDir","_pos","_objs","_constType","_anchor","_object","_BuildTime","_buildingObjs","_builtArray","_side","_level"];
 

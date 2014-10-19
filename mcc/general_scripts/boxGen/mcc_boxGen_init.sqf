@@ -21,7 +21,7 @@ if (_display != findDisplay MCC3D_IDD) then
 }
 else
 {
-	_target = Object3D;
+	if (!isnil "Object3D") then {_target = Object3D};
 	_isMCC3D = true;
 };
 
@@ -61,7 +61,7 @@ _comboBox = _display displayCtrl GEARCLASS_IDD;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["Binoculars", "Items","Uniforms", "Launchers", "Machine Guns", "Pistols", "Rifles","Sniper Rifles","Rucks","Glasses","Magazines","Under Barrel","Grenades","Explosive"];
+	} foreach ["Weapons", "Items","Uniforms", "Launchers", "Machine Guns", "Pistols", "Rifles","Sniper Rifles","Rucks","Glasses","Magazines","Under Barrel","Grenades","Explosive"];
 _comboBox lbSetCurSel MCC_gearDialogClassIndex;
 
 _array = switch (MCC_gearDialogClassIndex) do 

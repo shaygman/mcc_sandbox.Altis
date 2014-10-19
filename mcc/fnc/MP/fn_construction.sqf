@@ -1,5 +1,5 @@
 //==================================================================MCC_fnc_construction===============================================================================================
-// Example:[_question, _header , _variable] call MCC_fnc_construction;
+// Example:[_conType, _pos , _side, _dir] call MCC_fnc_construction;
 //==================================================================================================================================================================================
 private ["_conType","_pos","_time","_side","_reqCrates","_vehicleType","_baseAnchor","_markerName","_markerType","_text","_complete","_newObjects","_const",
          "_bagFence","_dir"];

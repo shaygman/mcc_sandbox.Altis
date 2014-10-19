@@ -12,6 +12,8 @@ _ammo_index 	= 0;
 _glasses_index 	= 0;
 _displayArray = []; 
 
+W_ATTACHMENTS = [];
+
 _CfgWeapons 		= configFile >> "CfgWeapons" ;
 for "_i" from 1 to (count _CfgWeapons - 1) do
 	{
@@ -66,6 +68,7 @@ for "_i" from 1 to (count _CfgWeapons - 1) do
 		
 		if (_type == 131072) then	//Item
 			{
+				if ((getnumber(configFile >> "CfgWeapons" >> _cfgclass >> "itemInfo" >>"type")) == 201) then {W_ATTACHMENTS set [count W_ATTACHMENTS,[_cfgclass,_weaponDisplayName,_picture]]};
 				if ((getText(_CfgWeapon>>"descriptionShort")!="") || (getNumber(_CfgWeapon>>"mFact")==1)) then {						//Uniform
 						W_ITEMS set [_item_index,[_cfgclass,_weaponDisplayName,_picture]];
 						_displayArray set [count _displayArray,_weaponDisplayName];

@@ -86,9 +86,9 @@ if (_men distance _ied <4) then
 	
 	//Create progress bar
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutRsc ["MCC_interactionPB", "PLAIN"];
-	_ctrl = ((player getVariable "MCC_interactionPB") displayCtrl 2);
+	_ctrl = ((uiNameSpace getVariable "MCC_interactionPB") displayCtrl 2);
 	_ctrl ctrlSetText "Disarming";
-	_ctrl = ((player getVariable "MCC_interactionPB") displayCtrl 1);
+	_ctrl = ((uiNameSpace getVariable "MCC_interactionPB") displayCtrl 1);
 	
 	for [{_x=1},{_x<_disarmTime},{_x=_x+0.1}]  do 
 	{

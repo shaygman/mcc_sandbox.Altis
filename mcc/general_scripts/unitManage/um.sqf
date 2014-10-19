@@ -454,6 +454,7 @@ switch (_type) do
 						if (_answer) then 
 						{
 							 serverCommand format["#exec ban %1",_playerUID];
+							 serverCommand format["#kick %1",_playerUID];
 							 player sidechat format["%1 has been ban from the server",_name];
 						};
 					};

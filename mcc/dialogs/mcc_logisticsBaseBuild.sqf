@@ -315,7 +315,6 @@ MCC_CONST_CAM_Handler =
 		_ctrlK 	= _input select 5;
 		_altK	= _input select 6;
 		
-		player sidechat "down: " + str [_posX,_posY];
 	};
 	
 	if (_mode == "mouseholding") then

@@ -36,7 +36,6 @@
 //----Interaction-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_interactionMenu.hpp"
 
-
 //--------------------------------CP------------------------------------------------
 #define CPPATH "\mcc_sandbox_mod\"
 #define CPVersion "0.1"
@@ -719,6 +718,7 @@ class cfgWeapons
 	class GrenadeLauncher: Default{};
 	class arifle_MX_GL_F;
 	class itemCore;
+	class InventoryItem_Base_F;
 	class Launcher_Base_F; 
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgWeapons.hpp"
 	

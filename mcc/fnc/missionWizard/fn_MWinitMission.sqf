@@ -477,6 +477,9 @@ if (MW_debug) then {diag_log format ["Total enemy's infantry Spawned in main zon
 if (_isCQB) then 
 {
 	[[getmarkerpos str _zoneNumber,((getmarkersize str _zoneNumber) select 0) max ((getmarkersize str _zoneNumber) select 1),0,(_totalEnemyUnits*0.005),_enemyfaction,str _enemySide],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
+	
+	//lock some doors
+	[getmarkerpos str _zoneNumber,((getmarkersize str _zoneNumber) select 0) max ((getmarkersize str _zoneNumber) select 1),11] spawn MCC_fnc_deleteBrush;
 }; 
 
 // Is _isCiv
@@ -730,8 +733,14 @@ if (_weatherChange != 0) then
 		if (_weatherChange == 3) then {[["storm",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP};
 	};
 };			
-			
-			
+/*
+//Force AI to use flashlights
+if (sunOrMoon <0.5 &&  random 1 > 0.5) then
+{
+	[getmarkerpos str _zoneNumber,((getmarkersize str _zoneNumber) select 0) max ((getmarkersize str _zoneNumber) select 1),17] spawn MCC_fnc_deleteBrush;
+	[getmarkerpos str _zoneNumber,((getmarkersize str _zoneNumber) select 0) max ((getmarkersize str _zoneNumber) select 1),18] spawn MCC_fnc_deleteBrush;
+};		
+*/			
 // ------------------  CREATE BRIEFINGS --------------------------------------------------------------------------
 //-----------------  CREATE BRIEFINGS --------------------------------------------------------------------------
 private ["_factionName","_music","_missionName1","_missionName2","_html","_html2","_control","_tempText","_missionTittle","_sounds"];
