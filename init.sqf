@@ -115,7 +115,7 @@ if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- 
 //Define non-lethal ammunition player using this ammunition on units closer then 30 meters will not kill them but stun them. Leave "" to none
 if (isnil "MCC_nonLeathal") then {MCC_nonLeathal = "prpl_6Rnd_12Gauge_Slug"};
 
-//----------------- non-lethal ammo ---------------------------------------------
+//-----------------MCC Survive mod ---------------------------------------------
 // Set to true to activate survival mode - scavange for loot to survive
 if (isnil "MCC_surviveMod") then {MCC_surviveMod = true}; 
 

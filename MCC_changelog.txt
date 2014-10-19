@@ -1,18 +1,28 @@
 Change log r10:
+- Added: MCC_survive mode, by enabling this variables MCC interaction key will allow you to search map objects or spawned objects for random loot including: resources, 
+ammo and weapons. Requires inidbi running on the server, empty loot points will refresh every number of days in game time equal to the variable here:MCC_surviveModRefresh
+It will also save items that the players placed in loot spawn objects so the players can use them as stashes for persistence purpose
+//-----------------MCC Survive mod ---------------------------------------------
+// Set to true to activate survival mode - scavange for loot to survive
+MCC_surviveMod = true; 
+
+//How long in days(24H-game time) will it take for spawn position to refresh
+MCC_surviveModRefresh = 1; 
+
 - Added: ST Flashbang grenade integrated to MCC to work with neutralizing enemy units, stunned units will be more likely to surrender.
-- Added: AI units will not automaticlly neutralized firt they will drop their weapons and stand with their hands up the player should approch them and zip cuff them
-         to restrain them or they might run off or even take their weapons again. 
+- Added: AI units will not automatically neutralized first they will drop their weapons and stand with their hands up the player should approach them and zip cuff them
+         To restrain them or they might run off or even take their weapons again. 
 - Added: MCC Interaction key will open doors by clicking it and by holding it next to a door you'll have this options:
-         - Mirror under the door: Allow the player to inspect the room before making an entry - requires tactical video prob item. 
+         - Mirror under the door: Allow the player to inspect the room before making an entry - requires tactical video probe item. 
 		 - Breaching charge: Will open locked door while inflicting heavy damage to units on the other side - requires claymore charge. 
 		 - Lock/Pick lock door: Allow the player to lock or unlock doors - requires multitool item or AGM's defuse tool.
 - Added:  Non-lethal ammunition variable "MCC_nonLeathal" player using this ammunition on units closer then 30 meters will not kill them but stun them. Leave "" to none.
           By default "prpl_6Rnd_12Gauge_Slug" to work with Benelli M4 Super 90 Pack http://www.armaholic.com/page.php?id=21870
 - Added: Interact with vehicles - by clicking the MCC interaction button next to a vehicle you can open the vehicles' doors or by holding the button you can board the vehicle  
-         in specific postion or access the vehicle's inventory.
+         in specific position or access the vehicle's inventory.
 - Added: Lock doors (all) and Lock doors (random) to brushes - will lock doors in the given area. 
 - Added: Specialist in Role Selection will gain XP from disarming IEDs. 
-- Added: 2 new resources food and meds, what we'll do with them? time will tell. 
+- Added: 2 new resources food and meds, what we'll do with them? Time will tell. 
 - Added: New items: Multitool, Tactical video probe
 - Fixed: In the spawn UI the delayed and cache buttons were Offset
 - Fixed: Vehicle fire caused by IED will put off after some time. 
@@ -20,8 +30,8 @@ Change log r10:
 - Fixed  : Blacklisting of known locations referred old function instead of CfgFunction
 - Fixed: Error saving and loading IED and ambush groups while sync.
 - Fixed: Hidden IED isn't deleted after disarming. 
-- Fixed: Respawn tents transperent icons. 
-- Changed: Refactored GAIA to use CfgFunctions (by MikeMatrix)
+- Fixed: Respawn tents transparent icons. 
+- Changed: Refractors GAIA to use CfgFunctions (by MikeMatrix)
 
 Change log r9:
 General:
