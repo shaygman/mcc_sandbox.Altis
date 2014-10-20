@@ -4,7 +4,7 @@ private ["_OPFarrays","_BLUarrays","_INDgrp","_INDhq","_INDmen","_OPFmen2","_BLU
 _pos = _this select 0;
 _side = _this select 1;
 _size = _this select 2;
-_grpId = if (count _this > 3) then { _this select 3;} else {nil};	
+_grpId = nil;	
 
 _BLUmen = ["B_diver_F","B_diver_exp_F","B_diver_TL_F"];
 _OPFmen = ["O_diver_F","O_diver_exp_F","O_diver_TL_F"];

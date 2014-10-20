@@ -116,8 +116,8 @@ while{true}do{
 
 			
 				_wp1 = _wGroup addWaypoint [_newPos, 0];
-				_wp1 setWaypointType ([ "MOVE", "DESTROY" , "SAD", "HOLD","SENTRY","GUARD" ] CALL BIS_FNC_SELECTRANDOM);
-				_wp1 setWaypointBehaviour ([  "CARELESS" ,"SAFE", "AWARE" ,"COMBAT" , "STEALTH" ] CALL BIS_FNC_SELECTRANDOM);
+				_wp1 setWaypointType ([ "MOVE", "DESTROY" , "SAD"  ] CALL BIS_FNC_SELECTRANDOM);
+				_wp1 setWaypointBehaviour ([  "CARELESS" ,"SAFE", "AWARE" , "STEALTH" ] CALL BIS_FNC_SELECTRANDOM);
 				_wp1 setWaypointCombatMode "RED";
 				_wp1 setWaypointSpeed "FULL";
 			
