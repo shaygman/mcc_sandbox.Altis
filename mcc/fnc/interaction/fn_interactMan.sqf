@@ -2,22 +2,27 @@
 // Interaction with man type
 // Example: [_suspect,_men] spawn MCC_fnc_interactMan; 
 //=================================================================================================================================================================================
-private ["_suspect","_men","_rand","_factor","_null","_suspectCorage","_waitTime"];
+private ["_suspect","_men","_rand","_factor","_null","_suspectCorage","_keyName","_pos"];
 _suspect 	= _this select 0;
 _men 		= _this select 1;
-_waitTime 	= 1;
+_keyName	= _this select 2;
 
 disableSerialization;
 player setVariable ["MCC_interactionActive",true];
 
-//shout
-if !(MCC_interactionKey_holding) then
+//draw interaction text
+if (!MCC_interactionKey_holding && ((_suspect getVariable ["MCC_disarmed",false]) || ((_suspect getVariable ["MCC_neutralize",false])) && !(_suspect in units group player))) then
 {
-	[[[netid _men,_men], format ["dontmove%1",floor (random 20)]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-	sleep 2;
+	_pos = getpos _suspect;
+	_pos set [2, (_pos select 2) + 1.5];
+	missionNameSpace setVariable ["MCC_interactionObjects", [[_pos, format ["Hold %1 to interact",_keyName]]]];
+}
+else
+{
+	missionNameSpace setVariable ["MCC_interactionObjects", []];
 };
 
-if (MCC_interactionKey_holding && (player distance  _suspect < 3) && !(lineIntersects [getposasl player, getposasl _suspect]) && !dialog) exitWith
+if (MCC_interactionKey_holding && (player distance  _suspect < 5) && !dialog) exitWith
 {
 	MCC_fnc_ManMenuClicked =
 	{
@@ -91,11 +96,15 @@ if (MCC_interactionKey_holding && (player distance  _suspect < 3) && !(lineInter
 	player setVariable ["interactWith",[_suspect]];
 	_ctrl ctrlAddEventHandler ["LBSelChanged","_this spawn MCC_fnc_ManMenuClicked"];
 	waituntil {!dialog};
-	sleep _waitTime; 
 	player setVariable ["MCC_interactionActive",false];  
 };
+
 //Cant neturalize friendly units
 if (((side _suspect != civilian && (side _suspect getFriend  side player)>0.6)) || isPlayer _suspect || (_suspect getVariable ["MCC_neutralize",false]) || (_suspect getVariable ["MCC_disarmed",false])) exitWith {player setVariable ["MCC_interactionActive",false]};
+
+//shout
+[[[netid _men,_men], format ["dontmove%1",floor (random 20)]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
+sleep 1; 
 
 _factor = if (side _suspect == civilian) then {6} else {11};
 if (primaryWeapon player == "") then {_factor = _factor*2}; 

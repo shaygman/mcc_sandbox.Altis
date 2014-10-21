@@ -78,6 +78,7 @@ class MCC
 		class createMCCZones	{description = "Create MCC zones localy";};
 		class initCuratorAttribute	{description = "Init MCC's curato Attribute";};
 		class interactProgress	{description = "Create a progress bar and anim for the player";};
+		class loadTruckUI		{description = "Open logistic truck UI";};
 	};
 
 	class ied
@@ -241,16 +242,17 @@ class MCC
 		class RestrictZoneEffect		{description = "Effect while inside a restricted zone.";};
 	};
 
-	class aircraft
+	class actions
 	{
 		#ifdef MCCMODE
-		file = "\mcc_sandbox_mod\mcc\fnc\aircraft";
+		file = "\mcc_sandbox_mod\mcc\fnc\actions";
 		#else
-		file = "mcc\fnc\aircraft";
+		file = "mcc\fnc\actions";
 		#endif
 
 		class ilsChilds		{description = "Handles ILS childs";};
-		class ilsMain		{description = "Handles ILS main dialog";};
+		class dragObject	{description = "Start a dragging animation must be run local on the dragging unit";};
+		class releaseObject	{description = "stop a dragging animation must be run local on the dragging unit";};
 	};
 	
 	class roleSelection

@@ -9,9 +9,13 @@ MCC_surviveMod = true;
 //How long in days(24H-game time) will it take for spawn position to refresh
 MCC_surviveModRefresh = 1; 
 
+- Added: Building's doors will randomly locked in Missiow Wizard CQB missions.
 - Added: ST Flashbang grenade integrated to MCC to work with neutralizing enemy units, stunned units will be more likely to surrender.
 - Added: AI units will not automatically neutralized first they will drop their weapons and stand with their hands up the player should approach them and zip cuff them
          To restrain them or they might run off or even take their weapons again. 
+- Added: interact key allow you to drag static weapons and ammoboxes.
+- Added: interact key allow you to flip turnover ATVs.
+- Added: interact key allow you to push boats to water.
 - Added: MCC Interaction key will open doors by clicking it and by holding it next to a door you'll have this options:
          - Mirror under the door: Allow the player to inspect the room before making an entry - requires tactical video probe item. 
 		 - Breaching charge: Will open locked door while inflicting heavy damage to units on the other side - requires claymore charge. 
@@ -19,7 +23,7 @@ MCC_surviveModRefresh = 1;
 - Added:  Non-lethal ammunition variable "MCC_nonLeathal" player using this ammunition on units closer then 30 meters will not kill them but stun them. Leave "" to none.
           By default "prpl_6Rnd_12Gauge_Slug" to work with Benelli M4 Super 90 Pack http://www.armaholic.com/page.php?id=21870
 - Added: Interact with vehicles - by clicking the MCC interaction button next to a vehicle you can open the vehicles' doors or by holding the button you can board the vehicle  
-         in specific position or access the vehicle's inventory.
+         in specific position or access the vehicle's inventory. While inside you can switch seats with the interaction key. 
 - Added: Lock doors (all) and Lock doors (random) to brushes - will lock doors in the given area. 
 - Added: Specialist in Role Selection will gain XP from disarming IEDs. 
 - Added: 2 new resources food and meds, what we'll do with them? Time will tell. 
@@ -33,6 +37,10 @@ MCC_surviveModRefresh = 1;
 - Fixed: Hidden IED isn't deleted after disarming. 
 - Fixed: Respawn tents transparent icons. 
 - Changed: Refractors GAIA to use CfgFunctions (by MikeMatrix)
+
+TODO
+Interaction put cargo in vehicles
+Add UI for disabling interaction or binding keys
 
 Change log r9:
 General:

@@ -10,11 +10,11 @@
 #define MCC_fuel ["watertank","waterbarrel","barrelwater","stallwater"]
 //#define MCC_plantsFruit ["neriumo","ficusc"]
 #define MCC_misc ["fishinggear","crabcages","rowboat","calvary","pipes_small","woodpile","pallets_stack","wheelcart"]
-#define MCC_garbage ["garbagebags","junkpile","garbagepallet","tyres","garbagewashingmachine"]
+#define MCC_garbage ["garbagebags","junkpile","garbagepallet","tyres","garbagewashingmachine","scrapheap"]
 #define MCC_wreck ["wreck_car","wreck_truck","wreck_offroad","wreck_van"]
 #define MCC_wreckMil ["wreck_ural","wreck_uaz","wreck_hmmwv","wreck_heli","wreck_hunter","wreck_brdm","wreck_bmp","wreck_t72_hull","wreck_slammer"]
 #define MCC_wreckSub ["uwreck"]
-#define MCC_ammoBox ["wpnsbox","weaponsbox","itembox","ammobox","supplydrop"]
+#define MCC_ammoBox ["woodenbox","luggageheap","pallet_milboxes_f"]
 
 #define MCC_medItems ["MCC_antibiotics","MCC_painkillers","MCC_bandage","MCC_waterpure","MCC_vitamine"]
 #define MCC_fuelItems ["MCC_fuelCan","MCC_fuelbot"]
@@ -26,12 +26,13 @@ private ["_object","_typeOfobject","_ctrl","_break","_searchTime","_animation","
 disableSerialization;
 _object 	= _this select 0;
 
-if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false])) then
+player sidechat "class: " + str typeof _object;
+if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then
 {
 	missionNameSpace setVariable [format ["MCC_isInteracted%1",getpos _object], true]; 
 	publicvariable format ["MCC_isInteracted%1",getpos _object];
 	//Create progress bar
-	_searchTime = 3;
+	_searchTime = 10;
 	_break		= false; 
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutRsc ["MCC_interactionPB", "PLAIN"];
 	_ctrl = ((uiNameSpace getVariable "MCC_interactionPB") displayCtrl 2);
@@ -42,12 +43,12 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 	{
 		
 		_ctrl progressSetPosition (_x/_searchTime); 
-		if ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic") then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
+		//if ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic") then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
 		if ((_object distance player) > 5 || !MCC_interactionKey_holding) then {_x = _searchTime; _break = true;};
 		sleep 0.1;
 	};
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
-	player playMoveNow "AmovPknlMstpSlowWrflDnon";	
+	//player playMoveNow "AmovPknlMstpSlowWrflDnon";	
 	
 	//If moved to far from the IED
 	if (_break) exitwith {};	
@@ -169,7 +170,8 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 			};
 		};
 		
-		player action ["Gear",_wepHolder];
+		player action ["OpenBag",_wepHolder];
+		waituntil {dialog};
 		waituntil {!dialog};
 		
 
