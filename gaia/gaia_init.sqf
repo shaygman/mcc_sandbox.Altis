@@ -44,8 +44,9 @@ MCC_GAIA_ATTACKS_FOR_NONGAIA	 = false;
 
 //Ambient Combat
 MCC_GAIA_AMBIANT_COMBAT				 = false;
-MCC_GAIA_AMBIENT_minRange			 = 1000;	 
-MCC_GAIA_AMBIENT_maxRange 		 = 1400;	 
+MCC_GAIA_AMBIENT_minRange			 = 800;	 
+MCC_GAIA_AMBIENT_maxRange 		 = 1000;	 
+MCC_GAIA_AMBIENT_ZONE_RESERVED = 1000;
 
 
 MCC_GAIA_AMBIANT							 = true;

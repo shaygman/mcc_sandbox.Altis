@@ -59,11 +59,12 @@ while{true}do{
 						LV_AI_indeGroups = LV_AI_indeGroups - [_wGroup];
 					};
 				};
+				{deleteVehicle _x;} foreach ([_wGroup] call  BIS_fnc_groupVehicles);
 				{ deleteVehicle _x }forEach units _wGroup;
 			};
 		};
 		sleep 1;
 		_i = _i + 1;
 	};
-	sleep 20;
+	sleep 5;
 };

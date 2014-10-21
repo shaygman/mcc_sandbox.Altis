@@ -420,7 +420,7 @@ _StartTimeIssueOrders = time;
 								  				)										: {
 								  					 														//Clear the dude till he clears his mind.
 								  					 														//We do not count him into the attack
-								  					 														_dummy=[_x] call fnc_RemoveWayPoints;
+								  					 														_dummy=[_x] call GAIA_fnc_removeWaypoints;
 								  															};
 
 

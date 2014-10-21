@@ -73,13 +73,16 @@ _TotInRangeEUnits  = 0;
 _TotInRangeIUnits  = 0;
 _TotUnits					 = 0;
 _TotInRangeUnits   = 0;
+_centerPos				 = [];
+_GrpUnit					 = [];
+_ActiveZone				 = "";
+_simu							 = "";
 
 
-
-if(isNil("LV_ACS_activeGroups"))then{LV_ACS_activeGroups = [];}; 
-if(isNil("LV_AI_westGroups"))then{LV_AI_westGroups = [];}; 
-if(isNil("LV_AI_eastGroups"))then{LV_AI_eastGroups = [];}; 
-if(isNil("LV_AI_indeGroups"))then{LV_AI_indeGroups = [];}; 
+LV_ACS_activeGroups = []; 
+LV_AI_westGroups 		= []; 
+LV_AI_eastGroups 		= []; 
+LV_AI_indeGroups 		= []; 
 
 if(!(isNil("ACpatrol")))then{terminate ACpatrol;};
 if(!(isNil("ACcleanUp")))then{terminate ACcleanUp;};
@@ -88,35 +91,57 @@ if(_communication == 1)then{
 	ACcommunication = [] spawn GAIA_fnc_AIcommunication;
 };
 ACcleanUp = [_syncedUnit,_dissapearDistance,_mp] spawn GAIA_fnc_ACcleanUp;
-ACpatrol = [_syncedUnit,_maxRange,_patrolType,_mp] spawn GAIA_fnc_ACpatrol;
+//ACpatrol = [_syncedUnit,_maxRange,_patrolType,_mp] spawn GAIA_fnc_ACpatrol;
 
-while{true}do{
+while{true}do
+{
 	if(_maxTime == _minTime)then{
 		_timeDelay = _maxTime;
 	}else{
 		_timeDelay = (random(_maxTime - _minTime)) + _minTime;
 	};
 	sleep _timeDelay;
+	
+	_syncedUnit = call GAIA_fnc_GetPlayers;
+	
+	
+
+	
 	if (
 				(count LV_ACS_activeGroups < _groupAmount)
 				and
 				MCC_GAIA_AMBIANT_COMBAT
+				and
+				(count(_syncedUnit)>0)
 		 )
 	then
 	{
 		if(count LV_ACS_activeGroups == (_groupAmount - 1))then{sleep _timeDelay;};
 		
-			if(_mp)then{ _syncedUnit = call GAIA_fnc_GetPlayers;};
-			_groupAmount = (((count(_syncedUnit))/3) max 6);
+			
+			_groupAmount = ((count(playableUnits))max 1)*6;
 			_spotValid = false;
 			while{!_spotValid}do
 			{
-				_spotValid = true;
-				if(((typeName _syncedUnit) == "ARRAY")||(_mp))then{
-					_centerPos = getPos (_syncedUnit call BIS_fnc_selectRandom);
-				}else{
-					_centerPos = getPos _syncedUnit;
-				};
+				
+				
+				_player		 = (_syncedUnit call BIS_fnc_selectRandom);
+				if ((_player getVariable ["MCC_AMBIENT_ZONE","none"])=="none") then
+					{
+						_player setvariable ["MCC_AMBIENT_ZONE",str(MCC_GAIA_AMBIENT_ZONE_RESERVED+1)];
+						_mrknm = (_player getVariable ["MCC_AMBIENT_ZONE","none"]);
+						_mrk 	 = createMarkerLocal [_mrknm, position _player ];
+						_mrk setMarkerShapeLocal "RECTANGLE";
+						_mrk setMarkerSize [_maxRange, _maxRange];
+						
+					}
+					else
+					{
+						(_player getVariable ["MCC_AMBIENT_ZONE","none"]) setMarkerPos getpos _player;
+					};
+				
+				_centerPos  = position _player;			
+				_ActiveZone = (_player getVariable ["MCC_AMBIENT_ZONE","none"]);
 				
 				if(_maxRange == _minRange)then{
 					_range = _maxRange;
@@ -124,39 +149,29 @@ while{true}do{
 					_range = (random(_maxRange - _minRange)) + _minRange;
 				};
 				_dir = random 360;
-				_spawnPos = [(_centerPos select 0) + (sin _dir) * _range, (_centerPos select 1) + (cos _dir) * _range, 0];
+				 
+				 //_spawnPos = getpos(( [(nearestObjects [_centerPos, ["house"], 1000]),{_x distance _centerPos>800}] call BIS_fnc_conditionalSelect) call BIS_fnc_selectRandom);
+				//_spawnPos = [(_centerPos select 0) + (sin _dir) * _range, (_centerPos select 1) + (cos _dir) * _range, 0];
+				_spawnpos =[getPos _player, _minRange, _maxRange, 30, 1, 20, 0] call BIS_fnc_findSafePos;
 				
-				if(surfaceIsWater _spawnPos)then{
-					_isFlat = []; 	
-					_d1 = 0;	
-					while{count _isFlat == 0}do{ //check if there's land at _maxRange
-						_tempPos = [(_centerPos select 0) + (sin _d1) * _maxRange, (_centerPos select 1) + (cos _d1) * _maxRange, 0];
-						_isFlat = _tempPos isflatempty [2,0,1,2,0,false];
-						_d1 = _d1 + 45;
-						//hint format["%1",_isFlat];
-						if(_d1 == 360)exitWith{};
-					};
-					if(count _isFlat > 0)then{ //if land is found, spawn most groups as land / air groups
-						_waterUnitChance = floor(random 5);
-						if(_waterUnitChance > 3)then{ //Water units chance 1/5
-							_spawnPos = _isFlat;
-							//_spawnPos = [1,_centerPos,_spawnPos,_range] call GAIA_fnc_FindLandPosition;
-							//_spawnPos = [_centerPos,_minRange,_maxRange,5,0,1,0] call BIS_fnc_findSafePos;
-						};
-					};
-				};
-				if(((typeName _syncedUnit) == "ARRAY")||(_mp))then{
-					{
-						if((_x distance _spawnPos) < _minRange)exitWith{_spotValid = false;};
-					}forEach _syncedUnit;
-				};
+	
+				{
+					if((_x distance _spawnPos) < _minRange)exitWith{_spotValid = false;};
+				}forEach _syncedUnit;
+				
 				
 				_avoidArray = MCC_GAIA_ZONES_EAST + MCC_GAIA_ZONES_WEST + MCC_GAIA_ZONES_EAST + MCC_GAIA_ZONES_INDEP;
 				
-				{
-					if([_spawnPos,_x] call GAIA_fnc_IsInMarker)exitWith{_spotValid = false;};
-				}forEach _avoidArray;
-				
+				//Result check
+			 	if (
+			 			!((  (getArray(configFile >> "CfgWorlds" >> worldName >> "centerPosition")) distance _spawnPos)==0)
+			 			and
+			 			!([_spawnPos,_minRange] call GAIA_fnc_isNearPlayer)
+			 			and
+			 			(_spawnPos distance player)> _minRange
+			 		 )
+				then
+				{_spotValid = true;};
 				
 			};
 
@@ -275,43 +290,82 @@ while{true}do{
 	
 		if _DoStuff then
 		{
-				_side 		= [[0,1,2],_sideRatios] call BIS_fnc_selectRandomweighted;
-				_faction  = [(_factions select _side)] call BIS_fnc_selectRandom;
+				_sideNr		= [[0,1,2],_sideRatios] call BIS_fnc_selectRandomweighted;
+				_side     = ([west,east,independent] select _sideNr);
+				_faction  = ([ "BLU_F","OPF_F", "IND_F"] select _sideNr);
 				hint format["Found %1",_faction];
-					
-				_menOrVehicle = floor(random 10);
-				if(_menOrVehicle < 4)then{
-					if(surfaceIsWater _spawnPos)then{
-						_grp = [_spawnPos, _side,_faction] call GAIA_fnc_fullWaterVehicle;
-					}else{
-						_landOrAir = floor(random 3);
-						if(_landOrAir > 1)then{
-							_grp = [_spawnPos, _side,_faction] call GAIA_fnc_fullAirVehicle;
-						}else{
-							_grp = [_spawnPos, _side,_faction] call GAIA_fnc_fullLandVehicle;
-						};
-					};
-				}else{
-					if(surfaceIsWater _spawnPos)then{
-						_grp = [_spawnPos, _side, [10,3],_faction] call GAIA_fnc_diveGroup;
-					}else{
-						_grp = [_spawnPos, _side, [10,3],_faction] call GAIA_fnc_menGroup;
-					};
-				};
-				if(typeName _skills != "STRING")then{_skls = [_grp,_skills] call GAIA_fnc_ACskills;};
-				LV_ACS_activeGroups set [(count LV_ACS_activeGroups), (group _grp)];
 				
-				switch(_side)do{
+	
+					
+			 	// Can be a water pos
+			 	
+			 	//Did we get the world centerpos? Fuck it....
+			 	//"soldier", "car", "motorcycle", "tank", "helicopter", "airplane", "ship"
+
+			 		if (surfaceIsWater _spawnPos) then
+			 		{
+			 			
+			 			_simu = [["helicopter", "airplane", "ship"],[0.3,0.3,1]] call BIS_fnc_selectRandomWeighted; 			
+			 		}
+			 		else
+			 		{
+			 			
+			 			_simu = [["soldier", "car", "motorcycle", "tank", "helicopter", "airplane" ],[1,0.3,0.2,0.1,0.05,0.05]] call BIS_fnc_selectRandomWeighted;
+			 		};
+					
+					
+					
+					if (_simu == "soldier") then 
+					{
+						// Love the x simulation
+						_unitarray= [_faction ,_simu,"men"] call MCC_fnc_makeUnitsArray;
+						_unitarray = _unitarray + ( [_faction ,_simu+"x","men"] call MCC_fnc_makeUnitsArray);
+						
+						_amount = (floor random 10);
+						_dude   = [];
+						_GrpUnit= [];
+						for [{_i=0}, {_i <  _amount}, {_i=_i+1}] do
+						{
+							_dude = _unitarray select (floor random (count _unitarray));
+							ggg= _dude;
+							_GrpUnit = _GrpUnit + [ (_dude  select 0)];
+							
+							
+						};
+						_grp = [_spawnPos, _side, _GrpUnit] call BIS_fnc_spawnGroup;
+					}
+					else
+					{
+							// Love the x simulation
+						_unitarray= [_faction ,_simu] call MCC_fnc_makeUnitsArray;
+						_unitarray = _unitarray + ( [_faction ,_simu+"x"] call MCC_fnc_makeUnitsArray);
+						
+						if (count(_unitarray)>0) then
+						{
+							_dude = _unitarray select (floor random (count _unitarray));					
+							_grp = ([_spawnPos, 200, (_dude  select 0), _side] call bis_fnc_spawnvehicle) select 2;
+						};
+					};	
+				
+	
+	
+	
+				LV_ACS_activeGroups set [(count LV_ACS_activeGroups), ( _grp)];
+				
+				switch(_sideNr)do{
 					case 0:{
-						LV_AI_eastGroups set [(count LV_AI_eastGroups), (group _grp)];
+						LV_AI_eastGroups set [(count LV_AI_eastGroups), ( _grp)];
 					};
 					case 1:{
-						LV_AI_westGroups set [(count LV_AI_westGroups), (group _grp)];
+						LV_AI_westGroups set [(count LV_AI_westGroups), ( _grp)];
 					};
 					case 2:{
-						LV_AI_indeGroups set [(count LV_AI_indeGroups), (group _grp)];
+						LV_AI_indeGroups set [(count LV_AI_indeGroups), ( _grp)];
 					};
 				};
+				
+				hint _ActiveZone;
+				( _grp) setVariable ["GAIA_ZONE_INTEND",[_ActiveZone, "MOVE"], false];
 				
 				if(!isNil("_customInit"))then{ 
 					{
