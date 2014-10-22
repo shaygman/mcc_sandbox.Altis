@@ -35,7 +35,7 @@ _syncedUnit 			 = [];
 _InRange					 = false;
 _skills 					 = "default";
 _communication 		 = 1;	 
-_dissapearDistance = _maxRange+900;
+_dissapearDistance = _maxRange+200;
 _customInit 			 = nil;	 
 _patrolType 			 = 1;	
 _mp 							 = true;
@@ -56,6 +56,7 @@ _NearestEnemyGroups= [];
 _NearestFriendlyGroups = [];
 _grp							 = grpNull;
 _player						 = objNull;
+_LastPosPlayer		 = [];
 
 
 
@@ -100,8 +101,9 @@ while{true}do
 		
 		
 			
-			_groupAmount = ((count(playableUnits))max 1)*3;
+			_groupAmount = ((count(playableUnits))max 1)*7;
 			_spotValid = false;
+			_attempt   = 0;
 			
 			while{!_spotValid}do
 			{
@@ -130,7 +132,38 @@ while{true}do
 				 
 				 //_spawnPos = getpos(( [(nearestObjects [_centerPos, ["house"], 1000]),{_x distance _centerPos>800}] call BIS_fnc_conditionalSelect) call BIS_fnc_selectRandom);
 				//_spawnPos = [(_centerPos select 0) + (sin _dir) * _range, (_centerPos select 1) + (cos _dir) * _range, 0];
+				_LastPosPlayer =(_player getVariable ["MCC_AMBIENT_PLAYER_POS",[]]);
+				if (
+							//Only try to predict if we have any clue where this player was before.
+							(count(_LastPosPlayer)>0) 
+							&&
+							//We tried to predict 3 times with absolute failing. Stop doing that!!!
+							_attempt<4
+					 )
+				then
+				{
+					//If he had not moved then there is no use to predict is it, einstein?
+					if ((_LastPosPlayer distance  _player)>30) then
+						{
+							//Figure out where the dude goes.
+							_dir = [_LastPosPlayer,position _player ] call BIS_fnc_dirTo;
+							_spawnpos = [_player, _maxrange, _dir] call BIS_fnc_relPos;
+							_mrknm = format["%1",_spawnpos];
+							_mrk 	 = createMarkerLocal [_mrknm, _spawnpos ];
+							_mrk setMarkerShapeLocal "RECTANGLE";
+							_mrk setMarkerSize [10, 10];
+							
+							hint "we tried to predit";
+							sleep 1;
+
+						}
+						else
+						{_spawnpos =[getPos _player, _minRange, _maxRange, 30, 1, 20, 0] call BIS_fnc_findSafePos;};
+				}
+				else
+				{
 				_spawnpos =[getPos _player, _minRange, _maxRange, 30, 1, 20, 0] call BIS_fnc_findSafePos;
+				};
 				
 				_avoidArray = MCC_GAIA_ZONES_EAST + MCC_GAIA_ZONES_WEST + MCC_GAIA_ZONES_EAST + MCC_GAIA_ZONES_INDEP;
 				
@@ -154,10 +187,12 @@ while{true}do
 					{_spotValid = false;};
 				}forEach ([_avoidArray, {parseNumber _x <1000}] call BIS_fnc_conditionalSelect);
 					
-				if !(_spotvalid) then {sleep 5;};
+				if !(_spotvalid) then {hint "we failed a pos!";sleep 1;_attempt=_attempt+1;};
 			};
 
-
+			//Update the position of the player 
+			_player setvariable ["MCC_AMBIENT_PLAYER_POS",position _Player];
+			
 			_FactionsWest = [];
 			_FactionsEast = [];
 			_FactionsIndep= [];
@@ -191,6 +226,9 @@ while{true}do
 								&&
 								// He is not a player
 								!(isplayer _x)
+								&&
+								count((group _x) getVariable ["GAIA_ZONE_INTEND",[]])>0
+								
 								
 								
 							) 
@@ -201,34 +239,19 @@ while{true}do
 						switch (side _x) do
 						{
 					    case west: 					{ 
-										    						if !((faction _x) in _FactionsWest) then {_FactionsWest=_FactionsWest+ [(faction _x)]};					    							
-										    						if ((_centerPos distance _unit)<_ScanUnitRange) then 
-										    						{_WestUnits = _WestUnits + 1;_TotUnits  = _TotUnits + 1; }
-										    						else
-										    						{
-										    						if (_distw==0) then {_distw= (_player distance _x)} else {_distw=(_player distance _x)min _DistW; };
-										    						}
-										    						;
+										    						if !((faction _x) in _FactionsWest) then {_FactionsWest=_FactionsWest+ [(faction _x)]};		
+										    						if ((_centerPos distance _unit)<_ScanUnitRange) then 			    							
+										    						{_WestUnits = _WestUnits + 1;_TotUnits  = _TotUnits + 1;}; 								    						
 										    					};     			    
 							case east: 					{ 
 										    						if !((faction _x) in _FactionsEast) then {_FactionsEast=_FactionsEast+ [(faction _x)]};					    							
-										        				if ((_centerPos distance _unit)<_ScanUnitRange) then 
-										        				{_EastUnits = _EastUnits + 1;_TotUnits  = _TotUnits + 1; }
-										        				else
-										        				{
-										    							if (_diste==0) then {_diste= (_player distance _x)} else {_diste=(_player distance _x)min _Diste; };
-										    						}
-										        				;
+										    						if ((_centerPos distance _unit)<_ScanUnitRange) then 			    							
+										        				{_EastUnits = _EastUnits + 1;_TotUnits  = _TotUnits + 1;}; 									        				
 										    					};     
 					    case independent	: { 
 									    							if !((faction _x) in _FactionsIndep) then {_FactionsIndep=_FactionsIndep+ [(faction _x)]};					    							
-									    							if ((_centerPos distance _unit)<_ScanUnitRange) then 
-									    							{_IndepUnits = _IndepUnits + 1;_TotUnits  = _TotUnits + 1; }
-									    							else							    								
-										        				{
-										    							if (_disti==0) then {_disti= (_player distance _x)} else {_disti=(_player distance _x)min _Disti; };
-										    						}
-									    							;									        					
+									    							if ((_centerPos distance _unit)<_ScanUnitRange) then 			    							
+									    							{_IndepUnits = _IndepUnits + 1;_TotUnits  = _TotUnits + 1;};						    							
 					    					 					};     					    					 					    					 
 						};
 				 	};
@@ -242,7 +265,16 @@ while{true}do
 				if (_TotUnits ==0) 
 				then
 					{
+						_distW = [west,_player,true] call GAIA_fnc_getDistanceToClosestZone;
+						_distE = [east,_player,true] call GAIA_fnc_getDistanceToClosestZone;
+						_distI = [independent,_player,true] call GAIA_fnc_getDistanceToClosestZone;
+						
+						if (_distw==99999) then {_distw=0};
+						if (_diste==99999) then {_diste=0};
+						if (_disti==99999) then {_disti=0};
+						
 						_distTot= 	_distI+_distE+_distW;
+						
 						if (_distw>0 && _distw!=_distTot) then {_distw  =   _distTot - _distW;};
 						if (_diste>0 && _diste!=_distTot) then {_diste  =   _distTot - _Diste;};
 						if (_disti>0 && _disti!=_distTot) then {_disti  =   _disttot - _Disti;};
@@ -345,7 +377,7 @@ while{true}do
 							
 						};
 						_grp = [_spawnPos, _side, _GrpUnit] call BIS_fnc_spawnGroup;
-						( _grp) setVariable ["GAIA_ZONE_INTEND",[_ActiveZone, (["MOVE","NOFOLLOW","FORTIFY"]call BIS_fnc_selectRandom)], false];
+						( _grp) setVariable ["GAIA_ZONE_INTEND",[_ActiveZone, (["MOVE","NOFOLLOW","FORTIFY"]call BIS_fnc_selectRandom)], true];
 						
 					}
 					else
@@ -358,7 +390,7 @@ while{true}do
 						{
 							_dude = _unitarray select (floor random (count _unitarray));					
 							_grp = ([_spawnPos, 200, (_dude  select 0), _side] call bis_fnc_spawnvehicle) select 2;
-							( _grp) setVariable ["GAIA_ZONE_INTEND",[_ActiveZone, (["MOVE","NOFOLLOW"]call BIS_fnc_selectRandom)], false];
+							( _grp) setVariable ["GAIA_ZONE_INTEND",[_ActiveZone, (["MOVE","NOFOLLOW"]call BIS_fnc_selectRandom)], true];
 						};
 					};	
 				  ( _grp) setVariable ["GAIA_AMBIENT",true, false];
