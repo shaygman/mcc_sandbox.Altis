@@ -16,7 +16,15 @@ while{(count _players) == 0}do
       {
         _player   = _x;
         _amount   = round(count(nearestObjects [_player, ["house"], 1000])/50);
-        _ActiveAmb= ({(leader _x distance _player)<(MCC_GAIA_AMBIENT_maxRange+100)} count LV_ACS_activeGroups);
+        _ActiveAmb= (
+        							{
+        								(leader _x distance _player)<(MCC_GAIA_AMBIENT_maxRange+100)
+        								&&
+        								(_x getVariable ["GAIA_AMBIENT",false]) 
+        								&&
+        								isTouchingGround _player
+        							} count allgroups
+        						);
         if ((_amount - _ActiveAmb)>0) then
         { _players set[(count _players), _x];};
       };
