@@ -6,6 +6,8 @@ private ["_side","_ClosestZone","_zones","_Distance"];
 
 _side 							= _this select 0;
 _pos								= _this select 1;
+
+
 _ExcludeAmbientZone = if (count _this > 2) then {_this select 2} else {false};
 
 _Distance	= 0;
@@ -26,11 +28,14 @@ if _ExcludeAmbientZone then
 else
 {_ClosestZone=(([_Zones,[],{_pos distance (getMarkerPos _x)},"ASCEND"] call BIS_fnc_sortBy)select 0);};
 
-if IsNil("_ClosestZone") then
+if (IsNil("_ClosestZone") )then
 	{_Distance = 99999;}
 else
 	{		
-		_Distance = ((getMarkerPos _ClosestZone) distance _pos);
+		if (!(getMarkerColor _ClosestZone == ""))then
+		{_Distance = ((getMarkerPos _ClosestZone) distance _pos);}
+		else
+		{_Distance = 99999;};
 	};
 	
 _Distance

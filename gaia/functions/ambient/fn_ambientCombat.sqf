@@ -57,6 +57,7 @@ _NearestFriendlyGroups = [];
 _grp							 = grpNull;
 _player						 = objNull;
 _LastPosPlayer		 = [];
+_roads						 = [];
 
 
 
@@ -196,10 +197,6 @@ while{true}do
 			_FactionsWest = [];
 			_FactionsEast = [];
 			_FactionsIndep= [];
-			_WestUnits		= 0;
-			_EastUnits		= 0;
-			_IndepUnits		= 0;
-			_TotUnits			= 0;
 			_NearestW   	= objNull;
 			_NearestI   	= objNull;
 			_NearestE   	= objNull;
@@ -238,21 +235,9 @@ while{true}do
 						_unit			 = _x;					
 						switch (side _x) do
 						{
-					    case west: 					{ 
-										    						if !((faction _x) in _FactionsWest) then {_FactionsWest=_FactionsWest+ [(faction _x)]};		
-										    						if ((_centerPos distance _unit)<_ScanUnitRange) then 			    							
-										    						{_WestUnits = _WestUnits + 1;_TotUnits  = _TotUnits + 1;}; 								    						
-										    					};     			    
-							case east: 					{ 
-										    						if !((faction _x) in _FactionsEast) then {_FactionsEast=_FactionsEast+ [(faction _x)]};					    							
-										    						if ((_centerPos distance _unit)<_ScanUnitRange) then 			    							
-										        				{_EastUnits = _EastUnits + 1;_TotUnits  = _TotUnits + 1;}; 									        				
-										    					};     
-					    case independent	: { 
-									    							if !((faction _x) in _FactionsIndep) then {_FactionsIndep=_FactionsIndep+ [(faction _x)]};					    							
-									    							if ((_centerPos distance _unit)<_ScanUnitRange) then 			    							
-									    							{_IndepUnits = _IndepUnits + 1;_TotUnits  = _TotUnits + 1;};						    							
-					    					 					};     					    					 					    					 
+					    case west: 					{ if !((faction _x) in _FactionsWest) then {_FactionsWest=_FactionsWest+ [(faction _x)]};};     			    
+							case east: 					{ if !((faction _x) in _FactionsEast) then {_FactionsEast=_FactionsEast+ [(faction _x)]};};     
+					    case independent	: {if !((faction _x) in _FactionsIndep) then {_FactionsIndep=_FactionsIndep+ [(faction _x)]};};     					    					 					    					 
 						};
 				 	};
 				 	
@@ -261,77 +246,69 @@ while{true}do
 				_DoStuff = true;
 				
 				
-				// In case we have no units found, make sure we dont devide by zero so set it to [0,0,0]
-				if (_TotUnits ==0) 
-				then
+
+				_distW = [west,position _player,true] call GAIA_fnc_getDistanceToClosestZone;
+				_distE = [east,position _player,true] call GAIA_fnc_getDistanceToClosestZone;
+				_distI = [independent,position _player,true] call GAIA_fnc_getDistanceToClosestZone;
+						
+				if (_distw==99999) then {_distw=0};
+				if (_diste==99999) then {_diste=0};
+				if (_disti==99999) then {_disti=0};
+						
+				_distTot= 	_distI+_distE+_distW;
+				
+				if (_distw>0 && _distw!=_distTot) then {_distw  =   _distTot - _distW;};
+				if (_diste>0 && _diste!=_distTot) then {_diste  =   _distTot - _Diste;};
+				if (_disti>0 && _disti!=_distTot) then {_disti  =   _disttot - _Disti;};
+				
+				if (_disttot>0) then
+				{
+					_distTot= 	_distI+_distE+_distW;
+					_ratioe = (_diste/_disttot);
+					_ratioW = (_distw/_disttot);
+					_ratioi = (_disti/_disttot);				
+					_sideRatios = [_ratioW,_ratioe,_ratioi ];
+					_min 				= [_sideratios,0]call BIS_fnc_findExtreme;
+					_max 				= [_sideratios,1]call BIS_fnc_findExtreme;
+					
+					
+					// Do the ownership thingy's, driving me titnuts here.Help my math! :)
+					//We have 2 sides (max)
+					if (
+								((_max > 0.6) and _min==0) 										
+						 )
+					then
 					{
-						_distW = [west,_player,true] call GAIA_fnc_getDistanceToClosestZone;
-						_distE = [east,_player,true] call GAIA_fnc_getDistanceToClosestZone;
-						_distI = [independent,_player,true] call GAIA_fnc_getDistanceToClosestZone;
-						
-						if (_distw==99999) then {_distw=0};
-						if (_diste==99999) then {_diste=0};
-						if (_disti==99999) then {_disti=0};
-						
-						_distTot= 	_distI+_distE+_distW;
-						
-						if (_distw>0 && _distw!=_distTot) then {_distw  =   _distTot - _distW;};
-						if (_diste>0 && _diste!=_distTot) then {_diste  =   _distTot - _Diste;};
-						if (_disti>0 && _disti!=_distTot) then {_disti  =   _disttot - _Disti;};
-						
-						if (_disttot>0) then
+						_i=0;
 						{
-							_distTot= 	_distI+_distE+_distW;
-							_ratioe = (_diste/_disttot);
-							_ratioW = (_distw/_disttot);
-							_ratioi = (_disti/_disttot);				
-							_sideRatios = [_ratioW,_ratioe,_ratioi ];
-							_min 				= [_sideratios,0]call BIS_fnc_findExtreme;
-							_max 				= [_sideratios,1]call BIS_fnc_findExtreme;
-							
-							
-							// Do the ownership thingy's, driving me titnuts here.Help my math! :)
-							//We have 2 sides (max)
-							if (
-										((_max > 0.6) and _min==0) 										
-								 )
-							then
-							{
-								_i=0;
-								{
-									if (_x!=_max) then {_sideRatios set [_i,0];};
-									_i=_i+1;
-								} foreach _sideRatios;
-							};
-							
-							//We have 3 side
-							if (
-										((_max > 0.36) and _min>0) 
-								 )
-							then
-							{
-								_i=0;
-								{
-									if (_x==_max) then {_sideRatios set [_i,_max+_min];};
-									if (_x==_min) then {_sideRatios set [_i,0];};
-									_i=_i+1;
-								} foreach _sideRatios;
-							};
-							_dostuff 		= true;
-							
-						}
-						else
-						{
-							
-							_sideRatios = [0,0,0];
-							_DoStuff    = false;
-						};
-					}
-				else
-					{	
-						_sideRatios = [(_WestUnits/_TotUnits),(_EastUnits/_TotUnits),(_IndepUnits/_TotUnits)];				
+							if (_x!=_max) then {_sideRatios set [_i,0];};
+							_i=_i+1;
+						} foreach _sideRatios;
 					};
-				hint format ["%1 ratio: %2 total: %3 disttot %4",[ _FactionsWest,_FactionsEast, _FactionsIndep],_sideRatios,_totunits,_distTot];
+					
+					//We have 3 side
+					if (
+								((_max > 0.36) and _min>0) 
+						 )
+					then
+					{
+						_i=0;
+						{
+							if (_x==_max) then {_sideRatios set [_i,_max+_min];};
+							if (_x==_min) then {_sideRatios set [_i,0];};
+							_i=_i+1;
+						} foreach _sideRatios;
+					};
+					_dostuff 		= true;
+					
+				}
+				else
+				{
+					
+					_sideRatios = [0,0,0];
+					_DoStuff    = false;
+				};
+		hint format ["%1 ratio: %2 total: %3 disttot %4",[ _FactionsWest,_FactionsEast, _FactionsIndep],_sideRatios,_totunits,_distTot];
 				
 	
 		if _DoStuff then
@@ -357,7 +334,12 @@ while{true}do
 			 			_simu = [["soldier", "car", "motorcycle", "tank"],[1,0.4,0.05,0.01]] call BIS_fnc_selectRandomWeighted;
 			 		};
 					
-					
+					if (!(isOnRoad _spawnpos) and (_simu in ["soldier", "car","motorcycle","tank"])) then
+							{
+								_roads = _spawnpos nearRoads 100;
+								if (count(_roads)>0) then
+									{_spawnpos = position(_roads call BIS_fnc_selectRandom);};
+							};
 					
 					if (_simu == "soldier") then 
 					{
@@ -385,6 +367,8 @@ while{true}do
 							// Love the x simulation
 						_unitarray= [_faction ,_simu] call MCC_fnc_makeUnitsArray;
 						_unitarray = _unitarray + ( [_faction ,_simu+"x"] call MCC_fnc_makeUnitsArray);
+						
+						
 						
 						if (count(_unitarray)>0) then
 						{

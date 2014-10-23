@@ -65,7 +65,7 @@ switch (_HQ_side) do
 //_ca=[_ca,[],{[_HQ_side,_x] CALL GAIA_fnc_getDistanceToClosestZone;},"ASCEND"] call BIS_fnc_sortBy;
 if (count(_ca)>0) then
 	{
-		_CA=[+_CA,[],{[_HQ_side,_x] CALL GAIA_fnc_getDistanceToClosestZone;}] call BIS_fnc_sortBy;
+		_CA=[_CA,[],{[_HQ_side,_x] CALL GAIA_fnc_getDistanceToClosestZone;}] call BIS_fnc_sortBy;
 	};
 
 
