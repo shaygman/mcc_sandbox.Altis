@@ -1,109 +1,91 @@
-if(!isServer) exitWith {};
+/*
+    Description:
+    Cache group far away from players.
+    Can only be executed by server.
 
-_sf   			= _this select 0; 
+    Parameter(s):
+    #0 ARRAY - Group Data
 
-_uv 				= [];
-_crew 			= [];
-_gv					= [];
+    Returns:
+    nil
+*/
 
-_group = creategroup (_sf select 2);
-if (isnull _group) exitwith {};
-_group  setVariable ["GAIA_zone_intend", (_sf select 3),true];
-_group  setVariable ["MCC_GAIA_RESPAWN", (_sf select 9),true];
+if (!isServer) exitWith {};
 
-//Now the trick is to restore the original group variable before we got cached.
-_var2 = "GAIA_RESPAWN_" + str(_group); 	
-missionNamespace setVariable [_var2, (_sf select 10)];
+_groupData = [_this, 0] call BIS_fnc_param;
 
-//I gues we were cached, because we just got uncached.
-_group  setVariable ["mcc_gaia_cache", true,true];
+_group = createGroup (_groupData select 2);
+if (isNull _group) exitWith {};
+_group  setVariable ["GAIA_zone_intend", _groupData select 3, true];
+_group  setVariable ["MCC_GAIA_RESPAWN", _groupData select 9, true];
 
+missionNamespace setVariable [format ["GAIA_RESPAWN_%1", str _group], _groupData select 10];
 
-//Create Vehicles in group
+_group  setVariable ["mcc_gaia_cache", true, true];
+
 {
-		_veh = _x;
-		//_cv  = (_veh select 0)  createvehicle (_veh select 1);
-		_cv = createVehicle [(_veh select 0), (_veh select 1), [], 0, "CAN_COLLIDE"] ;
-		//_cv  setPosasl (_veh select 1);
-		_cv setdamage (_veh select 2);
-		_cv setfuel (_veh select 3);
-		_cv setdir  (_veh select 5);
-	
-	
-		{
-			_un = _group createUnit [(_x select 0), (_x select 1), [], 0, "FORM"] ;	
-			_un setdamage 		(_x select 2);
-			_un setskill  		(_x select 3);
-			_un setrank   		(_x select 4);
-			
-			//_un setdir			  (_x select 6);
-			_role = (_x select 5);
-			if ((_role select 0) == "Driver") then 
-				{_un moveInDriver _cv ; };
-			if ((_role select 0) == "Turret") then 
-				{_un moveInTurret [_cv, (_role select 1)]; };
-			if ((_role select 0) == "Cargo") then 
-				{_un assignAsCargo  _cv; 
-					_un moveInCargo  _cv;					
-				};
-			
-		}	foreach (_veh select 4);
-			
-			_group setFormDir (_veh select 5);
-} foreach (_sf select 0);
+	private ["_vehicle", "_createdVehicle"];
+	_vehicle = _x;
+	_createdVehicle = createVehicle [_vehicle select 0, _vehicle select 1, [], 0, "CAN_COLLIDE"];
+	_createdVehicle setDamage (_vehicle select 2);
+	_createdVehicle setFuel (_vehicle select 3);
+	_createdVehicle setDir (_vehicle select 5);
 
-
-//Create Infantry in group
-{
-	//player globalchat format [" going  %1",(_x select 0)];
-	//_un=(_x select 0) createUnit [(_x select 1), _group,"",(_x select 3),(_x select 4)];
-	_un = _group createUnit [(_x select 0), (_x select 1), [], 0, "CAN_COLLIDE"] ;
-	
-	_un setdamage 		(_x select 2);
-	_un setskill  		(_x select 3);
-	_un setrank   		(_x select 4);
-	_un setPosasl 		(_x select 1);
-	
-	_un setdir			 	(_x select 5);
-  
-} foreach (_sf select 1);
-
-
-_group setspeedmode 	(_sf select 6);
-_group setformation 	(_sf select 7);
-_group setbehaviour 	(_sf select 4);
-_group setcombatmode (_sf select 5);
-
-// Clear all way points
-while {(count (waypoints _group)) > 0} do
-{
- deleteWaypoint ((waypoints _group) select 0); 
-};
-if (count (_sf select 8)>1) then 
-{
-	_array = (_sf select 8) select 0;
-	_current = (_sf select 8) select 1;
-	
-	
-	
 	{
-		private "_waypoint";
-		if (( (_x select 0) distance [0,0,0])>0) then 
-		{
-			_waypoint = _group addwaypoint [(_x select 0), 0];
-			
-			_waypoint setwaypointtype (_x select 1);
-			
-			_waypoint setwaypointbehaviour (_x select 2);
-			_waypoint setwaypointspeed (_x select 3);
-			_waypoint setwaypointcombatmode (_x select 4);
-			_waypoint setwaypointformation (_x select 5);
-			_waypoint setwaypointstatements (_x select 6);
-			_waypoint setwaypointtimeout (_x select 7);
-			_waypoint setwaypointhouseposition (_x select 8);
+		private ["_createdUnit"];
+		_createdUnit = _group createUnit [_x select 0, _x select 1, [], 0, "FORM"];
+		_createdUnit setDamage (_x select 2);
+		_createdUnit setSkill (_x select 3);
+		_createdUnit setRank (_x select 4);
+
+
+		((_x select 5) select 0) call {
+			if (_this == "Driver") exitWith {_createdUnit moveInDriver _createdVehicle};
+			if (_this == "Turret") exitWith {_createdUnit moveInTurret _createdVehicle};
+			if (_this == "Cargo") exitWith {_createdUnit assignAsCargo _createdVehicle; _createdUnit moveInCargo _createdVehicle};
 		};
-		
-	} foreach _array;
-	
-	_group setcurrentwaypoint [_group,_current];
+	} forEach (_vehicle select 4);
+
+	_group setFormDir (_vehicle select 4);
+} forEach (_groupData select 0);
+
+{
+	private ["_createdUnit"];
+	_createdUnit = _group createUnit [_x select 0, _x select 1, [], 0, "CAN_COLLIDE"];
+	_createdUnit setPosASL (_x select 1);
+	_createdUnit setDamage (_x select 2);
+	_createdUnit setSkill (_x select 3);
+	_createdUnit setRank (_x select 4);
+	_createdUnit setDir (_x select 5);
+} forEach (_groupData select 1);
+
+_group setBehaviour (_groupData select 4);
+_group setCombatMode (_groupData select 5);
+_group setSpeedMode (_groupData select 6);
+_group setFormation (_groupData select 7);
+
+while {(count waypoints _group) > 0} do
+{
+	deleteWaypoint ((waypoints _group) select 0);
+};
+
+if ((count (_groupData select 8)) > 1) then
+{
+	{
+		if (((_x select 0) distance [0, 0, 0]) > 0) then
+		{
+			private ["_waypoint"];
+			_waypoint = _group addWaypoint [_x select 0, 0];
+			_waypoint setWaypointType (_x select 1);
+			_waypoint setWaypointBehaviour (_x select 2);
+			_waypoint setWaypointSpeed (_x select 3);
+			_waypoint setWaypointCombatMode (_x select 4);
+			_waypoint setWaypointFormation (_x select 5);
+			_waypoint setWaypointStatements (_x select 6);
+			_waypoint setWaypointTimeout (_x select 7);
+			_waypoint setWaypointHousePosition (_x select 8);
+		};
+	} forEach ((_groupData select 8) select 0);
+
+	_group setCurrentWaypoint [_group, (_groupData select 8) select 1];
 };
