@@ -1,26 +1,38 @@
-if(!isServer) exitWith {};
-private ["_count"];
-_count = 0;
+/*
+    Description:
+    Uncache group close to player.
+    Can only be executed by server.
+
+    Parameter(s):
+    _this GROUP - Group to be uncached
+
+    Returns:
+    nil
+*/
+
+#define AI_SKILLTYPES ["TARGET", "AUTOTARGET", "MOVE", "ANIM", "FSM"]
+
+if (!isServer) exitWith {};
+
 {
-        if(_x != leader _this && !("Driver" in assignedVehicleRole _x)) then {
-		if (vehicle _x == _x) then {
-	                _x setPos [(formationPosition _x )select 0,(formationPosition _x )select 1];
-		};
-                _x allowDamage true;
-                _x enableSimulation true;
-                
-                _x enableAI "TARGET";
-                _x enableAI "AUTOTARGET";
-                _x enableAI "MOVE";
-                _x enableAI "ANIM";
-                _x enableAI "FSM";
-                
-        
- 				        //_x hideObject false;
-        				//if (vehicle _x != _x) then {(vehicle _x) hideObject false};
-                
-                _count = _count + 1;
+    private ["_unit"];
+    _unit = _x;
+    if (_unit != leader _this && !("Driver" in assignedVehicleRole _unit)) then
+    {
+        if (vehicle _unit == _unit) then
+        {
+            private ["_formationPosition"];
+            _formationPosition = formationPosition _unit;
+            _unit setPos [_formationPosition select 0, _formationPosition select 1];
         };
+
+        _unit enableSimulation true;
+        _unit allowDamage true;
+
+        {
+            _unit enableAI _x;
+        } forEach AI_SKILLTYPES;
+    };
 } forEach units _this;
 
-_this setVariable ["GAIA_CACHED_STAGE_1",false, false];
+_this setVariable ["GAIA_CACHED_STAGE_1", false, false];
