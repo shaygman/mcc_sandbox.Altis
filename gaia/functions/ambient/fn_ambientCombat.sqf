@@ -58,7 +58,9 @@ _player						 = objNull;
 _LastPosPlayer		 = [];
 _time							 = time;
 
-
+_FactionsWest = [];
+_FactionsEast = [];
+_FactionsIndep= [];
 
 
 
@@ -196,9 +198,7 @@ while{true}do
 			//Update the position of the player 
 			_player setvariable ["MCC_AMBIENT_PLAYER_POS",position _Player];
 			
-			_FactionsWest = [];
-			_FactionsEast = [];
-			_FactionsIndep= [];
+
 			_NearestW   	= objNull;
 			_NearestI   	= objNull;
 			_NearestE   	= objNull;

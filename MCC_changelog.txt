@@ -36,6 +36,7 @@ MCC_surviveModRefresh = 1;
 - Fixed: Error saving and loading IED and ambush groups while sync.
 - Fixed: Hidden IED isn't deleted after disarming. 
 - Fixed: Respawn tents transparent icons. 
+- Fixed: GAIA flanking orders sometimes went nuts, resulting in unlimited waypoints. Capped to max 6 waypoints for flanking.
 - Changed: Refractors GAIA to use CfgFunctions (by MikeMatrix)
 
 TODO

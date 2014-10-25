@@ -3,7 +3,7 @@
 // Example: [_group,_targetpos] call fnc_DoAttackInf
 // spirit 20-1-2014
 //===========================================================================================================================================================================
-private ["_group","_TargetPos","_pos","_Degree","_NrOfBuildingWp"];
+private ["_group","_TargetPos","_pos","_Degree","_NrOfBuildingWp","_count"];
 
 _group 			= _this select 0;
 _TargetPos	=	_this select 1;
@@ -13,6 +13,7 @@ _CoverPos	= [];
 _NrOfBuildingWp = 0;
 _Degree = 0;
 _angle  = [42,0,-42] call BIS_fnc_selectRandom;
+_count  = 0;
 
 
 [_group] call GAIA_fnc_removeWaypoints;
@@ -23,7 +24,7 @@ if !(surfaceiswater _TargetPos ) then
 		//Set the recon unit in stealth
 		_group  setBehaviour	"STEALTH";
 
-		while {(_Pos distance _TargetPos)>200} do
+		while {((_Pos distance _TargetPos)>200) and _count < 6} do
 		{
 			sleep 0.1;
 			//Determine our compass heading from group leader to _TargetPos
@@ -43,6 +44,7 @@ if !(surfaceiswater _TargetPos ) then
 				{
 				//Give the dude an Attack Waypoint
 				_dummy	=[_group,_pos, "MOVE"] call GAIA_fnc_addAttackWaypoint;
+				_count  = _count +1;
 				};
 
 		};
