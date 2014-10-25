@@ -25,7 +25,7 @@ while {!(MCC_GAIA_AC)} do
 private ["_minRange,_maxRange"];
 
  
-_maxRange 			   = MCC_GAIA_AMBIENT_maxRange;	 
+_maxRange 			   = MCC_GAIA_AC_MAXRANGE;	 
 _minRange 				 = _maxRange - 200;
 _timeDelay				 = 5;	 
 _groupAmount 			 = 0;
