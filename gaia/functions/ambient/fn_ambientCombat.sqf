@@ -17,19 +17,19 @@
 if (!isServer)exitWith{};
 
 // Take it easy as long as the show has not started.
-while {!(MCC_GAIA_AMBIANT_COMBAT)} do 
+while {!(MCC_GAIA_AC)} do 
 {
     sleep 5;
 };
 
 private ["_minRange,_maxRange"];
 
-_minRange 				 = MCC_GAIA_AMBIENT_minRange;	 
+ 
 _maxRange 			   = MCC_GAIA_AMBIENT_maxRange;	 
-
+_minRange 				 = _maxRange - 200;
 _timeDelay				 = 5;	 
-_groupAmount 			 = 20;
-_ScanUnitRange		 = 2500;
+_groupAmount 			 = 0;
+
 _sideRatios 			 = [0,0,0]; 
 _syncedUnit 			 = [];
 _InRange					 = false;
@@ -50,14 +50,13 @@ _TotInRangeUnits   = 0;
 _centerPos				 = [];
 _GrpUnit					 = [];
 _ActiveZone				 = "";
-_simu							 = "";
+_grp							 = grpNull;
 _spawnpos				   = [];
 _NearestEnemyGroups= [];
 _NearestFriendlyGroups = [];
-_grp							 = grpNull;
 _player						 = objNull;
 _LastPosPlayer		 = [];
-_roads						 = [];
+_time							 = time;
 
 
 
@@ -71,6 +70,8 @@ while{true}do
 	sleep _timeDelay;
 	
 	_syncedUnit = call GAIA_fnc_GetPlayers;
+
+	
 	// Remove out of range and out of heart groups
 	{
 		_delete = true;
@@ -93,7 +94,7 @@ while{true}do
 	if (
 				(({(_x getVariable ["GAIA_AMBIENT",false]) } count allgroups) < _groupAmount)
 				and
-				MCC_GAIA_AMBIANT_COMBAT
+				MCC_GAIA_AC
 				and
 				(count(_syncedUnit)>0)
 		 )
@@ -101,8 +102,8 @@ while{true}do
 	{
 		
 		
-			
-			_groupAmount = ((count(playableUnits))max 1)*7;
+			//Maximum ambient is 6 groups per player with a max of 35. 
+			_groupAmount = (((count(playableUnits))max 1)*6) min MCC_GAIA_AC_MAXGROUPS;
 			_spotValid = false;
 			_attempt   = 0;
 			
@@ -112,6 +113,8 @@ while{true}do
 				
 				
 				_player		 = (_syncedUnit call BIS_fnc_selectRandom);
+					//Set the visuals
+	
 				if ((_player getVariable ["MCC_AMBIENT_ZONE","none"])=="none") then
 					{
 						_player setvariable ["MCC_AMBIENT_ZONE",str(MCC_GAIA_AMBIENT_ZONE_RESERVED+1)];
@@ -144,18 +147,15 @@ while{true}do
 				then
 				{
 					//If he had not moved then there is no use to predict is it, einstein?
-					if ((_LastPosPlayer distance  _player)>30) then
+					if ((_LastPosPlayer distance  _player)>3) then
 						{
 							//Figure out where the dude goes.
 							_dir = [_LastPosPlayer,position _player ] call BIS_fnc_dirTo;
 							_spawnpos = [_player, _maxrange, _dir] call BIS_fnc_relPos;
-							_mrknm = format["%1",_spawnpos];
-							_mrk 	 = createMarkerLocal [_mrknm, _spawnpos ];
-							_mrk setMarkerShapeLocal "RECTANGLE";
-							_mrk setMarkerSize [10, 10];
+		
 							
-							hint "we tried to predit";
-							sleep 1;
+							
+		
 
 						}
 						else
@@ -166,7 +166,7 @@ while{true}do
 				_spawnpos =[getPos _player, _minRange, _maxRange, 30, 1, 20, 0] call BIS_fnc_findSafePos;
 				};
 				
-				_avoidArray = MCC_GAIA_ZONES_EAST + MCC_GAIA_ZONES_WEST + MCC_GAIA_ZONES_EAST + MCC_GAIA_ZONES_INDEP;
+				
 				
 				
 				//Result check
@@ -183,12 +183,13 @@ while{true}do
 				{_spotValid = true;};
 				
 				//Are we in a marker?
+				//We dont want ambient to spawn when inside GAIA zones. The mission maker is doing stuff.
 				{
-					if([_spawnPos,_x] call GAIA_fnc_IsInMarker)exitWith
+					if([_spawnPos,str _x] call GAIA_fnc_IsInMarker)exitWith
 					{_spotValid = false;};
-				}forEach ([_avoidArray, {parseNumber _x <1000}] call BIS_fnc_conditionalSelect);
+				}forEach ([MCC_zones_numbers, { _x <1000}] call BIS_fnc_conditionalSelect);
 					
-				if !(_spotvalid) then {hint "we failed a pos!";sleep 1;_attempt=_attempt+1;};
+				if !(_spotvalid) then {_attempt=_attempt+1;};
 			};
 
 			//Update the position of the player 
@@ -200,13 +201,7 @@ while{true}do
 			_NearestW   	= objNull;
 			_NearestI   	= objNull;
 			_NearestE   	= objNull;
-			_DistW				= 0;
-			_DistE			  = 0;
-			_DistI				= 0;
-			_distTot			= 0;
-			_ratioW				= 0;
-			_ratioE				= 0;
-			_ratioI				= 0;
+
 			
 			
 				
@@ -243,142 +238,29 @@ while{true}do
 				 	
 				} foreach allUnits;
 				
-				_DoStuff = true;
 				
 				
-
-				_distW = [west,position _player,true] call GAIA_fnc_getDistanceToClosestZone;
-				_distE = [east,position _player,true] call GAIA_fnc_getDistanceToClosestZone;
-				_distI = [independent,position _player,true] call GAIA_fnc_getDistanceToClosestZone;
-						
-				if (_distw==99999) then {_distw=0};
-				if (_diste==99999) then {_diste=0};
-				if (_disti==99999) then {_disti=0};
-						
-				_distTot= 	_distI+_distE+_distW;
 				
-				if (_distw>0 && _distw!=_distTot) then {_distw  =   _distTot - _distW;};
-				if (_diste>0 && _diste!=_distTot) then {_diste  =   _distTot - _Diste;};
-				if (_disti>0 && _disti!=_distTot) then {_disti  =   _disttot - _Disti;};
-				
-				if (_disttot>0) then
-				{
-					_distTot= 	_distI+_distE+_distW;
-					_ratioe = (_diste/_disttot);
-					_ratioW = (_distw/_disttot);
-					_ratioi = (_disti/_disttot);				
-					_sideRatios = [_ratioW,_ratioe,_ratioi ];
-					_min 				= [_sideratios,0]call BIS_fnc_findExtreme;
-					_max 				= [_sideratios,1]call BIS_fnc_findExtreme;
-					
-					
-					// Do the ownership thingy's, driving me titnuts here.Help my math! :)
-					//We have 2 sides (max)
-					if (
-								((_max > 0.6) and _min==0) 										
-						 )
-					then
-					{
-						_i=0;
-						{
-							if (_x!=_max) then {_sideRatios set [_i,0];};
-							_i=_i+1;
-						} foreach _sideRatios;
-					};
-					
-					//We have 3 side
-					if (
-								((_max > 0.36) and _min>0) 
-						 )
-					then
-					{
-						_i=0;
-						{
-							if (_x==_max) then {_sideRatios set [_i,_max+_min];};
-							if (_x==_min) then {_sideRatios set [_i,0];};
-							_i=_i+1;
-						} foreach _sideRatios;
-					};
-					_dostuff 		= true;
-					
-				}
-				else
+			_DoStuff = true;
+			
+			_sideRatios = [(position _player)] call GAIA_fnc_getsideratio;
+			
+		
+			if ((_sideRatios distance [0,0,0])==0) then
 				{
 					
 					_sideRatios = [0,0,0];
 					_DoStuff    = false;
 				};
-		hint format ["%1 ratio: %2 total: %3 disttot %4",[ _FactionsWest,_FactionsEast, _FactionsIndep],_sideRatios,_totunits,_distTot];
+				
+		//hint format ["%1 ratio: %2 total: %3 disttot %4",[ _FactionsWest,_FactionsEast, _FactionsIndep],_sideRatios,_totunits,_distTot];
 				
 	
 		if _DoStuff then
 		{
-				_sideNr		= [[0,1,2],_sideRatios] call BIS_fnc_selectRandomweighted;
-				_side     = ([west,east,independent] select _sideNr);
-				_faction  = ([ _FactionsWest,_FactionsEast, _FactionsIndep] select _sideNr) call BIS_fnc_selectRandom;
-				
-								
-			 	// Can be a water pos
-			 	
-			 	//Did we get the world centerpos? Fuck it....
-			 	//"soldier", "car", "motorcycle", "tank", "helicopter", "airplane", "ship"
-
-			 		if (surfaceIsWater _spawnPos) then
-			 		{
-			 			
-			 			_simu = [["helicopter", "airplane", "ship"],[0.01,0.01,1]] call BIS_fnc_selectRandomWeighted; 			
-			 		}
-			 		else
-			 		{
-			 			
-			 			_simu = [["soldier", "car", "motorcycle", "tank"],[1,0.4,0.05,0.01]] call BIS_fnc_selectRandomWeighted;
-			 		};
-					
-					if (!(isOnRoad _spawnpos) and (_simu in ["soldier", "car","motorcycle","tank"])) then
-							{
-								_roads = _spawnpos nearRoads 100;
-								if (count(_roads)>0) then
-									{_spawnpos = position(_roads call BIS_fnc_selectRandom);};
-							};
-					
-					if (_simu == "soldier") then 
-					{
-						// Love the x simulation
-						_unitarray= [_faction ,_simu,"men"] call MCC_fnc_makeUnitsArray;
-						_unitarray = _unitarray + ( [_faction ,_simu+"x","men"] call MCC_fnc_makeUnitsArray);
-						
-						_amount = (floor random 10) max 3;
-						_dude   = [];
-						_GrpUnit= [];
-						for [{_i=0}, {_i <  _amount}, {_i=_i+1}] do
-						{
-							_dude = _unitarray select (floor random (count _unitarray));
-							
-							_GrpUnit = _GrpUnit + [ (_dude  select 0)];
-							
-							
-						};
-						_grp = [_spawnPos, _side, _GrpUnit] call BIS_fnc_spawnGroup;
-						( _grp) setVariable ["GAIA_ZONE_INTEND",[_ActiveZone, (["MOVE","NOFOLLOW","FORTIFY"]call BIS_fnc_selectRandom)], true];
-						
-					}
-					else
-					{
-							// Love the x simulation
-						_unitarray= [_faction ,_simu] call MCC_fnc_makeUnitsArray;
-						_unitarray = _unitarray + ( [_faction ,_simu+"x"] call MCC_fnc_makeUnitsArray);
-						
-						
-						
-						if (count(_unitarray)>0) then
-						{
-							_dude = _unitarray select (floor random (count _unitarray));					
-							_grp = ([_spawnPos, 200, (_dude  select 0), _side] call bis_fnc_spawnvehicle) select 2;
-							( _grp) setVariable ["GAIA_ZONE_INTEND",[_ActiveZone, (["MOVE","NOFOLLOW"]call BIS_fnc_selectRandom)], true];
-						};
-					};	
-				  ( _grp) setVariable ["GAIA_AMBIENT",true, false];
-	
+			
+			_grp =[_sideRatios,[ _FactionsWest,_FactionsEast, _FactionsIndep],_spawnpos] call GAIA_fnc_SpawnGroup;
+			
 				
 		};
 	};

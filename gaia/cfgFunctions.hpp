@@ -13,6 +13,9 @@ class GAIA
         class ambientCombat {};
         class getPlayers {};
         class isInMarker {};
+        class getsideratio {};
+        class SpawnGroup {};
+        class ShowLocationOwner {};
         
     };
 
