@@ -71,6 +71,7 @@ while{true}do
 	
 	_syncedUnit = call GAIA_fnc_GetPlayers;
 
+	_groupAmount = (((count(playableUnits))max 1)*6) min MCC_GAIA_AC_MAXGROUPS;
 	
 	// Remove out of range and out of heart groups
 	{
