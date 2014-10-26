@@ -25,7 +25,7 @@
 
 #define mcc_deletePlayerBodyIDC 8425
 
-private ["_string", "_resistanceHostile", "_AiSkill","_value","_ACEReviveTime","_ACESpectator","_t2t","_code"];
+private ["_string", "_resistanceHostile", "_AiSkill","_value","_t2t","_code"];
 disableSerialization;
 
 if !mcc_isloading then	

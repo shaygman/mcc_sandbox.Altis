@@ -61,11 +61,11 @@ else
 
 if (MCC_GAIA_AC) then
 {
-	ctrlsettext [1015,"Ambient BF(on)"];
+	ctrlsettext [1015,"Ambient Warzone(on)"];
 }
 else
 {
-	ctrlsettext [1015,"Ambient BF(off)"];
+	ctrlsettext [1015,"Ambient Warzone(off)"];
 }; 
 
 //Capture 

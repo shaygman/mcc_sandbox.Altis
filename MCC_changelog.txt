@@ -39,6 +39,11 @@ MCC_surviveModRefresh = 1;
 - Fixed: GAIA flanking orders sometimes went nuts, resulting in unlimited waypoints. Capped to max 6 waypoints for flanking.
 - Changed: Refractors GAIA to use CfgFunctions (by MikeMatrix)
 
+-Removed 3d Party:
+F2 framework.
+Spectator script.
+Lefovers from UPSMON.
+
 TODO
 Interaction put cargo in vehicles
 Add UI for disabling interaction or binding keys

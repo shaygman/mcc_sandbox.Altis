@@ -53,13 +53,11 @@
 //--------------------------Others----------------------------------------------------
 #include "bon_artillery\dialog\Artillery.hpp"
 #include "VAS\menu.hpp"
-#include "spectator\spectating.hpp"
 
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
 {
 	#include "gaia\cfgFunctions.hpp"
-	#include "ais_injury\cfgFunctionsAIS.hpp"		//Mission only
 	#include "mcc\cfg\cfgFunctions.hpp"
 	#include "VAS\cfgFunctions.hpp"
 };
@@ -117,5 +115,4 @@ class RscTitles
 
 	#include "mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "mcc\dialogs\compass.hpp"
-	#include "ais_injury\dialogs\rscTitlesAIS.hpp"	//A3 wounding system
 };

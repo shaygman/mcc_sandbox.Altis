@@ -306,7 +306,6 @@ else
 		else
 		{
 			player sideChat format["Request ID: %2. Requesting to logout %1. Contacting server......",  player,mcc_request];
-			ace_sys_spectator_can_exit_spectator = false;			
 		};
 		#endif
 		//obviously when we are loading there is no need to safe it again since that will influence the load process by double output

@@ -51,7 +51,6 @@
 //--------------------------Others----------------------------------------------------
 #include "\mcc_sandbox_mod\bon_artillery\dialog\Artillery.hpp"
 #include "\mcc_sandbox_mod\VAS\menu.hpp"
-#include "\mcc_sandbox_mod\spectator\spectating.hpp"
 #include "\mcc_sandbox_mod\hcam\hcam.hpp"
 
 //--------------------------Cfg----------------------------------------------------

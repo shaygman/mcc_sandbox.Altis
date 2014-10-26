@@ -22,6 +22,4 @@ while { true } do
 	if (isnil "MCC_deadGroup") then {MCC_deadGroup = createGroup civilian; publicVariable "MCC_deadGroup"}; 
 	[player] join MCC_deadGroup;
 	player attachto [MCC_respawnAnchor,[2,2,2]];
-	sleep 2;
-	[] execVM MCC_path + "spectator\specta.sqf";
 };

@@ -283,9 +283,9 @@ class mcc_groupGen
 		class MCC_ambientBFButton: MCC_RscButton
 		{
 			idc = 1015;
-			onButtonClick = "_ctrl = _this select 0; if (ctrlText _ctrl == 'Ambient BF(on)') then {_ctrl ctrlSetText 'Ambient BF(off)';MCC_GAIA_AC = false;} else {_ctrl ctrlSetText 'Ambient BF(on)';MCC_GAIA_AC = true}; publicVariable 'MCC_GAIA_AC';";
+			onButtonClick = "_ctrl = _this select 0; if (ctrlText _ctrl == 'Ambient Warzone(on)') then {_ctrl ctrlSetText 'Ambient Warzone(off)';MCC_GAIA_AC = false;} else {_ctrl ctrlSetText 'Ambient Warzone(on)';MCC_GAIA_AC = true}; publicVariable 'MCC_GAIA_AC';";
 			tooltip = "Spawn random ambient battlefield around the player";
-			text = "Ambient BF(off)"; //--- ToDo: Localize;
+			text = "Ambient Warzone(off)"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 
 			x = 0.391146 * safezoneW + safezoneX;
@@ -335,10 +335,10 @@ class mcc_groupGen
 		class MCC_spectator: MCC_RscButton
 		{
 			idc = -1;
-			text = "Spectator";
-			tooltip = "Open spectator camera";
+			text = "Camera";
+			tooltip = "Open Camera";
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
+			onButtonClick = "while {dialog} do {closedialog 0;};[] call BIS_fnc_camera";
 
 			x = 0.505729 * safezoneW + safezoneX;
 			y = 0.0491758 * safezoneH + safezoneY;
