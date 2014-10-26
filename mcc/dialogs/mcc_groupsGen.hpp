@@ -247,7 +247,7 @@ class mcc_groupGen
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 
 			x = 0.391146 * safezoneW + safezoneX;
-			y = 0.72000 * safezoneH + safezoneY;
+			y = 0.73 * safezoneH + safezoneY;
 			w = 0.0744792 * safezoneW;
 			h = 0.0329871 * safezoneH;
 		};
@@ -276,6 +276,20 @@ class mcc_groupGen
 
 			x = 0.391146 * safezoneW + safezoneX;
 			y = 0.665 * safezoneH + safezoneY;
+			w = 0.0744792 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_ambientBFButton: MCC_RscButton
+		{
+			idc = 1015;
+			onButtonClick = "_ctrl = _this select 0; if (ctrlText _ctrl == 'Ambient BF(on)') then {_ctrl ctrlSetText 'Ambient BF(off)';MCC_GAIA_AC = false;} else {_ctrl ctrlSetText 'Ambient BF(on)';MCC_GAIA_AC = true}; publicVariable 'MCC_GAIA_AC';";
+			tooltip = "Spawn random ambient battlefield around the player";
+			text = "Ambient BF(off)"; //--- ToDo: Localize;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+			x = 0.391146 * safezoneW + safezoneX;
+			y = 0.698051 * safezoneH + safezoneY;
 			w = 0.0744792 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};

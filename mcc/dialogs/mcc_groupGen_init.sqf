@@ -59,6 +59,15 @@ else
 	ctrlsettext [520,"Enable Roles"];
 }; 
 
+if (MCC_GAIA_AC) then
+{
+	ctrlsettext [1015,"Ambient BF(on)"];
+}
+else
+{
+	ctrlsettext [1015,"Ambient BF(off)"];
+}; 
+
 //Capture 
 if (!MCC_capture_state) then { ctrlEnable [MCCSTOPCAPTURE,false];};
 

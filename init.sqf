@@ -17,7 +17,6 @@ else
 {
 	MCC_path = "";
 	MCC_path	 = "";
-	[] execVM MCC_path +"init_mission.sqf";
 	enableSaving [false, false];
 };
 
