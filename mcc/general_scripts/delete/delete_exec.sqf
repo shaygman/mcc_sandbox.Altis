@@ -186,7 +186,7 @@ switch _type do
 	} 
 	else	
 	{
-		deletevehicle _x;
+		if (_x getVariable ["mcc_delete",true]) then {deletevehicle _x};
 	};
 } foreach _nearObjects;
 

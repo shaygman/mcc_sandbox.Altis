@@ -1125,6 +1125,8 @@ class MCC_RscActivePicture
 	{
 		access = 0;
 		color[] = {1,1,1,0.5};
+		colorDisable[] = {1,1,1,1.4};
+		colorDisabled[] = {1,1,1,1.2};
 		colorActive[] = {1,1,1,1};
 		colorText[] = {0,0,0,1};
 		default = 0;

@@ -26,7 +26,6 @@ private ["_object","_typeOfobject","_ctrl","_break","_searchTime","_animation","
 disableSerialization;
 _object 	= _this select 0;
 
-player sidechat "class: " + str typeof _object;
 if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then
 {
 	missionNameSpace setVariable [format ["MCC_isInteracted%1",getpos _object], true]; 

@@ -141,6 +141,7 @@ if (isServer) then
 		
 	_dummy = _building createvehicle _pos;
 	_dummy setdir _dir;
+	_dummy setVariable ["mcc_delete",false,true];
 	
 	_flag = "FlagPole_F" createvehicle _pos;
 	sleep 0.5;
@@ -149,6 +150,7 @@ if (isServer) then
 	_dummy setvariable ["type",_size,true]; 
 	_dummy setvariable ["side",_side,true]; 
 	_dummy setvariable ["mcc_flag",_flag,true]; 
+	_dummy setVariable ["mcc_delete",false,true];
 	
 	//If is FOB
 	if (_size == "FOB") then 
@@ -190,7 +192,12 @@ if (isServer) then
 		_dummy addEventHandler ["handledamage",{0}];
 	};
 	
-	if (!_destructable) then {_sphere = "ProtectionZone_Invisible_F" createvehicle (getpos _dummy);_sphere setpos (getpos _dummy)};
+	if (!_destructable) then 
+	{
+		_sphere = "ProtectionZone_Invisible_F" createvehicle (getpos _dummy);
+		_sphere setpos (getpos _dummy);
+		_sphere setVariable ["mcc_delete",false,true];
+	};
 	
 	[_side, _dummy] call BIS_fnc_addRespawnPosition;
 					

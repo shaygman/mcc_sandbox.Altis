@@ -20,6 +20,7 @@ if !mcc_isloading then
 					publicVariable ""MCC_START_WEST"";
 
 					[[_pos, 0, 'west','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[_pos, random 360 , ['hq',1], 0, west] spawn MCC_fnc_construct_base;
 					onMapSingleClick """";
 					
 					mcc_safe=mcc_safe + FORMAT [""
@@ -30,6 +31,7 @@ if !mcc_isloading then
 												publicVariable 'MCC_teleportAtStartWest';
 												
 												[[MCC_START_WEST, 0, 'west','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+												[MCC_START_WEST, random 360 , ['hq',1], 0, west] spawn MCC_fnc_construct_base;
 												""							  
 												,MCC_START_WEST
 												,MCC_teleportAtStartWest
@@ -49,6 +51,7 @@ if !mcc_isloading then
 					publicVariable ""MCC_START_EAST"";
 
 					[[_pos, 0, 'east','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[_pos, random 360 , ['hq',1], 0, east] spawn MCC_fnc_construct_base;
 					onMapSingleClick """";
 					
 					mcc_safe=mcc_safe + FORMAT [""
@@ -59,6 +62,7 @@ if !mcc_isloading then
 												publicVariable 'MCC_teleportAtStartEast';
 												
 												[[MCC_START_EAST, 0, 'east','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+												[MCC_START_EAST, random 360 , ['hq',1], 0, east] spawn MCC_fnc_construct_base;
 												""							  
 												,MCC_START_EAST
 												,MCC_teleportAtStartEast
@@ -78,6 +82,7 @@ if !mcc_isloading then
 					publicVariable ""MCC_START_GUER"";
 
 					[[_pos, 0, 'GUER','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[_pos, random 360 , ['hq',1], 0, resistance] spawn MCC_fnc_construct_base;
 					onMapSingleClick """";
 					
 					mcc_safe=mcc_safe + FORMAT [""
@@ -88,6 +93,7 @@ if !mcc_isloading then
 												publicVariable 'MCC_teleportAtStartGuer';
 												
 												[[MCC_START_GUER, 0, 'GUER','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+												[MCC_START_GUER, random 360 , ['hq',1], 0, resistance] spawn MCC_fnc_construct_base;
 												""							  
 												,MCC_START_GUER
 												,MCC_teleportAtStartGuer

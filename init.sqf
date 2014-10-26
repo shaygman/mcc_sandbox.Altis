@@ -718,10 +718,9 @@ if ( isServer ) then
 	_SideHQ_west   = createCenter west;
 
 	//create logics
-
-
 	MCC_dummyLogicGroup = creategroup sideLogic;
-
+	MCC_dummyLogicGroup setVariable ["MCC_CPGroup",true,true];
+	
 	//server
 	_dummy = MCC_dummyLogicGroup createunit ["Logic", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_server";

@@ -30,7 +30,7 @@
 
 //----Logistics-----------------
 #include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
-#include "mcc\Dialogs\mcc_logisticsBaseBuild.hpp"
+#include "mcc\Dialogs\rts\mcc_logisticsBaseBuild.hpp"
 
 //----Interaction-----------------
 #include "mcc\Dialogs\mcc_interactionMenu.hpp"
@@ -82,6 +82,11 @@ class CfgSounds
 class CfgNotifications
 {
 	#include "mcc\cfg\CfgNotifications.hpp"
+};
+
+class cfgRtsBuildings
+{
+	#include "mcc\cfg\cfgRtsBuildings.hpp"
 };
 
 class RscTitles

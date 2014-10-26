@@ -31,7 +31,7 @@
 
 //----Logistics-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
-#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_logisticsBaseBuild.hpp"
+#include "\mcc_sandbox_mod\mcc\Dialogs\rts\mcc_logisticsBaseBuild.hpp"
 
 //----Interaction-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_interactionMenu.hpp"
@@ -102,6 +102,11 @@ class CfgLights
 class CfgNotifications
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgNotifications.hpp"
+};
+
+class cfgRtsBuildings
+{
+	#include "\mcc_sandbox_mod\mcc\cfg\cfgRtsBuildings.hpp"
 };
 
 class RscTitles
