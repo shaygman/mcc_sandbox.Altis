@@ -1,10 +1,11 @@
 //ARMA3Alpha function LV_fnc_getPlayers v1.0 - by SPUn / lostvar
 //Returns array of all alive non-captive players
-private["_all","_players","_time"];
+private["_all","_players","_time","_grp"];
 _players 	= [];
 _ActiveAmb= 0;
 _time 		= time;
 _spotvalid= false;
+_grp  		= grpNull;
 
 while{(count _players) == 0}do
 {
@@ -52,6 +53,26 @@ while{(count _players) == 0}do
       };
     };
   }forEach _all;
+
+//Delete old shit  
+	{
+		_delete = true;
+		_grp    = _x;
+		if (_grp getVariable ["GAIA_AMBIENT",false]) then
+		{
+			{
+				if ([position _x,_dissapearDistance] call GAIA_fnc_isNearPlayer) exitWith {_delete = false;};					
+			} forEach (units _grp);
+			if _delete then 
+			{
+				//Delete all shit
+				{deleteVehicle _x; sleep 0.3} foreach ([_grp] call  BIS_fnc_groupVehicles);
+				{ deleteVehicle _x;sleep 0.3 }forEach units _grp;
+				deletegroup _grp;
+			};
+		};
+	}forEach allgroups;  
+  
 sleep 3;
 };
 _players

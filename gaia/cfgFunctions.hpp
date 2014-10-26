@@ -11,6 +11,8 @@ class GAIA
         #endif
 
         class ambientCombat {};
+        class ambientCombatServer {};
+        class ambientCombatClient {};
         class getPlayers {};
         class isInMarker {};
         class getsideratio {};

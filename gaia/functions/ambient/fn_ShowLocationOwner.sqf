@@ -14,7 +14,7 @@ _MarkerColor= "";
 	{
 		if ( (getMarkerType  (str(_x))) == "") then
 		{
-			 _mrk = createMarker [(str(_x)), (locationPosition _x ) ];
+			 _mrk = createMarkerLocal [(str(_x)), (locationPosition _x ) ];
 			 //_mrk setMarkerType "mil_dot";_mrk setMarkerColor "ColorBlue"			 
 		}
 		else
@@ -32,8 +32,8 @@ _MarkerColor= "";
 		};
 		if !(_set) 								  	 then {_MarkerType ="mil_warning";_MarkerColor = "ColorWhite";_set=true;   };
 		
-		if ((getMarkerType  _mrk) != _MarkerType) then {_mrk setMarkerType _MarkerType;};
-		if ((getMarkerColor _mrk) != _MarkerColor) then {_mrk setMarkerColor _MarkerColor;}
+		if ((getMarkerType  _mrk) != _MarkerType) then {_mrk setMarkerTypeLocal  _MarkerType;};
+		if ((getMarkerColor _mrk) != _MarkerColor) then {_mrk setMarkerColorLocal  _MarkerColor;}
 		
 	};
 	
