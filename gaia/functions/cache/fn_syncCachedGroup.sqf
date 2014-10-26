@@ -1,19 +1,27 @@
-private ["_count"];
+/*
+    Description:
+    Synchronize leader of Group to known state.
 
-_count = 0;
-if (!(simulationEnabled (leader _this))) then {
-	private ["_x"];
-	_x = leader _this;
+    Parameter(s):
+    _this GROUP - Group to be synchronized
 
-        _x allowDamage true;
-        _x enableSimulation true;
-                
-        _x enableAI "TARGET";
-        _x enableAI "AUTOTARGET";
-        _x enableAI "MOVE";
-        _x enableAI "ANIM";
-        _x enableAI "FSM";
-                
-        _count = _count + 1;
+    Returns:
+    nil
+*/
+
+#define AI_SKILLTYPES ["TARGET", "AUTOTARGET", "MOVE", "ANIM", "FSM"]
+
+if (isNull _this) exitWith {};
+
+if (!(simulationEnabled leader _this)) then
+{
+    private ["_leader"];
+    _leader = leader _this;
+
+    _leader enableSimulation true;
+    _leader allowDamage true;
+
+    {
+        _leader enableAI _x;
+    } forEach AI_SKILLTYPES;
 };
-

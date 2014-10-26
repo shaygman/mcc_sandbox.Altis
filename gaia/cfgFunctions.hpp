@@ -11,29 +11,13 @@ class GAIA
         #endif
 
         class ambientCombat {};
-        class ACcleanUp {};
-        class ACpatrol {};
-        class ACskills {};
-        class AIcommunication {};
-        class closeDoors {};
-        class deleteOnDestination {};
-        class diveGroup {};
-        class findLandPosition {};
-        class follow {};
-        class fullAirVehicle {};
-        class fullLandVehicle {};
-        class fullWaterVehicle {};
+        class ambientCombatServer {};
+        class ambientCombatClient {};
         class getPlayers {};
         class isInMarker {};
-        class killAfterDelay {};
-        class menGroup {};
-        class nearestBuilding {};
-        class randomSpot {};
-        class removeAC {};
-        class removeDead {};
-        class removeGroupV2 {};
-        class simpleCache {};
-        class vehicleInit {};
+        class getsideratio {};
+        class SpawnGroup {};
+        class ShowLocationOwner {};
         
     };
 

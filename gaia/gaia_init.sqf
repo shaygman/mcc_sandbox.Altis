@@ -14,7 +14,6 @@ MCC_GAIA_CA_DEBUG					= [];
 
 
 MCC_GAIA_CACHE						= false;
-GAIA_CACHE_SLEEP					= 0.5;
 
 GAIA_CACHE_STAGE_1				= 1000;
 GAIA_CACHE_STAGE_2				= (2*GAIA_CACHE_STAGE_1);
@@ -43,9 +42,9 @@ MCC_GAIA_MORTAR_TIMEOUT				 = 300;
 MCC_GAIA_ATTACKS_FOR_NONGAIA	 = false;
 
 //Ambient Combat
-MCC_GAIA_AMBIANT_COMBAT				 = false;
-MCC_GAIA_AMBIENT_minRange			 = 800;	 
-MCC_GAIA_AMBIENT_maxRange 		 = 1000;	 
+MCC_GAIA_AC										 = false;
+MCC_GAIA_AC_MAXRANGE			 		 = 1000;
+MCC_GAIA_AC_MAXGROUPS						= 35;
 MCC_GAIA_AMBIENT_ZONE_RESERVED = 1000;
 
 
@@ -103,7 +102,7 @@ MCC_GAIA_TARGETS_CIV			= []; for "_i" from 0 to 90 do  { MCC_GAIA_TARGETS_INDEP 
 [civilian] 		spawn GAIA_fnc_startGaia;
 
 
-[] spawn GAIA_fnc_startGaiaCache;
+[0.5] spawn GAIA_fnc_startGaiaCache;
 
 [] spawn GAIA_FNC_ambientCombat;
 
