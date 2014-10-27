@@ -108,7 +108,14 @@ if (_index == 2 && MCC_allowSquadDialog) exitWith
 };
 
 //SQL PDA
-if (_index == 3 && MCC_allowsqlPDA) exitWith 
+if (_index == 3 && ((count units player > 1) && (leader player == player)) && MCC_allowsqlPDA) exitWith 
 {
-	createDialog "MCC_SQLPDA";
+	if (dialog) then 
+	{
+		while {dialog} do {closeDialog 0};
+	}
+	else
+	{
+		createDialog "MCC_SQLPDA";
+	};
 };

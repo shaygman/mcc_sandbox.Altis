@@ -1,3 +1,6 @@
+//==================================================================MCC_fnc_interaction===============================================================================================
+// Interaction perent
+//=================================================================================================================================================================================
 private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePlayer","_airports","_counter","_searchArray","_sides",
 		 "_positionStart","_positionEnd","_pointIntersect","_break","_interactiveObjects","_objArray","_keyName","_key","_text"];
 #define MCC_barrels ["garbagebarrel","garbagebin","toiletbox","garbagecontainer","fieldtoilet","tabledesk","cashdesk"]
@@ -6,7 +9,7 @@ private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePla
 #define MCC_food ["icebox","rack","shelves","sacks_goods","basket","sack_f"]
 //#define MCC_water ["water_source"]
 #define MCC_fuel ["watertank","waterbarrel","barrelwater","stallwater"]
-//#define MCC_plantsFruit ["neriumo","ficusc"]
+#define MCC_plantsFruit ["neriumo","ficusc"]
 #define MCC_misc ["fishinggear","crabcages","rowboat","calvary","pipes_small","woodpile","pallets_stack","wheelcart"]
 #define MCC_garbage ["garbagebags","junkpile","garbagepallet","tyres","garbagewashingmachine","scrapheap"]
 #define MCC_wreck ["wreck_car","wreck_truck","wreck_offroad","wreck_van"]
@@ -23,8 +26,7 @@ _text = "";
 if (_key select 0) then {_text = "Shift + "}; 
 if (_key select 1) then {_text = _text + "Ctrl + "}; 
 if (_key select 2) then {_text = _text + "Alt + "}; 
-_textKey = 	[(_key select 3)] call MCC_fnc_keyToName;
-_keyName = format ["%1%2",_text,_textKey];
+_keyName = format ["%1%2",_text, keyName (_key select 3)];
 
 //Do not fire while inside a dialog 
 if (dialog) exitWith {}; 
@@ -91,7 +93,7 @@ if (vehicle player == player) then
 		_selected = _pointIntersect select ((count _pointIntersect)-1);
 		if (player distance _selected < 5) exitWith
 		{
-			_objArray = MCC_barrels + MCC_grave + MCC_containers + MCC_food + MCC_fuel + MCC_misc + MCC_garbage + MCC_wreck + MCC_wreckMil + MCC_wreckSub + MCC_ammoBox;
+			_objArray = MCC_barrels + MCC_grave + MCC_containers + MCC_food + MCC_fuel + MCC_misc + MCC_plantsFruit + MCC_garbage + MCC_wreck + MCC_wreckMil + MCC_wreckSub + MCC_ammoBox;
 			if ((({[_x , str _selected] call BIS_fnc_inString} count _objArray)>0) && (isNull attachedTo _selected)) exitWith
 			{
 				missionNameSpace setVariable ["MCC_interactionObjects", [[getpos _selected, format ["Hold %1 to search",_keyName]]]];
@@ -110,7 +112,7 @@ else
 	
 	MCC_fnc_vehicleCargoMenuClicked = 
 	{
-		private ["_ctrl","_index","_ctrlData","_object","_animation","_phase","_door"];
+		private ["_ctrl","_index","_ctrlData","_object","_animation","_phase","_door","_locked"];
 		disableSerialization;
 
 		_ctrl 		= _this select 0;
@@ -121,9 +123,14 @@ else
 		closeDialog 0; 
 		switch (true) do
 		{
-			case (_ctrlData in ["commander","driver","gunner"]) : {player action [format ["moveTo%1",_ctrlData], _object]};
+			case (_ctrlData in ["commander","driver"]) : {player action [format ["moveTo%1",_ctrlData], _object]};
 			case (_ctrlData == "cargo") : {player action ["MoveToCargo", _object, (_object emptyPositions "cargo")-1]};
 			case (_ctrlData == "load") : {[player] call MCC_fnc_loadTruckUI};
+			case (_ctrlData == "dropOff") : {[] call MCC_fnc_requestDropOff};
+			case (["gunner",_ctrlData] call BIS_fnc_inString) : 
+			{
+				call compile format ["player action ['MoveToTurret',%1,%2]",_object,([_ctrlData,"[01234567890]"] call BIS_fnc_filterString)];
+			};
 			case (["ils" , _ctrlData] call BIS_fnc_inString) : 
 			{
 				//find the right runway from the data we gave - we have to filter it
@@ -148,9 +155,42 @@ else
 		    ((vectorUp _vehiclePlayer) select 2) >0 && 
 			locked _vehiclePlayer <2) then 
 			{
+				_locked = switch (_x) do
+							{
+								case "driver": {if (lockedDriver _vehiclePlayer) then {true} else {false}};
+								default {false};
+							};
 				_array set [count _array, [_x,format ["Move to %1 sit",if (_vehiclePlayer isKindof "air" && _x == "driver") then {"pilot"} else {_x}],format ["\A3\ui_f\data\igui\cfg\actions\getin%1_ca.paa",_x]]];
 			};
-	} foreach ["commander","driver","gunner","cargo"]; 
+	} foreach ["commander","driver","cargo"]; 
+	
+	//turrets
+	private ["_i","_entry","_turrets","_path","_count"];
+	_entry = configFile >> "CfgVehicles" >> typeof _vehiclePlayer;
+	_turrets = [_entry >> "turrets"] call BIS_fnc_returnVehicleTurrets;	
+	_path = [];
+	_i = 0;
+	_count 	= 0;
+	while {_i < (count _turrets)} do
+	{
+		private ["_turretIndex", "_thisTurret","_unit"];
+		_turretIndex 	= _turrets select _i;
+		_thisTurret 	= _path + [_turretIndex];
+		_unit 			= _vehiclePlayer turretUnit _thisTurret;
+		
+		if ((isNull _unit || (!isNull _unit && !isPlayer _unit)) && !(_vehiclePlayer lockedTurret _thisTurret) && (locked _vehiclePlayer <2)) then 
+		{
+			_array set [count _array, [format ["gunner%1",_thisTurret],format ["Move to %1",configName ((_entry >> "turrets") select _count)],"\A3\ui_f\data\igui\cfg\actions\getingunner_ca.paa"]];
+		};
+		_i = _i + 2;
+		_count = _count + 1;
+	};
+
+	//dropOff
+	if ((player in (assignedCargo  _vehiclePlayer)) && (player == leader player) && !isnull driver _vehiclePlayer  && locked _vehiclePlayer <2) then
+	{
+		_array set [count _array,["dropOff","Request Drop-off",_pic]];
+	};
 	
 	//Logistics
 	if ((typeof _vehiclePlayer in MCC_supplyTracks) && (player == driver _vehiclePlayer) && (speed _vehiclePlayer < 10) && MCC_allowlogistics) then

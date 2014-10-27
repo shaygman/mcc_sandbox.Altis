@@ -4,7 +4,7 @@
 // <in> Nothing
 //<out> Nothing
 //==============================================================================================================================================================================	
-private ["_string","_respawnItems","_airports","_counter","_searchArray","_key","_textKey","_text"];
+private ["_string","_respawnItems","_airports","_counter","_searchArray","_key","_text"];
 
 //Interactive objects EH
 uiNameSpace setVariable ["MCC_interactionActive",false];  
@@ -43,8 +43,8 @@ _text = "";
 if (_key select 0) then {_text = "Shift + "}; 
 if (_key select 1) then {_text = _text + "Ctrl + "}; 
 if (_key select 2) then {_text = _text + "Alt + "}; 
-_textKey = 	[(_key select 3)] call MCC_fnc_keyToName;
-_text = format ["%1%2",_text,_textKey];
+
+_text = format ["%1%2",_text,keyName (_key select 3)];
 		
 _text spawn
 {
@@ -97,7 +97,7 @@ _string = format ["((MCC_server getVariable ['CP_commander%1','']) == getPlayerU
 _null = player addaction ["<t color=""#FFCC01"">Commander - Console</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,1],-1,false,true,"teamSwitch",_string];
 
 //Add MCC Squad leader PDA
-_string = format ["(count units _this > 1) && (leader _this == _this) && ('ItemGPS' in (assignedItems _this)) && (vehicle _target == vehicle _this) && MCC_allowsqlPDA",side player]; 
+_string = format ["((count units _this > 1) && (leader _this == _this)) && MCC_allowsqlPDA",side player]; 
 _null = player addaction ["<t color=""#FFCC01"">Squad Leader - PDA</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,3],-1,false,true,"teamSwitch",_string];
 
 // Add MCC to the action menu

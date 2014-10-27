@@ -1,6 +1,6 @@
 private ["_unit","_Cargocount","_sucess"];
-_unit 	=  if (count _this > 0) then {_this select 0} else {objNull};
-if (isNull _unit) exitWith {};
+if (count _this == 0) exitWith {};
+_unit 	=  _this select 0;
 
 _sucess = false; 
 

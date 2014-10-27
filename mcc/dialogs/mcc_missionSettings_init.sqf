@@ -15,10 +15,6 @@
 #define mcc_showGRPMarkerComboIDC 8413
 #define mcc_showMessagesComboIDC 8414
 
-#define MCC_keyBindsOpenMCCButtonIDC 8415
-#define MCC_keyBindsOpenConsoleButtonIDC 8416
-#define MCC_keyBindsT2TButtonIDC 8417
-
 #define MCC_timeExcelIDC 8419
 #define MCC_AISmokeIDC 8420
 #define MCC_AISmokeChanceIDC 8421
@@ -225,22 +221,3 @@ _comboBox = _mccdialog displayCtrl mcc_deletePlayerBodyIDC;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
 _comboBox lbSetCurSel (missionNamespace getVariable ["mcc_deletePlayerBodyIndex",0]);
-
-//Show key Binds
-private ["_text","_key","_textKey"];
-
-for [{_x=8415},{_x<=8417},{_x=_x+1}]  do 
-{
-	_key = MCC_keyBinds select (_x-8415);
-
-	_text = "";
-	if (_key select 0) then {_text = "Shift + "}; 
-	if (_key select 1) then {_text = _text + "Ctrl + "}; 
-	if (_key select 2) then {_text = _text + "Alt + "}; 
-	
-	
-	_textKey = 	[(_key select 3)] call MCC_fnc_keyToName;
-	_text = format ["%1%2",_text,_textKey];
-
-	ctrlsettext [_x, _text];
-};

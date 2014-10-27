@@ -79,6 +79,7 @@ class MCC
 		class initCuratorAttribute	{description = "Init MCC's curato Attribute";};
 		class interactProgress	{description = "Create a progress bar and anim for the player";};
 		class loadTruckUI		{description = "Open logistic truck UI";};
+		class keyDown			{description = "Handle keydown/keyUp EH";};
 	};
 
 	class ied
@@ -288,9 +289,11 @@ class MCC
 		file = "mcc\fnc\interaction";
 		#endif
 		
-		class interactMan	{description = " Interaction with man type";};
-		class interactIED	{description = " Interaction with IED type";};
-		class interactDoor	{description = " Interaction with door type";};
-		class interactObject	{description = " Interaction with containers object";};
+		class interaction	{description = "Interaction perent";};
+		class interactMan	{description = "Interaction with man type";};
+		class interactIED	{description = "Interaction with IED type";};
+		class interactDoor	{description = "Interaction with door type";};
+		class interactObject	{description = "Interaction with containers object";};
+		class requestDropOff	{description = "Request player or AI to drop off a cargo group in a specific place - shold run localy on the requestor";};
 	};
 };

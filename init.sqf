@@ -107,6 +107,9 @@ if (isnil "MCC_allowSquadDialogCamera") then {MCC_allowSquadDialogCamera = true}
 //allow MCC logistics
 if (isnil "MCC_allowlogistics") then {MCC_allowlogistics = true};  //false - disabled
 
+//allow MCC interaction
+if (isnil "MCC_interaction") then {MCC_interaction = true};  //false - disabled
+
 //----------------- Teleport 2 Team -----------------------------------------------------------------------------
 if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- AfterRespawn, 3-Always
 
@@ -1112,37 +1115,25 @@ if (!isServer && !(MCC_isLocalHC)) then
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 {
 	waituntil {!(IsNull (findDisplay 46))};
-	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46]]];
+																//		MCC				//		Console			//  T2T				//		Squad dialog		//			Interaction	//		SQL PDA		//
+	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46],[false,true,false,209]]];
 	
 	//Prevent error messages for backward comp
-	if (count MCC_keyBinds < 5) then
+	if (count MCC_keyBinds < 6) then
 	{
-		profileNamespace setVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46]]];
-		MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46]]];  
+		profileNamespace setVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46],[false,true,false,209]]];
+		MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46],[false,true,false,209]]];  
 	}; 
 
-	//Opening status radio
-	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 2) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Medic)',time],true]}"];
-	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 3) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Medevac)',time],true]}"];
-	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 4) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Repair)',time],true]}"];
-	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 5) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Ammo)',time],true]}"];
-	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 6) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['(Need Fuel)',time],true]}"];
-	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if (((_this select 1) == 7) && (commandingMenu == 'RscCallSupport') && (leader player == player)) then {(group player) setvariable ['MCC_support',['',time],true]}"];
-
+	//Handle Key
+	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "_null = ['keydown',_this] call MCC_fnc_keyDown"];
+	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyUp", "_null = ['keyup',_this] call MCC_fnc_keyDown"];
+	
 	// Teleport to team on Alt + T
 	if (isnil "MCC_teleportToTeam") then {MCC_teleportToTeam = true};
-	_keyDown = (findDisplay 46) displayAddEventHandler ["KeyDown", "if ((_this select 1 ==((MCC_keyBinds select 2) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 2) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 2) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 2) select 2))) then {[] execVM '"+MCC_path+"mcc\general_scripts\mcc_SpawnToPosition.sqf';true}"];
-
-	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 0) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 0) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 0) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 0) select 2))) then {null = [nil,nil,nil,nil,0] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
-	(findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 1) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 1) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 1) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 1) select 2))) then {null = [nil,nil,nil,nil,1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 	
-	//Interaction key
-	(findDisplay 46) displayAddEventHandler ["KeyDown",format ["if ((_this select 1 ==((MCC_keyBinds select 4) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 4) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 4) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 4) select 2))) then {MCC_interactionKey_down = true; MCC_interactionKey_up = false; null = [] execVM '%1mcc\general_scripts\interaction\interaction.sqf'};",MCC_path]];
-	(findDisplay 46) displayAddEventHandler ["KeyUp","if (_this select 1 ==((MCC_keyBinds select 4) select 3)) then {MCC_interactionKey_down = false; MCC_interactionKey_up = true; MCC_interactionKey_holding = false};"];
-
 	//Squad Dialog
-	MCC_squadDialogOpen = false;
-	MCC_squadDialogOpenEH = (findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 3) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 3) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 3) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 3) select 2))) then {null = [nil,nil,nil,nil,2] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
+	MCC_squadDialogOpen = false;	
 
 	//Save gear EH
 	if(local player) then {player addEventHandler ["killed",{[player] execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};

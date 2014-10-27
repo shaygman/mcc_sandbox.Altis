@@ -39,7 +39,7 @@ lbClear _comboBox;
 _comboBox lbSetCurSel (MCC_terrainPref select 1); // set viewdistance index to current vd
 
 //Show key Binds
-for [{_x=8415},{_x<=8419},{_x=_x+1}]  do 
+for [{_x=8415},{_x<=8420},{_x=_x+1}]  do 
 {
 	_key = MCC_keyBinds select (_x-8415);
 
@@ -48,9 +48,7 @@ for [{_x=8415},{_x<=8419},{_x=_x+1}]  do
 	if (_key select 1) then {_text = _text + "Ctrl + "}; 
 	if (_key select 2) then {_text = _text + "Alt + "}; 
 	
-	
-	_textKey = 	[(_key select 3)] call MCC_fnc_keyToName;
-	_text = format ["%1%2",_text,_textKey];
+	_text = format ["%1%2",_text,keyName (_key select 3)];
 
 	ctrlsettext [_x, _text];
 };

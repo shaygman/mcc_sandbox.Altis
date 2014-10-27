@@ -238,6 +238,7 @@ class MCC_RscControlsGroup
 	};
 };
 
+
 class MCC_RscProgress
 { 
 	access = 0;
@@ -1178,4 +1179,148 @@ class MCC_RscToolbox {
 	  colorSelectedBg[] = {0.450,0.450,0.450,1};
 	  font = "PuristaMedium";
 	  sizeEx = 0.0208333;
+};
+class MCC_keyBindsGroup: MCC_RscControlsGroup
+{
+	idc = -1;
+	x = 0.29375 * safezoneW + safezoneX;
+	y = 0.225 * safezoneH + safezoneY;
+	w = 0.216563 * safezoneW;
+	h = 0.242 * safezoneH;
+	class controls
+	{
+		class MCC_keyBindsOpenMCCtext: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Open MCC:"; //--- ToDo: Localize;
+			x = 0.00515597 * safezoneW;
+			y = 0.044 * safezoneH;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsOpenConsoletext: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Comander Console:"; //--- ToDo: Localize;
+			x = 0.00515625 * safezoneW;
+			y = 0.077 * safezoneH;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsOpenT2Ttext: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Teleport to team:"; //--- ToDo: Localize;
+			x = 0.00515597 * safezoneW;
+			y = 0.143 * safezoneH;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsOpenGroupstext: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Squad Dialog:"; //--- ToDo: Localize;
+			x = 0.00515597 * safezoneW;
+			y = 0.176 * safezoneH;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsMCCinteractiontext: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Interaction Key:"; //--- ToDo: Localize;
+			x = 0.00515597 * safezoneW;
+			y = 0.209 * safezoneH;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindssSQLPDAtext: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Squad leader PDA:"; //--- ToDo: Localize;
+			x = 0.00515597 * safezoneW;
+			y = 0.11 * safezoneH;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsOpenMCCButton: MCC_RscButton
+		{
+			idc = 8415;
+			tooltip = "Click to change";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onMouseButtonUp =  __EVAL("[_this, 0] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.108281 * safezoneW;
+			y = 0.044 * safezoneH;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsOpenConsoleButton: MCC_RscButton
+		{
+			idc = 8416;
+			tooltip = "Click to change";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onMouseButtonUp =  __EVAL("[_this,1] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.108281 * safezoneW;
+			y = 0.077 * safezoneH;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsT2TButton: MCC_RscButton
+		{
+			idc = 8417;
+			tooltip = "Click to change";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onMouseButtonUp =  __EVAL("[_this,2] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.108281 * safezoneW;
+			y = 0.143 * safezoneH;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsGroupsButton: MCC_RscButton
+		{
+			idc = 8418;
+			tooltip = "Click to change";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onMouseButtonUp =  __EVAL("[_this,3] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.108281 * safezoneW;
+			y = 0.176 * safezoneH;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		
+		class MCC_keyBindsMCCinteractionButton: MCC_RscButton
+		{
+			idc = 8419;
+			tooltip = "Click to change";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onMouseButtonUp =  __EVAL("[_this,4] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.108281 * safezoneW;
+			y = 0.209 * safezoneH;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindssSQLPDAButton: MCC_RscButton
+		{
+			idc = 8420;
+			tooltip = "Click to change";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onMouseButtonUp =  __EVAL("[_this,5] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.108281 * safezoneW;
+			y = 0.11 * safezoneH;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+	};
 };

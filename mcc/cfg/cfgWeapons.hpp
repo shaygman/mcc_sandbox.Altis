@@ -95,12 +95,35 @@ class MCC_bandage : MCC_antibiotics
 class MCC_waterpure : MCC_antibiotics 
 {
 	displayName = "Water purification tablets";
-	descriptionShort = "Does the water taste funny?";
+	descriptionShort = "In this forsaken place water purifications tabs are the common coin";
 	picture = "\mcc_sandbox_mod\data\items\waterpure.paa";
 	model = "\A3\Structures_F_EPA\Items\Medical\WaterPurificationTablets_F.p3d";
-	mcc_surviveValue = 40;
+	mcc_surviveValue = 0.1;
+	class ItemInfo : MCC_Item
+	{
+		mass = 0.1;
+	};
 };
 
+class MCC_fruit1 : MCC_waterpure 
+{
+	displayName = "Strange fruit";
+	picture = "\mcc_sandbox_mod\data\items\fruit1.paa";
+	model = "\A3\weapons_F\ammo\mag_univ.p3d";
+	mcc_surviveValue = 1;
+	class ItemInfo : MCC_Item
+	{
+		mass = 1;
+	};
+};
+
+class MCC_fruit2 : MCC_fruit1 
+{
+	displayName = "Strange fruit";
+	picture = "\mcc_sandbox_mod\data\items\fruit2.paa";
+	model = "\A3\weapons_F\ammo\mag_univ.p3d";
+};
+	
 class MCC_vitamine : MCC_antibiotics 
 {
 	displayName = "Vitamins";
@@ -239,7 +262,7 @@ class MCC_cerealbox : itemCore
 class MCC_bacon : itemCore 
 {
 	scope = 2;
-	displayName = "Bacon";
+	displayName = "Canned Food";
 	picture = "\mcc_sandbox_mod\data\items\bacon.paa";
 	model = "\A3\Structures_F\Items\Food\TacticalBacon_F.p3d";
 	mcc_surviveType = "food";

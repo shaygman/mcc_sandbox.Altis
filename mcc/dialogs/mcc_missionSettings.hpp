@@ -17,10 +17,6 @@
 #define mcc_showGRPMarkerComboIDC 8413
 #define mcc_showMessagesComboIDC 8414
 
-#define MCC_keyBindsOpenMCCButtonIDC 8415
-#define MCC_keyBindsOpenConsoleButtonIDC 8416
-#define MCC_keyBindsT2TButtonIDC 8417
-
 #define MCC_timeExcelIDC 8419
 #define MCC_AISmokeIDC 8420
 #define MCC_AISmokeChanceIDC 8421
@@ -82,13 +78,6 @@ class missionSettings {
 	mcc_showGRPMarkerCombo,
 	mcc_showMessages,
 	mcc_showMessagesCombo,
-	MCC_keyBindstittle,
-	MCC_keyBindsOpenMCCtext,
-	MCC_keyBindsOpenConsoletext,
-	MCC_keyBindsOpenT2Ttext,
-	MCC_keyBindsOpenMCCButton,
-	MCC_keyBindsOpenConsoleButton,
-	MCC_keyBindsT2TButton,
 	mcc_TimeExcelTitle,
 	mcc_TimeExcelCombo,
 	missionSettingsGAIATittle,
@@ -440,90 +429,6 @@ class missionSettings {
 		tooltip = "Disable/Enable MCC's Messages"; //--- ToDo: Localize;
 	};
 	
-	class MCC_keyBindstittle: MCC_RscText
-	{
-		idc = -1;
-
-		text = "Key Binds:"; //--- ToDo: Localize;
-		x = 0.43125 * safezoneW + safezoneX;
-		y = 0.588 * safezoneH + safezoneY;
-		w = 0.133125 * safezoneW;
-		h = 0.0299633 * safezoneH;
-		colorText[] = {0,1,1,1};
-		colorBackground[] = {1,1,1,0};
-	};
-	
-	class MCC_keyBindsOpenMCCtext: MCC_RscText
-	{
-		idc = -1;
-
-		text = "Open MCC:"; //--- ToDo: Localize;
-		x = 0.391146 * safezoneW + safezoneX;
-		y = 0.621 * safezoneH + safezoneY;
-		w = 0.108854 * safezoneW;
-		h = 0.0219914 * safezoneH;
-	};
-	
-	class MCC_keyBindsOpenConsoletext: MCC_RscText
-	{
-		idc = -1;
-
-		text = "Open MCC Console:"; //--- ToDo: Localize;
-		x = 0.391146 * safezoneW + safezoneX;
-		y = 0.654 * safezoneH + safezoneY;
-		w = 0.108854 * safezoneW;
-		h = 0.0219914 * safezoneH;
-	};
-	
-	class MCC_keyBindsOpenT2Ttext: MCC_RscText
-	{
-		idc = -1;
-
-		text = "Teleport to team:"; //--- ToDo: Localize;
-		x = 0.391146 * safezoneW + safezoneX;
-		y = 0.687 * safezoneH + safezoneY;
-		w = 0.108854 * safezoneW;
-		h = 0.0219914 * safezoneH;
-	};
-	
-	class MCC_keyBindsOpenMCCButton: MCC_RscButton
-	{
-		idc = MCC_keyBindsOpenMCCButtonIDC;
-		tooltip = "Click to change";
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-		action =  __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
-
-		x = 0.505729 * safezoneW + safezoneX;
-		y = 0.621 * safezoneH + safezoneY;
-		w = 0.1 * safezoneW;
-		h = 0.0219914 * safezoneH;
-	};
-	class MCC_keyBindsOpenConsoleButton: MCC_RscButton
-	{
-		idc = MCC_keyBindsOpenConsoleButtonIDC;
-		tooltip = "Click to change";
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-		action =  __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
-
-		x = 0.505729 * safezoneW + safezoneX;
-		y = 0.654 * safezoneH + safezoneY;
-		w = 0.1 * safezoneW;
-		h = 0.0219914 * safezoneH;
-	};
-
-	class MCC_keyBindsT2TButton: MCC_RscButton
-	{
-		idc = MCC_keyBindsT2TButtonIDC;
-		tooltip = "Click to change";
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-		action =  __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
-
-		x = 0.505729 * safezoneW + safezoneX;
-		y = 0.687 * safezoneH + safezoneY;
-		w = 0.1 * safezoneW;
-		h = 0.0219914 * safezoneH;
-	};
-
 	class mcc_TimeExcelTitle: MCC_RscText
 	{
 		idc = -1;

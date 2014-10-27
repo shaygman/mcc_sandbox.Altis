@@ -8,7 +8,7 @@
 #define MCC_food ["icebox","rack","shelves","sacks_goods","basket","sack_f"]
 //#define MCC_water ["water_source"]
 #define MCC_fuel ["watertank","waterbarrel","barrelwater","stallwater"]
-//#define MCC_plantsFruit ["neriumo","ficusc"]
+#define MCC_plantsFruit ["neriumo","ficusc"]
 #define MCC_misc ["fishinggear","crabcages","rowboat","calvary","pipes_small","woodpile","pallets_stack","wheelcart"]
 #define MCC_garbage ["garbagebags","junkpile","garbagepallet","tyres","garbagewashingmachine","scrapheap"]
 #define MCC_wreck ["wreck_car","wreck_truck","wreck_offroad","wreck_van"]
@@ -16,13 +16,15 @@
 #define MCC_wreckSub ["uwreck"]
 #define MCC_ammoBox ["woodenbox","luggageheap","pallet_milboxes_f"]
 
-#define MCC_medItems ["MCC_antibiotics","MCC_painkillers","MCC_bandage","MCC_waterpure","MCC_vitamine"]
+#define MCC_medItems ["MCC_antibiotics","MCC_painkillers","MCC_bandage","MCC_vitamine"]
 #define MCC_fuelItems ["MCC_fuelCan","MCC_fuelbot"]
 #define MCC_repairItems ["MCC_ductTape","MCC_butanetorch","MCC_oilcan","MCC_metalwire","MCC_carBat"]
 #define MCC_foodItem ["MCC_foodcontainer","MCC_cerealbox","MCC_bacon","MCC_rice"]
+#define MCC_money ["MCC_waterpure"]
+#define MCC_fruits ["MCC_fruit1","MCC_fruit2"]
 
 private ["_object","_typeOfobject","_ctrl","_break","_searchTime","_animation","_phase","_doorTypes","_isHouse","_loadName","_waitTime","_array","_displayname",
-         "_randomChance","_loot","_wepHolder","_class"];
+         "_randomChance","_loot","_wepHolder","_class","_money","_rand"];
 disableSerialization;
 _object 	= _this select 0;
 
@@ -53,19 +55,19 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 	if (_break) exitwith {};	
 	
 	//Weapon/ammo/med/fuel/repair/food
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_barrels)>0) then {_typeOfobject = "barrel"; _randomChance =[0.025,0.05,0.05,0.1,0.1,0.1]}; 
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_grave)>0) then {_typeOfobject = "grave"; _randomChance =[0.1,0.2,0.05,0.05,0.15,0.05]}; 
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_containers)>0) then {_typeOfobject = "container"; _randomChance =[0.05,0.15,0.15,0.05,0.1,0.15]}; 
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_food)>0) then {_typeOfobject = "food"; _randomChance =[0.05,0.05,0.05,0.05,0.1,0.15]}; 
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_barrels)>0) then {_typeOfobject = "barrel"; _randomChance =[0.025,0.05,0.05,0.1,0.1,0.1,0.2]}; 
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_grave)>0) then {_typeOfobject = "grave"; _randomChance =[0.1,0.2,0.05,0.05,0.15,0.05,0.2]}; 
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_containers)>0) then {_typeOfobject = "container"; _randomChance =[0.05,0.15,0.15,0.05,0.1,0.15,0.15]}; 
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_food)>0) then {_typeOfobject = "food"; _randomChance =[0.05,0.05,0.05,0.05,0.1,0.15,0.1]}; 
 	//if (({[_x , str _object] call BIS_fnc_inString} count MCC_water)>0) then {_typeOfobject = "water"; _randomChance =[0.05,0.1,0.1,0.2,0.2,0.4]};  
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_fuel)>0) then {_typeOfobject = "fuel"; _randomChance =[0.05,0.05,0.05,0.15,0.1,0.05]};  
-	//if (({[_x , str _object] call BIS_fnc_inString} count MCC_plantsFruit)>0) then {_typeOfobject = "fruit"}; 
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_misc)>0) then {_typeOfobject = "misc"; _randomChance =[0.05,0.1,0.05,0.05,0.15,0.1]}; 
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_garbage)>0) then {_typeOfobject = "garbage"; _randomChance =[0.05,0.1,0.05,0.05,0.15,0.05]}; 
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_wreck)>0) then {_typeOfobject = "wreck"; _randomChance =[0.05,0.2,0.15,0.15,0.1,0.05]};  
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_wreckMil)>0) then {_typeOfobject = "mwreck"; _randomChance =[0.2,0.4,0.1,0.15,0.2,0.05]}; 
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_wreckSub)>0) then {_typeOfobject = "uwreck"; _randomChance =[0.3,0.5,0.05,0.2,0.2,0.05]};  
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_ammoBox)>0) then {_typeOfobject = "ammobox"; _randomChance =[0.3,0.5,0.15,0.05,0.05,0.05]}; 
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_fuel)>0) then {_typeOfobject = "fuel"; _randomChance =[0.05,0.05,0.05,0.15,0.1,0.05,0.15]};  
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_plantsFruit)>0) then {_typeOfobject = "fruit"}; 
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_misc)>0) then {_typeOfobject = "misc"; _randomChance =[0.05,0.1,0.05,0.05,0.15,0.1,0.15]}; 
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_garbage)>0) then {_typeOfobject = "garbage"; _randomChance =[0.05,0.1,0.05,0.05,0.15,0.05,0.05]}; 
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_wreck)>0) then {_typeOfobject = "wreck"; _randomChance =[0.05,0.2,0.15,0.15,0.1,0.05,0.1]};  
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_wreckMil)>0) then {_typeOfobject = "mwreck"; _randomChance =[0.2,0.4,0.1,0.15,0.2,0.05,0.1]}; 
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_wreckSub)>0) then {_typeOfobject = "uwreck"; _randomChance =[0.3,0.5,0.05,0.2,0.2,0.05,0.1]};  
+	if (({[_x , str _object] call BIS_fnc_inString} count MCC_ammoBox)>0) then {_typeOfobject = "ammobox"; _randomChance =[0.3,0.5,0.15,0.05,0.05,0.05,0.2]}; 
 	if (!isnil "_typeOfobject") then 
 	{
 		//create the random loot
@@ -86,62 +88,92 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 			//time stamp
 			_loot set [0, dateToNumber date];
 			
-			//Weapons
-			_array = W_BINOS + W_ATTACHMENTS + W_LAUNCHERS +W_MG + W_PISTOLS + W_RIFLES + W_SNIPER;
-			for "_i" from 0 to ((_randomChance select 0)/0.1) do 
+			//Fruit
+			if (_typeOfobject == "fruit") then
 			{
-				if (random 1 < (_randomChance select 0)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
-			};
-			
-			//Ammo
-			_array = U_MAGAZINES + U_UNDERBARREL +U_GRENADE + U_EXPLOSIVE;
-			for "_i" from 0 to ((_randomChance select 1)/0.1) do 
+				if (random 1 > 0.5) then 
+				{
+					_array = [];
+					{
+						_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
+					} foreach MCC_fruits;
+					
+					_loot set [count _loot, _array call BIS_fnc_selectRandom];
+				};
+			}
+			else
 			{
-				if (random 1 < (_randomChance select 1)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
-			};
-			
-			//Med
-			_array = [];
-			{
-				_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
-			} foreach MCC_medItems;
-			
-			for "_i" from 0 to ((_randomChance select 2)/0.1) do 
-			{
-				if (random 1 < (_randomChance select 2)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
-			};
-			
-			//fuel
-			_array = [];
-			{
-				_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
-			} foreach MCC_fuelItems;
-			
-			for "_i" from 0 to ((_randomChance select 3)/0.1) do 
-			{
-				if (random 1 < (_randomChance select 3)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
-			};
-			
-			//repair
-			_array = [];
-			{
-				_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
-			} foreach MCC_repairItems;
-			
-			for "_i" from 0 to ((_randomChance select 4)/0.1) do 
-			{
-				if (random 1 < (_randomChance select 4)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
-			};
-			
-			//food
-			_array = [];
-			{
-				_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
-			} foreach MCC_foodItem;
-			
-			for "_i" from 0 to ((_randomChance select 5)/0.1) do 
-			{
-				if (random 1 < (_randomChance select 5)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
+				//Weapons
+				_array = W_BINOS + W_ATTACHMENTS + W_LAUNCHERS +W_MG + W_PISTOLS + W_RIFLES + W_SNIPER;
+				for "_i" from 0 to ((_randomChance select 0)/0.1) do 
+				{
+					if (random 1 < (_randomChance select 0)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
+				};
+				
+				//Ammo
+				_array = U_MAGAZINES + U_UNDERBARREL +U_GRENADE + U_EXPLOSIVE;
+				for "_i" from 0 to ((_randomChance select 1)/0.1) do 
+				{
+					if (random 1 < (_randomChance select 1)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
+				};
+				
+				//Med
+				_array = [];
+				{
+					_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
+				} foreach MCC_medItems;
+				
+				for "_i" from 0 to ((_randomChance select 2)/0.1) do 
+				{
+					if (random 1 < (_randomChance select 2)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
+				};
+				
+				//fuel
+				_array = [];
+				{
+					_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
+				} foreach MCC_fuelItems;
+				
+				for "_i" from 0 to ((_randomChance select 3)/0.1) do 
+				{
+					if (random 1 < (_randomChance select 3)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
+				};
+				
+				//repair
+				_array = [];
+				{
+					_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
+				} foreach MCC_repairItems;
+				
+				for "_i" from 0 to ((_randomChance select 4)/0.1) do 
+				{
+					if (random 1 < (_randomChance select 4)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
+				};
+				
+				//food
+				_array = [];
+				{
+					_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
+				} foreach MCC_foodItem;
+				
+				for "_i" from 0 to ((_randomChance select 5)/0.1) do 
+				{
+					if (random 1 < (_randomChance select 5)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]}; 
+				};
+				
+				//Money
+				_money = [(MCC_money select 0),(getText(configFile >> "CfgWeapons" >> (MCC_money select 0)>> "displayname")),(getText(configFile >> "CfgWeapons" >> (MCC_money select 0) >> "picture"))];
+				for "_i" from 0 to ((_randomChance select 6)/0.1) do 
+				{
+					if (random 1 < (_randomChance select 6)) then 
+					{
+						_rand = floor random 30; 
+						for "_i" from 0 to _rand do 
+						{
+							_loot set [count _loot,_money];
+						};
+					}; 
+				};
 			};
 		};
 		
@@ -155,7 +187,7 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 		{
 			_class = (_loot select _i) select 0; 
 			
-			if (_class in (MCC_foodItem + MCC_repairItems + MCC_fuelItems + MCC_medItems) || ({_x select 0 == _class} count W_ATTACHMENTS)>0) then
+			if (_class in (MCC_foodItem + MCC_money + MCC_fruits + MCC_repairItems + MCC_fuelItems + MCC_medItems) || ({_x select 0 == _class} count W_ATTACHMENTS)>0) then
 			{
 				_wepHolder addItemCargo [_class,1]
 			}

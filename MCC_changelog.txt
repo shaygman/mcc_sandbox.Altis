@@ -1,14 +1,14 @@
 Change log r10:
+- Added: Items: 
+                Multi-tool - for unlocking/locking doors.
+				Tactical Video Probe - for mirroring under the door. 
+				Antibiotics, Painkillers, Bandage, Water purification tablets, 2 types of Strange fruit, Vitamins, Fuel canister, Fuel bottle, Duct Tape,
+				Butane torch, Oil canister, Scrap Metal, Car Battery, Food container, Cereal box, Canned Food, Rice - we have plans for them but it is to early to reveal. 
+- Added: MCC key binds option from BI main menu without the need to have MCC access (mod only).
+- Added: Key bind to Squad PDA.
 - Added: MCC_survive mode, by enabling this variables MCC interaction key will allow you to search map objects or spawned objects for random loot including: resources, 
-ammo and weapons. Requires inidbi running on the server, empty loot points will refresh every number of days in game time equal to the variable here:MCC_surviveModRefresh
-It will also save items that the players placed in loot spawn objects so the players can use them as stashes for persistence purpose
-//-----------------MCC Survive mod ---------------------------------------------
-// Set to true to activate survival mode - scavange for loot to survive
-MCC_surviveMod = true; 
-
-//How long in days(24H-game time) will it take for spawn position to refresh
-MCC_surviveModRefresh = 1; 
-
+         ammo and weapons. Requires inidbi running on the server, empty loot points will refresh every number of days in game time equal to the variable here:MCC_surviveModRefresh
+         It will also save items that the players placed in loot spawn objects so the players can use them as stashes for persistence purpose
 - Added: Building's doors will randomly locked in Missiow Wizard CQB missions.
 - Added: ST Flashbang grenade integrated to MCC to work with neutralizing enemy units, stunned units will be more likely to surrender.
 - Added: AI units will not automatically neutralized first they will drop their weapons and stand with their hands up the player should approach them and zip cuff them
@@ -22,8 +22,14 @@ MCC_surviveModRefresh = 1;
 		 - Lock/Pick lock door: Allow the player to lock or unlock doors - requires multitool item or AGM's defuse tool.
 - Added:  Non-lethal ammunition variable "MCC_nonLeathal" player using this ammunition on units closer then 30 meters will not kill them but stun them. Leave "" to none.
           By default "prpl_6Rnd_12Gauge_Slug" to work with Benelli M4 Super 90 Pack http://www.armaholic.com/page.php?id=21870
-- Added: Interact with vehicles - by clicking the MCC interaction button next to a vehicle you can open the vehicles' doors or by holding the button you can board the vehicle  
-         in specific position or access the vehicle's inventory. While inside you can switch seats with the interaction key. 
+- Added: Interact with vehicles- by clicking the MCC interaction button next to a vehicle you can:
+		 - By clicking: 
+		    - open the vehicles' doors/ramps.
+         - By holding: 
+		     - Board the vehicle in specific position.
+             - Access the vehicle's inventory. 
+			 - While inside you can switch seats. 
+			 - While inside you can ask AI or players for drop-off at a specific location. 
 - Added: Lock doors (all) and Lock doors (random) to brushes - will lock doors in the given area. 
 - Added: Specialist in Role Selection will gain XP from disarming IEDs. 
 - Added: 2 new resources food and meds, what we'll do with them? Time will tell. 
@@ -42,7 +48,18 @@ MCC_surviveModRefresh = 1;
 -Removed 3d Party:
 F2 framework.
 Spectator script.
-Lefovers from UPSMON.
+Leftovers from UPSMON.
+
+- New Vars
+// Set to true to activate survival mode - scavange for loot to survive
+MCC_surviveMod = true; 
+
+//How long in days(24H-game time) will it take for spawn position to refresh
+MCC_surviveModRefresh = 1; 
+
+//Disable interaction
+MCC_interaction = true
+
 
 TODO
 Interaction put cargo in vehicles

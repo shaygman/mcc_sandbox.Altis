@@ -1,11 +1,5 @@
 #define MCC_LoginDIalog_IDD 2990
 
-#define MCC_keyBindsOpenMCCButtonIDC 8415
-#define MCC_keyBindsOpenConsoleButtonIDC 8416
-#define MCC_keyBindsT2TButtonIDC 8417
-#define MCC_keyBindsGroupsButtonIDC 8418
-#define MCC_keyBindsMCCinteractionIDC 8419
-
 class mcc_loginDialog
 {
 	idd = MCC_LoginDIalog_IDD;
@@ -177,124 +171,12 @@ class mcc_loginDialog
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
 		
-		class MCC_keyBindsOpenMCCtext: MCC_RscText
+		class MCC_keyBindsLogin: MCC_keyBindsGroup
 		{
-			idc = -1;
-
-			text = "Open MCC:"; //--- ToDo: Localize;
 			x = 0.5 * safezoneW + safezoneX;
-			y = 0.302077 * safezoneH + safezoneY;
-			w = 0.0973958 * safezoneW;
-			h = 0.0219914 * safezoneH;
+			y = 0.25 * safezoneH + safezoneY;
 		};
 		
-		class MCC_keyBindsOpenConsoletext: MCC_RscText
-		{
-			idc = -1;
-
-			text = "Open MCC Console:"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.335064 * safezoneH + safezoneY;
-			w = 0.0973958 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
-		
-		class MCC_keyBindsOpenT2Ttext: MCC_RscText
-		{
-			idc = -1;
-
-			text = "Teleport to team:"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.368051 * safezoneH + safezoneY;
-			w = 0.0973958 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
-		
-		class MCC_keyBindsOpenGroupstext: MCC_RscText
-		{
-			idc = -1;
-
-			text = "Squad Dialog:"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.401038 * safezoneH + safezoneY;
-			w = 0.0973958 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
-		
-		class MCC_keyBindsOpenMCCButton: MCC_RscButton
-		{
-			idc = MCC_keyBindsOpenMCCButtonIDC;
-			tooltip = "Click to change";
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			action =  __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
-
-			x = 0.603125 * safezoneW + safezoneX;
-			y = 0.302077 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
-		class MCC_keyBindsOpenConsoleButton: MCC_RscButton
-		{
-			idc = MCC_keyBindsOpenConsoleButtonIDC;
-			tooltip = "Click to change";
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			action =  __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
-
-			x = 0.603125 * safezoneW + safezoneX;
-			y = 0.335064 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
-
-		class MCC_keyBindsT2TButton: MCC_RscButton
-		{
-			idc = MCC_keyBindsT2TButtonIDC;
-			tooltip = "Click to change";
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			action =  __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
-
-			x = 0.603125 * safezoneW + safezoneX;
-			y = 0.368051 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
-		
-		class MCC_keyBindsGroupsButton: MCC_RscButton
-		{
-			idc = MCC_keyBindsGroupsButtonIDC;
-			tooltip = "Click to change";
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			action =  __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
-
-			x = 0.603125 * safezoneW + safezoneX;
-			y = 0.401038 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
-		
-		class MCC_keyBindsMCCinteractiontext: MCC_RscText
-		{
-			idc = -1;
-			
-			text = "Interaction Key:"; //--- ToDo: Localize;
-			x = 0.5 * safezoneW + safezoneX;
-			y = 0.434 * safezoneH + safezoneY;
-			w = 0.0973958 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
-		class MCC_keyBindsMCCinteractionButton: MCC_RscButton
-		{
-			idc = MCC_keyBindsMCCinteractionIDC;
-			tooltip = "Click to change";
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			action =  __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
-
-			x = 0.603125 * safezoneW + safezoneX;
-			y = 0.434 * safezoneH + safezoneY;
-			w = 0.103125 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
-	
 		class MCC_login: MCC_RscButtonMenu
 		{
 			idc = -1;

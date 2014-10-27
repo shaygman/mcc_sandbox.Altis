@@ -11,7 +11,7 @@
 private ["_type","_keyDown","_ctrl","_display"];
 disableSerialization;
 
-_type = _this select 0;
+_type = _this select 1;
 
 MCC_functionName_keyDown = 
 {
@@ -30,52 +30,20 @@ MCC_functionName_keyDown =
 	if (_ctrlKey) then {_text = _text + "Ctrl + "}; 
 	if (_alt) then {_text = _text + "Alt + "}; 
 	
-	
-	_textKey = 	[_dikCode] call MCC_fnc_keyToName;
-	
-	if (_textKey !="") then
+	_textKey = 	keyName _dikCode;
+	if !(_dikCode in [42,54,56,184,29,157]) then
 	{
 		_ctrl ctrlsetText _text + _textKey;
 		_array = [_shift,_ctrlKey,_alt,_dikCode];
 		MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[],[]]];
 		MCC_keyBinds set [_ctrlType, _array];
 		profileNamespace setVariable ["MCC_keyBinds", MCC_keyBinds];
+		_ctrl ctrlRemoveAllEventHandlers "KeyDown";
 	};
 };
 
-_display = if (tolower str(findDisplay missionSettings_IDD) == "no display") then {MCC_LoginDIalog_IDD} else {missionSettings_IDD}; 
+_display = ctrlParent ((_this select 0) select 0); 
 hint "Press any key or key combination with Alt, Shift or Ctrl to bind";
 
-switch (_type) do	
-{
-	case 0:	//Open MCC
-	{
-		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsOpenMCCButtonIDC;
-		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,0] call MCC_functionName_keyDown"];
-	};
-	
-	case 1:	
-	{
-		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsOpenConsoleButtonIDC;
-		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,1] call MCC_functionName_keyDown"];
-	};
-	
-	case 2:	
-	{
-		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsT2TButtonIDC;
-		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,2] call MCC_functionName_keyDown"];
-	};
-	
-	case 3:	
-	{
-		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsGroupsButtonIDC;
-		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,3] call MCC_functionName_keyDown"];
-	};
-	
-	case 4:	
-	{
-		_ctrl = (findDisplay _display) displayCtrl MCC_keyBindsMCCinteractionIDC;
-		_keyDown = _ctrl ctrlSetEventHandler ["KeyDown",  "[_this,4] call MCC_functionName_keyDown"];
-	};
-};
-	
+_ctrl = _display displayCtrl (8415 + _type);
+_keyDown = _ctrl ctrlAddEventHandler ["KeyDown",  format ["[_this,%1] call MCC_functionName_keyDown",_type]];

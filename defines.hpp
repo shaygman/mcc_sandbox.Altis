@@ -35,6 +35,9 @@
 //----Interaction-----------------
 #include "mcc\Dialogs\mcc_interactionMenu.hpp"
 
+//----Key Settings-----------------
+#include "mcc\Dialogs\mcc_rscKeyBinds.hpp"
+
 //---- test I should delete it at the end
 #include "mcc\dialogs\test.hpp"
 //--------------------------------CP------------------------------------------------

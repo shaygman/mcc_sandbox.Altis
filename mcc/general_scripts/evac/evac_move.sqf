@@ -80,8 +80,7 @@ else
 		case 3:			//Helocasting
 		{
 			//while {(_heli distance _pos)>55} do {_pilot doMove _pos; sleep 5;};
-			_heli flyinHeight 3;
-			waituntil {((getposasl _heli) select 2) < 8};
+			while {((getposasl _heli) select 2) > 8} do {_heli flyinHeight 3; sleep 1};
 			_heli globalChat "Golf 1 in position, clear for helocasting";
 			
 			{					

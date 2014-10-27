@@ -14,10 +14,6 @@ player addRating (-1 * (rating player));
 
 player setVariable ["cpReady",false,true];
 
-
-//Remove Squad event handler
-(findDisplay 46) displayRemoveEventHandler ["KeyUp", MCC_squadDialogOpenEH];
-
 //Get rank from the server
 [["MCCplayerRank", player, "N/A", "STRING"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "MCCplayerRank"};
@@ -161,6 +157,4 @@ waituntil {!dialog};
 cutText ["Deploying ....","BLACK IN",5];
 
 sleep 2;
-//Add Squad event handler
-MCC_squadDialogOpenEH = (findDisplay 46) displayAddEventHandler ["KeyUp",format ["if ((_this select 1 ==((MCC_keyBinds select 3) select 3)) && (str (_this select 2) == str ((MCC_keyBinds select 3) select 0)) && (str (_this select 3) == str ((MCC_keyBinds select 3) select 1)) && (str (_this select 4) == str ((MCC_keyBinds select 3) select 2))) then {null = [nil,nil,nil,nil,2] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'};",MCC_path]];
 player setVariable ["cpReady",true,true];
