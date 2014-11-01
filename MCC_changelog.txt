@@ -1,3 +1,14 @@
+Change log r10 hotfix:
+- Fixed grenade bug.
+- Fixed change faction bug.
+- Re-add the mission templates to the mod version (arma 2 maps included).
+- Fixed MCC isn't working while hijacking AI.
+
+- Added new modules: 
+		Start location - instead of calling funcitons just place that module on the map to predefine a start location for each side. 
+		Settings(MCC) - Predfine MCC settings and enable/disable MCC features. 
+		Settings(GAIA)- Predfine GAIA settings and enable/disable GAIA features.
+		
 Change log r10:
 - Added: Items: 
                 Multi-tool - for unlocking/locking doors.

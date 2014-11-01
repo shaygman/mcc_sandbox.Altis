@@ -113,7 +113,8 @@ switch (_type) do
 				MCC_hijack_effect ppEffectEnable true;
 				
 				MCC_backToplayerIndex = _targetUnit addaction ["<t color=""#CC0000"">Back To Player</t>", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
-				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>",MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+				player setVariable ["MCC_allowed",true,true];
 				_ok = _targetUnit addEventHandler ["Killed", format ["[_this select 0] execVM '%1mcc\general_scripts\unitManage\backToPlayer.sqf'",MCC_path]];
 				
 				if (MCC_PrevHijacked_Group != "") then

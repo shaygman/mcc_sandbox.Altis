@@ -7,13 +7,28 @@
 // size: string  "FOB" or  "HQ"
 // destructable: Boolean
 //==============================================================================================================================================================================
-private ["_side","_size","_destructable","_building","_dummy","_sphere","_dir","_animate","_flag","_flagTex","_name"];
-_pos			= _this select 0; 
-_dir			= _this select 1; 
-_side 			= _this select 2;			
-_size 			= toupper (_this select 3);			
-_destructable	= _this select 4; 
-_animate		= if (count _this > 5) then {_this select 5} else {false};
+private ["_side","_size","_destructable","_building","_dummy","_sphere","_dir","_animate","_flag","_flagTex","_name","_logic","_pos"];
+if ((typeName (_this select 0)) == "OBJECT") then
+{
+	_logic			= _this select 0;
+	_pos			= getpos _logic; 
+	_dir			= getdir _logic;
+	
+	_side 			= (_logic getvariable ["side",0]) call bis_fnc_sideType; 
+	_size 			= toupper (_logic getvariable ["size","FOB"]);			
+	_destructable	= _logic getvariable ["distractable",true]; 
+	_animate		= false;
+	
+}
+else
+{
+	_pos			= _this select 0; 
+	_dir			= _this select 1; 
+	_side 			= _this select 2;			
+	_size 			= toupper (_this select 3);			
+	_destructable	= _this select 4; 
+	_animate		= if (count _this > 5) then {_this select 5} else {false};
+};
 
 
 #define REQUIRE_MEMBERS 3
@@ -90,54 +105,54 @@ if (isServer) then
 	};
 	
 	switch (_side) do
-		{
-			case west:	//west
-			{ 
-				if (_size == "FOB") then 
-				{
-					_building = "Land_BagBunker_Tower_F";
-					_flagTex = CP_flagWest;
-				}
-				else 
-				{
-					_building = "ProtectionZone_Invisible_F";
-					_flagTex = CP_flagWest;
-				}; 
-			};
-			
-			case east:	//east
-			{ 
-				if (_size == "FOB") then 
-				{
-					_building = "Land_BagBunker_Tower_F";
-					_flagTex = CP_flagEast;
-				} 
-				else 
-				{
-					_building = "ProtectionZone_Invisible_F";
-					_flagTex = CP_flagEast;
-				}; 
-			};
-			case resistance:	//east
-			{ 
-				if (_size == "FOB") then 
-				{
-					_building = "Land_BagBunker_Tower_F";
-					_flagTex = CP_flagGUER;
-				} 
-				else 
-				{
-					_building = "ProtectionZone_Invisible_F";
-					_flagTex = CP_flagGUER;
-				}; 
-			};
-			
-			default
+	{
+		case west:	//west
+		{ 
+			if (_size == "FOB") then 
+			{
+				_building = "Land_BagBunker_Tower_F";
+				_flagTex = CP_flagWest;
+			}
+			else 
+			{
+				_building = "ProtectionZone_Invisible_F";
+				_flagTex = CP_flagWest;
+			}; 
+		};
+		
+		case east:	//east
+		{ 
+			if (_size == "FOB") then 
+			{
+				_building = "Land_BagBunker_Tower_F";
+				_flagTex = CP_flagEast;
+			} 
+			else 
+			{
+				_building = "ProtectionZone_Invisible_F";
+				_flagTex = CP_flagEast;
+			}; 
+		};
+		case resistance:	//east
+		{ 
+			if (_size == "FOB") then 
+			{
+				_building = "Land_BagBunker_Tower_F";
+				_flagTex = CP_flagGUER;
+			} 
+			else 
 			{
 				_building = "ProtectionZone_Invisible_F";
 				_flagTex = CP_flagGUER;
-			};
+			}; 
 		};
+		
+		default
+		{
+			_building = "ProtectionZone_Invisible_F";
+			_flagTex = CP_flagGUER;
+		};
+	};
 		
 	_dummy = _building createvehicle _pos;
 	_dummy setdir _dir;
@@ -190,6 +205,8 @@ if (isServer) then
 	{
 		//Not destroyable
 		_dummy addEventHandler ["handledamage",{0}];
+		missionNameSpace setVariable [format ["MCC_START_%1",_side],_pos];
+		publicVariable format ["MCC_START_%1",_side];
 	};
 	
 	if (!_destructable) then 

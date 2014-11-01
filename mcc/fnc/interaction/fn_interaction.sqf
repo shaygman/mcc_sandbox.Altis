@@ -129,7 +129,7 @@ else
 			case (_ctrlData == "dropOff") : {[] call MCC_fnc_requestDropOff};
 			case (["gunner",_ctrlData] call BIS_fnc_inString) : 
 			{
-				call compile format ["player action ['MoveToTurret',%1,%2]",_object,([_ctrlData,"[01234567890]"] call BIS_fnc_filterString)];
+				call compile format ["player action ['MoveToTurret',vehicle player,%1]",([_ctrlData,"[01234567890]"] call BIS_fnc_filterString)];
 			};
 			case (["ils" , _ctrlData] call BIS_fnc_inString) : 
 			{

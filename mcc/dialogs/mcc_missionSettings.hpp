@@ -433,7 +433,7 @@ class missionSettings {
 	{
 		idc = -1;
 
-		text = "Time exceleration"; //--- ToDo: Localize;
+		text = "Time acceleration"; //--- ToDo: Localize;
 		x = 0.339583 * safezoneW + safezoneX;
 		y = 0.379 * safezoneH + safezoneY;
 		w = 0.108854 * safezoneW;

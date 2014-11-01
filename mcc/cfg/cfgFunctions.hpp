@@ -56,6 +56,7 @@ class MCC
 		class makeBriefing	{description = "Server Only - create a Logic based briefing";};
 		class handleAddaction	{description = "Handle addactions after respawn - init";};
 		class ppEffects	{description = "Create effects to all players";};
+		class gear	{description = "Assign gear by roles";};
 	};
 
 	class ui
@@ -241,6 +242,8 @@ class MCC
 		class moduleObjectiveSectorMCC	{ext = ".fsm";};
 		class createRestrictedZones		{description = "create restriction zone around a marker.";};
 		class RestrictZoneEffect		{description = "Effect while inside a restricted zone.";};
+		class missionSettings {description = "Mission settings";};
+		class GAIASettings {description = "GAIA settings";};
 	};
 
 	class actions

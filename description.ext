@@ -29,3 +29,22 @@ class Header
 	minPlayers = 1;
 	maxPlayers = 149;
 };
+
+class Params
+{
+	 class f_param_gear
+        {
+                title = "Gear";
+                values[] = {0,1,2,3,4};
+                texts[] = {"Regular","Night Ops(SF Only)","Divers(SF Only)","Ghillie Suit(SF Only)","Tier 1(SF Only)"};
+                default = 0;
+        }; 
+		
+		class f_param_nightvision
+        {
+                title = "Night Vision";
+                values[] = {0,1};
+                texts[] = {"Off","On"};
+                default = 1;
+        }; 
+};

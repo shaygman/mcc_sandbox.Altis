@@ -137,6 +137,7 @@ class mcc_sandbox_moduleRestrictedZone : Module_F
 	author = "shay_gman";
 	displayName = "Restricted zones";
 	function = "MCC_fnc_createRestrictedZones";
+	icon = "\mcc_sandbox_mod\data\mccModule.paa";
 	picture = "\mcc_sandbox_mod\data\mccModule.paa";
 	_generalMacro = "ModuleZoneRestriction_F";
 	scope = 2;
@@ -364,13 +365,13 @@ class mcc_sandbox_moduleILS : Module_F
 				class Enabled
 				{
 					name = "On";
-					value = true;
+					value = 1;
 					default = 1;
 				};
 				class Disabled
 				{
 					name = "Off";
-					value = false;
+					value = 0;
 				};
 			};
 		};
@@ -382,6 +383,594 @@ class mcc_sandbox_moduleILS : Module_F
 	};
 };
 
+class mcc_sandbox_moduleStartLocations : Module_F
+{
+	category = "MCC";
+	author = "shay_gman";
+	displayName = "Start Location";
+	icon = "\mcc_sandbox_mod\data\mccModule.paa";
+	picture = "\mcc_sandbox_mod\data\mccModule.paa";
+	vehicleClass = "Modules";
+	function = "MCC_fnc_buildSpawnPoint";
+	scope = 2;
+	isGlobal = 1;
+	
+	class Arguments
+	{
+		class side
+		{
+			displayName = "Side";
+			typeName = "NUMBER";
+			class values
+			{
+				class BLUFOR
+				{
+					name = "$STR_WEST";
+					value = 1;
+				};
+				class OPFOR
+				{
+					name = "$STR_EAST";
+					value = 0;
+				};
+				class Independent
+				{
+					name = "$STR_GUERRILA";
+					value = 2;
+				};
+			};
+		};
+		
+		class size
+		{
+			displayName = "Tyoe";
+			typeName = "STRING";
+			class values
+			{
+				class fob
+				{
+					name = "F.O.B";
+					value = "FOB";
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "Main";
+					value = "MAIN";
+				};
+			};
+		};
+		
+		class distractable
+		{
+			displayName = "Distractable";
+			typeName = "BOOL";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+	};
+	
+	class ModuleDescription: ModuleDescription
+	{
+		description = "Place start module to predefine MCC's start locations";
+	};
+};
+
+class mcc_sandbox_moduleMissionSettings : Module_F
+{
+	category = "MCC";
+	author = "shay_gman";
+	displayName = "Settings (MCC)";
+	icon = "\mcc_sandbox_mod\data\mccModule.paa";
+	picture = "\mcc_sandbox_mod\data\mccModule.paa";
+	vehicleClass = "Modules";
+	function = "MCC_fnc_missionSettings";
+	scope = 2;
+	isGlobal = 1;
+	
+	class Arguments
+	{
+		class t2t
+		{
+			displayName = "Teleport 2 Team";
+			typeName = "NUMBER";
+			class values
+			{
+				class disabled
+				{
+					name = "Disabled";
+					value = 0;
+				};
+				class jip
+				{
+					name = "JIP Only";
+					value = 1;
+					default = 1;
+				};
+				class respawn
+				{
+					name = "After Respawn";
+					value = 2;
+				};
+				class always
+				{
+					name = "Always";
+					value = 3;
+				};
+			};
+		};
+		class saveGear
+		{
+			displayName = "Save Gear";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		class messages
+		{
+			displayName = "MCC messages";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class nameTags
+		{
+			displayName = "Name Tags";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class groupMarkers
+		{
+			displayName = "Group Markers";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class artilleryComputer
+		{
+			displayName = "Artilery Computer";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class timeAccel
+		{
+			displayName = "Time Acceleration";
+			typeName = "NUMBER";
+			class values
+			{
+				class disabled
+				{
+					name = "Disabled";
+					value = 0;
+					default = 1;
+				};
+				class tx5
+				{
+					name = "x5";
+					value = 5;
+				};
+				class tx10
+				{
+					name = "x10";
+					value = 2;
+				};
+				class tx15
+				{
+					name = "x15";
+					value = 15;
+				};
+				class tx20
+				{
+					name = "x20";
+					value = 20;
+				};
+			};
+		};
+		
+		class deleteBody
+		{
+			displayName = "Delete dead players' bodies";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class respawnMenu
+		{
+			displayName = "Respawn Menu";
+			description = "Allow start location dialog on JIP or after respawn";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class sqlPDA
+		{
+			displayName = "Squad Leader PDA";
+			description = "Allow Squad Leader PDA";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class commanderConsole
+		{
+			displayName = "Commander Console";
+			description = "Allow Commander Console";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class squadDialog
+		{
+			displayName = "Squad Dialog";
+			description = "Players can open the squad dialog and form/change squads - requires key binding";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class squadDialogPip
+		{
+			displayName = "Squad Dialog (camera)";
+			description = "Player can inspect others from their squad in the Squad Dialog";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class logistics
+		{
+			displayName = "Logistics";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class interaction
+		{
+			displayName = "Interaction";
+			description = "Players can use MCC interaction with objects/units - requires key binding";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+	};
+	
+	class ModuleDescription: ModuleDescription
+	{
+		description = "Define MCC settings";
+	};
+};
+
+class mcc_sandbox_moduleGAIASettings : Module_F
+{
+	category = "MCC";
+	author = "shay_gman";
+	displayName = "Settings (GAIA)";
+	icon = "\mcc_sandbox_mod\data\mccModule.paa";
+	picture = "\mcc_sandbox_mod\data\mccModule.paa";
+	vehicleClass = "Modules";
+	function = "MCC_fnc_GAIASettings";
+	scope = 2;
+	isGlobal = 1;
+	
+	class Arguments
+	{
+		class aiSkillGen
+		{
+			displayName = "AI Skill(overall)";
+			typeName = "NUMBER";
+			class values
+			{
+				class rookie
+				{
+					name = "Rookie";
+					value = 0.1;
+				};
+				class moderate
+				{
+					name = "Moderate";
+					value = 0.4;
+					default = 1;
+				};
+				class vetran
+				{
+					name = "Vetran";
+					value = 0.8;
+				};
+			};
+		};
+		
+		class aiSkillAim : aiSkillGen
+		{
+			displayName = "AI Skill(Aim)";
+		};
+		
+		class aiSkillSpot : aiSkillGen
+		{
+			displayName = "AI Skill(Spot)";
+		};
+		
+		class aiSkillCommand : aiSkillGen
+		{
+			displayName = "AI Skill(Command)";
+		};
+		
+		class aiSmoke
+		{
+			displayName = "AI use smoke/flare";
+			typeName = "BOOL";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class aiSmokeChance
+		{
+			displayName = "Smoke/flares Chance";
+			description = "Define how ofter AI will use smoke/flares";
+			typeName = "NUMBER";
+			class values
+			{
+				class low
+				{
+					name = "Low";
+					value = 0;
+				};
+				class normal
+				{
+					name = "Normal";
+					value = 1;
+					default = 1;
+				};
+				class high
+				{
+					name = "High";
+					value = 2;
+				};
+			};
+		};
+		
+		class cacheDistance
+		{
+			displayName = "Cache Distance";
+			description = "How far any player should be from a unit before it cached";
+			typeName = "NUMBER";
+			class values
+			{
+				class low
+				{
+					name = "1500";
+					value = 1500;
+				};
+				class normal
+				{
+					name = "3000";
+					value = 3000;
+					default = 1;
+				};
+				class high
+				{
+					name = "6000";
+					value = 6000;
+				};
+			};
+		};
+		
+		class gaiacontrol
+		{
+			displayName = "GAIA Controlls";
+			description = "If set to everyone GAIA will give order to all units availables even players";
+			typeName = "BOOL";
+			class values
+			{
+				class Enabled
+				{
+					name = "Only GAIA units";
+					value = 0;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "Everyone";
+					value = 1;
+				};
+			};
+		};
+	};
+	
+	class ModuleDescription: ModuleDescription
+	{
+		description = "Define MCC settings";
+	};
+};
 class Box_NATO_AmmoVeh_F;
 class MCC_crateAmmo : Box_NATO_AmmoVeh_F
 {

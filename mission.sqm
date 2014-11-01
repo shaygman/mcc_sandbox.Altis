@@ -27,9 +27,9 @@ class Mission
 	class Intel
 	{
 		briefingName="Altis COOP: MCC Sandbox - DEV";
-		startWeather=0.84999996;
+		startWeather=0.099999994;
 		startWind=0;
-		forecastWeather=0.84999996;
+		forecastWeather=0.099999994;
 		forecastWind=0;
 		forecastWaves=0;
 		rainForced=1;
@@ -65,6 +65,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitNO_ASL_SL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="NATO Alpha Squad Leader";
 				};
 				class Item1
@@ -77,6 +78,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_ASL_M";
+					init="_null =[this,""med""] spawn MCC_fnc_gear;";
 					description="NATO Alpha Medic";
 				};
 			};
@@ -98,6 +100,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_A1_FTL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 1 Fireteam Leader";
 				};
 				class Item1
@@ -109,6 +112,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_A1_AR";
+					init="_null =[this,""mg""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 1 Automatic Rifleman";
 				};
 				class Item2
@@ -120,6 +124,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_A1_AAR";
+					init="_null =[this,""mga""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 1 Assistant Automatic Rifleman";
 				};
 				class Item3
@@ -131,6 +136,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_A1_AT";
+					init="_null =[this,""at""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 1 Rifleman (AT)";
 				};
 			};
@@ -152,6 +158,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_A2_FTL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 2 Fireteam Leader";
 				};
 				class Item1
@@ -163,6 +170,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_A2_AR";
+					init="_null =[this,""mg""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 2 Automatic Rifleman";
 				};
 				class Item2
@@ -174,6 +182,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_A2_AAR";
+					init="_null =[this,""mga""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 2 Assistant Automatic Rifleman";
 				};
 				class Item3
@@ -185,6 +194,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_A2_AT";
+					init="_null =[this,""at""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 2 Rifleman (AT)";
 				};
 			};
@@ -206,6 +216,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_A3_FTL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 3 Fireteam Leader";
 				};
 				class Item1
@@ -217,6 +228,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_A3_AR";
+					init="_null =[this,""mg""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 3 Automatic Rifleman";
 				};
 				class Item2
@@ -228,6 +240,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_A3_AAR";
+					init="_null =[this,""mga""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 3 Assistant Automatic Rifleman";
 				};
 				class Item3
@@ -239,6 +252,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_A3_AT";
+					init="_null =[this,""at""] spawn MCC_fnc_gear;";
 					description="NATO Alpha 3 Rifleman (AT)";
 				};
 			};
@@ -261,6 +275,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_ASL_SL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="Iran Alpha Squad Leader";
 				};
 				class Item1
@@ -274,6 +289,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_ASL_M";
+					init="_null =[this,""med""] spawn MCC_fnc_gear;";
 					description="Iran Alpha Medic";
 				};
 			};
@@ -296,6 +312,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_A1_FTL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 1 Fireteam Leader";
 				};
 				class Item1
@@ -308,6 +325,7 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="UnitIR_A1_AR";
+					init="_null =[this,""mg""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 1 Automatic Rifleman";
 				};
 				class Item2
@@ -320,6 +338,7 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="UnitIR_A1_AAR";
+					init="_null =[this,""mga""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 1 Assistant Automatic Rifleman";
 				};
 				class Item3
@@ -332,6 +351,7 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="GrpIR_A1_AT";
+					init="_null =[this,""at""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 1 Rifleman (AT)";
 				};
 			};
@@ -354,6 +374,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_A2_FTL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 2 Fireteam Leader";
 				};
 				class Item1
@@ -366,6 +387,7 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="UnitIR_A2_AR";
+					init="_null =[this,""mg""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 2 Automatic Rifleman";
 				};
 				class Item2
@@ -378,6 +400,7 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="UnitIR_A2_AAR";
+					init="_null =[this,""mga""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 2 Assistant Automatic Rifleman";
 				};
 				class Item3
@@ -390,6 +413,7 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="GrpIR_A2_AT";
+					init="_null =[this,""at""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 2 Rifleman (AT)";
 				};
 			};
@@ -412,6 +436,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_A3_FTL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 3 Fireteam Leader";
 				};
 				class Item1
@@ -424,6 +449,7 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="UnitIR_A3_AR";
+					init="_null =[this,""mg""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 3 Automatic Rifleman";
 				};
 				class Item2
@@ -436,6 +462,7 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="UnitIR_A3_AAR";
+					init="_null =[this,""mga""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 3 Assistant Automatic Rifleman";
 				};
 				class Item3
@@ -448,6 +475,7 @@ class Mission
 					lock="UNLOCKED";
 					skill=0.60000002;
 					text="GrpIR_A3_AT";
+					init="_null =[this,""at""] spawn MCC_fnc_gear;";
 					description="Iran Alpha 3 Rifleman (AT)";
 				};
 			};
@@ -469,6 +497,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_MMG1_G";
+					init="_null =[this,""hmg""] spawn MCC_fnc_gear;";
 					description="NATO Medium MG Team 1 Gunner";
 				};
 				class Item1
@@ -480,6 +509,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_MMG1_AG";
+					init="_null =[this,""hmga""] spawn MCC_fnc_gear;";
 					description="NATO Medium MG Team 1 Assistant Gunner";
 				};
 			};
@@ -501,6 +531,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_MAT1_G";
+					init="_null =[this,""hat""] spawn MCC_fnc_gear;";
 					description="NATO Medium AT Team 1 Gunner";
 				};
 				class Item1
@@ -513,6 +544,7 @@ class Mission
 					skill=0.60000002;
 					health=0.99000001;
 					text="UnitNO_MAT1_AG";
+					init="_null =[this,""hata""] spawn MCC_fnc_gear;";
 					description="NATO Medium AT Team 1 Assistant Gunner";
 				};
 			};
@@ -534,6 +566,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_MMG1_G";
+					init="_null =[this,""hmg""] spawn MCC_fnc_gear;";
 					description="Iran Medium MG Team 1 Gunner";
 				};
 				class Item1
@@ -545,6 +578,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitIR_MMG1_AG";
+					init="_null =[this,""hmga""] spawn MCC_fnc_gear;";
 					description="Iran Medium MG Team 1 Assistant Gunner";
 				};
 			};
@@ -566,6 +600,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_MAT1_G";
+					init="_null =[this,""hat""] spawn MCC_fnc_gear;";
 					description="Iran Medium AT Team 1 Gunner";
 				};
 				class Item1
@@ -577,6 +612,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitIR_MAT1_AG";
+					init="_null =[this,""hata""] spawn MCC_fnc_gear;";
 					description="Iran Medium AT Team 1 Assistant Gunner";
 				};
 			};
@@ -597,6 +633,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="UnitNO_MAA1_G";
+					init="_null =[this,""aa""] spawn MCC_fnc_gear;";
 					description="NATO Medium AA Team 1 Gunner";
 				};
 				class Item1
@@ -608,6 +645,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_MAA1_AG";
+					init="_null =[this,""aaa""] spawn MCC_fnc_gear;";
 					description="NATO Medium AA Team 1 Assistant Gunner";
 				};
 			};
@@ -629,6 +667,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_ENG1_FTL";
+					init="_null =[this,""eng""] spawn MCC_fnc_gear;";
 					description="NATO Engineer Team 1 Leader";
 				};
 				class Item1
@@ -640,6 +679,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_ENG1_A";
+					init="_null =[this,""eng""] spawn MCC_fnc_gear;";
 					description="NATO Engineer Team 1 Assistant";
 				};
 			};
@@ -661,6 +701,7 @@ class Mission
 					rank="CAPTAIN";
 					skill=0.60000002;
 					text="UnitNO_AH1_P";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="NATO Wing 1 Pilot";
 				};
 				class Item1
@@ -673,6 +714,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitNO_AH1_CP";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="NATO Wing 1 Co-Pilot";
 				};
 			};
@@ -694,6 +736,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_MAA1_G";
+					init="_null =[this,""aa""] spawn MCC_fnc_gear;";
 					description="Iran Medium AA Team 1 Gunner";
 				};
 				class Item1
@@ -705,6 +748,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitIR_MAA1_AG";
+					init="_null =[this,""aaa""] spawn MCC_fnc_gear;";
 					description="Iran Medium AA Team 1 Assistant Gunner";
 				};
 			};
@@ -726,6 +770,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_ENG1_FTL";
+					init="_null =[this,""eng""] spawn MCC_fnc_gear;";
 					description="Iran Engineer Team 1 Leader";
 				};
 				class Item1
@@ -737,6 +782,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitIR_ENG1_A";
+					init="_null =[this,""eng""] spawn MCC_fnc_gear;";
 					description="Iran Engineer Team 1 Assistant";
 				};
 			};
@@ -758,6 +804,7 @@ class Mission
 					rank="CAPTAIN";
 					skill=0.60000002;
 					text="UnitIR_TH1_P";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="Iran Wing 1 Pilot";
 				};
 				class Item1
@@ -770,6 +817,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitIR_TH1_CP";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="Iran Wing1 Co-Pilot";
 				};
 			};
@@ -791,7 +839,7 @@ class Mission
 					rank="CAPTAIN";
 					skill=0.60000002;
 					text="UnitIR_AH1_P";
-					init="GrpIR_AH1 = group this; nul = [""p"",this] call f_fnc_assignGear; ";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="Iran Wing 2 Pilot";
 				};
 				class Item1
@@ -804,7 +852,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitIR_AH1_CP";
-					init="GrpIR_AH1 = group this; nul = [""p"",this] call f_fnc_assignGear; ";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="Iran Wing 2 Co-Pilot";
 				};
 			};
@@ -826,6 +874,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitGR_ASL_SL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="Green Alpha Squad Leader";
 				};
 				class Item1
@@ -838,6 +887,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_ASL_M";
+					init="_null =[this,""med""] spawn MCC_fnc_gear;";
 					description="Green Alpha Medic";
 				};
 			};
@@ -859,6 +909,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_A1_FTL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="Green Alpha 1 Fireteam Leader";
 				};
 				class Item1
@@ -871,6 +922,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_A1_AR";
+					init="_null =[this,""mg""] spawn MCC_fnc_gear;";
 					description="Green Alpha 1 Automatic Rifleman";
 				};
 				class Item2
@@ -882,6 +934,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitGR_A1_AAR";
+					init="_null =[this,""mga""] spawn MCC_fnc_gear;";
 					description="Green Alpha 1 Assistant Automatic Rifleman";
 				};
 				class Item3
@@ -893,6 +946,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitGR_A1_AT";
+					init="_null =[this,""at""] spawn MCC_fnc_gear;";
 					description="Green Alpha 1 Rifleman (AT)";
 				};
 			};
@@ -914,6 +968,7 @@ class Mission
 					rank="CAPTAIN";
 					skill=0.60000002;
 					text="UnitNO_TH1_P";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="NATO Wing 2 Pilot";
 				};
 				class Item1
@@ -926,6 +981,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitNO_TH1_CP";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="NATO Wing 2 Co-Pilot";
 				};
 			};
@@ -947,6 +1003,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitNO_IFV1_CM";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="NATO IFV 1 Commander";
 				};
 				class Item1
@@ -959,6 +1016,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitNO_IFV1_GN";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="NATO IFV 1 Gunner";
 				};
 				class Item2
@@ -971,6 +1029,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitNO_IFV1_DR";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="NATO IFV 1 Driver";
 				};
 			};
@@ -992,6 +1051,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitNO_IFV2_CM";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="NATO IFV 2 Commander";
 				};
 				class Item1
@@ -1004,6 +1064,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitNO_IFV2_GN";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="NATO IFV 2 Gunner";
 				};
 				class Item2
@@ -1016,6 +1077,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_IFV2_DR";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="NATO IFV 2 Driver";
 				};
 			};
@@ -1037,6 +1099,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitNO_IFV3_CM";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="NATO IFV 3 Commander";
 				};
 				class Item1
@@ -1049,6 +1112,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitNO_IFV3_GN";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="NATO IFV 3 Gunner";
 				};
 				class Item2
@@ -1061,6 +1125,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_IFV3_DR";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="NATO IFV 3 Driver";
 				};
 			};
@@ -1082,6 +1147,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitNO_ART_TL";
+					init="_null =[this,""mort""] spawn MCC_fnc_gear;";
 					description="NATO Mortar Team Leader";
 				};
 				class Item1
@@ -1094,6 +1160,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_ART_AM";
+					init="_null =[this,""morta""] spawn MCC_fnc_gear;";
 					description="NATO Mortar Team Assistant Gunner";
 				};
 			};
@@ -1114,6 +1181,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="UnitNO_SN1_SN";
+					init="_null =[this,""snp""] spawn MCC_fnc_gear;";
 					description="NATO Sniper Team 1 Sniper";
 				};
 				class Item1
@@ -1125,6 +1193,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_SN1_SP";
+					init="_null =[this,""spot""] spawn MCC_fnc_gear;";
 					description="NATO Sniper Team 1 Spotter";
 				};
 			};
@@ -1145,6 +1214,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="UnitNO_SN2_SN";
+					init="_null =[this,""snp""] spawn MCC_fnc_gear;";
 					description="NATO Sniper Team 2 Sniper";
 				};
 				class Item1
@@ -1156,6 +1226,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitNO_SN2_SP";
+					init="_null =[this,""spot""] spawn MCC_fnc_gear;";
 					description="NATO Sniper Team 2 Spotter";
 				};
 			};
@@ -1177,7 +1248,10 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitNO_SF1_TL";
+					init="_null =[this,""sftl""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Team Leader";
+					syncId=0;
+					synchronizations[]={12};
 				};
 				class Item1
 				{
@@ -1189,7 +1263,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF1_MG";
+					init="_null =[this,""sfmg""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Automatic Riffleman";
+					syncId=1;
+					synchronizations[]={12};
 				};
 				class Item2
 				{
@@ -1201,7 +1278,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF1_MRK";
+					init="_null =[this,""sfmark""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Marksman";
+					syncId=2;
+					synchronizations[]={12};
 				};
 				class Item3
 				{
@@ -1213,7 +1293,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF1_SR";
+					init="_null =[this,""sfat""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 JTAC-AT";
+					syncId=3;
+					synchronizations[]={12};
 				};
 				class Item4
 				{
@@ -1225,7 +1308,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF1_EXP";
+					init="_null =[this,""sfdem""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Explosive Specialist";
+					syncId=4;
+					synchronizations[]={12};
 				};
 				class Item5
 				{
@@ -1237,7 +1323,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF1_MED";
+					init="_null =[this,""sfmed""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Medic";
+					syncId=5;
+					synchronizations[]={12};
 				};
 			};
 		};
@@ -1258,7 +1347,10 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitNO_SF2_TL";
+					init="_null =[this,""sftl""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Team Leader";
+					syncId=6;
+					synchronizations[]={13};
 				};
 				class Item1
 				{
@@ -1270,8 +1362,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF2_MG";
-					init="r";
+					init="_null =[this,""sfmg""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Automatic Riffleman";
+					syncId=7;
+					synchronizations[]={13};
 				};
 				class Item2
 				{
@@ -1283,7 +1377,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF2_MRK";
+					init="_null =[this,""sfmark""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Marksman";
+					syncId=8;
+					synchronizations[]={13};
 				};
 				class Item3
 				{
@@ -1295,7 +1392,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF2_SR";
+					init="_null =[this,""sfat""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 JTAC-AT";
+					syncId=9;
+					synchronizations[]={13};
 				};
 				class Item4
 				{
@@ -1307,7 +1407,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF2_EXP";
+					init="_null =[this,""sfdem""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Explosive Specialist";
+					syncId=10;
+					synchronizations[]={13};
 				};
 				class Item5
 				{
@@ -1319,7 +1422,10 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitNO_SF2_MED";
+					init="_null =[this,""sfmed""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Medic";
+					syncId=11;
+					synchronizations[]={13};
 				};
 			};
 		};
@@ -1340,6 +1446,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitIR_IFV1_CM";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Iran IFV 1 Commander";
 				};
 				class Item1
@@ -1352,6 +1459,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_IFV1_GN";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Iran IFV 1 Gunner";
 				};
 				class Item2
@@ -1364,6 +1472,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_IFV1_DR";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Iran IFV 1 Driver";
 				};
 			};
@@ -1385,6 +1494,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitIR_IFV2_CM";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Iran IFV 2 Commander";
 				};
 				class Item1
@@ -1397,6 +1507,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_IFV2_GN";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Iran IFV 2 Gunner";
 				};
 				class Item2
@@ -1409,6 +1520,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_IFV2_DR";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Iran IFV 2 Driver";
 				};
 			};
@@ -1430,6 +1542,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitIR_IFV3_CM";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Iran IFV 3 Commander";
 				};
 				class Item1
@@ -1442,6 +1555,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_IFV3_GN";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Iran IFV 3 Gunner";
 				};
 				class Item2
@@ -1454,6 +1568,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_IFV3_DR";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Iran IFV 3 Driver";
 				};
 			};
@@ -1475,6 +1590,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_SN1_SN";
+					init="_null =[this,""snp""] spawn MCC_fnc_gear;";
 					description="Iran Sniper Team 1 Sniper";
 				};
 				class Item1
@@ -1487,6 +1603,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SN1_SP";
+					init="_null =[this,""spot""] spawn MCC_fnc_gear;";
 					description="Iran Sniper Team 1 Spotter";
 				};
 			};
@@ -1508,6 +1625,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_SN2_SN";
+					init="_null =[this,""snp""] spawn MCC_fnc_gear;";
 					description="Iran Sniper Team 2 Sniper";
 				};
 				class Item1
@@ -1520,6 +1638,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SN2_SP";
+					init="_null =[this,""spot""] spawn MCC_fnc_gear;";
 					description="Iran Sniper Team 2 Spotter";
 				};
 			};
@@ -1541,6 +1660,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_A2_FTL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="Green Alpha 2 Fireteam Leader";
 				};
 				class Item1
@@ -1553,6 +1673,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_A2_AR";
+					init="_null =[this,""mg""] spawn MCC_fnc_gear;";
 					description="Green Alpha 2 Automatic Rifleman";
 				};
 				class Item2
@@ -1564,6 +1685,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitGR_A2_AAR";
+					init="_null =[this,""mga""] spawn MCC_fnc_gear;";
 					description="Green Alpha 2 Assistant Automatic Rifleman";
 				};
 				class Item3
@@ -1575,6 +1697,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitGR_A2_AT";
+					init="_null =[this,""at""] spawn MCC_fnc_gear;";
 					description="Green Alpha 2 Rifleman (AT)";
 				};
 			};
@@ -1596,6 +1719,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_A3_FTL";
+					init="_null =[this,""ftl""] spawn MCC_fnc_gear;";
 					description="Green Alpha 3 Fireteam Leader";
 				};
 				class Item1
@@ -1608,6 +1732,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_A3_AR";
+					init="_null =[this,""mg""] spawn MCC_fnc_gear;";
 					description="Green Alpha 3 Automatic Rifleman";
 				};
 				class Item2
@@ -1619,6 +1744,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitGR_A3_AAR";
+					init="_null =[this,""mga""] spawn MCC_fnc_gear;";
 					description="Green Alpha 3 Assistant Automatic Rifleman";
 				};
 				class Item3
@@ -1630,6 +1756,7 @@ class Mission
 					player="PLAY CDG";
 					skill=0.60000002;
 					text="UnitGR_A3_AT";
+					init="_null =[this,""at""] spawn MCC_fnc_gear;";
 					description="Green Alpha 3 Rifleman (AT)";
 				};
 			};
@@ -1652,6 +1779,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_ART_TL";
+					init="_null =[this,""mort""] spawn MCC_fnc_gear;";
 					description="Iran Mortar Team Leader";
 				};
 				class Item1
@@ -1665,6 +1793,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_ART_AM";
+					init="_null =[this,""morta""] spawn MCC_fnc_gear;";
 					description="Iran Mortar Team Assistant Gunner";
 				};
 			};
@@ -1686,6 +1815,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_SF1_TL";
+					init="_null =[this,""sftl""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 1 Team Leader";
 				};
 				class Item1
@@ -1698,6 +1828,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF1_MG";
+					init="_null =[this,""sfmg""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 1 Automatic Riffleman";
 				};
 				class Item2
@@ -1710,6 +1841,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF1_MRK";
+					init="_null =[this,""sfmark""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 1 Marksman";
 				};
 				class Item3
@@ -1722,6 +1854,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF1_SR";
+					init="_null =[this,""sfat""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 1 JTAC-AT";
 				};
 				class Item4
@@ -1734,6 +1867,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF1_EXP";
+					init="_null =[this,""sfdem""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 1 Explosive Specialist";
 				};
 				class Item5
@@ -1746,6 +1880,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF1_MED";
+					init="_null =[this,""sfmed""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 1 Medic";
 				};
 			};
@@ -1767,6 +1902,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIR_SF2_TL";
+					init="_null =[this,""sftl""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 2 Team Leader";
 				};
 				class Item1
@@ -1779,6 +1915,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF2_MG";
+					init="_null =[this,""sfmg""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 2 Automatic Riffleman";
 				};
 				class Item2
@@ -1791,6 +1928,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF2_MRK";
+					init="_null =[this,""sfmark""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 2 Marksman";
 				};
 				class Item3
@@ -1803,6 +1941,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF2_SR";
+					init="_null =[this,""sfat""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 1 JTAC-AT";
 				};
 				class Item4
@@ -1815,6 +1954,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF2_EXP";
+					init="_null =[this,""sfdem""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 2 Explosive Specialist";
 				};
 				class Item5
@@ -1827,6 +1967,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIR_SF2_MED";
+					init="_null =[this,""sfmed""] spawn MCC_fnc_gear;";
 					description="Iran Special Forces Team 2 Medic";
 				};
 			};
@@ -1848,6 +1989,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_MMG1_G";
+					init="_null =[this,""hmg""] spawn MCC_fnc_gear;";
 					description="Green Medium MG Team 1 Gunner";
 				};
 				class Item1
@@ -1860,7 +2002,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_MMG1_AG";
-					init=" ";
+					init=" _null =[this,""hmga""] spawn MCC_fnc_gear;";
 					description="Green Medium MG Team 1 Assistant Gunner";
 				};
 			};
@@ -1882,6 +2024,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_MAT1_G";
+					init="_null =[this,""hat""] spawn MCC_fnc_gear;";
 					description="Green Medium AT Team 1 Gunner";
 				};
 				class Item1
@@ -1894,7 +2037,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_MAT1_AG";
-					init=" ";
+					init=" _null =[this,""hata""] spawn MCC_fnc_gear;";
 					description="Green Medium AT Team 1 Assistant Gunner";
 				};
 			};
@@ -1916,6 +2059,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_MAA1_G";
+					init="_null =[this,""aa""] spawn MCC_fnc_gear;";
 					description="Green Medium AA Team 1 Gunner";
 				};
 				class Item1
@@ -1928,6 +2072,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_MAA1_AG";
+					init="_null =[this,""aaa""] spawn MCC_fnc_gear;";
 					description="Green Medium AA Team 1 Assistant Gunner";
 				};
 			};
@@ -1949,6 +2094,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_ENG1_FTL";
+					init="_null =[this,""eng""] spawn MCC_fnc_gear;";
 					description="Green Engineer Team 1 Leader";
 				};
 				class Item1
@@ -1961,6 +2107,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_ENG1_A";
+					init="_null =[this,""eng""] spawn MCC_fnc_gear;";
 					description="Green Engineer Team 1 Assistant";
 				};
 			};
@@ -1982,6 +2129,7 @@ class Mission
 					rank="CAPTAIN";
 					skill=0.60000002;
 					text="UnitGR_AH1_P";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="Green Wing 1 Pilot";
 				};
 				class Item1
@@ -1994,6 +2142,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitGR_AH1_CP";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="Green Wing 1 Co-Pilot";
 				};
 			};
@@ -2006,7 +2155,7 @@ class Mission
 				items=2;
 				class Item0
 				{
-					position[]={14696.12,17.86063,16387.027};
+					position[]={14698.447,17.860001,16388.035};
 					id=130;
 					side="GUER";
 					vehicle="I_helipilot_F";
@@ -2015,11 +2164,12 @@ class Mission
 					rank="CAPTAIN";
 					skill=0.60000002;
 					text="UnitGR_TH1_P";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="Green Wing 2 Pilot";
 				};
 				class Item1
 				{
-					position[]={14698.005,17.861219,16386.586};
+					position[]={14700.332,17.859873,16387.594};
 					id=131;
 					side="GUER";
 					vehicle="I_helipilot_F";
@@ -2027,6 +2177,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitGR_TH1_CP";
+					init="_null =[this,""pilot""] spawn MCC_fnc_gear;";
 					description="Green Wing 2 Co-Pilot";
 				};
 			};
@@ -2048,6 +2199,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitGR_IFV1_CM";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Green IFV 1 Commander";
 				};
 				class Item1
@@ -2060,6 +2212,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_IFV1_GN";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Green IFV 1 Gunner";
 				};
 				class Item2
@@ -2072,6 +2225,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_IFV1_DR";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Green IFV 1 Driver";
 				};
 			};
@@ -2093,6 +2247,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitGR_IFV2_CM";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Green IFV 2 Commander";
 				};
 				class Item1
@@ -2105,6 +2260,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_IFV2_GN";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Green IFV 2 Gunner";
 				};
 				class Item2
@@ -2117,6 +2273,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_IFV2_DR";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Green IFV 2 Driver";
 				};
 			};
@@ -2138,6 +2295,7 @@ class Mission
 					rank="LIEUTENANT";
 					skill=0.60000002;
 					text="UnitGR_IFV3_CM";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Green IFV 3 Commander";
 				};
 				class Item1
@@ -2150,6 +2308,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_IFV3_GN";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Green IFV 3 Gunner";
 				};
 				class Item2
@@ -2162,6 +2321,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_IFV3_DR";
+					init="_null =[this,""crew""] spawn MCC_fnc_gear;";
 					description="Green IFV 3 Driver";
 				};
 			};
@@ -2183,6 +2343,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitGR_ART_TL";
+					init="_null =[this,""mort""] spawn MCC_fnc_gear;";
 					description="Grenn Mortar Team Leader";
 				};
 				class Item1
@@ -2195,6 +2356,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitGR_ART_AM";
+					init="_null =[this,""morta""] spawn MCC_fnc_gear;";
 					description="Grenn Mortar Team Assistant Gunner";
 				};
 			};
@@ -2216,6 +2378,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIGR_SN1_SN";
+					init="_null =[this,""snp""] spawn MCC_fnc_gear;";
 					description="Green Sniper Team 1 Sniper";
 				};
 				class Item1
@@ -2228,6 +2391,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIGR_SN1_SP";
+					init="_null =[this,""spot""] spawn MCC_fnc_gear;";
 					description="Green Sniper Team 1 Spotter";
 				};
 			};
@@ -2249,6 +2413,7 @@ class Mission
 					rank="SERGEANT";
 					skill=0.60000002;
 					text="UnitIGR_SN2_SN";
+					init="_null =[this,""snp""] spawn MCC_fnc_gear;";
 					description="Green Sniper Team 2 Sniper";
 				};
 				class Item1
@@ -2261,6 +2426,7 @@ class Mission
 					rank="CORPORAL";
 					skill=0.60000002;
 					text="UnitIGR_SN2_SP";
+					init="_null =[this,""spot""] spawn MCC_fnc_gear;";
 					description="Green Sniper Team 2 Spotter";
 				};
 			};
