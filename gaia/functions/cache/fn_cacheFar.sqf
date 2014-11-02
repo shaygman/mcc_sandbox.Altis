@@ -1,91 +1,101 @@
-/*
-    Description:
-    Cache group far away from players.
-    Can only be executed by server.
+if(!isServer) exitWith {};
+private ["_group"];
 
-    Parameter(s):
-    #0 GROUP - Group to be cached.
-
-    Returns:
-    nil
-*/
-
-if (!isServer) exitWith {};
-
-private ["_group", "_units", "_vehicles", "_groupVehicles", "_unmountedUnits", "_waypoints"];
-
-_group = [_this, 0, grpNull, [grpNull]] call BIS_fnc_param;
+_group 			= _this select 0; 
+_units  		= units _group;
 if (isNull _group) exitWith {};
+_vehicles		=  [_group] call  BIS_fnc_groupVehicles;
+_sf 				= [];
+_uv 				= [];
+_crew 			= [];
+_gv					= [];
 
-_units = units _group;
-_vehicles = [_group] call BIS_fnc_groupVehicles;
-
-_groupVehicles = [];
-
-{
-    private ["_vehicle", "_crew"];
-    _vehicle = _x;
-    _crew = [];
-
-    {
-        private ["_unit"];
-        _unit = _x;
-
-        if (assignedVehicle _unit == _vehicle && alive _unit) then
-        {
-            _crew pushBack [typeOf _unit, getPos _unit, damage _unit, skill _unit, rank _unit, assignedVehicleRole _unit, getDir _unit];
-            _units = _units - [_unit];
-        };
-    } forEach _units;
-
-    _groupVehicles pushBack [typeOf _vehicle, getPos _vehicle, damage _vehicle, fuel _vehicle, _crew, getDir _vehicle];
-} forEach _vehicles;
-
-_unmountedUnits = [];
 
 {
-    if (alive _x) then
-    {
-        _unmountedUnits pushBack [typeOf _x, visiblePositionASL _x, damage _x, skill _x, rank _x, getDir _x];
-    };
-} forEach _units;
+	_veh = _x;
+	_crew = [];
+	{
+	 
+		if 
+			(
+			 ( assignedVehicle _x == _veh)
+			 and
+			 ( alive _x)
+			)
+	  then
+		{
+			//player globalchat format ["%1, %2",_veh,_x];
+			_crew = _crew + [[(typeof _x),(getpos _x),damage _x,skill _x,rank _x,(assignedVehicleRole _x),getdir _x]];
+			_units = _units  - [_x];
+			
+		}
+	}	foreach _units;
+	
+	_gv = _gv + [[(typeof _veh),position _veh,damage _veh,fuel _veh,_crew,getdir _x]];
+	
+} foreach _vehicles;
 
-_waypoints = [];
-
-if (((count waypoints _group) - currentWaypoint _group) > 0) then
 {
-    private ["_allWaypoints"];
-    _allWaypoints = [];
-    {
-        if (((waypointPosition _x) distance [0, 0, 0]) > 0) then
-        {
-            _allWaypoints pushBack [waypointPosition _x, waypointType _x, waypointBehaviour _x, waypointSpeed _x, waypointCombatMode _x, waypointFormation _x, waypointStatements _x, waypointTimeout _x, waypointHousePosition _x];
-        };
-    } forEach waypoints _group;
-    _waypoints = [_allWaypoints, currentWaypoint _group];
+	if  ( alive _x) then 
+	{
+		_uv = _uv + [[typeof _x,(visiblePositionasl _x),damage _x,skill _x,rank _x,getdir _x]];
+		//deleteVehicle _x;
+	};
+	
+}
+foreach _units;
+
+_array = [];_waypoints=[];
+
+if (((count (waypoints _group)) - currentWaypoint _group)>0) then
+{
+	{
+		private "_waypoint";
+		
+		if (( (waypointposition _x) distance [0,0,0])>0) then 
+		{
+				_waypoint = [
+					waypointposition _x,
+					waypointtype _x,
+					waypointbehaviour _x,
+					waypointspeed _x,
+					waypointcombatmode _x,
+					waypointformation _x,
+					waypointstatements _x,
+					waypointtimeout _x,
+					waypointhouseposition _x
+				];
+				
+				_array set [count _array, _waypoint];
+		};
+		
+	} foreach (waypoints _group);
+	_waypoints = [_array, currentwaypoint _group];
 };
 
-MCC_GAIA_CACHE_STAGE2 pushBack position leader _group;
+_sf = 	[_gv  
+				,_uv  
+				,side _group
+				,(_x getVariable  ["GAIA_zone_intend",[]])
+				,behaviour (leader _group)
+				,combatmode _group
+				,speedmode _group
+				,formation _group
+				,_waypoints
+				,(_group getVariable  ["MCC_GAIA_RESPAWN",-1])
+				, (missionNamespace getVariable [ "GAIA_RESPAWN_" + str(_group),[] ])
+				];
 
-missionNamespace setVariable [
-    format ["GAIA_CACHE_%1", str position leader _group],
-    [
-        _groupVehicles,
-        _unmountedUnits,
-        side _group,
-        _group getVariable ["GAIA_zone_intend", []],
-        behaviour leader _group,
-        combatMode _group,
-        speedMode _group,
-        formation _group,
-        _waypoints,
-        _group getVariable ["MCC_GAIA_RESPAWN", -1],
-        missionNamespace getVariable [format ["GAIA_RESPAWN_%1", str _group], []]
-    ]
-];
+_pos = position leader _group;
 
-{
-    deleteVehicle _x;
-} forEach (units _group + _vehicles);
+MCC_GAIA_CACHE_STAGE2 = MCC_GAIA_CACHE_STAGE2+ [_pos];
+_var2 = "GAIA_CACHE_" + str(_pos); 	
+missionNamespace setVariable [_var2, _sf ];
 
-deleteGroup _group;
+
+//player globalchat format ["%1",_sf];
+
+{deleteVehicle _x;} foreach units _group;
+{deleteVehicle _x;} foreach _vehicles;
+deletegroup _group;
+
