@@ -1,4 +1,4 @@
-private ["_heliType","_pos", "_dummy", "_dir","_gunNum","_type","_entry","_side","_gunnersGroup","_evac","_evac_p"];
+private ["_heliType","_pos", "_dummy", "_dir","_gunNum","_type","_entry","_side","_gunnersGroup","_evac","_evac_p","_turretPath","_isCargo","_index"];
 
 _heliType 	= _this select 0; 	//Type of heli
 _pos 		= _this select 1;
@@ -54,18 +54,23 @@ _turrets = [_entry >> "turrets"] call BIS_fnc_returnVehicleTurrets;			//All turr
 _path = [];
 private ["_i"];
 _i = 0;
+_index = 0;
 
 while {_i < (count _turrets)} do
 {
 	private ["_turretIndex", "_thisTurret"];
 	_turretIndex = _turrets select _i;
 	_thisTurret = _path + [_turretIndex];
-	if (isNull (_evac turretUnit _thisTurret)) then 
+	_turretPath = configName ((configFile >> "CfgVehicles" >> _type >> "turrets") Select _index);
+	player sidechat str _turretPath;
+	_isCargo = ["cargo",tolower _turretPath] call BIS_fnc_inString;
+	if (isNull (_evac turretUnit _thisTurret) && !_isCargo) then 
 	{
 		_unit = _gunnersGroup createUnit [evac_p_type, _pos, [], 0, "NONE"]; //Spawn unit into this turret, if empty.
 		_unit moveInTurret [_evac, _thisTurret];
 	};
 	_i = _i + 2;
+	_index = _index + 1;
 };
 
 _evac setVariable ["MCC_evacStartPos", getposATL _evac, true];

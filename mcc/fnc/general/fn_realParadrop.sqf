@@ -143,8 +143,9 @@ private "_safepos";
 		_plane setVariable ["MCCjumpReady",true,true];				//Ready for the jump
 
 		sleep 12; 
-		_plane animate ["CargoRamp_Open", 0.8];	
-
+		//_this animate ["CargoRamp_Open", 0];	
+		{_plane animateDoor [_x, 1]} foreach ["CargoRamp_Open"];
+		
 		sleep 4; 
 
 		if (_isHalo) then

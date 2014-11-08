@@ -221,3 +221,19 @@ _comboBox = _mccdialog displayCtrl mcc_deletePlayerBodyIDC;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
 _comboBox lbSetCurSel (missionNamespace getVariable ["mcc_deletePlayerBodyIndex",0]);
+
+_tempArray = []; 
+{
+	_tempArray pushBack (missionNameSpace getVariable [_x,false]);
+} foreach ["MCC_interaction","MCC_surviveMod","MCC_cover","MCC_coverUI","MCC_changeRecoil","MCC_coverVault"];
+
+for "_i" from 8427 to 8432 do 
+{
+	_comboBox = _mccdialog displayCtrl _i; 
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["Disabled","Enabled"];
+	_comboBox lbSetCurSel (if (_tempArray select (_i - 8427)) then {1} else {0});
+};

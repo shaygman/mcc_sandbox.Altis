@@ -3,7 +3,7 @@
 // Example: [] call MCC_fnc_cover;
 //===========================================================================================================================================================================	
 private ["_center","_left","_right","_up","_cover","_centerFront","_leftFront","_rightFront","_upFront","_cover","_headPos","_currentAnim","_string",
-			 "_centerFrontFar","_stance","_isWall"];
+			 "_centerFrontFar","_stance","_isWall","_pos"];
 		 
 if(alive player && vehicle player == player) then
 {
@@ -18,10 +18,38 @@ if(alive player && vehicle player == player) then
 	_upFront 		= player modelToWorld [(_headPos select 0),(_headPos select 1)+2,(_headPos select 2)+0.3];
 	_centerFront	= player modelToWorld [(_headPos select 0),(_headPos select 1)+1,(_headPos select 2)];
 	_centerFrontFar	= player modelToWorld [(_headPos select 0),(_headPos select 1)+3,(_headPos select 2)];
+	_stance 		= stance player;
 	
+	if ((missionNameSpace getVariable ["MCC_changeRecoil",true]) && _stance == "PRONE" && unitRecoilCoefficient player > 0.5) then
+	{
+		player setVariable ["MCC_recoilCoef", 0.3];
+		player setUnitRecoilCoefficient (0.3 * unitRecoilCoefficient player);
+		
+		[] spawn
+		{
+			if (missionNameSpace getVariable ["MCC_coverUI",true] && (player getVariable ["MCC_mirrorCamOff",true])) then
+			{	
+				while {stance player == "PRONE"} do
+				{
+					if !(player getVariable ["MCC_behindCover", false]) then
+					{
+						[format ["<img align='left' size='1.5' image='%1data\cover\bipods.paa'/>",MCC_path],0.5,1,0.1,0,0,1] spawn BIS_fnc_dynamicText;
+					};
+					sleep 0.1;
+				};
+			};
+			
+			waituntil {stance player != "PRONE"};
+			player setUnitRecoilCoefficient 1;
+		};
+	};
+
+					
+					
 	//Are we behind cover
 	if(lineIntersects [ATLtoASL _center, ATLtoASL _centerFront]) then
 	{
+		player setVariable ["MCC_behindCover", true];
 		_cover = switch (true) do
 				{
 					case (!(lineIntersects [ATLtoASL _up, ATLtoASL _upFront])): {"up"};
@@ -29,7 +57,6 @@ if(alive player && vehicle player == player) then
 					case (!(lineIntersects [ATLtoASL _left, ATLtoASL _leftFront])): {"left"};
 					default {"none"}
 				};
-		_stance = stance player;
 		
 		//are we behind a wall
 		_isWall =  if (_stance in ["STAND","CROUCH"] && _cover == "up" && !(lineIntersects [ATLtoASL _centerFront, ATLtoASL _centerFrontFar])) then {true} else {false}; 
@@ -59,7 +86,7 @@ if(alive player && vehicle player == player) then
 		};
 		
 		//UI?
-		if (missionNameSpace getVariable ["MCC_coverUI",true]) then
+		if ((missionNameSpace getVariable ["MCC_coverUI",true]) && (player getVariable ["MCC_mirrorCamOff",true])) then
 		{
 			_string = "";
 			switch (_cover) do
@@ -77,6 +104,7 @@ if(alive player && vehicle player == player) then
 		if (cameraView == "GUNNER" && _cover in ["up","left","right"] && speed player == 0) then
 		{
 			_currentAnim = animationState player;
+			_pos = getpos player; 
 			
 			 switch(_cover) do
 			{
@@ -102,13 +130,20 @@ if(alive player && vehicle player == player) then
 			//Work around for prone
 			if (cameraView == "GUNNER") then
 			{
-				if (missionNameSpace getVariable ["MCC_changeRecoil",true]) then
+				if ((missionNameSpace getVariable ["MCC_changeRecoil",true]) && stance player != "PRONE") then
 				{
 					player setVariable ["MCC_recoilCoef", 0.4];
 					player setUnitRecoilCoefficient (0.4 * unitRecoilCoefficient player);
 				};
-			
-				waitUntil {cameraView != "GUNNER"};
+				
+				while {cameraView == "GUNNER" && (_pos distance getpos player)<1.5} do
+				{
+					if ((missionNameSpace getVariable ["MCC_coverUI",true]) && (missionNameSpace getVariable ["MCC_changeRecoil",true])) then
+					{	
+						[format ["<img align='left' size='1.5' image='%1data\cover\bipods.paa'/>",MCC_path],0.5,1,0.1,0,0,1] spawn BIS_fnc_dynamicText;
+						sleep 0.1;
+					};
+				};
 				//player playactionNow format ["player%1",_stance];
 				player playmoveNow _currentAnim;
 				if (_currentAnim in ["aadjpknlmstpsraswrflddown","aadjpercmstpsraswrflddown","aadjpknlmstpsraswrfldup","aadjpknlmstpsraswrflddown"]) then
@@ -123,5 +158,9 @@ if(alive player && vehicle player == player) then
 				};
 			};
 		};
+	}
+	else
+	{
+		player setVariable ["MCC_behindCover", false];
 	};
 };

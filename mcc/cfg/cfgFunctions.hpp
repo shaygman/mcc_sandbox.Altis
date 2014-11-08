@@ -244,6 +244,7 @@ class MCC
 		class RestrictZoneEffect		{description = "Effect while inside a restricted zone.";};
 		class missionSettings {description = "Mission settings";};
 		class GAIASettings {description = "GAIA settings";};
+		class settingsCover {description = "Cover settings";};
 	};
 
 	class actions

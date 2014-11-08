@@ -81,10 +81,10 @@ switch (true) do
 				private ["_keyNightVision","_keysBanned","_keyForward","_keyBack","_keyLeft","_keyRight","_mode","_input","_NVGstate","_camTarget","_pos","_relDir"];
 				_keyNightVision	= actionKeys "NightVision";
 				_keysBanned		= [1,15];
-				_keyForward		= actionKeys "MoveForward";
-				_keyBack		= actionKeys "MoveBack";
-				_keyLeft		= actionKeys "MoveLeft";
-				_keyRight		= actionKeys "MoveRight";
+				_keyForward		= actionKeys "carForward";
+				_keyBack		= actionKeys "carBack";
+				_keyLeft		= actionKeys "carLeft";
+				_keyRight		= actionKeys "carRight";
 				_mode 	= _this select 0;
 				_input 	= _this select 1;
 				_cam 	= player getVariable ["MCC_doorCam",objNull];
@@ -104,7 +104,7 @@ switch (true) do
 					{
 						playSound "nvSound";
 						_NVGstate = !(player getVariable ["MCC_DOORCAM_NVSTATE", false]);
-						"uavrtt" setPiPEffect (if (_NVGstate) then {[0]} else {[1]});
+						"uavrtt" setPiPEffect (if (_NVGstate) then {[1]} else {[0]});
 						player setVariable ["MCC_DOORCAM_NVSTATE", _NVGstate];
 					};
 					

@@ -81,9 +81,10 @@ while {true} do
 	};	
 	
 	//Cover
-	if (missionNameSpace getVariable ["MCC_cover",true]) then
+	if (missionNameSpace getVariable ["MCC_cover",false]) then
 	{
 		[] call MCC_fnc_cover; 
+		//_null = execVM "mcc\fnc\actions\fn_cover.sqf";
 	};
 	
 	sleep 0.1; 

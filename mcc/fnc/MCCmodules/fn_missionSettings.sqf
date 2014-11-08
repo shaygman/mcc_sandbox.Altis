@@ -3,7 +3,7 @@
 // Example: [] call MCC_fnc_missionSettings;
 // _group1 = group, the group name
 //===========================================================================================================================================================================	
-private ["_logic","_var","_name","_string","_desc","_action","_preTask","_pos","_side"];
+private ["_logic","_var"];
 
 _logic	= _this select 0;
 
@@ -82,11 +82,4 @@ MCC_allowlogistics = if (_var == 0) then {false} else {true};
 //interaction
 _var 	= _logic getvariable ["interaction",1];
 MCC_interaction = if (_var == 0) then {false} else {true};		
-
-//cover
-_var 	= _logic getvariable ["cover",1];
-MCC_cover = if (_var == 0) then {false} else {true};	
-
-//coverRecoil
-_var 	= _logic getvariable ["coverRecoil",1];
-MCC_changeRecoil = if (_var == 0) then {false} else {true};			
+		

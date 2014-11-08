@@ -46,7 +46,10 @@ if (tolower _ehType == "keydown") exitWith
 	//if (_dikCode in actionKeys "MoveForward" || _dikCode in actionKeys "MoveBack" || _dikCode in actionKeys "MoveLeft" || _dikCode in actionKeys "MoveRight") then {player SetVariable ["MCC_moveKeyDown",true]};
 	
 	//Vault
-	if ((_dikCode in actionKeys "GetOver") && !(player getVariable ["MCC_vaultOver",false]) && (player getVariable ["MCC_wallAhead",""]) != "") exitWith {[] spawn MCC_fnc_vault};
+	if (missionNameSpace getVariable ["MCC_coverVault",true]) then
+	{
+		if ((_dikCode in actionKeys "GetOver") && !(player getVariable ["MCC_vaultOver",false]) && (player getVariable ["MCC_wallAhead",""]) != "") exitWith {[] spawn MCC_fnc_vault};
+	};
 	
 	//keybinds
 	switch (_action) do

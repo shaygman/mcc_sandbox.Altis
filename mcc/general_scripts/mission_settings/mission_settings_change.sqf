@@ -206,7 +206,17 @@ if !mcc_isloading then
 	publicvariable "mcc_deletePlayerBodyIndex";
 	MCC_deletePlayersBody = if ((lbCurSel mcc_deletePlayerBodyIDC) == 0) then {false} else {true};								
 	publicvariable "MCC_deletePlayersBody";
+	
+	private ["_tempArray","_var"];
+	_tempArray = ["MCC_interaction","MCC_surviveMod","MCC_cover","MCC_coverUI","MCC_changeRecoil","MCC_coverVault"];
 
+	for "_i" from 8427 to 8432 do 
+	{
+		_var = _tempArray select (_i-8427);
+		missionNameSpace setVariable [_var, if ((lbCurSel _i)==0) then {false} else {true}];
+		publicVariable _var;
+	};
+	
 	Hint "Mission Settings Saved";
     closedialog 0;
 };

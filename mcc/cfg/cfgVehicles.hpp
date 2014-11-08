@@ -19,6 +19,7 @@ class Module_F: Logic
 #include "modules\StartLocations.hpp"
 #include "modules\MissionSettings.hpp"
 #include "modules\GAIASettings.hpp"
+#include "modules\cover.hpp"
 
 class Box_NATO_AmmoVeh_F;
 class MCC_crateAmmo : Box_NATO_AmmoVeh_F
