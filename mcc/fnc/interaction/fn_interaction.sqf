@@ -98,7 +98,7 @@ if (vehicle player == player) then
 			{
 				missionNameSpace setVariable ["MCC_interactionObjects", [[getpos _selected, format ["Hold %1 to search",_keyName]]]];
 				//_null= [_selected] execvm "mcc\fnc\interaction\fn_interactObject.sqf";
-				[_selected] call MCC_fnc_interactObject;
+				//[_selected] call MCC_fnc_interactObject;
 				_break = true;
 			};
 		};
@@ -108,8 +108,6 @@ if (vehicle player == player) then
 }
 else
 {
-	_vehiclePlayer = vehicle player;
-	
 	MCC_fnc_vehicleCargoMenuClicked = 
 	{
 		private ["_ctrl","_index","_ctrlData","_object","_animation","_phase","_door","_locked"];
@@ -137,9 +135,12 @@ else
 				((player getVariable ["interactWith",[]]) select call compile ([_ctrlData,"1234567890"] call BIS_fnc_filterString)) call MCC_fnc_ilsChilds;
 			};
 			case (_ctrlData == "abort") : {player setVariable ["MCC_ILSAbort",true]};
+			case (_ctrlData == "reel") : {_object call MCC_fnc_attachPod};
+			case (_ctrlData == "releasepod") : {_object call MCC_fnc_releasePod};
 		};
 	};
 	
+	_vehiclePlayer = vehicle player;
 	_array 			= [];
 	_displayName 	= getText (configfile >> "CfgVehicles" >> typeof _vehiclePlayer >> "displayName"); 
 	_pic		 	= getText (configfile >> "CfgVehicles" >> typeof _vehiclePlayer >> "picture"); 
@@ -228,6 +229,25 @@ else
 		};
 		
 		player setVariable ["interactWith",_airports];
+	};
+	
+	//Taru pods
+	if ((_vehiclePlayer isKindOf "O_Heli_Transport_04_F") && (player == Driver _vehiclePlayer)&& isnull(_vehiclePlayer getVariable ["MCC_attachedPod",objnull])) then
+	{
+		_attachedCargo = (ropeAttachedObjects _vehiclePlayer) select 0;
+		if (!isnil "_attachedCargo") then
+		{
+			if (_attachedCargo isKindOf "Pod_Heli_Transport_04_base_F") then
+			{
+				_array set [count _array,["reel",format ["Reel in %1",getText (configfile >> "CfgVehicles" >> typeof _attachedCargo >> "displayName")],_pic]];
+			};
+		};
+	};
+	
+	//Taru pods
+	if ((_vehiclePlayer isKindOf "O_Heli_Transport_04_F") && (player == Driver _vehiclePlayer) && !isnull(_vehiclePlayer getVariable ["MCC_attachedPod",objnull])) then
+	{
+			_array set [count _array,["releasepod",format ["Drop %1",getText (configfile >> "CfgVehicles" >> typeof (_vehiclePlayer getVariable ["MCC_attachedPod",objnull]) >> "displayName")],_pic]];
 	};
 	
 	_array set [count _array,["close","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"]];

@@ -1084,7 +1084,7 @@ waituntil {alive player};
 
 MCC_groupGenGroupStatus = [west,east,resistance,civilian];
 
-if (!isServer && !(MCC_isLocalHC)) then
+if (isPlayer player && !isServer && !(MCC_isLocalHC) && (missionNameSpace getVariable ["MCC_syncOn",true])) then
 {
 	private ["_html","_loop"];
 	waituntil {!(IsNull (findDisplay 46))};

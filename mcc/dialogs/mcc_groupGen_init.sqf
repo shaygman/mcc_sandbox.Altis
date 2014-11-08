@@ -38,6 +38,9 @@ if (MCC_trackMarker) then
 ctrlShow [510,false];
 ctrlShow [MCC_GroupGenInfo_IDC,false];
 
+//Show zones
+{str _x setMarkerAlphaLocal 0.4;(format["LABEL_%1",_x]) setMarkerAlphaLocal 1;} foreach MCC_zones_numbers; 
+
 //Hide admin buttons for no-admins
 if !(serverCommandAvailable "#logout") then
 {
@@ -165,4 +168,8 @@ while {(str (finddisplay groupGen_IDD) != "no display")} do
 	};
 	sleep 1;
 };
+
+//Hide zones
+{str _x setMarkerAlphaLocal 0;(format["LABEL_%1",_x]) setMarkerAlphaLocal 0;} foreach MCC_zones_numbers; 
+
 //------------------------------------------------------------------------------------------

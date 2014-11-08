@@ -17,10 +17,6 @@ mcc_zone_markername		= str _zoneNumber;
 MCC_Marker_dir			= 0;
 mcc_hc					= 0;
 
-/*
-MCC_zones_numbers set [count MCC_zones_numbers, mcc_zone_number]; 
-publicVariable "MCC_zones_numbers"; 
-*/
 _script_handler 		= [0] execVM format ["%1mcc\general_scripts\mcc_make_the_marker.sqf",MCC_path];
 waitUntil {scriptDone _script_handler};
 

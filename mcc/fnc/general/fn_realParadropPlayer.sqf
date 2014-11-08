@@ -1,4 +1,4 @@
-private ["_unit","_plane","_positions","_dir","_isHalo","_jumpReady","_unitPosition","_isCargo","_y","_x","_pos","_vehicle","_init","_time","_light"];
+private ["_unit","_plane","_positions","_dir","_isHalo","_jumpReady","_unitPosition","_isCargo","_y","_x","_pos","_vehicle","_init","_time","_light","_pod"];
 _plane 		= _this select 0;												//where from
 _unit 		= _this select 1;												//Who is jumping
 _unitNumber	= _this select 2;												//what is his jumper number
@@ -23,21 +23,20 @@ if (isplayer _unit) then
 	titleText ["","BLACK FADED",5];	
 };
 
-if ((vehicle _unit != _unit) && (vehicle _unit != _plane)) then {unassignVehicle _unit; sleep 0.5;}; 
-_unit assignAsCargo _plane;
-_unit moveInCargo _plane;
-		
-/*		
-while {!_isCargo && (alive _plane)} do
+if (_isHalo) then
+{
+	_pod = _plane getVariable ["MCC_attachedPod",objnull];
+	if ((vehicle _unit != _unit) && (vehicle _unit != _pod )) then {unassignVehicle _unit; sleep 0.5;}; 
+	_unit assignAsCargo _pod ;
+	_unit moveInCargo _pod ;
+}
+else
 {
 	if ((vehicle _unit != _unit) && (vehicle _unit != _plane)) then {unassignVehicle _unit; sleep 0.5;}; 
 	_unit assignAsCargo _plane;
-	_unit MoveInCargo _plane;
-	sleep 1;
-	if (vehicle _unit == _plane) then {_isCargo = true};
+	_unit moveInCargo _plane;
 };
-*/
-
+		
 sleep 5;
 
 if (isplayer _unit) then
@@ -91,7 +90,16 @@ if (isplayer _unit) then
 	camdestroy _camera;
 	_camera = nil;
 };
-				
+
+if (_isHalo) exitWith 
+{
+	if (!isplayer _unit) then 
+	{
+		while {(getpos vehicle _unit select 2) > 1} do {sleep 2};
+		unassignVehicle _unit;
+		_unit action ["EJECT",vehicle _unit];	
+	};
+};
 while {!_jumpReady} do {sleep 1;_jumpReady = _plane getvariable "MCCjumpReady"}; 	//let them sit for a while
 
 //Make them stand on the ramp		

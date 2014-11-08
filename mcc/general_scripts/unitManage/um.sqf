@@ -342,11 +342,20 @@ switch (_type) do
 			};
 		};
 
-		case 10:	//HALO
+		case 10:	//Parachute
 		{
+			_answer = ["<t font='TahomaB'>Parachut or drop-pods?</t>","","Parachut","Drop-pods"] call BIS_fnc_guiMessage;	
+			waituntil {!isnil "_answer"};
+			if (_answer) then 
+			{
+				MCC_UMparadropIsHalo = false; 
+			}
+			else
+			{
+				MCC_UMparadropIsHalo = true; 
+			};
 			MCC_UMParadropRequestMarker = true; 
-			MCC_UMparadropIsHalo = false; 
-			hint "click and dragto start the Parachute";
+			hint "click and dragto start the Drop";
 		};
 				
 		case 11:	//Broadcast

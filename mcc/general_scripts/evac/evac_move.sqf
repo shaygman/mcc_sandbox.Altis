@@ -143,42 +143,52 @@ else
 			{
 				case "B_Heli_Light_01_F":
 				{
-					_ropes = [[0.6,0.5,-25.9],[-0.8,0.5,-25.9]];
+					_ropes = [[0.6,0.5,0],[-0.8,0.5,0]];
 				}; 
 				
 				case "B_Heli_Transport_01_F":
 				{
-					_ropes = [[-1.11,2.5,-24.7],[1.11,2.5,-24.7]];
+					_ropes = [[-1.11,2.5,0],[1.11,2.5,0]];
 				};
 				
 				case "I_Heli_Transport_02_F":
 				{
-					_ropes = [[1,-5,-26],[-1,-5,-26]];
+					_ropes = [[1,-5,0],[-1,-5,0]];
 				};
 				
 				case "O_Heli_Attack_02_F":
 				{
-					_ropes = [[1.35,1.35,-24.95],[-1.45,1.35,-24.95]];
+					_ropes = [[1.35,1.35,0],[-1.45,1.35,0]];
 				};
 				
 				case "O_Heli_Light_02_F":
 				{
-					_ropes = [[1.3,1.3,-25],[-1.3,1.3,-25]];
+					_ropes = [[1.3,1.3,0],[-1.3,1.3,0]];
 				};
 				
 				case "I_Heli_light_03_F":
 				{
-					_ropes = [[1.3,1.3,-25],[-1.3,1.3,-25]];
+					_ropes = [[1.3,1.3,0],[-1.3,1.3,0]];
+				};
+				
+				case "O_Heli_Transport_04_covered_F":
+				{
+					_ropes = [[1,-4,-1],[-1,-4,-1]];
+				};
+				
+				case "B_Heli_Transport_03_F":
+				{
+					_ropes = [[1,-4,-1],[-1,-4,-1]];
 				};
 				
 				case "I_Heli_light_03_unarmed_F":
 				{
-					_ropes = [[1.3,1.3,-25],[-1.3,1.3,-25]];
+					_ropes = [[1.3,1.3,0],[-1.3,1.3,0]];
 				};
 				
 				default 
 				{
-					_ropes = [[1.3,1.3,-25],[-1.3,1.3,-25]];
+					_ropes = [[1.3,1.3,0],[-1.3,1.3,0]];
 				};
 			};
 			
@@ -202,7 +212,11 @@ else
 			waitUntil { sleep 1; ( (abs(speed _heli) < 0.5) && ((getPos _heli select 2) < 40) ) || !alive _heli || !alive (driver _heli)};
 			if (!alive _heli) exitWith {}; 
 			
+			{_heli animateDoor [_x, 1]} foreach ["Door_6_source","Door_rear_source"];
+			
 			{	
+				_rope = ropeCreate [vehicle player, _x,40,[10],[10], true];
+				/*
 				_rope = createVehicle ["land_rope_f", [0,0,0], [], 0, "CAN_COLLIDE"];
 				sleep 0.3;
 				_rope allowDamage false;
@@ -210,7 +224,8 @@ else
 				_actualRopes set [count _actualRopes, _rope];
 				_rope setdir (getdir _heli);
 				_rope attachto [_heli, _x];
-
+				*/
+				_actualRopes set [count _actualRopes, _rope];
 				sleep 0.5;
 			} forEach _ropes;
 			
@@ -226,7 +241,7 @@ else
 						_unit = _this select 0;
 						_rope = _this select 1;
 						_zdelta = 7 / 10;
-						_zc = 22;
+						_zc = -4;
 						
 						if (isMultiplayer) then
 						{
@@ -247,7 +262,7 @@ else
 						
 						_unit setpos [(getpos _unit select 0), (getpos _unit select 1), 0 max ((getpos _unit select 2) - 3)];
 						
-						while { (alive _unit) && ( (getpos _unit select 2) > 1 ) && ( _zc > -24 ) } do 
+						while { (alive _unit) && ( (getpos _unit select 2) > 0.3 ) && ( _zc > -40 ) } do 
 						{
 							_unit attachTo [_rope, [0,0,_zc]];
 							_zc = _zc - _zdelta;
@@ -276,6 +291,8 @@ else
 			
 			// drop the ropes and delete them
 			{
+				ropeUnwind [ _x, 3, 0];
+				/*
 				_attachPoint = _ropes select _forEachIndex;
 				_zc = -22;
 				while { _zc > -50 } do 
@@ -285,6 +302,7 @@ else
 					sleep 0.1;
 				};
 				deletevehicle _x;
+				*/
 			} foreach _actualRopes;
 		};
 	};
@@ -312,4 +330,6 @@ else
 			[[[_startPos], _height, 1, [netid _heli,_heli],assignedCargo _heli],"MCC_fnc_evacMove",_heli,false] spawn BIS_fnc_MP;
 		}; 
 	};
+	
+	{_heli animateDoor [_x, 0]} foreach ["Door_6_source","Door_rear_source"];
 };

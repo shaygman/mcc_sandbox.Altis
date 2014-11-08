@@ -1989,3 +1989,15 @@ class MCC_zip
 	sound[] = {"mcc\sounds\zip.ogg", 1, 1};
 	#endif
 };
+
+class MCC_zoom
+{
+	name = "MCC_zoom";
+	titles[] = {};
+	
+	#ifdef MCCMODE
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\zoom.ogg", 1, 1};
+	#else
+	sound[] = {"mcc\sounds\zoom.ogg", 1, 1};
+	#endif
+};

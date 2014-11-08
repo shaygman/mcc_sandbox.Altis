@@ -257,6 +257,10 @@ class MCC
 		class ilsChilds		{description = "Handles ILS childs";};
 		class dragObject	{description = "Start a dragging animation must be run local on the dragging unit";};
 		class releaseObject	{description = "stop a dragging animation must be run local on the dragging unit";};
+		class releasePod	{description = "Release a pod from Taru helicopter";};
+		class attachPod		{description = "Attach a pod to Taru helicopter";};
+		class vault			{description = "Vault over an obstacle";};
+		class cover			{description = "Manage cover mechanics";};
 	};
 	
 	class roleSelection

@@ -97,19 +97,19 @@ switch (_paraSide) do
 					_helitype = "B_Heli_Light_01_F";
 					//_spawnParaGroup = _paraGroupArray select 1;
 					_spawnParaGroup = _paraGroupArray select ((count _paraGroupArray) -1);
-					_ropes = [[0.6,0.5,-25.9],[-0.8,0.5,-25.9]];
+					_ropes = [[0.6,0.5,0],[-0.8,0.5,0]];
 				};
 				case 1: // 1, 4, 7 
 				{
 					_helitype = "B_Heli_Transport_01_F";
 					_spawnParaGroup = _paraGroupArray select ((count _paraGroupArray) -1);
-					_ropes = [[-1.11,2.5,-24.7],[1.11,2.5,-24.7]];
+					_ropes = [[-1.11,2.5,0],[1.11,2.5,0]];
 				};
 				case 2: // 2, 5, 8 
 				{ 
-					_helitype = "I_Heli_Transport_02_F";
+					_helitype = "B_Heli_Transport_03_F";
 					_spawnParaGroup = _paraGroupArray select 0;
-					_ropes = [[1,-5,-26],[-1,-5,-26]];
+					_ropes = [[1,-4,-1],[-1,-4,-1]];
 				};
 			};
 		};
@@ -123,20 +123,20 @@ switch (_paraSide) do
 				{ 
 					_helitype = "O_Heli_Attack_02_F";
 					_spawnParaGroup = _paraGroupArray select ((count _paraGroupArray) - 1);
-					_ropes = [[1.35,1.35,-24.95],[-1.45,1.35,-24.95]];
+					_ropes = [[1.35,1.35,0],[-1.45,1.35,0]];
 				};
 				case 1: 
 				{
 					_helitype = "O_Heli_Light_02_F";
 					_spawnParaGroup = _paraGroupArray select ((count _paraGroupArray) -1);
 					//_ropes = [[1.3,1.3,-25],[-1.3,1.3,-25]];
-					_ropes = [[1.3,1.3,-25],[-1.3,1.3,-25]];
+					_ropes = [[1.3,1.3,0],[-1.3,1.3,0]];
 				};
 				case 2: 
 				{ 
-					_helitype = "I_Heli_Transport_02_F";
+					_helitype = "O_Heli_Transport_04_covered_F";
 					_spawnParaGroup = _paraGroupArray select 0;
-					_ropes = [[1,-5,-26],[-1,-5,-26]];
+					_ropes = [[1,-4,-1],[-1,-4,-1]];
 				};
 			};
 		};
@@ -152,19 +152,19 @@ switch (_paraSide) do
 				{ 
 					_helitype = "I_Heli_light_03_F";
 					_spawnParaGroup = _paraGroupArray select ((count _paraGroupArray) -1);
-					_ropes = [[1.3,1.3,-25],[-1.3,1.3,-25]];
+					_ropes = [[1.3,1.3,0],[-1.3,1.3,0]];
 				};
 				case 1: 
 				{
 					_helitype = "I_Heli_light_03_unarmed_F";
 					_spawnParaGroup = _paraGroupArray select ((count _paraGroupArray) -1);
-					_ropes = [[1.3,1.3,-25],[-1.3,1.3,-25]];
+					_ropes = [[1.3,1.3,0],[-1.3,1.3,0]];
 				};
 				case 2: 
 				{ 
 					_helitype = "I_Heli_Transport_02_F";
 					_spawnParaGroup = _paraGroupArray select 0;
-					_ropes = [[1,-5,-26],[-1,-5,-26]];
+					_ropes = [[1,-5,0],[-1,-5,0]];
 				};
 			};			
 		};
@@ -321,23 +321,21 @@ waitUntil { sleep 1;(_heli distance _dropPos) < ((getPosATL _heli select 2) + 15
 
 { 
 	_heli animateDoor [_x,1]; 
-} foreach ["door_back_L","door_back_R","door_L","door_R"];
-
-if (typeOf _heli == "I_Heli_Transport_02_F") then
-{
-	_heli animate ["CargoRamp_Open", 0.5];
-	sleep 2;
-};
+} foreach ["door_back_L","door_back_R","door_L","door_R","Door_6_source","Door_rear_source"];
 
 if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 {
 	
-	_heli flyInHeight 20;
+	_heli flyInHeight 35;
 	sleep 4;		
 	doStop (driver _heli);
-	waitUntil { sleep 1; ( (abs(speed _heli) < 0.5) && ((getPosATL _heli select 2) < 25) )  || !alive _heli || !alive (driver _heli)};
-
+	waitUntil { sleep 1; ( (abs(speed _heli) < 0.5) && ((getPos _heli select 2) < 50) )  || !alive _heli || !alive (driver _heli)};
+	if ( !alive _heli || !alive (driver _heli)) exitWith {};
+	
 	{	
+		_rope = ropeCreate [_heli, _x,55,[10],[10], true];
+		_actualRopes set [count _actualRopes, _rope];
+		/*
 		_rope = createVehicle ["land_rope_f", [0,0,0], [], 0, "CAN_COLLIDE"];
 		sleep 0.3;
 		_rope allowDamage false;
@@ -345,13 +343,13 @@ if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 		_actualRopes set [count _actualRopes, _rope];
 		_rope setdir (getdir _heli);
 		_rope attachto [_heli, _x];
-
+		*/
 		sleep 0.5;
 	} forEach _ropes;
 };
 
 {
-
+	[units _x] allowGetIn false;
 	[_x, _heli, _p_mcc_zone_markername, _p_mcc_zone_behavior, _p_mcc_awareness, _paraMode, _paraType, _actualRopes, _forEachIndex, count _cargoGroups] spawn 
 	{
 		private ["_paraGroup", "_dir", "_p_mcc_zone_markername", "_p_mcc_zone_behavior", "_p_mcc_awareness", "_paraMode", "_paraType", 
@@ -374,7 +372,6 @@ if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 			case 0: // paradrop
 			{
 				_heli flyInHeight (getPosATL _heli select 2); // to maintain current altitude
-				
 				{
 					if (typeOf _heli == "I_Heli_Transport_02_F") then
 					{
@@ -398,10 +395,10 @@ if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 					};
 					
 					_x allowDamage false;
+					_x action ["GETOUT",vehicle _x];	
 					unassignVehicle _x;
-					_x action ["EJECT",vehicle _x];	
 					//_x action ["GetOut",vehicle _x];
-
+					sleep 1;
 					_chute = createVehicle ["NonSteerable_Parachute_F", position _x, [], ((_dir)-5+(random 10)), 'NONE'];
 					_chute setPos (getPos _x);
 					_chute setDir ((_dir)-5+(random 10));
@@ -445,16 +442,16 @@ if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 							_unit = _this select 0;
 							_rope = _this select 1;
 							_zdelta = 7 / 10;
-							_zc = 22;
+							_zc = -4;
 							
+							_unit action ["GETOUT", vehicle _unit];
 							unassignVehicle _unit;
-							_unit action ["eject", vehicle _unit];
 							[compile format ["objectFromNetID '%1' switchmove 'crew_tank01_out'", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
 							//_unit switchmove "crew_tank01_out";
 							
 							_unit setpos [(getpos _unit select 0), (getpos _unit select 1), 0 max ((getpos _unit select 2) - 3)];
 							
-							while { (alive _unit) && ( (getpos _unit select 2) > 1 ) && ( _zc > -24 ) } do 
+							while { (alive _unit) && ( (getpos _unit select 2) > 0.3 ) && ( _zc > -55 ) } do 
 							{
 								_unit attachTo [_rope, [0,0,_zc]];
 								_zc = _zc - _zdelta;
@@ -528,6 +525,7 @@ if ( _paraMode > 0 ) then  // Drop-off or fast-rope
 }
 else // Paradrop
 {
+	sleep 10;
 	_heli flyInHeight _flyHeight;
 	_heliPilot flyInHeight _flyHeight;
 };
@@ -542,14 +540,14 @@ _heli setDestination [_away, "VehiclePlanned", true];
 
 { 
 	_heli animateDoor [_x,0]; 
-} foreach ["door_back_L","door_back_R","door_L","door_R"];
+} foreach ["door_back_L","door_back_R","door_L","door_R","Door_6_source","Door_rear_source"];
 
 _heli animate ["CargoRamp_Open", 0];
 
 // Allow chopper to leave else AI will board again :-/
 sleep 5; 
 
-// activate UPSMON for each paragroup
+// activate GAIA for each paragroup
 if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then 
 {
 	{
@@ -565,8 +563,6 @@ if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zo
 		//_null = [leader _paraGroup, _p_mcc_zone_markername,_p_mcc_zone_behavior,_p_mcc_awareness,"SHOWMARKER","spawned" ] spawn mcc_ups;
 		_paraGroup setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 
-		//player sideChat format ["UPSMON activated for %1...", _paraGroup];
-			
 	} foreach _cargoGroups;
 };
 

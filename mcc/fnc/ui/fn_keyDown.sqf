@@ -25,6 +25,10 @@ _action = -1;
 
 if (tolower _ehType == "keyup") exitWith
 {
+	//move key pressed?
+	//if (_dikCode in actionKeys "MoveForward" || _dikCode in actionKeys "MoveBack" || _dikCode in actionKeys "MoveLeft" || _dikCode in actionKeys "MoveRight") then {player SetVariable ["MCC_moveKeyDown",false]};
+	
+	//keybinds
 	switch (_action) do
 	{
 		case 0 : {_null = [nil,nil,nil,nil,0] execVM format ["%1mcc\dialogs\mcc_PopupMenu.sqf",MCC_path]};	//MCC
@@ -38,10 +42,26 @@ if (tolower _ehType == "keyup") exitWith
 
 if (tolower _ehType == "keydown") exitWith
 {
+	//move key pressed?
+	//if (_dikCode in actionKeys "MoveForward" || _dikCode in actionKeys "MoveBack" || _dikCode in actionKeys "MoveLeft" || _dikCode in actionKeys "MoveRight") then {player SetVariable ["MCC_moveKeyDown",true]};
+	
+	//Vault
+	if ((_dikCode in actionKeys "GetOver") && !(player getVariable ["MCC_vaultOver",false]) && (player getVariable ["MCC_wallAhead",""]) != "") exitWith {[] spawn MCC_fnc_vault};
+	
+	//keybinds
 	switch (_action) do
 	{
-		case 4 : {MCC_interactionKey_down = true; MCC_interactionKey_up = false; if (missionNameSpace getVariable ["MCC_interaction",true]) then {[] spawn MCC_fnc_interaction}};	//Interaction
-	};
+		case 4 : 
+		{
+			MCC_interactionKey_down = true; 
+			MCC_interactionKey_up = false; 
+			if (missionNameSpace getVariable ["MCC_interaction",true]) then 
+			{
+				//_null = [] execVM format["%1mcc\fnc\interaction\fn_interaction.sqf",MCC_path];
+				[] spawn MCC_fnc_interaction
+			};	//Interaction
+		};
+	};	
 };
 
 true; 

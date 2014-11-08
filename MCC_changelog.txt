@@ -1,3 +1,27 @@
+Change log r11:
+- Added: New Paradrop infil for players and AI - Drop-pods.
+- Added: New functionality attach and drop pods with the MI-290 Taru. Once you have sling load a pod press MCC interaction to reel it in and press MCC interaction to 
+		drop the pod- it will parachute the pod safty.
+- Added: New rope physicx to the fast rope options the EVAC and AI reinforcement.
+- Added: New helicopters variants for the EVAC and AI reinforcement.  
+- Added: New Variable MCC_syncOn - disable it to have no server sync (in MCC(settings) module)
+- Added: Interact doors in ArmA2 maps (will not work for all doors as BI totally change the configs).
+- Added: Tactical Video Probe tool tips.
+- Changed: Tactical Video Probe has been changed from a full screen video to a tablet picture in picture view. 
+- Added: MCC zones will not be displayed on the map just in the MCC console itself. 
+- Added: Cover system (need to be activated using MCC (settings) module). Allow picking out of corners automatically, reducing recoile while picking from cover, allows vaulting/climbing over obstcales. 
+		MCC_cover
+		MCC_coverUI
+		MCC_changeRecoil
+
+- Fixed: Sync will not effect AI units
+- Fixed: Altis Mod template and disabled automatic weather on all templates.
+- Fixed: Presets added to Zeus objects/units didn't work for JIP. 
+- Fixed: Delete evac didn't work. 
+- Fixed: GAIA Caching. 
+
+
+
 Change log r10 hotfix:
 - Fixed grenade bug.
 - Fixed change faction bug.

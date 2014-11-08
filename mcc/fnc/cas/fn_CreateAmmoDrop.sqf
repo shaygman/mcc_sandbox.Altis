@@ -28,8 +28,7 @@ _para setVelocity _velocity;
 if (_objectData in ["Ship","Submarine","TrackedAPC","Tank","WheeledAPC","Car"]) then
 {
 	_drop attachto [_para,[0,0,-(abs ((boundingbox _drop select 0) select 2))]];
-	
-	//Thanks to KKid for this part
+
 	{
 		_p = createVehicle [_class, getpos _para,[],0,"CAN_COLLIDE"];
 		_paras set [count _paras, _p];

@@ -60,7 +60,7 @@ _safepos     =[_spawn ,1,100,2,1,10,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS
 _planeArray = [[_safepos select 0,_safepos select 1, _flyHight], _heading, _planeType, _side] call bis_fnc_spawnvehicle;
 
 _plane = _planeArray select 0;
-
+_plane setpos [(getPos _plane select 0),(getPos _plane select 1),_flyHight];
 _plane flyInHeight _flyHight;
 			
 if (IsNil "_captive") then { _captive = false; };

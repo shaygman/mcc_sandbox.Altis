@@ -79,5 +79,12 @@ while {true} do
 			[_string,1.2,0.8,0.5,0,0,4] spawn BIS_fnc_dynamicText;
 		};
 	};	
-	sleep 0.5; 
+	
+	//Cover
+	if (missionNameSpace getVariable ["MCC_cover",true]) then
+	{
+		[] call MCC_fnc_cover; 
+	};
+	
+	sleep 0.1; 
 };
