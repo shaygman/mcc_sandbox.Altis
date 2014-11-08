@@ -1,72 +1,130 @@
-/*
-    Description:
-    GAIA cache main Thread.
-    Can only be executed by server.
+if(!isServer ) exitWith {};
+private["_count"];
 
-    Parameter(s):
-    #0 NUMBER - Idle duration
 
-    Returns:
-    nil
-*/
-
-if (!isServer) exitWith {};
-
-private ["_idleDuration"];
-
-_idleDuration = [_this, 0, 0.5, [0]] call BIS_fnc_param;
 
 while {true} do
 {
-	{
-		private ["_group"];
-		_group = _x;
-		if ((count units _group) > 0 && alive leader _group) then
-		{
-			call {
-				private ["_gaiaCachedStage1", "_isClose", "_behaviour", "_gaiaZoneIntend", "_gaiaPortfolio"];
-				_gaiaCachedStage1 = _x getVariable ["GAIA_CACHED_STAGE_1", false];
-				_isClose = [getPosATL leader _group, GAIA_CACHE_STAGE_1] call GAIA_fnc_isNearPlayer;
-				_behaviour = behaviour leader _group;
-				_gaiaZoneIntend = _group getVariable ["GAIA_zone_intend", []];
-				_gaiaPortfolio = _group getVariable ["GAIA_Portfolio", []];
+	 {
+			if (
+			   			//Seems like allgroups opens up with all sorts of empty groups, better check it
+			   			(count(units _x)>0)
+			   			and
+			   			(alive (leader _x))
+					)
+			then
+				{
+							//player globalchat "time to check caches";
+							//Cache stage 1
+							switch(true)do
+							{
 
-				if (!_gaiaCachedStage1 && !_isClose && _behaviour != "COMBAT" && ((count _gaiaZoneIntend > 1 && !("DoMortar" in _gaiaPortfolio) && !("DoArtillery" in _gaiaPortfolio)) || count _gaiaZoneIntend == 0))
-					exitWith {_group spawn GAIA_fnc_cache};
-				if (_gaiaCachedStage1 && _isClose)
-					exitWith {_group spawn GAIA_fnc_uncache};
-				if (_gaiaCachedStage1 && _behaviour == "COMBAT")
-					exitWith {_group spawn GAIA_fnc_uncache};
-				_group spawn GAIA_fnc_syncCachedGroup;
-			};
+											//We are not cached, closest player is out of range 1, not in combat, exclude artillery and mortars
+											case (
+																!(_x getVariable  ["GAIA_CACHED_STAGE_1",false])
+																and
+																!([getPosATL(leader _x),GAIA_CACHE_STAGE_1] call GAIA_fnc_isNearPlayer)
+																and
+																(behaviour(leader _x)!="COMBAT")
+																and
+																(
+																	(
+																		(count(_x getVariable  ["GAIA_zone_intend",[]])>1)
+																		and
+																		!("DoMortar" in (_x getVariable  ["GAIA_Portfolio",[]]))
+					   												and
+					   												!("DoArtillery" in (_x getVariable  ["GAIA_Portfolio",[]]))
+					   											)
+					   											or
+					   											(
+					   												(count(_x getVariable  ["GAIA_zone_intend",[]])==0)
+					   											)
+																)
+													  ):  {	_x spawn GAIA_fnc_cache;};
 
-			if (!([getPosATL leader _group, GAIA_CACHE_STAGE_2] call GAIA_fnc_isNearPlayer)) then {[_group] call GAIA_fnc_cacheFar};
-		};
-		sleep 0.1;
-	} forEach ([allGroups, {_x getVariable ["mcc_gaia_cache", false]}] call BIS_fnc_conditionalSelect);
+										 //We are cached, player is in range 1
+											case (
+																(_x getVariable  ["GAIA_CACHED_STAGE_1",false])
+																and
+																([getPosATL(leader _x),GAIA_CACHE_STAGE_1] call GAIA_fnc_isNearPlayer)
+													  ):  {_x spawn GAIA_fnc_uncache;};
 
-	{
-		if ([_x, GAIA_CACHE_STAGE_2] call GAIA_fnc_isNearPlayer) then
-		{
-			[missionNamespace getVariable [format ["GAIA_CACHE_%1", str _x], [0, 0, 0]]] call GAIA_fnc_uncacheFar;
-			MCC_GAIA_CACHE_STAGE2 set [_forEachIndex, objNull];
-		};
-	} forEach MCC_GAIA_CACHE_STAGE2;
+					  					//We are in combat, decache him at all times, no matter the range
+					  					case (
+																(_x getVariable  ["GAIA_CACHED_STAGE_1",false])
+																and
+																(behaviour(leader _x)=="COMBAT")
+													  ):  {	_x spawn GAIA_fnc_uncache;};
 
-	MCC_GAIA_CACHE_STAGE2 = MCC_GAIA_CACHE_STAGE2 - [objNull];
+ 											default {_x spawn GAIA_fnc_syncCachedGroup;};
+							};
 
-	{
-		if ([_x, GAIA_CACHE_STAGE_2] call GAIA_fnc_isNearPlayer) then
-		{
-			private ["_delayed"];
-			_delayed = missionNamespace getVariable [format ["MCC_DELAY%1", str _x], [0, 0, 0]];
-			_delayed set [27, false];
-			[_delayed, "mcc_setup", false, false] spawn BIS_fnc_MP;
-			MCC_DELAYED_SPAWNS set [_forEachIndex, objNull];
-		};
-	} forEach MCC_DELAYED_SPAWNS;
 
-	MCC_DELAYED_SPAWNS = MCC_DELAYED_SPAWNS - [objNull];
+							//Cache stage 2
+							if (
+											!([getPosATL(leader _x),GAIA_CACHE_STAGE_2] call GAIA_fnc_isNearPlayer)
+											//and
+											//(behaviour(leader _x)!="COMBAT")
+											/*
+											and
+											(_x getVariable ["GAIA_class",""])!=""
+											and
+											!("DoMortar" in (_x getVariable  ["GAIA_Portfolio",[]]))
+					   					and
+					   					!("DoArtillery" in (_x getVariable  ["GAIA_Portfolio",[]]))
+					   					*/
+					   		 )
+					   	then 	{[_x] call GAIA_fnc_cacheFar;};
 
-	sleep _idleDuration;
+				};
+
+			//chill out, no rush
+		  sleep 0.1;
+
+	 }  forEach ([ALLGROUPS, {_x getVariable ["mcc_gaia_cache", false]}] call BIS_fnc_conditionalSelect);
+	 _idx = 0;
+	 {
+
+
+	 						if ([_x,GAIA_CACHE_STAGE_2] call GAIA_fnc_isNearPlayer)
+	 						then
+	 						{
+	 							[(missionNamespace getVariable [ "GAIA_CACHE_" + str(_x),[0,0,0]])] call GAIA_fnc_uncacheFar;
+	 							MCC_GAIA_CACHE_STAGE2 set [_idx, "delete_me"];
+
+	 						};
+	 						_idx= _idx + 1;
+	 }  forEach MCC_GAIA_CACHE_STAGE2;
+
+	 // Delete respawned dudes
+	 MCC_GAIA_CACHE_STAGE2 = MCC_GAIA_CACHE_STAGE2 - ["delete_me"];
+
+
+	 //Delayed spawning
+	 	 _idx = 0;
+	 {
+
+
+	 						if ([_x,GAIA_CACHE_STAGE_2] call GAIA_fnc_isNearPlayer)
+	 						then
+	 						{
+
+	 							_ar = (missionNamespace getVariable [ "MCC_DELAY" + str(_x),[0,0,0]]);
+	 							//Disable delayed (we are the delayed spawn)
+	 							_ar set [27,false];
+	 							//Enable the caching no matter what, delayed WILL be cached
+	 							//_ar set [26,true];
+	 							[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
+	 							MCC_DELAYED_SPAWNS set [_idx, "delete_me"];
+
+	 						};
+	 						_idx= _idx + 1;
+	 }  forEach MCC_DELAYED_SPAWNS;
+
+	 // Delete respawned dudes
+	 MCC_DELAYED_SPAWNS = MCC_DELAYED_SPAWNS - ["delete_me"];
+
+
+	 //We checked allgroups so we need a break
+	 sleep GAIA_CACHE_SLEEP;
 };
