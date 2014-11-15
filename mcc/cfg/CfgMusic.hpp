@@ -22,3 +22,4 @@ class mcc_wind
 	sound[] = {"mcc\sounds\wind.ogg", 1, 1};
 	#endif
 };
+

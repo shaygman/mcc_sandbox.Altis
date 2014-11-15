@@ -146,9 +146,9 @@ if(alive player && vehicle player == player) then
 				};
 				//player playactionNow format ["player%1",_stance];
 				player playmoveNow _currentAnim;
-				if (_currentAnim in ["aadjpknlmstpsraswrflddown","aadjpercmstpsraswrflddown","aadjpknlmstpsraswrfldup","aadjpknlmstpsraswrflddown"]) then
+				if (_currentAnim in ["aadjpknlmstpsraswrflddown","aadjpercmstpsraswrflddown","aadjpknlmstpsraswrfldup","aadjppnemstpsraswrfldup"]) then
 				{
-					sleep 0.3;
+					sleep 0.4;
 					player switchMove _currentAnim;
 				};
 				

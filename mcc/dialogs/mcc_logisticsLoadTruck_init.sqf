@@ -121,7 +121,7 @@ MCC_FNC_LOGTRUCK_ADD =
 				}
 				else
 				{
-					player sidechat "No crate from this type found"; 
+					systemchat "No crate from this type found"; 
 				};
 			};
 		};
@@ -188,7 +188,7 @@ MCC_FNC_LOGTRUCK_ADD =
 				}
 				else
 				{
-					player sidechat "There is not enough space to unload cargo"; 
+					systemchat "There is not enough space to unload cargo"; 
 				};
 			};
 			

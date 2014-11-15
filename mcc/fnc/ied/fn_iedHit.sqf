@@ -8,7 +8,6 @@ _damage		= _this select 2;
 _damageType	= _this select 4;
 _return 	= 0;
 
-//player sidechat format ["fakeIED: %1 , DamageDone: %2, Damage: %3, DamageType: %4",_fakeIed,_damage,(damage _fakeIed),_damageType];
 _fakeIed setdamage ((damage _fakeIed) + _damage); 
 if (!alive _ied || !alive _fakeIed) exitwith {		//Remove the Disable IED action if it's allready disabled
 		_fakeIed removeaction 0;

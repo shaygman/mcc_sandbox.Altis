@@ -12,7 +12,7 @@ respawndelay = 5;
 disabledAI   = 1;
 
 //----- For PvP ---------
-//disableChannels[]={0,6};
+disableChannels[]={0};
 joinUnassigned = 1;	
 	
 corpseLimit = 30;

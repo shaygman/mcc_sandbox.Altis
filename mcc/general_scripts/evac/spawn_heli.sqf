@@ -62,7 +62,7 @@ while {_i < (count _turrets)} do
 	_turretIndex = _turrets select _i;
 	_thisTurret = _path + [_turretIndex];
 	_turretPath = configName ((configFile >> "CfgVehicles" >> _type >> "turrets") Select _index);
-	player sidechat str _turretPath;
+	
 	_isCargo = ["cargo",tolower _turretPath] call BIS_fnc_inString;
 	if (isNull (_evac turretUnit _thisTurret) && !_isCargo) then 
 	{

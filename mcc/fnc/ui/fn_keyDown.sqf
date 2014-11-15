@@ -25,9 +25,18 @@ _action = -1;
 
 if (tolower _ehType == "keyup") exitWith
 {
-	//move key pressed?
-	//if (_dikCode in actionKeys "MoveForward" || _dikCode in actionKeys "MoveBack" || _dikCode in actionKeys "MoveLeft" || _dikCode in actionKeys "MoveRight") then {player SetVariable ["MCC_moveKeyDown",false]};
+	//Vault
+	if (missionNameSpace getVariable ["MCC_coverVault",true]) then
+	{
+		if ((_dikCode in actionKeys "GetOver") && !(player getVariable ["MCC_vaultOver",false]) && (player getVariable ["MCC_wallAhead",""]) != "") exitWith {[] spawn MCC_fnc_vault};
+	};
 	
+	//Change weapons
+	if (missionNameSpace getVariable ["MCC_quickWeaponChange",false]) then
+	{
+		if (_dikCode in [2,3,4,5]) exitWith {[_dikCode] spawn MCC_fnc_weaponSelect};
+	};
+
 	//keybinds
 	switch (_action) do
 	{
@@ -42,15 +51,6 @@ if (tolower _ehType == "keyup") exitWith
 
 if (tolower _ehType == "keydown") exitWith
 {
-	//move key pressed?
-	//if (_dikCode in actionKeys "MoveForward" || _dikCode in actionKeys "MoveBack" || _dikCode in actionKeys "MoveLeft" || _dikCode in actionKeys "MoveRight") then {player SetVariable ["MCC_moveKeyDown",true]};
-	
-	//Vault
-	if (missionNameSpace getVariable ["MCC_coverVault",true]) then
-	{
-		if ((_dikCode in actionKeys "GetOver") && !(player getVariable ["MCC_vaultOver",false]) && (player getVariable ["MCC_wallAhead",""]) != "") exitWith {[] spawn MCC_fnc_vault};
-	};
-	
 	//keybinds
 	switch (_action) do
 	{

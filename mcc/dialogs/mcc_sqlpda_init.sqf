@@ -242,7 +242,7 @@ MCC_fnc_SQLPDAMenuclicked =
 			}
 			else
 			{
-				player sidechat (_errorMessege select _errorMessegeIndex); 
+				systemchat (_errorMessege select _errorMessegeIndex); 
 			}
 		};
 	};

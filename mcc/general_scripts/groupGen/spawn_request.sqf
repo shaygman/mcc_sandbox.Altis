@@ -232,7 +232,7 @@ if !mcc_isloading then
 	{	
 		if (typeName MCC_groupBroadcast != "STRING") then
 		{
-			if (count MCC_groupBroadcast == 0) exitWIth {player sidechat "Cannot spawn an empty group"}; 
+			if (count MCC_groupBroadcast == 0) exitWIth {systemchat "Cannot spawn an empty group"}; 
 		};
 
 		hint "click on the map"; 
@@ -242,7 +242,7 @@ if !mcc_isloading then
 	else
 	{
 		//Failsafe NO group selected
-		if ((lbCurSel UNIT_CLASS) == -1) exitWith {player sidechat "Cannot spawn an empty group"}; 
+		if ((lbCurSel UNIT_CLASS) == -1) exitWith {systemchat "Cannot spawn an empty group"}; 
 		
 		//Failsafe incase we trying to spawn something without making a zone first
 		if (count mcc_zone_pos == 0) exitWith {hint "Create a zone first"};	

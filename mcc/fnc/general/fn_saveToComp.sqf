@@ -67,5 +67,5 @@ diag_log "# Log: MCC_fnc_saveToComp : EndGrabbing   #";
 diag_log "###########################################";
 
 copyToClipboard _mission;
-player sidechat "Objects saved to clipboard and droped to rpt file in a composition's format";
+systemchat "Objects saved to clipboard and droped to rpt file in a composition's format";
 _mission;

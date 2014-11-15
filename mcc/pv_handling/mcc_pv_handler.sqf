@@ -163,9 +163,6 @@ my_pv_handler =
 				_specialUps = "";
 				_specialUpsNr = 1;
 				_specialUpsRandom = "";
-				//KRON_UPS_Debug = 1;
-				
-			//player sidechat format ["DEBUG 5_1 Zone: %1 = %2", _p_mcc_zonetype, _p_mcc_zonetypenr];
 			
 				switch (_p_mcc_zonetype) do		//Which zone type
 					{
@@ -235,7 +232,6 @@ my_pv_handler =
 									_p_mcc_zone_markername setMarkerShapeLocal _p_mcc_marker_zone_type;
 									_p_mcc_zone_markername setMarkerSizeLocal _p_mcc_zone_markerSize;
 									_p_mcc_zone_markername setMarkerDirLocal _p_mcc_marker_zone_dir;
-									_p_mcc_zone_markername setMarkerAlphaLocal 0;
 								}
 							else
 								{
@@ -243,7 +239,6 @@ my_pv_handler =
 									_p_mcc_zone_markername setMarkerShapeLocal _p_mcc_marker_zone_type;
 									_p_mcc_zone_markername setMarkerSizeLocal _p_mcc_zone_markerSize;
 									_p_mcc_zone_markername setMarkerDirLocal _p_mcc_marker_zone_dir;
-									_p_mcc_zone_markername setMarkerAlphaLocal 0;
 								};
 							};
 		

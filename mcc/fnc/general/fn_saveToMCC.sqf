@@ -312,7 +312,7 @@ MCC_output = MCC_output + "];";
 
 
 copyToClipboard MCC_output;
-player sidechat "Objects saved";
+systemchat "Objects saved";
 
 MCC_output
 /*			

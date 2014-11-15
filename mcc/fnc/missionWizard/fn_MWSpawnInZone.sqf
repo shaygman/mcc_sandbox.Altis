@@ -4,7 +4,7 @@
 // Return - handler
 //========================================================================================================================================================================================
 private ["_zoneNumber","_script_handler","_spawnType","_classtype","_spawnwithcrew","_spawnname","_spawnfaction","_spawnbehavior","_spawndisplayname",
-         "_previusZone","_mcc_delayed_spawnPlaceHolder","_mcc_cachingPlaceHolder"];
+         "_previusZone"];
 
 _zoneNumber 		= _this select 0;
 _spawnType			= _this select 1; 

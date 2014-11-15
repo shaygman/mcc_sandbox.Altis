@@ -1,4 +1,4 @@
-if (isnil "car1") exitWith {player sidechat "You must spawn a convoy first"};
+if (isnil "car1") exitWith {systemchat "You must spawn a convoy first"};
 if !mcc_isloading then 
 {
 	if (MCC_capture_state) then

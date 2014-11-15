@@ -12,7 +12,7 @@ waituntil {dialog};
 _size = 200;
 player setVariable ["MCC_baseSize",_size];
 
-if (isnil format ["MCC_START_%1",playerSide]) exitWith {closeDialog 0; player sidechat "You must have a base to expand"};
+if (isnil format ["MCC_START_%1",playerSide]) exitWith {closeDialog 0; systemchat "You must have a base to expand"};
 _startPos = call compile format ["MCC_START_%1",playerSide];
 
 if (isnil "MCC_CONST_CAM") then 

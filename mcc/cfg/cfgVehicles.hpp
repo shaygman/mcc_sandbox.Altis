@@ -20,7 +20,14 @@ class Module_F: Logic
 #include "modules\MissionSettings.hpp"
 #include "modules\GAIASettings.hpp"
 #include "modules\cover.hpp"
+#include "modules\radio.hpp"
 
+class Land_Ammobox_rounds_F;
+class MCC_ammoBox : Land_Ammobox_rounds_F 
+{
+	ammo = 100;
+};
+	
 class Box_NATO_AmmoVeh_F;
 class MCC_crateAmmo : Box_NATO_AmmoVeh_F
 {

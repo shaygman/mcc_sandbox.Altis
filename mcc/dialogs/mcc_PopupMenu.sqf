@@ -16,7 +16,7 @@ else
 	_index = (_key select 3) select 4;
 };
 
-if ((_index == 0) && (player getVariable ['MCC_allowed',false])) exitWith 
+if (_index == 0) exitWith 
 {
 	if (str findDisplay 2994 != "No display") then 
 	{

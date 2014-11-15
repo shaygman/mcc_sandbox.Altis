@@ -117,7 +117,7 @@ while {true} do
 				
 				if (_rating > 0) then
 				{
-					if (CP_debug) then {player sidechat format ["rating add: %1", _rating]};
+					if (CP_debug) then {systemchat format ["rating add: %1", _rating]};
 					
 					_role = player getvariable "CP_role";
 					while {isnil "_role"} do {_role = player getvariable "CP_role";}; 
@@ -128,7 +128,7 @@ while {true} do
 					if (!isnil "_exp") then 
 					{
 						if (_exp < 0) then {_exp = 0};
-						if (CP_debug) then {player sidechat format ["rating: %1", _exp]};
+						if (CP_debug) then {systemchat format ["rating: %1", _exp]};
 						
 						_oldLevel = call compile format  ["%1Level select 0",_role]; 
 						
@@ -143,7 +143,7 @@ while {true} do
 							_oldLevel = _newLevel;
 						 };
 						
-						if (CP_debug) then {player sidechat format ["level: %1",_level]};
+						if (CP_debug) then {systemchat format ["level: %1",_level]};
 						
 						missionNameSpace setVariable [format ["%1Level",_role], _level]; 
 						[[format ["%1Level",_role], player, _level, "ARRAY"], "MCC_fnc_setVariable", false, false] spawn BIS_fnc_MP;

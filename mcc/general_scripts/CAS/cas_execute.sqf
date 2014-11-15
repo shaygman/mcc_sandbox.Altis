@@ -234,7 +234,7 @@ else
 				_pilotGroup1 setBehaviour "COMBAT";
 				_pilotGroup1 setCombatMode "YELLOW";
 				
-				[playerSide,'HQ'] sideChat format ["%1 entering target area, ETA %2 seconds", _cas_name, round ((_plane1 distance _pos) / ((speed _plane1) * 0.25 ))];
+				[playerSide,'HQ'] sidechat format ["%1 entering target area, ETA %2 seconds", _cas_name, round ((_plane1 distance _pos) / ((speed _plane1) * 0.25 ))];
 			
 				//make invisible target primary target
 				//ACE invisible targets: http://freeace.wikkii.com/wiki/Class_Lists_for_ACE2
@@ -260,7 +260,6 @@ else
 				if ( (count _targetList) > 1 ) then 
 				{ 
 					// If real vehicle found assign that one as gun-run target
-					//[playerSide,'HQ'] sideChat format ["%1 Target List: [%2] - [%3]", _cas_name, typeOf (_targetList select 0), _targetList];
 					_target = _targetList select 1;
 				};
 
@@ -306,7 +305,7 @@ else
 			};
 			
 			//clear_gunrun_target.sqf should have set the damage of target to 1 now
-			[playerSide,'HQ'] sideChat format ["%1 is leaving the area", _cas_name];
+			[playerSide,'HQ'] sidechat format ["%1 is leaving the area", _cas_name];
 			
 			_plane1 doWatch objNull;
 			(gunner _plane1) doWatch objNull;

@@ -27,7 +27,7 @@ if (MCC_teleportToTeam) then
 		}
 		else
 		{
-			player sideChat "Unable to teleport - target unit in vehicle with no empty spaces"; 
+			systemchat "Unable to teleport - target unit in vehicle with no empty spaces"; 
 		};
 	}
 	else

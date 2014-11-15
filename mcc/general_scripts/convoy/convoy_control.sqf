@@ -44,7 +44,7 @@ while {alive _unit1 && alive _unit2} do {
 	if (_dist < 20) then {_unit1 forceSpeed 2; if (_debug) then {hintsilent format ["%1 back slowing down 2",_unit1]};};
 	if (_dist < 15) then {_unit1 forceSpeed 0; if (_debug) then {hintsilent format ["%1 waiting for %2 to move",_unit1,_unit2]};};
 
-	if (_debug) then {_unit1 sideChat format ["dist %1, to front %2",_dist,_unit2];};
+	if (_debug) then {_unit1 sidechat format ["dist %1, to front %2",_dist,_unit2];};
 	sleep .5;
 	};
 	//failsafe

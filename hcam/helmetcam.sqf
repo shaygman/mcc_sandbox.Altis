@@ -29,7 +29,7 @@ _target attachTo [_neck,[0.5,10,0]];
 hcam_cam = "camera" camCreate getPos player;
 waitUntil {hcam_cam != ObjNull};
 808 cutRsc ["RscHcamDialog", "PLAIN"];
-//systemChat "cam ready";
+
 HCAM_CTRL_PIP ctrlsettext "#(argb,256,256,1)r2t(rendertarget0,1.0)";
 
 // Remember zoomed state

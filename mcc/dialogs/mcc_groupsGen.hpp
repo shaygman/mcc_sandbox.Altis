@@ -269,7 +269,7 @@ class mcc_groupGen
 		class MCC_occupyButton: MCC_RscButton
 		{
 			idc = -1;
-			onButtonClick = "if (str (getmarkerpos str mcc_active_zone) != str [0,0,0]) then {[str mcc_active_zone] spawn GAIA_fnc_occupy} else {player sidechat 'Create a zone first'}";
+			onButtonClick = "if (str (getmarkerpos str mcc_active_zone) != str [0,0,0]) then {[str mcc_active_zone] spawn GAIA_fnc_occupy} else {systemchat 'Create a zone first'}";
 			tooltip = "Occupy current selected zone with the selected faction's units";
 			text = "Occupy Zone"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";

@@ -262,6 +262,7 @@ class MCC
 		class attachPod		{description = "Attach a pod to Taru helicopter";};
 		class vault			{description = "Vault over an obstacle";};
 		class cover			{description = "Manage cover mechanics";};
+		class weaponSelect	{description = "Change weapons and throw utility";};
 	};
 	
 	class roleSelection
@@ -302,6 +303,19 @@ class MCC
 		class interactIED	{description = "Interaction with IED type";};
 		class interactDoor	{description = "Interaction with door type";};
 		class interactObject	{description = "Interaction with containers object";};
+		class interactUtility	{description = "Interaction with utility object";};
 		class requestDropOff	{description = "Request player or AI to drop off a cargo group in a specific place - shold run localy on the requestor";};
+	};
+	
+	class radio
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\radio";
+		#else
+		file = "mcc\fnc\radio";
+		#endif
+		
+		class vonRadio		{description = "simulate real radio comms on ArmA VON";};
+		class settingsRadio	{description = "Real radio comms settings";};
 	};
 };

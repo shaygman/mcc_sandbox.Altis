@@ -45,30 +45,34 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 					MCC_bonFire = false;
 					[[[netid _requestor,_requestor], "shoutS5"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 					sleep 2; 
-					//[playerSide,"HQ"] sideChat "Shot, Over";
 					[[[netid _requestor,_requestor], "shoutO5"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 				};
-			
-			for "_i" from 1 to _nrshells do {			//MCC stuff
-				if (count MCC_bonCannons > 0) then {	
+				
+			//MCC stuff
+			for "_i" from 1 to _nrshells do 
+			{			
+				if (count MCC_bonCannons > 0) then 
+				{	
 					[2, [_cannon,_splashpos]] execVM MCC_path+"mcc\general_scripts\artillery\bon_art.sqf";
 				};
 				
 				sleep 10; 
 			
-			if (MCC_bonSplash) then 
+				if (MCC_bonSplash) then 
 				{
 					MCC_bonSplash = false;
 					[[[netid _requestor,_requestor], "splashS6"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 					sleep 2; 
-					//[playerSide,"HQ"] sideChat "Shot, Over";
 					[[[netid _requestor,_requestor], "splashO6"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 				};
 				
 				_lasertarget = _requestor call arti_func_getLaser;
 				
-				if(_spread < 0 && isNull _lasertarget) exitWith{};
-				if(_spread < 0) then{_splashpos = getPos _lasertarget};
+				if(_spread == 0 && isNull _lasertarget) exitWith {};
+				if(_spread == 0) then 
+				{
+					_splashpos = getPos _lasertarget;
+				};
 				
 				switch (_artitype) do
 					{
@@ -107,9 +111,11 @@ diag_log format["Cannon to fire: %1, Cannon avilable: %2",_cannons_to_fire, _can
 						};
 					};
 
-				sleep (120 * _nrshells);
-				MCC_server SetVariable [format["Arti_%2_Cannon%1_available",_cannon,_side],true,true];
+				sleep 5;
 			};
+			
+			sleep (20 * _nrshells);
+			MCC_server SetVariable [format["Arti_%2_Cannon%1_available",_cannon,_side],true,true];
 		};
 	}
 	else {_cannons_available = _cannons_available - [_x]};

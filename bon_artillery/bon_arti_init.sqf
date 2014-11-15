@@ -24,7 +24,7 @@ if (isnil "HW_arti_types") then {HW_arti_types = []};
 HW_arti_maxnrshells = 10;
 
 // element: [displayname,splashdown dispersion in meters]; LASER must have dispersion < 0 to work
-HW_arti_spreads = [["PRECISE",50],["TIGHT",100],["SCATTERED",150],["WIDE",200],["LASER",-1]];
+HW_arti_spreads = [["PRECISE",50],["TIGHT",100],["SCATTERED",150],["WIDE",200],["LASER",0]];
 
 // if true each player can see his/her position when opening the map
 HW_arti_show_pos_on_map = false;
@@ -115,7 +115,7 @@ if(isNil "bon_arti_registration_message") then{bon_arti_registration_message = [
 "bon_arti_registration_message" addPublicVariableEventHandler {
 	_name = (_this select 1) select 0;
 	_side = (_this select 1) select 1;
-	[_side,"HQ"] sideChat format["%1 registered for Fire Mission.",_name];
+	[_side,"HQ"] sidechat format["%1 registered for Fire Mission.",_name];
 };
 
 if(true) exitWith{};

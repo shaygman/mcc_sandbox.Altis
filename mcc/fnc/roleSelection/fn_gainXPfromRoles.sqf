@@ -8,7 +8,7 @@ _playerVehicle	= vehicle player;
 //Gain XP Officer
 if (_role == "officer") then 
 {		
-	if (CP_debug) then {player sidechat format ["rating: %1", rating player]};
+	if (CP_debug) then {systemchat format ["rating: %1", rating player]};
 	
 	_counter = 0;
 	{
@@ -32,7 +32,7 @@ if (_role == "officer") then
 //Gain XP as Pilot
 if (((_playerVehicle iskindof "Air") && _role == "pilot") && (isengineon _playerVehicle)) then 
 {
-	if (CP_debug) then {player sidechat format ["rating: %1", rating player]};
+	if (CP_debug) then {systemchat format ["rating: %1", rating player]};
 	
 	_counter = 0;
 	{
@@ -57,7 +57,7 @@ if (((_playerVehicle iskindof "Air") && _role == "pilot") && (isengineon _player
 //Gain XP crewman
 if ((((_playerVehicle iskindof "Tank") || (_playerVehicle iskindof "Tank_F") || (_playerVehicle iskindof "Wheeled_APC_F")) && _role == "crew") && (isengineon _playerVehicle)) then 
 {
-	if (CP_debug) then {player sidechat format ["rating: %1", rating player]};
+	if (CP_debug) then {systemchat format ["rating: %1", rating player]};
 	
 	_counter = 0;
 	{

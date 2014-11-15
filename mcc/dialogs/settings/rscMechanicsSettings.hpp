@@ -65,7 +65,7 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 		};
 		class CoverUICombo: MCC_RscCombo
 		{
-			idc = 8429;
+			idc = 8430;
 			x = 0.242344 * safezoneW;
 			y = 0.044 * safezoneH;
 			w = 0.0825 * safezoneW;
@@ -83,7 +83,7 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 		};
 		class CoverCombo: MCC_RscCombo
 		{
-			idc = 8430;
+			idc = 8429;
 			x = 0.077344 * safezoneW;
 			y = 0.11 * safezoneH;
 			w = 0.0825 * safezoneW;
@@ -126,5 +126,26 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			w = 0.0670312 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
+		
+		class weaponsBinds: MCC_RscText
+		{
+			idc = -1;
+			text = "Weapons binds:"; //--- ToDo: Localize;
+			x = 0.335156 * safezoneW;
+			y = 0.044 * safezoneH;
+			w = 0.0670312 * safezoneW;
+			h = 0.022 * safezoneH;
+		};
+		
+		class weaponsBindsCombo: MCC_RscCombo
+		{
+			idc = 8433;
+			x = 0.407344 * safezoneW;
+			y = 0.044 * safezoneH;
+			w = 0.0825 * safezoneW;
+			h = 0.022 * safezoneH;
+			tooltip = "Quick weapons selection with the 1-5 buttons"; //--- ToDo: Localize;
+		};
+		
 	};
 };

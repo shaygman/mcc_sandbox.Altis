@@ -55,12 +55,9 @@ if(_spreadtype == "LASER") then{_message = "Polar Laser,"};
 
 _requestor spawn {
 	[[[netid _this,_this], "requestO1"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-	//_this sideChat format["%1, this is %2, Fire Mission, OVER",HW_Arti_CallSign,group player];
 	sleep (5 + random 2);
 	[[[netid _this,_this], "requestS1"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 	sleep (5 + random 2);
-	//[side player,"HQ"] sideChat format["%1, this is %2, Fire Mission, OUT",group player,HW_Arti_CallSign];
-
 };
 sleep (6 + random 6);
 MCC_bonFire = true; 
@@ -75,7 +72,6 @@ switch _missiontype do
 	{
 		[[[netid _requestor,_requestor], "gridO2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 		sleep (10 + random 2);
-		//_requestor sideChat format["%1, this is %2, Adjustment Fire, %3 OVER",HW_Arti_CallSign,group _requestor,_message];
 		[[[netid _requestor,_requestor], "gridS2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 		sleep (9 + random 2);
 		[[[netid _requestor,_requestor], "splashO3"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
@@ -86,7 +82,6 @@ switch _missiontype do
 		sleep (9 + random 2);
 		[[[netid _requestor,_requestor], "messegeO4"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 		sleep (9 + random 2);
-		//[side player,"HQ"] sideChat format["%1, this is %2, Adjustment Fire, %3 OUT",group _requestor,HW_Arti_CallSign,_message];
 		[] execVM (BON_ARTI_PATH+"bon_arti_adjustfire.sqf");
 	};
 
@@ -96,7 +91,6 @@ switch _missiontype do
 		// initiate fire mission
 		[[[netid _requestor,_requestor], "gridO2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 		sleep (10 + random 2);
-		//_requestor sideChat format["%1, this is %2, Fire For Effect, %3 OVER",HW_Arti_CallSign,group _requestor,_message];
 		[[[netid _requestor,_requestor], "gridS2"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 		sleep (9 + random 2);
 		[[[netid _requestor,_requestor], "splashO3"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;

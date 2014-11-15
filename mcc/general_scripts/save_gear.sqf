@@ -49,11 +49,6 @@ if (MCC_saveGear) then
 	_magazines = magazines _unit;
 };
 
-if (!isnil "mcc_actionInedx") then
-{	
-	_unit removeAction mcc_actionInedx;
-};
-
 WaitUntil {alive player};
 
 //Mark it zero again

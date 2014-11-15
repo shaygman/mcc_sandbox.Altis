@@ -346,12 +346,12 @@ if (_action ==4) exitWIth
 				MCC_customGroupsSave set [count MCC_customGroupsSave, _groupToSave];
 				profileNamespace setVariable ["MCC_customGroupsSave", MCC_customGroupsSave];
 				
-				player sideChat "Custom group saved successfully"; 
+				systemchat "Custom group saved successfully"; 
 			}; 
 		}
 		else 
 		{
-			player sideChat "Give a name to your custom group first"; 
+			systemchat "Give a name to your custom group first"; 
 		};
 	};
 };

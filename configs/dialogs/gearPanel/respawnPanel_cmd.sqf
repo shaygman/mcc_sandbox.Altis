@@ -45,9 +45,9 @@ switch (_cmd) do
 		{ 
 				
 			//Check if alive
-			if (isnull CP_activeSpawn) exitWith {player sidechat "Select new spawn point."};
+			if (isnull CP_activeSpawn) exitWith {systemchat "Select new spawn point."};
 			if (typeName CP_activeSpawn == "GROUP") then {CP_activeSpawn = leader CP_activeSpawn};
-			if (!alive CP_activeSpawn) exitWith {CP_activeSpawn setVariable ["dead",true,true]; player sidechat "Spawn Point has been destroyed, select another spawn point."};
+			if (!alive CP_activeSpawn) exitWith {CP_activeSpawn setVariable ["dead",true,true];systemchat "Spawn Point has been destroyed, select another spawn point."};
 			
 		
 			if (CP_activated) then
@@ -68,7 +68,7 @@ switch (_cmd) do
 					if ((group player) == (_groups select _i) select 0) then {_deployAvailable = true}; 
 				};
 				
-				if (!_deployAvailable) exitWith {player sidechat "You must join a group first."};
+				if (!_deployAvailable) exitWith {systemchat "You must join a group first."};
 				
 				//Check for roles 
 				_countRole 			= 0;
@@ -133,8 +133,8 @@ switch (_cmd) do
 											};
 				};
 				
-				if (_countRole > _roleLimit) exitWith {player sidechat "All kit's have been taken! Choose another kit."}; 
-				if (count (units (group player)) < _minPlayersForRole) exitWith {player sidechat format ["You need %1 players in your squad to use this kit! Choose another kit.",_minPlayersForRole]};
+				if (_countRole > _roleLimit) exitWith {systemchat "All kit's have been taken! Choose another kit."}; 
+				if (count (units (group player)) < _minPlayersForRole) exitWith {systemchat format ["You need %1 players in your squad to use this kit! Choose another kit.",_minPlayersForRole]};
 				
 				//Check if no enemy is close by
 				
@@ -156,12 +156,12 @@ switch (_cmd) do
 					};
 				};
 				
-				if (!_spawnAvailable) exitWith {player sidechat "Spawn Point is being overrun, select another spawn point."};
+				if (!_spawnAvailable) exitWith {systemchat "Spawn Point is being overrun, select another spawn point."};
 			
 			
 				//looking for a spawn point
 				playerDeployPos    =[(getpos CP_activeSpawn),1,30,1,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
-				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {player sidechat " No good position found! Try again."};
+				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {systemchat " No good position found! Try again."};
 				playerDeploy = true;
 				
 				//Is it a spawn tent and we spawned as the squad leader - delete the tent
@@ -183,7 +183,7 @@ switch (_cmd) do
 			{
 				//looking for a spawn point
 				playerDeployPos    =[(getpos CP_activeSpawn),1,30,1,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
-				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {player sidechat " No good position found! Try again."};
+				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {systemchat " No good position found! Try again."};
 				
 				//Is it a spawn tent and we spawned as the squad leader - delete the tent
 				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && (player == leader player)) then

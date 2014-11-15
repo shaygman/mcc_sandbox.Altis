@@ -23,7 +23,7 @@ _targetlist = [];
 
 
 
-//if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat "Gathering Intelligence......Waitout."; };
+//if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sidechat "Gathering Intelligence......Waitout."; };
 //
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 //									Phase 1: Gather TArgets, drop breadcrumbs
@@ -116,14 +116,14 @@ _NewTargetInfo	= [];
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
-//if (MCC_GAIA_DEBUG) then {[_HQ_side,"HQ"] sideChat "Updating the targetlist."; };
+//if (MCC_GAIA_DEBUG) then {[_HQ_side,"HQ"] sidechat "Updating the targetlist."; };
 {
 	if 	(
 	      	(((side _x) getFriend _HQ_side)<0.6)
 	     )
 	then
 	{
-				 //[_HQ_side,"HQ"] sideChat "Found!";
+				 //[_HQ_side,"HQ"] sidechat "Found!";
 				 _OldTargetInfo	= [];
 				 _targetlist 		= [];
       	 _OldTargetInfo = _x getVariable ["GAIA_TargetInfo",[]];

@@ -208,9 +208,9 @@ if !mcc_isloading then
 	publicvariable "MCC_deletePlayersBody";
 	
 	private ["_tempArray","_var"];
-	_tempArray = ["MCC_interaction","MCC_surviveMod","MCC_cover","MCC_coverUI","MCC_changeRecoil","MCC_coverVault"];
+	_tempArray = ["MCC_interaction","MCC_surviveMod","MCC_cover","MCC_coverUI","MCC_changeRecoil","MCC_coverVault","MCC_quickWeaponChange"];
 
-	for "_i" from 8427 to 8432 do 
+	for "_i" from 8427 to 8433 do 
 	{
 		_var = _tempArray select (_i-8427);
 		missionNameSpace setVariable [_var, if ((lbCurSel _i)==0) then {false} else {true}];

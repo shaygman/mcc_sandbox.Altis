@@ -201,7 +201,7 @@ else
 			{
 				// Allright we are doing something else then making / updating zones, report that by hint			
 				
-				player sideChat format["Request ID: %3. Spawn %1 in zone %2. Contacting server......", mcc_spawnname , mcc_zone_markername,mcc_request];
+				systemchat format["Request ID: %3. Spawn %1 in zone %2. Contacting server......", mcc_spawnname , mcc_zone_markername,mcc_request];
 				
 				 
 				//Set the behavior back from script understanding to human readable again											
@@ -300,12 +300,12 @@ else
 			else
 			{
 				// We are creating/updating a zone, lets report that by hint
-				player sideChat format["Request ID: %2. Update zone %1. Contacting server......",  mcc_zone_markername,mcc_request];
+				systemchat format["Request ID: %2. Update zone %1. Contacting server......",  mcc_zone_markername,mcc_request];
 			};
 		}
 		else
 		{
-			player sideChat format["Request ID: %2. Requesting to logout %1. Contacting server......",  player,mcc_request];
+			systemchat format["Request ID: %2. Requesting to logout %1. Contacting server......",  player,mcc_request];
 		};
 		#endif
 		//obviously when we are loading there is no need to safe it again since that will influence the load process by double output

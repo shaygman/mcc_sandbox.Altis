@@ -72,7 +72,7 @@ if ( _spawnkind == "Gun-run long" ) then
 		//hint format ["%1 m from target", round (_plane1 distance _target)];
 	};
 		
-	[playerSide,'HQ'] sideChat format ["%1 Final approach - ETA %2 seconds", _cas_name, round ((_plane1 distance _target) / ((speed _plane1) * 0.2778 ))];
+	[playerSide,'HQ'] sidechat format ["%1 Final approach - ETA %2 seconds", _cas_name, round ((_plane1 distance _target) / ((speed _plane1) * 0.2778 ))];
 	
 	sleep 3;
 	_distA=round (_plane1 distance _target);

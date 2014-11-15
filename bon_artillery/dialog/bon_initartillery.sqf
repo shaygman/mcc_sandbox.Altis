@@ -105,7 +105,6 @@ for "_i" from 1 to (HW_Arti_CannonNumber + count _realCannons)  do
 {
 	while{dialog} do 
 	{
-		//player sidechat str (lbSelection ((findDisplay BON_ARTY_DIALOG) displayCtrl BON_ARTY_CANNONLIST));
 		if(arti_already_adjusting) then{
 			ctrlEnable [BON_ARTY_ADJUSTBUTTON, false];
 		} else {

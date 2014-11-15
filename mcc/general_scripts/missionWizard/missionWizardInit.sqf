@@ -32,7 +32,7 @@ private ["_playersNumber","_difficulty","_totalEnemyUnits","_isCQB","_check","_m
 //MCC_MWAnimalsIndex MCC_MWBattleGroundIndex MCC_MWMusicIndex
 if (isnil "MCC_MWisGenerating") then {MCC_MWisGenerating = false}; 
 MCC_mcc_screen = 2;
-if (MCC_MWisGenerating) exitWith {player sideChat "MCC is now generating a mission please try again later"}; 
+if (MCC_MWisGenerating) exitWith {systemchat "MCC is now generating a mission please try again later"}; 
 MCC_MWisGenerating = true;
 
 //Get params
@@ -192,7 +192,7 @@ publicVariableServer "mcc_zone_markposition";
 publicVariableServer "mcc_zone_marker_X";
 publicVariableServer "mcc_zone_marker_Y";
 
-if (MW_debug) then {player sidechat format ["Total enemy's units: %1", _totalEnemyUnits]};
+if (MW_debug) then {systemchat format ["Total enemy's units: %1", _totalEnemyUnits]};
 diag_log format ["MCC Mission Wizard total enemy Count = %1", _totalEnemyUnits];
 
 //Check if faction has groups in it if not exit

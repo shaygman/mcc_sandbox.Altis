@@ -21,7 +21,7 @@ switch (_HQ_side) do
 //									Phase 0: GAIA never dies, even if all her units are destroyed. All HAIL GAIA!
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format ["Waking up GAIA...............%1",_HQ_side]; };
+if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sidechat format ["Waking up GAIA...............%1",_HQ_side]; };
 Sleep 2;
 
 while {true} do
@@ -54,7 +54,7 @@ while {true} do
 
 
 		//GAIA IS A GO!
-		if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format ["GAIA %1 wakes up and looks around the place. Man what a night. Time to destroy some player.",_HQ_side]; };
+		if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sidechat format ["GAIA %1 wakes up and looks around the place. Man what a night. Time to destroy some player.",_HQ_side]; };
 
 		while { ( {side _x == _HQ_side } count allunits > 0 ) } do
 		{
@@ -68,35 +68,35 @@ while {true} do
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 				//									Phase: Analyze Enemy
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format["Analyze Target...............................%1",_HQ_side]; };
+				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sidechat format["Analyze Target...............................%1",_HQ_side]; };
 				_mklist = [_HQ_side,_mklist] call GAIA_fnc_analyzeTargets;
 				sleep 1;
 
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 				//									Phase: Organise Contact Area's (CA's)
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format["Organise Contact Areas.......................%1",_HQ_side]; };
+				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sidechat format["Organise Contact Areas.......................%1",_HQ_side]; };
 				_dummy = [_HQ_side] CALL GAIA_fnc_getConflictAreas;
 				sleep 1;
 
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 				//									Phase: Analyze GAIA Forces and Zones
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format["Analyze Forces...............................%1",_HQ_side]; };
+				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sidechat format["Analyze Forces...............................%1",_HQ_side]; };
 				_dummy = [_HQ_side] CALL GAIA_fnc_analyzeForces;
 				sleep 1;
 
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 				//									Phase: Classify GAIA controlled groups
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format["Classify GAIA controlled groups...............%1",_HQ_side]; };
+				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sidechat format["Classify GAIA controlled groups...............%1",_HQ_side]; };
 				_dummy = [_HQ_side] CALL GAIA_fnc_classifySide;
 				sleep 1;
 
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 				//									Phase: Issue Orders
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format["Issue Orders.,,,,,,,,,,,,,,,,,,,..............%1",_HQ_side]; };
+				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sidechat format["Issue Orders.,,,,,,,,,,,,,,,,,,,..............%1",_HQ_side]; };
 				_dummy = [_HQ_side] CALL GAIA_fnc_issueOrders;
 				sleep 1;
 
@@ -104,7 +104,7 @@ while {true} do
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 				//									Phase: Sleep
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sideChat format["Sleep........................................%1",_HQ_side]; };
+				if (MCC_GAIA_DEBUG) then{[_HQ_side,"HQ"] sidechat format["Sleep........................................%1",_HQ_side]; };
 				uisleep MCC_GAIA_SHARETARGET_DELAY;
 
 

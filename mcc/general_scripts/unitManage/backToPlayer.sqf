@@ -1,7 +1,7 @@
 private ["_caller","_groupSide", "_group","_hijackedSide","_delete","_preUnit"];
 _caller = _this select 0;	//Who activate the script
 If (!(isPlayer _caller) || !(local player)) exitWith{};
-if (!alive MCC_Prev_Player) exitWith {player sidechat "Previous player is no longer alive"; player removeaction MCC_backToplayerIndex};
+if (!alive MCC_Prev_Player) exitWith {systemchat "Previous player is no longer alive"; player removeaction MCC_backToplayerIndex};
 _delete = false; 
 
 //If we came here because we died then delete the old character if it respawned. 
@@ -26,7 +26,8 @@ _group = creategroup _groupSide;
 [MCC_Prev_Player] joinSilent _group;
 [_caller] joinSilent _group;
 _caller removeaction MCC_backToplayerIndex; 
-_caller removeaction mcc_actionInedx; 
+player setVariable ["MCC_allowed",true,true];
+//_caller removeaction mcc_actionInedx; 
 
 private ["_camera","_ppgrain"];
 _camera = "Camera" camcreate [(getpos MCC_Prev_Player) select 0, (getpos MCC_Prev_Player) select 1,((getpos MCC_Prev_Player) select 2) + 100];

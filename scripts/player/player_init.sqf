@@ -1,6 +1,6 @@
 private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight","_role","_exp","_level"];
 
-if (!MCC_iniDBenabled) exitWIth {player sidechat "iniDB isn't running. Can't access role selection"};
+if (!MCC_iniDBenabled) exitWIth {player systemchat "iniDB isn't running. Can't access role selection"};
 
 //Black Screen on mission startup
 cutText ["","BLACK",0.1];
@@ -17,43 +17,43 @@ player setVariable ["cpReady",false,true];
 //Get rank from the server
 [["MCCplayerRank", player, "N/A", "STRING"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "MCCplayerRank"};
-if (CP_debug) then {player sidechat format ["player Rank : %1",MCCplayerRank]};
+if (CP_debug) then {systemchat format ["player Rank : %1",MCCplayerRank]};
 
 [["officerLevel", player, CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "officerLevel"};
-if (CP_debug) then {player sidechat format ["officerLevel : %1",officerLevel]};
+if (CP_debug) then {systemchat format ["officerLevel : %1",officerLevel]};
 
 [["arLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "arLevel"};
-if (CP_debug) then {player sidechat format ["arLevel : %1",arLevel]};
+if (CP_debug) then {systemchat format ["arLevel : %1",arLevel]};
 
 [["riflemanLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "riflemanLevel"};
-if (CP_debug) then {player sidechat format ["riflemanLevel : %1",riflemanLevel]};
+if (CP_debug) then {systemchat format ["riflemanLevel : %1",riflemanLevel]};
 
 [["ATLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "ATLevel"};
-if (CP_debug) then {player sidechat format ["ATLevel : %1",ATLevel]};
+if (CP_debug) then {systemchat format ["ATLevel : %1",ATLevel]};
 
 [["corpsmanLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "corpsmanLevel"};
-if (CP_debug) then {player sidechat format ["corpsmanLevel : %1",corpsmanLevel]};
+if (CP_debug) then {systemchat format ["corpsmanLevel : %1",corpsmanLevel]};
 
 [["marksmanLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "marksmanLevel"};
-if (CP_debug) then {player sidechat format ["marksmanLevel : %1",marksmanLevel]};
+if (CP_debug) then {systemchat format ["marksmanLevel : %1",marksmanLevel]};
 
 [["specialistLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "specialistLevel"};
-if (CP_debug) then {player sidechat format ["specialistLevel : %1",specialistLevel]};
+if (CP_debug) then {systemchat format ["specialistLevel : %1",specialistLevel]};
 
 [["crewLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "crewLevel"};
-if (CP_debug) then {player sidechat format ["crewLevel : %1",crewLevel]};
+if (CP_debug) then {systemchat format ["crewLevel : %1",crewLevel]};
 
 [["pilotLevel", player,CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "pilotLevel"};
-if (CP_debug) then {player sidechat format ["pilotLevel : %1",pilotLevel]};
+if (CP_debug) then {systemchat format ["pilotLevel : %1",pilotLevel]};
 
 //******************************************************************************************************************************
 //											Start camera
@@ -70,7 +70,7 @@ while {!_logicEmpty} do
 		if ((count _nearObjects) == 0) then {_logicEmpty = true} else {_logicPos = [_logicPos select 0,_logicPos select 1, (_logicPos select 2)-30]};
 };
 
-if (CP_debug) then {player sidechat format ["position: %1",_logicPos]};
+if (CP_debug) then {systemchat format ["position: %1",_logicPos]};
 _camLogic = createagent ["Logic",_logicPos,[],0,"none"];
 _camLogic setpos _logicPos;
 _camLogic setdir 180;

@@ -28,11 +28,6 @@ for [{_i=0}, {_i<=10000}, {_i=_i+1}] do
 	else 
 	{
 		deleteMarker _mkrName;
-		//if ( _mkrText == format ["Warthog %1",_ammount] ) then
-		//{
-		//	MCC_GunRunBusy set [_ammount, 0];
-		//	[playerSide,'HQ'] sideChat format ["%1 available for CAS support again", _mkrText];
-		//};
 		_i = 20000;
 		if (true) exitWith {};
 	};

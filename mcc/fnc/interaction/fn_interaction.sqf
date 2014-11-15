@@ -44,12 +44,27 @@ player setVariable ["MCC_interactionActiveTime",time];
 if (vehicle player == player) then
 {
 	_target = cursorTarget;
+	player reveal _target;
+	
+	if (_target isKindof "weaponHolderSimulated") then
+	{
+		{
+			if (_x distance _target < 2) exitWith {_target = _x}; 
+		} foreach allDeadMen;
+	};
 	
 	//Handle house
 	if ((_target isKindof "house" || _target isKindof "AllVehicles" || _target isKindof "ReammoBox_F") && !(_target isKindof "CAManBase")) exitWith
 	{
 		//[_target] execvm "mcc\fnc\interaction\fn_interactDoor.sqf";
 		_null= [_target] call MCC_fnc_interactDoor
+	};
+	
+	//Handle supply crate
+	if (typeof _target in ["MCC_ammoBox"]) exitWith
+	{
+		//[_target] execvm "mcc\fnc\interaction\fn_interactUtility.sqf";
+		_null= [_target] call MCC_fnc_interactUtility
 	};
 	
 	//Handle man

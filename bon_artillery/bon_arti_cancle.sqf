@@ -2,7 +2,7 @@
 
 _requestor = _this;
 
-[playerSide,"HQ"] sideChat "Fire Mission canceled";
+[playerSide,"HQ"] sidechat "Fire Mission canceled";
 CloseDialog 0;
 
 // clean up

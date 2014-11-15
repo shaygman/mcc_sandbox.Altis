@@ -270,8 +270,6 @@ if (_cargoNum > 0) then
 				};
 			};
 			
-			//player sideChat format ["MCC paradrop custom group: %1", _paraGroupArray]; 
-			//diag_log format ["MCC paradrop custom group: %1 - %2 - group array: %3", _paraSide, _p_mcc_spawnfaction, units _newParaGroup];
 			_unitspawned = _newParaGroup;
 		};
 		
@@ -554,16 +552,8 @@ if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zo
 
 		_null = [leader _paraGroup, _p_mcc_zone_markername,_p_mcc_zone_behavior,_p_mcc_awareness,"SHOWMARKER","spawned" ] spawn mcc_ups;
 
-		//player sideChat format ["UPSMON activated for %1...", _paraGroup];
-			
 	} foreach _cargoGroups;
 };
-/*
-_timeOut = time + 20; // send chopper away again
-waituntil { sleep 1; (time > _timeOut); };
-_heliCrew move _away; // bypass while sometimes chopper starts to hover
-_heliPilot domove _away;
-*/
 
 _timeOut = time + 80; // if chopper is still around after 1.2 minute just delete it
 waituntil { sleep 1; ( ((_heli distance _away) < ((getPosATL _heli select 2) + 350)) || (time > _timeOut) ); };

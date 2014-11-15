@@ -1,4 +1,62 @@
+Change log r12:
+Added: Radio System - NEW
+- Adds simulated military radio sounds (such as ACRE/TFR) to built in VON , the radio will become scramble as the players move away from each others. 
+- Players will be allowed to use specific radio as Commander will be able to use the command radio, squad leaders the Side radio and all can use the Group, Direct and Vehicle radio. 
+- Able to define punishment to radio abuser as kick after hot mic for a period a time or for not using the correct radio (as grunt using the commander radio).
+- Distinguished beeps for commanders broadcasts. 
+- Need to be activated and configure by placing the MCC Settings(Radio) module. 
+- Additional params:
+	MCC_VonRadio - activate on/off - must be done before the mission start
+	MCC_vonRadioDistanceGlobal - Max distance for Global radio
+	MCC_vonRadioDistanceSide - Max distance for Side radio
+	MCC_vonRadioDistanceCommander - Max distance for Commander radio
+	MCC_vonRadioDistanceGroup - Max distance for Group radio
+	MCC_vonRadioKickIdle - Should we kick abusing players
+	MCC_vonRadioKickIdleTime - How long before kicking a player who is hot micing. 
+
+Added: Pick up kit - NEW
+- Using the interaction key on dead body players can pick the entire gear of the dead unit (uniforms, helmet not included).
+- Used for PvP match where you want to disable players inventory. 
+
+Added: Quick Weapon change - NEW
+- Switch weapons using the 1-5 keys. Needed for the ammo-box feature. 
+- Additional params:
+	MCC_quickWeaponChange - Enable/Disable quick weapon change.
+	
+Added: Personal Ammo-Boxes - NEW
+- Added: Personal ammo-boxes that can be carried and dropped using the 4 key.
+- Players can approach the ammo box and press the interaction key to resupply ammo for their handgun, launchers and rifles. 
+- Each box have limited supply and will be deleted once depleted. 
+- Used for PvP match where you want to disable players inventory. 
+- TODO: add them to the role selection. 
+
+- fixed: Commander console artillery laser targets and multiple rounds - TODO check
+- fixed: Fast rope bugs since Helicopters DLC. 
+- fixed: Transperent zone when first creating a zone. 
+- fixed: Access rights module duplicate MCC and didn't work for admins.
+- fixed: Cache by default on while spawning units not in zone.
+- fixed: Mission Genrator caching and delayed spawning by alawys on - set if you want it on or off from Spawn menu. 
+- fixed: Cover only worked when enabling cover UI.
+- fixed: Cover sitting animation get stuck. 
+- Changed: Cover module changed to Mechanic module so you can define more MCC players' mechanics there
+- Chnaged: MCC GAIA settings module include skill for AI from 0-1 instead of rookie/med/vetran
+
+Fix: FOB west/east
+TODO - heli supply
+TODO - medical
+TODO - ambient
+TODO - NV
+TODO - supression
+
+
 Change log r11:
+
+Cover system: - NEW
+- Added: Cover system (need to be activated using MCC (settings) module). Allow picking out of corners automatically, reducing recoile while picking from cover, allows vaulting/climbing over obstcales. 
+		MCC_cover
+		MCC_coverUI
+		MCC_changeRecoil
+		
 Helicopters:
 - Added: New Paradrop infil for players and AI - Drop-pods.
 - Added: New functionality attach and drop pods with the MI-290 Taru. Once you have sling load a pod press MCC interaction to reel it in and press MCC interaction to 
@@ -22,11 +80,6 @@ Tactical Video Probe
 - Added: Tactical Video Probe tool tips.
 - Changed: Tactical Video Probe has been changed from a full screen video to a tablet picture in picture view. 
 
-Cover system: - NEW
-- Added: Cover system (need to be activated using MCC (settings) module). Allow picking out of corners automatically, reducing recoile while picking from cover, allows vaulting/climbing over obstcales. 
-		MCC_cover
-		MCC_coverUI
-		MCC_changeRecoil
 
 
 

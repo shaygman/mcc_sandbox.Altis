@@ -241,6 +241,12 @@ if (_action == 6) exitWith
 	
 	if (mcc_delayed_spawn) then {(_mccdialog displayCtrl 3022) cbSetChecked true}; 
 	if (mcc_caching) then {(_mccdialog displayCtrl 3023) cbSetChecked true}; 
+	while {ctrlShown _control} do
+	{
+		mcc_delayed_spawn = if (cbChecked (_mccdialog displayCtrl 3022)) then {true} else {false};
+		mcc_caching = if (cbChecked (_mccdialog displayCtrl 3023)) then {true} else {false};
+		sleep 0.1;
+	};
 };
 
 //-------------------------------------------------------------------------------------EVAC----------------------------------------------------------------------------------------------

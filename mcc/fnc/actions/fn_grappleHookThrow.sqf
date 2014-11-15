@@ -21,7 +21,7 @@ if (_ammoType == "B_IR_Grenade") then
 	while {str _impactPos != str (getPosATL _ammo)} do
 	{
 		_impactPos = getPosATL _ammo;
-		player sidechat str ((getpos _ammo) select 2); 
+		systemchat str ((getpos _ammo) select 2); 
 		sleep 0.1;
 	};
 };

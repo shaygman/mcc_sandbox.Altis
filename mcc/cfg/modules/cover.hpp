@@ -2,7 +2,7 @@ class mcc_sandbox_moduleCover : Module_F
 {
 	category = "MCC";
 	author = "shay_gman";
-	displayName = "Settings (Cover)";
+	displayName = "Settings (Mechanics)";
 	icon = "\mcc_sandbox_mod\data\mccModule.paa";
 	picture = "\mcc_sandbox_mod\data\mccModule.paa";
 	vehicleClass = "Modules";
@@ -12,27 +12,6 @@ class mcc_sandbox_moduleCover : Module_F
 	
 	class Arguments
 	{
-		class cover
-		{
-			displayName = "Cover System";
-			description = "Allows player to pick out of cover automatically and vault/climb over obstecls";
-			typeName = "NUMBER";
-			class values
-			{
-				class Enabled
-				{
-					name = "Yes";
-					value = 1;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "No";
-					value = 0;
-				};
-			};
-		};
-		
 		class coverUI
 		{
 			displayName = "Cover System UI";
@@ -94,11 +73,32 @@ class mcc_sandbox_moduleCover : Module_F
 					value = 0;
 				};
 			};
-		}
+		};
+		
+		class switchWeapons
+		{
+			displayName = "Weapons binds";
+			description = "Quick weapons selection with the 1-5 buttons";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
 	};
 	
 	class ModuleDescription: ModuleDescription
 	{
-		description = "Define MCC's cover settings";
+		description = "Define MCC's mechanics settings";
 	};
 };

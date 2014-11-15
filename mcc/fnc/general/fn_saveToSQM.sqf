@@ -331,7 +331,7 @@ if (count _arrayGroups > 0) then
 					{
 						_newString = (_object getvariable ["vehicleinit",""]) + format ["group _this setVariable ['GAIA_ZONE_INTEND',%1]",group _object getvariable ["GAIA_ZONE_INTEND",[]]];
 						_object setvariable ["vehicleinit",_newString];
-						player sidechat "string:" + _newString;
+						systemchat "string:" + _newString;
 					};
 					
 					if (_group getvariable ["mcc_gaia_cache",false]) then 
@@ -590,5 +590,5 @@ _mission = _mission
 		+ "};" + _br;
 				  
 copyToClipboard _mission;
-player sidechat "Objects saved to clipboard as sqm file";
+systemchat "Objects saved to clipboard as sqm file";
     

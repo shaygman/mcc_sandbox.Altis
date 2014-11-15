@@ -113,13 +113,6 @@ if (!isnil "_missionMaker") then
 	[[],"MCC_fnc_createMCCZones",_missionMaker,false] spawn BIS_fnc_MP;
 };
 
-//Move to cache
-_mcc_delayed_spawnPlaceHolder = if (mcc_delayed_spawn) then {true} else {false};
-_mcc_cachingPlaceHolder = if (mcc_caching) then {true} else {false};
-
-mcc_delayed_spawn		= TRUE;
-mcc_caching				= TRUE;
-
 MCC_MWCleanup = 
 {
 	//Clear up
@@ -128,10 +121,6 @@ MCC_MWCleanup =
 
 	if (!isnil "hsim_worldArea") then {deleteVehicle hsim_worldArea;	hsim_worldArea = nil};
 	if (!isnil "MWMissionArea") then {deleteVehicle MWMissionArea;	MWMissionArea = nil};
-	
-	sleep 10; 
-	mcc_delayed_spawn 	= _this select 0;
-	mcc_caching 		= _this select 1;
 	breakout "#all";
 };
 
@@ -152,7 +141,7 @@ if (_wholeMap) then
 		{
 			diag_log FORMAT ["MCC: Mission Wizard Error: mapSize param not defined for '%1'",worldname];
 			[["mapSize param not defined for '%1'",worldname],"bis_fnc_halt",_missionMaker, false] call BIS_fnc_MP;
-			[_mcc_delayed_spawnPlaceHolder, _mcc_cachingPlaceHolder] call MCC_MWCleanup;
+			[] call MCC_MWCleanup;
 		};
 		
 		_mapSize = _mapSize / 2;
@@ -192,7 +181,7 @@ if (_wholeMap) then
 	{
 		diag_log "MCC: Mission Wizard Error: Can't find mission center"; 
 		[["MCC: Mission Wizard Error: Can't find mission center try building your mission in a zone"],"bis_fnc_halt",_missionMaker, false] call BIS_fnc_MP;
-		[_mcc_delayed_spawnPlaceHolder, _mcc_cachingPlaceHolder] call MCC_MWCleanup;
+		[] call MCC_MWCleanup;
 	}; 
 
 	_missionCenter = _center select 0; 
@@ -204,7 +193,7 @@ else
 	{
 		diag_log "MCC: Mission Wizard Error: Create a zone first"; 
 		[["MCC: Mission Wizard Error: Create a zone first"],"bis_fnc_halt",_missionMaker, false] call BIS_fnc_MP;
-		[_mcc_delayed_spawnPlaceHolder, _mcc_cachingPlaceHolder] call MCC_MWCleanup;
+		[] call MCC_MWCleanup;
 	};
 	
 	MWMissionArea = createtrigger ["emptydetector",mcc_zone_markposition];
@@ -241,7 +230,7 @@ else
 	
 	if (isNil "_center") exitWith 
 	{
-		MCC_server sidechat "MCC: Mission Wizard Error: Can't find mission center try building your mission in a zone"; 
+		systemchat "MCC: Mission Wizard Error: Can't find mission center try building your mission in a zone"; 
 		diag_log "MCC: Mission Wizard Error: Can't find mission center"; 
 		MCC_MWisGenerating = false;
 	}; 
@@ -285,7 +274,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 		
 		if (isnil "_objPos") exitWith
 		{
-			MCC_server sidechat "MCC: Mission Wizard Error: Can't find good objective's position try again"; 
+			systemchat "MCC: Mission Wizard Error: Can't find good objective's position try again"; 
 			diag_log "MCC: Mission Wizard Error: Can't find good objective's position try again"; 
 			MCC_MWisGenerating = false;
 		};
@@ -959,4 +948,4 @@ if (_playMusic == 0 ) then
 	[[2,compile format ["playMusic '%1'",_music]], "MCC_fnc_globalExecute", _sidePlayer, false] spawn BIS_fnc_MP;
 };
 
-[_mcc_delayed_spawnPlaceHolder, _mcc_cachingPlaceHolder] call MCC_MWCleanup;
+[] call MCC_MWCleanup;

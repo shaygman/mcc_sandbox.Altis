@@ -604,9 +604,9 @@ if (!isDedicated && !MCC_isLocalHC) then
 };
 
 mcc_delayed_spawn		= false;
-mcc_caching					= false;
-mcc_delayed_spawns	= [];
-mcc_safe_pos				= [];
+mcc_caching				= false;
+mcc_delayed_spawns		= [];
+mcc_safe_pos			= [];
 mcc_spawntype   		= "";
 mcc_classtype   		= "";
 mcc_isnewzone   		= false;
@@ -1149,7 +1149,13 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 
 	//Handle add - action
 	[] call MCC_fnc_handleAddaction;
-
+	
+	//Handle Radio 
+	if (missionNameSpace getVariable ["MCC_VonRadio",true]) then
+	{
+		[]  spawn  MCC_fnc_vonRadio;
+	};
+	
 	//Add start locations script
 	[]  spawn MCC_fnc_startLocations;
 	

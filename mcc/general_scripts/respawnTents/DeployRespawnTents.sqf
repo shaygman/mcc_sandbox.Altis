@@ -18,7 +18,7 @@ _nearby = {alive _x && {_x in (units _caller)}} count (getPosATL _caller nearEnt
 
 if (_nearby < REQUIRE_MEMBERS) exitWith 
 {
-	player sidechat format ["You require %1 more squad members within %2m",REQUIRE_MEMBERS-_nearby,REQUIRE_DISTANCE];
+	systemchat format ["You require %1 more squad members within %2m",REQUIRE_MEMBERS-_nearby,REQUIRE_DISTANCE];
 };
 _pos = ATLtoASL(_caller modelToWorld [0,3,0]);
 
@@ -38,10 +38,10 @@ while {lineIntersects [_pos, [_pos select 0, _pos select 1, (_pos select 2) + 1]
 };
 
 _obj = lineIntersectsObjs [_pos, getposASL player, player, player, true, 32];
-player sidechat str _obj;
+
 if (lineIntersects [getPosASL player, _pos] || count _obj > 0) exitWith
 {
-	player sideChat "No suitable position found";
+	systemchat "No suitable position found";
 };
 
 _tentType = secondaryWeapon player;

@@ -18,7 +18,7 @@ if (_type == 0) exitWith
 					case 2: {10}; 	//WP Cinametic				
 				};
 				
-	if (_name == "") exitWith {player sidechat "Name cannot be empty"}; 
+	if (_name == "") exitWith {systemchat "Name cannot be empty"}; 
 	
 	//Do we have to wait till task complete?
 	_preTask = lbCurSel 8508;

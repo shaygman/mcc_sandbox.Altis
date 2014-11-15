@@ -1,11 +1,20 @@
-private["_heli", "_route", "_endpos", "_height", "_landing ", "_pilot", "_i", "_j", "_pos", "_dist", "_distold", "_angh", "_dir","_startPos",
+private["_heli", "_route", "_endpos", "_height", "_landing ", "_pilot", "_i", "_j", "_pos", "_dist", "_distold", "_angh", "_dir","_startPos","_class",
 		"_accel", "_speed", "_steps", "_inipos", "_offset","_nearSmokes","_wp","_wp2","_distance","_relDirHor","_velocityX","_velocityY","_cargoUnits"];
 
 _route         = _this select 0;
 _height        = _this select 1;
 _landing       = _this select 2;
 _heli          = _this select 3;
-_cargoUnits	   = _this select 4;
+
+
+_cargoUnits	   = [];
+{
+	_class = tolower (_x select 1);
+	if (_class == "cargo" || (_class == "turret" && (_x select 4))) then
+	{
+		_cargoUnits pushBack (_x select 0);
+	};
+} foreach (fullCrew _heli);
 
 if (!local _heli) exitWith {hint "vehicle must be local";};
 
@@ -91,7 +100,7 @@ else
 						
 						if (isMultiplayer) then
 						{
-							 [compile format ["unassignVehicle objectFromNetID '%1'; objectFromNetID '%1' action ['eject', vehicle objectFromNetID '%1']", netID _unit], "BIS_fnc_spawn", _unit, false] call BIS_fnc_MP;
+							 [compile format ["unassignVehicle objectFromNetID '%1'; objectFromNetID '%1' action ['eject', vehicle objectFromNetID '%1']", netID _unit], "BIS_fnc_spawn", _unit, false] spawn BIS_fnc_MP;
 						}
 						else
 						{
@@ -290,9 +299,19 @@ else
 			sleep 3;
 			
 			// drop the ropes and delete them
+			private ["_attachPoint","_zc"];
 			{
-				ropeUnwind [ _x, 3, 0];
+				_attachPoint = _ropes select _forEachIndex;
+				_zc = -22;
+				while { _zc > -50 } do 
+				{
+					_x attachTo [_heli, [_attachPoint select 0 , _attachPoint select 1,_zc]];
+					_zc = _zc - 2;
+					sleep 0.1;
+				};
+				deletevehicle _x;
 				/*
+				ropeUnwind [ _x, 3, 0];
 				_attachPoint = _ropes select _forEachIndex;
 				_zc = -22;
 				while { _zc > -50 } do 
@@ -327,7 +346,7 @@ else
 		
 		if (_empty && (!isnil "_startPos")) then
 		{
-			[[[_startPos], _height, 1, [netid _heli,_heli],assignedCargo _heli],"MCC_fnc_evacMove",_heli,false] spawn BIS_fnc_MP;
+			[[[_startPos], _height, 1, [netid _heli,_heli]],"MCC_fnc_evacMove",_heli,false] spawn BIS_fnc_MP;
 		}; 
 	};
 	

@@ -37,7 +37,7 @@ if(count _unitsArray < 4) then
 	_unitsArray = [_faction,"soldier"] call MCC_fnc_makeUnitsArray;
 }; 
 
-if ( (count _unitsArray) == 0 ) exitWith { diag_log format ["MCC Warning: no suitable reinforcement group found for %1", _this]; player sideChat format ["Error: no suitable reinforcement group for this Faction"]; };
+if ( (count _unitsArray) == 0 ) exitWith { diag_log format ["MCC Warning: no suitable reinforcement group found for %1", _this]; systemchat format ["Error: no suitable reinforcement group for this Faction"]; };
 
 _vehiclesTypesArray 	= [_faction,"carx","car"] call MCC_fnc_makeUnitsArray;
 
@@ -46,12 +46,12 @@ if(count _vehiclesTypesArray < 2) then
 	_vehiclesTypesArray = [_faction,"carx"] call MCC_fnc_makeUnitsArray;
 }; 
 
-if ( (count _vehiclesTypesArray) == 0 ) exitWith { diag_log format ["MCC Warning: no suitable reinforcement group found for %1", _this]; player sideChat format ["Error: no suitable reinforcement group for this Faction"]; };
+if ( (count _vehiclesTypesArray) == 0 ) exitWith { diag_log format ["MCC Warning: no suitable reinforcement group found for %1", _this]; systemchat format ["Error: no suitable reinforcement group for this Faction"]; };
 
 //Find a road
 _nearRoads = ([_startPosDir,500] call MCC_fnc_nearestRoad) select 0; 
 
-if ( isnull _nearRoads) exitWith { diag_log format ["MCC Warning: no suitable reinforcement place found for %1", _this]; player sideChat format ["Error: no suitable reinforcement place found"]; };
+if ( isnull _nearRoads) exitWith { diag_log format ["MCC Warning: no suitable reinforcement place found for %1", _this]; systemchat format ["Error: no suitable reinforcement place found"]; };
 _startPosDir = getposAtl _nearRoads; 
 
 //Let's build the group and vehicles 

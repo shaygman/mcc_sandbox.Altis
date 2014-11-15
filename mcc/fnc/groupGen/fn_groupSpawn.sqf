@@ -15,8 +15,6 @@ private ["_pos","_unitsArray","_side","_group","_loc","_isEmpty","_unitClass","_
 _pos 		= _this select 0; 
 _unitsArray = _this select 1; 
 _loc 		= _this select 2;
-_cache		= if (count _this > 3) then { _this select 3}; 
-
 _side		= if (typeName (_this select 3) == "STRING") then 
 				{
 					switch (tolower (_this select 3)) do
@@ -32,6 +30,7 @@ _side		= if (typeName (_this select 3) == "STRING") then
 				};
 
 _isEmpty	= _this select 4;
+_cache		= if (count _this > 5) then { _this select 5}; 
 
 mcc_isnewzone = false;
 mcc_grouptype = "";
@@ -57,14 +56,14 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 		if (typeName _unitsArray == "STRING") exitWith 
 		{
 			_group = [_pos, _side, (call compile _unitsArray)] call MCC_fnc_spawnGroup;
-			_group setVariable ["mcc_gaia_cache",true, true];
+			_group setVariable ["mcc_gaia_cache",_cache, true];
 
 		};
 
 		if (typeName _unitsArray == "CONFIG") exitWith 
 		{
 			_group = [_pos, _side, _unitsArray] call MCC_fnc_spawnGroup;
-			_group setVariable ["mcc_gaia_cache",true, true];
+			_group setVariable ["mcc_gaia_cache",_cache, true];
 		};	
 		
 		//Array group workAround
@@ -101,6 +100,6 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 			_x setSkill ["general", MCC_AI_Skill];
 		} foreach units _group;
 		
-		_group setVariable ["mcc_gaia_cache",true, true];
+		_group setVariable ["mcc_gaia_cache",_cache, true];
 	};
 };

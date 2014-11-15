@@ -112,8 +112,9 @@ switch (_type) do
 				MCC_hijack_effect ppEffectCommit 0;
 				MCC_hijack_effect ppEffectEnable true;
 				
-				MCC_backToplayerIndex = _targetUnit addaction ["<t color=""#CC0000"">Back To Player</t>", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
-				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>",MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "teamSwitch","vehicle _target == vehicle _this"];
+				MCC_backToplayerIndex = _targetUnit addaction ["<t color=""#CC0000"">Back To Player</t>", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "","vehicle _target == vehicle _this"];
+				_string = "(vehicle _target == vehicle _this) && (getplayerUID player in MCC_allowedPlayers || 'all' in MCC_allowedPlayers || serverCommandAvailable '#logout' || isServer || (player getvariable ['MCC_allowed',false]))"; 
+				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>",MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "",_string];
 				player setVariable ["MCC_allowed",true,true];
 				_ok = _targetUnit addEventHandler ["Killed", format ["[_this select 0] execVM '%1mcc\general_scripts\unitManage\backToPlayer.sqf'",MCC_path]];
 				
@@ -419,7 +420,7 @@ switch (_type) do
 			{
 				if (count MCC_selectedUnits > 1) then
 				{
-					player sidechat "Select a single player unit";
+					systemchat "Select a single player unit";
 				}
 				else
 				{
@@ -433,14 +434,14 @@ switch (_type) do
 						if (_answer) then 
 						{
 							 serverCommand format["#kick %1",_playerUID];
-							 player sidechat format["%1 has been kicked from the server",_name];
+							 systemchat format["%1 has been kicked from the server",_name];
 						};
 					};
 				};
 			} 
 			else 
 			{
-				player sidechat "Select a single player unit";
+				systemchat "Select a single player unit";
 			};
 		};
 		
@@ -450,7 +451,7 @@ switch (_type) do
 			{
 				if (count MCC_selectedUnits > 1) then
 				{
-					player sidechat "Select a single player unit";
+					systemchat "Select a single player unit";
 				}
 				else
 				{
@@ -465,14 +466,14 @@ switch (_type) do
 						{
 							 serverCommand format["#exec ban %1",_playerUID];
 							 serverCommand format["#kick %1",_playerUID];
-							 player sidechat format["%1 has been ban from the server",_name];
+							 systemchat format["%1 has been ban from the server",_name];
 						};
 					};
 				};
 			} 
 			else 
 			{
-				player sidechat "Select a single player unit";
+				systemchat "Select a single player unit";
 			};
 		};
 		

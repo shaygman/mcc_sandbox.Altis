@@ -537,22 +537,6 @@ class MCC_RscListNbox
 
 		color[] = {1,1,1,1}; // Scrollbar color
 	};
-	
-	/*
-	onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
-	onDestroy = "systemChat str ['onDestroy',_this]; false";
-	onSetFocus = "systemChat str ['onSetFocus',_this]; false";
-	onKillFocus = "systemChat str ['onKillFocus',_this]; false";
-	onKeyDown = "systemChat str ['onKeyDown',_this]; false";
-	onKeyUp = "systemChat str ['onKeyUp',_this]; false";
-	onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
-	onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
-	onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
-	onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
-	onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
-	onMouseMoving = "";
-	onMouseHolding = "";
-	*/
 };
 
 class MCC_RscTree 

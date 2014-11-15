@@ -141,9 +141,9 @@ switch (_cmd) do
 					if ((_x getvariable "CP_role") == _role) then {_countRole = _countRole +1};
 				} foreach units _activeGroup; 
 				
-				if (_countRole > (_roleLimit -1)) exitWith {player sidechat "Can't switch to that group all kit's have been taken!"}; 
+				if (_countRole > (_roleLimit -1)) exitWith {systemchat "Can't switch to that group all kit's have been taken!"}; 
 				
-				if (count (units _activeGroup) < (_minPlayersForRole-1)) exitWith {player sidechat format ["Not enough players to join this squad with this kit, Squad needs %1 players to use this kit!",_minPlayersForRole]};
+				if (count (units _activeGroup) < (_minPlayersForRole-1)) exitWith {systemchat format ["Not enough players to join this squad with this kit, Squad needs %1 players to use this kit!",_minPlayersForRole]};
 				
 				//If we got this far lets switch
 				[player] join (CP_activeGroup select 0);
@@ -210,7 +210,7 @@ switch (_cmd) do
 		//check if player in group
 		if ((count (units (group player)) > 0) && ((group player) in _array)) exitWith 
 		{
-			player sidechat "You must leave your squad before changing sides"; 
+			systemchat "You must leave your squad before changing sides"; 
 		}; 
 			
 		//check if there is room in the other side
@@ -225,13 +225,13 @@ switch (_cmd) do
 		
 		if (_counter >= CP_maxPlayers) exitWith 
 		{
-			player sidechat Format ["%1 side is full",_side]; 
+			systemchat Format ["%1 side is full",_side]; 
 		};
 			
 		//check if the player is currently a commander for his side
 		if (_commander == getPlayerUID player) exitWith 
 		{
-			player sidechat "You must leave the commander slot before you can switch sides"; 
+			systemchat "You must leave the commander slot before you can switch sides"; 
 		};		
 			
 		//Make the switch
@@ -245,7 +245,7 @@ switch (_cmd) do
 		[player] join _group;
 		_group = grpNull;
 		deleteGroup _group;
-		player sidechat format["You are now part of the %1 side", side player];
+		systemchat format["You are now part of the %1 side", side player];
 		CP_weaponAttachments =[];		//Reset atachments choice
 		CP_playerUniforms =  nil;
 		CP_opticsIndex = 0;
@@ -260,14 +260,14 @@ switch (_cmd) do
 		private "_text";
 		_text = ctrlText CP_squadPanelCreateSquadText;
 		
-		if (_text == "") exitWith {player sidechat "Squad name can't be empty"}; 
+		if (_text == "") exitWith {systemchat "Squad name can't be empty"}; 
 		
 		//Rename squad if it is not a predefined squad
 		if ((ctrlText CP_squadPanelCreateSquadButton ==  "Rename Squad")) then 
 		{
 			if  ((lbCurSel CP_squadPanelSquadList) < (count CP_defaultGroups)) then
 			{
-				player sidechat "Can't rename predefined squad name"; 
+				systemchat "Can't rename predefined squad name"; 
 			}
 			else
 			{
@@ -286,12 +286,12 @@ switch (_cmd) do
 				//check if player in group
 				if ((count (units (group player)) > 0) && ((group player) in _array)) exitWith 
 				{
-					player sidechat "You must leave your squad first"; 
+					systemchat "You must leave your squad first"; 
 				}; 
 					
 				//check if there is room to make another squad
 				if ((count _groups) >= CP_maxSquads) exitWith {
-					player sidechat format ["Max number of squads reached %1/%2", count _groups, CP_maxSquads]; 
+					systemchat format ["Max number of squads reached %1/%2", count _groups, CP_maxSquads]; 
 					};
 					
 				//Create a new squad
@@ -310,7 +310,7 @@ switch (_cmd) do
 				sleep 0.5;
 				CP_squadPanelSquadList lbSetCurSel (count _groups);
 				
-				player sidechat format ["Squad %1 Created", _text, _group];
+				systemchat format ["Squad %1 Created", _text, _group];
 			};
 			
 		_null = [0] execVM format["%1configs\dialogs\gearPanel\squadPanel_cmd.sqf",MCC_path];
@@ -468,7 +468,7 @@ switch (_cmd) do
 				}
 				else
 				{
-					player sidechat format["You can only start mutiny once every 5 minutes. Time to wait %1 seconds", floor (_lastMutiny - time)]; 
+					systemchat format["You can only start mutiny once every 5 minutes. Time to wait %1 seconds", floor (_lastMutiny - time)]; 
 				};
 			};
 		};

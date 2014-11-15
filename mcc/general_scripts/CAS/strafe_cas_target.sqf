@@ -7,7 +7,7 @@ _target = _this select 3;
 
 while {(_plane distance _pos < 1300) && (damage _target < 0.8)} do 
 {	
-	[playerSide,'HQ'] sideChat format ["%1 Engaging target", _cas_name];
+	[playerSide,'HQ'] sidechat format ["%1 Engaging target", _cas_name];
 	(group _plane) setBehaviour "COMBAT";
 	_plane enableAI "TARGET";
 	(group _plane) reveal [_target, 3.5];

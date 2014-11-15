@@ -156,9 +156,6 @@ my_pv_handler =
 		_specialUps = "";
 		_specialUpsNr = 1;
 		_specialUpsRandom = "";
-		//KRON_UPS_Debug = 1;
-		
-	//player sidechat format ["DEBUG 5_1 Zone: %1 = %2", _p_mcc_zonetype, _p_mcc_zonetypenr];
 	
 		switch (_p_mcc_zonetype) do		//Which zone type
 			{
