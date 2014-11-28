@@ -14,17 +14,11 @@ HW_arti_number_shells_per_hour = 0;
 // element: [displayname,config type-entry]
 if (isnil "HW_arti_types") then {HW_arti_types = []};
 
-				/*[["DPICM","GrenadeHand"],["HE 120mm","Sh_120_HE"], ["Cluster 120mm","Cluster_120mm_AMOS"], ["Cluster AP","Mo_cluster_AP"],["Mines 120mm","Mine_120mm_AMOS_range"],
-				["HE Laser-guided","Sh_120mm_AMOS_LG"],["HE 82mm","Sh_82mm_AMOS"], ["Incendiary 82mm","Fire_82mm_AMOS"],
-				["Smoke White 120mm","Smoke_120mm_AMOS_White"],["Smoke White 82mm","Smoke_82mm_AMOS_White"],["Smoke Green 40mm","G_40mm_SmokeGreen"], ["Smoke Red 40mm","G_40mm_SmokeRed"],
-				["Flare White","F_40mm_White"], ["Flare Green","F_40mm_Green"], ["Flare Red","F_40mm_Red"]];*/
-				
-
 // max. nr. shells each cannon can fire in one fire mission
 HW_arti_maxnrshells = 10;
 
 // element: [displayname,splashdown dispersion in meters]; LASER must have dispersion < 0 to work
-HW_arti_spreads = [["PRECISE",50],["TIGHT",100],["SCATTERED",150],["WIDE",200],["LASER",0]];
+HW_arti_spreads = [["PRECISE",5],["TIGHT",50],["SCATTERED",100],["WIDE",150],["LASER",0]];
 
 // if true each player can see his/her position when opening the map
 HW_arti_show_pos_on_map = false;

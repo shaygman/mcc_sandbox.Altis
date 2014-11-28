@@ -81,6 +81,7 @@ class MCC
 		class interactProgress	{description = "Create a progress bar and anim for the player";};
 		class loadTruckUI		{description = "Open logistic truck UI";};
 		class keyDown			{description = "Handle keydown/keyUp EH";};
+		class help				{description = "Display tooltip";};
 	};
 
 	class ied
@@ -226,6 +227,7 @@ class MCC
 		class PDAcreatemarker	{description = "Creates markers on mp per side and delete them after a period of time";};
 		class construction		{description = "Constract a tactical building on the server side";};
 		class construct_base	{description = "Constract a building in base";};
+		class addRating			{description = "Adds rating to a specific player";};
 	};
 
 	class MCCmodules
@@ -263,6 +265,8 @@ class MCC
 		class vault			{description = "Vault over an obstacle";};
 		class cover			{description = "Manage cover mechanics";};
 		class weaponSelect	{description = "Change weapons and throw utility";};
+		class utilityUse	{description = "use utility";};
+		class grenadeThrow	{description = "Throw grenades";};		
 	};
 	
 	class roleSelection
@@ -317,5 +321,28 @@ class MCC
 		
 		class vonRadio		{description = "simulate real radio comms on ArmA VON";};
 		class settingsRadio	{description = "Real radio comms settings";};
+	};
+	
+	class medic
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\medic";
+		#else
+		file = "mcc\fnc\medic";
+		#endif
+		
+		class initMedic		{description = "Init Medic System";};
+	};
+	
+	class helpers
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\helpers";
+		#else
+		file = "mcc\fnc\helpers";
+		#endif
+		
+		class createHelper		{description = "Create ingame UI helper for interacted objects";};
+		class deleteHelper		{description = "Delete ingame UI helper for interacted objects";};
 	};
 };

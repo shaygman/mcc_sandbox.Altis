@@ -732,7 +732,7 @@ class MCC_RscMapControl
 	scaleMin = 0.001;
 	shadow = 0;
 	showCountourInterval = 0;
-	sizeEx = 0.04;
+	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	sizeExGrid = 0.02;
 	sizeExInfo = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 	sizeExLabel = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
@@ -1162,7 +1162,7 @@ class MCC_RscToolbox {
 	  colorDisable[] = {0.4, 0.4, 0.4, 1};
 	  colorSelectedBg[] = {0.450,0.450,0.450,1};
 	  font = "PuristaMedium";
-	  sizeEx = 0.0208333;
+	  sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 };
 class MCC_keyBindsGroup: MCC_RscControlsGroup
 {

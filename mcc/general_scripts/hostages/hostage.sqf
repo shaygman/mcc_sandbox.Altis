@@ -22,6 +22,7 @@ if (_action == 0) then
 	[_hostage] join _caller;
 	_nul = _caller addaction [format ["Disband %1", name _hostage],MCC_path + "mcc\general_scripts\hostages\hostage.sqf",[1,_hostage],6,false,true,"","_target == _this"];
 	[[[netID _hostage,_hostage], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+	[_hostage] spawn MCC_fnc_deleteHelper;
 };
 
 //disabnd Hostage TODO no leave group while doing so	
@@ -33,6 +34,7 @@ if (_action == 1) then
 	_group = createGroup (_hostage getVariable ["MCC_orgSide", civilian]);
 	[_hostage] join _group;
 	_hostage setVariable ["MCC_neutralize",true,true];
+	[_hostage, "Hold %1 to interact"] spawn MCC_fnc_createHelper;
 };
 
 //Join player	
@@ -42,4 +44,5 @@ if (_action == 2) then
 	(units group _hostage) join _caller;
 	[[[_hostage],{(_this select 0) setUnitPos "AUTO"}],"BIS_fnc_spawn", _hostage, false] spawn BIS_fnc_MP;
 	_nul = _caller addaction [format ["Disband %1", name _hostage],MCC_path + "mcc\general_scripts\hostages\hostage.sqf",[1,_hostage],6,false,true,"","_target == _this"];
+	[_hostage] spawn MCC_fnc_deleteHelper;
 };

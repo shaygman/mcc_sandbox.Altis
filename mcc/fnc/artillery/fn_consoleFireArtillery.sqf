@@ -1,10 +1,17 @@
-private ["_requestor","_x_correction","_y_correction","_missiontype","_cannons_to_fireReal","_cannonsObjects","_cannonsetup","_cannon","_splashpos","_firedelay",
+//==================================================================MCC_fnc_consoleFireArtillery===============================================================================================
+// Order AI or players to fire artillery
+// Example: [_requestor,_x_correction,_y_correction,_missiontype] spawn MCC_fnc_consoleFireArtillery;
+// _requestor: 			Object, Who called the artillery
+// _x_correction: 		Integer
+// _y_correction: 		Integer
+//===========================================================================================================================================================================	
+
+private ["_requestor","_x_correction","_y_correction","_cannons_to_fireReal","_cannonsObjects","_cannonsetup","_cannon","_splashpos","_firedelay",
          "_artitype","_nrshells","_spread"];
 
 _requestor 				= _this select 0;
 _x_correction 			= _this select 1;
 _y_correction 			= _this select 2;
-_missiontype 			= _this select 3;
 
 _cannons_to_fireReal 	= _requestor getVariable ["requesting_cannonsReal",[]];
 	
@@ -25,8 +32,8 @@ _cannonsObjects = [];
 	_spread 	= (_x select 1) select 4;
 	
 	//X-correction
-	_splashpos set [0, (_splashpos select 0) + (_x_correction *50)];
-	_splashpos set [1, (_splashpos select 1) + (_y_correction *50)];
+	_splashpos set [0, (_splashpos select 0) + (_x_correction *20)];
+	_splashpos set [1, (_splashpos select 1) + (_y_correction *20)];
 	
 	if (isPlayer _cannon) then
 	{

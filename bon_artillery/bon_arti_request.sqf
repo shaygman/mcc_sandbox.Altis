@@ -34,7 +34,7 @@ _spreadtype = lbText [BON_ARTY_SPREAD,lbCurSel BON_ARTY_SPREAD];
 _cannons_to_fireVR 		= _requestor getVariable ["requesting_cannons",[]];
 _cannons_to_fireReal 	= _requestor getVariable ["requesting_cannonsReal",[]];
 
-if (count _cannons_to_fireReal > 0) then {[_requestor,_x_correction,_y_correction,_missiontype] call MCC_fnc_consoleFireArtillery};
+if (count _cannons_to_fireReal > 0) then {[_requestor,_x_correction,_y_correction] call MCC_fnc_consoleFireArtillery};
 if (count _cannons_to_fireVR == 0) exitWith {};
 
 if (isnil "MCC_bonFire") then {MCC_bonFire = false};

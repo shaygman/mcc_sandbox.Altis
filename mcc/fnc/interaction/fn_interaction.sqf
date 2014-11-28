@@ -209,9 +209,9 @@ else
 	};
 	
 	//Logistics
-	if ((typeof _vehiclePlayer in MCC_supplyTracks) && (player == driver _vehiclePlayer) && (speed _vehiclePlayer < 10) && MCC_allowlogistics) then
+	if ((typeof _vehiclePlayer in MCC_supplyTracks || (_vehiclePlayer isKindOf "helicopter" && ((getpos _vehiclePlayer) select 2) > 15)) && (player == driver _vehiclePlayer) && (speed _vehiclePlayer < 10) && MCC_allowlogistics) then
 	{
-		_array set [count _array,["load","Load Menu",_pic]];
+		_array set [count _array,["load","Logistics",_pic]];
 	};
 	
 	//MCC ILS

@@ -119,7 +119,7 @@ if (isnil "MCC_nonLeathal") then {MCC_nonLeathal = "prpl_6Rnd_12Gauge_Slug"};
 
 //MCC Survive mod 
 // Set to true to activate survival mode - scavange for loot to survive
-if (isnil "MCC_surviveMod") then {MCC_surviveMod = false}; 
+if (isnil "MCC_surviveMod") then {MCC_surviveMod = true}; 
 
 //How long in days(24H-game time) will it take for spawn position to refresh
 if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1}; 
@@ -174,9 +174,6 @@ MCC_artilleryTypeArray = [["DPICM","GrenadeHand",0,40],["HE 120mm","Sh_120mm_HE_
 						["Smoke White 120mm","Smoke_120mm_AMOS_White",1,20],["Smoke White 82mm","Smoke_82mm_AMOS_White",1,20],["Smoke Green 40mm","G_40mm_SmokeGreen",1,20], ["Smoke Red 40mm","G_40mm_SmokeRed",1,20],
 						["Flare White","F_40mm_White",2,20], ["Flare Green","F_40mm_Green",2,20], ["Flare Red","F_40mm_Red",2,20]];
 MCC_artillerySpreadArray = [["On-target",0], ["Precise",100], ["Tight",200], ["Wide",400]]; //Name and spread in meters
-MCC_artilleryNumberArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
-MCC_artilleryEnabled	= false; //for artillery marker
-MCC_spawnEnabled		= false; //for spawn marker
 
 //-------------------------MCC Convoy presets---------------------------------------------
 //The Type of units, drivers and escort in the HVT car
@@ -187,7 +184,7 @@ MCCConvoyCivEscort = "C_man_1_1_F"; MCCConvoyCivDriver = "C_man_1_1_F";
 
 //-------------------------MCC commander number of virtual cannons---------------------------------------------
 MCC_bonCannons = [];
-if (isnil "HW_Arti_CannonNumber") then {HW_Arti_CannonNumber = 1};
+if (isnil "HW_Arti_CannonNumber") then {HW_Arti_CannonNumber = 3};
 
 //----------------------------Presets---------------------------------------------------------
 mccPresetsVehicle = [
@@ -293,14 +290,17 @@ MCC_supplyAttachPoints = [
 
 if (MCC_isMode) then
 {
-	MCC_logisticsCrates_Types = ["MCC_crateAmmo","MCC_crateSupply","MCC_crateFuel"];
+	MCC_logisticsCrates_TypesWest = ["MCC_crateAmmo","MCC_crateSupply","MCC_crateFuel","MCC_crateAmmoBigWest","MCC_crateSupplyBigWest","MCC_crateFuelBigWest"];
+	MCC_logisticsCrates_TypesEast = ["MCC_crateAmmo","MCC_crateSupply","MCC_crateFuel","MCC_crateAmmoBigEast","MCC_crateSupplyBigEast","MCC_crateFuelBigEast","Land_Pod_Heli_Transport_04_bench_F","Land_Pod_Heli_Transport_04_covered_F"];
 }
 else
 {
-	MCC_logisticsCrates_Types = ["Box_NATO_AmmoVeh_F","Land_PaperBox_closed_F","Land_WaterBarrel_F"];
+	MCC_logisticsCrates_TypesWest = ["Box_NATO_AmmoVeh_F","CargoNet_01_box_F","CargoNet_01_barrels_F","B_Slingload_01_Ammo_F","B_Slingload_01_Repair_F","B_Slingload_01_Fuel_F"];
+	MCC_logisticsCrates_TypesEast = ["Box_NATO_AmmoVeh_F","CargoNet_01_box_F","CargoNet_01_barrels_F","Land_Pod_Heli_Transport_04_ammo_F","Land_Pod_Heli_Transport_04_repair_F","Land_Pod_Heli_Transport_04_fuel_F","Land_Pod_Heli_Transport_04_bench_F","Land_Pod_Heli_Transport_04_covered_F"];
 };
 
-MCC_SUPPLY_CRATEITEM = MCC_logisticsCrates_Types select 1;
+MCC_SUPPLY_CRATEITEM = MCC_logisticsCrates_TypesWest select 1;
+MCC_SUPPLY_CRATEITEMBIG = [MCC_logisticsCrates_TypesWest select 4, MCC_logisticsCrates_TypesEast select 4];
 
 //----------------------gaia------------------------------------------------------
 call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];
@@ -1283,3 +1283,6 @@ if(CP_activated && !isDedicated) then
 };
 MCC_initDone = true;
 finishMissionInit;
+
+//remove
+_null = [] execVM "mcc\fnc\medic\fn_initMedic.sqf"

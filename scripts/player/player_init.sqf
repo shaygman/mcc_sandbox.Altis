@@ -1,6 +1,6 @@
 private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight","_role","_exp","_level"];
 
-if (!MCC_iniDBenabled) exitWIth {player systemchat "iniDB isn't running. Can't access role selection"};
+if (!MCC_iniDBenabled) exitWIth {systemchat "iniDB isn't running. Can't access role selection"};
 
 //Black Screen on mission startup
 cutText ["","BLACK",0.1];
@@ -9,6 +9,30 @@ cutText ["","BLACK",0.1];
 //											Get player levels
 //******************************************************************************************************************************
 waituntil {alive player};
+//Disable weapon disassemble
+player addEventHandler ["WeaponDisassembled",
+{
+	_this spawn
+	{
+		_unit = _this select 0;
+		_bag1 = _this select 1;
+		_bag2 = _this select 2;
+
+		_currBag = unitBackpack _unit;
+
+		titleText ["You are not allowed to disassemble static weapons.", "PLAIN DOWN", 0.5];
+
+		_unit action ["TakeBag", _bag1];
+
+		_time = time;
+		waitUntil {unitBackpack _unit == _bag1 || time - _time > 3};
+
+		_unit action ["Assemble", _bag2];
+
+		if (!isNull _currBag) then { _unit action ["TakeBag", _currBag] };
+	};
+}];
+
 //Mark it zero again
 player addRating (-1 * (rating player));
 

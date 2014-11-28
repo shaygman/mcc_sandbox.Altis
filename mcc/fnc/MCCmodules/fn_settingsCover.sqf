@@ -19,10 +19,22 @@ MCC_changeRecoil = if (_var == 0) then {false} else {true};
 _var 	= _logic getvariable ["coverUI",1];
 MCC_coverUI = if (_var == 0) then {false} else {true};	
 
-//cover Cault
+//cover Vault
 _var 	= _logic getvariable ["coverVault",1];
 MCC_coverVault = if (_var == 0) then {false} else {true};		
 
-//cover Cault
+//Switch weapon
 _var 	= _logic getvariable ["switchWeapons",1];
 MCC_quickWeaponChange = if (_var == 0) then {false} else {true};	
+
+//interaction
+_var 	= _logic getvariable ["interaction",1];
+MCC_interaction = if (_var == 0) then {false} else {true};	
+
+//interaction UI
+_var 	= _logic getvariable ["interactionUI",0];
+MCC_ingameUI = if (_var == 0) then {false} else {true};
+
+//Survive mod  
+_var 	= _logic getvariable ["survive",0];
+MCC_surviveMod = if (_var == 0) then {false} else {true};

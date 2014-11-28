@@ -235,8 +235,8 @@ if !mcc_isloading then
 			if (count MCC_groupBroadcast == 0) exitWIth {systemchat "Cannot spawn an empty group"}; 
 		};
 
-		hint "click on the map"; 
-		MCC_spawnEnabled = true; 
+		hint "click map to spawn - Hold Ctrl for multiple times"; 
+		missionNameSpace setVariable ["MCC_spawnEnabled",true];
 	}
 	//Spawn to zone
 	else

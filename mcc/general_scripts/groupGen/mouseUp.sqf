@@ -18,12 +18,12 @@ if (mcc_missionmaker == (name player)) then
 	MCC_GroupGenMouseButtonUp = true;
 	
 	//Clear some markers
-	if (_pressed == 1 && (MCC_artilleryEnabled || MCC_spawnEnabled) && (str MCC_XYmap == format ["[%1,%2]",_posX,_posY])) then
+	if (_pressed == 1 && ((missionNameSpace getVariable ["MCC_artilleryEnabled",false]) || (missionNameSpace getVariable ["MCC_spawnEnabled",false])) && (str MCC_XYmap == format ["[%1,%2]",_posX,_posY])) then
 	{
-		MCC_artilleryEnabled = false;
+		missionNameSpace setVariable ["MCC_artilleryEnabled",false];
 		deleteMarkerLocal "mcc_arty";
 		
-		MCC_spawnEnabled = false;
+		missionNameSpace setVariable ["MCC_spawnEnabled",false];
 		deleteMarkerLocal "mcc_spawnMarker";
 	};
 		

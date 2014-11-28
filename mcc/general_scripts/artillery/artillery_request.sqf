@@ -10,7 +10,7 @@ if !mcc_isloading then
 		MCCSimulate		= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 2;
 		_shellName		= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 0;
 		MCCshellRadius	= (MCC_artilleryTypeArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 30))) select 3;
-		nshell 			= MCC_artilleryNumberArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 32));
+		nshell 			= (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 32))+1;
 		MCC_artyDelay 	=(lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 33))*20;
 		
 		if (isnil "MCC_artyDelay") then {MCC_artyDelay = 0};
@@ -19,8 +19,8 @@ if !mcc_isloading then
 		   case 0:		//Request
 			{
 				shellspread = (MCC_artillerySpreadArray select (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 31))) select 1;
-				MCC_artilleryEnabled = true; 
-				hint "click on map where you want to send artillery"; 
+				missionNameSpace setVariable ["MCC_artilleryEnabled",true];
+				hint "click on map where you want to send artillery -Hold Ctrl for multiple clicks"; 
 				
 			};
 			case 1:	//Add		

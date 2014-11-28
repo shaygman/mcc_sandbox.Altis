@@ -28,6 +28,7 @@ _npc disableAI "MOVE";
 _npc disableAI "AUTOTARGET";
 
 _npc setVariable ["MCC_disarmed",true,true];
+[_npc, "Hold %1 to interact"] spawn MCC_fnc_createHelper;
 
 if (_pos != "") then
 {

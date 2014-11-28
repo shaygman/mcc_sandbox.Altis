@@ -26,7 +26,7 @@ class MCC3D_RSC
 				w = 1;
 				h = 1;
 				font = "EtelkaNarrowMediumPro";
-				sizeEx = 0.1;
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
 				colorBackground[] = {0,0,0,1};
 				colorText[] = {1,1,1,1};
 				text = "Example Text";

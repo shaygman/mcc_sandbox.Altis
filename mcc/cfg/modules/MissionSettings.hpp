@@ -15,6 +15,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class t2t
 		{
 			displayName = "Teleport 2 Team";
+			description = "When players willbe able to teleport to the squad leader via the Squad Dialog or key bind";
 			typeName = "NUMBER";
 			class values
 			{
@@ -44,6 +45,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class saveGear
 		{
 			displayName = "Save Gear";
+			description = "Respawn with the same gear the player had when they player died";
 			typeName = "NUMBER";
 			class values
 			{
@@ -63,6 +65,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class messages
 		{
 			displayName = "MCC messages";
+			description = "Show MCC messages";
 			typeName = "NUMBER";
 			class values
 			{
@@ -104,6 +107,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class nameTags
 		{
 			displayName = "Name Tags";
+			description = "Show in-game name tags, ranks (role and health stats while Role Selection is active)";
 			typeName = "NUMBER";
 			class values
 			{
@@ -123,7 +127,8 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		
 		class groupMarkers
 		{
-			displayName = "Group Markers";
+			displayName = "Squads Markers";
+			description = "Show Squads markers on the map for all players while playing in a squad from the Squad Dialog";
 			typeName = "NUMBER";
 			class values
 			{
@@ -144,6 +149,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class artilleryComputer
 		{
 			displayName = "Artilery Computer";
+			description = "Enable/Disable the default BI artillery computer";
 			typeName = "NUMBER";
 			class values
 			{
@@ -164,6 +170,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class timeAccel
 		{
 			displayName = "Time Acceleration";
+			description = "Shorten day/night cycle";
 			typeName = "NUMBER";
 			class values
 			{
@@ -199,6 +206,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class deleteBody
 		{
 			displayName = "Delete dead players' bodies";
+			description = "Delete dead player body after respawn";
 			typeName = "NUMBER";
 			class values
 			{
@@ -324,6 +332,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class logistics
 		{
 			displayName = "Logistics";
+			description = "Enables MCC logistics";
 			typeName = "NUMBER";
 			class values
 			{
@@ -341,10 +350,10 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 			};
 		};
 		
-		class interaction
+		class roleSelection
 		{
-			displayName = "Interaction";
-			description = "Players can use MCC interaction with objects/units - requires key binding";
+			displayName = "Role Selection";
+			description = "Enables Role selection by default";
 			typeName = "NUMBER";
 			class values
 			{
@@ -352,12 +361,12 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				{
 					name = "Yes";
 					value = 1;
-					default = 1;
 				};
 				class Disabled
 				{
 					name = "No";
 					value = 0;
+					default = 1;
 				};
 			};
 		};

@@ -34,9 +34,13 @@ if (tolower _ehType == "keyup") exitWith
 	//Change weapons
 	if (missionNameSpace getVariable ["MCC_quickWeaponChange",false]) then
 	{
-		if (_dikCode in [2,3,4,5]) exitWith {[_dikCode] spawn MCC_fnc_weaponSelect};
+		if (_dikCode in [2,3,4,5,6,7]) exitWith 
+		{
+			//_null= [_dikCode] execVM "mcc\fnc\actions\fn_weaponSelect.sqf";
+			[_dikCode] spawn MCC_fnc_weaponSelect;
+		};
 	};
-
+	
 	//keybinds
 	switch (_action) do
 	{

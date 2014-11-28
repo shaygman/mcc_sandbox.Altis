@@ -36,23 +36,23 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			h = 0.022 * safezoneH;
 			tooltip = "Enable interaction menu - requires key bind"; //--- ToDo: Localize;
 		};
-		class Survival: MCC_RscText
+		class interactionUIText: MCC_RscText
 		{
 			idc = -1;
-			text = "Survival:"; //--- ToDo: Localize;
+			text = "Interaction UI:"; //--- ToDo: Localize;
 			x = 0.00515647 * safezoneW;
 			y = 0.077 * safezoneH;
 			w = 0.0670312 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
-		class SurvivalCombo: MCC_RscCombo
+		class interactionUICombo: MCC_RscCombo
 		{
-			idc = 8428;
+			idc = 8434;
 			x = 0.077344 * safezoneW;
 			y = 0.077 * safezoneH;
 			w = 0.0825 * safezoneW;
 			h = 0.022 * safezoneH;
-			tooltip = "Enables survival mode - search map items foor lot every 24 hours"; //--- ToDo: Localize;
+			tooltip = "Enables interction in-game UI"; //--- ToDo: Localize;
 		};
 		class coverRecoil: MCC_RscText
 		{
@@ -147,5 +147,23 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			tooltip = "Quick weapons selection with the 1-5 buttons"; //--- ToDo: Localize;
 		};
 		
+		class Survival: MCC_RscText
+		{
+			idc = -1;
+			text = "Survival:"; //--- ToDo: Localize;
+			x = 0.335156 * safezoneW;
+			y = 0.077 * safezoneH;
+			w = 0.0670312 * safezoneW;
+			h = 0.022 * safezoneH;
+		};
+		class SurvivalCombo: MCC_RscCombo
+		{
+			idc = 8428;
+			x = 0.407344 * safezoneW;
+			y = 0.077 * safezoneH;
+			w = 0.0825 * safezoneW;
+			h = 0.022 * safezoneH;
+			tooltip = "Enables survival mode - search map items foor lot every 24 hours"; //--- ToDo: Localize;
+		};
 	};
 };

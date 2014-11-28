@@ -32,6 +32,7 @@ _pod setVelocity [0, 0, -10];
 _vehicle setVariable ["MCC_attachedPod",objnull,true];
 _vehicle setMass [(getMass _vehicle)- (_vehicle getVariable ["MCC_attachedPodMass",0]),0.5];
 sleep 2; 
+_vehicle enableRopeAttach true;
 [_pod, driver _vehicle, velocity _vehicle] spawn 
 {
 	private ["_pod","_class","_pilot","_para","_velocity","_vel"];

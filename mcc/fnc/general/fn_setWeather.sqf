@@ -23,8 +23,10 @@ if ((count _weather) > 3) then {0 setRain 		(_weather select 3)};
 if ((count _weather) > 4) then {0 setLightnings	(_weather select 4)};
 if ((count _weather) > 5) then {0 setFog [(_weather select 5), 0.03,10]};
 
+/*
 0 = [] spawn 
 {
 	sleep 0.1;
 	simulWeatherSync;
 };
+*/

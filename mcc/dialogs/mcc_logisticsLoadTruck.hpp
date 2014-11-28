@@ -73,12 +73,15 @@ class MCC_LOGISTICS_LOAD_TRUCK
 		class MCC_loadTruckTittle: MCC_RscText
 		{
 			idc = -1;
-			text = "Load Truck"; //--- ToDo: Localize;
+			text = "Logistics"; //--- ToDo: Localize;
+			colorText[] = {0,1,1,1};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 2)";
+			
 			x = 0.419792 * safezoneW + safezoneX;
 			y = 0.247 * safezoneH + safezoneY;
 			w = 0.131771 * safezoneW;
 			h = 0.066 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 2)";
+			
 		};
 		class MCC_loadTruckRepairText: MCC_RscText
 		{

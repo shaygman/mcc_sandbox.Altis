@@ -10,5 +10,6 @@ removeallweapons _hostage;
 _hostage setcaptive true;
 _init = "_this switchmove 'AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon';";
 [[[netID _hostage,_hostage], _init, false], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
+[_hostage, "Hold %1 to interact"] spawn MCC_fnc_createHelper;
 
 

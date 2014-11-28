@@ -157,6 +157,9 @@ if (_explode) then
 	};
 };
 
+//Delete helper
+[_dummy] spawn MCC_fnc_deleteHelper;
+
 //fail safe give the game enough time to read the variable from it before deleting it.
 sleep 1;	
 if (typeOf _fakeIed in _hidden) then {deletevehicle _fakeIed}; 

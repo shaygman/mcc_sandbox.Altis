@@ -375,11 +375,11 @@ setGroupIconsVisible [false,false];
 setGroupIconsSelectable false;
 
 //Artillery
-MCC_artilleryEnabled = false; 
+missionNameSpace setVariable ["MCC_artilleryEnabled",false];
 deleteMarkerLocal "mcc_arty";
 
 //Spawn
-MCC_spawnEnabled = false;
+missionNameSpace setVariable ["MCC_spawnEnabled",false];
 deleteMarkerLocal "mcc_spawnMarker";
 
 //Remove EH

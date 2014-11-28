@@ -79,7 +79,7 @@ MCC_allowSquadDialogCamera = if (_var == 0) then {false} else {true};
 _var 	= _logic getvariable ["logistics",1];
 MCC_allowlogistics = if (_var == 0) then {false} else {true};	
 
-//interaction
-_var 	= _logic getvariable ["interaction",1];
-MCC_interaction = if (_var == 0) then {false} else {true};		
+//Role Selection
+_var 	= _logic getvariable ["roleSelection",0];
+CP_activated = if (_var == 0) then {false} else {true};		
 		

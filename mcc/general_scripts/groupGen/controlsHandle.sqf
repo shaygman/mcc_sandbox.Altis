@@ -175,12 +175,13 @@ if (_action == 5) exitWith
 		_comboBox lbSetCurSel 0;
 
 	_comboBox = (_mccdialog displayCtrl 32);		//Artillery Number
-		lbClear _comboBox;
-		{
-			_displayname = format ["%1",_x];
-			_comboBox lbAdd _displayname;
-		} foreach MCC_artilleryNumberArray;
-		_comboBox lbSetCurSel 0;
+	lbClear _comboBox;
+	for "_i" from 1 to 50 do 
+	{
+		_displayname = str _i;
+		_comboBox lbAdd _displayname;
+	};
+	_comboBox lbSetCurSel 0;
 		
 	_comboBox = (_mccdialog displayCtrl 33);		//Artillery Delay
 	lbClear _comboBox;

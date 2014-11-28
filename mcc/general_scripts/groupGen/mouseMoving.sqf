@@ -10,7 +10,7 @@ MCCGroupGenDispPosXY = _ctrl ctrlmapscreentoworld [_params select 1,_params sele
 
 
 //Artillery
-if (MCC_artilleryEnabled) exitWith
+if (missionNameSpace getVariable ["MCC_artilleryEnabled",false]) exitWith
 {
 		deleteMarkerLocal "mcc_arty";
 		_shellspread = if (shellspread == 0) then
@@ -29,7 +29,7 @@ if (MCC_artilleryEnabled) exitWith
 };
 
 //Group/Unit spawn
-if (MCC_spawnEnabled) exitWith
+if (missionNameSpace getVariable ["MCC_spawnEnabled",false]) exitWith
 {
 		createMarkerLocal ["mcc_spawnMarker", MCCGroupGenDispPosXY];
 		"mcc_spawnMarker" setMarkerTypeLocal "KIA";

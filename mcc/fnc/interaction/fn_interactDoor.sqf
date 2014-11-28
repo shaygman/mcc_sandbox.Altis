@@ -423,7 +423,7 @@ switch (true) do
 			} foreach ["commander","driver","gunner","cargo"]; 
 			
 			//Static-drag but no inventory
-			if ((_object isKindof "StaticWeapon" || _object isKindof "ReammoBox_F") && (_object != (player getVariable ["mcc_draggedObject", objNull])) && (count attachedObjects _object == 0)) then 
+			if ((_object isKindof "StaticWeapon" || _object isKindof "ReammoBox_F") && (_object != (player getVariable ["mcc_draggedObject", objNull])) && (count attachedObjects _object == 0) && (getmass _object < 501)) then 
 			{
 				_array set [count _array,["drag",format ["Drag %1",_displayName],format ["%1data\IconAmmo.paa",MCC_path]]];
 			};
@@ -441,7 +441,7 @@ switch (true) do
 			};
 			
 			//Gear menu
-			if !(_object isKindof "StaticWeapon") then 
+			if (!(_object isKindof "StaticWeapon") && !CP_activated) then 
 			{
 				_array set [count _array,["gear","Open inventory",format ["%1data\IconAmmo.paa",MCC_path]]];
 			};
@@ -487,8 +487,18 @@ switch (true) do
 		
 		if !(isNull (player getVariable ["mcc_draggedObject", objNull])) then {[] call MCC_fnc_releaseObject};
 		
+		//Quick get inside vehicles
+		{
+			if ((_object emptyPositions _x)>0 && ((vectorUp _object) select 2) >0 && locked _object <2) exitWith 
+			{
+				player action [format ["getIn%1",_x], _object];
+			};
+		} foreach ["driver","commander","gunner","cargo"];
+		
+		/*
 		if (_door == "") exitWith {};
 		_phase = if ((_object doorPhase _door) > 0) then {0} else {1};
 		_object animateDoor [_door, _phase, false];
+		*/
 	};
 };

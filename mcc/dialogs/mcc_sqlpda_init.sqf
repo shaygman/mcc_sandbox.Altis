@@ -13,8 +13,8 @@ uiNamespace setVariable ["MCC_sqlpdaMenu2", _disp displayCtrl 2];
 
 #define REQUIRE_SQL_CONSTRUCT_DISTANCE 200
 #define REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE 300
-#define REQUIRE_FOB_FOB_MIN_DISTANCE 1000
-#define REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE 300
+#define REQUIRE_FOB_FOB_MIN_DISTANCE 2000
+#define REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE 500
 #define ANCHOR_ITEM "Land_Rampart_F"
 {
 	_x ctrlshow false;
@@ -205,7 +205,7 @@ MCC_fnc_SQLPDAMenuclicked =
 								format ["Can't order to build deployables further then %1m from the player",REQUIRE_SQL_CONSTRUCT_DISTANCE],
 								"Can't build on water",
 								format ["FOB must be build in a minimum distance of %1m from another FOB or HQ",REQUIRE_FOB_FOB_MIN_DISTANCE],
-								format ["Deployables must be build in a minimum distance of %1m from an FOB",REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE],
+								format ["Deployables can be build in a maximum distance of %1m from an FOB",REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE],
 								format ["Only one construction can be built at the same time in %1 meters radius",REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE]
 		                    ];
 							

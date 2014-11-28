@@ -12,6 +12,27 @@ class mcc_sandbox_moduleCover : Module_F
 	
 	class Arguments
 	{
+		class cover
+		{
+			displayName = "Cover System";
+			description = "Enable/Disable cover system";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
 		class coverUI
 		{
 			displayName = "Cover System UI";
@@ -92,6 +113,69 @@ class mcc_sandbox_moduleCover : Module_F
 				{
 					name = "No";
 					value = 0;
+				};
+			};
+		};
+		
+		class interaction
+		{
+			displayName = "Interaction";
+			description = "Players can use MCC interaction with objects/units - requires key binding";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class interactionUI
+		{
+			displayName = "Interaction UI";
+			description = "Show/hide in-game interaction UI";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+		
+		class survive
+		{
+			displayName = "Survive mod ";
+			description = "Players can search objects in the world to find resources and weapons";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+					default = 1;
 				};
 			};
 		};

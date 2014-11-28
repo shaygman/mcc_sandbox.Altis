@@ -27,3 +27,12 @@ class MCC_6Rnd_12Gauge_beanBag
 	weaponpoolavailable = 1;
 	weight = 0;
 };
+
+class MCC_ammoBoxMag : CA_Magazine 
+{
+	scope = 2;
+	displayName = "Ammo Box";
+	picture = "\mcc_sandbox_mod\data\items\ammoBox.paa";
+	model = "\A3\Structures_F_EPB\Items\Military\Ammobox_rounds_F.p3d";
+	mass = 100;
+};

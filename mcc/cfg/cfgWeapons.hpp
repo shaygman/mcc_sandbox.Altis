@@ -286,15 +286,3 @@ class MCC_rice : itemCore
 		mass = 50;
 	};
 };
-
-class MCC_ammoBoxMag : itemCore 
-{
-	scope = 2;
-	displayName = "Ammo Box";
-	picture = "\mcc_sandbox_mod\data\items\ammoBox.paa";
-	model = "\A3\Structures_F_EPB\Items\Military\Ammobox_rounds_F.p3d";
-	class ItemInfo : MCC_Item 
-	{
-		mass = 100;
-	};
-};

@@ -289,7 +289,8 @@ if (random 25 > _suspectCorage || (_suspect getVariable ["MCC_Stunned", false]))
 			_escapeChance = _escapeChance + 0.01;
 		};
 		
-		_suspect setVariable ["MCC_disarmed",false]
+		_suspect setVariable ["MCC_disarmed",false];
+		[_suspect] spawn MCC_fnc_deleteHelper;
 	};
 } 
 else

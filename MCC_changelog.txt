@@ -19,16 +19,34 @@ Added: Pick up kit - NEW
 - Used for PvP match where you want to disable players inventory. 
 
 Added: Quick Weapon change - NEW
-- Switch weapons using the 1-5 keys. Needed for the ammo-box feature. 
+- Switch weapons using the 1-5 keys. Needed for the ammo-box feature.
+	1: Primary Weapon/Handgun
+	2: Launcher
+	3: Grenades TODO roll grenade
+	4: Utility/Explosives
+- Added: Quick drop of explosives and utility
 - Additional params:
 	MCC_quickWeaponChange - Enable/Disable quick weapon change.
-	
+
+- Added: Grenade throw	
 Added: Personal Ammo-Boxes - NEW
 - Added: Personal ammo-boxes that can be carried and dropped using the 4 key.
 - Players can approach the ammo box and press the interaction key to resupply ammo for their handgun, launchers and rifles. 
 - Each box have limited supply and will be deleted once depleted. 
 - Used for PvP match where you want to disable players inventory. 
-- TODO: add them to the role selection. 
+- Added to the rifleman role in role selection.
+
+Added: Logistics to helicopters - NEW
+- While flying above 15 meters and not far from 50 meters from the HQ helicopters pilots can press the MCC interaction key to bring up the logistic interface.
+- Helicopters can sling load one crate at a time and deliver it around the battlefield.
+- Added: Big supply crates for big transport helicopters. Big supply crates are equal to 4 regular supply crates. 
+- Added: Taru helicopter's pilots can purchase pods at the HQ.
+- Added: Gain XP from logsitics
+- Known Issue: With helicopters while slingloading a supply crate to a construction site when the crate hit the ground while slingloaded it may break the game, WORKAROUND - release the crate before it touches the ground.
+
+Added: Medical system - new
+MCC_medicDamageCoef 0.1-1
+MCC_medicXPmesseges boolean
 
 - fixed: Commander console artillery laser targets and multiple rounds - TODO check
 - fixed: Fast rope bugs since Helicopters DLC. 
@@ -38,15 +56,26 @@ Added: Personal Ammo-Boxes - NEW
 - fixed: Mission Genrator caching and delayed spawning by alawys on - set if you want it on or off from Spawn menu. 
 - fixed: Cover only worked when enabling cover UI.
 - fixed: Cover sitting animation get stuck. 
+- fixed: Atmoshphere brushes fog disapper. 
+- fixed: Tauro helicopter not able to sling load after attaching a pod. 
 - Changed: Cover module changed to Mechanic module so you can define more MCC players' mechanics there
 - Chnaged: MCC GAIA settings module include skill for AI from 0-1 instead of rookie/med/vetran
+- Changed: MCC interaction key while close to vehicle will quickly get you inside empty position in the vehicle (driver first) while holding the interaction will
+let you choose where you want to mount the vehicle. 
+- Changed: Limted the draggable object weight to 500 k/g
+- Added: Role selection to MCC settings module
+- Added: Survive mod to MCC settings (mechanics) module
+- Added: while role selection is active players won't be able to disassemble static weapons. 
+- Fixed: Some UI text that wasn't scalable with changing interface size - still it is recommanded to use MCC with interface size - small. 
+- Added: MCC_ingameUI - turn off for no in-game UI such as above IED: available in the mission settings and the MCC Settings (Mechanics) module. 
+- Changed: Artillery spread for Commander Console: "PRECISE" = 5m, "TIGHT"=50m, "SCATTERED" =100m, "WIDE" = 150
 
 Fix: FOB west/east
-TODO - heli supply
 TODO - medical
 TODO - ambient
 TODO - NV
 TODO - supression
+TODO - sling loading objects
 
 
 Change log r11:

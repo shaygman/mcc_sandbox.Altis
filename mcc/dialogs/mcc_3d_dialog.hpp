@@ -50,7 +50,7 @@ class MCC3D_Dialog
 			colorSelect[]={1.0,0.35,0.3,1};
 			colorBackground[]={0,0,0,1};
 			colorSelectBackground[]={0,0,0,1}; 
-			sizeEx=0.028;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			
 			x = 0.053125 * safezoneW + safezoneX;
 			y = 0.0491758 * safezoneH + safezoneY;
@@ -66,7 +66,7 @@ class MCC3D_Dialog
 			y = 0.0821629 * safezoneH + safezoneY;
 			w = 0.120313 * safezoneW;
 			h = 0.0219914 * safezoneH;
-			sizeEx=0.028; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)"; 
 			onLBSelChanged=__EVAL ("[0] execVM '"+MCCPATH+"mcc\pop_menu\group_change3d.sqf'");
 		};
 			
@@ -77,14 +77,14 @@ class MCC3D_Dialog
 			y = 0.11515 * safezoneH + safezoneY;
 			w = 0.120313 * safezoneW;
 			h = 0.0219914 * safezoneH;
-			sizeEx=0.028;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			onLBSelChanged=__EVAL ("[1] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");
 		};
 		
 		class setting_Empty : MCC_RscCombo 
 		{	
 			idc=MCC_SETTING_EMPTY; 
-			sizeEx=0.028;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.053125 * safezoneW + safezoneX;
 			y = 0.148137 * safezoneH + safezoneY;
 			w = 0.120313 * safezoneW;
@@ -135,7 +135,7 @@ class MCC3D_Dialog
 		{
 			idc=MCC_PRESETS;
 			colorBackground[] = {0,0,0,1};
-			sizeEx=0.028;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.053125 * safezoneW + safezoneX;
 			y = 0.291081 * safezoneH + safezoneY;
 			w = 0.0916667 * safezoneW;
@@ -148,7 +148,7 @@ class MCC3D_Dialog
 			style=MCCST_LEFT; 
 			colorBackground[]={1,1,1,0}; 
 			colorText[]={0,1,1,1};
-			sizeEx=0.03; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.00156247 * safezoneW + safezoneX;
 			y = 0.0491758 * safezoneH + safezoneY;
 			w = 0.0458333 * safezoneW;
@@ -160,7 +160,7 @@ class MCC3D_Dialog
 		{
 			idc = -1; 
 			colorText[]={0,1,1,1};
-			sizeEx=0.04; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.85)";
 			x = 0.00729163 * safezoneW + safezoneX;
 			y = 0.00519296 * safezoneH + safezoneY;
 			w = 0.0859375 * safezoneW;
@@ -172,7 +172,7 @@ class MCC3D_Dialog
 		{	
 			idc = -1; 
 			colorText[]={0,1,1,1};
-			sizeEx=0.03; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.00156247 * safezoneW + safezoneX;
 			y = 0.0821629 * safezoneH + safezoneY;
 			w = 0.0458333 * safezoneW;
@@ -184,7 +184,7 @@ class MCC3D_Dialog
 		{
 			idc = -1; 
 			colorText[]={0,1,1,1};
-			sizeEx=0.03; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.00156247 * safezoneW + safezoneX;
 			y = 0.11515 * safezoneH + safezoneY;
 			w = 0.0458333 * safezoneW;
@@ -195,7 +195,7 @@ class MCC3D_Dialog
 		{
 			idc = -1; 
 			colorText[]={0,1,1,1};
-			sizeEx=0.03; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.00156247 * safezoneW + safezoneX;
 			y = 0.148137 * safezoneH + safezoneY;
 			w = 0.0458333 * safezoneW;
@@ -206,7 +206,7 @@ class MCC3D_Dialog
 		{
 			idc = -1; 
 			colorText[]={0,1,1,1};
-			sizeEx=0.03; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.00156247 * safezoneW + safezoneX;
 			y = 0.181124 * safezoneH + safezoneY;
 			w = 0.0458333 * safezoneW;
@@ -218,7 +218,7 @@ class MCC3D_Dialog
 		{
 			idc = -1; 
 			colorText[]={0,1,1,1};
-			sizeEx=0.03; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.00156247 * safezoneW + safezoneX;
 			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.0401042 * safezoneW;
@@ -230,7 +230,7 @@ class MCC3D_Dialog
 		{
 			idc = -1; 
 			colorText[]={0,1,1,1};
-			sizeEx=0.03; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.00156247 * safezoneW + safezoneX;
 			y = 0.291081 * safezoneH + safezoneY;
 			w = 0.0458333 * safezoneW;
@@ -242,7 +242,7 @@ class MCC3D_Dialog
 		{
 			idc = -1; 
 			colorText[]={0,1,1,1};
-			sizeEx=0.03; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.00156247 * safezoneW + safezoneX;
 			y = 0.324069 * safezoneH + safezoneY;
 			w = 0.0458333 * safezoneW;
@@ -254,7 +254,7 @@ class MCC3D_Dialog
 		class Zone_Loc : MCC_RscCombo 
 		{
 			idc=MCC_ZONE_LOC;
-			sizeEx=0.028;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			x = 0.053125 * safezoneW + safezoneX;
 			y = 0.324069 * safezoneH + safezoneY;
 			w = 0.108854 * safezoneW;
@@ -269,8 +269,7 @@ class MCC3D_Dialog
 			w = 0.0286458 * safezoneW;
 			h = 0.0219914 * safezoneH;
 			
-			size=0.02; 
-			sizeEx=0.02; 
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.65)";
 			text="Add"; 
 			onButtonClick=__EVAL("[2] execVM '"+MCCPATH+"mcc\pop_menu\spawn_group3d.sqf'");
 		};
@@ -391,11 +390,13 @@ class MCC3D_Dialog
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
 		h = 0.0549786 * safezoneH;
-		sizeEx = 0.028;text = "";};
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		text = "";};
 	class initBackground : MCC_RscText {idc = -1;
 		x = 0.053125 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.120313 * safezoneW;
 		h = 0.0549786 * safezoneH;
-		sizeEx = 0.028;text = "";};
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+		text = "";};
 };

@@ -156,17 +156,35 @@ publicvariable "CP_riflemanItmes1";
 CP_riflemanItmes2 = ["SERVER_RIFLEMAN", "items", "CP_riflemanItmes2", "ARRAY"] call iniDB_read;
 if (count CP_riflemanItmes2 == 0) then
 {
-	CP_riflemanItmes2		= call compileFinal str	[
-									[3,"MiniGrenade",2],
-									[0,"SmokeShell",0],
-									[7,"HandGrenade",2],
-									[11,"SmokeShellRed",2],
-									[11,"SmokeShellGreen",2],
-									[21,"Chemlight_green",4],
-									[21,"Chemlight_red",4],
-									[21,"Chemlight_yellow",4],
-									[31,"B_IR_Grenade",2]
-									];
+	if (MCC_isMode) then
+	{
+		CP_riflemanItmes2		= call compileFinal str	[
+										[0,"", 0],
+										[0,"MCC_ammoBoxMag",2],
+										[3,"SmokeShell",2],
+										[7,"HandGrenade",2],
+										[11,"SmokeShellRed",2],
+										[11,"SmokeShellGreen",2],
+										[21,"Chemlight_green",4],
+										[21,"Chemlight_red",4],
+										[21,"Chemlight_yellow",4],
+										[31,"B_IR_Grenade",2]
+										];
+	}
+	else
+	{
+		CP_riflemanItmes2		= call compileFinal str	[
+										[3,"MiniGrenade",2],
+										[0,"SmokeShell",0],
+										[7,"HandGrenade",2],
+										[11,"SmokeShellRed",2],
+										[11,"SmokeShellGreen",2],
+										[21,"Chemlight_green",4],
+										[21,"Chemlight_red",4],
+										[21,"Chemlight_yellow",4],
+										[31,"B_IR_Grenade",2]
+										];
+	};
 
 	["SERVER_RIFLEMAN", "items", "CP_riflemanItmes2",CP_riflemanItmes2, "ARRAY"] call iniDB_write;
 }; 

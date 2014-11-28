@@ -196,7 +196,7 @@ class ArtilleryDialog
 			y = 0.247 * safezoneH + safezoneY;
 			w = 0.1375 * safezoneW;
 			h = 0.0275 * safezoneH;
-			sizeEx = 0.03;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			text = "";
 		};
 		class HW_ArtiInstructions : HW_ArtiTextField {
@@ -207,7 +207,7 @@ class ArtilleryDialog
 			y = 0.214 * safezoneH + safezoneY;
 			w = 0.131771 * safezoneW;
 			h = 0.21395 * safezoneH;
-			sizeEx = 0.0225;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.6)";
 			text = "Always use 'Cancel' to unregister without actually executing a fire mission.\n\n\n\n\n\n\n\n\n\n\n\n\n\nWritten by Bon_Inf*.";
 		};
 		class HW_ArtiShellsLeft : HW_ArtiTextField 
@@ -279,8 +279,7 @@ class ArtilleryDialog
 			y = 0.247 * safezoneH + safezoneY;
 			w = 0.0401042 * safezoneW;
 			h = 0.022 * safezoneH;
-
-			sizeEx = 0.03;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			text = "";
 		};
 		class HW_ArtiYcoordunit : HW_ArtiXCoordunit 
@@ -363,7 +362,7 @@ class ArtilleryDialog
 			y = 0.258 * safezoneH + safezoneY;
 			w = 0.01375 * safezoneW;
 			h = 0.099 * safezoneH;
-			sizeEx = 0.03;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			text = "Height";
 		};
 		class HW_ArtiSliderDescr : MCC_RscText 
@@ -376,7 +375,7 @@ class ArtilleryDialog
 			y = 0.368 * safezoneH + safezoneY;
 			w = 0.020625 * safezoneW;
 			h = 0.0275 * safezoneH;
-			sizeEx = 0.025;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			text = "";
 		};
 
@@ -387,7 +386,7 @@ class ArtilleryDialog
 			colorText[] = { 1, 1, 1, 1 };
 			colorSelect[] = { 1.0, 0.35, 0.3, 1 };
 			colorSelectBackground[] = { 0, 0, 0, 1 };
-			sizeEx = 0.028;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			onLBSelChanged = "_this call arti_dlgUpdate";
 			x = 0.282292 * safezoneW + safezoneX;
 			y = 0.445 * safezoneH + safezoneY;
@@ -429,7 +428,7 @@ class ArtilleryDialog
 			y = 0.445 * safezoneH + safezoneY;
 			w = 0.0572917 * safezoneW;
 			h = 0.022 * safezoneH;
-			sizeEx = 0.03;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			text = "Type:";
 		};
 		class HW_ArtiNrShellsTitle : HW_ArtiTypeTitle 
@@ -484,7 +483,7 @@ class ArtilleryDialog
 			w = 0.0630208 * safezoneW;
 			h = 0.022 * safezoneH;
 			size = 0.02821;
-			sizeEx = 0.02821;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			text = "Confirm";
 			onButtonClick = __EVAL("[] execVM '"+MCCPATH+"bon_artillery\bon_arti_setup.sqf'");
 		};
@@ -538,7 +537,7 @@ class ArtilleryDialog
 			y = 0.511 * safezoneH + safezoneY;
 			w = 0.0916667 * safezoneW;
 			h = 0.0275 * safezoneH;
-			sizeEx = 0.028;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			text = "Corr. left-right";
 		};
 		class HW_ArtiRightCorrection : MCC_RscButton 
@@ -577,7 +576,7 @@ class ArtilleryDialog
 			y = 0.478 * safezoneH + safezoneY;
 			w = 0.0916667 * safezoneW;
 			h = 0.0275 * safezoneH;
-			sizeEx = 0.028;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			text = "Corr. distance";
 		};
 		class HW_ArtiUpCorrection : HW_ArtiRightCorrection 

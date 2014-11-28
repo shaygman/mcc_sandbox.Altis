@@ -4,6 +4,7 @@ private ["_unit","_goggles","_headgear","_uniform","_uniformItems","_vest","_mag
 _unit 	= _this select 0;
 _killer = if (count _this > 1) then {_this select 1} else {objnull};
 
+
 //Case we in role selection and have tickets
 if (CP_activated) then
 {
@@ -11,6 +12,10 @@ if (CP_activated) then
 	
 	_side = _unit getVariable ["CP_side", playerside];
 	_tickets = [_side] call BIS_fnc_respawnTickets;
+	
+	//Delete utility placed by the player
+	{deleteVehicle _x} foreach (player getVariable ["MCC_utilityActiveCharges",[]]);
+
 	if (_tickets > 1) then
 	{
 		_tickets = _tickets -1; 

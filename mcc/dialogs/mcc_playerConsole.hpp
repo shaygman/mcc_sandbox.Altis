@@ -96,7 +96,8 @@ class MCC_playerConsole {
   MCC_ConsoleEvacApproachText,
   MCC_ConsoleEvacApproachComboBox,
   MCC_ConsoleCallEvacButton,
-  MCC_ConsoleCallEvac3WPButton
+  MCC_ConsoleCallEvac3WPButton,
+  MCC_ConsoleHelp
   };
   
  //========================================= Background========================================
@@ -544,6 +545,19 @@ class mcc_consoleF6: MCC_RscButton
 		h = 0.03 * safezoneH;
 		onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\console\liveFeed.sqf'");
 	};
+	class MCC_ConsoleHelp: MCC_RscStructuredText
+	{
+		idc = -1;
+		text = "(?)";
+		colorBackground[] = { 0, 0, 0, 0.7};
+		onMouseEnter = "[_this, true,12,'console'] spawn MCC_fnc_help";
+				
+		x = 0.47 * safezoneW + safezoneX;
+		y = 0.225 * safezoneH + safezoneY;
+		w = 0.020625 * safezoneW;
+		h = 0.033 * safezoneH;
+	};
+	
 	class MCC_ConsoleInfoLiveFeedClose: MCC_RscButton {
 		idc = MCC_CONSOLEINFOLIVEFEEDCLOSE;
 		text = "Close Feed";

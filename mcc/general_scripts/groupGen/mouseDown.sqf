@@ -91,7 +91,7 @@ if (mcc_missionmaker == (name player)) then
 			};
 		} foreach MCC_activeMarkers;
 		
-		if ((_nearZone || _nearMarker) && !MCC_artilleryEnabled && !MCC_spawnEnabled && !MCC_ConsoleRuler && !MCC_doubleClicked && !MCC_zone_drawing && !MCC_CASrequestMarker && !MCC_brush_drawing && !MCC_drawTriggers
+		if ((_nearZone || _nearMarker) && !(missionNameSpace getVariable ["MCC_artilleryEnabled",false]) && !(missionNameSpace getVariable ["MCC_spawnEnabled",false]) && !MCC_ConsoleRuler && !MCC_doubleClicked && !MCC_zone_drawing && !MCC_CASrequestMarker && !MCC_brush_drawing && !MCC_drawTriggers
 			&& !MCC_drawMinefield && !MCC_delete_drawing && !MCC_ambushPlacing && !MCC_UMParadropRequestMarker) exitWith
 		{
 				private ["_size","_pos","_center","_width","_hight"];
@@ -168,9 +168,9 @@ if (mcc_missionmaker == (name player)) then
 	};
 	
 	//Artillery
-	if (MCC_artilleryEnabled &&  _pressed == 0) exitWith
+	if ((missionNameSpace getVariable ["MCC_artilleryEnabled",false]) &&  _pressed == 0) exitWith
 	{
-		if (!_ctrlKey) then {MCC_artilleryEnabled = false}; 
+		if (!_ctrlKey) then {missionNameSpace setVariable ["MCC_artilleryEnabled",false]}; 
 		if (MCC_capture_state) then
 		{
 			hint "Artillery captured.";
@@ -195,9 +195,9 @@ if (mcc_missionmaker == (name player)) then
 	};
 	
 	//Spawn
-	if (MCC_spawnEnabled &&  _pressed == 0) exitWith
+	if ((missionNameSpace getVariable ["MCC_spawnEnabled",false]) &&  _pressed == 0) exitWith
 	{
-		if (!_ctrlKey) then {MCC_spawnEnabled = false}; 
+		if (!_ctrlKey) then {missionNameSpace setVariable ["MCC_spawnEnabled",false]}; 
 		if (MCC_capture_state) then
 		{
 			hint "Spawned Captured";

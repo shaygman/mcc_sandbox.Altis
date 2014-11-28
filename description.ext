@@ -10,6 +10,7 @@ onLoadMission = MCC Sandbox stands for Mission Control Centre. With it you can c
 respawn      = "BASE";
 respawndelay = 5;
 disabledAI   = 1;
+enableDebugConsole = 1;
 
 //----- For PvP ---------
 disableChannels[]={0};

@@ -2,7 +2,7 @@
 // Example:[_conType, _pos , _side, _dir] call MCC_fnc_construction;
 //==================================================================================================================================================================================
 private ["_conType","_pos","_time","_side","_reqCrates","_vehicleType","_baseAnchor","_markerName","_markerType","_text","_complete","_newObjects","_const",
-         "_bagFence","_dir"];
+         "_bagFence","_dir","_availableCrates","_cratesArray"];
 		 
 _conType	=_this select 0;
 _pos	 	=_this select 1;
@@ -83,30 +83,47 @@ _markerName = format ["MCC_constractMarkerName_%1",["MCC_constractMarkerName_",1
 //Main loop
 _complete 	= false; 
 _newObjects = []; 
+_availableCrates = 0;
+_cratesArray = MCC_SUPPLY_CRATEITEMBIG + [MCC_SUPPLY_CRATEITEM];
+
 while {alive _baseAnchor && time < (_time + TIME_BEFORE_DELETE) && !_complete} do
 {
 	private ["_nearbyCrates","_nearbyMen","_prop","_propPos"]; 
 	
 	sleep 1; 
-	
-	//How many players from my side are near
+
 	if (floor time % 10 == 0) then
 	{
+		//find crates
 		_nearByCrates = [];
+		
 		{
-			if (isNull attachedTo _x) then
+			_type = _x;
 			{
-				_nearByCrates set [count _nearByCrates, _x];
-			};
-		} foreach (getPosATL _baseAnchor nearObjects [MCC_SUPPLY_CRATEITEM, 50]);
-				
+				if (isNull attachedTo _x && ((getpos _x) select 2 < 0.2) ) then
+				{
+					_nearByCrates set [count _nearByCrates, _x];
+				};
+			} foreach (getPosATL _baseAnchor nearObjects [_type, 50]);
+		} foreach _cratesArray;
+		
+		//How many players from my side are near
 		_nearbyMen = {alive _x && {side _x == _side}} count (getPosATL _baseAnchor nearEntities ["CAManBase", 50]);
 		
 		if (_nearbyMen > REQUIRE_MEMBERS && count _nearbyCrates > 0) then
 		{
 			_prop = _nearbyCrates select 0;
 			_propPos = getposATL _prop;
+			_availableCrates = _availableCrates + (if (typeof _prop == MCC_SUPPLY_CRATEITEM) then {1} else {4});
+			
+			//give XP 
+			if ((_prop getVariable ["MCC_loadedBy",""]) != "" && CP_activated) then
+			{
+				[[_prop getVariable ["MCC_loadedBy",""], 200 ,"For logstics"], "MCC_fnc_addRating", true] spawn BIS_fnc_MP;
+			};
+			
 			deletevehicle _prop;
+			
 			_prop = "Land_Sacks_heap_F" createvehicle _propPos;
 			waituntil {!isnull _prop};
 			_prop setpos _propPos;
@@ -115,10 +132,10 @@ while {alive _baseAnchor && time < (_time + TIME_BEFORE_DELETE) && !_complete} d
 			//Update marker
 			[compile format ['deleteMarker "%1";',_markerName],"BIS_fnc_spawn", _side ,false] call BIS_fnc_MP; 
 			sleep 1; 
-			[[[_markerName], _pos, "colorBlue", "loc_Tourism", format ["Building %1: %2/%3 crates",_text, count _newObjects, _reqCrates],false],"BIS_fnc_markerCreate", _side,false] call BIS_fnc_MP; 
+			[[[_markerName], _pos, "colorBlue", "loc_Tourism", format ["Building %1: %2/%3 crates",_text, _availableCrates, _reqCrates],false],"BIS_fnc_markerCreate", _side,false] call BIS_fnc_MP; 
 		};
 		
-		if (count _newObjects >= _reqCrates) then
+		if (_availableCrates >= _reqCrates) then
 		{
 			_complete = true; 
 		};

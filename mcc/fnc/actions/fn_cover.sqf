@@ -16,7 +16,7 @@ if(alive player && vehicle player == player) then
 	_leftFront 		= player modelToWorld [(_headPos select 0)-0.8,(_headPos select 1)+2,(_headPos select 2)];
 	_rightFront 	= player modelToWorld [(_headPos select 0)+0.8,(_headPos select 1)+2,(_headPos select 2)];
 	_upFront 		= player modelToWorld [(_headPos select 0),(_headPos select 1)+2,(_headPos select 2)+0.3];
-	_centerFront	= player modelToWorld [(_headPos select 0),(_headPos select 1)+1,(_headPos select 2)];
+	_centerFront	= player modelToWorld [(_headPos select 0),(_headPos select 1)+1.5,(_headPos select 2)];
 	_centerFrontFar	= player modelToWorld [(_headPos select 0),(_headPos select 1)+3,(_headPos select 2)];
 	_stance 		= stance player;
 	

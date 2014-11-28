@@ -13,7 +13,7 @@
 
 //Made by Shay_Gman (c) 06.14
 private ["_pos", "_trapvolume", "_IEDExplosionType", "_IEDDisarmTime", "_IEDJammable", "_IEDTriggerType", "_IEDAmbushGroup",
- "_trapdistance", "_iedside", "_fakeIed", "_dummy","_ok","_iedDir","_init"]; 
+ "_trapdistance", "_iedside", "_fakeIed", "_dummy","_ok","_iedDir","_init","_helper"]; 
 disableSerialization;
 
 if (!isServer) exitWIth {}; 
@@ -64,6 +64,9 @@ _dummy setvariable ["iedMarkerName", "IED", true];
 _dummy setvariable ["iedTrigered", false, true]; 
 _dummy setvariable ["iedAmbush", false, true];
 _dummy setvariable ["MCC_IEDtype", "ied", true];
+
+//Create helper
+[_dummy,"Hold %1 to disarm"] spawn MCC_fnc_createHelper;
 
 //If it is radio IED
 if (_IEDTriggerType == 1) then 

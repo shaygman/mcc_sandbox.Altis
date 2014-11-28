@@ -35,7 +35,7 @@ if (_ctrlKey && _pressed == 10) then {MCC_ConsoleGroups9 = MCC_ConsoleGroupSelec
 if (_ctrlKey && _pressed == 11) then {MCC_ConsoleGroups10 = MCC_ConsoleGroupSelected}; //0
 
 //select group from a number
-if (((_pressed >= 2) && (_pressed <=11)) && !_shift && !_ctrlKey && !_alt) then
+if (((_pressed >= 2) && (_pressed <=11)) && !_shift && !_ctrlKey && !_alt && !isnil "MCC_ConsoleGroupSelected") then
 	{
 		{_x removeGroupIcon (_x getvariable "MCCgroupIconDataSelected")} foreach MCC_ConsoleGroupSelected;
 		_selectedGroup = call compile format ["MCC_ConsoleGroups%1",_pressed -1];
