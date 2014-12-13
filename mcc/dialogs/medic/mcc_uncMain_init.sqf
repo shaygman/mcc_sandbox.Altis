@@ -59,6 +59,7 @@ while {dialog && alive player && (player getvariable ["MCC_medicUnconscious",fal
 	if (_remaineBlood <= 0) then
 	{
 		closeDialog 0;
+		player setCaptive false;
 		player setDamage 1;
 	};
 
@@ -86,3 +87,5 @@ _disp displayRemoveEventHandler ["KeyDown", _escEH];
 ppEffectDestroy  _rPPEffect;
 ppEffectDestroy  _cPPEffect;
 player setFatigue 0;
+player setCaptive false;
+closeDialog 0;

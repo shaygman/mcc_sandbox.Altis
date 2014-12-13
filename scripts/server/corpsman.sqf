@@ -3,16 +3,15 @@
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------Primary----------------------------------------------------------------
 
-//West 
+//West
 CP_corpsmanWeaponWest = ["SERVER_Corpsman", "primary", "CP_corpsmanWeaponWest", "ARRAY"] call iniDB_read;
 if (count CP_corpsmanWeaponWest == 0) then
-{		
+{
 	CP_corpsmanWeaponWest 	= call compileFinal str	[
-							[0,"arifle_TRG20_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_Red",2]],
-							[13,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_Red",2]],
-							[26,"arifle_MXC_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]],
-							[39,"arifle_MXC_Black_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]]
-						   ]; 
+							[0,"arifle_TRG20_F",["30Rnd_556x45_Stanag",9,"30Rnd_556x45_Stanag_Tracer_Red",2]],
+							[13,"arifle_MXC_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]],
+							[26,"arifle_MXC_Black_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]]
+						   ];
 	["SERVER_Corpsman", "primary", "CP_corpsmanWeaponWest",CP_corpsmanWeaponWest, "ARRAY"] call iniDB_write;
 };
 publicvariable "CP_corpsmanWeaponWest";
@@ -20,10 +19,10 @@ publicvariable "CP_corpsmanWeaponWest";
 {
 	_weapon = _x select 1;
 	_factor		= _forEachIndex * 13;
-	
+
 	if (!isnil "_weapon") then
 	{
-		_weaponAttachments = ["SERVER_Corpsman", "primary_attachments_west", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read; 
+		_weaponAttachments = ["SERVER_Corpsman", "primary_attachments_west", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read;
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
@@ -44,12 +43,12 @@ publicvariable "CP_corpsmanWeaponWest";
 //East
 CP_corpsmanWeaponEast = ["SERVER_Corpsman", "primary", "CP_corpsmanWeaponEast", "ARRAY"] call iniDB_read;
 if (count CP_corpsmanWeaponEast == 0) then
-{							   
+{
 	CP_corpsmanWeaponEast 	= call compileFinal str 	[
-							[0,"arifle_Katiba_C_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_green",2]],
-							[13,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_green",2]],
-							[26,"arifle_MX_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]]
-							]; 
+							[0,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9,"30Rnd_556x45_Stanag_Tracer_Green",2]],
+							[13,"arifle_Katiba_C_F",["30Rnd_65x39_caseless_green",9,"30Rnd_65x39_caseless_green_mag_Tracer",2]],
+							[26,"arifle_MXC_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]]
+							];
 	["SERVER_Corpsman", "primary", "CP_corpsmanWeaponEast",CP_corpsmanWeaponEast, "ARRAY"] call iniDB_write;
 };
 publicvariable "CP_corpsmanWeaponEast";
@@ -57,10 +56,10 @@ publicvariable "CP_corpsmanWeaponEast";
 {
 	_weapon = _x select 1;
 	_factor		= _forEachIndex * 13;
-	
+
 	if (!isnil "_weapon") then
 	{
-		_weaponAttachments = ["SERVER_Corpsman", "primary_attachments_east", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read; 
+		_weaponAttachments = ["SERVER_Corpsman", "primary_attachments_east", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read;
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
@@ -82,9 +81,9 @@ CP_corpsmanWeaponGuer = ["SERVER_Corpsman", "primary", "CP_corpsmanWeaponGuer", 
 if (count CP_corpsmanWeaponGuer == 0) then
 {
 	CP_corpsmanWeaponGuer 	= call compileFinal str	[
-							[0,"arifle_TRG20_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_green",2]],
-							[13,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9,"30Rnd_65x39_caseless_green",2]],
-							[26,"arifle_MXC_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]]
+							[0,"arifle_Mk20C_F",["30Rnd_556x45_Stanag",9,"30Rnd_556x45_Stanag_Tracer_Yellow",2]],
+							[13,"arifle_MXC_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]],
+							[26,"arifle_MXC_Black_F",["30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2]]
 							];
 	["SERVER_Corpsman", "primary", "CP_corpsmanWeaponGuer",CP_corpsmanWeaponGuer, "ARRAY"] call iniDB_write;
 };
@@ -93,10 +92,10 @@ publicvariable "CP_corpsmanWeaponGuer";
 {
 	_weapon = _x select 1;
 	_factor		= _forEachIndex * 13;
-	
+
 	if (!isnil "_weapon") then
 	{
-		_weaponAttachments = ["SERVER_Corpsman", "primary_attachments_guer", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read; 
+		_weaponAttachments = ["SERVER_Corpsman", "primary_attachments_guer", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read;
 		if (count _weaponAttachments == 0) then
 		{
 			_weaponAttachments	=	call compileFinal str[
@@ -111,11 +110,11 @@ publicvariable "CP_corpsmanWeaponGuer";
 	};
 } foreach CP_corpsmanWeaponGuer;
 
-//----------------------------------------------------Secondery----------------------------------------------------------------	
+//----------------------------------------------------Secondery----------------------------------------------------------------
 //west
 CP_corpsmanSecWest = ["SERVER_Corpsman", "secondery", "CP_corpsmanSecWest", "ARRAY"] call iniDB_read;
 if (count CP_corpsmanSecWest == 0) then
-{				   		   
+{
 	CP_corpsmanSecWest 	= call compileFinal str	[[0,"",["",0]]];
 	["SERVER_Corpsman", "secondery", "CP_corpsmanSecWest",CP_corpsmanSecWest, "ARRAY"] call iniDB_write;
 };
@@ -138,7 +137,7 @@ if (count CP_corpsmanSecGuer == 0) then
 	["SERVER_Corpsman", "secondery", "CP_corpsmanSecGuer",CP_corpsmanSecGuer, "ARRAY"] call iniDB_write;
 };
 publicvariable "CP_corpsmanSecGuer";
-//------------------------------------------------------------------------------Items---------------------------------------------------------------------------	
+//------------------------------------------------------------------------------Items---------------------------------------------------------------------------
 CP_corpsmanItmes1 = ["SERVER_Corpsman", "items", "CP_corpsmanItmes1", "ARRAY"] call iniDB_read;
 if (count CP_corpsmanItmes1 == 0) then
 {
@@ -149,8 +148,8 @@ if (count CP_corpsmanItmes1 == 0) then
 									];
 
 	["SERVER_Corpsman", "items", "CP_corpsmanItmes1",CP_corpsmanItmes1, "ARRAY"] call iniDB_write;
-}; 
-publicvariable "CP_corpsmanItmes1"; 
+};
+publicvariable "CP_corpsmanItmes1";
 
 
 CP_corpsmanItmes2 = ["SERVER_Corpsman", "items", "CP_corpsmanItmes2", "ARRAY"] call iniDB_read;
@@ -169,8 +168,8 @@ if (count CP_corpsmanItmes2 == 0) then
 									];
 
 	["SERVER_Corpsman", "items", "CP_corpsmanItmes2",CP_corpsmanItmes2, "ARRAY"] call iniDB_write;
-}; 
-publicvariable "CP_corpsmanItmes2"; 
+};
+publicvariable "CP_corpsmanItmes2";
 
 CP_corpsmanItmes3 = ["SERVER_Corpsman", "items", "CP_corpsmanItmes3", "ARRAY"] call iniDB_read;
 if (count CP_corpsmanItmes3 == 0) then
@@ -188,26 +187,39 @@ if (count CP_corpsmanItmes3 == 0) then
 									];
 
 	["SERVER_Corpsman", "items", "CP_corpsmanItmes3",CP_corpsmanItmes3, "ARRAY"] call iniDB_write;
-}; 
-publicvariable "CP_corpsmanItmes3"; 
+};
+publicvariable "CP_corpsmanItmes3";
 
 
 CP_corpsmanGeneralItmes = ["SERVER_Corpsman", "items", "CP_corpsmanGeneralItmes", "ARRAY"] call iniDB_read;
 if (count CP_corpsmanGeneralItmes == 0) then
 {
-	CP_corpsmanGeneralItmes		= call compileFinal str	[
+	CP_corpsmanGeneralItmes		= if (missionNamespace getVariable ["MCC_medicComplex",false]) then
+	{
+		call compileFinal str	[
 									[0,"ItemMap",1],
 									[0,"ItemCompass",1],
 									[0,"ItemWatch",1],
 									[0,"ItemRadio",1],
-									[0,"FirstAidKit",10],
-									[0,"SmokeShell",2],
-									[0,"Medikit",1]
+									[0,"MCC_epipen",8],
+									[0,"MCC_salineBag",2],
+									[0,"MCC_firstAidKit",1]
 									];
+	}
+	else
+	{
+		call compileFinal str	[
+									[0,"ItemMap",1],
+									[0,"ItemCompass",1],
+									[0,"ItemWatch",1],
+									[0,"ItemRadio",1],
+									[0,"FirstAidKit",10]
+									];
+	};
 
 	["SERVER_Corpsman", "items", "CP_corpsmanGeneralItmes",CP_corpsmanGeneralItmes, "ARRAY"] call iniDB_write;
-}; 
-publicvariable "CP_corpsmanGeneralItmes"; 
+};
+publicvariable "CP_corpsmanGeneralItmes";
 //------------------------------------------------------------------------------Gear---------------------------------------------------------------------------
 
 CP_corpsmanUniformsWest = ["SERVER_Corpsman", "gear", "CP_corpsmanUniformsWest", "ARRAY"] call iniDB_read;
@@ -221,13 +233,13 @@ if (count CP_corpsmanUniformsWest == 0) then
 										[[0,"B_AssaultPack_mcamo"],[12,"B_Kitbag_mcamo"],[27,"B_Bergen_mcamo"],[39,"B_AssaultPack_blk"]],	//Backpack
 										[[0,"U_B_CombatUniform_mcam"],[15,"U_B_CombatUniform_mcam_tshirt"],[30,"U_B_CombatUniform_mcam_vest"],[50,"U_B_Wetsuit"]]	//Uniforms
 									];
-	["SERVER_Corpsman", "gear", "CP_corpsmanUniformsWest",CP_corpsmanUniformsWest, "ARRAY"] call iniDB_write;	
+	["SERVER_Corpsman", "gear", "CP_corpsmanUniformsWest",CP_corpsmanUniformsWest, "ARRAY"] call iniDB_write;
 };
 publicvariable "CP_corpsmanUniformsWest";
 
 CP_corpsmanUniformsEast = ["SERVER_Corpsman", "gear", "CP_corpsmanUniformsEast", "ARRAY"] call iniDB_read;
 if (count CP_corpsmanUniformsEast == 0) then
-{								
+{
 	CP_corpsmanUniformsEast	= call compileFinal str	[
 										[[0,""],[20,"NVGoggles"]],		//NV
 										[[0,"H_Booniehat_khk"],[10,"H_Booniehat_mcamo"]],	//Head
@@ -242,7 +254,7 @@ publicvariable "CP_corpsmanUniformsEast";
 
 CP_corpsmanUniformsGuar = ["SERVER_Corpsman", "gear", "CP_corpsmanUniformsGuar", "ARRAY"] call iniDB_read;
 if (count CP_corpsmanUniformsGuar == 0) then
-{	
+{
 	CP_corpsmanUniformsGuar	= call compileFinal str	[
 										[[0,""],[20,"NVGoggles"]],		//NV
 										[[0,"H_Booniehat_khk"],[10,"H_Booniehat_mcamo"]],	//Head

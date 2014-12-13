@@ -55,11 +55,11 @@ MCC_medicPunishTK	boolean
 
 
 
-- fixed: Commander console artillery laser targets and multiple rounds - TODO check
+- fixed: Commander console artillery laser targets and multiple rounds 
 - fixed: Fast rope bugs since Helicopters DLC. 
 - fixed: Transperent zone when first creating a zone. 
 - fixed: Access rights module duplicate MCC and didn't work for admins.
-- fixed: Cache by default on while spawning units not in zone.
+- fixed: Cache will no longer by default on when spawning units not in zone.
 - fixed: Mission Genrator caching and delayed spawning by alawys on - set if you want it on or off from Spawn menu. 
 - fixed: Cover only worked when enabling cover UI.
 - fixed: Cover sitting animation get stuck. 
@@ -76,13 +76,12 @@ let you choose where you want to mount the vehicle.
 - Fixed: Some UI text that wasn't scalable with changing interface size - still it is recommanded to use MCC with interface size - small. 
 - Added: MCC_ingameUI - turn off for no in-game UI such as above IED: available in the mission settings and the MCC Settings (Mechanics) module. 
 - Changed: Artillery spread for Commander Console: "PRECISE" = 5m, "TIGHT"=50m, "SCATTERED" =100m, "WIDE" = 150
+- Added: Max load, Weight and armor value to the uniform selection in roles selection. 
 
+TODO
+Fix gear script in MP
 Fix: FOB west/east
-bandage AI doesn't stop bleeding - fix
-TODO - drag man and drag object
-Release get into vechile isn't working - stuck on animation
-TODO - finishing drag end up inside a turret
-
+FOG in sandstorm - fix
 
 TODO - ambient
 TODO - NV

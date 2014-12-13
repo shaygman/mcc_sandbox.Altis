@@ -1,7 +1,7 @@
 //=================================================================MCC_fnc_medicUseItem=========================================================================================
 //Handle medic uses item
 //=============================================================================================================================================================================
-private ["_item","_itemType","_unit","_complex","_self","_fail","_remaineBlood","_maxBleeding","_hitArray","_hitSelections","_damage","_break"];
+private ["_item","_itemType","_unit","_complex","_self","_fail","_remaineBlood","_maxBleeding","_hitArray","_hitSelections","_damage","_break","_string"];
 _itemType 	= _this select 0;
 _unit 		= _this select 1;
 _self		= if (_unit == player) then {true} else {false};
@@ -51,6 +51,13 @@ switch (_itemType) do
 		_fail = ["Bandaging",10,_unit] call MCC_fnc_medicProgressBar;
 		if !(_fail) then
 		{
+			//Gain XP
+			if ((_unit getVariable ["MCC_medicBleeding",0])>0 && !_self && CP_activated) then
+			{
+				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For bandaging %1",name _unit]} else {""};
+				[getplayeruid player, 100,_string] spawn MCC_fnc_addRating;
+			};
+
 			_unit setVariable ["MCC_medicBleeding",0,true];
 		};
 	};
@@ -63,6 +70,14 @@ switch (_itemType) do
 			_hitArray = [];
 			_hitSelections = ["HitHead","HitBody","hitHands","hitLegs"];
 			{_hitArray pushBack (_unit getHitPointDamage _x)} foreach _hitSelections;
+
+			//Gain XP
+			if ((getDammage _unit)>0.2 && !_self && CP_activated) then
+			{
+				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For healing %1",name _unit]} else {""};
+				[getplayeruid player, 200,_string] spawn MCC_fnc_addRating;
+			};
+
 			_unit setDamage 0.2;
 
 			{
@@ -77,6 +92,13 @@ switch (_itemType) do
 		_fail = ["Injecting Epipen",10,_unit] call MCC_fnc_medicProgressBar;
 		if !(_fail) then
 		{
+			//Gain XP
+			if ((_unit getVariable ["MCC_medicUnconscious",false]) && !_self && CP_activated) then
+			{
+				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For healing %1",name _unit]} else {""};
+				[getplayeruid player, 300,_string] spawn MCC_fnc_addRating;
+			};
+
 			_unit setVariable ["MCC_medicUnconscious",false,true];
 		};
 	};

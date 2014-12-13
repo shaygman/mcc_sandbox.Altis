@@ -1,7 +1,7 @@
 //===============================================================MCC_fnc_handleDamage=========================================================================================
 // Handle damage on players and AI
 //==============================================================================================================================================================================
-private ["_unit","_selectionName","_damage","_source","_bleeding","_unconscious"];
+private ["_unit","_selectionName","_damage","_source","_bleeding","_unconscious","_string"];
 _unit 			= _this select 0;
 _selectionName	= tolower (_this select 1);
 _damage			= _this select 2;
@@ -36,6 +36,13 @@ else
 		//AI will not always get unconscious and sometimes just die
 		if  (!(isPlayer _unit) && (random 1 > 0.3)) then
 		{
+			//GetXP
+			if (CP_activated) then
+			{
+				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For killing %1",name _unit]} else {""};
+				[[getplayeruid _source, 500,_string], "MCC_fnc_addRating", _source] spawn BIS_fnc_MP;
+			};
+
 			_damage;
 		}
 		else

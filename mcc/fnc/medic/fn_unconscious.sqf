@@ -38,7 +38,7 @@ if (isplayer _source && _source != _unit) then
 		if (CP_activated) then
 		{
 			_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For killing %1",name _unit]} else {""};
-			[[getplayeruid _source, 100,_string], "MCC_fnc_addRating", side _source] spawn BIS_fnc_MP;
+			[[getplayeruid _source, 500,_string], "MCC_fnc_addRating", side _source] spawn BIS_fnc_MP;
 		};
 
 	};
@@ -46,6 +46,7 @@ if (isplayer _source && _source != _unit) then
 
 _ypos = (getpos _unit) select 2;
 waitUntil {isTouchingGround _unit};
+_unit allowDamage true;
 
 //If we are falling from too high
 if (_ypos > 10) exitWith
@@ -85,7 +86,7 @@ _unit spawn
 	_this disableAI "FSM";
 	_this disableConversation true;
 
-	sleep 2;
+	sleep 1;
 	_this allowDamage true;
 
 	while {alive _this && time < _t && (_this getVariable ["MCC_medicUnconscious",false])} do

@@ -30,8 +30,8 @@ private ["_maxBleeding","_bleeding","_remaineBlood","_unit"];
 						if (missionNamespace getVariable ["MCC_medicComplex",false]) then
 						{
 							{
-								if (_x == "FirstAidKit") then {_this removeItem _x; _this addMagazines ["MCC_bandage",2]};
-								if (_x == "Medikit") then {_this removeItem _x; _this addMagazines ["MCC_bandage",12]; _this addMagazines ["MCC_epipen",6]; _this addMagazines ["MCC_salineBag",2]; _this addMagazines ["MCC_firstAidKit",1]};
+								if (_x == "FirstAidKit") then {_this removeItem _x; _this addMagazines ["MCC_bandage",1]};
+								if (_x == "Medikit") then {_this removeItem _x; _this addMagazines ["MCC_bandage",8]; _this addMagazines ["MCC_epipen",6]; _this addMagazines ["MCC_salineBag",2]; _this addMagazines ["MCC_firstAidKit",1]};
 							} forEach (items _this);
 						};
 					};

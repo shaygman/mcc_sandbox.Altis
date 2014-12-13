@@ -2,21 +2,21 @@ class CP_UNIFORMSPANEL {
 	  idd = -1;
 	  movingEnable = false;
 	  onLoad =  __EVAL("_this execVM '"+CPPATH+"configs\dialogs\gearPanel\uniformsPanel_init.sqf'");
-	  
-	  controlsBackground[] = 
+
+	  controlsBackground[] =
 	  {
 		CP_respawnPanelBckg,
 		CP_tittle,
 		CP_sglogo
 	  };
-	  
+
 
 	  //---------------------------------------------
-	  objects[] = 
-	  { 
+	  objects[] =
+	  {
 	  };
-	  
-	  controls[] = 
+
+	  controls[] =
 	  {
 		CP_uniformPanelBackButton,
 		CP_uniformPanelNV,
@@ -33,8 +33,11 @@ class CP_UNIFORMSPANEL {
 		CP_uniformsTittle,
 		CP_gearPanelPiP,
 		CP_gearPanelPiPFake,
-		CP_InfoText
+		CP_InfoText,
+		CP_ItemsLoad
 	  };
+
+	#include "RscControlsGroupItemsLoad.hpp"
 
 	class CP_uniformPanelBackButton: CP_RscButtonMenu
 	{
@@ -192,18 +195,18 @@ class CP_UNIFORMSPANEL {
 	{
 		idc = -1;
 		text = "#(argb,512,512,1)r2t(rendertarget7,1.0);";
-		x = 0.614583 * safezoneW + safezoneX;
-		y = 0.291081 * safezoneH + safezoneY;
-		w = 0.275 * safezoneW;
-		h = 0.46182 * safezoneH;
+		x = 0.615191 * safezoneW + safezoneX;
+		y = 0.28 * safezoneH + safezoneY;
+		w = 0.273281 * safezoneW;
+		h = 0.418 * safezoneH;
 	};
 	class CP_gearPanelPiPFake: CP_RscListBox
 	{
 		idc = -1;
-		x = 0.614583 * safezoneW + safezoneX;
-		y = 0.291081 * safezoneH + safezoneY;
-		w = 0.275 * safezoneW;
-		h = 0.46182 * safezoneH;
+		x = 0.615191 * safezoneW + safezoneX;
+		y = 0.28 * safezoneH + safezoneY;
+		w = 0.273281 * safezoneW;
+		h = 0.418 * safezoneH;
 		onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 		onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 		onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
