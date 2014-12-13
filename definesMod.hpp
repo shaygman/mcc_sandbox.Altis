@@ -39,6 +39,9 @@
 //----Key Settings-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_rscKeyBinds.hpp"
 
+//----medic-----------------
+#include "\mcc_sandbox_mod\mcc\Dialogs\medic\mcc_uncMain.hpp"
+
 //--------------------------------CP------------------------------------------------
 #define CPPATH "\mcc_sandbox_mod\"
 #define CPVersion "0.1"
@@ -62,7 +65,7 @@ class CfgFunctions
 	#include "\mcc_sandbox_mod\gaia\cfgFunctions.hpp"
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgFunctions.hpp"
 	#include "\mcc_sandbox_mod\VAS\cfgFunctions.hpp"
-	
+
 	//super_flash
 	#include "\mcc_sandbox_mod\super_flash\CfgFunctions.hpp"
 };
@@ -75,7 +78,7 @@ class CfgObjectCompositions
 class CfgMusic
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgMusic.hpp"
-	
+
 	//super_flash
 	#include "\mcc_sandbox_mod\super_flash\music\CfgMusic.hpp"
 };
@@ -83,7 +86,7 @@ class CfgMusic
 class CfgSounds
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgSounds.hpp"
-	
+
 	//super_flash
 	#include "\mcc_sandbox_mod\super_flash\sounds\CfgSounds.hpp"
 };
@@ -116,6 +119,7 @@ class RscTitles
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\compass.hpp"
 	#include "\mcc_sandbox_mod\hcam\hcam.hpp"
+	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_3dObject.hpp"
 };
 
 class cfgVehicles
@@ -137,13 +141,13 @@ class cfgMagazines
 	class CA_Magazine: Default{};
 	class HandGrenade: CA_Magazine{};
 	class 1Rnd_HE_Grenade_shell;
-	
+
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgMagazines.hpp"
-	
+
 	//super_flash
 	#include "\mcc_sandbox_mod\super_flash\cfgMagazines.hpp"
 };
-	
+
 class cfgWeapons
 {
 	class Default;
@@ -151,9 +155,9 @@ class cfgWeapons
 	class arifle_MX_GL_F;
 	class itemCore;
 	class InventoryItem_Base_F;
-	class Launcher_Base_F; 
+	class Launcher_Base_F;
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgWeapons.hpp"
-	
+
 	//super_flash
 	#include "\mcc_sandbox_mod\super_flash\CfgWeapons.hpp"
 };
@@ -180,7 +184,7 @@ class GroupList;
 class UnitList;
 
 class RscAttributeAreaSize;
-class RscAttributeName;						
+class RscAttributeName;
 
 //Extend Main menu
 #include "\mcc_sandbox_mod\mcc\cfg\menuExt.hpp"

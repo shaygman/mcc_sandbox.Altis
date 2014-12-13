@@ -4,40 +4,40 @@ class mcc_loginDialog
 {
 	idd = MCC_LoginDIalog_IDD;
 	movingEnable = true;
-	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\mcc_loginDialog_init.sqf'"); 
+	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\mcc_loginDialog_init.sqf'");
 
-	controlsBackground[] = 
+	controlsBackground[] =
 	{
 	};
 
 
 	//---------------------------------------------
-	objects[] = 
-	{ 
+	objects[] =
+	{
 	};
-  
+
 	class controls
 	{
 		class MCC_loginFrame: MCC_RscText
 		{
 			idc = -1;
 			colorBackground[] = { 0.051, 0.051, 0.051,1};
-			
+
 			x = 0.29375 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.423958 * safezoneW;
-			h = 0.319 * safezoneH;
+			h = 0.359 * safezoneH;
 		};
-		
+
 		class mcc_loginDialogFrame: MCC_RscText
 		{
 			idc = -1;
-			
+
 			colorBackground[] = { 0.150, 0.150, 0.150,1};
 			x = 0.299479 * safezoneW + safezoneX;
 			y = 0.236 * safezoneH + safezoneY;
 			w = 0.4125 * safezoneW;
-			h = 0.297 * safezoneH;
+			h = 0.337 * safezoneH;
 		};
 		class MCC_LoginTittle: MCC_RscText
 		{
@@ -45,7 +45,7 @@ class mcc_loginDialog
 
 			text = "MCC Login"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
-			
+
 			x = 0.459896 * safezoneW + safezoneX;
 			y = 0.247099 * safezoneH + safezoneY;
 			w = 0.07 * safezoneW;
@@ -76,7 +76,7 @@ class mcc_loginDialog
 		{
 			idc = 1006;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			onLBSelChanged =  __EVAL("[2] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");	
+			onLBSelChanged =  __EVAL("[2] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
 
 			x = 0.4 * safezoneW + safezoneX;
 			y = 0.34606 * safezoneH + safezoneY;
@@ -103,7 +103,7 @@ class mcc_loginDialog
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.305208 * safezoneW + safezoneX;
-			y = 0.489 * safezoneH + safezoneY;
+			y = 0.529 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.032987 * safezoneH;
 			colorBackground[] = {0.219,0.147,0.112,1};
@@ -170,13 +170,13 @@ class mcc_loginDialog
 			h = 0.032987 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.75)";
 		};
-		
+
 		class MCC_keyBindsLogin: MCC_keyBindsGroup
 		{
 			x = 0.5 * safezoneW + safezoneX;
 			y = 0.25 * safezoneH + safezoneY;
 		};
-		
+
 		class MCC_login: MCC_RscButtonMenu
 		{
 			idc = -1;
@@ -184,12 +184,25 @@ class mcc_loginDialog
 
 			text = "Login"; //--- ToDo: Localize;
 			x = 0.6375 * safezoneW + safezoneX;
-			y = 0.489 * safezoneH + safezoneY;
+			y = 0.529 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.032987 * safezoneH;
 			colorBackground[] = {0.219,0.147,0.112,1};
 			tooltip = "Login as the mission maker"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		};
+
+		class MCC_Help: MCC_RscStructuredText
+		{
+			idc = -1;
+			text = "(?)";
+			colorBackground[] = { 0, 0, 0, 0.7};
+			onMouseEnter = "[_this, true,[5,1],'mcclogin'] spawn MCC_fnc_help";
+
+			x = 0.305208 * safezoneW + safezoneX;
+			y = 0.247099 * safezoneH + safezoneY;
+			w = 0.020625 * safezoneW;
+			h = 0.033 * safezoneH;
 		};
 	};
 };

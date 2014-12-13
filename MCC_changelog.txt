@@ -45,8 +45,15 @@ Added: Logistics to helicopters - NEW
 - Known Issue: With helicopters while slingloading a supply crate to a construction site when the crate hit the ground while slingloaded it may break the game, WORKAROUND - release the crate before it touches the ground.
 
 Added: Medical system - new
-MCC_medicDamageCoef 0.1-1
+MCC_medicSystemEnabled boolean - global
+MCC_medicComplex = true;
+MCC_medicBleedingEnabled = true;
+MCC_medicBleedingTime - integer 200
+MCC_medicDamageCoef 0.1-1 0.9
 MCC_medicXPmesseges boolean
+MCC_medicPunishTK	boolean
+
+
 
 - fixed: Commander console artillery laser targets and multiple rounds - TODO check
 - fixed: Fast rope bugs since Helicopters DLC. 
@@ -71,7 +78,12 @@ let you choose where you want to mount the vehicle.
 - Changed: Artillery spread for Commander Console: "PRECISE" = 5m, "TIGHT"=50m, "SCATTERED" =100m, "WIDE" = 150
 
 Fix: FOB west/east
-TODO - medical
+bandage AI doesn't stop bleeding - fix
+TODO - drag man and drag object
+Release get into vechile isn't working - stuck on animation
+TODO - finishing drag end up inside a turret
+
+
 TODO - ambient
 TODO - NV
 TODO - supression

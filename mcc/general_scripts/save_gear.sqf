@@ -9,16 +9,16 @@ _killer = if (count _this > 1) then {_this select 1} else {objnull};
 if (CP_activated) then
 {
 	private ["_side","_sideTickets","_tickets"];
-	
+
 	_side = _unit getVariable ["CP_side", playerside];
 	_tickets = [_side] call BIS_fnc_respawnTickets;
-	
+
 	//Delete utility placed by the player
 	{deleteVehicle _x} foreach (player getVariable ["MCC_utilityActiveCharges",[]]);
 
 	if (_tickets > 1) then
 	{
-		_tickets = _tickets -1; 
+		_tickets = _tickets -1;
 		[_side, -1] call BIS_fnc_respawnTickets;
 	}
 	else	//Mission end
@@ -26,16 +26,16 @@ if (CP_activated) then
 		[west, missionNameSpace getVariable ["MCC_ticketsWest",200]] call BIS_fnc_respawnTickets;
 		[east, missionNameSpace getVariable ["MCC_ticketsEast",200]] call BIS_fnc_respawnTickets;
 		[resistance, missionNameSpace getVariable ["MCC_ticketsGUER",200]] call BIS_fnc_respawnTickets;
-		
+
 		[["sidetickets"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
 	};
 };
 
-if (MCC_saveGear) then 
+if (MCC_saveGear) then
 {
 	_goggles = goggles _unit; 			//Can't  save gear after killed EH
-	_headgear = headgear _unit; 
-	_uniform = uniform _unit; 
+	_headgear = headgear _unit;
+	_uniform = uniform _unit;
 	_vest = vest _unit;
 	_backpack = backpack _unit;
 
@@ -50,7 +50,7 @@ if (MCC_saveGear) then
 
 	_primaryWeapon = primaryWeapon _unit;
 	_secondaryWeapon = secondaryWeapon _unit;
-	_handgunWeapon = handgunWeapon _unit; 
+	_handgunWeapon = handgunWeapon _unit;
 	_magazines = magazines _unit;
 };
 
@@ -59,12 +59,19 @@ WaitUntil {alive player};
 //Mark it zero again
 player addRating (-1 * (rating player));
 
+//handle MCC medic stuff
+player setVariable ["MCC_medicUnconscious",false,true];
+player setVariable ["MCC_medicSeverInjury",false,true];
+player setVariable ["MCC_medicBleeding",0,true];
+player setvariable ["MCC_medicRemainBlood",(missionNamespace getvariable ["MCC_medicBleedingTime",200])];
+player setCaptive false;
+
 //Delete dead body
 if (missionNameSpace getVariable ["MCC_deletePlayersBody",false]) then {deleteVehicle _unit};
 
 _null = [(compile format ["MCC_curator addCuratorEditableObjects [[%1],false];", player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 
-if (MCC_saveGear) then 
+if (MCC_saveGear) then
 {
 	removeGoggles player;
 	removeHeadgear player;
@@ -73,7 +80,7 @@ if (MCC_saveGear) then
 	removeBackpack player;
 
 	removeAllWeapons player;
-	removeAllItems player; 
+	removeAllItems player;
 	removeAllAssignedItems player;
 
 	if (_goggles != "") then {player addGoggles _goggles};
@@ -83,7 +90,7 @@ if (MCC_saveGear) then
 	if (_backpack != "") then {player addBackpack _backpack};
 
 	waituntil {backpack player == _backpack};
-	
+
 	if (!isnil "_uniformItems") then
 	{
 		{
@@ -92,10 +99,10 @@ if (MCC_saveGear) then
 					case (isClass (configFile >> "CfgMagazines" >> _x)) : {player addmagazine _x};
 					case (isClass (configFile >> "CfgWeapons" >> _x)) : {player additem _x};
 					case (isClass (configFile >> "CfgGlasses" >> _x)) : {player additem _x};
-				}; 
+				};
 		} foreach _uniformItems;
 	};
-	
+
 	if (!isnil "_assigneditems") then
 	{
 		{
@@ -104,11 +111,11 @@ if (MCC_saveGear) then
 					case (isClass (configFile >> "CfgMagazines" >> _x)) : {player addmagazine _x};
 					case (isClass (configFile >> "CfgWeapons" >> _x)) : {player addWeaponGlobal _x;player linkItem  _x};
 					case (isClass (configFile >> "CfgGlasses" >> _x)) : {player additem _x;player assignItem _x};
-				}; 
+				};
 		} foreach _assigneditems;
 	};
-	
-	
+
+
 	if (!isnil "_vestItems") then
 	{
 		{
@@ -117,10 +124,10 @@ if (MCC_saveGear) then
 					case (isClass (configFile >> "CfgMagazines" >> _x)) : {player addmagazine _x};
 					case (isClass (configFile >> "CfgWeapons" >> _x)) : {player additem _x};
 					case (isClass (configFile >> "CfgGlasses" >> _x)) : {player additem _x};
-				}; 
+				};
 		} foreach _vestItems;
 	};
-	
+
 	if (!isnil "MCC_save_Backpack") then
 	{
 		{
@@ -129,35 +136,35 @@ if (MCC_saveGear) then
 				case (isClass (configFile >> "CfgMagazines" >> _x)) : {(unitBackpack player) addMagazineCargo [_x,1]};
 				case (isClass (configFile >> "CfgWeapons" >> _x)) : {(unitBackpack player) addItemCargo [_x,1]};
 				case (isClass (configFile >> "CfgGlasses" >> _x)) : {(unitBackpack player) addItemCargo [_x,1]};
-			}; 
+			};
 		} foreach MCC_save_Backpack;
 	};
-	
-	if (!isnil "_primaryWeapon") then 
+
+	if (!isnil "_primaryWeapon") then
 	{
 		player addWeaponGlobal  _primaryWeapon;
 		{player addPrimaryWeaponItem _x} foreach MCC_save_primaryWeaponItems;
-		
+
 		{
 			if (_x != "") then {player addmagazine _x};
 		} foreach _primMag;
 	};
-	
-	if (!isnil "_secondaryWeapon") then 
+
+	if (!isnil "_secondaryWeapon") then
 	{
 		player addWeaponGlobal  _secondaryWeapon;
 		{player addSecondaryWeaponItem _x} foreach MCC_save_secondaryWeaponItems;
-		
+
 		{
 			if (_x != "") then {player addmagazine _x};
 		} foreach _secmMag;
 	};
-	
-	if (!isnil "_handgunWeapon") then 
+
+	if (!isnil "_handgunWeapon") then
 	{
 		player addWeaponGlobal  _handgunWeapon;
 		{player addHandgunItem _x} foreach MCC_save_handgunitems;
-		
+
 			{
 				if (_x != "") then {player addmagazine _x};
 			} foreach _handMag;
@@ -168,7 +175,7 @@ if (MCC_saveGear) then
 		player selectWeapon _primaryWeapon;
 		_muzzles = getArray(configFile>>"cfgWeapons" >> _primaryWeapon >> "muzzles");
 		player selectWeapon (_muzzles select 0);
-	}; 
+	};
 };
 
 //Handle add - action
@@ -177,10 +184,10 @@ if (MCC_saveGear) then
 if (isnil "MCC_TRAINING") then
 {
 	//------------T2T---------------------------------
-	if (MCC_t2tIndex == 2) then {MCC_teleportToTeam = true}; 
+	if (MCC_t2tIndex == 2) then {MCC_teleportToTeam = true};
 
 	//-------------------Role selection -------------------------------------------
-	if (CP_activated) then 
+	if (CP_activated) then
 	{
 		_null=[] execVM MCC_path + "scripts\player\player_init.sqf";
 	}

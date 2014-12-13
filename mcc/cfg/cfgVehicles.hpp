@@ -8,7 +8,7 @@ class Module_F: Logic
 	class ModuleDescription
 	{
 		class AnyBrain;
-		class EmptyDetector; 
+		class EmptyDetector;
 	};
 };
 
@@ -21,13 +21,14 @@ class Module_F: Logic
 #include "modules\GAIASettings.hpp"
 #include "modules\cover.hpp"
 #include "modules\radio.hpp"
+#include "modules\medicSystem.hpp"
 
 class Land_Ammobox_rounds_F;
-class MCC_ammoBox : Land_Ammobox_rounds_F 
+class MCC_ammoBox : Land_Ammobox_rounds_F
 {
 	ammo = 100;
 };
-	
+
 class Box_NATO_AmmoVeh_F;
 class MCC_crateAmmo : Box_NATO_AmmoVeh_F
 {
@@ -54,7 +55,7 @@ class MCC_crateFuel : Box_NATO_AmmoVeh_F
 	model = "\A3\Supplies_F_Heli\CargoNets\CargoNet_01_barrels_F.p3d";
 };
 
-//Big Crates 
+//Big Crates
 //West
 class B_Slingload_01_Ammo_F;
 class MCC_crateAmmoBigWest : B_Slingload_01_Ammo_F

@@ -2,20 +2,20 @@ class CP_SQUADPANEL {
 	  idd = -1;
 	  movingEnable = false;
 	  onLoad =  __EVAL("_this execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_init.sqf'");
-	  
-	  controlsBackground[] = 
+
+	  controlsBackground[] =
 	  {
 	  	  CP_respawnPanelBckg,
 		  CP_sglogo
 	  };
-	  
+
 
 	  //---------------------------------------------
-	  objects[] = 
-	  { 
+	  objects[] =
+	  {
 	  };
-	  
-	  controls[] = 
+
+	  controls[] =
 	  {
 		CP_exitButton,
 		CP_respawnPanelButton,
@@ -50,10 +50,11 @@ class CP_SQUADPANEL {
 		CP_side2Score,
 		CP_side3,
 		CP_side3Score,
-		MCC_ResourcesControlsGroup,		
-		CP_RscMainXPUI
+		MCC_ResourcesControlsGroup,
+		CP_RscMainXPUI,
+		MCC_Help
 	  };
-	  
+
 		class CP_exitButton: CP_RscButtonMenu
 		{
 			idc = 8;
@@ -257,7 +258,7 @@ class CP_SQUADPANEL {
 			text = __EVAL(CPPATH+"configs\data\sgLogo.paa");
 			colorText[] = {1,1,1,1.8};
 		};
-		
+
 		class CP_LockSquadPic: CP_RscPicture
 		{
 			idc = 14;
@@ -269,7 +270,7 @@ class CP_SQUADPANEL {
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
 		};
-		
+
 		class CP_LockSquad: CP_RscButtonMenu
 		{
 			idc = -1;
@@ -282,7 +283,7 @@ class CP_SQUADPANEL {
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
 		};
-		
+
 		class CP_Teleport: CP_RscButtonMenu
 		{
 			idc = 15;
@@ -296,8 +297,8 @@ class CP_SQUADPANEL {
 			tooltip = "Teleport to the selected unit position or vehicle"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
 		};
-		
-		class CP_commander: CP_RscText 
+
+		class CP_commander: CP_RscText
 		{
 			idc = -1;
 			text = "Commander:";
@@ -308,7 +309,7 @@ class CP_SQUADPANEL {
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
-		class CP_commanderName: CP_RscText 
+		class CP_commanderName: CP_RscText
 		{
 			idc = 16;
 			colorBackground[] = {0,0,0,0.7};
@@ -330,7 +331,7 @@ class CP_SQUADPANEL {
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
-		
+
 		class CP_respawnPanelRoleTittle: CP_RscText
 		{
 			idc = 27;
@@ -352,13 +353,13 @@ class CP_SQUADPANEL {
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			//onLBSelChanged = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
 		};
-		
+
 		class CP_deployPanelButton: CP_RscButtonMenu
 		{
 			idc = 98;
 			text = "Deploy"; //--- ToDo: Localize;
 			colorBackground[] = {1,0,0,0.3};
-			
+
 			x = 0.505729 * safezoneW + safezoneX;
 			y = 0.741906 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
@@ -367,7 +368,7 @@ class CP_SQUADPANEL {
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 			action = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'");
 		};
-		
+
 		class CP_flag: CP_RscPicture
 		{
 			idc = 20;
@@ -382,7 +383,7 @@ class CP_SQUADPANEL {
 			idc = 21;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			colorText[] = {0,1,1,1};
-			
+
 			x = 0.711979 * safezoneW + safezoneX;
 			y = 0.214111 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -392,7 +393,7 @@ class CP_SQUADPANEL {
 		{
 			idc = 22;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			
+
 			x = 0.711979 * safezoneW + safezoneX;
 			y = 0.240501 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -403,7 +404,7 @@ class CP_SQUADPANEL {
 			idc = 23;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			colorText[] = {0,1,1,1};
-			
+
 			x = 0.757813 * safezoneW + safezoneX;
 			y = 0.214111 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -413,7 +414,7 @@ class CP_SQUADPANEL {
 		{
 			idc = 24;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			
+
 			x = 0.757813 * safezoneW + safezoneX;
 			y = 0.240501 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -424,7 +425,7 @@ class CP_SQUADPANEL {
 			idc = 25;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			colorText[] = {0,1,1,1};
-			
+
 			x = 0.803646 * safezoneW + safezoneX;
 			y = 0.214111 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
@@ -434,13 +435,25 @@ class CP_SQUADPANEL {
 		{
 			idc = 26;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			
+
 			x = 0.803646 * safezoneW + safezoneX;
 			y = 0.240501 * safezoneH + safezoneY;
 			w = 0.034375 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
-		
+		class MCC_Help: MCC_RscStructuredText
+		{
+			idc = -1;
+			text = "(?)";
+			colorBackground[] = { 0, 0, 0, 0.7};
+			onMouseEnter = "[_this, true,[5,1],'squadDialog'] spawn MCC_fnc_help";
+
+			x = 0.1 * safezoneW + safezoneX;
+			y = 0.22 * safezoneH + safezoneY;
+			w = 0.020625 * safezoneW;
+			h = 0.033 * safezoneH;
+		};
+
 		class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = 80;
@@ -459,7 +472,7 @@ class CP_SQUADPANEL {
 					w = 0.04125 * safezoneW;
 					h = 0.033 * safezoneH;
 				};
-				
+
 				class MCC_RepairText: MCC_RscText
 				{
 					idc = 82;
@@ -469,7 +482,7 @@ class CP_SQUADPANEL {
 					w = 0.04125 * safezoneW;
 					h = 0.033 * safezoneH;
 				};
-				
+
 				class MCC_FuelText: MCC_RscText
 				{
 					idc = 83;
@@ -501,7 +514,7 @@ class CP_SQUADPANEL {
 				{
 					idc = -1;
 
-					text =  __EVAL(MCCPATH +"data\IconAmmo.paa"); 
+					text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
 					x = 0.00515625 * safezoneW;
 					y = 0.011 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -541,7 +554,7 @@ class CP_SQUADPANEL {
 				{
 					idc = -1;
 
-					text = __EVAL(MCCPATH +"data\IconMed.paa"); 
+					text = __EVAL(MCCPATH +"data\IconMed.paa");
 					x = 0.00515625 * safezoneW;
 					y = 0.187 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -549,7 +562,7 @@ class CP_SQUADPANEL {
 				};
 			};
 		};
-		
+
 		class CP_RscMainXPUI: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = 101;
@@ -567,7 +580,7 @@ class CP_SQUADPANEL {
 					h = "6 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 					colorBackground[] = {0,0,0,0.4};
 				}
-				
+
 				class messeges: MCC_RscStructuredText
 				{
 					idc =102;
@@ -577,7 +590,7 @@ class CP_SQUADPANEL {
 					w = "20 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
 					h = "2 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 				};
-				
+
 				class XPTitle: MCC_RscText
 				{
 					idc =103;
@@ -587,7 +600,7 @@ class CP_SQUADPANEL {
 					w = "2 * 			(			((safezoneW / safezoneH) min 1.2) / 60)";
 					h = "1 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 				};
-				
+
 				class XPValue: MCC_RscProgress
 				{
 					idc = 104;

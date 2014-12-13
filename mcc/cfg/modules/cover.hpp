@@ -9,7 +9,7 @@ class mcc_sandbox_moduleCover : Module_F
 	function = "MCC_fnc_settingsCover";
 	scope = 2;
 	isGlobal = 1;
-	
+
 	class Arguments
 	{
 		class cover
@@ -32,7 +32,7 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
-		
+
 		class coverUI
 		{
 			displayName = "Cover System UI";
@@ -53,7 +53,7 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
-		
+
 		class coverRecoil
 		{
 			displayName = "Cover System Recoil";
@@ -74,7 +74,7 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
-		
+
 		class coverVault
 		{
 			displayName = "Allow vault/climb";
@@ -95,7 +95,7 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
-		
+
 		class switchWeapons
 		{
 			displayName = "Weapons binds";
@@ -116,7 +116,7 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
-		
+
 		class interaction
 		{
 			displayName = "Interaction";
@@ -137,7 +137,7 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
-		
+
 		class interactionUI
 		{
 			displayName = "Interaction UI";
@@ -158,10 +158,10 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
-		
+
 		class survive
 		{
-			displayName = "Survive mod ";
+			displayName = "Survive mod";
 			description = "Players can search objects in the world to find resources and weapons";
 			typeName = "NUMBER";
 			class values
@@ -180,7 +180,7 @@ class mcc_sandbox_moduleCover : Module_F
 			};
 		};
 	};
-	
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Define MCC's mechanics settings";

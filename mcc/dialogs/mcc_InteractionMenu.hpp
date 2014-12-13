@@ -7,15 +7,15 @@ class MCC_INTERACTION_MENU
 	movingEnable = 1;
 	onLoad = "uiNamespace setVariable [""MCC_INTERACTION_MENU"", _this select 0]";
 
-	controlsBackground[] = 
+	controlsBackground[] =
 	{
 	};
 
-	objects[] = 
-	{ 
+	objects[] =
+	{
 	};
 
-	class controls  
+	class controls
 	{
 		class MCC_interactionMenu0: MCC_RscListbox
 		{
@@ -25,7 +25,29 @@ class MCC_INTERACTION_MENU
 			x = 0 * safezoneW + safezoneX;
 			y = 0 * safezoneH + safezoneY;
 			w = 0 * safezoneW;
-			h = 0.4 * safezoneH;
+			h = 0.8 * safezoneH;
+		};
+
+		class MCC_interactionMenu1: MCC_RscListbox
+		{
+			idc = 1;
+			moving = true;
+			colorBackground[] = {0,0,0,0.7};
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0 * safezoneW;
+			h = 0.8 * safezoneH;
+		};
+
+		class MCC_interactionMenu2: MCC_RscListbox
+		{
+			idc = 2;
+			moving = true;
+			colorBackground[] = {0,0,0,0.7};
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0 * safezoneW;
+			h = 0.8 * safezoneH;
 		};
 	};
 };

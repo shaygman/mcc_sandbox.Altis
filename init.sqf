@@ -117,12 +117,23 @@ if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- 
 //Define non-lethal ammunition player using this ammunition on units closer then 30 meters will not kill them but stun them. Leave "" to none
 if (isnil "MCC_nonLeathal") then {MCC_nonLeathal = "prpl_6Rnd_12Gauge_Slug"};
 
-//MCC Survive mod 
+//MCC Survive mod
 // Set to true to activate survival mode - scavange for loot to survive
-if (isnil "MCC_surviveMod") then {MCC_surviveMod = true}; 
+if (isnil "MCC_surviveMod") then {MCC_surviveMod = false};
 
 //How long in days(24H-game time) will it take for spawn position to refresh
-if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1}; 
+if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1};
+
+//============== Medic System ====================================
+if !(MCC_isMode) then
+{
+		MCC_medicSystemEnabled = true;
+		//MCC_medicComplex = true;
+		MCC_medicBleedingEnabled = true;
+		MCC_medicDamageCoef = 0.7;
+
+		[] spawn MCC_fnc_initMedic;
+};
 
 //----------------------IED settings---------------------------------------------
 // IED types the first one is display name the second is the classname [displayName, ClassName]
@@ -235,6 +246,7 @@ mccPresetsUnits = [
 					,['Prone', '_this setUnitPos "DOWN";']
 					,['Remove All Weapons', 'removeAllWeapons _this;']
 					,['Remove All Items', 'removeAllItems _this;']
+					,['Unconscious (MCC medic system)', '[_this,_this] spawn MCC_fnc_unconscious']
 					,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
 					,['', '']
 					,['======= General =======','']
@@ -722,7 +734,7 @@ if ( isServer ) then
 	//create logics
 	MCC_dummyLogicGroup = creategroup sideLogic;
 	MCC_dummyLogicGroup setVariable ["MCC_CPGroup",true,true];
-	
+
 	//server
 	_dummy = MCC_dummyLogicGroup createunit ["Logic", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
 	_name = "MCC_server";
@@ -1116,30 +1128,30 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 {
 	waituntil {!(IsNull (findDisplay 46))};
 																//		MCC				//		Console			//  T2T				//		Squad dialog		//			Interaction	//		SQL PDA		//
-	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46],[false,true,false,209]]];
-	
+	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,219],[false,true,false,209],[false,true,false,219]]];
+
 	//Prevent error messages for backward comp
-	if (count MCC_keyBinds < 6) then
+	if (count MCC_keyBinds < 7) then
 	{
-		profileNamespace setVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46],[false,true,false,209]]];
-		MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,46],[false,true,false,209]]];  
-	}; 
+		profileNamespace setVariable ["MCC_keyBinds",[[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,219],[false,true,false,209],[false,true,false,219]]];
+		MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,219],[false,true,false,209],[false,true,false,219]]];
+	};
 
 	//Handle Key
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "_null = ['keydown',_this] call MCC_fnc_keyDown"];
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyUp", "_null = ['keyup',_this] call MCC_fnc_keyDown"];
-	
+
 	// Teleport to team on Alt + T
 	if (isnil "MCC_teleportToTeam") then {MCC_teleportToTeam = true};
-	
+
 	//Squad Dialog
-	MCC_squadDialogOpen = false;	
+	MCC_squadDialogOpen = false;
 
 	//Save gear EH
 	if(local player) then {player addEventHandler ["killed",{[player] execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};
 
 	//Handle Heal
-	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && (_this select 1 != _this select 0) && (tolower ((_this select 1) getvariable ["CP_role","n/a"]) == "corpsman") ) then {(_this select 1) addrating 200; _string = "<t font='puristaMedium' size='0.5' color='#FFFFFF '>+200 Exp For Healing</t>"; [[_string,0,1,2,1,0,4], "bis_fnc_dynamictext", _this select 1, false] spawn BIS_fnc_MP; false}}]};
+	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && (_this select 1 != _this select 0) && (tolower ((_this select 1) getvariable ["CP_role","n/a"]) == "corpsman") ) then {(_this select 1) addrating 200; _string = "<t font='puristaMedium' size='0.5' color='#FFFFFF '>+200 Exp For Healing</t>"; [[_string,0,1,2,1,0,4], "bis_fnc_dynamictext", _this select 1, false] spawn BIS_fnc_MP};(_this select 0) setVariable ["MCC_medicBleeding",0,true]; false}]};
 
 	//Curator
 	if(local player && (isMultiplayer)) then
@@ -1149,16 +1161,16 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 
 	//Handle add - action
 	[] call MCC_fnc_handleAddaction;
-	
-	//Handle Radio 
+
+	//Handle Radio
 	if (missionNameSpace getVariable ["MCC_VonRadio",true]) then
 	{
 		[]  spawn  MCC_fnc_vonRadio;
 	};
-	
+
 	//Add start locations script
 	[]  spawn MCC_fnc_startLocations;
-	
+
 	//Add beanbag ammo for shouguns
 	if (MCC_nonLeathal != "") then
 	{
@@ -1276,13 +1288,13 @@ if (getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMine
 		<br/>You can use Electronic Countermeasure Vehicles (ECM) to block RCIEDs","MCC Engineer/EOD",nil,false] spawn BIS_fnc_guiMessage;
 };
 
-//============= Init MCC done===========================
+
+//============= Start public EH locally ===========================
 if(CP_activated && !isDedicated) then
 {
 	_null=[] execVM MCC_path + "scripts\player\player_init.sqf"
 };
+
+//============= Init MCC done===========================
 MCC_initDone = true;
 finishMissionInit;
-
-//remove
-_null = [] execVM "mcc\fnc\medic\fn_initMedic.sqf"

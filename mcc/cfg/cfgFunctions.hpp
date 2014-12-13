@@ -247,6 +247,7 @@ class MCC
 		class missionSettings {description = "Mission settings";};
 		class GAIASettings {description = "GAIA settings";};
 		class settingsCover {description = "Cover settings";};
+		class settingsMedical {description = "Medical system settings";};
 	};
 
 	class actions
@@ -266,9 +267,10 @@ class MCC
 		class cover			{description = "Manage cover mechanics";};
 		class weaponSelect	{description = "Change weapons and throw utility";};
 		class utilityUse	{description = "use utility";};
-		class grenadeThrow	{description = "Throw grenades";};		
+		class grenadeThrow	{description = "Throw grenades";};
+		class pickKit		{description = "pick up dead unit kit";};
 	};
-	
+
 	class roleSelection
 	{
 		#ifdef MCCMODE
@@ -276,24 +278,24 @@ class MCC
 		#else
 		file = "mcc\fnc\roleSelection";
 		#endif
-		
+
 		class unlock	{description = "Check for gear unlocks and notify the player.";};
 		class gainXPfromRoles	{description = "gain XP from specific roles.";};
-		class createRespawnTent	{description = "Creates a respawn tent";};		
-		class getVariable		{description = "Global execute a command on server only  - SERVER ONLY";};		
-		class setValue			{description = "Sets variable with custom value on a specific player";};		
-		class buildSpawnPoint	{description = "Create a spawn point to the given side - SERVER ONLY";};		
-		class setGroupID		{description = "Set group ID - SERVER ONLY";};		
-		class getGroupID		{description = "get group ID";};		
-		class setGear			{description = "Sets gear to role";};		
-		class assignGear		{description = " Sets gear to role";};		
-		class addWeapon			{description = " Sets gear to role";};		
+		class createRespawnTent	{description = "Creates a respawn tent";};
+		class getVariable		{description = "Global execute a command on server only  - SERVER ONLY";};
+		class setValue			{description = "Sets variable with custom value on a specific player";};
+		class buildSpawnPoint	{description = "Create a spawn point to the given side - SERVER ONLY";};
+		class setGroupID		{description = "Set group ID - SERVER ONLY";};
+		class getGroupID		{description = "get group ID";};
+		class setGear			{description = "Sets gear to role";};
+		class assignGear		{description = " Sets gear to role";};
+		class addWeapon			{description = " Sets gear to role";};
 		class addItem {};
-		class setVariable{}; 
+		class setVariable{};
 		class allowedDrivers{};
-		class allowedWeapons{};		
+		class allowedWeapons{};
 	};
-	
+
 	class interaction
 	{
 		#ifdef MCCMODE
@@ -301,16 +303,17 @@ class MCC
 		#else
 		file = "mcc\fnc\interaction";
 		#endif
-		
+
 		class interaction	{description = "Interaction perent";};
 		class interactMan	{description = "Interaction with man type";};
 		class interactIED	{description = "Interaction with IED type";};
 		class interactDoor	{description = "Interaction with door type";};
 		class interactObject	{description = "Interaction with containers object";};
 		class interactUtility	{description = "Interaction with utility object";};
+		class interactSelf	{description = "Interaction with self";};
 		class requestDropOff	{description = "Request player or AI to drop off a cargo group in a specific place - shold run localy on the requestor";};
 	};
-	
+
 	class radio
 	{
 		#ifdef MCCMODE
@@ -318,11 +321,11 @@ class MCC
 		#else
 		file = "mcc\fnc\radio";
 		#endif
-		
+
 		class vonRadio		{description = "simulate real radio comms on ArmA VON";};
 		class settingsRadio	{description = "Real radio comms settings";};
 	};
-	
+
 	class medic
 	{
 		#ifdef MCCMODE
@@ -330,10 +333,18 @@ class MCC
 		#else
 		file = "mcc\fnc\medic";
 		#endif
-		
+
 		class initMedic		{description = "Init Medic System";};
+		class handleDamage	{description = "Handle damage on players and AI";};
+		class unconscious	{description = "Handle unconscious behavior";};
+		class medicEffects	{description = "Handle clients medic effects";};
+		class medicProgressBar	{description = "Handle medic progress";};
+		class medicUseItem	{description = "Handle medic uses item";};
+		class medicDragCarry {description = "Handle drag and carry units";};
+		class loadWounded 	{description = "Unload wounded from a vehicle";};
+		class medicArea		{description = "create a building as a medic area";};
 	};
-	
+
 	class helpers
 	{
 		#ifdef MCCMODE
@@ -341,7 +352,7 @@ class MCC
 		#else
 		file = "mcc\fnc\helpers";
 		#endif
-		
+
 		class createHelper		{description = "Create ingame UI helper for interacted objects";};
 		class deleteHelper		{description = "Delete ingame UI helper for interacted objects";};
 	};

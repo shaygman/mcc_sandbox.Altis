@@ -1,14 +1,17 @@
 //==================================================================MCC_fnc_interactMan===============================================================================================
 // Interaction with man type
-// Example: [_suspect,_men] spawn MCC_fnc_interactMan; 
+// Example: [_suspect,_men] spawn MCC_fnc_interactMan;
 //=================================================================================================================================================================================
-private ["_suspect","_men","_rand","_factor","_null","_suspectCorage","_keyName","_pos"];
+private ["_suspect","_men","_rand","_factor","_null","_suspectCorage","_keyName","_pos","_suspectName"];
 _suspect 	= _this select 0;
 _men 		= _this select 1;
 _keyName	= _this select 2;
 
 disableSerialization;
 player setVariable ["MCC_interactionActive",true];
+
+//Release dragged objects
+if !(isNull (player getVariable ["mcc_draggedObject", objNull])) then {[] call MCC_fnc_releaseObject};
 
 //draw interaction text
 if (!MCC_interactionKey_holding && ((_suspect getVariable ["MCC_disarmed",false]) || ((_suspect getVariable ["MCC_neutralize",false])) && !(_suspect in units group player))) then
@@ -22,28 +25,48 @@ else
 	missionNameSpace setVariable ["MCC_interactionObjects", []];
 };
 
-if (MCC_interactionKey_holding && (player distance  _suspect < 5) && !dialog) exitWith
+if (MCC_interactionKey_holding && (player distance  _suspect < 2) && !dialog) exitWith
 {
 	MCC_fnc_ManMenuClicked =
 	{
-		private ["_ctrl","_index","_ctrlData","_suspect"];
+		private ["_ctrl","_index","_ctrlData","_suspect","_ctrlIDC","_disp","_posX","_posY","_child","_array"];
 		disableSerialization;
 
 		_ctrl 		= _this select 0;
 		_index 		= _this select 1;
 		_ctrlData	= _ctrl lbdata _index;
-		
+		_ctrlIDC 	= ctrlIDC _ctrl;
+		_disp		= ctrlParent _ctrl;
+		_posX		= ((ctrlposition _ctrl) select 0)+ ((ctrlposition _ctrl) select 2);
+		_posY		= (ctrlposition _ctrl) select 1;
 		_suspect = (player getVariable ["interactWith",[]]) select 0;
-		closeDialog 0;
-		
-		switch (_ctrlData) do
-		{	
-			case "zip":		
+
+		uiNamespace setVariable ["MCC_interactionMenu0", _disp displayCtrl 0];
+		uiNamespace setVariable ["MCC_interactionMenu1", _disp displayCtrl 1];
+		uiNamespace setVariable ["MCC_interactionMenu2", _disp displayCtrl 2];
+
+		#define MCC_interactionMenu0 (uiNamespace getVariable "MCC_interactionMenu0")
+		#define MCC_interactionMenu1 (uiNamespace getVariable "MCC_interactionMenu1")
+		#define MCC_interactionMenu2 (uiNamespace getVariable "MCC_interactionMenu2")
+
+		//saveData
+		switch (_ctrlIDC) do
+		{
+			case 0:	{uinamespace setVariable ["MCC_interactionMenu0Data", _ctrlData]};
+			case 1:	{uinamespace setVariable ["MCC_interactionMenu1Data", _ctrlData]};
+		};
+
+		//Close dialog
+		if (_ctrlData in ["zip","follow","pickKit","close","bandage","epipen","saline","heal","drag","carry"]) then {closeDialog 0};
+
+		switch (true) do
+		{
+			case (_ctrlData == "zip"):
 			{
 				//Zipcuff
 				if ((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player)) exitWith
 				{
-					["Restraining suspect",5] call MCC_fnc_interactProgress; 
+					["Restraining suspect",5] call MCC_fnc_interactProgress;
 					playsound "MCC_zip";
 					_suspect setVariable ["MCC_disarmed",false,true];
 					sleep 1.5;
@@ -51,163 +74,238 @@ if (MCC_interactionKey_holding && (player distance  _suspect < 5) && !dialog) ex
 					_suspect setVariable ["MCC_neutralize",true,true];
 				};
 			};
-			
-			case "follow":		
+
+			case (_ctrlData == "follow"):
 			{
 				if ((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && ((({_x getVariable ["MCC_neutralize",false]} count units group player)<2))) exitWith
 				{
 						_null = [_suspect, player, 0,[0]] execVM format ["%1mcc\general_scripts\hostages\hostage.sqf",MCC_path];
 				};
 			};
-			
-			case "pickKit":		
+
+			case (_ctrlData == "pickKit"):
 			{
-				private ["_itemsPlayer","_itemsSuspect","_wepHolder","_backPackSuspect","_backPackPlayer","_vestPlayer","_vestSuspect","_time","_wepSuspect",
-				         "_wepPlayer"];
-				
-				_itemsPlayer  = itemsWithMagazines player;
-				_itemsSuspect = itemsWithMagazines _suspect;
+				[_suspect] call MCC_fnc_pickKit;
+			};
 
-				_backPackSuspect	= backpack _suspect;
-				_backPackPlayer 	= backpack player;
-				_vestSuspect 		= vest _suspect;
-				_vestPlayer 		= vest player;
-				
-				_wepPlayer = weapons player; 
-				_wepSuspect = weapons _suspect;
-				
-				//remove
-				removeAllItemsWithMagazines player;
-				removeAllItemsWithMagazines _suspect;
-
-				//Backpack
-				if (_backPackPlayer != "") then
+			case (_ctrlData == "medic"):
+			{
+				private ["_bandage","_epipen","_saline","_medkit","_maxBleeding","_complex","_isMedic","_itemsPlayer","_itemsSuspect","_bandagePic","_epipenPic","_salinePic","_medkitPic"];
+				_child =  MCC_interactionMenu1;
+				_complex = missionNamespace getVariable ["MCC_medicComplex",false];
+				if (_complex) then
 				{
-					removeBackpackGlobal player;
+					_bandage = "MCC_bandage";
+					_bandagePic = getText (configFile >> "CfgMagazines" >> _bandage >> "picture");
 
-					if (_backPackSuspect != "") then
-					{
-						removeBackpackGlobal _suspect;
-						player addBackpack _backPackSuspect;
-						_time = time;
-						waituntil {backpack player == _backPackSuspect || time - _time > 3 };
-					};
-					_suspect addBackpack _backPackPlayer;
-					_time = time;
-					waituntil {backpack _suspect == _backPackPlayer || time - _time > 3 };
+					_epipen = "MCC_epipen";
+					_epipenPic = getText (configFile >> "CfgMagazines" >> _epipen >> "picture");
+
+					_saline = "MCC_salineBag";
+					_salinePic = getText (configFile >> "CfgMagazines" >> _saline >> "picture");
+
+					_medkit = "MCC_firstAidKit";
+					_medkitPic = getText (configFile >> "CfgMagazines" >> _medkit >> "picture");
+
+					_itemsPlayer = magazines player;
+					_itemsSuspect = if (_suspect getvariable ["MCC_medicUnconscious",false]) then {magazines _suspect} else {[]};
 				}
 				else
 				{
-					if (_backPackSuspect != "") then
-					{
-						removeBackpackGlobal _suspect;
-						player addBackpack _backPackSuspect;
-						_time = time;
-						waituntil {backpack player == _backPackSuspect || time - _time > 3 };
-					};
-				};
-				
-				//Vest
-				if (_vestPlayer != "") then
-				{
-					removeVest player;
+					_bandage = "FirstAidKit";
+					_bandagePic = getText (configFile >> "CfgWeapons" >> _bandage >> "picture");
 
-					if (_vestSuspect != "") then
-					{
-						removeVest _suspect;
-						player addVest _vestSuspect;
-						_time = time;
-						waituntil {vest player == _vestSuspect || time - _time > 3 };
-					};
-					_suspect addVest _vestPlayer;
-					_time = time;
-					waituntil {vest _suspect == _vestPlayer || time - _time > 3 };
-				}
-				else
-				{
-					if (_vestSuspect != "") then
-					{
-						removeVest _suspect;
-						player addVest _vestSuspect;
-						_time = time;
-						waituntil {vest player == _vestSuspect || time - _time > 3 };
-					};
-				};
-				
-				//weapons
-				private ["_nearHolders","_holder"];
-				
-				_nearHolders = (getpos _suspect nearObjects ["weaponHolderSimulated",3]);
+					_epipen = "Medikit";
+					_epipenPic = getText (configFile >> "CfgMagazines" >> "MCC_epipen" >> "picture");
 
-				if (count _wepPlayer > 0) then
-				{
-					if (count _nearHolders > 0) then
-					{
-						_wepHolder = _nearHolders select 0;
-					}
-					else
-					{
-						_wepHolder = "weaponHolderSimulated" createVehicle getpos _suspect;
-						waituntil {!isnil "_wepHolder"};
-						_wepHolder setpos getpos _suspect;
-					};
-					
-					{
-						_weapon = if (typeName _x == "STRING") then {_x} else {_x select 0};
-						player action ["DropWeapon", _wepHolder, _weapon];
-					} foreach _wepPlayer;
+					_saline = "Medikit";
+					_salinePic = getText (configFile >> "CfgMagazines" >> "MCC_salineBag" >> "picture");
+
+					_medkit = "Medikit";
+					_medkitPic = getText (configFile >> "CfgWeapons" >> _medkit >> "picture");
+
+					_itemsPlayer = items player;
+					_itemsSuspect = if (_suspect getvariable ["MCC_medicUnconscious",false]) then {items _suspect} else {[]};
 				};
-				
+
+				_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
+				_isMedic = if (((getNumber(configFile >> "CfgVehicles" >> typeOf vehicle player >> "attendant")) == 1) || ((player getvariable ["CP_role",""]) == "Corpsman")) then {true} else {false};
+
+				_array = [
+						   ["pulse","Pulse Check",format ["%1data\IconPulse.paa",MCC_path],[0,1,0,1]],
+						   ["physical","Physical Check",format ["%1data\IconPhysical.paa",MCC_path],[0,1,0,1]],
+						   ["bandage",format ["Bandage X %1", {_x == _bandage} count (_itemsPlayer+_itemsSuspect)],_bandagePic],
+						   ["epipen",format ["Inject epipen X %1", {_x == _epipen} count (_itemsPlayer+_itemsSuspect)],_epipenPic],
+						   ["saline",format ["Saline transfusion X %1", {_x == _saline} count (_itemsPlayer+_itemsSuspect)],_salinePic],
+						   ["heal","First Aid",_medkitPic]
+						 ];
+
+				if ( !alive _suspect) then {_array set [1,-1]};
+				if (!(_bandage in (_itemsPlayer+_itemsSuspect)) || !alive _suspect) then {_array set [2,-1]};
+				if (!(_epipen in (_itemsPlayer+_itemsSuspect)) || !alive _suspect) then {_array set [3,-1]};
+				if (!(_saline in (_itemsPlayer+_itemsSuspect)) || !alive _suspect) then {_array set [4,-1]};
+				if (!(_medkit in _itemsPlayer) || !_isMedic || !alive _suspect || (_suspect getVariable ["MCC_medicUnconscious",false]) || ((_suspect getVariable ["MCC_medicBleeding",0])> 0.2)) then {_array set [5,-1]};
+				_array = _array - [-1];
+			};
+
+			case (_ctrlData in ["bandage","epipen","saline","heal"]):
+			{
+				[_ctrlData, _suspect] call MCC_fnc_medicUseItem;
+			};
+
+			case (_ctrlData == "pulse"):
+			{
+				private ["_string","_maxBleeding","_remaineBlood","_subArray","_fatigueEffect"];
+				_child =  MCC_interactionMenu2;
+				_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
+				_remaineBlood = _suspect getvariable ["MCC_medicRemainBlood",_maxBleeding];
+				_fatigueEffect = floor (30*(getFatigue _suspect));
+
+				MCC_interactionMenu2 ctrlShow false;
+
+				//Blood loss
+				switch (true) do
+							{
+								case (!alive _suspect) : {_string = "No pulse, he is Dead";  _subArray = [1,1,1,1];};
+								case (_remaineBlood == _maxBleeding) : {_string = format ["%1 - No blood loss",(floor (random 5))+80+_fatigueEffect]; _subArray = [1,1,1,1];};
+								case (_remaineBlood/_maxBleeding < 0.4) : {_string = format ["%1 - Severe blood Loss",(floor (random 5))+160+_fatigueEffect]; _subArray = [1,0,0,1];};
+								case (_remaineBlood/_maxBleeding < 0.7) : {_string = format ["%1 - Mild blood loss",(floor (random 5))+120+_fatigueEffect]; _subArray = [1,1,0,1];};
+								case (_remaineBlood/_maxBleeding >= 0.7) : {_string = format ["%1 - Minor blood loss",(floor (random 5))+95+_fatigueEffect]; _subArray = [0,1,0,1];};
+							};
+				_array = [
+						   ["pulseReport",_string,"",_subArray]
+						 ];
+			};
+
+			case (_ctrlData == "physical"):
+			{
+				private ["_string","_damage","_hitPoints","_subArray","_partName","_bleeding"];
+				_child =  MCC_interactionMenu2;
+				_hitPoints = ["HitHead","HitBody","hitLegs","hitHands"];
+				_partName = ["Head: ","Body: ","Legs: ","Hands: "];
+				_array = [];
+				_bleeding = _suspect getVariable ["MCC_medicBleeding",0];
+
+				MCC_interactionMenu2 ctrlShow false;
+
+				//Trauma
 				{
-					_holder = _x; 
-					{player action ["TakeWeapon", _holder, _x]} foreach (weaponCargo _x);
-				} foreach _nearHolders;
-				
-				{
-					player action ["TakeWeapon", _suspect, _x];
-				} foreach _wepSuspect;
-				
-				//Items + mage
-				{
+					_subArray = [];
+					_damage = _suspect getHitPointDamage _x;
 					switch (true) do
-					{
-						case (isClass (configFile >> "CfgMagazines" >> _x)) : {player addMagazine _x};
-						case (isClass (configFile >> "CfgWeapons" >> _x)) : {player addItem _x};
-					};
-				} foreach _itemsSuspect;
-				
-				
-				{
-					switch (true) do
-					{
-						case (isClass (configFile >> "CfgMagazines" >> _x)) : {_suspect addMagazine _x};
-						case (isClass (configFile >> "CfgWeapons" >> _x)) : {_suspect addItem _x};
-					};
-				} foreach _itemsPlayer;
+							{
+								case (_damage < 0.05) : {_string = "No trauma"; _subArray set [3,[1,1,1,1]];};
+								case (_damage < 0.3) : {_string = "Minor trauma"; _subArray set [3,[0,1,0,1]];};
+								case (_damage < 0.6) : {_string = "Mild trauma"; _subArray set [3,[1,1,0,1]];};
+								case (_damage >= 0.6) : {_string = "Severe trauma"; _subArray set [3,[1,0,0,1]];};
+							};
+					_subArray set [0,"physicalReport"];
+					_subArray set [1,(_partName select _foreachIndex) + _string]; lbSetColor
+					_subArray set [2,""];
+					_array pushBack _subArray;
+				} foreach _hitPoints;
+
+
+				//Bleeding
+				_subArray = [];
+				_subArray set [0,"physicalReport"];
+
+				switch (true) do
+								{
+									case (_bleeding == 0) : {_string =  "Not Bleeding"; _subArray set [3,[1,1,1,1]];};
+									case (_bleeding < 0.2) : {_string =  "Minor Bleeding"; _subArray set [3,[0,1,0,1]];};
+									case (_bleeding < 0.6) : {_string =  "Mild Bleeding"; _subArray set [3,[1,1,0,1]];};
+									case (_bleeding >= 0.6) : {_string =  "Severe Bleeding"; _subArray set [3,[1,0,0,1]];};
+								};
+
+				_subArray set [1,"Bleeding: " + _string];
+				_subArray set [2,""];
+				_array pushBack _subArray;
+			};
+
+			case (_ctrlData in ["drag","carry"] ):
+			{
+
+				[player,_suspect, _ctrlData == "carry"] call MCC_fnc_medicDragCarry;
+			};
+
+			case (["load",_ctrlData] call bis_fnc_inString):
+			{
+				closeDialog 0;
+				[[_suspect,_ctrlData,true], "MCC_fnc_loadWounded", _suspect, false] spawn BIS_fnc_MP;
 			};
 		};
+
+		//Reveal
+		if (!isnil "_child") then
+		{
+			_child ctrlShow true;
+			_child ctrlSetPosition [_posX,_posY,0.12 * safezoneW, ((count _array)) * (0.025* safezoneH)];
+			_child ctrlCommit 0;
+
+			_child ctrlRemoveAllEventHandlers "LBSelChanged";
+			_comboBox = _child;
+			lbClear _comboBox;
+			{
+				_class			= _x select 0;
+				_displayname 	= _x select 1;
+				_pic 			= _x select 2;
+				_index 			= _comboBox lbAdd _displayname;
+				if (!isnil "_pic") then {_comboBox lbSetPicture [_index, _pic]};
+				_comboBox lbSetData [_index, _class];
+				if (count _x > 3) then {_comboBox lbSetColor [_index, _x select 3]};
+			} foreach _array;
+
+			_child ctrlAddEventHandler ["LBSelChanged","_this spawn MCC_fnc_ManMenuClicked"];
+		};
 	};
-	
-	_array = [["zip","Restrain Suspect",""],
-			  ["follow","Order Suspect",""],
+
+	_suspectName = if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect};
+	_array = [["",format ["-= %1 =-",_suspectName],""],
+			  ["zip","Restrain",format ["%1data\iconHandcuffs.paa",MCC_path]],
+			  ["follow","Order Around",format ["%1data\iconOrder.paa",MCC_path]],
 			  ["pickKit","Pick Up Kit",format ["%1data\IconAmmo.paa",MCC_path]],
-			  ["close","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"]];
-	
+			  ["medic","Examine",format ["%1data\IconMed.paa",MCC_path]],
+			  ["drag","Drag",format ["%1data\IconDrag.paa",MCC_path]]];
+
+	//Load wounded
+	private ["_nearVehicles","_vehicle","_vehicleName"];
+	_nearVehicles = [];
+	if (_suspect getVariable ["MCC_medicUnconscious",false] && alive _suspect) then
+	{
+		_nearVehicles = (_suspect nearObjects ["Helicopter",5]) + (_suspect nearObjects ["LandVehicle",5]);
+
+		for [{_x=0},{_x<count _nearVehicles},{_x=_x+1}] do
+		{
+			_vehicle = _nearVehicles select _x;
+			if ((_vehicle emptyPositions "cargo")==0 || ((vectorUp _vehicle) select 2) <=0 || locked _vehicle >1) then {_nearVehicles set [_x,-1]};
+		};
+
+		_nearVehicles = _nearVehicles - [-1];
+	};
+
+	{
+		_vehicleName = getText (configfile >> "CfgVehicles" >> typeof _x >> "displayName");
+		_array set [count _array, [format ["load_%1",_foreachIndex],format ["Load into %1",_vehicleName],"\A3\ui_f\data\igui\cfg\actions\getincargo_ca.paa"]];
+	} forEach _nearVehicles;
 
 	//Manage array
-	if !((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player) && alive _suspect) then {_array set [0,-1]};
-	if !((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && ((({_x getVariable ["MCC_neutralize",false]} count units group player)<2)) && alive _suspect) then {_array set [1,-1]};
-	if (alive _suspect) then {_array set [2,-1]};
+	if !((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player) && alive _suspect) then {_array set [1,-1]};
+	if !((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && ((({_x getVariable ["MCC_neutralize",false]} count units group player)<2)) && alive _suspect) then {_array set [2,-1]};
+	if (alive _suspect) then {_array set [3,-1]};
+	if (!(_suspect getVariable ["MCC_medicUnconscious",false]) || !(alive _suspect)) then {_array set [5,-1]};
+
 	_array = _array - [-1];
-	
-	if (count _array == 1) exitWith {}; 
+
+	 _array pushBack ["close","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"];
+	if (count _array == 2) exitWith {};
 	_ok = createDialog "MCC_INTERACTION_MENU";
 	waituntil {dialog};
 
 	_ctrl = ((uiNameSpace getVariable "MCC_INTERACTION_MENU") displayCtrl 0);
-	_ctrl ctrlSetPosition [0.4,0.4,0.15 * safezoneW, 0.025* count _array* safezoneH];	
+	_ctrl ctrlSetPosition [0.4,0.4,0.15 * safezoneW, 0.025* count _array* safezoneH];
 	_ctrl ctrlCommit 0;
-	
+
 	_ctrl ctrlRemoveAllEventHandlers "LBSelChanged";
 
 	lbClear _ctrl;
@@ -220,32 +318,32 @@ if (MCC_interactionKey_holding && (player distance  _suspect < 5) && !dialog) ex
 		_ctrl lbSetData [_index, _class];
 	} foreach _array;
 	_ctrl lbSetCurSel 0;
-	
+
 	player setVariable ["interactWith",[_suspect]];
 	_ctrl ctrlAddEventHandler ["LBSelChanged","_this spawn MCC_fnc_ManMenuClicked"];
 	waituntil {!dialog};
-	player setVariable ["MCC_interactionActive",false];  
+	player setVariable ["MCC_interactionActive",false];
 };
 
 //Cant neturalize friendly units
-if (((side _suspect != civilian && (side _suspect getFriend  side player)>0.6)) || isPlayer _suspect || (_suspect getVariable ["MCC_neutralize",false]) || (_suspect getVariable ["MCC_disarmed",false]) || !(alive _suspect)) exitWith {player setVariable ["MCC_interactionActive",false]};
+if (((side _suspect != civilian && (side _suspect getFriend  side player)>0.6)) || isPlayer _suspect || (_suspect getVariable ["MCC_neutralize",false]) || (_suspect getVariable ["MCC_disarmed",false]) || !(alive _suspect) || (captive _suspect)) exitWith {player setVariable ["MCC_interactionActive",false]};
 
 //shout
 [[[netid _men,_men], format ["dontmove%1",floor (random 20)]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-sleep 1; 
+sleep 1;
 
 _factor = if (side _suspect == civilian) then {6} else {11};
-if (primaryWeapon player == "") then {_factor = _factor*2}; 
+if (primaryWeapon player == "") then {_factor = _factor*2};
 _rand= random 20;
-		
+
 [[2,getpos _suspect,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[(group _suspect)]],"MCC_fnc_manageWp", false, false] spawn BIS_fnc_MP;
 
 //Stop and look at the player
-[[[_suspect, _men], 
+[[[_suspect, _men],
   {
 	_suspect = _this select 0;
 	_men = _this select 1;
-	
+
 	(group _suspect) setFormDir ([_suspect,_men] call BIS_fnc_dirTo);
 	doStop _suspect;
 	_suspect disableAI "MOVE";
@@ -261,7 +359,7 @@ if (isnil "_suspectCorage") then
 _suspectCorage = _suspectCorage * (1-(getdammage _suspect));
 
 //If comply
-if (random 25 > _suspectCorage || (_suspect getVariable ["MCC_Stunned", false])) then 
+if (random 25 > _suspectCorage || (_suspect getVariable ["MCC_Stunned", false])) then
 {
 	[[[netid _suspect,_suspect], format ["enough%1",floor random 14]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 	[[_suspect,"amovpercmstpsnonwnondnon_amovpercmstpssurwnondnon"], "MCC_fnc_disarmUnit", _suspect, false] spawn BIS_fnc_MP;
@@ -275,32 +373,32 @@ if (random 25 > _suspectCorage || (_suspect getVariable ["MCC_Stunned", false]))
 		  deleteVehicle _x;
 		} forEach attachedObjects _suspect;
 	};
-	
+
 	//If left unintended for long will break free
-	_suspect spawn 
+	_suspect spawn
 	{
 		private ["_escapeChance","_suspect"];
 		_suspect		= _this;
 		_escapeChance 	= 0.01;
-				
+
 		while {alive _suspect && !(_suspect getVariable ["MCC_neutralize",false])} do
 		{
-			if (random 1 < _escapeChance) exitWith {_suspect setVariable ["MCC_disarmed",false,true]}; 
+			if (random 1 < _escapeChance) exitWith {_suspect setVariable ["MCC_disarmed",false,true]};
 			_escapeChance = _escapeChance + 0.01;
 		};
-		
+
 		_suspect setVariable ["MCC_disarmed",false];
 		[_suspect] spawn MCC_fnc_deleteHelper;
 	};
-} 
+}
 else
 {
 	[[[netid _suspect,_suspect], format ["alone%1",floor random 10]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-	if ((stance _suspect == "STAND") && (side _suspect == civilian)) then 
+	if ((stance _suspect == "STAND") && (side _suspect == civilian)) then
 	{
 		[[_suspect,"Acts_Kore_Introducing",true,4], "MCC_fnc_setUnitAnim", true, false] spawn BIS_fnc_MP;
 	};
 };
 
 [[[_suspect],{(_this select 0) enableAI "MOVE";}],"BIS_fnc_spawn", _suspect, false] spawn BIS_fnc_MP;
-player setVariable ["MCC_interactionActive",false]; 
+player setVariable ["MCC_interactionActive",false];

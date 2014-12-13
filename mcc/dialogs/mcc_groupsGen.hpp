@@ -40,6 +40,18 @@ class mcc_groupGen
 	{
 		//========================================= Controls========================================
 		//Tittle
+		class MCC_Help: MCC_RscStructuredText
+		{
+			idc = -1;
+			text = "(?)";
+			colorBackground[] = { 0, 0, 0, 0.7};
+			onMouseEnter = "[_this, true,[13,13],'mccmain'] spawn MCC_fnc_help";
+
+			x = 0.195 * safezoneW + safezoneX;
+			y = 0.095 * safezoneH + safezoneY;
+			w = 0.020625 * safezoneW;
+			h = 0.033 * safezoneH;
+		};
 
 		//Faction
 		class mcc_groupGen_factionTittle: MCC_RscText
@@ -279,7 +291,7 @@ class mcc_groupGen
 			w = 0.0744792 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
-		
+
 		class MCC_ambientBFButton: MCC_RscButton
 		{
 			idc = 1015;

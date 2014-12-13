@@ -9,7 +9,7 @@ class mcc_sandbox_moduleStartLocations : Module_F
 	function = "MCC_fnc_buildSpawnPoint";
 	scope = 2;
 	isGlobal = 1;
-	
+
 	class Arguments
 	{
 		class side
@@ -35,10 +35,10 @@ class mcc_sandbox_moduleStartLocations : Module_F
 				};
 			};
 		};
-		
+
 		class size
 		{
-			displayName = "Tyoe";
+			displayName = "Type";
 			typeName = "STRING";
 			class values
 			{
@@ -55,7 +55,7 @@ class mcc_sandbox_moduleStartLocations : Module_F
 				};
 			};
 		};
-		
+
 		class distractable
 		{
 			displayName = "Distractable";
@@ -76,7 +76,7 @@ class mcc_sandbox_moduleStartLocations : Module_F
 			};
 		};
 	};
-	
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Place start module to predefine MCC's start locations";

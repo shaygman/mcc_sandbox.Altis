@@ -1,6 +1,6 @@
 private ["_mccdialog","_comboBox","_displayname","_it","_x","_index"];
 disableSerialization;
-MCC_GUI1initDone = false; 
+MCC_GUI1initDone = false;
 
 #define MCCVIEWDISTANCE 1006
 #define MCCGRASSDENSITY 1007
@@ -39,41 +39,41 @@ lbClear _comboBox;
 _comboBox lbSetCurSel (MCC_terrainPref select 1); // set viewdistance index to current vd
 
 //Show key Binds
-for [{_x=8415},{_x<=8420},{_x=_x+1}]  do 
+for [{_x=8415},{_x<=8421},{_x=_x+1}]  do
 {
 	_key = MCC_keyBinds select (_x-8415);
 
 	_text = "";
-	if (_key select 0) then {_text = "Shift + "}; 
-	if (_key select 1) then {_text = _text + "Ctrl + "}; 
-	if (_key select 2) then {_text = _text + "Alt + "}; 
-	
+	if (_key select 0) then {_text = "Shift + "};
+	if (_key select 1) then {_text = _text + "Ctrl + "};
+	if (_key select 2) then {_text = _text + "Alt + "};
+
 	_text = format ["%1%2",_text,keyName (_key select 3)];
 
 	ctrlsettext [_x, _text];
 };
 
-sleep 1; 
-MCC_GUI1initDone = true; 
+sleep 1;
+MCC_GUI1initDone = true;
 
 //-------------------------------------------------FPS Loop  -----------------------------
-while {(str (finddisplay 2990) != "no display")} do 
+while {(str (finddisplay 2990) != "no display")} do
 {
 	MCC_clientFPS  = round(diag_fps);
 	ctrlSetText [MCCCLIENTFPS, format["%1",MCC_clientFPS]];
-	
-	if (isnil "mcc_fps_running") then {mcc_fps_running = false}; 
-	if !(mcc_fps_running) then 
+
+	if (isnil "mcc_fps_running") then {mcc_fps_running = false};
+	if !(mcc_fps_running) then
 	{
 		[[1],"MCC_fnc_FPS",true,false] spawn BIS_fnc_MP;
 		sleep 0.5;
 	};
-		
-	if !( MCC_isHC ) then 
-	{		
+
+	if !( MCC_isHC ) then
+	{
 		ctrlSetText [MCCSERVERFPS, format["%1",MCC_serverFPS]];
 	}
-	else 
+	else
 	{
 		ctrlSetText [MCCSERVERFPS, format[" %1 - HC FPS: %2", MCC_serverFPS, MCC_hcFPS]];
 	};

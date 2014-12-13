@@ -21,80 +21,80 @@
 //"CourierNewB64" "TahomaB" "Bitstream" "Zeppelin32"
 
 //-----------------------------------------------------------------------------
-// Control Types 
-#define MCCCT_STATIC 0 
-#define MCCCT_BUTTON 1 
-#define MCCCT_EDIT 2 
-#define MCCCT_SLIDER 3 
-#define MCCCT_COMBO 4 
-#define MCCCT_LISTBOX 5 
-#define MCCCT_TOOLBOX 6 
-#define MCCCT_CHECKBOXES 7 
-#define MCCCT_PROGRESS 8 
-#define MCCCT_HTML 9 
-#define MCCCT_STATIC_SKEW 10 
-#define MCCCT_ACTIVETEXT 11 
-#define MCCCT_TREE 12 
-#define MCCCT_STRUCTURED_TEXT 13 
-#define MCCCT_CONTEXT_MENU 14 
-#define MCCCT_CONTROLS_GROUP 15 
+// Control Types
+#define MCCCT_STATIC 0
+#define MCCCT_BUTTON 1
+#define MCCCT_EDIT 2
+#define MCCCT_SLIDER 3
+#define MCCCT_COMBO 4
+#define MCCCT_LISTBOX 5
+#define MCCCT_TOOLBOX 6
+#define MCCCT_CHECKBOXES 7
+#define MCCCT_PROGRESS 8
+#define MCCCT_HTML 9
+#define MCCCT_STATIC_SKEW 10
+#define MCCCT_ACTIVETEXT 11
+#define MCCCT_TREE 12
+#define MCCCT_STRUCTURED_TEXT 13
+#define MCCCT_CONTEXT_MENU 14
+#define MCCCT_CONTROLS_GROUP 15
 
-#define MCCCT_XKEYDESC 40 
-#define MCCCT_XBUTTON 41 
-#define MCCCT_XLISTBOX 42 
-#define MCCCT_XSLIDER 43 
-#define MCCCT_XCOMBO 44 
-#define MCCCT_ANIMATED_TEXTURE 45 
+#define MCCCT_XKEYDESC 40
+#define MCCCT_XBUTTON 41
+#define MCCCT_XLISTBOX 42
+#define MCCCT_XSLIDER 43
+#define MCCCT_XCOMBO 44
+#define MCCCT_ANIMATED_TEXTURE 45
 
-#define MCCCT_OBJECT 80 
-#define MCCCT_OBJECT_ZOOM 81 
-#define MCCCT_OBJECT_CONTAINER 82 
-#define MCCCT_OBJECT_CONT_ANIM 83 
+#define MCCCT_OBJECT 80
+#define MCCCT_OBJECT_ZOOM 81
+#define MCCCT_OBJECT_CONTAINER 82
+#define MCCCT_OBJECT_CONT_ANIM 83
 
-#define MCCCT_LINEBREAK 98 
-#define MCCCT_USER 99 
-#define MCCCT_MAP 100 
-#define MCCCT_MAP_MAIN 101 
+#define MCCCT_LINEBREAK 98
+#define MCCCT_USER 99
+#define MCCCT_MAP 100
+#define MCCCT_MAP_MAIN 101
 
 #define MCCCT_SL_DIR 0x400
 #define MCCCT_SL_VERT 0
-#define MCCCT_SL_HORZ 0x400 
+#define MCCCT_SL_HORZ 0x400
 
 //-----------------------------------------------------------------------------
-// Static styles 
-#define MCCST_POS 0x0F 
-#define MCCST_HPOS 0x03 
-#define MCCST_VPOS 0x0C 
+// Static styles
+#define MCCST_POS 0x0F
+#define MCCST_HPOS 0x03
+#define MCCST_VPOS 0x0C
 
-#define MCCST_LEFT 0x00 
-#define MCCLB_TEXTURES 0x10 
-#define MCCST_RIGHT 0x01 
-#define MCCST_CENTER 0x02 
-#define MCCST_DOWN 0x04 
-#define MCCST_UP 0x08 
+#define MCCST_LEFT 0x00
+#define MCCLB_TEXTURES 0x10
+#define MCCST_RIGHT 0x01
+#define MCCST_CENTER 0x02
+#define MCCST_DOWN 0x04
+#define MCCST_UP 0x08
 
-#define MCCST_VCENTER 0x0c 
-#define MCCST_TYPE 0xF0 
+#define MCCST_VCENTER 0x0c
+#define MCCST_TYPE 0xF0
 
-#define MCCST_SINGLE 0 
-#define MCCST_MULTI 16 
-#define MCCST_TITLE_BAR 32 
-#define MCCST_PICTURE 48 
-#define MCCST_FRAME 64 
-#define MCCST_BACKGROUND 80 
-#define MCCST_GROUP_BOX 96 
-#define MCCST_GROUP_BOX2 112 
-#define MCCST_HUD_BACKGROUND 128 
-#define MCCST_TILE_PICTURE 144 
-#define MCCST_WITH_RECT 160 
-#define MCCST_LINE 176 
-#define MCCLB_MULTI 0x20 
+#define MCCST_SINGLE 0
+#define MCCST_MULTI 16
+#define MCCST_TITLE_BAR 32
+#define MCCST_PICTURE 48
+#define MCCST_FRAME 64
+#define MCCST_BACKGROUND 80
+#define MCCST_GROUP_BOX 96
+#define MCCST_GROUP_BOX2 112
+#define MCCST_HUD_BACKGROUND 128
+#define MCCST_TILE_PICTURE 144
+#define MCCST_WITH_RECT 160
+#define MCCST_LINE 176
+#define MCCLB_MULTI 0x20
 #define MCCSL_VERT 0
 
 //-----------------------------------------------------------------------------
 // standard base dialog control class definitions
 //-----------------------------------------------------------------------------
-class MCC_RscText 
+class MCC_RscText
 {
   access = 0;
   type = 0;
@@ -117,8 +117,8 @@ class MCC_RscText
   y = 0.0;
 };
 //----------------------------------------------------------
-class MCC_RscControlsGroupNoScrollbars 
-{ 
+class MCC_RscControlsGroupNoScrollbars
+{
 	h = 1;
 	idc = -1;
 	shadow = 0;
@@ -127,7 +127,7 @@ class MCC_RscControlsGroupNoScrollbars
 	w = 1;
 	x = 0;
 	y = 0;
-	
+
 	class Controls;
 	class HScrollbar
 	{
@@ -147,7 +147,7 @@ class MCC_RscControlsGroupNoScrollbars
 		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
 		width = 0;
 	};
-	
+
 	class VScrollbar
 	{
 		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
@@ -169,7 +169,7 @@ class MCC_RscControlsGroupNoScrollbars
 };
 
 class MCC_RscControlsGroup
-{ 
+{
 	h = 1;
 	idc = -1;
 	shadow = 0;
@@ -178,7 +178,7 @@ class MCC_RscControlsGroup
 	w = 1;
 	x = 0;
 	y = 0;
-	
+
 	class Controls;
 	class HScrollbar
 	{
@@ -198,7 +198,7 @@ class MCC_RscControlsGroup
 		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
 		width = 0;
 	};
-	
+
 	class VScrollbar
 	{
 		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
@@ -217,7 +217,7 @@ class MCC_RscControlsGroup
 		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
 		width = 0;
 	};
-	
+
 	class ScrollBar
 	{
         arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
@@ -240,7 +240,7 @@ class MCC_RscControlsGroup
 
 
 class MCC_RscProgress
-{ 
+{
 	access = 0;
 	colorBar[] = {"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])","(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])","(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])","(profilenamespace getvariable ['GUI_BCG_RGB_A',0.8])"};
 	colorFrame[] = {0,0,0,0};
@@ -251,10 +251,10 @@ class MCC_RscProgress
 	type = 8;
 	w = 0.313726;
 	x = 0.344;
-	y = 0.619;	
+	y = 0.619;
 };
 
-class MCC_RscButton 
+class MCC_RscButton
 {
   access = 0;
   borderSize = 0;
@@ -287,7 +287,7 @@ class MCC_RscButton
   y = 0;
 };
 
-class MCC_RscCheckBox 
+class MCC_RscCheckBox
 {
 	checked = 0;
 	color[] = {1,1,1,0.7};
@@ -429,7 +429,7 @@ class RscButtonMenuCancel : RscButtonMenuOK
   text = "Cancel";
 };
 
-class MCC_RscListbox 
+class MCC_RscListbox
 {
 	access = 0;
 	arrowEmpty = "#(argb,8,8,3)color(1,1,1,1)";
@@ -479,15 +479,15 @@ class MCC_RscListbox
 		};
 };
 
-class MCC_RscListNbox 
+class MCC_RscListNbox
 {
 	access = 0;
-	idc = -1; 
+	idc = -1;
 	type = 102;
 	style = MCCST_LEFT + MCCLB_TEXTURES; // Style
 	default = 0;
 	blinkingPeriod = 0;
-	
+
 	x = 29 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
 	y = 15 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
 	w = 10 * GUI_GRID_CENTER_W; // Width
@@ -539,7 +539,7 @@ class MCC_RscListNbox
 	};
 };
 
-class MCC_RscTree 
+class MCC_RscTree
 {
 	access = 0;
 	borderSize = 0;
@@ -583,8 +583,8 @@ class MCC_RscTree
 			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
 			width = 0;
 		};
-};	
-class MCC_RscCombo 
+};
+class MCC_RscCombo
 	{
 	access = 0;
 	arrowEmpty = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_ca.paa";
@@ -633,7 +633,7 @@ class MCC_RscCombo
 			thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
 			width = 0;
 		};
-		
+
 	class ComboScrollBar
 		{
 			arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
@@ -653,8 +653,8 @@ class MCC_RscCombo
 			width = 0;
 		};
 	};
-	
-class MCC_RscStructuredText 
+
+class MCC_RscStructuredText
 	{
 		access = 0;
 		idc = -1;
@@ -677,8 +677,8 @@ class MCC_RscStructuredText
 				shadow = 1;
 			};
 	};
-	
-class MCC_RscMapControl 
+
+class MCC_RscMapControl
 	{
 	access = 0;
 	alphaFadeEndScale = 0.4;
@@ -1050,10 +1050,10 @@ class MCC_RscMapControl
 		importance = 1;
 		size = 24;
 		};
-	
+
 	};
 
-class MCC_RscSlider 
+class MCC_RscSlider
 	{
 		access = 0;
 		color[] = {1,1,1,0.8};
@@ -1086,7 +1086,7 @@ class MCC_RscXSliderH
 		x = 0;
 		y = 0;
 	};
-	
+
 class MCC_RscPicture
 	{
 		access = 0;
@@ -1134,7 +1134,7 @@ class MCC_RscActivePicture
 		x = 0;
 		y = 0;
 	};
-	
+
 class MCC_RscFrame
 	{
 		colorBackground[] = {0,0,0,0};
@@ -1146,7 +1146,7 @@ class MCC_RscFrame
 		text = "";
 		type = 0;
 	};
-	
+
 class MCC_RscToolbox {
 	  type = MCCCT_TOOLBOX;  //defined constant (6)
 	  style = MCCST_LEFT; //defined constant (2)
@@ -1170,7 +1170,7 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 	x = 0.29375 * safezoneW + safezoneX;
 	y = 0.225 * safezoneH + safezoneY;
 	w = 0.216563 * safezoneW;
-	h = 0.242 * safezoneH;
+	h = 0.29 * safezoneH;
 	class controls
 	{
 		class MCC_keyBindsOpenMCCtext: MCC_RscText
@@ -1233,6 +1233,16 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 			w = 0.0973958 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
+		class MCC_keyBindsMCCinteractionSelftext: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Interaction Self:"; //--- ToDo: Localize;
+			x = 0.00515597 * safezoneW;
+			y = 0.242 * safezoneH;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
 		class MCC_keyBindsOpenMCCButton: MCC_RscButton
 		{
 			idc = 8415;
@@ -1281,7 +1291,7 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
-		
+
 		class MCC_keyBindsMCCinteractionButton: MCC_RscButton
 		{
 			idc = 8419;
@@ -1303,6 +1313,18 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 
 			x = 0.108281 * safezoneW;
 			y = 0.11 * safezoneH;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_keyBindsMCCinteractionSelfButton: MCC_RscButton
+		{
+			idc = 8421;
+			tooltip = "Click to change";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			onMouseButtonUp =  __EVAL("[_this,6] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.108281 * safezoneW;
+			y = 0.242 * safezoneH;
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};

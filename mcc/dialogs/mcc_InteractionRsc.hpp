@@ -18,7 +18,7 @@ class MCC_interactionPB
 			y = 0.676 * safezoneH + safezoneY;
 			w = 0.165 * safezoneW;
 			h = 0.099 * safezoneH;
-			
+
 			class controls
 			{
 				class MCC_interactionPRBar: MCC_RscProgress
@@ -32,11 +32,11 @@ class MCC_interactionPB
 					colorFrame[] = {1,1,1,0.8};
 					colorBackground[] = {0,0,0,0.3};
 				};
-				
+
 				class MCC_interactionText: MCC_RscText
 				{
 					idc = 2;
-					style = 0x02; 
+					style = 0x02;
 					sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
 					x = 0.015469 * safezoneW;
 					y = 0.011 * safezoneH;

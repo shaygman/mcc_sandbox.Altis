@@ -37,9 +37,9 @@
 class MCC_playerConsole {
   idd = mcc_playerConsole_IDD;
   movingEnable = 1;
-  onLoad = __EVAL("[] execVM '"+MCCPATH+"mcc\dialogs\mcc_playerConsole_init.sqf'"); 
-  
-  controlsBackground[] = 
+  onLoad = __EVAL("[] execVM '"+MCCPATH+"mcc\dialogs\mcc_playerConsole_init.sqf'");
+
+  controlsBackground[] =
   {
   mcc_ConsolePic,
   mcc_ConsoleBackground,
@@ -48,14 +48,14 @@ class MCC_playerConsole {
   MCC_mapBackground,
   MCC_mapConsole
   };
-  
+
 
   //---------------------------------------------
-  objects[] = 
-  { 
+  objects[] =
+  {
   };
-  
-  controls[] = 
+
+  controls[] =
   {
   mcc_consoleF1,
   mcc_consoleF2,
@@ -99,7 +99,7 @@ class MCC_playerConsole {
   MCC_ConsoleCallEvac3WPButton,
   MCC_ConsoleHelp
   };
-  
+
  //========================================= Background========================================
 	class mcc_ConsolePic: MCC_RscPicture	{idc = -1;text = __EVAL(MCCPATH +"data\console.paa");
 		x = -0.0446875 * safezoneW + safezoneX;
@@ -154,7 +154,7 @@ class mcc_consoleF2: MCC_RscButton
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
 	onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\console\conoleSwitchMenu.sqf'");
-	tooltip = "UAV Control"; 
+	tooltip = "UAV Control";
 };
 class mcc_consoleF3: MCC_RscButton
 {
@@ -171,7 +171,7 @@ class mcc_consoleF3: MCC_RscButton
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
 	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\console\conoleSwitchMenu.sqf'");
-	tooltip = "AC-130 Control"; 
+	tooltip = "AC-130 Control";
 };
 class mcc_consoleF4: MCC_RscButton
 {
@@ -187,7 +187,7 @@ class mcc_consoleF4: MCC_RscButton
 	colorBackgroundActive[] = {0,0,0,0};
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
-	tooltip = "Forward observer artillery's interface"; 
+	tooltip = "Forward observer artillery's interface";
 	onButtonClick = __EVAL("[0,0,0,[1]] execVM '"+MCCPATH+"mcc\general_scripts\console\conoleOpenMenu.sqf'");
 };
 class mcc_consoleF5: MCC_RscButton
@@ -204,7 +204,7 @@ class mcc_consoleF5: MCC_RscButton
 	colorBackgroundActive[] = {0,0,0,0};
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
-	tooltip = "Construction interface"; 
+	tooltip = "Construction interface";
 	onButtonClick ="while {dialog} do {closeDialog 0}; createDialog 'MCC_LOGISTICS_BASE_BUILD'";
 };
 class mcc_consoleF6: MCC_RscButton
@@ -273,7 +273,7 @@ class mcc_consoleF6: MCC_RscButton
 		y = 0.205934 * safezoneH + safezoneY;
 		w = 0.07875 * safezoneW;
 		h = 0.0280062 * safezoneH;
-		tooltip = "Call selected CAS - Click and drag on the mini-map to define CAS's approach"; 
+		tooltip = "Call selected CAS - Click and drag on the mini-map to define CAS's approach";
 		onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\console\console_request.sqf'");
 	};
 	//Airdrop
@@ -302,7 +302,7 @@ class mcc_consoleF6: MCC_RscButton
 		y = 0.359969 * safezoneH + safezoneY;
 		w = 0.07875 * safezoneW;
 		h = 0.0280062 * safezoneH;
-		tooltip = "Call selected airdrop - Click and drag on the mini-map to define airdrop's approach"; 
+		tooltip = "Call selected airdrop - Click and drag on the mini-map to define airdrop's approach";
 		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\console_request.sqf'");
 	};
 	//==============================EVAC===========================================
@@ -360,7 +360,7 @@ class mcc_consoleF6: MCC_RscButton
 		y = 0.584019 * safezoneH + safezoneY;
 		w = 0.0853125 * safezoneW;
 		h = 0.0280062 * safezoneH;
-		colorBackground[] = {1,1,1,0};		
+		colorBackground[] = {1,1,1,0};
 	};
 	class MCC_ConsoleEvacApproachComboBox: MCC_RscCombo {
 		idc = MCC_ConsoleEvacApproachComboBox_IDD;
@@ -375,7 +375,7 @@ class mcc_consoleF6: MCC_RscButton
 		y = 0.668037 * safezoneH + safezoneY;
 		w = 0.0853125 * safezoneW;
 		h = 0.0420094 * safezoneH;
-		tooltip = "Call selected EVAC - Mouse click on the mini-map to call it"; 
+		tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
 		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
 	};
 	class MCC_ConsoleCallEvac3WPButton: MCC_RscButton {
@@ -385,7 +385,7 @@ class mcc_consoleF6: MCC_RscButton
 		y = 0.668037 * safezoneH + safezoneY;
 		w = 0.105 * safezoneW;
 		h = 0.0420094 * safezoneH;
-		tooltip = "Call selected EVAC - Mouse click on the mini-map to call it"; 
+		tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
 		onButtonClick = __EVAL("nul=[1] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
 	};
 	class MCC_ConsoleWPBckgr: MCC_RscStructuredText
@@ -437,7 +437,7 @@ class mcc_consoleF6: MCC_RscButton
 		y = 0.1 * safezoneH + safezoneY;
 		w = 0.1 * safezoneW;
 		h = 0.1 * safezoneH;
-		tooltip = "Add a waypoint to all selected groups"; 
+		tooltip = "Add a waypoint to all selected groups";
 		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\manageWP.sqf'");
 	};
 	class MCC_ConsoleWPReplace: MCC_RscButton {
@@ -447,7 +447,7 @@ class mcc_consoleF6: MCC_RscButton
 		y = 0.1 * safezoneH + safezoneY;
 		w = 0.1 * safezoneW;
 		h = 0.1 * safezoneH;
-		tooltip = "Remove all waypoints from any selected groups and add a new waypoint"; 
+		tooltip = "Remove all waypoints from any selected groups and add a new waypoint";
 		onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\console\manageWP.sqf'");
 	};
 	class MCC_ConsoleWPClear: MCC_RscButton {
@@ -457,7 +457,7 @@ class mcc_consoleF6: MCC_RscButton
 		y = 0.1 * safezoneH + safezoneY;
 		w = 0.1 * safezoneW;
 		h = 0.1 * safezoneH;
-		tooltip = "Remove all waypoints from any selected groups"; 
+		tooltip = "Remove all waypoints from any selected groups";
 		onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\console\manageWP.sqf'");
 	};
 	class MCC_ConsoleInfoText: MCC_RscStructuredText
@@ -479,7 +479,7 @@ class mcc_consoleF6: MCC_RscButton
 		h = 0.03 * safezoneH;
 		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\liveFeed.sqf'");
 	};
-	
+
 	class MCC_ConsoleInfoUAVControl: MCC_RscButton {
 		idc = MCC_CONSOLEINFOUAVCONTROL;
 		text = "Take Control";
@@ -489,18 +489,18 @@ class mcc_consoleF6: MCC_RscButton
 		h = 0.1 * safezoneH;
 		onButtonClick =  __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\console\conoleSwitchMenu.sqf'");
 	};
-	
+
 	class MCC_ConsoleMapRulerButton: MCC_RscButton {
 		idc = MCC_ConsoleMapRulerButton;
 		text = "Ruler";
-		tooltip = "Activate the map ruler - left click on the map and drag from one point to another to measure distance and direction"; 
+		tooltip = "Activate the map ruler - left click on the map and drag from one point to another to measure distance and direction";
 		x = 0.462187 * safezoneW + safezoneX;
 		y = (0.213012 * safezoneH + safezoneY) + (0.494807 * safezoneH);
 		w = 0.06 * safezoneW;
 		h = 0.03 * safezoneH;
 		onButtonClick =  "MCC_ConsoleRuler = true";
 	};
-	
+
 	class MCC_ConsoleMapRulerDir: MCC_RscText {
 		idc = MCC_ConsoleMapRulerDir;
 		text = "Direction:";
@@ -526,7 +526,7 @@ class mcc_consoleF6: MCC_RscButton
 		h = 0.03 * safezoneH;
 		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\liveFeed.sqf'");
 	};
-	
+
 	class MCC_ConsoleInfoLiveFeedNV: MCC_RscButton {
 		idc = MCC_CONSOLEINFOLIVEFEEDNV;
 		text = "N/V";
@@ -550,14 +550,14 @@ class mcc_consoleF6: MCC_RscButton
 		idc = -1;
 		text = "(?)";
 		colorBackground[] = { 0, 0, 0, 0.7};
-		onMouseEnter = "[_this, true,12,'console'] spawn MCC_fnc_help";
-				
+		onMouseEnter = "[_this, true,[12,12],'console'] spawn MCC_fnc_help";
+
 		x = 0.47 * safezoneW + safezoneX;
 		y = 0.225 * safezoneH + safezoneY;
 		w = 0.020625 * safezoneW;
 		h = 0.033 * safezoneH;
 	};
-	
+
 	class MCC_ConsoleInfoLiveFeedClose: MCC_RscButton {
 		idc = MCC_CONSOLEINFOLIVEFEEDCLOSE;
 		text = "Close Feed";
@@ -582,7 +582,7 @@ class mcc_consoleF6: MCC_RscButton
 		colorBackgroundActive[] = {0,0,0,0};
 		colorDisabled[] = {0,0,0,0};
 		colorBackgroundDisabled[] = {0,0,0,0};
-		tooltip = "Close the conosle"; 
+		tooltip = "Close the conosle";
 		onButtonClick = "closedialog 0;";
 	};
 };

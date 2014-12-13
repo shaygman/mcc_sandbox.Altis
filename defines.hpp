@@ -38,6 +38,9 @@
 //----Key Settings-----------------
 #include "mcc\Dialogs\mcc_rscKeyBinds.hpp"
 
+//----medic-----------------
+#include "mcc\Dialogs\medic\mcc_uncMain.hpp"
+
 //---- test I should delete it at the end
 #include "mcc\dialogs\test.hpp"
 //--------------------------------CP------------------------------------------------
@@ -118,4 +121,5 @@ class RscTitles
 
 	#include "mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "mcc\dialogs\compass.hpp"
+	#include "mcc\dialogs\mcc_3dObject.hpp"
 };
