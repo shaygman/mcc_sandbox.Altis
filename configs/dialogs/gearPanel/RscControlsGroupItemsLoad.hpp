@@ -21,7 +21,7 @@ class CP_ItemsLoad: MCC_RscControlsGroupNoScrollbars
 		class InfoLoadText: MCC_RscText
 		{
 			idc = -1;
-			text = "Load";
+			text = "Max.Load";
 			x = 0.00515625 * safezoneW;
 			y = 0.044 * safezoneH;
 			w = 0.0309375 * safezoneW;

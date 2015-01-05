@@ -1,4 +1,4 @@
-private ["_cmd","_comboBox","_role","_armor","_weight","_load"];
+private ["_cmd","_comboBox","_role"];
 disableSerialization;
 
 #define CP_UNIFORMSPANEL_IDD (uiNamespace getVariable "CP_UNIFORMSPANEL_IDD")
@@ -51,22 +51,5 @@ switch (_cmd) do
 
 [CP_classesIndex,0] call MCC_fnc_setGear;
 
-_armor = 0;
-{
-	_armor = _armor + ((getNumber (configfile >> "CfgWeapons" >> _x >> "ItemInfo" >> "armor"))* (getNumber (configfile >> "CfgWeapons" >> _x >> "ItemInfo" >> "passThrough")));
-} forEach [vest player];
-
-_weight = 0;
-{
-	_weight = _weight + (getNumber (configfile >> "CfgWeapons" >> _x >> "ItemInfo" >> "mass"));
-} forEach [uniform player, vest player, headgear player];
-
-_load = 0;
-{
-	_load = _load + (getNumber (configfile >> "CfgVehicles" >> _x >> "maximumLoad"));
-	_weight = _weight + (getNumber (configfile >> "CfgVehicles" >> _x >> "mass"));
-} forEach [Backpack player];
-
-(CP_UNIFORMSPANEL_IDD displayCtrl 201) progressSetPosition (_armor/120);
-(CP_UNIFORMSPANEL_IDD displayCtrl 202) progressSetPosition (_load/320);
-(CP_UNIFORMSPANEL_IDD displayCtrl 203) progressSetPosition (_weight/320);
+//Gear stats
+[CP_UNIFORMSPANEL_IDD] call MCC_fnc_playerStats;

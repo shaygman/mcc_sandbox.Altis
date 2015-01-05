@@ -50,26 +50,26 @@ uiNamespace setVariable ["XPValue", _disp displayCtrl 104];
 if !(CP_activated) then
 {
 	{
-		_x ctrlshow false; 
+		_x ctrlshow false;
 	} foreach [CP_ticketsWestText,CP_ticketsEastText,CP_respawnPanelRoleCombo,CP_gearPanelPiP,CP_side1,CP_side1Score,CP_side2,CP_side2Score,CP_side3,CP_side3Score];
-	
-	for "_i" from 27 to 31 do 
+
+	for "_i" from 27 to 31 do
 	{
-		ctrlshow [_i,false]; 
-	}; 
-	
+		ctrlshow [_i,false];
+	};
+
 	(_disp displayCtrl 32) ctrlSetPosition [0.815 * safezoneW + safezoneX, 0.741906 * safezoneH + safezoneY, 0.0973958 * safezoneW, 0.0439828 * safezoneH];
-	(_disp displayCtrl 32) ctrlCommit 0; 
-	
+	(_disp displayCtrl 32) ctrlCommit 0;
+
 	CP_flag ctrlSetPosition [0.155 * safezoneW + safezoneX, 0.207514 * safezoneH + safezoneY, 0.0916667 * safezoneW, 0.07697 * safezoneH];
-	CP_flag ctrlCommit 0; 
-	
+	CP_flag ctrlCommit 0;
+
 	CP_deployPanelMiniMap  ctrlSetPosition [0.36 * safezoneW + safezoneX, 0.3 * safezoneH + safezoneY, 0.55 * safezoneW, 0.41 * safezoneH];
-	CP_deployPanelMiniMap ctrlCommit 0; 
+	CP_deployPanelMiniMap ctrlCommit 0;
 	CP_RscMainXPUI ctrlShow false;
 };
 
-MCC_CPMap_mouseMoving = 
+MCC_CPMap_mouseMoving =
 {
 	MC_MWMap_mousePos = [_this select 1,_this select 2];
 };
@@ -79,32 +79,32 @@ MCC_CPMap_mouseUp =
 	private ["_index","_selected"];
 	_selected = missionNameSpace getVariable ["MCCSpawnPosSelected",[]];
 	if (typeName _selected == "ARRAY") exitWith {};
-	
+
 	_index = (missionNamespace getVariable ["MCCActiveSpawnPosArray",[]]) find _selected;
 	CP_respawnPointsList lbSetCurSel _index;
 };
 
-MCC_fnc_CPMapOpen_draw = 
+MCC_fnc_CPMapOpen_draw =
 {
 	private ["_spawnArray"];
 	_map = _this select 0;
 	_display = ctrlparent _map;
 	_time = diag_ticktime;
-	
+
 	_mousePos = _map ctrlmapscreentoworld MC_MWMap_mousePos;
 	_mouseLimit = 3.5 / safezoneh;
 	missionNamespace setVariable ["MCCSpawnPosSelected",[]];
-	
+
 	_spawnArray = (missionNamespace getVariable "MCCActiveSpawnPosArray");
-	
+
 	_textureAnimPhase = abs(6 - floor (_time * 16) % 12);
 	{
 		_pos = if (typeName _x == "GROUP") then {getpos leader _x} else {getpos _x};
-		_title = if (typeName _x == "GROUP") then 
+		_title = if (typeName _x == "GROUP") then
 				{
 					format ["%1 - %2",(_foreachIndex +1), "Leader"];
-				} 
-				else 
+				}
+				else
 				{
 					format ["%1- %2",(_foreachIndex +1), _x getvariable ["type","FOB"]];
 				};
@@ -114,7 +114,7 @@ MCC_fnc_CPMapOpen_draw =
 		_texture = format ["\A3\Ui_f\data\Map\GroupIcons\badge_rotate_%1_gs.paa",_textureAnimPhase];
 
 		//--- Icon is under cursor
-		if ((_pos distance _mousePos) < (_mouseLimit * _size * (ctrlMapScale (uiNamespace getVariable "CP_deployPanelMiniMap") *7))) then 
+		if ((_pos distance _mousePos) < (_mouseLimit * _size * (ctrlMapScale (uiNamespace getVariable "CP_deployPanelMiniMap") *7))) then
 		{
 			_size = _size * 1.6;
 			_alpha = 1;
@@ -144,18 +144,18 @@ _map ctrladdeventhandler ["draw","_this call MCC_fnc_CPMapOpen_draw;"];
 _map ctrladdeventhandler ["mousemoving","_this call MCC_CPMap_mouseMoving;"];
 _map ctrladdeventhandler ["mouseholding","_this call MCC_CPMap_mouseMoving;"];
 _map ctrladdeventhandler ["MouseButtonUp","_this call MCC_CPMap_mouseUp;"];
-	
+
 //Respawn panel indecator
-CP_respawnPanelOpen = true; 
+CP_respawnPanelOpen = true;
 
 //Disable Esc while respawn is on
-CP_disableEsc = CP_RESPAWNPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"]; 
+CP_disableEsc = CP_RESPAWNPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
 //Find relevent spawn points
-missionNamespace setVariable ["MCCActiveSpawnPosArray",[player] call BIS_fnc_getRespawnPositions]; 
+missionNamespace setVariable ["MCCActiveSpawnPosArray",[player] call BIS_fnc_getRespawnPositions];
 
 //Find relevent spawn points again (After cleanup)
-missionNamespace setVariable ["MCCActiveSpawnPosArray",[player] call BIS_fnc_getRespawnPositions]; 
+missionNamespace setVariable ["MCCActiveSpawnPosArray",[player] call BIS_fnc_getRespawnPositions];
 
 //Set side flag
 CP_flag ctrlSetText call compile format ["CP_flag%1", _sidePlayer];
@@ -171,12 +171,12 @@ if (CP_activated) then
 		{
 			ctrlSetText [_idc, str _x];
 			_idc = _idc + 2;
-		} foreach _activeSides;	
+		} foreach _activeSides;
 	};
 
-		
+
 	//Load Classes
-	_comboBox = CP_respawnPanelRoleCombo; 
+	_comboBox = CP_respawnPanelRoleCombo;
 	lbClear _comboBox;
 		{
 			_displayname = _x;
@@ -185,67 +185,70 @@ if (CP_activated) then
 			_comboBox lbsetpicture [_index,_pic];
 		} foreach CP_classes;
 	_comboBox lbSetCurSel CP_classesIndex;
-	
+
 	//Set XP
 	_role = player getvariable "CP_role";
-	if (isnil "_role") exitWith {}; 
-	
-	_exp 	 = call compile format  ["%1Level select 1",_role]; 
-	if (isnil "_exp") exitWith {}; 	
-	
+	if (isnil "_role") exitWith {};
+
+	_exp 	 = call compile format  ["%1Level select 1",_role];
+	if (isnil "_exp") exitWith {};
+
 	if (_exp < 0) then {_exp = 0};
-	_oldLevel = call compile format  ["%1Level select 0",_role]; 
+	_oldLevel = call compile format  ["%1Level select 0",_role];
 	_html = "<t color='#818960' size='2' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
 	messeges ctrlSetStructuredText parseText _html;
-	
+
 	_needXP 			= (CP_XPperLevel + _oldLevel*100) + ((CP_XPperLevel + _oldLevel*100)*(_oldLevel-1));
 	_needXPPrevLevel 	= (CP_XPperLevel + (_oldLevel-1)*100)*(_oldLevel-1);
-	XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel))); 
-	
-	
+	XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel)));
+
+
 };
 
-//Refresh	
-[] spawn 
+//Gear stats
+[CP_RESPAWNPANEL_IDD] call MCC_fnc_playerStats;
+
+//Refresh
+[] spawn
 	{
 		private ["_comboBox","_displayname","_index","_idc","_activeSides","_sidePlayer","_leader","_firstTime","_array","_disp"];
 		disableSerialization;
-		
-		_firstTime = true; 
-		while {dialog && CP_respawnPanelOpen} do 
+
+		_firstTime = true;
+		while {dialog && CP_respawnPanelOpen} do
 		{
-			
+
 			_sidePlayer = player getVariable ["CP_side", side player];
-			missionNamespace setVariable ["MCCActiveSpawnPosArray",[player] call BIS_fnc_getRespawnPositions]; 
-			
-			_groups	 = switch (player getVariable ["CP_side", playerside]) do	
+			missionNamespace setVariable ["MCCActiveSpawnPosArray",[player] call BIS_fnc_getRespawnPositions];
+
+			_groups	 = switch (player getVariable ["CP_side", playerside]) do
 						{
 							case west:			{CP_westGroups};
 							case east:			{CP_eastGroups};
 							case resistance:	{CP_guarGroups};
 						};
-			
-			_array = []; 
+
+			_array = [];
 			{
-				_array set [count _array, _x select 0]; 
-			} foreach _groups; 
-			
+				_array set [count _array, _x select 0];
+			} foreach _groups;
+
 			//Load available resources
 			_disp = CP_RESPAWNPANEL_IDD;
 			_array = call compile format ["MCC_res%1",playerside];
 			{_disp displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85];
-		
+
 			/*
 			//Add group leader as spawn point
-			_leader = leader player; 
-			
+			_leader = leader player;
+
 			if (!(group player in (missionNamespace getVariable "MCCActiveSpawnPosArray")) && group player in _array) then
 			{
-				
+
 				if (alive _leader && (_leader getVariable ["cpReady",true]) && _leader != player) then
 				{
 					_index = ([player, group player] call BIS_fnc_addRespawnPosition) select 1;
-					player setVariable ["CPRespawnLeadedrIndex",_index, true];  
+					player setVariable ["CPRespawnLeadedrIndex",_index, true];
 				};
 			}
 			else
@@ -256,15 +259,19 @@ if (CP_activated) then
 				};
 			};
 			*/
-			
+
 			//Clear unavailable spawn points
 			{
-				if (typeName _x != "GROUP") then 
+				if (typeName _x != "GROUP") then
 				{
 					if (! (alive _x) || _x getVariable ["dead",false]) then {[player, _x] call BIS_fnc_removeRespawnPosition};
 				}
 			} foreach (missionNamespace getVariable "MCCActiveSpawnPosArray");
-			
+
+			//Time
+			_t = if ((estimatedEndServerTime - serverTime)>0) then {[estimatedEndServerTime - serverTime] call MCC_fnc_time} else {""};
+			ctrlSetText [1919,_t];
+
 			//Tickets
 			if (CP_activated) then
 			{
@@ -274,16 +281,16 @@ if (CP_activated) then
 				{
 					ctrlSetText [_idc, str ([_x] call BIS_fnc_respawnTickets)];
 					_idc = _idc + 2;
-				} foreach _activeSides;	
+				} foreach _activeSides;
 			};
-			
+
 			//Load respawn points
 			uinameSpace setVariable ["cpLoadingSpawnPoints",true];
-			
-			_comboBox = CP_respawnPointsList; 
+
+			_comboBox = CP_respawnPointsList;
 			lbClear _comboBox;
 				{
-					_displayname = if (typeName _x == "GROUP") then 
+					_displayname = if (typeName _x == "GROUP") then
 							{
 								format ["( %1 ) - %2",(_foreachIndex +1), "Leader"];
 							}
@@ -297,6 +304,6 @@ if (CP_activated) then
 				} foreach (missionNamespace getVariable "MCCActiveSpawnPosArray");
 			uinameSpace setVariable ["cpLoadingSpawnPoints",false];
 			if (_firstTime) then {_firstTime = false; _comboBox lbSetCurSel CP_respawnPointsIndex};
-			sleep 1; 
+			sleep 1;
 		};
 	};

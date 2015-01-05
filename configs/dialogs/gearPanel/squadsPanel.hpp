@@ -5,6 +5,7 @@ class CP_SQUADPANEL {
 
 	  controlsBackground[] =
 	  {
+	  	  bckg,
 	  	  CP_respawnPanelBckg,
 		  CP_sglogo
 	  };
@@ -52,14 +53,38 @@ class CP_SQUADPANEL {
 		CP_side3Score,
 		MCC_ResourcesControlsGroup,
 		CP_RscMainXPUI,
-		MCC_Help
+		MCC_Help,
+		CP_ItemsLoad,
+		timeLeft
 	  };
+
+	  	#include "RscControlsGroupItemsLoad.hpp"
+
+	  	class bckg: CP_RscText
+		{
+			idc = 999;
+			x = -0.00531252 * safezoneW + safezoneX;
+			y = -0.00599999 * safezoneH + safezoneY;
+			w = 1.01063 * safezoneW;
+			h = 1.012 * safezoneH;
+			colorBackground[] = {0,0,0,1};
+		};
+
+		class timeLeft: CP_RscText
+		{
+			idc = 1919;
+			x = 0.463906 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.0973958 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		};
 
 		class CP_exitButton: CP_RscButtonMenu
 		{
 			idc = 8;
 
-			text = "Exit"; //--- ToDo: Localize;
+			text = "Exit Game"; //--- ToDo: Localize;
 			x = 0.872396 * safezoneW + safezoneX;
 			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
@@ -155,8 +180,8 @@ class CP_SQUADPANEL {
 		{
 			idc = 3;
 			text = "Join Squad"; //--- ToDo: Localize;
-			x = 0.505729 * safezoneW + safezoneX;
-			y = 0.631949 * safezoneH + safezoneY;
+			x = 0.505156 * safezoneW + safezoneX;
+			y = 0.621 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			action = __EVAL("[1] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
@@ -166,8 +191,8 @@ class CP_SQUADPANEL {
 		{
 			idc = 12;
 			text = "Switch Side"; //--- ToDo: Localize;
-			x = 0.15625 * safezoneW + safezoneX;
-			y = 0.664936 * safezoneH + safezoneY;
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.731 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			tooltip = "Switch to the opposite side"; //--- ToDo: Localize;
@@ -177,23 +202,23 @@ class CP_SQUADPANEL {
 		class CP_squadPanelCreateSquadButton: CP_RscButtonMenu
 		{
 			idc = 5;
-			text = "Create Squad"; //--- ToDo: Localize;
-			x = 0.259375 * safezoneW + safezoneX;
-			y = 0.664936 * safezoneH + safezoneY;
-			w = 0.0973958 * safezoneW;
-			h = 0.0439828 * safezoneH;
+			text = "Create"; //--- ToDo: Localize;
+			x = 0.29375 * safezoneW + safezoneX;
+			y = 0.621 * safezoneH + safezoneY;
+			w = 0.0567187 * safezoneW;
+			h = 0.033 * safezoneH;
 			tooltip = "Create a new squad. Type the name of your new squad bellow"; //--- ToDo: Localize;
 			action = __EVAL("[3] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
 		class CP_squadPanelCreateSquadTittle: CP_RscText
 		{
 			idc = -1;
 			text = "Squad Name:"; //--- ToDo: Localize;
-			x = 0.158542 * safezoneW + safezoneX;
-			y = 0.626011 * safezoneH + safezoneY;
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.621 * safezoneH + safezoneY;
 			w = 0.0630208 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			h = 0.032987 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
 		class CP_squadPanelCreateSquadText: CP_RscText
@@ -201,10 +226,10 @@ class CP_SQUADPANEL {
 			idc = 4;
 			type = CPCT_EDIT;
 			style = CPST_MULTI;
-			x = 0.22374 * safezoneW + safezoneX;
-			y = 0.62733 * safezoneH + safezoneY;
-			w = 0.126042 * safezoneW;
-			h = 0.0329871 * safezoneH;
+			x = 0.216406 * safezoneW + safezoneX;
+			y = 0.621 * safezoneH + safezoneY;
+			w = 0.0773437 * safezoneW;
+			h = 0.033 * safezoneH;
 
 			colorBackground[] = {0,0,0,0.7};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
@@ -215,16 +240,16 @@ class CP_SQUADPANEL {
 			text = "#(argb,512,512,1)r2t(rendertarget7,1.0);";
 			x = 0.614583 * safezoneW + safezoneX;
 			y = 0.291081 * safezoneH + safezoneY;
-			w = 0.275 * safezoneW;
-			h = 0.46182 * safezoneH;
+			w = 0.273281 * safezoneW;
+			h = 0.418 * safezoneH;
 		};
 		class CP_gearPanelPiPFake: CP_RscListBox
 		{
 			idc = -1;
 			x = 0.614583 * safezoneW + safezoneX;
 			y = 0.291081 * safezoneH + safezoneY;
-			w = 0.275 * safezoneW;
-			h = 0.46182 * safezoneH;
+			w = 0.273281 * safezoneW;
+			h = 0.418 * safezoneH;
 			onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 			onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 			onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
@@ -290,8 +315,8 @@ class CP_SQUADPANEL {
 			action =  __EVAL("[6] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
 
 			text = "Teleport"; //--- ToDo: Localize;
-			x = 0.3625 * safezoneW + safezoneX;
-			y = 0.631949 * safezoneH + safezoneY;
+			x = 0.360781 * safezoneW + safezoneX;
+			y = 0.621 * safezoneH + safezoneY;
 			w = 0.0916667 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			tooltip = "Teleport to the selected unit position or vehicle"; //--- ToDo: Localize;
@@ -303,18 +328,18 @@ class CP_SQUADPANEL {
 			idc = -1;
 			text = "Commander:";
 			colorBackground[] = {0,0,0,0.7};
-			x = 0.15625 * safezoneW + safezoneX;
-			y = 0.741906 * safezoneH + safezoneY;
-			w = 0.0859375 * safezoneW;
-			h = 0.0439828 * safezoneH;
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.676 * safezoneH + safezoneY;
+			w = 0.0670312 * safezoneW;
+			h = 0.044 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
 		class CP_commanderName: CP_RscText
 		{
 			idc = 16;
 			colorBackground[] = {0,0,0,0.7};
-			x = 0.242188 * safezoneW + safezoneX;
-			y = 0.741906 * safezoneH + safezoneY;
+			x = 0.221562 * safezoneW + safezoneX;
+			y = 0.676 * safezoneH + safezoneY;
 			w = 0.108854 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
@@ -325,8 +350,8 @@ class CP_SQUADPANEL {
 			action =  __EVAL("[7] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
 
 			text = "Mutiny"; //--- ToDo: Localize;
-			x = 0.3625 * safezoneW + safezoneX;
-			y = 0.741906 * safezoneH + safezoneY;
+			x = 0.329844 * safezoneW + safezoneX;
+			y = 0.676 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;
 			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";

@@ -7,7 +7,7 @@ _unit 	= _this select 0;
 _source	= _this select 1;
 
 if (_unit getVariable ["MCC_medicUnconscious",false]) exitWith {};
-
+_unit allowDamage false;
 _unit setVariable ["MCC_medicSeverInjury",false,true];
 _unit setVariable ["MCC_medicUnconscious",true,true];
 
@@ -57,6 +57,8 @@ if (_ypos > 10) exitWith
 _unit setCaptive true;
 _unit playmoveNow "Unconscious";
 
+//Add helper
+[_unit, "Hold %1 to heal"] spawn MCC_fnc_createHelper;
 
 //Handle player
 if (isPlayer _unit) exitWith
@@ -109,4 +111,8 @@ _unit spawn
 	_this disableConversation false;
 
 	if ((_this getVariable ["MCC_medicUnconscious",false]) && alive _this) then {_this setDamage 1};
+
+	//Remove helper
+	[_this] spawn MCC_fnc_deleteHelper;
 };
+

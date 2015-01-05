@@ -2,8 +2,6 @@ private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate
 
 if (!MCC_iniDBenabled) exitWIth {systemchat "iniDB isn't running. Can't access role selection"};
 
-//Black Screen on mission startup
-cutText ["","BLACK",0.1];
 // - TO DO  delete corpse and items from it.
 //******************************************************************************************************************************
 //											Get player levels
@@ -82,13 +80,13 @@ if (CP_debug) then {systemchat format ["pilotLevel : %1",pilotLevel]};
 //******************************************************************************************************************************
 //											Start camera
 //******************************************************************************************************************************
-playerDeploy = false; 
+playerDeploy = false;
 
 //--- Unit pos
 _logicPos = [(random 1000) + 1000,(random 1000) + 1000,(random 1000) + 10000];
 
 _logicEmpty = false;
-while {!_logicEmpty} do 
+while {!_logicEmpty} do
 {																//Check if can spawn a dummy unit
 		_nearObjects = _logicPos nearObjects ["Man",50];
 		if ((count _nearObjects) == 0) then {_logicEmpty = true} else {_logicPos = [_logicPos select 0,_logicPos select 1, (_logicPos select 2)-30]};
@@ -98,13 +96,13 @@ if (CP_debug) then {systemchat format ["position: %1",_logicPos]};
 _camLogic = createagent ["Logic",_logicPos,[],0,"none"];
 _camLogic setpos _logicPos;
 _camLogic setdir 180;
-_camBuildings = "Land_u_Addon_01_V1_F" createvehiclelocal _logicPos; 
+_camBuildings = "Land_u_Addon_01_V1_F" createvehiclelocal _logicPos;
 _camBuildings attachto [_camLogic,[3.5,4.5,0]];
 _camBuildings setdir (getdir _camLogic);
-_camLight = "Land_PortableLight_double_F" createvehiclelocal _logicPos; 
+_camLight = "Land_PortableLight_double_F" createvehiclelocal _logicPos;
 _camLight attachto [_camLogic,[1,2,0]];
 _camLight setdir 140;
-//_camLight setpos [(_logicPos select 0) - 2, (_logicPos select 1) - 3,(_logicPos select 2)]; 
+//_camLight setpos [(_logicPos select 0) - 2, (_logicPos select 1) - 3,(_logicPos select 2)];
 player attachto [_camLogic,[0,4,0]];
 
 //--- Camera
@@ -117,7 +115,7 @@ CP_gearCam camSetFov CP_gearCamFOV;
 CP_gearCam camcommitprepared 0;
 cameraEffectEnableHUD true;
 showcinemaborder false;
-player setvariable ["CPCenter", _camLogic]; 
+player setvariable ["CPCenter", _camLogic];
 
 //handle NV
 /*
@@ -146,7 +144,7 @@ if !(_ok) exitWith { hint "createDialog failed"; diag_log  "CP: create respawn D
 waituntil {playerDeploy};
 //Spawn point found clearing not needed stuff
 detach player;
-detach CP_gearCam; 
+detach CP_gearCam;
 CP_gearCam cameraeffect ["Terminate","back"];
 
 player setpos playerDeployPos;
@@ -154,27 +152,27 @@ player setpos playerDeployPos;
 while {isnil "_role"} do {_role = player getvariable "CP_role";};
 
 //If an officer and not leader make him the leader
-if ( (tolower _role == "officer" ) && (player != leader player)) then {group player selectLeader player};	
+if ( (tolower _role == "officer" ) && (player != leader player)) then {group player selectLeader player};
 
 //Set Rank
 _level 	 = call compile format  ["%1Level select 0",_role];
 if (MCCplayerRank == "N/A") then
 {
-	MCCplayerRank = [(floor (_level/10)) min 6,"classname"] call BIS_fnc_rankParams; 
+	MCCplayerRank = [(floor (_level/10)) min 6,"classname"] call BIS_fnc_rankParams;
 };
 
-player setRank MCCplayerRank; 
- 
+player setRank MCCplayerRank;
+
 
 camDestroy CP_gearCam;
 deleteVehicle CP_gearCam;
-CP_gearCam = nil; 
+CP_gearCam = nil;
 
-deleteVehicle _camLogic; 
-deleteVehicle _camBuildings; 
+deleteVehicle _camLogic;
+deleteVehicle _camBuildings;
 deleteVehicle _camLight;
 setviewdistance 2500;
-closedialog 0; 
+closedialog 0;
 waituntil {!dialog};
 //Respawning
 

@@ -34,7 +34,7 @@ if (tolower _ehType == "keyup") exitWith
 	//Change weapons
 	if (missionNameSpace getVariable ["MCC_quickWeaponChange",false]) then
 	{
-		if (_dikCode in [2,3,4,5,6,7]) exitWith
+		if (_dikCode in [2,3,4,5,6,7] && _shift) exitWith
 		{
 			//_null= [_dikCode] execVM "mcc\fnc\actions\fn_weaponSelect.sqf";
 			[_dikCode] spawn MCC_fnc_weaponSelect;
@@ -64,8 +64,8 @@ if (tolower _ehType == "keydown") exitWith
 			MCC_interactionKey_up = false;
 			if (missionNameSpace getVariable ["MCC_interaction",true]) then
 			{
-				_null = [] execVM format["%1mcc\fnc\interaction\fn_interaction.sqf",MCC_path];
-				//[] spawn MCC_fnc_interaction
+				//_null = [] execVM format["%1mcc\fnc\interaction\fn_interaction.sqf",MCC_path];
+				[] spawn MCC_fnc_interaction
 			};	//Interaction
 		};
 
@@ -73,6 +73,7 @@ if (tolower _ehType == "keydown") exitWith
 		{
 			//Self
 			[player] spawn MCC_fnc_interactSelf;
+			//_null = [player] execVM format["%1mcc\fnc\interaction\fn_interactSelf.sqf",MCC_path];
 		};
 	};
 };

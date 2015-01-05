@@ -30,10 +30,10 @@ else
 {
 	_sides 	= _logic getvariable ["sides",-1];
 	_time 	= _logic getvariable ["time",10];
-	_air 	= _logic getvariable ["air",false];
-	_delete = _logic getvariable ["hide",false];
-	
-	_sides = if (_sides == -1) then {[east,west,resistance,civilian]} else {[_sides call bis_fnc_sideType]}; 
+	_air 	= (_logic getvariable ["air",1]) == 1;
+	_delete = (_logic getvariable ["hide",1]) == 1;
+
+	_sides = if (_sides == -1) then {[east,west,resistance,civilian]} else {[_sides call bis_fnc_sideType]};
 };
 
 //[_logic,  _sides ,_time , _air ,_delete] execVM "test.sqf";
@@ -44,15 +44,15 @@ if (isServer) then
 {
 	//Get all triggers
 	{
-		if (typeOf _x == "LocationArea_F") then 
+		if (typeOf _x == "LocationArea_F") then
 		{
 			_location = _x;
 			{
-				if (typeOf _x == "EmptyDetector") then 
+				if (typeOf _x == "EmptyDetector") then
 				{
 					_x setTriggerActivation["ANY","PRESENT",true];
 					//Should we create markers for the trigger
-					if (_delete) then 
+					if (_delete) then
 					{
 						_mName = createMarker [str _x, getpos _x];
 						_mName setMarkerColor "colorRed";
@@ -66,8 +66,8 @@ if (isServer) then
 			} forEach synchronizedObjects _location;
 		};
 	} forEach synchronizedObjects _logic;
-	
-	sleep 1; 
+
+	sleep 1;
 	_logic setVariable ["triggers", _trgs, true];
 };
 
@@ -76,17 +76,17 @@ if (!isdedicated) then
 {
 	sleep 10;
 	while {isNil {_logic getVariable "triggers"}} do {sleep 0.5};
-	//waituntil {!(isNil {_logic getVariable "triggers"})}; 
+	//waituntil {!(isNil {_logic getVariable "triggers"})};
 
 	_trgs = _logic getVariable "triggers";
-	
+
 	//set Activation for all
 	{
 		_x setTriggerActivation ["ANY","PRESENT",true];
 		sleep 0.1;
 	} foreach _trgs;
 
-	
+
 	//Main loop
 	while {!isnull _logic} do
 	{
@@ -99,10 +99,10 @@ if (!isdedicated) then
 };
 
 //if the logic have beeen deleted delete triggers
-if (isServer) exitWith 
+if (isServer) exitWith
 {
 	waituntil {isnull _logic};
 	{
 		deleteVehicle _x;
-	} foreach _trgs; 
+	} foreach _trgs;
 };

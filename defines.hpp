@@ -31,6 +31,7 @@
 //----Logistics-----------------
 #include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
 #include "mcc\Dialogs\rts\mcc_logisticsBaseBuild.hpp"
+#include "mcc\Dialogs\rts\rtsMainBox.hpp"
 
 //----Interaction-----------------
 #include "mcc\Dialogs\mcc_interactionMenu.hpp"

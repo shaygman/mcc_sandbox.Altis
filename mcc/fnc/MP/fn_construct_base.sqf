@@ -1,17 +1,16 @@
-//==================================================================MCC_fnc_construct_base===============================================================================================
+//==================================================================MCC_fnc_construct_base======================================================================================
 // Example:[_pos, _anchorDir , _anchorType, _BuildTime, _side]  call  MCC_fnc_construct_base;
-//==================================================================================================================================================================================
-private ["_Type","_cfgClass","_anchorType","_anchorDir","_pos","_objs","_constType","_anchor","_object","_BuildTime","_buildingObjs","_builtArray",
+//==============================================================================================================================================================================
+private ["_cfgClass","_anchorType","_anchorDir","_pos","_objs","_constType","_anchor","_object","_BuildTime","_buildingObjs","_builtArray",
          "_side","_level","_instant","_endTime"];
 
 
 _pos			= _this select 0;
 _anchorDir 		= _this select 1;
-_Type 			= _this select 2;
+_cfgClass		= _this select 2;
 _BuildTime		= _this select 3;
 _side			= _this select 4;
 
-_cfgClass = format ["MCC_rts_%1%2",(_Type select 0),(_Type select 1)];
 _instant = if (_BuildTime <=0) then {true} else {false};
 
 if (MCC_isMode) then
@@ -91,6 +90,7 @@ s1 = _anchor;		//TODO Remove
 
 //Attach module to anchor
 _module attachto [_anchor,[0,0,0]];
+_module setVariable ["mcc_construction_anchor",_anchor,true];
 
 _anchor AddEventHandler ["HandleDamage",
 							 {
@@ -123,10 +123,13 @@ for "_i" from 0 to ((count _objs) - 1) do
 	_object AddEventHandler ["HandleDamage", {}];
 };
 
-
+//find the main box and add helper
+if (_constType == "hq") then
+{
+	clearItemCargoGlobal _object;
+	clearMagazineCargoGlobal _object;
+	clearWeaponCargoGlobal _object;
+	clearBackpackCargoGlobal _object;
+	[_object,"Hold %1 to open cargo box"] spawn MCC_fnc_createHelper;
+};
 //_this attachTo [s1,[0,0,0]]; _this setVectorDirAndUp [[0,1,0],[0,0,1]]
-
-
-
-
-

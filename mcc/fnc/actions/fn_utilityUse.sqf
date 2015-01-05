@@ -32,8 +32,8 @@ _utility setdir getdir player;
 
 if !(_mag in magazines player) then
 {
-	player setVariable ["MCC_utilityItem",[]];
-	(["mcc_3dObject"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
+	player setVariable ["MCC_utilityItem",["",""]];
+	[5] call MCC_fnc_weaponSelect;
 };
 
 if (_itemClass in ["DemoCharge_Remote_Ammo_Scripted","SatchelCharge_Remote_Ammo_Scripted","IEDUrbanBig_Remote_Ammo","IEDLandBig_Remote_Ammo",

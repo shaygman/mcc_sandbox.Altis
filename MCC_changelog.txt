@@ -44,7 +44,20 @@ Added: Logistics to helicopters - NEW
 - Added: Gain XP from logsitics
 - Known Issue: With helicopters while slingloading a supply crate to a construction site when the crate hit the ground while slingloaded it may break the game, WORKAROUND - release the crate before it touches the ground.
 
-Added: Medical system - new
+Added: Interact self - NEW
+- Added: with interact self (Ctrl + interaction key by default) players can heal and inspect themself (MCC medical system), Spot enemies, call support and order the construction of FOB exc. 
+
+Added: Medical system - NEW
+New modular and scalable medical system (need to place the MCC medical system module) The medical system is built around blood level where a player loose alot of blood he will eventually die. including:
+- Complex or plain: in complex mod players will need more items to heal such as epipen, bandages, first aid kits, saline bags and more. Where in non-complex option players will use ArmA 3 default gear such as FAIK and Medikits.
+- Medical system will work on AI and players where AI will sometimes regain consciousness so varifying a kill is now needed. 
+- Bleeding, players and AI can bleed to death either while alive or unconscious, bandaging will only stop the bleeding but will not regain blood level. Blood level will regain over long periods of time and can be increased to a degree by addressing saline transfusions. 
+- Unconscious effects for players and AI. 
+- Bleeding effects vary from blury vision, lower stamina, fading and color blind - depends on the amount of blood lost. 
+- Body armor - mission maker can adjust the effectiveness of body armors by adjusting it effects on players.  
+- Team kill punish - Where a player got killed by a friendly player he can ask to punish that player - if mission maker allows. 
+- Cas evac - since blood loose regain slowly it is vital to get the mortaly wounded players to the MCC side start location to fasten the blood regain and heal major wounds. 
+
 MCC_medicSystemEnabled boolean - global
 MCC_medicComplex = true;
 MCC_medicBleedingEnabled = true;
@@ -79,7 +92,6 @@ let you choose where you want to mount the vehicle.
 - Added: Max load, Weight and armor value to the uniform selection in roles selection. 
 
 TODO
-Fix gear script in MP
 Fix: FOB west/east
 FOG in sandstorm - fix
 
@@ -87,7 +99,6 @@ TODO - ambient
 TODO - NV
 TODO - supression
 TODO - sling loading objects
-
 
 Change log r11:
 

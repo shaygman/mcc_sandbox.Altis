@@ -88,4 +88,9 @@ ppEffectDestroy  _rPPEffect;
 ppEffectDestroy  _cPPEffect;
 player setFatigue 0;
 player setCaptive false;
+player playmoveNow "amovppnemstpsraswrfldnon";
+
+//Remove helper
+[player] spawn MCC_fnc_deleteHelper;
+
 closeDialog 0;

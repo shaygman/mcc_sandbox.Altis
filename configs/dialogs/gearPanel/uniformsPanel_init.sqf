@@ -22,19 +22,19 @@ uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 6];
 
 
 //Disable Esc while respawn is on
-CP_disableEsc = CP_UNIFORMSPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"]; 
+CP_disableEsc = CP_UNIFORMSPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
 
 //Load NV
-_items = CP_currentUniforms select 0;  
+_items = CP_currentUniforms select 0;
 _array = [];
-for [{_i = 0},{_i < count _items},{_i = _i+1}] do 
+for [{_i = 0},{_i < count _items},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (_items select _i)select 0) then {
 			_array set [count _array, (_items select _i) select 1];
 		};
 	};
-_comboBox = CP_uniformPanelNV; 
+_comboBox = CP_uniformPanelNV;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -47,15 +47,15 @@ lbClear _comboBox;
 _comboBox lbSetCurSel CP_NVIndex;
 
 //Load Head gear
-_items = CP_currentUniforms select 1;  
+_items = CP_currentUniforms select 1;
 _array = [];
-for [{_i = 0},{_i < count _items},{_i = _i+1}] do 
+for [{_i = 0},{_i < count _items},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (_items select _i)select 0) then {
 			_array set [count _array, (_items select _i) select 1];
 		};
 	};
-_comboBox = CP_uniformPanelHead; 
+_comboBox = CP_uniformPanelHead;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -68,15 +68,15 @@ lbClear _comboBox;
 _comboBox lbSetCurSel CP_headgearIndex;
 
 //Load Goggles
-_items = CP_currentUniforms select 2;  
+_items = CP_currentUniforms select 2;
 _array = [];
-for [{_i = 0},{_i < count _items},{_i = _i+1}] do 
+for [{_i = 0},{_i < count _items},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (_items select _i)select 0) then {
 			_array set [count _array, (_items select _i) select 1];
 		};
 	};
-_comboBox = CP_uniformPanelGoggles; 
+_comboBox = CP_uniformPanelGoggles;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgGlasses">> _x);
@@ -89,15 +89,15 @@ lbClear _comboBox;
 _comboBox lbSetCurSel CP_gogglesIndex;
 
 //Load Vest
-_items = CP_currentUniforms select 3;  
+_items = CP_currentUniforms select 3;
 _array = [];
-for [{_i = 0},{_i < count _items},{_i = _i+1}] do 
+for [{_i = 0},{_i < count _items},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (_items select _i)select 0) then {
 			_array set [count _array, (_items select _i) select 1];
 		};
 	};
-_comboBox = CP_uniformPanelVest; 
+_comboBox = CP_uniformPanelVest;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -110,15 +110,15 @@ lbClear _comboBox;
 _comboBox lbSetCurSel CP_vestIndex;
 
 //Load Backpack
-_items = CP_currentUniforms select 4;  
+_items = CP_currentUniforms select 4;
 _array = [];
-for [{_i = 0},{_i < count _items},{_i = _i+1}] do 
+for [{_i = 0},{_i < count _items},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (_items select _i)select 0) then {
 			_array set [count _array, (_items select _i) select 1];
 		};
 	};
-_comboBox = CP_uniformPanelBackpack; 
+_comboBox = CP_uniformPanelBackpack;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgVehicles">> _x);
@@ -131,15 +131,15 @@ lbClear _comboBox;
 _comboBox lbSetCurSel CP_backpackIndex;
 
 //Load Uniforms
-_items = CP_currentUniforms select 5;  
+_items = CP_currentUniforms select 5;
 _array = [];
-for [{_i = 0},{_i < count _items},{_i = _i+1}] do 
+for [{_i = 0},{_i < count _items},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (_items select _i)select 0) then {
 			_array set [count _array, (_items select _i) select 1];
 		};
 	};
-_comboBox = CP_uniformPanelUniforms; 
+_comboBox = CP_uniformPanelUniforms;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -150,4 +150,5 @@ lbClear _comboBox;
 		_comboBox lbSetData [_index, _class];
 	} foreach _array;
 _comboBox lbSetCurSel CP_uniformsIndex;
+
 

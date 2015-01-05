@@ -12,7 +12,8 @@ class Mission
 		"A3_Structures_F_Mil_Flags",
 		"a3_map_altis",
 		"a3_characters_f",
-		"A3_Modules_F"
+		"A3_Modules_F",
+		"A3_Modules_F_Curator_Multiplayer"
 	};
 	addOnsAuto[]=
 	{
@@ -1250,8 +1251,6 @@ class Mission
 					text="UnitNO_SF1_TL";
 					init="_null =[this,""sftl""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Team Leader";
-					syncId=0;
-					synchronizations[]={12};
 				};
 				class Item1
 				{
@@ -1265,8 +1264,6 @@ class Mission
 					text="UnitNO_SF1_MG";
 					init="_null =[this,""sfmg""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Automatic Riffleman";
-					syncId=1;
-					synchronizations[]={12};
 				};
 				class Item2
 				{
@@ -1280,8 +1277,6 @@ class Mission
 					text="UnitNO_SF1_MRK";
 					init="_null =[this,""sfmark""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Marksman";
-					syncId=2;
-					synchronizations[]={12};
 				};
 				class Item3
 				{
@@ -1295,8 +1290,6 @@ class Mission
 					text="UnitNO_SF1_SR";
 					init="_null =[this,""sfat""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 JTAC-AT";
-					syncId=3;
-					synchronizations[]={12};
 				};
 				class Item4
 				{
@@ -1310,8 +1303,6 @@ class Mission
 					text="UnitNO_SF1_EXP";
 					init="_null =[this,""sfdem""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Explosive Specialist";
-					syncId=4;
-					synchronizations[]={12};
 				};
 				class Item5
 				{
@@ -1325,8 +1316,6 @@ class Mission
 					text="UnitNO_SF1_MED";
 					init="_null =[this,""sfmed""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 1 Medic";
-					syncId=5;
-					synchronizations[]={12};
 				};
 			};
 		};
@@ -1349,8 +1338,6 @@ class Mission
 					text="UnitNO_SF2_TL";
 					init="_null =[this,""sftl""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Team Leader";
-					syncId=6;
-					synchronizations[]={13};
 				};
 				class Item1
 				{
@@ -1364,8 +1351,6 @@ class Mission
 					text="UnitNO_SF2_MG";
 					init="_null =[this,""sfmg""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Automatic Riffleman";
-					syncId=7;
-					synchronizations[]={13};
 				};
 				class Item2
 				{
@@ -1379,8 +1364,6 @@ class Mission
 					text="UnitNO_SF2_MRK";
 					init="_null =[this,""sfmark""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Marksman";
-					syncId=8;
-					synchronizations[]={13};
 				};
 				class Item3
 				{
@@ -1394,8 +1377,6 @@ class Mission
 					text="UnitNO_SF2_SR";
 					init="_null =[this,""sfat""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 JTAC-AT";
-					syncId=9;
-					synchronizations[]={13};
 				};
 				class Item4
 				{
@@ -1409,8 +1390,6 @@ class Mission
 					text="UnitNO_SF2_EXP";
 					init="_null =[this,""sfdem""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Explosive Specialist";
-					syncId=10;
-					synchronizations[]={13};
 				};
 				class Item5
 				{
@@ -1424,8 +1403,6 @@ class Mission
 					text="UnitNO_SF2_MED";
 					init="_null =[this,""sfmed""] spawn MCC_fnc_gear;";
 					description="NATO Special Forces Team 2 Medic";
-					syncId=11;
-					synchronizations[]={13};
 				};
 			};
 		};

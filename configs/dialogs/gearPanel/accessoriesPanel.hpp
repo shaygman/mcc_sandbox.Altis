@@ -2,21 +2,22 @@ class CP_ACCESPANEL {
 	  idd = -1;
 	  movingEnable = false;
 	  onLoad =  __EVAL("_this execVM '"+CPPATH+"configs\dialogs\gearPanel\accessPanel_init.sqf'");
-	  
-	  controlsBackground[] = 
+
+	  controlsBackground[] =
 	  {
+	  	bckg,
 		CP_respawnPanelBckg,
 		CP_tittle,
 		CP_sglogo
 	  };
-	  
+
 
 	  //---------------------------------------------
-	  objects[] = 
-	  { 
+	  objects[] =
+	  {
 	  };
-	  
-	  controls[] = 
+
+	  controls[] =
 	  {
 		CP_uniformPanelBackButton,
 		CP_accessoriesPanelOptics,
@@ -29,6 +30,16 @@ class CP_ACCESPANEL {
 		CP_gearPanelPiPFake,
 		CP_InfoText
 	  };
+
+	  	class bckg: CP_RscText
+		{
+			idc = 999;
+			x = -0.00531252 * safezoneW + safezoneX;
+			y = -0.00599999 * safezoneH + safezoneY;
+			w = 1.01063 * safezoneW;
+			h = 1.012 * safezoneH;
+			colorBackground[] = {0,0,0,1};
+		};
 
 		class CP_uniformPanelBackButton: CP_RscButtonMenu
 		{

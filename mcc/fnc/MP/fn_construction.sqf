@@ -88,7 +88,7 @@ _cratesArray = MCC_SUPPLY_CRATEITEMBIG + [MCC_SUPPLY_CRATEITEM];
 
 while {alive _baseAnchor && time < (_time + TIME_BEFORE_DELETE) && !_complete} do
 {
-	private ["_nearbyCrates","_nearbyMen","_prop","_propPos"];
+	private ["_nearbyCrates","_nearbyMen","_prop","_propPos","_type"];
 
 	sleep 1;
 
@@ -97,8 +97,7 @@ while {alive _baseAnchor && time < (_time + TIME_BEFORE_DELETE) && !_complete} d
 		//find crates
 		_nearByCrates = [];
 
-		if ((count (getPosATL _baseAnchor nearObjects ["Rope", 50]))==0)
-		then
+		if ((count (getPosATL _baseAnchor nearObjects ["Rope", 50]))==0) then
 		{
 			{
 				_type = _x;
@@ -111,8 +110,10 @@ while {alive _baseAnchor && time < (_time + TIME_BEFORE_DELETE) && !_complete} d
 			} foreach _cratesArray;
 		};
 
+
 		//How many players from my side are near
-		_nearbyMen = {alive _x && (side _x == (_x getVariable ["MCC_side",sidelogic]))} count (getPos _baseAnchor nearEntities ["CAManBase", 50]);
+		_nearbyMen = {alive _x && (side _x == (_baseAnchor getVariable ["MCC_side",sidelogic]))} count (getPos _baseAnchor nearEntities ["CAManBase", 50]);
+
 
 		if (_nearbyMen >= REQUIRE_MEMBERS && count _nearbyCrates > 0) then
 		{

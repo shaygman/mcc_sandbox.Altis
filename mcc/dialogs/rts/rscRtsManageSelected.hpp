@@ -27,7 +27,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 			w = 0.020625 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
-		
+
 		class constructionTab: MCC_RscButton
 		{
 			idc = 952;
@@ -156,7 +156,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 			w = 0.0309375 * safezoneW;
 			h = 0.044 * safezoneH;
 		};
-		
+
 		class respic1: MCC_RscPicture
 		{
 			idc = 120;
@@ -170,16 +170,16 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = 121;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-			
+
 			x = 0.0618752 * safezoneW;
 			y = 0.022 * safezoneH;
 			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;			
+			h = 0.022 * safezoneH;
 		};
 		class respic2: MCC_RscPicture
 		{
 			idc = 122;
-		
+
 			x = 0.0825002 * safezoneW;
 			y = 0.022 * safezoneH;
 			w = 0.0154688 * safezoneW;
@@ -189,7 +189,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = 123;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-			
+
 			x = 0.097969 * safezoneW;
 			y = 0.022 * safezoneH;
 			w = 0.0154688 * safezoneW;
@@ -236,6 +236,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		class desc: MCC_RscStructuredText
 		{
 			idc = 150;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 
 			x = 0.0464067 * safezoneW;
 			y = 0.044 * safezoneH;
@@ -269,9 +270,9 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 			w = 0.04125 * safezoneW;
 			h = 0.176 * safezoneH;
 		};
-		
 
-		class upgrade1: MCC_RscButton
+
+		class upgrade1: MCC_RscActivePicture
 		{
 			idc = 160;
 
@@ -280,7 +281,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 			w = 0.0309375 * safezoneW;
 			h = 0.044 * safezoneH;
 		};
-		class upgrade2: MCC_RscButton
+		class upgrade2: MCC_RscActivePicture
 		{
 			idc = 161;
 
@@ -289,7 +290,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 			w = 0.0309375 * safezoneW;
 			h = 0.044 * safezoneH;
 		};
-		class upgrade3: MCC_RscButton
+		class upgrade3: MCC_RscActivePicture
 		{
 			idc = 162;
 

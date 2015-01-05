@@ -1,8 +1,8 @@
-//==================================================================MCC_fnc_interactDoor===============================================================================================
+//==================================================================MCC_fnc_interactDoor========================================================================================
 // Interaction with Door type
 // Example: [_object] spawn MCC_fnc_interactMan;
-//=================================================================================================================================================================================
-private ["_object","_door","_optionalDoors","_suspectCorage","_typeOfSelected","_animation","_phase","_doorTypes","_loadName","_waitTime","_array","_str","_closed"];
+//==============================================================================================================================================================================
+private ["_object","_door","_optionalDoors","_suspectCorage","_typeOfSelected","_animation","_phase","_doorTypes","_loadName","_waitTime","_array","_str","_closed","_startPos"];
 #define MCC_CHARGE "ClaymoreDirectionalMine_Remote_Mag"
 #define MCC_MIROR ["MineDetector","MCC_videoProbe"]
 #define MCC_LOCKPICK ["ToolKit","AGM_DefusalKit","MCC_multiTool"]
@@ -76,255 +76,6 @@ switch (true) do
 		//Open dialog
 		if (MCC_interactionKey_holding && _closed && !dialog) exitWith
 		{
-			MCC_DOOR_CAM_Handler =
-			{
-				private ["_keyNightVision","_keysBanned","_keyForward","_keyBack","_keyLeft","_keyRight","_mode","_input","_NVGstate","_camTarget","_pos","_relDir"];
-				_keyNightVision	= actionKeys "NightVision";
-				_keysBanned		= [1,15];
-				_keyForward		= actionKeys "carForward";
-				_keyBack		= actionKeys "carBack";
-				_keyLeft		= actionKeys "carLeft";
-				_keyRight		= actionKeys "carRight";
-				_mode 	= _this select 0;
-				_input 	= _this select 1;
-				_cam 	= player getVariable ["MCC_doorCam",objNull];
-				_camTarget = _cam getVariable ["MCC_DOORCAM_TARGET",[0,2,0]];
-
-				if (isnil "_cam") then {player setVariable ["MCC_mirrorCamOff",true]};
-
-				if (_mode == "keydown") then
-				{
-					_key = _input select 1;
-
-					//--- Terminate
-					if (_key in _keysBanned) then {player setVariable ["MCC_mirrorCamOff",true]};
-
-					//--- Start NVG
-					if (_key in _keyNightVision) then
-					{
-						playSound "nvSound";
-						_NVGstate = !(player getVariable ["MCC_DOORCAM_NVSTATE", false]);
-						"uavrtt" setPiPEffect (if (_NVGstate) then {[1]} else {[0]});
-						player setVariable ["MCC_DOORCAM_NVSTATE", _NVGstate];
-					};
-
-					//--- UP
-					if (_key in _keyForward) then
-					{
-						_camTarget set [2,(_camTarget select 2)+0.03];
-						_cam setVariable ["MCC_DOORCAM_TARGET",_camTarget];
-						_pos = _cam modelToWorld _camTarget;
-						if (((_pos select 2) - ((getpos _cam) select 2)) < 1.5) then
-						{
-							_cam camSetTarget _pos;
-							if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.11]};
-						};
-					};
-
-					//--- Down
-					if (_key in _keyBack) then
-					{
-						_camTarget set [2,(_camTarget select 2)-0.03];
-						_cam setVariable ["MCC_DOORCAM_TARGET",_camTarget];
-						_pos = _cam modelToWorld _camTarget;
-						if (((_pos select 2) - ((getpos _cam) select 2)) > -1.5) then
-						{
-							_cam camSetTarget _pos;
-							if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.11]};
-						}
-					};
-
-					//--- Left
-					if (_key in _keyLeft) then
-					{
-						_camTarget set [0,(_camTarget select 0)-0.03];
-						_cam setVariable ["MCC_DOORCAM_TARGET",_camTarget];
-						_pos = _cam modelToWorld _camTarget;
-						_relDir = [player,_pos] call BIS_fnc_relativeDirTo;
-						if ( _relDir > 325 || _relDir < 35) then
-						{
-							_cam camSetTarget _pos;
-							if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.11]};
-						};
-					};
-
-					//--- Right
-					if (_key in _keyRight) then
-					{
-						_camTarget set [0,(_camTarget select 0)+0.03];
-						_cam setVariable ["MCC_DOORCAM_TARGET",_camTarget];
-						_pos = _cam modelToWorld _camTarget;
-						_relDir = [player,_pos] call BIS_fnc_relativeDirTo;
-						if ( _relDir > 325 || _relDir < 35) then
-						{
-							_cam camSetTarget _pos;
-							if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.11]};
-						};
-					};
-
-					 _cam camCommit 0;
-				};
-
-			};
-			MCC_fnc_DoorMenuClicked =
-			{
-				private ["_ctrl","_index","_ctrlData","_object","_animation","_phase","_door"];
-				disableSerialization;
-
-				_ctrl 		= _this select 0;
-				_index 		= _this select 1;
-				_ctrlData	= _ctrl lbdata _index;
-
-				_object = (player getVariable ["interactWith",[]]) select 0;
-				_door 	= (player getVariable ["interactWith",[]]) select 1;
-				_phase 	= (player getVariable ["interactWith",[]]) select 2;
-
-				if (tolower worldName in MCC_ARMA2MAPS) then
-				{
-					_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
-					_animation = "dvere"+_str;
-				}
-				else
-				{
-					_animation = _door + "_rot";
-				};
-
-				switch (_ctrlData) do
-				{
-					case "charge":
-					{
-						closedialog 0;
-						player removeMagazine MCC_CHARGE;
-						["Placing Charge",4] call MCC_fnc_interactProgress;
-
-						_n = 2;
-						_position = ATLtoASL(player modelToworld [0,_n,1.5]);
-						while {!lineIntersects [ATLtoASL(player modelToworld [0,0,1]), _position]} do
-						{
-							_n = _n - 0.1;
-							_position = ATLtoASL(player modelToworld [0,_n,1]);
-						};
-						_position = ATLtoASL(player modelToworld [0,_n-0.9,1]);
-						_c4 = "ClaymoreDirectionalMine_Remote_Ammo_Scripted" createVehicle ATLtoASL _position;
-						_c4 setpos aslToAtl _position;
-						_c4 setdir (getdir player);
-						player addAction ["<t color=""#FF0000"">Detonate Charge</t>", {
-														player removeAction (_this select 2);
-														((_this select 3) select 1) animate [((_this select 3) select 2), ((_this select 3) select 3)];
-														((_this select 3) select 1) setVariable [format ["bis_disabled_%1",((_this select 3) select 4)],0,true];
-														sleep 0.7;
-														((_this select 3) select 0) setDamage 1;
-													}, [_c4,_object,_animation,_phase,_door]];
-					};
-
-					case "camera":
-					{
-						private ["_camera","_ppgrain","_ppblair","_keyDown","_tablet"];
-						closedialog 0;
-						player setVariable ["MCC_mirrorCamOff",false];
-
-						//tablet
-						_tablet = "Land_Tablet_01_F" createVehicle [0,0,0];
-						_tablet attachto [player,[-0.1,0.4,-0.2],"neck"];
-						_tablet setVectorDirAndUp [[0,1,1],[0,-1,0]];
-						_tablet setObjectTexture [0, "#(argb,512,512,1)r2t(uavrtt,1)"];
-
-						//animate - disable input
-						player playMove "AidlPknlMstpSlowWrflDnon_AI";
-						sleep 0.5;
-						player switchmove "acts_CrouchingIdleRifle01";
-						_addIndex = player addAction ["", {}, "", 0, false, true, "NightVision"];
-						_eh = player addeventhandler ["animChanged",{player switchMove "acts_CrouchingIdleRifle01";}];
-						playSound "nvSound";
-
-						if (cameraView != "INTERNAL") then {player switchCamera "INTERNAL"};
-
-
-						_camera = "Camera" camcreate (player modelToworld [0,2,0.3]);
-						_camera setdir (getDir player);
-						_camera cameraeffect ["internal","back","uavrtt"];
-						_camera camPrepareFOV 0.900;
-						_camera campreparefocus [-1,-1];
-						_camera camCommitPrepared 0;
-						_camera camcommit 0.01;
-						cameraEffectEnableHUD true;
-						showCinemaBorder false;
-
-						//"uavrtt" setPiPEffect [6,1,1,0.5,0.5,8,0.6,true];
-						/*
-						_ppgrain = ppEffectCreate ["filmGrain", 2005];
-						_ppgrain ppEffectAdjust [1, 1, 8, 0.6, 0.6,false];
-						_ppgrain ppEffectCommit 0;
-						_ppgrain ppEffectEnable true;
-
-						_ppblair = ppEffectCreate ["radialBlur", 100];
-						_ppblair ppEffectEnable true;
-						_ppblair ppEffectAdjust [02, 0.2, 1, 0.5];
-						_ppblair ppEffectCommit 1;
-						sleep 1;
-						_ppblair ppEffectEnable false;
-						ppEffectDestroy _ppblair;
-						*/
-						player setVariable ["MCC_doorCam",_camera];
-
-
-						_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if !(isnil 'MCC_DOOR_CAM_Handler') then {MCC_temp = ['keydown',_this,commandingmenu] spawn MCC_DOOR_CAM_Handler; MCC_temp = nil;}"];
-
-						//CLose cam
-						while {!(player getVariable ["MCC_mirrorCamOff",false]) && (alive player)} do
-						{
-							['<t font="puristaMedium" size="0.5" align="left" color="#a8e748">Use "W" "A" "S" "D" to rotate camera<br/><br/>Press "N" to activate nightvision<br/><br/>Press "Tab" to close video</t><br/>',-0.5,-0.2,0.1,0,0,1] spawn BIS_fnc_dynamicText;
-							sleep 0.1;
-						};
-
-						deleteVehicle _tablet;
-						player removeeventhandler ["animChanged",_eh];
-						player removeaction _addIndex;
-						player switchMove "AidlPknlMstpSlowWrflDnon_AI";
-						(findDisplay 46) displayRemoveEventHandler  ["KeyDown",_keyDown];
-						playSound "nvSound";
-						/*
-						_ppblair = ppEffectCreate ["radialBlur", 100];
-						_ppblair ppEffectEnable true;
-						_ppblair ppEffectAdjust [02, 0.2, 0.5, 0];
-						_ppblair ppEffectCommit 1;
-						sleep 1;
-						*/
-						_camera cameraEffect ["TERMINATE", "BACK"];
-						camdestroy _camera;
-						_camera = nil;
-						/*
-						_ppblair ppEffectEnable false;
-						ppEffectDestroy _ppblair;
-
-
-						_ppgrain ppEffectEnable false;
-						ppEffectDestroy _ppgrain;
-						*/
-					};
-
-					case "unlock":
-					{
-						closedialog 0;
-						["Unlocking",15] call MCC_fnc_interactProgress;
-						_object setVariable [format ["bis_disabled_%1",_door],0,true];
-
-					};
-
-					case "lock":
-					{
-						closedialog 0;
-						["Locking",15] call MCC_fnc_interactProgress;
-						_object setVariable [format ["bis_disabled_%1",_door],1,true];
-
-					};
-					case "close":
-					{
-						closedialog 0;
-					};
-				};
-			};
-
 
 			_array = [["charge",format ["Place Breaching Charge (%1)",{_x == MCC_CHARGE} count magazines player],getText(configFile >> "CfgMagazines">> MCC_CHARGE >> "picture")],
 					  ["camera","Mirror under the door","\A3\ui_f\data\map\markers\military\unknown_CA.paa"],
@@ -424,6 +175,14 @@ switch (true) do
 						};
 					} forEach (crew _object);
 				};
+
+				case (_ctrlData == "mainBox"):
+				{
+					_object setVariable ["mcc_mainBoxUsed", true,true];
+					createDialog "MCC_rtsMainBox";
+ 					waituntil {!dialog};
+ 					_object setVariable ["mcc_mainBoxUsed", false,true];
+				};
 			};
 		};
 
@@ -446,9 +205,16 @@ switch (true) do
 			};
 
 			//Static-drag but no inventory
-			if ((_object isKindof "StaticWeapon" || _object isKindof "ReammoBox_F") && (_object != (player getVariable ["mcc_draggedObject", objNull])) && (count attachedObjects _object == 0) && (getmass _object < 501)) then
+			if ((_object isKindof "StaticWeapon" || _object isKindof "ReammoBox_F") && (_object != (player getVariable ["mcc_draggedObject", objNull])) && (count attachedObjects _object == 0) && (getmass _object < 501) && (isNull attachedTo _object)) then
 			{
 				_array set [count _array,["drag",format ["Drag %1",_displayName],format ["%1data\IconAmmo.paa",MCC_path]]];
+			};
+
+			//rts main box
+			_startPos = call compile format ["MCC_START_%1",playerside];
+			if ((_object isKindof "Box_FIA_Support_F") && (!(_object getVariable ["mcc_mainBoxUsed", false])) && !(isNull attachedTo _object) && (player distance _startPos < 20)) then
+			{
+				_array set [count _array,["mainBox","Open Cargo Box",format ["%1data\IconAmmo.paa",MCC_path]]];
 			};
 
 			//Flip atv
@@ -464,7 +230,7 @@ switch (true) do
 			};
 
 			//Gear menu
-			if (!(_object isKindof "StaticWeapon") && !CP_activated) then
+			if (!(_object isKindof "StaticWeapon" || _object isKindof "Box_FIA_Support_F") && !CP_activated) then
 			{
 				_array set [count _array,["gear","Open inventory",format ["%1data\IconAmmo.paa",MCC_path]]];
 			};

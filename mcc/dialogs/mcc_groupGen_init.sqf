@@ -26,20 +26,20 @@ uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
 (findDisplay groupGen_IDD) displayAddEventHandler ["KeyUp",format ["if (_this select 1 == 211) then {MCC_UMUnit = 3; null = [12] execVM '%1mcc\general_scripts\unitManage\um.sqf'};",MCC_path]];
 
 //Assign as Curator on init
-if (player != getAssignedCuratorUnit MCC_curator) then {[compile format ["%1 assignCurator MCC_curator;", player],"BIS_fnc_spawn",false,false] spawn BIS_fnc_MP}; 
+if (player != getAssignedCuratorUnit MCC_curator) then {[compile format ["objectFromNetId '%1' assignCurator MCC_curator;", netid player],"BIS_fnc_spawn",false,false] spawn BIS_fnc_MP};
 
 //Track units if enabled
 if (MCC_trackMarker) then
 {
 	MCC_trackMarkerHandler = ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 9000) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
 };
-			
+
 //Hide GroupWP
 ctrlShow [510,false];
 ctrlShow [MCC_GroupGenInfo_IDC,false];
 
 //Show zones
-{str _x setMarkerAlphaLocal 0.4;(format["LABEL_%1",_x]) setMarkerAlphaLocal 1;} foreach MCC_zones_numbers; 
+{str _x setMarkerAlphaLocal 0.4;(format["LABEL_%1",_x]) setMarkerAlphaLocal 1;} foreach MCC_zones_numbers;
 
 //Hide admin buttons for no-admins
 if !(serverCommandAvailable "#logout") then
@@ -48,9 +48,9 @@ if !(serverCommandAvailable "#logout") then
 	ctrlShow [MCC_UM_BAN,false];
 };
 
-for "_i" from 500 to 518 step 1 do 
+for "_i" from 500 to 518 step 1 do
 {
-	((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl _i) ctrlShow false;		
+	((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl _i) ctrlShow false;
 };
 
 if (CP_activated) then
@@ -60,7 +60,7 @@ if (CP_activated) then
 else
 {
 	ctrlsettext [520,"Enable Roles"];
-}; 
+};
 
 if (MCC_GAIA_AC) then
 {
@@ -69,9 +69,9 @@ if (MCC_GAIA_AC) then
 else
 {
 	ctrlsettext [1015,"Ambient Warzone(off)"];
-}; 
+};
 
-//Capture 
+//Capture
 if (!MCC_capture_state) then { ctrlEnable [MCCSTOPCAPTURE,false];};
 
 //Respawn
@@ -91,7 +91,7 @@ lbClear _comboBox;
 _comboBox lbSetCurSel MCC_faction_index;
 
 //-------------------------------------------- GAIA --------------------------------------------------------------------------------------------------
-_comboBox =((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 1);		
+_comboBox =((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 1);
 lbClear _comboBox;
 {
 	_displayname = format ["%1",_x select 0];
@@ -128,41 +128,41 @@ _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline
 _html = _html + "<t color='#fefefe' size='1' shadow='1' align='center' underline='true'>IED: </t><br/>";
 _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Manual Detonate: Ctrl + Left mouse button on an IED icon.</t><br/>";
 _html = _html + "<t color='#fefefe' size='0.8' shadow='1' align='left' underline='false'>* Sync IEDs: Drag a line between two IEDs while holding Shift + Left mouse button.</t><br/>";
-		
-_comboBox ctrlSetStructuredText parseText _html;	
+
+_comboBox ctrlSetStructuredText parseText _html;
 
 //Is it first time we around? Let's respawn the zone markers if they are available
 if (isnil "MCCFirstOpenUI") then
 {
-	MCCFirstOpenUI = false; 
-	
+	MCCFirstOpenUI = false;
+
 	sleep 1;
 	//Loose mission maker when DC move to after login
 	if (!isnil "MCC_zones_numbers") then {[] call MCC_fnc_createMCCZones};
 };
 
 //----------------------------------------------------------- GROUPs ----------------------------------------------------------------------------
-	
-[] spawn MCC_fnc_groupGenRefresh; 	
+
+[] spawn MCC_fnc_groupGenRefresh;
 
 //-------------------------------------------------FPS Loop  -----------------------------
-while {(str (finddisplay groupGen_IDD) != "no display")} do 
+while {(str (finddisplay groupGen_IDD) != "no display")} do
 {
 	MCC_clientFPS  = round(diag_fps);
 	ctrlSetText [MCCCLIENTFPS, format["%1",MCC_clientFPS]];
-	
-	if (isnil "mcc_fps_running") then {mcc_fps_running = false}; 
-	if !(mcc_fps_running) then 
+
+	if (isnil "mcc_fps_running") then {mcc_fps_running = false};
+	if !(mcc_fps_running) then
 	{
 		[[1],"MCC_fnc_FPS",true,false] spawn BIS_fnc_MP;
 		sleep 0.5;
 	};
-		
-	if !( MCC_isHC ) then 
-	{		
+
+	if !( MCC_isHC ) then
+	{
 		ctrlSetText [MCCSERVERFPS, format["%1",MCC_serverFPS]];
 	}
-	else 
+	else
 	{
 		ctrlSetText [MCCSERVERFPS, format[" %1 - HC FPS: %2", MCC_serverFPS, MCC_hcFPS]];
 	};
@@ -170,6 +170,6 @@ while {(str (finddisplay groupGen_IDD) != "no display")} do
 };
 
 //Hide zones
-{str _x setMarkerAlphaLocal 0;(format["LABEL_%1",_x]) setMarkerAlphaLocal 0;} foreach MCC_zones_numbers; 
+{str _x setMarkerAlphaLocal 0;(format["LABEL_%1",_x]) setMarkerAlphaLocal 0;} foreach MCC_zones_numbers;
 
 //------------------------------------------------------------------------------------------

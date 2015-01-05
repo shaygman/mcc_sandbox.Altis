@@ -18,15 +18,16 @@ if (CP_activated) then
 
 	if (_tickets > 1) then
 	{
-		_tickets = _tickets -1;
-		[_side, -1] call BIS_fnc_respawnTickets;
+		_tickets = -1;
+		[_side, _tickets] call BIS_fnc_respawnTickets;
 	}
 	else	//Mission end
 	{
+		/*
 		[west, missionNameSpace getVariable ["MCC_ticketsWest",200]] call BIS_fnc_respawnTickets;
 		[east, missionNameSpace getVariable ["MCC_ticketsEast",200]] call BIS_fnc_respawnTickets;
 		[resistance, missionNameSpace getVariable ["MCC_ticketsGUER",200]] call BIS_fnc_respawnTickets;
-
+		*/
 		[["sidetickets"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
 	};
 };
@@ -69,7 +70,7 @@ player setCaptive false;
 //Delete dead body
 if (missionNameSpace getVariable ["MCC_deletePlayersBody",false]) then {deleteVehicle _unit};
 
-_null = [(compile format ["MCC_curator addCuratorEditableObjects [[%1],false];", player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
+_null = [(compile format ["MCC_curator addCuratorEditableObjects [[objectFromNetId '%1'],false];",netid player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 
 if (MCC_saveGear) then
 {

@@ -48,7 +48,6 @@ else
 		else
 		{
 			_damage = 0.9;
-			_unit allowDamage false;
 			[_unit,_source] spawn MCC_fnc_unconscious;
 			_damage;
 		}
@@ -57,9 +56,9 @@ else
 	{
 		_bleeding = (getDammage _unit) max (_unit getVariable ["MCC_medicBleeding",0]);
 		_unit setVariable ["MCC_medicBleeding",_bleeding min 1,true];
+
 		//Set damage coef
-		if (isPlayer _unit) then {_damage = _damage * (missionNamespace getVariable ["MCC_medicDamageCoef",1])};
-		_damage;
+		(_damage * (missionNamespace getVariable ["MCC_medicDamageCoef",1]));
 	};
 };
 

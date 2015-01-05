@@ -175,7 +175,7 @@ if (isServer) then
 
 		//Only destroyable with satchel or demo charges
 		_dummy addEventHandler ["handledamage",{
-										if ((_this select 4) == "SatchelCharge_Remote_Ammo" || (_this select 4) == "DemoCharge_Remote_Ammo") then
+										if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo","DemoCharge_Remote_Ammo_Scripted","SatchelCharge_Remote_Ammo_Scripted"]) then
 										{
 											private ["_obj","_mark","_flag","_side"];
 											_obj = _this select 0;

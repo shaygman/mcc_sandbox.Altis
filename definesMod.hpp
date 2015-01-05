@@ -32,6 +32,7 @@
 //----Logistics-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\rts\mcc_logisticsBaseBuild.hpp"
+#include "\mcc_sandbox_mod\mcc\Dialogs\rts\rtsMainBox.hpp"
 
 //----Interaction-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_interactionMenu.hpp"

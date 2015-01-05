@@ -39,7 +39,7 @@ uiNamespace setVariable ["messeges", _disp displayCtrl 102];
 uiNamespace setVariable ["XPTitle", _disp displayCtrl 103];
 uiNamespace setVariable ["XPValue", _disp displayCtrl 104];
 
-#define CP_SQUADPANEL_IDD (uiNamespace getVariable "CP_SQUADPANEL_IDD") 
+#define CP_SQUADPANEL_IDD (uiNamespace getVariable "CP_SQUADPANEL_IDD")
 #define CP_squadPanelSquadList (uiNamespace getVariable "CP_squadPanelSquadList")
 #define CP_squadPanelPlayersList (uiNamespace getVariable "CP_squadPanelPlayersList")
 #define CP_squadsPanelActiveSquadTittle (uiNamespace getVariable "CP_squadsPanelActiveSquadTittle")
@@ -92,10 +92,11 @@ if (MCC_squadDialogOpen) then
 	CP_switchSideButton ctrlShow false;
 	CP_respawnPanelRoleTittle ctrlShow false;
 	CP_respawnPanelBckg ctrlSetBackgroundColor [0, 0, 0, 0.5];
+	(CP_SQUADPANEL_IDD displayCtrl 999) ctrlShow false;
 }
 else
 {
-	CP_respawnPanelRoleCombo ctrlAddEventHandler ["LBSelChanged","[2] execVM '"+MCC_path+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'"];
+	CP_respawnPanelRoleCombo ctrlAddEventHandler ["LBSelChanged","[2,_this] execVM '"+MCC_path+"configs\dialogs\gearPanel\respawnPanel_cmd.sqf'"];
 	CP_Teleport ctrlShow false;
 	CP_switchSideButton ctrlShow false;		//Bugged for rating
 };
@@ -115,23 +116,23 @@ if (CP_activated) then
 	{
 		ctrlSetText [_idc, str _x];
 		_idc = _idc + 2;
-	} foreach _activeSides;	
-	
+	} foreach _activeSides;
+
 	//Set XP
 	_role = player getvariable "CP_role";
-	if (isnil "_role") exitWith {}; 
-	
-	_exp 	 = call compile format  ["%1Level select 1",_role]; 
-	if (isnil "_exp") exitWith {}; 	
-	
+	if (isnil "_role") exitWith {};
+
+	_exp 	 = call compile format  ["%1Level select 1",_role];
+	if (isnil "_exp") exitWith {};
+
 	if (_exp < 0) then {_exp = 0};
-	_oldLevel = call compile format  ["%1Level select 0",_role]; 
+	_oldLevel = call compile format  ["%1Level select 0",_role];
 	_html = "<t color='#818960' size='2' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
 	messeges ctrlSetStructuredText parseText _html;
-	
+
 	_needXP 			= (CP_XPperLevel + _oldLevel*100) + ((CP_XPperLevel + _oldLevel*100)*(_oldLevel-1));
 	_needXPPrevLevel 	= (CP_XPperLevel + (_oldLevel-1)*100)*(_oldLevel-1);
-	XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel))); 
+	XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel)));
 }
 else
 {
@@ -158,31 +159,31 @@ else
 };
 
 //Disable Esc while respawn is on
-CP_disableEsc = CP_SQUADPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"]; 
+CP_disableEsc = CP_SQUADPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
-_groups	 = switch (side player) do	
+_groups	 = switch (side player) do
 			{
 				case west:			{CP_westGroups};
 				case east:			{CP_eastGroups};
 				case resistance:	{CP_guarGroups};
 				default				{CP_guarGroups};
 			};
-				
+
 //Load active Groups
 _groupIndex = 0;
 
-_comboBox = CP_squadPanelSquadList; 
+_comboBox = CP_squadPanelSquadList;
 lbClear _comboBox;
 	{
 		_displayname = _x select 1;
 		_index = _comboBox lbAdd _displayname;
 		if (player in units (_x select 0)) then {_groupIndex = _foreachIndex};
 	} foreach _groups;
-	
+
 _comboBox lbSetCurSel _groupIndex;
 
 //Load Classes
-_comboBox = CP_respawnPanelRoleCombo; 
+_comboBox = CP_respawnPanelRoleCombo;
 lbClear _comboBox;
 	{
 		_displayname = _x;
@@ -192,17 +193,24 @@ lbClear _comboBox;
 	} foreach CP_classes;
 _comboBox lbSetCurSel CP_classesIndex;
 
-[] spawn 
+//Gear stats
+[CP_SQUADPANEL_IDD] call MCC_fnc_playerStats;
+
+[] spawn
 {
 	private ["_comboBox","_displayname","_index","_groups","_array","_oldCommander","_commander","_commanderName","_activeSides","_idc","_units","_disp"];
 	disableSerialization;
 	_oldCommander = "";
-	while {(str (CP_SQUADPANEL_IDD displayCtrl 0) != "No control")} do 
+	while {(str (CP_SQUADPANEL_IDD displayCtrl 0) != "No control")} do
 	{
 		//Load available resources
 		_disp = CP_SQUADPANEL_IDD;
 		_array = call compile format ["MCC_res%1",playerside];
-		{_disp displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85]; 
+		{_disp displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85];
+
+		//Time
+		_t = if ((estimatedEndServerTime - serverTime)>0) then {[estimatedEndServerTime - serverTime] call MCC_fnc_time} else {""};
+		ctrlSetText [1919,_t];
 
 		//Tickets
 		if (CP_activated) then
@@ -213,45 +221,45 @@ _comboBox lbSetCurSel CP_classesIndex;
 			{
 				ctrlSetText [_idc, str ([_x] call BIS_fnc_respawnTickets)];
 				_idc = _idc + 2;
-			} foreach _activeSides;	
+			} foreach _activeSides;
 		};
-			
+
 		if (str (side player) == "ENEMY") then {player addrating (abs (rating player))};
-		_groups	 = switch (player getVariable ["CP_side", playerside]) do	
+		_groups	 = switch (player getVariable ["CP_side", playerside]) do
 		{
 			case west:			{CP_westGroups};
 			case east:			{CP_eastGroups};
 			case resistance:	{CP_guarGroups};
 		};
-		
-		_array = []; 
+
+		_array = [];
 		{
-			_array set [count _array, _x select 0]; 
-		} foreach _groups; 
-		
+			_array set [count _array, _x select 0];
+		} foreach _groups;
+
 		//Change leave/join squad
-		if ((group player) in _array) then 
+		if ((group player) in _array) then
 		{
 			_unit = player getVariable ["MCC_selectedUnit", objnull];
-			
+
 			//Kick or leave
 			if (_unit != player && player == leader _unit) then
 			{
 				CP_squadPanelJoinButton ctrlSetText "Kick Player";
 			}
 			else
-			{ 
+			{
 				CP_squadPanelJoinButton ctrlSetText "Leave Squad";
 			};
-		} 
-		else 
+		}
+		else
 		{
 			CP_squadPanelJoinButton ctrlSetText "Join Squad";
 		};
-		
+
 		//Commander name
 		_commander = MCC_server getVariable [format ["CP_commander%1",side player],""];
-		
+
 		//We have a new commander
 		if (_oldCommander != _commander) then
 		{
@@ -262,8 +270,8 @@ _comboBox lbSetCurSel CP_classesIndex;
 				{
 					if ((getPlayerUID _x) == _commander) then {_commanderName = name _x};
 				};
-			} foreach allUnits; 
-			
+			} foreach allUnits;
+
 			if (_commander == "") then
 			{
 				CP_Mutiny ctrlSetText "Take Commander";
@@ -279,24 +287,24 @@ _comboBox lbSetCurSel CP_classesIndex;
 					CP_Mutiny ctrlSetText "Start Mutiny";
 				};
 			};
-			
+
 			CP_commanderName ctrlSetText _commanderName;
 			_oldCommander = _commander;
 		};
-		
-		
-		//Disable leaving squad 
-		if (! isnil "CP_activeGroup") then 
+
+
+		//Disable leaving squad
+		if (! isnil "CP_activeGroup") then
 		{
-			if ((ctrlText CP_squadPanelJoinButton == "Leave Squad") && (CP_activeGroup select 0 != (group player))) then 
+			if ((ctrlText CP_squadPanelJoinButton == "Leave Squad") && (CP_activeGroup select 0 != (group player))) then
 			{
-				CP_squadPanelJoinButton ctrlenable false; 
-			} 
+				CP_squadPanelJoinButton ctrlenable false;
+			}
 			else
 			{
-				CP_squadPanelJoinButton ctrlenable true; 
+				CP_squadPanelJoinButton ctrlenable true;
 			};
-			
+
 			//Lock
 			if ((CP_activeGroup select 0) getVariable ["locked",false]) then
 			{
@@ -307,90 +315,90 @@ _comboBox lbSetCurSel CP_classesIndex;
 				CP_LockSquad ctrlSetText (MCC_path +"data\unlocked.paa");
 			};
 		};
-		
-		
+
+
 		//Load active Groups
-		_comboBox = CP_squadPanelSquadList; 
+		_comboBox = CP_squadPanelSquadList;
 		lbClear _comboBox;
 		{
 			_displayname = _x select 1;
 			_index = _comboBox lbAdd _displayname;
 		} foreach _groups;
-		
+
 		//Rename Squad
-		if (! isnil "CP_activeGroup") then 
+		if (! isnil "CP_activeGroup") then
 		{
-			if (player == leader (CP_activeGroup select 0)) then 
+			if (player == leader (CP_activeGroup select 0)) then
 			{
-				CP_squadPanelCreateSquadButton ctrlSetText "Rename Squad";
-			} 
-			else 
+				CP_squadPanelCreateSquadButton ctrlSetText "Rename";
+			}
+			else
 			{
-				CP_squadPanelCreateSquadButton ctrlSetText "Create Squad";
+				CP_squadPanelCreateSquadButton ctrlSetText "Create";
 			};
-		
-			
+
+
 			//Make the leader first in list
 			_units = units (CP_activeGroup select 0);
-			
+
 			if (count _units > 1) then
 			{
 				_leader = [leader (CP_activeGroup select 0)];
 				_units = _units - _leader;
 				_units = _leader + _units;
 			};
-			
-			_comboBox = CP_squadPanelPlayersList; 
+
+			_comboBox = CP_squadPanelPlayersList;
 			lbClear _comboBox;
 			{
-				_role =	switch (tolower (_x getvariable ["CP_role","N/A"])) do	
+				_role =	switch (tolower (_x getvariable ["CP_role","N/A"])) do
 						{
-							case "officer":			
+							case "officer":
 							{
 								"(CO)"
 							};
-							
-							case "ar":			
+
+							case "ar":
 							{
 								"(AR)"
 							};
-							
-							case "rifleman":			
+
+							case "rifleman":
 							{
 								"(RL)"
 							};
-							
-							case "at":			
+
+							case "at":
 							{
 								"(AT)"
 							};
-							
-							case "corpsman":			
+
+							case "corpsman":
 							{
 								"(Corps)"
 							};
-							
-							case "marksman":			
+
+							case "marksman":
 							{
 								"(Marks)"
 							};
-							
-							case "specialist":			
+
+							case "specialist":
 							{
 								"(Spec)"
 							};
-							
-							case "pilot":			
+
+							case "pilot":
 							{
 								"(Pilot)"
 							};
-							
-							case "crew":			
+
+							case "crew":
 							{
 								"(Crew)"
 							};
-							
-							default			
+
+							default
 							{
 								"(N/A)"
 							};
@@ -401,7 +409,7 @@ _comboBox lbSetCurSel CP_classesIndex;
 				if (_x == player) then {_comboBox lbSetColor [_index, [0, 1, 0, 0.5]]};
 			} foreach _units;
 		};
-		
-		sleep 0.1; 
+
+		sleep 0.1;
 	};
 };

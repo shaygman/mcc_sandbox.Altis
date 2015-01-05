@@ -2,20 +2,21 @@ class CP_WEAPONSPANEL {
 	  idd = -1;
 	  movingEnable = false;
 	  onLoad =  __EVAL("_this execVM '"+CPPATH+"configs\dialogs\gearPanel\weaponsPanel_init.sqf'");
-	  
-	  controlsBackground[] = 
+
+	  controlsBackground[] =
 	  {
+	  	bckg,
 		CP_respawnPanelBckg,
 		CP_sglogo
 	  };
-	  
+
 
 	  //---------------------------------------------
-	  objects[] = 
-	  { 
+	  objects[] =
+	  {
 	  };
-	  
-	  controls[] = 
+
+	  controls[] =
 	  {
 		CP_weaponsPanelBackButton,
 		CP_weaponsPanelPrimary,
@@ -34,8 +35,20 @@ class CP_WEAPONSPANEL {
 		CP_gearPanelPiP,
 		CP_gearPanelPiPFake,
 		CP_InfoText,
-		CP_tittle
+		CP_tittle,
+		CP_ItemsLoad
 	  };
+
+	#include "RscControlsGroupItemsLoad.hpp"
+	class bckg: CP_RscText
+	{
+		idc = 999;
+		x = -0.00531252 * safezoneW + safezoneX;
+		y = -0.00599999 * safezoneH + safezoneY;
+		w = 1.01063 * safezoneW;
+		h = 1.012 * safezoneH;
+		colorBackground[] = {0,0,0,1};
+	};
 
 	class CP_weaponsPanelBackButton: CP_RscButtonMenu
 	{
@@ -209,18 +222,18 @@ class CP_WEAPONSPANEL {
 	{
 		idc = -1;
 		text = "#(argb,512,512,1)r2t(rendertarget7,1.0);";
-		x = 0.74 * safezoneW + safezoneX;
+		x = 0.72 * safezoneW + safezoneX;
 		y = 0.291081 * safezoneH + safezoneY;
-		w = 0.250521 * safezoneW;
-		h = 0.47 * safezoneH;
+		w = 0.273281 * safezoneW;
+		h = 0.418 * safezoneH;
 	};
 	class CP_gearPanelPiPFake: CP_RscListBox
 	{
 		idc = -1;
-		x = 0.74 * safezoneW + safezoneX;
+		x = 0.72 * safezoneW + safezoneX;
 		y = 0.291081 * safezoneH + safezoneY;
-		w = 0.250521 * safezoneW;
-		h = 0.47 * safezoneH;
+		w = 0.273281 * safezoneW;
+		h = 0.418 * safezoneH;
 		onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 		onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 		onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");

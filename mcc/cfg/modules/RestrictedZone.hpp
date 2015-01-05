@@ -1,4 +1,4 @@
-class mcc_sandbox_moduleRestrictedZone : Module_F 
+class mcc_sandbox_moduleRestrictedZone : Module_F
 {
 	category = "MCC";
 	author = "shay_gman";
@@ -10,7 +10,7 @@ class mcc_sandbox_moduleRestrictedZone : Module_F
 	scope = 2;
 	isGlobal = 2;
 	isTriggerActivated = 1;
-	
+
 	class Arguments
 	{
 		class sides
@@ -48,7 +48,7 @@ class mcc_sandbox_moduleRestrictedZone : Module_F
 				};
 			};
 		};
-		
+
 		class time
 		{
 			displayName = "Time Before Punishment";
@@ -56,84 +56,84 @@ class mcc_sandbox_moduleRestrictedZone : Module_F
 			typeName = "NUMBER";
 			defaultValue = 10;
 		};
-		
+
 		class inside
 		{
 			displayName = "Punished inside the zone";
 			description = "Should the players be punished for staying inside the zone or outside";
-			typeName = "BOOL";
+			typeName = "NUMBER";
 			class values
 			{
 				class Enabled
 				{
 					name = "Inside";
-					value = false;
+					value = 1;
 					default = 1;
 				};
 				class Disabled
 				{
 					name = "Outside";
-					value = true;
+					value = 0;
 				};
 			};
 		};
-		
+
 		class air
 		{
 			displayName = "Air Vehicles";
-			description = "Should air vehicles be punished";
-			typeName = "BOOL";
+			description = "Should air vehicles be allowed";
+			typeName = "NUMBER";
 			class values
 			{
 				class Enabled
 				{
 					name = "Yes";
-					value = false;
+					value = 1;
 					default = 1;
 				};
 				class Disabled
 				{
 					name = "No";
-					value = true;
+					value = 0;
 				};
 			};
 		};
-		
+
 		class hide
 		{
 			displayName = "Create markers";
 			description = "Create markers on the triggers locations";
-			typeName = "BOOL";
+			typeName = "NUMBER";
 			class values
 			{
 				class Disabled
 				{
 					name = "No";
-					value = false;
+					value = 0;
 				};
 				class Enabled
 				{
 					name = "Yes";
-					value = true;
+					value = 1;
 					default = 1;
 				};
 			};
 		};
 	};
-	
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Create restricted areas";
 		sync[] = {"LocationArea_F"};
- 
+
 		class LocationArea_F
 		{
-			description[] = { 
+			description[] = {
 				"Sync with any trigger"
 			};
-			optional = 1; 
+			optional = 1;
 			duplicate = 1;
-			synced[] = {"EmptyDetector"}; 
+			synced[] = {"EmptyDetector"};
 		};
 	};
 };

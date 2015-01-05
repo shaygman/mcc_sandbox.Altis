@@ -2,21 +2,22 @@ class CP_GEARPANEL {
 	  idd = -1;
 	  movingEnable = false;
 	  onLoad =  __EVAL("_this execVM '"+CPPATH+"configs\dialogs\gearPanel\gearPanel_init.sqf'");
-	  
-	  controlsBackground[] = 
+
+	  controlsBackground[] =
 	  {
+	  	bckg,
 		CP_respawnPanelBckg,
 		CP_tittle,
 		CP_sglogo
 	  };
-	  
+
 
 	  //---------------------------------------------
-	  objects[] = 
-	  { 
+	  objects[] =
+	  {
 	  };
-	  
-	  controls[] = 
+
+	  controls[] =
 	  {
 		CP_exitButton,
 		CP_respawnPanelButton,
@@ -52,14 +53,37 @@ class CP_GEARPANEL {
 		CP_gearPanelPiP,
 		CP_gearPanelPiPFake,
 		CP_InfoText,
-		MCC_ResourcesControlsGroup
+		MCC_ResourcesControlsGroup,
+		CP_ItemsLoad,
+		timeLeft
 	  };
+
+	 #include "RscControlsGroupItemsLoad.hpp"
+    class bckg: CP_RscText
+	{
+		idc = 999;
+		x = -0.00531252 * safezoneW + safezoneX;
+		y = -0.00599999 * safezoneH + safezoneY;
+		w = 1.01063 * safezoneW;
+		h = 1.012 * safezoneH;
+		colorBackground[] = {0,0,0,1};
+	};
+
+	class timeLeft: CP_RscText
+	{
+		idc = 1919;
+		x = 0.463906 * safezoneW + safezoneX;
+		y = 0.225 * safezoneH + safezoneY;
+		w = 0.0973958 * safezoneW;
+		h = 0.0439828 * safezoneH;
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+	};
 
 	class CP_exitButton: CP_RscButtonMenu
 	{
 		idc = -1;
 
-		text = "Exit"; //--- ToDo: Localize;
+		text = "Exit Game"; //--- ToDo: Localize;
 		x = 0.872396 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.0973958 * safezoneW;
@@ -420,16 +444,16 @@ class CP_GEARPANEL {
 		text = "#(argb,512,512,1)r2t(rendertarget7,1.0);";
 		x = 0.614583 * safezoneW + safezoneX;
 		y = 0.291081 * safezoneH + safezoneY;
-		w = 0.275 * safezoneW;
-		h = 0.46182 * safezoneH;
+		w = 0.273281 * safezoneW;
+		h = 0.418 * safezoneH;
 	};
 	class CP_gearPanelPiPFake: CP_RscListBox
 	{
 		idc = -1;
 		x = 0.614583 * safezoneW + safezoneX;
 		y = 0.291081 * safezoneH + safezoneY;
-		w = 0.275 * safezoneW;
-		h = 0.46182 * safezoneH;
+		w = 0.273281 * safezoneW;
+		h = 0.418 * safezoneH;
 		onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 		onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
 		onMouseButtonDown = __EVAL("['MouseButtonDown',_this] execVM '"+CPPATH+"configs\dialogs\gearPanel\camMouseMoving.sqf'");
@@ -463,7 +487,7 @@ class CP_GEARPANEL {
 		text = __EVAL(CPPATH+"configs\data\sgLogo.paa");
 		colorText[] = {1,1,1,1.8};
 	};
-	
+
 	class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 	{
 		idc = 80;
@@ -482,7 +506,7 @@ class CP_GEARPANEL {
 				w = 0.04125 * safezoneW;
 				h = 0.033 * safezoneH;
 			};
-			
+
 			class MCC_RepairText: MCC_RscText
 			{
 				idc = 82;
@@ -492,7 +516,7 @@ class CP_GEARPANEL {
 				w = 0.04125 * safezoneW;
 				h = 0.033 * safezoneH;
 			};
-			
+
 			class MCC_FuelText: MCC_RscText
 			{
 				idc = 83;
@@ -524,7 +548,7 @@ class CP_GEARPANEL {
 			{
 				idc = -1;
 
-				text =  __EVAL(MCCPATH +"data\IconAmmo.paa"); 
+				text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
 				x = 0.00515625 * safezoneW;
 				y = 0.011 * safezoneH;
 				w = 0.0154688 * safezoneW;
@@ -564,7 +588,7 @@ class CP_GEARPANEL {
 			{
 				idc = -1;
 
-				text = __EVAL(MCCPATH +"data\IconMed.paa"); 
+				text = __EVAL(MCCPATH +"data\IconMed.paa");
 				x = 0.00515625 * safezoneW;
 				y = 0.187 * safezoneH;
 				w = 0.0154688 * safezoneW;

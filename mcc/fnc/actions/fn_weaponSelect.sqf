@@ -8,6 +8,7 @@ disableSerialization;
 _key = _this select 0;
 _exit = false;
 if (vehicle player != player) exitWith {};
+showCommandingMenu "";
 
 //Clear utility stuff
 player setVariable ["MCC_dontAllowFire",false];

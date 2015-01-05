@@ -1,4 +1,4 @@
-private ["_disp","_comboBox","_index","_displayname","_array","_pic","_class"];
+private ["_disp","_comboBox","_index","_displayname","_array","_pic","_class","_ctrl","_ctrlPos"];
 disableSerialization;
 
 _disp = _this select 0;
@@ -21,18 +21,18 @@ uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 6];
 #define CP_InfoText (uiNamespace getVariable "CP_InfoText")
 
 //Disable Esc while respawn is on
-CP_disableEsc = CP_WEAPONSPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"]; 
+CP_disableEsc = CP_WEAPONSPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
-//Load primary weapons 
+//Load primary weapons
 _array = [];
-for [{_i = 0},{_i < count CP_currentWeaponArray},{_i = _i+1}] do 
+for [{_i = 0},{_i < count CP_currentWeaponArray},{_i = _i+1}] do
 	{
-		if (CP_currentLevel >= (CP_currentWeaponArray select _i)select 0) then 
+		if (CP_currentLevel >= (CP_currentWeaponArray select _i)select 0) then
 		{
 			_array set [count _array, (CP_currentWeaponArray select _i) select 1];
 		};
 	};
-_comboBox = CP_weaponsPanelPrimary; 
+_comboBox = CP_weaponsPanelPrimary;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -44,15 +44,15 @@ lbClear _comboBox;
 	} foreach _array;
 _comboBox lbSetCurSel CP_currentWeaponIndex;
 
-//Load Secondary weapons 
+//Load Secondary weapons
 _array = [];
-for [{_i = 0},{_i < count CP_currentWeaponSecArray},{_i = _i+1}] do 
+for [{_i = 0},{_i < count CP_currentWeaponSecArray},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (CP_currentWeaponSecArray select _i)select 0) then {
 			_array set [count _array, (CP_currentWeaponSecArray select _i) select 1];
 		};
 	};
-_comboBox = CP_weaponsPanelSecondary; 
+_comboBox = CP_weaponsPanelSecondary;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -66,14 +66,14 @@ _comboBox lbSetCurSel CP_currentSecWeaponIndex;
 
 //Load Handguns
 _array = [];
-for [{_i = 0},{_i < count CP_handguns},{_i = _i+1}] do 
+for [{_i = 0},{_i < count CP_handguns},{_i = _i+1}] do
 	{
-		if (CP_currentLevel >= (CP_handguns select _i)select 0) then 
+		if (CP_currentLevel >= (CP_handguns select _i)select 0) then
 		{
 			_array set [count _array, (CP_handguns select _i) select 1];
 		};
 	};
-_comboBox = CP_weaponsPanelHandgun; 
+_comboBox = CP_weaponsPanelHandgun;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -87,13 +87,13 @@ _comboBox lbSetCurSel CP_currentHandgunsIndex;
 
 //Load Items1
 _array = [];
-for [{_i = 0},{_i < count CP_currentItmes1},{_i = _i+1}] do 
+for [{_i = 0},{_i < count CP_currentItmes1},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (CP_currentItmes1 select _i)select 0) then {
 			_array set [count _array, (CP_currentItmes1 select _i) select 1];
 		};
 	};
-_comboBox = CP_weaponsPanelItem1; 
+_comboBox = CP_weaponsPanelItem1;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -107,13 +107,13 @@ _comboBox lbSetCurSel CP_currentItems1Index;
 
 //Load Items2
 _array = [];
-for [{_i = 0},{_i < count CP_currentItmes2},{_i = _i+1}] do 
+for [{_i = 0},{_i < count CP_currentItmes2},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (CP_currentItmes2 select _i)select 0) then {
 			_array set [count _array, (CP_currentItmes2 select _i) select 1];
 		};
 	};
-_comboBox = CP_weaponsPanelItem2; 
+_comboBox = CP_weaponsPanelItem2;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgMagazines">> _x);
@@ -127,13 +127,13 @@ _comboBox lbSetCurSel CP_currentItems2Index;
 
 //Load Items3
 _array = [];
-for [{_i = 0},{_i < count CP_currentItmes3},{_i = _i+1}] do 
+for [{_i = 0},{_i < count CP_currentItmes3},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (CP_currentItmes3 select _i)select 0) then {
 			_array set [count _array, (CP_currentItmes3 select _i) select 1];
 		};
 	};
-_comboBox = CP_weaponsPanelItem3; 
+_comboBox = CP_weaponsPanelItem3;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgMagazines">> _x);
@@ -147,3 +147,11 @@ _comboBox lbSetCurSel CP_currentItems3Index;
 
 CP_InfoText ctrlSetPosition [0.1 * safezoneW + safezoneX, 0.225107 * safezoneH + safezoneY, 0.161476 * safezoneW, 0.544025 * safezoneH];
 CP_InfoText ctrlCommit 1;
+
+//set gear stats position
+_ctrl = _disp displayCtrl 200;
+_ctrlPos= ctrlPosition _ctrl;
+_ctrl ctrlSetPosition [0.72 * safezoneW + safezoneX, _ctrlPos select 1,_ctrlPos select 2,_ctrlPos select 3];
+_ctrl ctrlCommit 0;
+
+[_disp] call MCC_fnc_playerStats;

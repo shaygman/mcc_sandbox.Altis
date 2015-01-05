@@ -56,7 +56,7 @@ class MCC
 		class makeBriefing	{description = "Server Only - create a Logic based briefing";};
 		class handleAddaction	{description = "Handle addactions after respawn - init";};
 		class ppEffects	{description = "Create effects to all players";};
-		class gear	{description = "Assign gear by roles";};
+		class gear	{preInit = 1; description = "Assign gear by roles";};
 	};
 
 	class ui
@@ -82,6 +82,7 @@ class MCC
 		class loadTruckUI		{description = "Open logistic truck UI";};
 		class keyDown			{description = "Handle keydown/keyUp EH";};
 		class help				{description = "Display tooltip";};
+		class playerStats		{description = "Show player stats in RS";};
 	};
 
 	class ied
@@ -228,6 +229,7 @@ class MCC
 		class construction		{description = "Constract a tactical building on the server side";};
 		class construct_base	{description = "Constract a building in base";};
 		class addRating			{description = "Adds rating to a specific player";};
+		class radioSupport		{description = "Broadcast radio support to all elements not including the broadcaster group";};
 	};
 
 	class MCCmodules
@@ -306,11 +308,15 @@ class MCC
 
 		class interaction	{description = "Interaction perent";};
 		class interactMan	{description = "Interaction with man type";};
+		class interactManClicked	{};
 		class interactIED	{description = "Interaction with IED type";};
 		class interactDoor	{description = "Interaction with door type";};
+		class DOOR_CAM_Handler	{};
+		class DoorMenuClicked	{};
 		class interactObject	{description = "Interaction with containers object";};
 		class interactUtility	{description = "Interaction with utility object";};
 		class interactSelf	{description = "Interaction with self";};
+		class interactSelfClicked	{};
 		class requestDropOff	{description = "Request player or AI to drop off a cargo group in a specific place - shold run localy on the requestor";};
 	};
 
@@ -324,6 +330,9 @@ class MCC
 
 		class vonRadio		{description = "simulate real radio comms on ArmA VON";};
 		class settingsRadio	{description = "Real radio comms settings";};
+		class VONRadioBroadcast {};
+		class VONRadiofindChannel {};
+		class VONRadioPressed {};
 	};
 
 	class medic
@@ -355,5 +364,25 @@ class MCC
 
 		class createHelper		{description = "Create ingame UI helper for interacted objects";};
 		class deleteHelper		{description = "Delete ingame UI helper for interacted objects";};
+	};
+
+	class rts
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\rts";
+		#else
+		file = "mcc\fnc\rts";
+		#endif
+
+		class boxMakeWeaponsArray {};
+		class addVirtualItemCargo {};
+		class addVirtualWeaponCargo {};
+		class addVirtualMagazineCargo {};
+		class getVirtualItemCargo {};
+		class getVirtualWeaponCargo {};
+		class getVirtualMagazineCargo {};
+		class removeVirtualItemCargo {};
+		class removeVirtualWeaponCargo {};
+		class removeVirtualMagazineCargo {};
 	};
 };

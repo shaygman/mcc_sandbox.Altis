@@ -3,7 +3,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 	idc = 80;
 	x = 0.164844 * safezoneW + safezoneX;
 	y = 0.764 * safezoneH + safezoneY;
-	w = 0.0721875 * safezoneW;
+	w = 0.085 * safezoneW;
 	h = 0.209 * safezoneH;
 	class controls
 	{
@@ -17,7 +17,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 			w = 0.04125 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
-		
+
 		class MCC_RepairText: MCC_RscText
 		{
 			idc = 82;
@@ -28,7 +28,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 			w = 0.04125 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
-		
+
 		class MCC_FuelText: MCC_RscText
 		{
 			idc = 83;
@@ -73,7 +73,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = -1;
 
-			text =  __EVAL(MCCPATH +"data\IconAmmo.paa"); 
+			text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
 			x = 0.00515598 * safezoneW;
 			y = 0.011 * safezoneH;
 			w = 0.0154688 * safezoneW;
@@ -113,7 +113,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = -1;
 
-			text = __EVAL(MCCPATH +"data\IconMed.paa"); 
+			text = __EVAL(MCCPATH +"data\IconMed.paa");
 			x = 0.00515598 * safezoneW;
 			y = 0.143 * safezoneH;
 			w = 0.0154688 * safezoneW;
@@ -122,8 +122,8 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 		class MCC_unitsPic: MCC_RscPicture
 		{
 			idc = -1;
-			text = __EVAL(MCCPATH +"data\IconMen.paa"); 
-			
+			text = __EVAL(MCCPATH +"data\IconMen.paa");
+
 			x = 0.00515598 * safezoneW;
 			y = 0.176 * safezoneH;
 			w = 0.0154688 * safezoneW;

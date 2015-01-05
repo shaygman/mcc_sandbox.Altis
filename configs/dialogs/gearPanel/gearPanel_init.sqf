@@ -29,10 +29,10 @@ uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 20];
 #define CP_InfoText (uiNamespace getVariable "CP_InfoText")
 
 CP_respawnPanelOpen = false;
-CP_gearPanelOpen	= true; 
+CP_gearPanelOpen	= true;
 
 //Disable Esc while respawn is on
-CP_disableEsc = CP_GEARPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"]; 
+CP_disableEsc = CP_GEARPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
 CP_gearPanelCommander ctrlsettext format ["Officer Level: %1 Exp: %2",OfficerLevel select 0,OfficerLevel select 1];
 CP_gearPanelAR ctrlsettext format ["Automatic Rifleman Level: %1 Exp: %2",arLevel select 0,arLevel select 1];
@@ -44,16 +44,23 @@ CP_gearPanelSpecialist ctrlsettext format ["Specialist Level: %1 Exp: %2",specia
 CP_gearPanelCrewman ctrlsettext format ["Crewman Level: %1 Exp: %2",crewLevel select 0,crewLevel select 1];
 CP_gearPanelPilot ctrlsettext format ["Pilot Level: %1 Exp: %2",pilotLevel select 0,pilotLevel select 1];
 
+//Gear stats
+[CP_GEARPANEL_IDD] call MCC_fnc_playerStats;
+
 [] spawn
 {
-	private ["_array","_disp"]; 
+	private ["_array","_disp"];
 	disableSerialization;
-	while {(str (CP_GEARPANEL_IDD displayCtrl 10) != "No control")} do 
+	while {(str (CP_GEARPANEL_IDD displayCtrl 10) != "No control")} do
 	{
+		//Time
+		_t = if ((estimatedEndServerTime - serverTime)>0) then {[estimatedEndServerTime - serverTime] call MCC_fnc_time} else {""};
+		ctrlSetText [1919,_t];
+
 		//Load available resources
 		_disp = CP_GEARPANEL_IDD;
 		_array = call compile format ["MCC_res%1",playerside];
 		{_disp displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85];
-		sleep 1; 
+		sleep 1;
 	};
 };
