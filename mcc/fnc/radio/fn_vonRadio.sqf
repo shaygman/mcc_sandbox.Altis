@@ -4,7 +4,7 @@
 private ["_text","_channelID","_fncKeyDown","_fncKeyUp","_ctrlText"];
 
 if (isDedicated) exitWith {};
-if !(missionNameSpace getVariable ["MCC_VonRadio",true]) exitWith {};
+if !(missionNameSpace getVariable ["MCC_VonRadio",false]) exitWith {};
 _text = "";
 _channelID = -1;
 

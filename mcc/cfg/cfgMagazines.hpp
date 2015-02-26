@@ -28,7 +28,6 @@ class MCC_6Rnd_12Gauge_beanBag
 	weight = 0;
 };
 
-class CA_Magazine;
 class MCC_magazine : CA_Magazine
 {
 	type = 1111;
@@ -110,7 +109,7 @@ class MCC_waterpure : MCC_antibiotics
 	picture = "\mcc_sandbox_mod\data\items\waterpure.paa";
 	model = "\A3\Structures_F_EPA\Items\Medical\WaterPurificationTablets_F.p3d";
 	value = 0.1;
-	mass = 0.1;
+	mass = 1;
 };
 
 class MCC_vitamine : MCC_antibiotics

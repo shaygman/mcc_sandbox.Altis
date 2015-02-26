@@ -23,7 +23,7 @@ class mcc_rscKeyBinds
 			x = 0.29375 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.237187 * safezoneW;
-			h = 0.403 * safezoneH;
+			h = 0.438 * safezoneH;
 		};
 
 		class keyBindstittle: MCC_RscText
@@ -51,7 +51,7 @@ class mcc_rscKeyBinds
 			action = "closeDialog 0";
 
 			x = 0.438125 * safezoneW + safezoneX;
-			y = 0.573 * safezoneH + safezoneY;
+			y = 0.608 * safezoneH + safezoneY;
 			w = 0.0825 * safezoneW;
 			h = 0.044 * safezoneH;
 		};

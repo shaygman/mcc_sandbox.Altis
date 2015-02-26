@@ -211,7 +211,7 @@ switch (true) do
 			};
 
 			//rts main box
-			_startPos = call compile format ["MCC_START_%1",playerside];
+			_startPos =  if !(isnil format ["MCC_START_%1",playerside]) then {call compile format ["MCC_START_%1",playerside]} else {[0,0,0]};
 			if ((_object isKindof "Box_FIA_Support_F") && (!(_object getVariable ["mcc_mainBoxUsed", false])) && !(isNull attachedTo _object) && (player distance _startPos < 20)) then
 			{
 				_array set [count _array,["mainBox","Open Cargo Box",format ["%1data\IconAmmo.paa",MCC_path]]];

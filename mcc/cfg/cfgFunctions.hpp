@@ -15,6 +15,7 @@ class MCC
 		file = "mcc\fnc\general";
 		#endif
 
+		class activateAddons {preInit = 1; description = "Pre init addon";};
 		class mobileRespawn	{description = "will move the respawn marker to the current position of the unit while the unit is alive, if the unit dead will move the marker to the prvious location.";};
 		class buildingPosCount	{description = "return the ammount of indexed positions in a building.";};
 		class makeUnitsArray	{description = "returns a unit array consist of all the units from the given function and simulation in format [_cfgclass,_vehicleDisplayName].";};
@@ -230,6 +231,8 @@ class MCC
 		class construct_base	{description = "Constract a building in base";};
 		class addRating			{description = "Adds rating to a specific player";};
 		class radioSupport		{description = "Broadcast radio support to all elements not including the broadcaster group";};
+		class inidbGet	{};
+		class inidbSet 	{};
 	};
 
 	class MCCmodules

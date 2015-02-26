@@ -60,20 +60,25 @@ if (tolower _ehType == "keydown") exitWith
 	{
 		case 4 :
 		{
-			MCC_interactionKey_down = true;
-			MCC_interactionKey_up = false;
-			if (missionNameSpace getVariable ["MCC_interaction",true]) then
+			//Interaction
+			if (missionNameSpace getVariable ["MCC_interaction",false]) then
 			{
+				MCC_interactionKey_down = true;
+				MCC_interactionKey_up = false;
+
 				//_null = [] execVM format["%1mcc\fnc\interaction\fn_interaction.sqf",MCC_path];
 				[] spawn MCC_fnc_interaction
-			};	//Interaction
+			};
 		};
 
 		case 6:
 		{
 			//Self
-			[player] spawn MCC_fnc_interactSelf;
-			//_null = [player] execVM format["%1mcc\fnc\interaction\fn_interactSelf.sqf",MCC_path];
+			if (missionNameSpace getVariable ["MCC_interaction",false]) then
+			{
+				[player] spawn MCC_fnc_interactSelf;
+				//_null = [player] execVM format["%1mcc\fnc\interaction\fn_interactSelf.sqf",MCC_path];
+			};
 		};
 	};
 };

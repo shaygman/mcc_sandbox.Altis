@@ -1,4 +1,4 @@
-private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight","_role","_exp","_level"];
+private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight","_role","_exp","_level","_safePos","_rad"];
 
 if (!MCC_iniDBenabled) exitWIth {systemchat "iniDB isn't running. Can't access role selection"};
 
@@ -147,7 +147,15 @@ detach player;
 detach CP_gearCam;
 CP_gearCam cameraeffect ["Terminate","back"];
 
-player setpos playerDeployPos;
+_safePos = [-500,-500,0];
+_rad = 10;
+while {str _safepos == "[-500,-500,0]"} do
+{
+	_safePos = [(playerDeployPos),_rad,30,1,0,900,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
+	_rad = _rad + 10;
+};
+
+player setpos _safePos;
 
 while {isnil "_role"} do {_role = player getvariable "CP_role";};
 

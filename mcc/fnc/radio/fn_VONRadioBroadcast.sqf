@@ -55,7 +55,8 @@ if (_channelIndex >= 0) then
 		_radioRange = _this select 1;
 		_allowed	= _this select 2;
 
-		_staticChance =  if (_allowed) then {((1 -(_speaker distance player)/_radioRange) max 0)} else {1};
+		//((1 -(_speaker distance player)/_radioRange) max 0)
+		_staticChance =  if (_allowed && (_speaker distance player < _radioRange)) then {0} else {1};
 		_helper = "logic" createVehiclelocal [0,0,0];
 		_helper attachto [player,[0,0,0],"head"];
 

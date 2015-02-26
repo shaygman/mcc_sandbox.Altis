@@ -8,13 +8,13 @@
 //Outout: <NOTHING>
 //
 // Example: [_varName1, _value1,_id], "MCC_fnc_setValue", true, false] spawn BIS_fnc_MP;
-//==============================================================================================================================================================================	
+//==============================================================================================================================================================================
 private ["_varName","_id","_value"];
-_varName 	= _this select 0;			
-_value 		= _this select 1; 
-_id			= _this select 2; 
+_varName 	= _this select 0;
+_value 		= _this select 1;
+_id			= _this select 2;
 
-if (getPlayerUID player == _id) then	
+if (getPlayerUID player == _id) then
 {
 	if (typeName _value == "STRING") then
 	{

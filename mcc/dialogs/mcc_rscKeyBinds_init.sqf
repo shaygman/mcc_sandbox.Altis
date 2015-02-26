@@ -14,3 +14,6 @@ for [{_x=8415},{_x<=8421},{_x=_x+1}]  do
 
 	ctrlsettext [_x, _text];
 };
+
+//Disable cover system client side
+ctrlEnable [8499,missionNamespace getVariable ["MCC_cover",false]];

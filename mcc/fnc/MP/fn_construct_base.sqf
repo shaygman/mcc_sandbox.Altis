@@ -2,7 +2,7 @@
 // Example:[_pos, _anchorDir , _anchorType, _BuildTime, _side]  call  MCC_fnc_construct_base;
 //==============================================================================================================================================================================
 private ["_cfgClass","_anchorType","_anchorDir","_pos","_objs","_constType","_anchor","_object","_BuildTime","_buildingObjs","_builtArray",
-         "_side","_level","_instant","_endTime"];
+         "_side","_level","_instant","_endTime","_boxName","_boxArray","_box"];
 
 
 _pos			= _this select 0;
@@ -12,6 +12,8 @@ _BuildTime		= _this select 3;
 _side			= _this select 4;
 
 _instant = if (_BuildTime <=0) then {true} else {false};
+
+//Do we have a box for our side?
 
 if (MCC_isMode) then
 {
@@ -36,6 +38,20 @@ else
 	{
 		if ((_x select 0)=="time") exitWith {_BuildTime = (_x select 1)};
 	} foreach _res;
+};
+
+if (_constType == "hq") then
+{
+	_boxName = format ["MCC_rtsMainBox%1",_side];
+	_box = missionNamespace getVariable [_boxName,objNull];
+	if !(isNull _box) then
+	{
+		_boxArray = _box getvariable ["MCC_virtual_cargo",[[],[],[],[]]];
+	}
+	else
+	{
+		_boxArray = [[],[],[],[]];
+	};
 };
 
 _buildingObjs = [
@@ -130,6 +146,7 @@ if (_constType == "hq") then
 	clearMagazineCargoGlobal _object;
 	clearWeaponCargoGlobal _object;
 	clearBackpackCargoGlobal _object;
+	_object setVariable ["MCC_virtual_cargo",_boxArray,true];
 	[_object,"Hold %1 to open cargo box"] spawn MCC_fnc_createHelper;
 };
 //_this attachTo [s1,[0,0,0]]; _this setVectorDirAndUp [[0,1,0],[0,0,1]]

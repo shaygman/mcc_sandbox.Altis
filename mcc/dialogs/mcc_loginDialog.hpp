@@ -26,7 +26,7 @@ class mcc_loginDialog
 			x = 0.29375 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.423958 * safezoneW;
-			h = 0.359 * safezoneH;
+			h = 0.394 * safezoneH;
 		};
 
 		class mcc_loginDialogFrame: MCC_RscText
@@ -37,7 +37,7 @@ class mcc_loginDialog
 			x = 0.299479 * safezoneW + safezoneX;
 			y = 0.236 * safezoneH + safezoneY;
 			w = 0.4125 * safezoneW;
-			h = 0.337 * safezoneH;
+			h = 0.372 * safezoneH;
 		};
 		class MCC_LoginTittle: MCC_RscText
 		{
@@ -103,7 +103,7 @@ class mcc_loginDialog
 
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.305208 * safezoneW + safezoneX;
-			y = 0.529 * safezoneH + safezoneY;
+			y = 0.564 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.032987 * safezoneH;
 			colorBackground[] = {0.219,0.147,0.112,1};
@@ -184,7 +184,7 @@ class mcc_loginDialog
 
 			text = "Login"; //--- ToDo: Localize;
 			x = 0.6375 * safezoneW + safezoneX;
-			y = 0.529 * safezoneH + safezoneY;
+			y = 0.564 * safezoneH + safezoneY;
 			w = 0.06875 * safezoneW;
 			h = 0.032987 * safezoneH;
 			colorBackground[] = {0.219,0.147,0.112,1};

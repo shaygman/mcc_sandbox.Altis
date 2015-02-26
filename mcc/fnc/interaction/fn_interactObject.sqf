@@ -1,7 +1,7 @@
-//==================================================================MCC_fnc_interactObject===============================================================================================
+//==================================================================MCC_fnc_interactObject======================================================================================
 // Interaction with containers object
 // Example:[player,_object]  call MCC_fnc_interactObject;
-//=================================================================================================================================================================================
+//=============================================================================================================================================================================
 #define MCC_barrels ["garbagebarrel","garbagebin","toiletbox","garbagecontainer","fieldtoilet","tabledesk","cashdesk"]
 #define MCC_grave ["grave_forest","grave_dirt","grave_rocks"]
 #define MCC_containers ["woodenbox","barreltrash","metalbarrel_f","cratesplastic","cargo20","cargo40","crates"]
@@ -16,15 +16,15 @@
 #define MCC_wreckSub ["uwreck"]
 #define MCC_ammoBox ["woodenbox","luggageheap","pallet_milboxes_f"]
 
-#define MCC_medItems ["MCC_antibiotics","MCC_painkillers","MCC_bandage","MCC_vitamine"]
-#define MCC_fuelItems ["MCC_fuelCan","MCC_fuelbot"]
-#define MCC_repairItems ["MCC_ductTape","MCC_butanetorch","MCC_oilcan","MCC_metalwire","MCC_carBat"]
-#define MCC_foodItem ["MCC_foodcontainer","MCC_cerealbox","MCC_bacon","MCC_rice"]
-#define MCC_money ["MCC_waterpure"]
+#define MCC_medItems [["MCC_antibiotics"],["MCC_painkillers"],["MCC_bandage"],["MCC_vitamine"]]
+#define MCC_fuelItems [["MCC_fuelCan"],["MCC_fuelbot"]]
+#define MCC_repairItems [["MCC_ductTape"],["MCC_butanetorch"],["MCC_oilcan"],["MCC_metalwire"],["MCC_carBat"]]
+#define MCC_foodItem [["MCC_foodcontainer"],["MCC_cerealbox"],["MCC_bacon"],["MCC_rice"]]
+#define MCC_money [["MCC_waterpure"]]
 #define MCC_fruits ["MCC_fruit1","MCC_fruit2"]
 
 private ["_object","_typeOfobject","_ctrl","_break","_searchTime","_animation","_phase","_doorTypes","_isHouse","_loadName","_waitTime","_array","_displayname",
-         "_randomChance","_loot","_wepHolder","_class","_money","_rand"];
+         "_randomChance","_loot","_wepHolder","_class","_money","_rand","_wepArray"];
 disableSerialization;
 _object 	= _this select 0;
 
@@ -70,9 +70,19 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 	if (({[_x , str _object] call BIS_fnc_inString} count MCC_ammoBox)>0) then {_typeOfobject = "ammobox"; _randomChance =[0.3,0.5,0.15,0.05,0.05,0.05,0.2]};
 	if (!isnil "_typeOfobject") then
 	{
+		//createvirtual wepholder
+		_wepHolder = "GroundWeaponHolder" createVehiclelocal getpos player;
+		_wepHolder setpos getpos player;
+		_wepHolder hideobject true;
+		player setVariable ["interactWith",_wepHolder];
+
 		//create the random loot
-		_loot = [format ["SERVER_%1",toupper worldName], "Loot Positions", format ["Object_%1",(getpos _object)], "ARRAY"] call iniDB_read;
-		//0.00273973
+		player setVariable ["MCC_readValue",nil];
+
+		//[format ["SERVER_%1",toupper worldName], "Loot Positions", format ["Object_%1",(getpos _object)], "ARRAY",player,true,[]] call MCC_fnc_inidbGet;
+		[[format ["SERVER_%1",toupper worldName], "Loot Positions", format ["Object_%1",(getpos _object)], "ARRAY",player,true,[]], "MCC_fnc_inidbGet", false, false] call BIS_fnc_MP;
+
+		while {isnil "_loot"} do {sleep 0.1;_loot = player getVariable ["MCC_readValue",nil]};
 
 		//If empty spawn check if it is time to respawn loot
 		if (count _loot == 1) then
@@ -95,7 +105,7 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 				{
 					_array = [];
 					{
-						_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture"))]];
+						_array set [count _array,_x];
 					} foreach MCC_fruits;
 
 					_loot set [count _loot, _array call BIS_fnc_selectRandom];
@@ -103,90 +113,29 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 			}
 			else
 			{
-				//Weapons
-				_array = W_BINOS + W_ATTACHMENTS + W_LAUNCHERS +W_MG + W_PISTOLS + W_RIFLES + W_SNIPER;
-				for "_i" from 0 to ((_randomChance select 0)/0.1) do
 				{
-					if (random 1 < (_randomChance select 0)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]};
-				};
+					_array = [W_BINOS + W_ATTACHMENTS + W_LAUNCHERS +W_MG + W_PISTOLS + W_RIFLES + W_SNIPER,
+					          U_MAGAZINES + U_UNDERBARREL +U_GRENADE + U_EXPLOSIVE,
+					          MCC_medItems,
+					          MCC_fuelItems,
+					          MCC_repairItems,
+					          MCC_foodItem,
+					          MCC_money] select _foreachIndex;
 
-				//Ammo
-				_array = U_MAGAZINES + U_UNDERBARREL +U_GRENADE + U_EXPLOSIVE;
-				for "_i" from 0 to ((_randomChance select 1)/0.1) do
-				{
-					if (random 1 < (_randomChance select 1)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]};
-				};
-
-				//Med
-				_array = [];
-				{
-					_array set [count _array, [_x,(getText(configFile >> "CfgMagazines" >> _x >> "displayname")),(getText(configFile >> "CfgMagazines" >> _x >> "picture"))]];
-				} foreach MCC_medItems;
-
-				for "_i" from 0 to ((_randomChance select 2)/0.1) do
-				{
-					if (random 1 < (_randomChance select 2)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]};
-				};
-
-				//fuel
-				_array = [];
-				{
-					_array set [count _array, [_x,(getText(configFile >> "CfgMagazines" >> _x >> "displayname")),(getText(configFile >> "CfgMagazines" >> _x >> "picture"))]];
-				} foreach MCC_fuelItems;
-
-				for "_i" from 0 to ((_randomChance select 3)/0.1) do
-				{
-					if (random 1 < (_randomChance select 3)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]};
-				};
-
-				//repair
-				_array = [];
-				{
-					_array set [count _array, [_x,(getText(configFile >> "CfgMagazines" >> _x >> "displayname")),(getText(configFile >> "CfgMagazines" >> _x >> "picture"))]];
-				} foreach MCC_repairItems;
-
-				for "_i" from 0 to ((_randomChance select 4)/0.1) do
-				{
-					if (random 1 < (_randomChance select 4)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]};
-				};
-
-				//food
-				_array = [];
-				{
-					_array set [count _array, [_x,(getText(configFile >> "CfgMagazines" >> _x >> "displayname")),(getText(configFile >> "CfgMagazines" >> _x >> "picture"))]];
-				} foreach MCC_foodItem;
-
-				for "_i" from 0 to ((_randomChance select 5)/0.1) do
-				{
-					if (random 1 < (_randomChance select 5)) then {_loot set [count _loot, _array call BIS_fnc_selectRandom]};
-				};
-
-				//Money
-				_money = [(MCC_money select 0),(getText(configFile >> "CfgMagazines" >> (MCC_money select 0)>> "displayname")),(getText(configFile >> "CfgMagazines" >> (MCC_money select 0) >> "picture"))];
-				for "_i" from 0 to ((_randomChance select 6)/0.1) do
-				{
-					if (random 1 < (_randomChance select 6)) then
+					if (count _array > 0) then
 					{
-						_rand = floor random 30;
-						for "_i" from 0 to _rand do
+						for "_i" from 0 to (_x/0.1) do
 						{
-							_loot set [count _loot,_money];
+							if (random 1 < _x) then {_loot set [count _loot, (_array call BIS_fnc_selectRandom) select 0]};
 						};
 					};
-				};
+				} forEach _randomChance;
 			};
 		};
 
-		//createvirtual wepholder
-		_wepHolder = "GroundWeaponHolder" createVehiclelocal getpos player;
-		_wepHolder setpos getpos player;
-		_wepHolder hideobject true;
-		player setVariable ["interactWith",_wepHolder];
-
 		for "_i" from 1 to (count _loot -1) do
 		{
-			_class = (_loot select _i) select 0;
-
+			_class = _loot select _i;
 			if (_class in (MCC_foodItem + MCC_money + MCC_fruits + MCC_repairItems + MCC_fuelItems + MCC_medItems) || ({_x select 0 == _class} count W_ATTACHMENTS)>0) then
 			{
 				_wepHolder addMagazineCargoGlobal [_class,1]
@@ -209,25 +158,16 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 		//get what left
 		_array = [];
 		_array set [0,_loot select 0];	//time stamp
-
+		_wepArray = (weaponCargo _wepHolder) + (itemCargo _wepHolder) + (magazineCargo _wepHolder);
+		if (typeName "_wepArray" != "ARRAY") then {_wepArray = []};
 		{
-			_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture")),1]];
-		} foreach (weaponCargo _wepHolder);
-
-		{
-			_array set [count _array, [_x,(getText(configFile >> "CfgWeapons" >> _x >> "displayname")),(getText(configFile >> "CfgWeapons" >> _x >> "picture")),1]];
-		} foreach (itemCargo _wepHolder);
-
-		{
-			_array set [count _array, [_x,(getText(configFile >> "CfgMagazines" >> _x >> "displayname")),(getText(configFile >> "CfgMagazines" >> _x >> "picture")),1]];
-		} foreach (magazineCargo _wepHolder);
-
+			_array set [count _array, _x];
+		} foreach _wepArray;
 		deleteVehicle _wepHolder;
 
-
-
 		//Update server
-		[format ["SERVER_%1",toupper worldName], "Loot Positions", format ["Object_%1",(getpos _object)],_array, "ARRAY"] call iniDB_write;
+		//[format ["SERVER_%1",toupper worldName], "Loot Positions", format ["Object_%1",(getpos _object)], "ARRAY",player,false,_array] call MCC_fnc_inidbGet;
+		[[format ["SERVER_%1",toupper worldName], "Loot Positions", format ["Object_%1",(getpos _object)], "ARRAY",player,false,_array], "MCC_fnc_inidbGet", false, false] call BIS_fnc_MP;
 	};
 
 };

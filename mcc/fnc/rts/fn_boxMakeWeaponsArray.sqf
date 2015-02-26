@@ -2,10 +2,11 @@
 // _weaponType Integer, type of weapon/item to cut from
 // _player Boolean is it a player or a box
 //==============================================================================================================================================================================
+disableSerialization;
 private ["_weaponType","_type","_player","_box","_returnArray","_Cfg"];
 _weaponType 	= _this select 0;
 _player 		= _this select 1;
-disableSerialization;
+
 if !(_player) then {_box = _this select 2};
 
 _returnArray = [];

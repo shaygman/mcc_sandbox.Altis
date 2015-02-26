@@ -1,10 +1,9 @@
-private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class", "_type", "_valor","_playerValor","_ctrl"];
+private ["_selectionBox","_cursel","_comboBox","_tempBox","_array","_displayArray","_displayname","_class","_pic","_index","_valor"];
 disableSerialization;
-
-private ["_selectionBox","_cursel","_comboBox","_tempBox","_array","_displayArray","_displayname","_class","_pic","_index"];
 _type			= _this select 0;
 _selectionBox 	= (_this select 1) select 0;
 _cursel 		= lbCurSel 2;
+
 
 //Don't have the box exit
 _tempBox = missionNamespace getVariable [format ["MCC_rtsMainBox%1",playerSide], objNull];
@@ -179,6 +178,7 @@ switch (_type) do
 };
 
 {
+	disableSerialization;
 	_ctrl = _x;
 	_array = [_cursel, _ctrl==0, _tempBox] call MCC_fnc_boxMakeWeaponsArray;
 	_displayArray = [];

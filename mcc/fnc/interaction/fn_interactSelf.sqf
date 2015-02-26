@@ -16,6 +16,12 @@ if (!dialog) exitWith
 			  ["build","Construct",format["%1data\IconRepair.paa",MCC_path]],
 			  ["close","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"]];
 
+	//If MCC medic system off
+	if !(missionNamespace getVariable ["MCC_medicSystemEnabled",false]) then
+	{
+		_array set [1,-1];
+	};
+
 	if (leader player != player) then
 	{
 		_array set [3,-1];

@@ -23,6 +23,11 @@ class Module_F: Logic
 #include "modules\radio.hpp"
 #include "modules\medicSystem.hpp"
 
+class Box_NATO_Ammo_F;
+#include "ammoBox\medicBox.hpp"
+#include "ammoBox\tacticalItemsBox.hpp"
+#include "ammoBox\miscItemsBox.hpp"
+
 class Land_Ammobox_rounds_F;
 class MCC_ammoBox : Land_Ammobox_rounds_F
 {

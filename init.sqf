@@ -41,7 +41,7 @@ if (!isMultiplayer && !MCC_isMode) then
 //--------------------- Who can access MCC leave "all" for everbody --------------------------------
 //Should be MCC_allowedPlayers = ["12321","1321123"];
 //Host or server admin will always have access
-if (isnil "MCC_allowedPlayers") then {MCC_allowedPlayers = ["all"]};
+//if (isnil "MCC_allowedPlayers") then {MCC_allowedPlayers = ["all"]};
 
 //----------------------General settings---------------------------------------
 //Default AI skill
@@ -753,6 +753,18 @@ if ( isServer ) then
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 
+	//Add addons to curator
+	private ["_cfg","_name","_newAddons"];
+	_cfg = (configFile >> "CfgPatches");
+	_newAddons = [];
+
+	for "_i" from 0 to ((count _cfg) - 1) do
+	{
+		_name = configName (_cfg select _i);
+		if (! (["a3_", _name] call BIS_fnc_inString)) then {_newAddons pushBack _name};
+	};
+	if (count _newAddons > 0) then {_dummy addCuratorAddons _newAddons};
+
 	//west
 	MCC_dummyLogicGroup = createGroup west;
 	_dummy = MCC_dummyLogicGroup createunit ["SideBLUFOR_F", [0, 90, 90],[],0.5,"NONE"];	//Logic Server
@@ -833,7 +845,7 @@ if ( isServer ) then
 		//get allowed players from iniDB
 		if (count _names == 0) then
 		{
-			["SERVER_misc", "allowedPlayers", "MCC_allowedPlayers",MCC_allowedPlayers, "ARRAY"] call iniDB_write;
+			["SERVER_misc", "allowedPlayers", "MCC_allowedPlayers", missionNameSpace getVariable ["MCC_allowedPlayers",[]], "ARRAY"] call iniDB_write;
 		}
 		else
 		{

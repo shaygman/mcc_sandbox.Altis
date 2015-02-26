@@ -440,6 +440,10 @@ class MCC_RscListbox
 	color[] = {1,1,1,1};
 	colorBackground[] = {0,0,0,0.3};
 	colorDisabled[] = {1,1,1,0.25};
+	colorPictudeDisabled[] = {1,1,1,0.25};
+	colorPicture[] = {1,1,1,1};
+	colorPictureDisabled[] = {1,1,1,1};
+	colorPictureSelected[] = {1,1,1,1};
 	colorScrollbar[] = {1,0,0,0};
 	colorSelect2[] = {0,0,0,1};
 	colorSelect[] = {0,0,0,1};
@@ -1170,7 +1174,7 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 	x = 0.29375 * safezoneW + safezoneX;
 	y = 0.225 * safezoneH + safezoneY;
 	w = 0.216563 * safezoneW;
-	h = 0.29 * safezoneH;
+	h = 0.33 * safezoneH;
 	class controls
 	{
 		class MCC_keyBindsOpenMCCtext: MCC_RscText
@@ -1213,16 +1217,6 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 			w = 0.0973958 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
-		class MCC_keyBindsMCCinteractiontext: MCC_RscText
-		{
-			idc = -1;
-
-			text = "Interaction Key:"; //--- ToDo: Localize;
-			x = 0.00515597 * safezoneW;
-			y = 0.209 * safezoneH;
-			w = 0.0973958 * safezoneW;
-			h = 0.0219914 * safezoneH;
-		};
 		class MCC_keyBindssSQLPDAtext: MCC_RscText
 		{
 			idc = -1;
@@ -1233,6 +1227,16 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 			w = 0.0973958 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
+		class MCC_keyBindsMCCinteractiontext: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Interaction Key:"; //--- ToDo: Localize;
+			x = 0.00515597 * safezoneW;
+			y = 0.209 * safezoneH;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
 		class MCC_keyBindsMCCinteractionSelftext: MCC_RscText
 		{
 			idc = -1;
@@ -1240,6 +1244,16 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 			text = "Interaction Self:"; //--- ToDo: Localize;
 			x = 0.00515597 * safezoneW;
 			y = 0.242 * safezoneH;
+			w = 0.0973958 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_coverSystemClientText: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Cover System:"; //--- ToDo: Localize;
+			x = 0.00515597 * safezoneW;
+			y = 0.275 * safezoneH;
 			w = 0.0973958 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
@@ -1325,6 +1339,19 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 
 			x = 0.108281 * safezoneW;
 			y = 0.242 * safezoneH;
+			w = 0.103125 * safezoneW;
+			h = 0.0219914 * safezoneH;
+		};
+		class MCC_coverSystemClientButton: MCC_RscButton
+		{
+			idc = 8499;
+			tooltip = "Click to disable client side";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			text = "Disabled"; //--- ToDo: Localize;
+			onMouseButtonUp =  __EVAL("[_this,7] execVM '"+MCCPATH+"mcc\general_scripts\mission_settings\keyBinds.sqf'");
+
+			x = 0.108281 * safezoneW;
+			y = 0.275 * safezoneH;
 			w = 0.103125 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};

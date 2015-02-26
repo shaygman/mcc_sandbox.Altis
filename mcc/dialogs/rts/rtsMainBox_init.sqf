@@ -1,6 +1,6 @@
 private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_class","_boxName","_tempBox","_displayArray","_sel"];
-disableSerialization;
 waituntil {dialog};
+disableSerialization;
 
 _mccdialog = _this select 0;
 uiNamespace setVariable ["MCC_rtsMainBox", _mccdialog];
@@ -38,6 +38,7 @@ _displayArray = [];
 _sel   = lbCurSel 2;
 
 {
+	disableSerialization;
 	_array = [_sel, _x==0, _tempBox] call MCC_fnc_boxMakeWeaponsArray;
 	_comboBox = _mccdialog displayCtrl _x;
 	lbClear _comboBox;
@@ -80,11 +81,11 @@ _sel   = lbCurSel 2;
 _mccdialog spawn
 {
 	private ["_array"];
+	disableSerialization;
 
 	while {(str (_this displayCtrl 0) != "No control")} do
 	{
 		//Load available resources
-		disableSerialization;
 		_array = call compile format ["MCC_res%1",playerside];
 		{_this displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85];
 	};

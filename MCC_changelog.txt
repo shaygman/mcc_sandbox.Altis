@@ -1,3 +1,19 @@
+Change log r13:
+- Fixed: Game crush after key binds.
+- Fixed: Disabling MCC's interaction doesn't disable MCC self interaction.
+- Fixed: Laser designated artillery in the commander console didn't worked well. 
+- Fixed: Resticting MCC access didn't worked well via Access Module or via inidb server_misc file. 
+- Fixed: Pictures in MCC and VAS listbox appears black. 
+- Added:MCC Medical items box
+- Added: MCC Tactical items box
+- Added: MCC Misc items box
+- Added: MCC Zeus will automaticlly detect and load addons
+
+TODO- interaction keys works without the module
+TODO - Zeus screen go black after respawn.
+TODD - add artilllery sounds and video
+
+
 Change log r12:
 Added: Radio System - NEW
 - Adds simulated military radio sounds (such as ACRE/TFR) to built in VON , the radio will become scramble as the players move away from each others. 
@@ -19,19 +35,21 @@ Added: Pick up kit - NEW
 - Used for PvP match where you want to disable players inventory. 
 
 Added: Quick Weapon change - NEW
-- Switch weapons using the 1-5 keys. Needed for the ammo-box feature.
+- Switch weapons using the Shift + 1-5 keys.
 	1: Primary Weapon/Handgun
 	2: Launcher
-	3: Grenades TODO roll grenade
+	3: Grenades
 	4: Utility/Explosives
-- Added: Quick drop of explosives and utility
+- Added: Quick drop of explosives and utility pressing the 4 key will cycle between available ordnance and utilities. Pressing the left mouse button will deploy them pressing the right mouse button will detonate it. 
+- Added: Grenade throw, 3 different grenades throws: shallow, normal and roll. Pressing the Shift + 3 key will cycle between available grenades. Pressing the right mouse button will tilt the grenade icon where horizontal grenade means roll, 45 degree means shallow throw and full up position means normal throw. 
+Use the grenade icon to aim and press left mouse button to throw. 
 - Additional params:
 	MCC_quickWeaponChange - Enable/Disable quick weapon change.
 
-- Added: Grenade throw	
+	
 Added: Personal Ammo-Boxes - NEW
-- Added: Personal ammo-boxes that can be carried and dropped using the 4 key.
-- Players can approach the ammo box and press the interaction key to resupply ammo for their handgun, launchers and rifles. 
+- Added: Personal ammo-boxes that can be carried and dropped using the Shift +4 key 
+- Any player can approach the ammo box and hold the interaction key to resupply ammo for their handgun, launchers and rifles. 
 - Each box have limited supply and will be deleted once depleted. 
 - Used for PvP match where you want to disable players inventory. 
 - Added to the rifleman role in role selection.
@@ -41,55 +59,57 @@ Added: Logistics to helicopters - NEW
 - Helicopters can sling load one crate at a time and deliver it around the battlefield.
 - Added: Big supply crates for big transport helicopters. Big supply crates are equal to 4 regular supply crates. 
 - Added: Taru helicopter's pilots can purchase pods at the HQ.
-- Added: Gain XP from logsitics
-- Known Issue: With helicopters while slingloading a supply crate to a construction site when the crate hit the ground while slingloaded it may break the game, WORKAROUND - release the crate before it touches the ground.
+- Added:   XP from logistics
 
 Added: Interact self - NEW
-- Added: with interact self (Ctrl + interaction key by default) players can heal and inspect themself (MCC medical system), Spot enemies, call support and order the construction of FOB exc. 
+- Added: with interact self (Ctrl + interaction key by default) players can heal and inspect themselves (MCC medical system), Spot enemies, call support and order the construction of FOB ex. 
 
-Added: Medical system - NEW
-New modular and scalable medical system (need to place the MCC medical system module) The medical system is built around blood level where a player loose alot of blood he will eventually die. including:
-- Complex or plain: in complex mod players will need more items to heal such as epipen, bandages, first aid kits, saline bags and more. Where in non-complex option players will use ArmA 3 default gear such as FAIK and Medikits.
-- Medical system will work on AI and players where AI will sometimes regain consciousness so varifying a kill is now needed. 
+Added: Medical system - NEW WIP
+New modular and scalable medical system (need to place the MCC medical system module) the medical system is built around blood level where a player loses a lot of blood he will eventually die. 
+Features:
+- Complex or plain: in complex mod players will need more items to heal such as epipen, bandages, first aid kits, saline bags and more. Where in the non-complex mod, players will use ArmA 3 default gear such as FAIK and Medikits.
+- Medical system will work on AI and players where AI will sometimes regain consciousness so verifying a kill is now needed. 
 - Bleeding, players and AI can bleed to death either while alive or unconscious, bandaging will only stop the bleeding but will not regain blood level. Blood level will regain over long periods of time and can be increased to a degree by addressing saline transfusions. 
 - Unconscious effects for players and AI. 
-- Bleeding effects vary from blury vision, lower stamina, fading and color blind - depends on the amount of blood lost. 
+- Bleeding effects vary from blurry vision, lower stamina, fading and color blind - depends on the amount of blood lost. 
 - Body armor - mission maker can adjust the effectiveness of body armors by adjusting it effects on players.  
 - Team kill punish - Where a player got killed by a friendly player he can ask to punish that player - if mission maker allows. 
-- Cas evac - since blood loose regain slowly it is vital to get the mortaly wounded players to the MCC side start location to fasten the blood regain and heal major wounds. 
+- MEDIVAC - since blood loose regain slowly it is vital to get the mortally wounded players to the MCC side start location to fasten the blood regain and heal major wounds.
 
-MCC_medicSystemEnabled boolean - global
-MCC_medicComplex = true;
-MCC_medicBleedingEnabled = true;
-MCC_medicBleedingTime - integer 200
-MCC_medicDamageCoef 0.1-1 0.9
-MCC_medicXPmesseges boolean
-MCC_medicPunishTK	boolean
+Added: Shared cargo and valor system - NEW
+As part of the expending WIP RTS element of the commander console new buildings have been added such as: Medical area, Medical Lab, Diesel generator, solar power panels' exc. So far you can only fool around by building these buildings as of now they aren't functional yet. 
+But in the basic version of the H.Q (Start location) and the 2 upgraded version of it (Radio tower and Sat-coms) I've added shared cargo box in the entrance to the HQ. 
+The shared cargo box allows players to drop items they don't need or resources they have found using the survival option to gain valor points and resources points. 
+Valor points can be used to withdraw items from the shared cargo but there is a catch, withdrawing an item will always cost more valor points then deposit it so at the end players are encouraged to give to the community more then they take.
+ KEEP IN MIND this is a WIP and this is my playground so if you don't like it just skip it and never activate the survival option. For those who do want to explore it keep in mind that this is my take on ArmA 3 campaign and according to my Interpretation I would love to make a resistance game mode where a group of players struggle with minimum gear to regain resources and control over the island while fighting Opfor AI and rival players driven faction.  
 
-
-
-- fixed: Commander console artillery laser targets and multiple rounds 
-- fixed: Fast rope bugs since Helicopters DLC. 
-- fixed: Transperent zone when first creating a zone. 
-- fixed: Access rights module duplicate MCC and didn't work for admins.
-- fixed: Cache will no longer by default on when spawning units not in zone.
-- fixed: Mission Genrator caching and delayed spawning by alawys on - set if you want it on or off from Spawn menu. 
-- fixed: Cover only worked when enabling cover UI.
-- fixed: Cover sitting animation get stuck. 
-- fixed: Atmoshphere brushes fog disapper. 
-- fixed: Tauro helicopter not able to sling load after attaching a pod. 
-- Changed: Cover module changed to Mechanic module so you can define more MCC players' mechanics there
-- Chnaged: MCC GAIA settings module include skill for AI from 0-1 instead of rookie/med/vetran
-- Changed: MCC interaction key while close to vehicle will quickly get you inside empty position in the vehicle (driver first) while holding the interaction will
-let you choose where you want to mount the vehicle. 
-- Changed: Limted the draggable object weight to 500 k/g
+- Added: Switch cover system off on client side. 
 - Added: Role selection to MCC settings module
 - Added: Survive mod to MCC settings (mechanics) module
 - Added: while role selection is active players won't be able to disassemble static weapons. 
-- Fixed: Some UI text that wasn't scalable with changing interface size - still it is recommanded to use MCC with interface size - small. 
 - Added: MCC_ingameUI - turn off for no in-game UI such as above IED: available in the mission settings and the MCC Settings (Mechanics) module. 
+- Added: Max load, Weight and armor value to the uniform selection in roles selection.
+
+- fixed: Commander console artillery laser targets and multiple rounds 
+- fixed: Fast rope bugs since Helicopters DLC. 
+- fixed: Transparent zone when first creating a zone. 
+- fixed: Access rights module duplicate MCC and didn't work for admins.
+- fixed: Cache will no longer by default on when spawning units not in zone.
+- fixed: Mission Generator caching and delayed spawning by always on - set if you want it on or off from Spawn menu. 
+- fixed: Cover only worked when enabling cover UI.
+- fixed: Cover sitting animation get stuck. 
+- fixed: Atmosphere brushes fog disappear. 
+- fixed: Tauro helicopter not able to sling load after attaching a pod. 
+- Fixed: Some UI text that wasn't scalable with changing interface size - still it is recommended to use MCC with interface size - small. 
+
+- Changed: Cover module changed to Mechanic module so you can define more MCC players' mechanics there
+- Changed: MCC GAIA settings module include skill for AI from 0-1 instead of rookie/med/veteran
+- Changed: MCC interaction key while close to vehicle will quickly get you inside empty position in the vehicle (driver first) while holding the interaction will
+let you choose where you want to mount the vehicle. 
+- Changed: Limited the draggable object weight to 500 k/g
 - Changed: Artillery spread for Commander Console: "PRECISE" = 5m, "TIGHT"=50m, "SCATTERED" =100m, "WIDE" = 150
-- Added: Max load, Weight and armor value to the uniform selection in roles selection. 
+
+
 
 TODO
 Fix: FOB west/east
