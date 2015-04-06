@@ -40,12 +40,11 @@ private ["_count", "_list", "_list2", "_units", "_i"];
 _statics = [(nearestObjects [_position,["StaticWeapon"], _radius]), {(_x iskindof "StaticWeapon") && (isnull(assignedGunner (_x))) && {[(position _x),_zone] CALL GAIA_fnc_isPositionInMarker} && {(_x emptypositions "Gunner" > 0)}}] call BIS_fnc_conditionalSelect;
 //[(position PLAYER),"1"] CALL GAIA_fnc_isPositionInMarker
 //_buildings = _position nearObjects ["building",_radius];
+_zone	 = (((_group) getVariable ["GAIA_zone_intend",[]])select 0);
+
 _buildings = [(_position nearObjects ["building",_radius]), {[(position _x),_zone] CALL GAIA_fnc_isPositionInMarker}] call BIS_fnc_conditionalSelect;
 _units = units _group;
 _count = count _units;
-
-
-_zone	 = (((_group) getVariable ["GAIA_zone_intend",[]])select 0);
 
 if !(isnil("_Zone")) then
 {

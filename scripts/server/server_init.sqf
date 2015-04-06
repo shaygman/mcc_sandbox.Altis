@@ -21,13 +21,13 @@ publicVariable "CP_maxSquads";
 if (MCC_iniDBenabled) then
 {
 	CP_defaultGroups = ["SERVER_misc", "RoleSelectionDefinse", "CP_defaultGroups", "ARRAY"] call iniDB_read;
-	
+
 	if (count CP_defaultGroups == 0) then
 	{
 		CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"];
 		 ["SERVER_misc", "RoleSelectionDefinse", "CP_defaultGroups",CP_defaultGroups, "ARRAY"] call iniDB_write;
 	};
-	
+
 	publicVariable "CP_defaultGroups";
 };
 
@@ -41,11 +41,11 @@ if (count CP_westGroups == 0) then
 	{												//West
 		_group = createGroup west;
 		waituntil {!isnil "_group"};
-		_group setVariable ["MCC_CPGroup",true,true]; 
+		_group setVariable ["MCC_CPGroup",true,true];
 		_group setVariable ["name",_x,true];
 		CP_westGroups set [_forEachIndex,[_group,_x]];
 	} foreach CP_defaultGroups;
-	
+
 	publicvariable "CP_westGroups";
 };
 
@@ -54,11 +54,11 @@ if (count CP_eastGroups == 0) then
 	{												//East
 		_group = createGroup east;
 		waituntil {!isnil "_group"};
-		_group setVariable ["MCC_CPGroup",true,true]; 
+		_group setVariable ["MCC_CPGroup",true,true];
 		_group setVariable ["name",_x,true];
 		CP_eastGroups set [_forEachIndex,[_group,_x]];
 	} foreach CP_defaultGroups;
-	
+
 	publicvariable "CP_eastGroups";
 };
 
@@ -67,11 +67,11 @@ if (count CP_guarGroups == 0) then
 	{												//East
 		_group = createGroup resistance;
 		waituntil {!isnil "_group"};
-		_group setVariable ["MCC_CPGroup",true,true]; 
+		_group setVariable ["MCC_CPGroup",true,true];
 		_group setVariable ["name",_x,true];
 		CP_guarGroups set [_forEachIndex,[_group,_x]];
 	} foreach CP_defaultGroups;
-	
+
 	publicvariable "CP_guarGroups";
 };
 
@@ -81,7 +81,7 @@ if (count CP_guarGroups == 0) then
 			_sideTickets = format ["MCC_tickets%1", _x];
 			_tickets = missionNameSpace getVariable [_sideTickets,200];
 			[_x, _tickets] call BIS_fnc_respawnTickets;
-		} foreach [west, east, resistance]; 
+		} foreach [west, east, resistance];
 	};
 
 //******************************************************************************************************************************
@@ -105,11 +105,11 @@ if (count CP_handguns == 0) then
 					[12,"hgun_ACPC2_F",["9Rnd_45ACP_Mag",3]],
 					[16,"hgun_Pistol_heavy_02_F",["6Rnd_45ACP_Cylinder",3]],
 					[20,"hgun_Pistol_heavy_01_F",["11Rnd_45ACP_Mag",3]]
-					]; 
-					
+					];
+
 	 ["SERVER_misc", "handguns", "CP_handguns",CP_handguns, "ARRAY"] call iniDB_write;
-}; 
-publicvariable "CP_handguns"; 		
+};
+publicvariable "CP_handguns";
 
 
 //------------------------------------------------------------------------------------------------------------------------------

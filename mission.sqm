@@ -47,7 +47,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=56;
+		items=57;
 		class Item0
 		{
 			side="WEST";
@@ -2481,6 +2481,27 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					init="this setVariable [""MCC_runwayDis"",400];this setVariable [""MCC_runwayName"",""AAC Airfield""];this setVariable [""MCC_runwayAG"",false];this setVariable [""MCC_runwayCircles"",true];this setVariable [""MCC_runwaySide"",-1];";
+				};
+			};
+		};
+		class Item56
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14876.482,17.942417,16393.186};
+					id=151;
+					side="LOGIC";
+					vehicle="HeadlessClient_F";
+					forceHeadlessClient=1;
+					text="MCCHeadlessClient";
+					player="PLAY CDG";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;					
 				};
 			};
 		};

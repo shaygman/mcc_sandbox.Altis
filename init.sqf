@@ -52,13 +52,13 @@ if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5};
 
 //---------------------Name Tags---------------------------------------------------
 // Show friendly name tags and vhicles' crew info - default - off
-if (isnil "MCC_nameTags") then {MCC_nameTags = false};
+//MCC_nameTags = false;
 
 //-------------------- Save Gear --------------------------------------------------
-if (isnil "MCC_saveGear") then {MCC_saveGear = false};
+//MCC_saveGear = false;
 
 //--------------------Gain XP (in role selection)--------------------------------
-if (isnil "CP_gainXP") then {CP_gainXP = true};						//Gain XP from killing, leading, healing, driving, flying or completing objectives?
+//CP_gainXP = true;						//Gain XP from killing, leading, healing, driving, flying or completing objectives?
 if (isnil "CP_XPperLevel") then {CP_XPperLevel = 3000};				//Xp needed for each level, Exp will raise by 5% each level
 if (isnil "CP_expNotifications") then {CP_expNotifications = true};	//Show Exp gaining notifications
 
@@ -92,23 +92,23 @@ if (isnil "MCC_resGUER") then {MCC_resGUER = [500,500,200,200,100]};
 
 //--------------------Screens -------------------------------------------------------
 //Allow start location dialog on JIP or after respawn
-if (isnil "MCC_openRespawnMenu") then {MCC_openRespawnMenu = true}; //false - disabled
+//MCC_openRespawnMenu = true; //false - disabled
 
 //allow SQL PDA
-if (isnil "MCC_allowsqlPDA") then {MCC_allowsqlPDA = true}; //false - disabled
+//MCC_allowsqlPDA = true; //false - disabled
 
 //allow Console
-if (isnil "MCC_allowConsole") then {MCC_allowConsole = true}; //false - disabled
+//MCC_allowConsole = true; //false - disabled
 
 //allow squad menu
-if (isnil "MCC_allowSquadDialog") then {MCC_allowSquadDialog = true}; //false - disabled
-if (isnil "MCC_allowSquadDialogCamera") then {MCC_allowSquadDialogCamera = true}; //Allow camera on squad dialog
+//MCC_allowSquadDialog = true; //false - disabled
+//MCC_allowSquadDialogCamera = true; //Allow camera on squad dialog
 
 //allow MCC logistics
-if (isnil "MCC_allowlogistics") then {MCC_allowlogistics = true};  //false - disabled
+//MCC_allowlogistics = true;  //false - disabled
 
 //allow MCC interaction
-if (isnil "MCC_interaction") then {MCC_interaction = true};  //false - disabled
+//MCC_interaction = true;  //false - disabled
 
 //Teleport 2 Team
 if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- AfterRespawn, 3-Always
@@ -127,10 +127,11 @@ if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1};
 //============== Medic System ====================================
 if !(MCC_isMode) then
 {
+		MCC_interaction = true;
 		MCC_medicSystemEnabled = true;
 		//MCC_medicComplex = true;
 		MCC_medicBleedingEnabled = true;
-		MCC_medicDamageCoef = 0.7;
+		MCC_medicDamageCoef = 0.9;
 
 		[] spawn MCC_fnc_initMedic;
 };
@@ -204,8 +205,8 @@ mccPresetsVehicle = [
 					,['Set Empty (Cargo)', 'clearMagazineCargoGlobal _this; clearWeaponCargoGlobal _this; clearItemCargoGlobal _this;']
 					,['Set Locked', '_this setVehicleLock "LOCKED";']
 					,['Clear Cargo', 'clearMagazineCargo _this; clearWeaponCargo _this; clearItemCargo _this;']
-					,['Add Crew (UAV)','createVehicleCrew _this;group _this setvariable ["MCC_canbecontrolled",true,true];']
-					,['Add Cargo Units', '[_this] call MCC_fnc_populateVehicle;']
+					,['Add Crew (UAV)','if (isServer) then {createVehicleCrew _this;group _this setvariable ["MCC_canbecontrolled",true,true];}']
+					,['Add Cargo Units', 'if (isServer) then {[_this] call MCC_fnc_populateVehicle};']
 					,['ECM - can jamm IED','if (isServer) then {_this setvariable ["MCC_ECM",true,true]};']
 					,['Logistic Vehicle - create FOB','_this addAction ["<t color=""#99FF00"">Create FOB </t>", "'+MCC_path+'scripts\player\createFOB.sqf",[],6,false, false,"teamSwitch","(driver vehicle _target == _this) && (speed (vehicle _target) == 0)"];']
 					,['Disable Simulation','_this enableSimulation false;']
@@ -225,6 +226,7 @@ mccPresetsVehicle = [
 					,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "'+MCC_path+'VAS\open.sqf"];']
 					,['Virtual Arsenal (BIS)', 'if (isServer) then {["AmmoboxInit",[_this,true]] call BIS_fnc_arsenal};']
 					,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
+					,['God mod', '_this allowDamage false;']
 					,['', '']
 					,['======= Effects =======','']
 					,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
@@ -248,6 +250,7 @@ mccPresetsUnits = [
 					,['Remove All Items', 'removeAllItems _this;']
 					,['Unconscious (MCC medic system)', '[_this,_this] spawn MCC_fnc_unconscious']
 					,['Can be controled using MCC Console', '(group _this) setvariable ["MCC_canbecontrolled",true,true];']
+					,['God mod', '_this allowDamage false;']
 					,['', '']
 					,['======= General =======','']
 					,['Kill Unit', '_this setdamage 1;']
@@ -273,6 +276,7 @@ mccPresetsObjects = [
 					,['Virtual Ammobox System (VAS)', '_this addAction ["<t color=""#ff1111"">Virtual Ammobox </t>", "'+MCC_path+'VAS\open.sqf"];']
 					,['Virtual Arsenal (BIS)', '["AmmoboxInit",[_this,true]] call BIS_fnc_arsenal']
 					,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
+					,['God mod', '_this allowDamage false;']
 					,['', '']
 					,['======= Effects =======','']
 					,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
@@ -332,14 +336,19 @@ if (isNil "MCC_isLocalHC" ) then
 };
 
 
-if ( !(isServer) && !(hasInterface) ) then
+if (!hasInterface && !isServer) then
 {
-    // is HC
-    MCC_isHC = true;
-    MCC_isLocalHC = true;
-    MCC_ownerHC = player;
-    publicVariable "MCC_isHC";
-    publicVariable "MCC_ownerHC";
+	0 spawn
+	{
+	    // is HC
+	    waituntil {alive player};
+	    MCC_isHC = true;
+	    MCC_isLocalHC = true;
+	    MCC_ownerHC = player;
+
+	    publicVariable "MCC_isHC";
+	    publicVariable "MCC_ownerHC";
+	 };
 };
 
 
@@ -798,7 +807,6 @@ if ( isServer ) then
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 
-
 	//create group for dead players
 	MCC_deadGroup = creategroup civilian;
 
@@ -1104,7 +1112,7 @@ CP_classesPic = [	MCC_path +"configs\data\Officer.paa",
 //******************************************************************************************************************************
 
 //=============================Sync with server when JIP======================
-waituntil {alive player};
+if (hasInterface && !isDedicated) then {waituntil {alive player}};
 
 MCC_groupGenGroupStatus = [west,east,resistance,civilian];
 
@@ -1211,6 +1219,29 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 
 	//Handle Name Tags
 	[] spawn MCC_NameTagsPlayerLoop;
+
+	//============ engineer data ========================
+	0 spawn
+	{
+		private ["_answer"];
+		if ((getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMines") == 1)&& (profileNamespace getVariable ["MCC_tutorialEOD",true])) then	//Check if is engineer
+		{
+			_answer = ["<t font='TahomaB'>You have just been assigned as Engineer/EOD</t>
+				<br/><img size='8' img image='\a3\missions_f\data\img\mp_coop_m01_overview_ca.paa' />
+				<br/>You can disarm mines and improvised explosive devices (IED).
+				<br/>To make sure the IED isn't Radio Controlled IED (RCIED), scan for enemy's spotters that can trigger the IED and neutralize them first.
+				<br/>Approach the IED carefully (no faster then a slow crawl), once you get close to it you either have the option to disarm it. Or you can place a demo charge to set off a controlled explosion.
+				<br/>You can use Electronic Countermeasure Vehicles (ECM) to block RCIEDs.
+				<br/><br/>Do you want to show this message in the future?","MCC Engineer/EOD","No","Yes"] call BIS_fnc_guiMessage;
+
+				waituntil {!isnil "_answer"};
+
+				if (_answer) exitWith
+				{
+					profileNamespace setVariable ["MCC_tutorialEOD",false];
+				};
+		};
+	};
 };
 
 //===============Delete Groups (server and HC client only)====================
@@ -1289,20 +1320,9 @@ if (isnil "MCC_terrainPref") then
 	MCC_terrainPref = [1,5];
 	profileNamespace setVariable ["MCC_terrainPref", MCC_terrainPref];
 };
-//============ engineer data ========================
-if (getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMines") == 1) then	//Check if is engineer
-{
-	["<t font='TahomaB'>You have just been assigned as Engineer/EOD</t>
-		<br/><img size='8' img image='\a3\missions_f\data\img\mp_coop_m01_overview_ca.paa' />
-		<br/>You can disarm mines and improvised explosive devices (IED).
-		<br/>To make sure the IED isn't Radio Controlled IED (RCIED), scan for enemy's spotters that can trigger the IED and neutralize them first.
-		<br/>Approach the IED carefully (no faster then a slow crawl), once you get close to it you either have the option to disarm it. Or you can place a demo charge to set off a controlled explosion.
-		<br/>You can use Electronic Countermeasure Vehicles (ECM) to block RCIEDs","MCC Engineer/EOD",nil,false] spawn BIS_fnc_guiMessage;
-};
-
 
 //============= Start public EH locally ===========================
-if(CP_activated && !isDedicated) then
+if(CP_activated && !isDedicated && !MCC_isLocalHC) then
 {
 	_null=[] execVM MCC_path + "scripts\player\player_init.sqf"
 };

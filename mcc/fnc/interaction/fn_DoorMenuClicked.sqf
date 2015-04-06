@@ -32,14 +32,14 @@ switch (_ctrlData) do
 		player removeMagazine MCC_CHARGE;
 		["Placing Charge",4] call MCC_fnc_interactProgress;
 
-		_n = 2;
+		_n = 0;
 		_position = ATLtoASL(player modelToworld [0,_n,1.5]);
 		while {!lineIntersects [ATLtoASL(player modelToworld [0,0,1]), _position]} do
 		{
-			_n = _n - 0.1;
+			_n = _n + 0.1;
 			_position = ATLtoASL(player modelToworld [0,_n,1]);
 		};
-		_position = ATLtoASL(player modelToworld [0,_n-0.9,1]);
+		_position = ATLtoASL(player modelToworld [0,_n-0.15,1]);
 		_c4 = "ClaymoreDirectionalMine_Remote_Ammo_Scripted" createVehicle ATLtoASL _position;
 		_c4 setpos aslToAtl _position;
 		_c4 setdir (getdir player);

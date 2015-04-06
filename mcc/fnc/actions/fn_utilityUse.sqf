@@ -2,11 +2,13 @@
 //use utility
 // Example: [] call MCC_fnc_utilityUse;
 //===========================================================================================================================================================================
-private ["_utility","_vel","_dir","_handPos","_item","_mag","_itemClass","_charges","_cfg","_putCfg","_putCfgArray","_putCfgName","_magMuzzle"];
+private ["_utility","_vel","_dir","_handPos","_item","_mag","_itemClass","_charges","_cfg","_putCfg","_putCfgArray","_putCfgName","_magMuzzle","_satchels"];
 _primaryMod = _this select 0;
 _mag 		= (player getVariable ["MCC_utilityItem",["",""]]) select 0;
 _itemClass	= (player getVariable ["MCC_utilityItem",["",""]]) select 1;
 
+_satchels = ["DemoCharge_Remote_Ammo_Scripted","SatchelCharge_Remote_Ammo_Scripted","IEDUrbanBig_Remote_Ammo","IEDLandBig_Remote_Ammo",
+			"ATMine_Range_Ammo","IEDUrbanSmall_Remote_Ammo","IEDLandSmall_Remote_Ammo"];
 if (_mag == "" && _primaryMod) exitWith {};
 
 if (!_primaryMod) exitWith
@@ -27,8 +29,45 @@ player playactionNow "putdown";
 sleep 0.3;
 _handPos = player selectionPosition "LeftHand";
 _utility = _itemClass createvehicle (player modelToWorld [(_handPos select 0),(_handPos select 1)+1.8,(_handPos select 2)]);
-_utility setpos (player modelToWorld [(_handPos select 0),(_handPos select 1)+1,0]);
-_utility setdir getdir player;
+
+//Stick it to a vehicle
+private ["_vehicle","_relPos","_handPos","_upFront","_headPos","_objects","_closeObject","_relDir","_n"];
+_headPos = player selectionPosition "head";
+_upFront = player modelToWorld [(_headPos select 0),(_headPos select 1)+2,(_headPos select 2)];
+_objects = (lineintersectsWith [ATLToASL (player modelToWorld _headPos), ATLToASL _upFront, objNull, objNull, true]);
+
+if (count _objects > 0) then
+{
+	_closeObject = _objects select 0;
+	if ((_closeObject isKindOf "LandVehicle") || (_closeObject isKindOf "Air") || (_closeObject isKindOf "Ship")) then {_vehicle = _closeObject};
+};
+
+if (_itemClass in _satchels && !(isNil "_vehicle")) then
+{
+	_handPos = player selectionPosition "LeftHand";
+	_upFront = player modelToWorld _handPos;
+	_n = 0;
+	while {!lineIntersects [ATLToASL _upFront, ATLToASL (player modelToworld [0,_n,1.5])]} do
+	{
+		_n = _n + 0.1;
+	};
+	_upFront = player modelToWorld [(_handPos select 0),_n,(_handPos select 2)];
+	_relPos = _vehicle worldToModel _upFront;
+	_utility attachTo [_vehicle, _relPos];
+	_relDir = [_vehicle, player] call BIS_fnc_relativeDirTo;
+	switch (true) do
+	{
+	    case (_relDir >= 315 || _relDir <= 45): {_utility setVectorDirAndUp [[0,0,1],[0,1,0]]};
+	    case (_relDir >= 135 && _relDir <= 225): {_utility setVectorDirAndUp [[0,0,1],[0,-1,0]]};
+	    case (_relDir >= 45 && _relDir <= 135): {_utility setVectorDirAndUp [[0,0,1],[1,0,0]]};
+	    case (_relDir > 225 && _relDir < 315): {_utility setVectorDirAndUp [[0,0,1],[-1,0,0]]};
+	};
+}
+else
+{
+	_utility setpos (player modelToWorld [(_handPos select 0),(_handPos select 1)+1,0]);
+	_utility setdir getdir player;
+};
 
 if !(_mag in magazines player) then
 {

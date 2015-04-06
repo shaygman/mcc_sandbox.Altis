@@ -350,7 +350,7 @@ class mcc_groupGen
 			text = "Camera";
 			tooltip = "Open Camera";
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			onButtonClick = "while {dialog} do {closedialog 0;};[] call BIS_fnc_camera";
+			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
 
 			x = 0.505729 * safezoneW + safezoneX;
 			y = 0.0491758 * safezoneH + safezoneY;

@@ -89,10 +89,19 @@ while {true} do
 {
 	if (alive player) then
 	{
-		MCC_save_Backpack = backPackItems player;
-		MCC_save_primaryWeaponItems = primaryWeaponItems player;
-		MCC_save_secondaryWeaponItems = secondaryWeaponItems player;
-		MCC_save_handgunitems = handgunItems player;
+		missionNamespace setVariable ["MCC_save_Backpack",backPackItems player];
+		missionNamespace setVariable ["MCC_save_primaryWeaponItems",primaryWeaponItems player];
+		missionNamespace setVariable ["MCC_save_secondaryWeaponItems",secondaryWeaponItems player];
+		missionNamespace setVariable ["MCC_save_handgunitems",handgunItems player];
+
+		missionNamespace setVariable ["MCC_save_primaryWeapon",primaryWeapon player];
+		missionNamespace setVariable ["MCC_save_secondaryWeapon",secondaryWeapon player];
+		missionNamespace setVariable ["MCC_save_handgunWeapon",handgunWeapon player];
+		missionNamespace setVariable ["MCC_save_magazines",magazines player];
+
+		missionNamespace setVariable ["MCC_save_primaryWeaponMagazine",primaryWeaponMagazine player];
+		missionNamespace setVariable ["MCC_save_secondaryWeaponMagazine",secondaryWeaponMagazine player];
+		missionNamespace setVariable ["MCC_save_handgunMagazine",handgunMagazine player];
 
 		if (CP_activated) then
 		{
@@ -103,7 +112,7 @@ while {true} do
 			[] call MCC_fnc_allowedWeapons;
 
 			//Manage XP
-			if (CP_gainXP) then
+			if (missionNamespace getvariable ["CP_gainXP",true]) then
 			{
 				//Gain XP from roles check every 10 minutes
 				if (time > _nextCheck) then

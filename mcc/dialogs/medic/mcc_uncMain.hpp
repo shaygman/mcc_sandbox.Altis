@@ -37,11 +37,22 @@ class mcc_uncMain
 		class info: MCC_RscText
 		{
 			idc = 2;
-			text = "info";
-			x = 0.407187 * safezoneW + safezoneX;
-			y = 0.445 * safezoneH + safezoneY;
-			w = 0.195937 * safezoneW;
-			h = 0.11 * safezoneH;
+			text = "Blood Pressure:";
+			x = 0.25 * safezoneW + safezoneX;
+			y = 0.115 * safezoneH + safezoneY;
+			w = 0.065 * safezoneW;
+			h = 0.033 * safezoneH;
+		};
+		class progressBar: MCC_RscProgress
+		{
+			idc = 3;
+			x = 0.355625 * safezoneW + safezoneX;
+			y = 0.115 * safezoneH + safezoneY;
+			w = 0.345469 * safezoneW;
+			h = 0.033 * safezoneH;
+			colorBar[] = {0.8,0,0,0.6};
+			colorFrame[] = {1,1,1,0.8};
+			colorBackground[] = {0,0,0,0.3};
 		};
 	};
 };

@@ -172,7 +172,7 @@ class MCC_rts_workshop1
 	#endif
 
 	displayName = "Workshop";
-	descriptionShort = "Outfit machine guns to unarmed offroads and repairs some vehicles damage";
+	descriptionShort = "Outfit machine guns on unarmed offroads and repairs some vehicles damage";
 	buildings[] = {"MCC_rts_storage1","MCC_rts_elecPower1"};
 	actions[] = {};
 	anchorType = "Land_cargo_addon02_V1_F";

@@ -22,10 +22,13 @@
 #define BON_ARTY_MISSIONTYPE 999921
 disableSerialization;
 
-private ['_splashpos','_artitype','_artispread_value','_artispread',"_req_cannonsVirtuall","_req_cannonsReal"];
+private ['_splashpos','_artitype','_artispread_value','_artispread',"_req_cannonsVirtuall","_req_cannonsReal","_isCommander"];
 
 _requestor = player;
 _dlg = findDisplay BON_ARTY_DIALOG;
+
+//is the player the commander or just using the artillery computer
+_isCommander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player);
 
 // read out the dialog input
 _spotter_xpos = (parseNumber ctrlText (_dlg displayCtrl BON_ARTY_XRAYEDIT)) mod 100000;
@@ -41,13 +44,13 @@ _y_correction = parseNumber ctrlText (_dlg displayCtrl BON_ARTY_YCORRECTION);
 _selectedCannon = lbcursel (_dlg displayCtrl BON_ARTY_CANNONLIST);
 
 //Real cannon
-if (_selectedCannon > (HW_Arti_CannonNumber-1)) then
+if (_selectedCannon > (HW_Arti_CannonNumber-1) || !_isCommander) then
 {
 	_artitype = (_dlg displayCtrl BON_ARTY_TYPE) lbData (lbCurSel BON_ARTY_TYPE);
 }
 else
 {
-	_artitype = (HW_arti_types select (lbCurSel BON_ARTY_TYPE)) select 1; 
+	_artitype = (HW_arti_types select (lbCurSel BON_ARTY_TYPE)) select 1;
 };
 
 _artispread = (HW_arti_spreads select (lbCurSel BON_ARTY_SPREAD)) select 0;
@@ -64,8 +67,8 @@ if(isNil "_splashpos") then
 	{
 		_splashpos = [(_splashpos select 0) + 25 - random 50,(_splashpos select 1) + 25 - random 50,_splashpos select 2];
 	};
-} 
-else 
+}
+else
 {
 	_modelpos = _requestor worldToModel _splashpos;
 	_modelpos = [(_modelpos select 0) + _x_correction, (_modelpos select 1) + _y_correction, _modelpos select 2];
@@ -85,7 +88,7 @@ _typeOfCannon = _listbox lbData ((lbSelection _listbox) select 0);
 for [{_i= 1},{_i < (count lbSelection _listbox)},{_i = _i + 1}]  do
 {
 	_data = _listbox lbData ((lbSelection _listbox) select _i);
-	if ( _data != _typeOfCannon) exitWith {_acceptable = false}; 
+	if ( _data != _typeOfCannon) exitWith {_acceptable = false};
 };
 
 if !(_acceptable) exitWith {ctrlSetText [BON_ARTY_SUMMARY,"Cannot produce same fire mission to different artillery pieces"]};
@@ -96,7 +99,7 @@ _arty_cannonsummary = format["\nPosition\nx-ray %1\nyankee %2\ndirection %3\ndis
 				_degrees,	// summary[2]
 				_distance,	// summary[3]
 				_height_disp,	// summary[4]
-				_artitype,	// summary[5]
+				getText(configFile >> "cfgMagazines" >> _artitype >> "displayname"),	// summary[5]
 				_arty_nrshells,	// summary[6]
 				_artispread,	// summary[7]
 				_firedelay	// summary[8]
@@ -116,7 +119,7 @@ _req_cannonsReal 		= _requestor getVariable ["requesting_cannonsReal",[]];
 		if(not isNil "arty_CurrNrShellsTotal") then{arty_CurrNrShellsTotal = arty_CurrNrShellsTotal - _shells2subtract};
 	};
 	arty_CurrNrShellsTotal = arty_CurrNrShellsTotal + _arty_nrshells;
-	
+
 	//real or vr
 	_data = _listbox lbData _x;
 	if (_data == "vr") then
@@ -129,7 +132,7 @@ _req_cannonsReal 		= _requestor getVariable ["requesting_cannonsReal",[]];
 		_req_cannonsReal = (_req_cannonsReal - [_x+1]) + [_x+1];
 		_requestor setVariable ["requesting_cannonsReal",_req_cannonsReal,true];
 	};
-	
+
 	_requestor setVariable [format["Arti_%2_Cannon%1",_x+1,side player],[_splashpos,_firedelay,_artitype,_arty_nrshells,_artispread_value],true];
 	_requestor setVariable [format["Arti_%2_Cannon%1Summary",_x+1,side player],_arty_cannonsummary,false];
 } foreach lbSelection _listbox;
@@ -141,7 +144,7 @@ if (_typeOfCannon == "vr") then
 	{
 		ctrlEnable [BON_ARTY_REQUESTBUTTON,false];
 		(_dlg displayCtrl BON_ARTY_SHELLSLEFT) ctrlSetTextColor [1,0,0,1];
-	} 
+	}
 	else
 	{
 		ctrlEnable [BON_ARTY_REQUESTBUTTON,true];

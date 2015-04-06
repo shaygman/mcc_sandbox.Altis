@@ -93,6 +93,7 @@ _unit spawn
 
 	while {alive _this && time < _t && (_this getVariable ["MCC_medicUnconscious",false])} do
 	{
+		if (animationState _this != "unconscious") then {_this playmoveNow "Unconscious"};
 		//It wake up
 		if (random 100 < 0.05) then
 		{

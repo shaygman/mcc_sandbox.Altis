@@ -53,7 +53,7 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
-
+		/*
 		class coverRecoil
 		{
 			displayName = "Cover System Recoil";
@@ -74,7 +74,7 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
-
+		*/
 		class coverVault
 		{
 			displayName = "Allow vault/climb";

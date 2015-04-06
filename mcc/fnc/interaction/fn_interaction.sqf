@@ -155,6 +155,7 @@ else
 			case (_ctrlData == "abort") : {player setVariable ["MCC_ILSAbort",true]};
 			case (_ctrlData == "reel") : {_object call MCC_fnc_attachPod};
 			case (_ctrlData == "releasepod") : {_object call MCC_fnc_releasePod};
+			case (_ctrlData == "artillery") : {_object call MCC_fnc_openArtillery};
 		};
 	};
 
@@ -212,9 +213,15 @@ else
 	};
 
 	//Logistics
-	if ((typeof _vehiclePlayer in MCC_supplyTracks || (_vehiclePlayer isKindOf "helicopter" && ((getpos _vehiclePlayer) select 2) > 15)) && (player == driver _vehiclePlayer) && (speed _vehiclePlayer < 10) && MCC_allowlogistics) then
+	if ((typeof _vehiclePlayer in MCC_supplyTracks || (_vehiclePlayer isKindOf "helicopter" && ((getpos _vehiclePlayer) select 2) > 15)) && (player == driver _vehiclePlayer) && (speed _vehiclePlayer < 10) && (missionNamespace getVariable ["MCC_allowlogistics",true])) then
 	{
 		_array set [count _array,["load","Logistics",_pic]];
+	};
+
+	//Artillery
+	if (getNumber (configfile >> "CfgVehicles" >> typeof _vehiclePlayer >> "artilleryScanner") == 1) then
+	{
+		_array set [count _array,["artillery","Artillery Computer",_pic]];
 	};
 
 	//MCC ILS

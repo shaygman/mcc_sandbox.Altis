@@ -115,6 +115,12 @@ switch (true) do
 		_child =  MCC_interactionMenu2;
 		_hitPoints = ["HitHead","HitBody","hitLegs","hitHands"];
 		_partName = ["Head: ","Body: ","Legs: ","Hands: "];
+		_partPic = [
+					MCC_path + "mcc\dialogs\medic\data\soldier_head.paa",
+					MCC_path + "mcc\dialogs\medic\data\soldier_body.paa",
+					MCC_path + "mcc\dialogs\medic\data\soldier_legs.paa",
+					MCC_path + "mcc\dialogs\medic\data\soldier_hands.paa"
+					];
 		_array = [];
 		_bleeding = _suspect getVariable ["MCC_medicBleeding",0];
 
@@ -132,8 +138,8 @@ switch (true) do
 						case (_damage >= 0.6) : {_string = "Severe trauma"; _subArray set [3,[1,0,0,1]];};
 					};
 			_subArray set [0,"physicalReport"];
-			_subArray set [1,(_partName select _foreachIndex) + _string]; lbSetColor
-			_subArray set [2,""];
+			_subArray set [1,(_partName select _foreachIndex) + _string];
+			_subArray set [2,(_partPic select _foreachIndex)];
 			_array pushBack _subArray;
 		} foreach _hitPoints;
 

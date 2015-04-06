@@ -7,7 +7,7 @@ disableSerialization;
 
 _key = _this select 0;
 _exit = false;
-if (vehicle player != player) exitWith {};
+if (vehicle player != player && _key != 5) exitWith {};
 showCommandingMenu "";
 
 //Clear utility stuff
@@ -43,7 +43,8 @@ switch (true) do
 	case (_key == 4):
 	{
 		private ["_mags","_allowedMags","_magsItems","_mag","_item","_speed","_index","_utility","_cameraInternal","_model","_ctrl"];
-		_cameraInternal = if (cameraView == "INTERNAL") then {true} else {false};
+		//_cameraInternal = if (cameraView == "INTERNAL") then {true} else {false};
+		showHUD false;
 
 		_mags = [];
 		{
@@ -73,6 +74,7 @@ switch (true) do
 		_ctrl ctrlSetModelScale 2.5;
 		{ ((uiNamespace getVariable "mcc_3dObject") displayCtrl _X) ctrlShow false} foreach [1,2];
 
+		((uiNamespace getVariable "mcc_3dObject") displayCtrl 3) ctrlSetText format ["Press %1 to cycle between grenade throws", ["action"] call MCC_fnc_getKeyFromAction];
 		player setVariable ["MCC_utilityItem",_mag];
 		player setVariable ["MCC_falseGrenadePrecise",2];
 
@@ -80,22 +82,23 @@ switch (true) do
 		player setVariable ["MCC_dontAllowFire",true];
 
 		// Add secondary hold fire to the action menu
-		_null =  player addAction ["", {[false] call MCC_fnc_grenadeThrow}, "", 0, false, true, "opticsTemp", "_this getVariable ['MCC_dontAllowFire',false]"];
+		_null =  player addAction ["", {[false] call MCC_fnc_grenadeThrow}, "", 0, false, true, "action", "_this getVariable ['MCC_dontAllowFire',false]"];
 		player setVariable ["MCC_actionHoldFireSecond",_null];
 
 		// Add hold fire to the action menu
 		_null =  player addAction ["", {[true] call MCC_fnc_grenadeThrow},"",0,false,true, "DefaultAction","_this getVariable ['MCC_dontAllowFire',false]"];
 		player setVariable ["MCC_actionHoldFire",_null];
 
-		0 = _cameraInternal spawn
+		0 = [] spawn
 		{
 			while {(count (player getVariable ["MCC_utilityItem",[]]) > 0) && alive player} do
 			{
-				if (cameraView != "INTERNAL") then {player switchCamera "INTERNAL"};
+				//if (cameraView != "INTERNAL") then {player switchCamera "INTERNAL"};
 				sleep 0.01;
 			};
-			if !_this then {player switchCamera "EXTERNAL"};
+			//if !_this then {player switchCamera "EXTERNAL"};
 			(["mcc_3dObject"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
+			showHUD true;
 		};
 	};
 
@@ -103,7 +106,8 @@ switch (true) do
 	case (_key == 5):
 	{
 		private ["_mags","_allowedMags","_magsItems","_mag","_model","_speed","_index","_magVehicle","_cameraInternal","_ctrl"];
-		_cameraInternal = if (cameraView == "INTERNAL") then {true} else {false};
+		//_cameraInternal = if (cameraView == "INTERNAL") then {true} else {false};
+		showHUD false;
 
 		_mags = [];
 		_allowedMags = ["MCC_ammoBoxMag","DemoCharge_Remote_Mag","SatchelCharge_Remote_Mag","IEDUrbanBig_Remote_Mag","IEDLandBig_Remote_Mag","ATMine_Range_Mag","APERSMine_Range_Mag","APERSBoundingMine_Range_Mag","SLAMDirectionalMine_Wire_Mag","APERSTripMine_Wire_Mag","ClaymoreDirectionalMine_Remote_Mag","IEDUrbanSmall_Remote_Mag","IEDLandSmall_Remote_Mag"];
@@ -159,27 +163,30 @@ switch (true) do
 		_ctrl ctrlSetModelDirAndUp [[0,1,1],[0,0,1]];
 		_ctrl ctrlSetModelScale 2;
 
+		((uiNamespace getVariable "mcc_3dObject") displayCtrl 3) ctrlSetText format ["Press %1 to detonate", ["action"] call MCC_fnc_getKeyFromAction];
+
 		//Disable fire
 		player setVariable ["MCC_dontAllowFire",true];
 
 
 		// Add secondary hold fire to the action menu
-		_null =  player addAction ["", {[false] spawn MCC_fnc_utilityUse}, "", 0, false, true, "opticsTemp", "_this getVariable ['MCC_dontAllowFire',false]"];
+		_null =  player addAction ["", {[false] spawn MCC_fnc_utilityUse}, "", 0, false, true, "action", "_this getVariable ['MCC_dontAllowFire',false]"];
 		player setVariable ["MCC_actionHoldFireSecond",_null];
 
 		// Add hold fire to the action menu
 		_null =  player addAction ["", {[true]  spawn MCC_fnc_utilityUse},"",0,false,true, "DefaultAction","_this getVariable ['MCC_dontAllowFire',false]"];
 		player setVariable ["MCC_actionHoldFire",_null];
 
-		0 = _cameraInternal spawn
+		0 = [] spawn
 		{
 			while {(count (player getVariable ["MCC_utilityItem",[]]) > 0) && alive player} do
 			{
-				if (cameraView != "INTERNAL") then {player switchCamera "INTERNAL"};
+				//if (cameraView != "INTERNAL") then {player switchCamera "INTERNAL"};
 				sleep 0.01;
 			};
-			if !_this then {player switchCamera "EXTERNAL"};
+			//if !_this then {player switchCamera "EXTERNAL"};
 			(["mcc_3dObject"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
+			showHUD true;
 		};
 
 	};

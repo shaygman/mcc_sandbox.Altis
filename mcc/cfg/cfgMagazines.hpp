@@ -88,7 +88,7 @@ class MCC_salineBag : MCC_antibiotics
 	displayName = "Saline Bag";
 	descriptionShort = "I'm all out of blood i'm so lost with out you";
 	picture = "\mcc_sandbox_mod\data\items\saline.paa";
-	model = "\A3\Structures_F\Items\Stationery\saline.p3d";
+	model = "\A3\Structures_F_EPA\Items\Medical\BloodBag_F.p3d";
 	value = 40;
 	mass = 30;
 };

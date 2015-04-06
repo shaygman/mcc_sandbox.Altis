@@ -27,7 +27,7 @@ if (_playerSideNr == 1) then
 	while {(isnil ("MCC_START_WEST"))} do {sleep 3};
 	missionNameSpace setVariable ["MCC_startLocationsRuning", false];
 
-	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",false]) then
+	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",true]) then
 	{
 		//Black Screen on mission startup
 		cutText ["","BLACK",0.1];
@@ -52,11 +52,11 @@ if (_playerSideNr == 1) then
 		{
 			if (surfaceIsWater (playerDeployPos)) then
 			{
-				_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(playerDeployPos),10,50,1,2,900,0] call BIS_fnc_findSafePos;
 			}
 			else
 			{
-				_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(playerDeployPos),10,50,1,0,900,0] call BIS_fnc_findSafePos;
 			};
 
 			//Teleport
@@ -74,7 +74,7 @@ if (_playerSideNr == 1) then
 		};
 	};
 
-	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",false])) then
+	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",true])) then
 	{
 		player setpos MCC_START_WEST;
 	};
@@ -98,7 +98,7 @@ if (_playerSideNr == 0) then
 
 	while { (isnil ("MCC_START_EAST"))  } do {sleep 3};
 
-	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",false]) then
+	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",true]) then
 	{
 		//Black Screen on mission startup
 		cutText ["","BLACK",0.1];
@@ -123,11 +123,11 @@ if (_playerSideNr == 0) then
 		{
 			if (surfaceIsWater (playerDeployPos)) then
 			{
-				_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(playerDeployPos),10,50,1,2,900,0] call BIS_fnc_findSafePos;
 			}
 			else
 			{
-				_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(playerDeployPos),10,50,1,0,900,0] call BIS_fnc_findSafePos;
 			};
 
 			//Teleport
@@ -145,7 +145,7 @@ if (_playerSideNr == 0) then
 		};
 	};
 
-	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",false])) then
+	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",true])) then
 	{
 		player setpos MCC_START_EAST;
 	};
@@ -168,7 +168,7 @@ if (_playerSideNr == 2) then
 
 	while { (isnil ("MCC_START_GUER")) } do {sleep 3};
 
-	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",false]) then
+	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",true]) then
 	{
 		//Black Screen on mission startup
 		cutText ["","BLACK",0.1];
@@ -193,11 +193,11 @@ if (_playerSideNr == 2) then
 		{
 			if (surfaceIsWater (playerDeployPos)) then
 			{
-				_safePos = [(playerDeployPos),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(playerDeployPos),10,50,1,2,900,0] call BIS_fnc_findSafePos;
 			}
 			else
 			{
-				_safePos = [(playerDeployPos),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+				_safePos = [(playerDeployPos),10,50,1,0,900,0] call BIS_fnc_findSafePos;
 			};
 
 			//Teleport
@@ -215,7 +215,7 @@ if (_playerSideNr == 2) then
 		};
 	};
 
-	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",false])) then
+	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",true])) then
 	{
 		player setpos MCC_START_GUER;
 	};
@@ -243,11 +243,11 @@ if (_playerSideNr == 3) then
 	{
 		if (surfaceIsWater (MCC_START_CIV)) then
 		{
-			_safePos = [(MCC_START_CIV),1,50,1,2,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(MCC_START_CIV),10,50,1,2,900,0] call BIS_fnc_findSafePos;
 		}
 		else
 		{
-			_safePos = [(MCC_START_CIV),1,50,1,0,900,0] call BIS_fnc_findSafePos;
+			_safePos = [(MCC_START_CIV),10,50,1,0,900,0] call BIS_fnc_findSafePos;
 		};
 
 		//Teleport

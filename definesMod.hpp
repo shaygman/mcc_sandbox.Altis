@@ -20,7 +20,7 @@
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_missionSettings.hpp"
 
 //----PDA-----------------
-#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_SQLPDA.hpp"
+#include "\mcc_sandbox_mod\mcc\Dialogs\sqlPDA\mcc_SQLPDA.hpp"
 
 //----Mission Wizard-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\MCCMW_briefingMap.hpp"
@@ -59,6 +59,7 @@
 #include "\mcc_sandbox_mod\bon_artillery\dialog\Artillery.hpp"
 #include "\mcc_sandbox_mod\VAS\menu.hpp"
 #include "\mcc_sandbox_mod\hcam\hcam.hpp"
+#include "\mcc_sandbox_mod\spectator\spectating.hpp"
 
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
@@ -115,12 +116,18 @@ class cfgRtsBuildings
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgRtsBuildings.hpp"
 };
 
+class cfgRtsActions
+{
+	#include "\mcc_sandbox_mod\mcc\cfg\cfgRtsActions.hpp"
+};
+
 class RscTitles
 {
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\compass.hpp"
 	#include "\mcc_sandbox_mod\hcam\hcam.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_3dObject.hpp"
+	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
 };
 
 class cfgVehicles

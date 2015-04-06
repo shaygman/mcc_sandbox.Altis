@@ -19,19 +19,19 @@ disableSerialization;
 
 _option = _this select 0;
 //Cleanup previos camera
-if (!isnil "MCC_consoleLiveFeedCam")  then 
+if (!isnil "MCC_consoleLiveFeedCam")  then
 {
 	if (!isnull MCC_consoleLiveFeedCam) then
 	{
 		MCC_consoleLiveFeedCam cameraEffect ["TERMINATE", "BACK"];
-		detach MCC_consoleLiveFeedCam; 
+		detach MCC_consoleLiveFeedCam;
 		camDestroy MCC_consoleLiveFeedCam;
 		deletevehicle MCC_consoleLiveFeedCam;
-		MCC_consoleLiveFeedCam = objnull; 
+		MCC_consoleLiveFeedCam = objnull;
 	}
 };
-	
-if (!isnil "MCC_consoleLiveFeedTarget") then 
+
+if (!isnil "MCC_consoleLiveFeedTarget") then
 {
 	if (!isnull MCC_consoleLiveFeedTarget) then
 	{
@@ -39,7 +39,7 @@ if (!isnil "MCC_consoleLiveFeedTarget") then
 		deletevehicle MCC_consoleLiveFeedTarget;
 	}
 };
-	
+
 MCC_consoleLiveFeed = false;
 
 if (_option== 3) exitWith					//Close Live Feed
@@ -51,29 +51,29 @@ if (_option== 3) exitWith					//Close Live Feed
 		ctrlShow [MCC_ConsoleMapRulerButton,true];
 		ctrlShow [MCC_ConsoleMapRulerDir,true];
 		ctrlShow [MCC_ConsoleMapRulerDis,true];
-				
+
 		ctrlShow [MCC_CONSOLEINFOLIVEFEEDNV,false];
 		ctrlShow [MCC_CONSOLEINFOLIVEFEEDTM,false];
 		ctrlShow [MCC_CONSOLEINFOLIVEFEEDCLOSE,false];
 		ctrlShow [MCC_CONSOLEINFOLIVEFEEDNORMAL,false];
 		ctrlShow [MCC_CONSOLEINFOUAVCONTROL,false];
 	};
-	
-switch (_option) do 
+
+switch (_option) do
 {
 	// Normal
 	case 0: {
-		_effectParams = [3, 0.1,1, 1, 0, [0,0,0,0], [1.1,0.7,1.1,1.1], [1.0,0.7,1.0,1.1]]; 
+		_effectParams = [3, 0.1,1, 1, 0, [0,0,0,0], [1.1,0.7,1.1,1.1], [1.0,0.7,1.0,1.1]];
 	};
-	
+
 	// Night vision
 	case 1: {
 		_effectParams = [1];
 	};
-	
+
 	// Thermal imaging
 	case 2: {
-		_effectParams = [2, 1,1, 1, 0, [0,0,0,0], [1.1,0.7,1.1,1.1], [1.0,0.7,1.0,1.1]]; 
+		_effectParams = [2, 1,1, 1, 0, [0,0,0,0], [1.1,0.7,1.1,1.1], [1.0,0.7,1.0,1.1]];
 	};
 };
 _mccdialog = findDisplay mcc_playerConsole_IDD;
@@ -93,8 +93,8 @@ ctrlShow [MCC_CONSOLEINFOLIVEFEEDCLOSE,true];
 ctrlShow [MCC_CONSOLEINFOLIVEFEEDNORMAL,true];
 
 //Create the target
-MCC_consoleLiveFeedTarget = "Sign_Sphere10cm_F" createvehiclelocal [0,0,0];	
-[[[netid MCC_consoleLiveFeedTarget,MCC_consoleLiveFeedTarget], "_this hideObjectGlobal true"], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
+MCC_consoleLiveFeedTarget = "Sign_Sphere10cm_F" createvehiclelocal [0,0,0];
+MCC_consoleLiveFeedTarget hideObjectGlobal true;
 
 // Create fake camera
 MCC_consoleLiveFeedCam = "Camera" camCreate [10,10,10];
@@ -115,13 +115,13 @@ if (_veh != _leader) then		//Inside a vehicle
 				MCC_consoleLiveFeedCam attachTo [_veh,[0,0,0.8]];
 				MCC_consoleLiveFeedTarget attachTo [_veh,[0,15,0]];
 			};
-	} 
+	}
 	else
 	{
 		MCC_consoleLiveFeedCam attachTo [_leader,[-0.18,0.08,0.05],"neck"];
 		MCC_consoleLiveFeedTarget attachTo [_leader,[0.5,10,0],"neck"];
 	};
-		
+
 MCC_consoleLiveFeedCam camsetTarget MCC_consoleLiveFeedTarget;
 MCC_consoleLiveFeedCam camCommit 0;
 
@@ -131,22 +131,22 @@ _control = _mccdialog displayCtrl MCC_MAPBACKGROUND;
 [_control] call MCC_fnc_pipOpen;
 ctrlSetText [MCC_MAPBACKGROUND, "#(argb,512,512,1)r2t(rendertarget12,1.0);"];
 "rendertarget12" setPiPEffect _effectParams;
-ctrlsetFocus _control; 
+ctrlsetFocus _control;
 
 waituntil {!MCC_Console1Open || !dialog};		//CleanUp
 //Cleanup previos camera
-if (!isnil "MCC_consoleLiveFeedCam")  then 
+if (!isnil "MCC_consoleLiveFeedCam")  then
 	{
 		if (!isnull MCC_consoleLiveFeedCam) then
 			{
 				MCC_consoleLiveFeedCam cameraEffect ["TERMINATE", "BACK"];
-				detach MCC_consoleLiveFeedCam; 
+				detach MCC_consoleLiveFeedCam;
 				camDestroy MCC_consoleLiveFeedCam;
-				MCC_consoleLiveFeedCam = objnull; 
+				MCC_consoleLiveFeedCam = objnull;
 			}
 	};
-	
-if (!isnil "MCC_consoleLiveFeedTarget") then 
+
+if (!isnil "MCC_consoleLiveFeedTarget") then
 	{
 		if (!isnull MCC_consoleLiveFeedTarget) then
 		{

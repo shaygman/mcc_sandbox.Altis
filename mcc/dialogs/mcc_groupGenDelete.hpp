@@ -22,7 +22,7 @@ class MCC_deleteDialogControls:MCC_RscControlsGroup
 		{
 			idc = -1;
 
-			text = "Delete Brush:"; //--- ToDo: Localize;
+			text = "Apply Brush:"; //--- ToDo: Localize;
 			x = 0.0401036 * safezoneW;
 			y = 0.0109958 * safezoneH;
 			w = 0.120313 * safezoneW;
@@ -57,7 +57,7 @@ class MCC_deleteDialogControls:MCC_RscControlsGroup
 			idc = -1;
 			text = "Close"; //--- ToDo: Localize;
 			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 518) ctrlShow false";
-			
+
 			x = 0.0744797 * safezoneW;
 			y = 0.0989618 * safezoneH;
 			w = 0.0515625 * safezoneW;

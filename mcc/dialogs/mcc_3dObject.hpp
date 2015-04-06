@@ -82,6 +82,20 @@ class mcc_3dObject
 			z = 0.2;
 		};
 	};
+
+	class Controls
+	{
+		class text: MCC_RscText
+		{
+			idc = 3;
+			style = MCCST_CENTER;
+			text = "Hello";
+			x = 0.365937 * safezoneW + safezoneX;
+			y = 0.9 * safezoneH + safezoneY;
+			w = 0.4 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
+	};
 };
 
 

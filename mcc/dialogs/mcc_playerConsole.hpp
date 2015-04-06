@@ -46,7 +46,8 @@ class MCC_playerConsole {
   MCC_ConsoleCASFrame,
   MCC_ConsoleEvacFrame,
   MCC_mapBackground,
-  MCC_mapConsole
+  MCC_mapConsole,
+  MCC_ConsoleInfoText
   };
 
 
@@ -75,7 +76,6 @@ class MCC_playerConsole {
   MCC_ConsoleWPAdd,
   MCC_ConsoleWPReplace,
   MCC_ConsoleWPClear,
-  MCC_ConsoleInfoText,
   MCC_ConsoleInfoLiveFeed,
   MCC_ConsoleInfoLiveFeedNormal,
   MCC_ConsoleInfoLiveFeedNV,

@@ -16,6 +16,8 @@ class MCC
 		#endif
 
 		class activateAddons {preInit = 1; description = "Pre init addon";};
+		class gear	{preInit = 1; description = "Assign gear by roles";};
+
 		class mobileRespawn	{description = "will move the respawn marker to the current position of the unit while the unit is alive, if the unit dead will move the marker to the prvious location.";};
 		class buildingPosCount	{description = "return the ammount of indexed positions in a building.";};
 		class makeUnitsArray	{description = "returns a unit array consist of all the units from the given function and simulation in format [_cfgclass,_vehicleDisplayName].";};
@@ -57,7 +59,8 @@ class MCC
 		class makeBriefing	{description = "Server Only - create a Logic based briefing";};
 		class handleAddaction	{description = "Handle addactions after respawn - init";};
 		class ppEffects	{description = "Create effects to all players";};
-		class gear	{preInit = 1; description = "Assign gear by roles";};
+		class SetPitchBankYaw	{};
+		class openArtillery {};
 	};
 
 	class ui
@@ -84,6 +87,7 @@ class MCC
 		class keyDown			{description = "Handle keydown/keyUp EH";};
 		class help				{description = "Display tooltip";};
 		class playerStats		{description = "Show player stats in RS";};
+		class getKeyFromAction 	{description = "Get the keys name from an action defined in CfgActions";};
 	};
 
 	class ied
@@ -387,5 +391,15 @@ class MCC
 		class removeVirtualItemCargo {};
 		class removeVirtualWeaponCargo {};
 		class removeVirtualMagazineCargo {};
+		class baseResourceReduce {};
+		//class baseSelected {};
+		class rtsClearBuilding {};
+		class baseActionClicked {};
+		class baseActionEntered {};
+		class baseActionExit {};
+		class baseOpenConstMenu {};
+		class baseBuildBorders {};
+		class CheckRes {};
+		class CheckBuildings {};
 	};
 };

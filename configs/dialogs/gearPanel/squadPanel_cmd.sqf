@@ -335,7 +335,7 @@ switch (_cmd) do
 		player setVariable ["MCC_selectedUnit", _unit];
 
 		//Only work if we didn't came here after respawn
-		if (!MCC_squadDialogOpen || isnil "_unit" || !MCC_allowSquadDialogCamera) exitWith {};
+		if (!MCC_squadDialogOpen || isnil "_unit" || !(missionNamespace getVariable ["MCC_allowSquadDialogCamera",true])) exitWith {};
 
 		//Set camera on squad member
 		if (_unit in units player) exitWith

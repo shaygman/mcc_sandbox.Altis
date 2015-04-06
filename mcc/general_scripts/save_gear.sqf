@@ -32,7 +32,7 @@ if (CP_activated) then
 	};
 };
 
-if (MCC_saveGear) then
+if (missionNamespace getvariable ["MCC_saveGear",false]) then
 {
 	_goggles = goggles _unit; 			//Can't  save gear after killed EH
 	_headgear = headgear _unit;
@@ -40,19 +40,19 @@ if (MCC_saveGear) then
 	_vest = vest _unit;
 	_backpack = backpack _unit;
 
-	_primMag = primaryWeaponMagazine _unit;
-	_secmMag = secondaryWeaponMagazine  _unit;
-	_handMag = handgunMagazine _unit;
+	_primMag = missionNamespace getVariable ["MCC_save_primaryWeaponMagazine",[]];
+	_secmMag = missionNamespace getVariable ["MCC_save_secondaryWeaponMagazine",[]];
+	_handMag = missionNamespace getVariable ["MCC_save_handgunMagazine",[]];
 	_items = items _unit;
 	_assigneditems = assigneditems _unit;
 
 	_uniformItems = uniformItems _unit;
 	_vestItems = vestItems _unit;
 
-	_primaryWeapon = primaryWeapon _unit;
-	_secondaryWeapon = secondaryWeapon _unit;
-	_handgunWeapon = handgunWeapon _unit;
-	_magazines = magazines _unit;
+	_primaryWeapon = missionNamespace getVariable ["MCC_save_primaryWeapon",""];
+	_secondaryWeapon =  missionNamespace getVariable ["MCC_save_secondaryWeapon",""];
+	_handgunWeapon =  missionNamespace getVariable ["MCC_save_handgunWeapon",""];
+	_magazines =  missionNamespace getVariable ["MCC_save_magazines", []];
 };
 
 WaitUntil {alive player};
@@ -72,7 +72,7 @@ if (missionNameSpace getVariable ["MCC_deletePlayersBody",false]) then {deleteVe
 
 _null = [(compile format ["MCC_curator addCuratorEditableObjects [[objectFromNetId '%1'],false];",netid player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 
-if (MCC_saveGear) then
+if (missionNamespace getvariable ["MCC_saveGear",false]) then
 {
 	removeGoggles player;
 	removeHeadgear player;

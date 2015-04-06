@@ -4,7 +4,7 @@ _distance = 100;
 
 while {true} do
 {
-	if (MCC_nameTags) then
+	if (missionNamespace getvariable ["MCC_nameTags",false]) then
 	{
 		_blank = " ";
 		_target = cursorTarget;

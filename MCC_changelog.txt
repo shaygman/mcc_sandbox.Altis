@@ -1,17 +1,63 @@
+Change log r14:
+- Reworked on the SQL PDA
+- Fixed: Fortify on Headless client
+- Removed the weapon resting in MCC's cover system as BI implemented it in Marksman DLC. 
+
+Change log r13 Hotfix:
+- Fixed: Task Force Radio and ACRE disbaled after respawn - medic system.
+- Fixed: Players able to log into MCC using key binds even if not allowed. 
+- Fixed: Commander virtuall artillery cannons didn't resets after the first fire mission. 
+
 Change log r13:
+
+Engine:
+- Added: MCC Zeus will automatically detect and load addons.
+- Added: "Don't show in the future" option for the EOD and SF messages. 
+- Added: Save to MCC (profile or clipboard) will save missions' settings.
+- Added: Unlock all doors brush. 
+- Added: MCC Templates to AiA maps. 
+- Fixed: Restricting MCC access via Access Module or via inidb server_misc file didn't worked well. 
+- Fixed: After respawning player stuck inside the start location building.
 - Fixed: Game crush after key binds.
+- Fixed: Combo box pictures in MCC and VAS listbox appears black. 
+- Fixed: Respawning without weapons. 
+- Fixed: Ambush group arrow directing was 90 degrees off. 
+- Fixed: "Add Cargo Units" and "Add Crew (UAV)" vehicle's presets run on all clients instead of only on the server
+- Fixed: Airdrop run on all clients instead only on the server - duplicated air drops.
+- Fixed: While spawning a group of vehicles AI switching vehicles and disembarking
+
+Interaction:
+- Added: Attaching explosives charges and satchels to vehicles while using the MCC's weapons key binds - press left mouse button while holding the explosives and close to a vehicle.
 - Fixed: Disabling MCC's interaction doesn't disable MCC self interaction.
+- Fixed: MCC's interaction was working by default in the mod version - now requires to be turned on from the settings module. 
+- Fixed: MCC's door breaching charges where not placed close enough to the door. 
+- changed: Alternate action (cycling between grenades throws or detonating explosives) changed to use default action key - by default middle mouse button. 
+
+Artillery:
+- Added: Access the MCC's artillery computer from any artillery piece that have computer enable in it's config by using MCC's interaction key while inside.  
 - Fixed: Laser designated artillery in the commander console didn't worked well. 
-- Fixed: Resticting MCC access didn't worked well via Access Module or via inidb server_misc file. 
-- Fixed: Pictures in MCC and VAS listbox appears black. 
+
+Evac:
+- Added: Evac helicopter can be edited with Zeus so you can make it invincible. 
+
+Medical system:
 - Added:MCC Medical items box
 - Added: MCC Tactical items box
 - Added: MCC Misc items box
-- Added: MCC Zeus will automaticlly detect and load addons
+- Changed: While unconscious-  "time remains" text has been changed to blood pressure bar. 
+- Fixed: Sometimes player stay standing while unconscious. 
 
-TODO- interaction keys works without the module
 TODO - Zeus screen go black after respawn.
 TODD - add artilllery sounds and video
+//198.27.70.120:2352
+//XeonE31245  Shay
+
+//
+No ROE
+Grunts don't know the plane
+40 minutes to get in
+radios are messed up
+no teleport to jip
 
 
 Change log r12:

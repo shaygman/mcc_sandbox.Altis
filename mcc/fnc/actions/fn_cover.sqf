@@ -25,6 +25,7 @@ if(alive player && vehicle player == player) then
 		player setVariable ["MCC_recoilCoef", 0.3];
 		player setUnitRecoilCoefficient (0.3 * unitRecoilCoefficient player);
 
+		/*	//Not needed anymore since the new Marksman DLC
 		[] spawn
 		{
 			if (missionNameSpace getVariable ["MCC_coverUI",true] && (player getVariable ["MCC_mirrorCamOff",true])) then
@@ -42,6 +43,7 @@ if(alive player && vehicle player == player) then
 			waituntil {stance player != "PRONE"};
 			player setUnitRecoilCoefficient 1;
 		};
+		*/
 	};
 
 
@@ -139,19 +141,23 @@ if(alive player && vehicle player == player) then
 			//Work around for prone
 			if (cameraView == "GUNNER") then
 			{
+				/* ABSOULTE Marksman DLC
 				if ((missionNameSpace getVariable ["MCC_changeRecoil",true]) && stance player != "PRONE") then
 				{
 					player setVariable ["MCC_recoilCoef", 0.4];
 					player setUnitRecoilCoefficient (0.4 * unitRecoilCoefficient player);
 				};
-
+				*/
 				while {cameraView == "GUNNER" && (_pos distance getpos player)<1.5} do
 				{
+					/* ABSOULTE Marksman DLC
 					if ((missionNameSpace getVariable ["MCC_coverUI",true]) && (missionNameSpace getVariable ["MCC_changeRecoil",true])) then
 					{
 						[format ["<img align='left' size='1.5' image='%1data\cover\bipods.paa'/>",MCC_path],0.5,1,0.1,0,0,1] spawn BIS_fnc_dynamicText;
-						sleep 0.1;
 					};
+					*/
+
+					sleep 0.1;
 				};
 				//player playactionNow format ["player%1",_stance];
 				player playmoveNow _currentAnim;
@@ -161,10 +167,12 @@ if(alive player && vehicle player == player) then
 					player switchMove _currentAnim;
 				};
 
+				/* ABSOULTE Marksman DLC
 				if (missionNameSpace getVariable ["MCC_changeRecoil",true]) then
 				{
 					player setUnitRecoilCoefficient ((player getVariable ["MCC_recoilCoef", 0.4])/ unitRecoilCoefficient player);
 				};
+				*/
 			};
 		};
 	}

@@ -22,41 +22,43 @@
 #define BON_ARTY_MISSIONTYPE 999921
 disableSerialization;
 
-private ["_arti_settings","_index","_shellsleft","_cannon","_comboBox","_artidialog","_displayname","_comboBox","_allAmmo","_ammoTypes","_ctrl",
-         "_selectedCannon","_ammo"];
+private ["_arti_settings","_index","_shellsleft","_cannon","_comboBox","_artidialog","_displayname","_comboBox","_allAmmo","_ammoTypes","_ctrl","_selectedCannon","_ammo","_isCommander"];
 
 _ctrl	= _this select 0;
 _index 	= _this select 1;
 _artidialog = findDisplay BON_ARTY_DIALOG;
 
+//is the player the commander or just using the artillery computer
+_isCommander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player);
+
 switch (ctrlIDC _ctrl) do
 {
 	//Selecting another cannon
-	case (BON_ARTY_CANNONLIST):	
+	case (BON_ARTY_CANNONLIST):
 	{
 		_arti_settings = player getVariable format["Arti_%2_Cannon%1Summary",_index + 1,playerSide];
 
 		if (not isNil "_arti_settings") then
 		{
 			ctrlSetText [BON_ARTY_SUMMARY,_arti_settings];
-		} 
-		else 
+		}
+		else
 		{
 			ctrlSetText [BON_ARTY_SUMMARY,""];
 		};
 
 		//Real cannon
-		if (_index > (HW_Arti_CannonNumber-1)) then
+		if (_index > (HW_Arti_CannonNumber-1) || !_isCommander) then
 		{
 			_cannon = MCC_bonCannons select _index;
 			_allAmmo = magazinesAmmo vehicle _cannon;
-			
+
 			_ammoTypes = [];
 			//Make it uniqe array
 			{
 				if !((_x select 0) in _ammoTypes) then {_ammoTypes set [count _ammoTypes, (_x select 0)]};
 			} foreach _allAmmo;
-			
+
 			_comboBox = _artidialog displayCtrl BON_ARTY_TYPE;
 			lbClear _comboBox;
 			{
@@ -70,9 +72,9 @@ switch (ctrlIDC _ctrl) do
 		else
 		{
 			_shellsleft = MCC_server getVariable format["Arti_%1_shellsleft",side player];
-			if (isNil "_shellsleft") then {_shellsleft = 0}; 
+			if (isNil "_shellsleft") then {_shellsleft = 0};
 			ctrlSetText [BON_ARTY_SHELLSLEFT,format["Shells left: %1",_shellsleft]];
-			
+
 			_comboBox = _artidialog displayCtrl BON_ARTY_TYPE;
 			lbClear _comboBox;
 			{
@@ -81,31 +83,31 @@ switch (ctrlIDC _ctrl) do
 				_comboBox lbsetData [_index, ""];
 			} foreach HW_arti_types;
 			_comboBox lbSetCurSel 0;
-		}; 
-	};	
+		};
+	};
 	//Changing the ordnance type
-	case (BON_ARTY_TYPE):	
+	case (BON_ARTY_TYPE):
 	{
 		_selectedCannon = lbcursel (_artidialog displayCtrl BON_ARTY_CANNONLIST);
-		
+
 		//Real cannon
-		if (_selectedCannon > (HW_Arti_CannonNumber-1)) then
+		if (_selectedCannon > (HW_Arti_CannonNumber-1) || !_isCommander) then
 		{
 			_cannon = MCC_bonCannons select _selectedCannon;
 			_ammo = _ctrl lbData _index;
-			
+
 			//Real ammo
 			if (_ammo != "") then
 			{
 				_allAmmo = magazinesAmmo vehicle _cannon;
-				
+
 				//count ammo
 				_shellsleft = 0;
 				//Make it uniqe array
 				{
 					if ((_x select 0) == _ammo) then {_shellsleft = _shellsleft +(_x select 1)};
 				} foreach _allAmmo;
-				
+
 				ctrlSetText [BON_ARTY_SHELLSLEFT,format["Shells left: %1",_shellsleft]];
 			};
 		};

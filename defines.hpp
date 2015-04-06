@@ -19,7 +19,7 @@
 #include "mcc\Dialogs\mcc_missionSettings.hpp"
 
 //----PDA-----------------
-#include "mcc\Dialogs\mcc_SQLPDA.hpp"
+#include "mcc\Dialogs\sqlPDA\mcc_SQLPDA.hpp"
 
 //----Mission Wizard-----------------
 #include "mcc\Dialogs\MCCMW_briefingMap.hpp"
@@ -60,6 +60,7 @@
 //--------------------------Others----------------------------------------------------
 #include "bon_artillery\dialog\Artillery.hpp"
 #include "VAS\menu.hpp"
+#include "spectator\spectating.hpp"
 
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
@@ -94,6 +95,12 @@ class cfgRtsBuildings
 	#include "mcc\cfg\cfgRtsBuildings.hpp"
 };
 
+class cfgRtsActions
+{
+	#include "mcc\cfg\cfgRtsActions.hpp"
+};
+
+
 class RscTitles
 {
 	titles[]={"img"};
@@ -123,4 +130,5 @@ class RscTitles
 	#include "mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "mcc\dialogs\compass.hpp"
 	#include "mcc\dialogs\mcc_3dObject.hpp"
+	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
 };

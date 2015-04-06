@@ -7,22 +7,22 @@ evac_p_type = getText (configFile >> "CfgVehicles" >> _heliType >> "crew");
 _side =  getNumber (configFile >> "CfgVehicles" >> _heliType >> "side");
 switch (_side) do	{
 	case 0:					//east
-		{ 
+		{
 			_side = east;
 		};
-		
+
 	case 1:					//west
-		{ 
+		{
 			_side = west;
 		};
-		
+
 	case 2:					//GUR
-		{ 
+		{
 			_side = resistance;
 		};
-		
+
 	case 3:					//Civilian
-		{ 
+		{
 			_side = civilian;
 		};
 	};
@@ -62,9 +62,9 @@ while {_i < (count _turrets)} do
 	_turretIndex = _turrets select _i;
 	_thisTurret = _path + [_turretIndex];
 	_turretPath = configName ((configFile >> "CfgVehicles" >> _type >> "turrets") Select _index);
-	
+
 	_isCargo = ["cargo",tolower _turretPath] call BIS_fnc_inString;
-	if (isNull (_evac turretUnit _thisTurret) && !_isCargo) then 
+	if (isNull (_evac turretUnit _thisTurret) && !_isCargo) then
 	{
 		_unit = _gunnersGroup createUnit [evac_p_type, _pos, [], 0, "NONE"]; //Spawn unit into this turret, if empty.
 		_unit moveInTurret [_evac, _thisTurret];
@@ -75,4 +75,6 @@ while {_i < (count _turrets)} do
 
 _evac setVariable ["MCC_evacStartPos", getposATL _evac, true];
 MCC_evacVehicles set [count MCC_evacVehicles, _evac];
-publicvariable "MCC_evacVehicles"; 
+publicvariable "MCC_evacVehicles";
+
+MCC_curator addCuratorEditableObjects [[_evac],false];

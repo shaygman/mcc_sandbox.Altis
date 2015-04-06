@@ -22,7 +22,7 @@ MCC_medicBleedingEnabled = if (_var == 0) then {false} else {true};
 MCC_medicBleedingTime = (_logic getvariable ["BleedingTime",200]);
 
 //DamageCoef
-MCC_medicDamageCoef = (_logic getvariable ["DamageCoef",0.8]);
+MCC_medicDamageCoef = (_logic getvariable ["DamageCoef",1]);
 
 //XPmesseges
 _var 	= _logic getvariable ["medicXPmesseges",1];

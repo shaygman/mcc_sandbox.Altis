@@ -45,14 +45,14 @@ if (_charsType == (typeName [])) then
 }
 else
 {
-	if (_charsType == (typeName 0)) then 
+	if (_charsType == (typeName 0)) then
 	{
 		//Only a count was given, so ask this function for a good composition.
 		_types = [_side, _chars] call BIS_fnc_returnGroupComposition;
-	} 
-	else 
+	}
+	else
 	{
-		if (_charsType == (typeName configFile)) then 
+		if (_charsType == (typeName configFile)) then
 		{
 			_types = [];
 		};
@@ -93,17 +93,17 @@ if (((count _positions) > 0) && ((count _types) != (count _positions))) exitWith
 if (((count _ranks) > 0) && ((count _types) != (count _ranks))) exitWith {debugLog "Log: [spawnGroup] List of ranks (4) should contain an equal amount of elements to the list of types (2)!"; grpNull};
 
 //Convert a CfgGroups entry to types, positions and ranks.
-if (_charsType == (typeName configFile)) then 
+if (_charsType == (typeName configFile)) then
 {
 	_ranks = [];
 	_positions = [];
-	
-	for "_i" from 0 to ((count _chars) - 1) do 
+
+	for "_i" from 0 to ((count _chars) - 1) do
 	{
 		private ["_item"];
 		_item = _chars select _i;
-		
-		if (isClass _item) then 
+
+		if (isClass _item) then
 		{
 			_types = _types + [getText(_item >> "vehicle")];
 			_ranks = _ranks + [getText(_item >> "rank")];
@@ -121,89 +121,90 @@ for "_i" from 0 to ((count _types) - 1) do
 	//See if this unit should be skipped.
 	private ["_skip"];
 	_skip = false;
-	if (_minUnits != -1) then 
+	if (_minUnits != -1) then
 	{
 		//Has the mandatory minimum been reached?
-		if (_i > (_minUnits - 1)) then 
+		if (_i > (_minUnits - 1)) then
 		{
 			//Has the spawn chance been satisfied?
 			if ((random 1) > _chance) then {_skip = true};
 		};
 	};
-	
-	if (!_skip) then 
+
+	if (!_skip) then
 	{
 		private ["_unit", "_type"];
 		_type = _types select _i;
-		_vehicles = []; 
-		
+		_vehicles = [];
+
 		//If given, use relative position.
 		private ["_itemPos"];
-		if ((count _positions) > 0) then 
+		if ((count _positions) > 0) then
 		{
 			private ["_relPos"];
 			_relPos = _positions select _i;
 			_itemPos = [(_pos select 0) + (_relPos select 0), (_pos select 1) + (_relPos select 1)];
-		} 
-		else 
+		}
+		else
 		{
 			_itemPos = _pos;
 		};
-	
-		//Is this a character or vehicle?	
-		if (getNumber(configFile >> "CfgVehicles" >> _type >> "isMan") == 1) then 
-		{	
+
+		//Is this a character or vehicle?
+		if (getNumber(configFile >> "CfgVehicles" >> _type >> "isMan") == 1) then
+		{
 			_unit = _grp createUnit [_type, _itemPos, [], 0, "FORM"];
 			_unit setDir _azimuth;
-		} 
-		else 
+		}
+		else
 		{
 			_unit = ([_itemPos, _azimuth, _type, _grp] call BIS_fnc_spawnVehicle) select 0;
 			_vehicles set [count _vehicles, _unit];
 		};
-		
+
 		//Curator
 		MCC_curator addCuratorEditableObjects [[_unit],false];
-			
+
 		//If given, set the unit's rank.
-		if ((count _ranks) > 0) then 
+		if ((count _ranks) > 0) then
 		{
 			[_unit,_ranks select _i] call bis_fnc_setRank;
 		};
-		
+
 		//If a range was given, set a random skill.
-		if ((count _skillRange) > 0) then 
+		if ((count _skillRange) > 0) then
 		{
 			private ["_minSkill", "_maxSkill", "_diff"];
 			_minSkill = _skillRange select 0;
 			_maxSkill = _skillRange select 1;
 			_diff = _maxSkill - _minSkill;
-			
-			_unit setUnitAbility (_minSkill + (random _diff));	
+
+			_unit setUnitAbility (_minSkill + (random _diff));
 		};
-		
+
 		//If a range was given, set a random ammo count.
-		if ((count _ammoRange) > 0) then 
+		if ((count _ammoRange) > 0) then
 		{
 			private ["_minAmmo", "_maxAmmo", "_diff"];
 			_minAmmo = _ammoRange select 0;
 			_maxAmmo = _ammoRange select 1;
 			_diff = _maxAmmo - _minAmmo;
-			
-			_unit setVehicleAmmo (_minAmmo + (random _diff));	
+
+			_unit setVehicleAmmo (_minAmmo + (random _diff));
 		};
 	};
 };
+/*
 aa= _grp;
 bb = _vehicles;
 //Assigne to vehicle
 if (count _vehicles > 0) then
 {
-	private ["_vehicle","_unit"]; 
+	private ["_vehicle","_unit"];
 	{
-		_vehicle = _x; 
+		_vehicle = _x;
 		{
-			_unit = _x; 
+			_unit = _x;
 			if (_vehicle emptyPositions "commander" >0) then
 			{
 				_unit assignAsCommander _vehicle;
@@ -222,7 +223,7 @@ if (count _vehicles > 0) then
 					};
 				};
 			};
-		} foreach units _grp; 
+		} foreach units _grp;
 	} foreach _vehicles;
 };
 /*

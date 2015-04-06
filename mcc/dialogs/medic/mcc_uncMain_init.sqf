@@ -52,9 +52,10 @@ _maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
 
 while {dialog && alive player && (player getvariable ["MCC_medicUnconscious",false])} do
 {
-	_infoCtrl = (_disp displayCtrl 2);
+	_infoCtrl = (_disp displayCtrl 3);
 	_remaineBlood = player getvariable ["MCC_medicRemainBlood",_maxBleeding];
-	_infoCtrl ctrlSetText format ["Blood Level: %1", floor ((_remaineBlood/_maxBleeding)*100)];
+	_infoCtrl progressSetPosition (_remaineBlood/_maxBleeding);
+	//_infoCtrl ctrlSetText format ["Blood Level: %1", floor ((_remaineBlood/_maxBleeding)*100)];
 
 	if (_remaineBlood <= 0) then
 	{
@@ -94,3 +95,11 @@ player playmoveNow "amovppnemstpsraswrfldnon";
 [player] spawn MCC_fnc_deleteHelper;
 
 closeDialog 0;
+
+waitUntil {alive player};
+//Enable ACRE
+player setVariable ["acre_sys_core_isDisabled", false, True];
+
+//Enable TF
+player setVariable ["tf_voiceVolume", 1, True];
+player setVariable ["tf_unable_to_use_radio", false, True];

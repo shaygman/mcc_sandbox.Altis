@@ -20,25 +20,25 @@ disableSerialization;
 
 _action = _this select 0;
 _mccdialog = (uiNamespace getVariable "MCC_groupGen_Dialog");
-MCC_GUI1initDone = false; 
+MCC_GUI1initDone = false;
 //------------------------------------------------------------------------------------ Close all open boxes -------------------------------------------------------------------------------
-for "_i" from 500 to 518 step 1 do 
+for "_i" from 500 to 518 step 1 do
 {
 	(_mccdialog displayCtrl _i) ctrlShow false;
-}; 
+};
 
 //-------------------------------------------------------------------------------------Weather----------------------------------------------------------------------------------------------
 if (_action == 0) exitWith
 {
 	_control = (_mccdialog displayCtrl 501);
-	_control ctrlShow true;		
-	
+	_control ctrlShow true;
+
 	(_mccdialog displayCtrl 10) sliderSetRange [0, 1];
 	(_mccdialog displayCtrl 11) sliderSetRange [0, 1];
 	(_mccdialog displayCtrl 12) sliderSetRange [0, 1];
 	(_mccdialog displayCtrl 13) sliderSetRange [0, 1];
 	(_mccdialog displayCtrl 14) sliderSetRange [0, 1];
-	
+
 	(_mccdialog displayCtrl 10) sliderSetPosition fog;
 	(_mccdialog displayCtrl 11) sliderSetPosition rain;
 	(_mccdialog displayCtrl 12) sliderSetPosition overcast;
@@ -51,7 +51,7 @@ if (_action == 1) exitWith
 {
 	_control = (_mccdialog displayCtrl 502);
 	_control ctrlShow true;
-	
+
 	//--------------------------------------Fill index--------------------------------------------------------------------------
 	_comboBox = (_mccdialog displayCtrl 15);		// MONTH
 	lbClear _comboBox;
@@ -68,7 +68,7 @@ if (_action == 1) exitWith
 		_comboBox lbAdd _displayname;
 	} foreach MCC_days_array;
 	_comboBox lbSetCurSel (date select 2)-1;
-	
+
 	_comboBox = (_mccdialog displayCtrl 17);		//  Year
 	lbClear _comboBox;
 	{
@@ -137,7 +137,7 @@ if (_action == 4) exitWith
 	lbClear _comboBox;
 	{
 		_displayname =  format ["%1",(_x select 3)select 0];
-		_index = _comboBox lbAdd _displayname;		
+		_index = _comboBox lbAdd _displayname;
 		_comboBox lbsetpicture [_index, (_x select 3) select 1];
 	} foreach (U_GEN_AIRPLANE+U_GEN_HELICOPTER);
 	_comboBox lbSetCurSel 0;
@@ -156,7 +156,7 @@ if (_action == 5) exitWith
 {
 	_control = (_mccdialog displayCtrl 505);
 	_control ctrlShow true;
-	
+
 	//---------------------------------Artillery----------------------------------------------------------------------------
 	_comboBox = (_mccdialog displayCtrl 30);		// Artillery Type
 		lbClear _comboBox;
@@ -165,7 +165,7 @@ if (_action == 5) exitWith
 			_comboBox lbAdd _displayname;
 		} foreach MCC_artilleryTypeArray;
 		_comboBox lbSetCurSel 0;
-		
+
 	_comboBox = (_mccdialog displayCtrl 31);		//Artillery Spread
 		lbClear _comboBox;
 		{
@@ -176,13 +176,13 @@ if (_action == 5) exitWith
 
 	_comboBox = (_mccdialog displayCtrl 32);		//Artillery Number
 	lbClear _comboBox;
-	for "_i" from 1 to 50 do 
+	for "_i" from 1 to 50 do
 	{
 		_displayname = str _i;
 		_comboBox lbAdd _displayname;
 	};
 	_comboBox lbSetCurSel 0;
-		
+
 	_comboBox = (_mccdialog displayCtrl 33);		//Artillery Delay
 	lbClear _comboBox;
 	{
@@ -208,7 +208,7 @@ if (_action == 6) exitWith
 	} foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "Ammo"];
 	_comboBox lbSetCurSel MCC_class_index;
 
-	_comboBox = _mccdialog displayCtrl MCC_GGUNIT_TYPE;		
+	_comboBox = _mccdialog displayCtrl MCC_GGUNIT_TYPE;
 	lbClear _comboBox;
 	{
 		_displayname =  _x;
@@ -216,7 +216,7 @@ if (_action == 6) exitWith
 	} foreach ["Units", "Groups"];
 	_comboBox lbSetCurSel 0;
 
-	_comboBox = _mccdialog displayCtrl MCC_GGUNIT_BEHAVIOR;		
+	_comboBox = _mccdialog displayCtrl MCC_GGUNIT_BEHAVIOR;
 	lbClear _comboBox;
 	{
 		_displayname = format ["%1",_x select 0];
@@ -224,24 +224,24 @@ if (_action == 6) exitWith
 	} foreach MCC_spawn_behaviors;
 	_comboBox lbSetCurSel MCC_behavior_index;
 
-	_comboBox = _mccdialog displayCtrl MCC_GGUNIT_EMPTY;		
+	_comboBox = _mccdialog displayCtrl MCC_GGUNIT_EMPTY;
 	lbClear _comboBox;
 	{
 		_displayname = format ["%1",_x select 0];
 		_comboBox lbAdd _displayname;
 	} foreach MCC_spawn_empty;
 	_comboBox lbSetCurSel MCC_empty_index;
-	
+
 	_comboBox =(_mccdialog displayCtrl 0);		//fill zone locations
 	lbClear _comboBox;
 	{
 		_displayname = _x select 0;
 		_comboBox lbAdd _displayname;
 	} foreach MCC_ZoneLocation;
-	_comboBox lbSetCurSel mcc_hc;	//MCC_ZoneLocation_index;	
-	
-	if (mcc_delayed_spawn) then {(_mccdialog displayCtrl 3022) cbSetChecked true}; 
-	if (mcc_caching) then {(_mccdialog displayCtrl 3023) cbSetChecked true}; 
+	_comboBox lbSetCurSel mcc_hc;	//MCC_ZoneLocation_index;
+
+	if (mcc_delayed_spawn) then {(_mccdialog displayCtrl 3022) cbSetChecked true};
+	if (mcc_caching) then {(_mccdialog displayCtrl 3023) cbSetChecked true};
 	while {ctrlShown _control} do
 	{
 		mcc_delayed_spawn = if (cbChecked (_mccdialog displayCtrl 3022)) then {true} else {false};
@@ -257,7 +257,7 @@ if (_action == 7) exitWith
 	_control ctrlShow true;
 
 	//--------------------------------------------------------EVAC Settings---------------------------------------------------------
-	_comboBox =  (_mccdialog displayCtrl 40);		//EVAC type		
+	_comboBox =  (_mccdialog displayCtrl 40);		//EVAC type
 	lbClear _comboBox;
 	{
 		_displayname = _x;
@@ -288,16 +288,16 @@ if (_action == 7) exitWith
 	_comboBox lbSetCurSel MCC_evacVehicles_index;
 
 	//Change evac type by vehicle class
-	if (count MCC_evacVehicles > 0) then 
-	{										
+	if (count MCC_evacVehicles > 0) then
+	{
 		private ["_insetionArray","_type"];
 		_insetionArray = ["Move (engine on)","Move (engine off)"];
 		ctrlShow [(_mccdialog displayCtrl 44),false];
 		_type = MCC_evacVehicles select MCC_evacVehicles_index;
-		
+
 		//Case we choose aircrft
-		if (_type iskindof "helicopter") then 
-		{									
+		if (_type iskindof "helicopter") then
+		{
 			_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
 			ctrlShow [(_mccdialog displayCtrl 44),true];
 		};
@@ -325,10 +325,10 @@ if (_action == 8) exitWith
 	#define MCC_TRAPS_TRIGGER 2014
 	#define MCC_TRAPS_PROXIMITY 2015
 	#define MCC_TRAPS_AMBUSH 2016
-	
+
 	_control = (_mccdialog displayCtrl 508);
 	_control ctrlShow true;
-	
+
 	//--------------------------------------------------------TRAPS Settings---------------------------------------------------------
 	_comboBox = _mccdialog displayCtrl MCC_TRAPS_PROXIMITY;		//fill combobox IED Prox
 	lbClear _comboBox;
@@ -409,7 +409,7 @@ if (_action == 9) exitWith
 {
 	_control = (_mccdialog displayCtrl 509);
 	_control ctrlShow true;
-	
+
 	//------------------------------------------Convoy Generator--------------------------------------------------------
 	_comboBox = (_mccdialog displayCtrl 50);		//fill combobox Car1
 	lbClear _comboBox;
@@ -506,7 +506,7 @@ if (_action == 10) exitWith
 	{
 		_displayname = format ["%1",_x select 0];
 		_index = _comboBox lbAdd _displayname;
-		_pic = (_x select 1); 
+		_pic = (_x select 1);
 		if (!isnil "_pic") then {_comboBox lbsetpicture [_index, _x select 1]};
 	} foreach MCC_brushesarray;
 	_comboBox lbSetCurSel 0;
@@ -516,15 +516,15 @@ if (_action == 10) exitWith
 	{
 		_displayname = format ["%1",_x select 0];
 		_index = _comboBox lbAdd _displayname;
-		_pic = (_x select 1); 
+		_pic = (_x select 1);
 		if (!isnil "_pic") then {_comboBox lbsetpicture [_index, _x select 1]};
 	} foreach MCC_markerarray;
 	_comboBox lbSetCurSel 0;
-	
+
 	_comboBox = (_mccdialog displayCtrl 3049);		//fill Available Markers
 	lbClear _comboBox;
 	{
-		_displayname = _x; 
+		_displayname = _x;
 		_index = _comboBox lbAdd _displayname;
 	} foreach MCC_activeMarkers;
 	_comboBox lbSetCurSel 0;
@@ -565,7 +565,7 @@ if (_action == 13) exitWith
 	#define MCC_JUKEBOX_ACTIVATE 3061
 	#define MCC_JUKEBOX_CONDITION 3062
 	#define MCC_JUKEBOX_ZONE 3063
-	
+
 	if (MCC_jukeboxMusic) then
 	{
 		_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_TRACK; //fill combobox music tracks
@@ -626,12 +626,12 @@ if (_action == 14) exitWith
 	#define MCC_TRIGGERS_CONDITION 3065
 	#define MCC_TRIGGERS_SHAPE 3066
 	#define MCC_TRIGGERS_LIST 3067
-	#define MCC_TRIGGERS_NAME 3068 
+	#define MCC_TRIGGERS_NAME 3068
 	#define MCC_TRIGGERS_TIME_MIN 3071
 	#define MCC_TRIGGERS_TIME_MAX 3072
 	#define MCC_TRIGGERS_STAT_COND 3073
 	#define MCC_TRIGGERS_STAT_DEACTIVE 3075
-	
+
 	//--------------------------------------------------Triggers---------------------------------------------------------------------------
 	_comboBox = _mccdialog displayCtrl MCC_TRIGGERS_ACTIVATE; //fill combobox Activate by
 
@@ -651,7 +651,7 @@ if (_action == 14) exitWith
 	} foreach MCC_musicCond_array;
 	_comboBox lbSetCurSel 0;
 
-	_comboBox = _mccdialog displayCtrl MCC_TRIGGERS_SHAPE;		//fill combobox Trigger Shape 
+	_comboBox = _mccdialog displayCtrl MCC_TRIGGERS_SHAPE;		//fill combobox Trigger Shape
 	lbClear _comboBox;
 	{
 		_displayname = _x;
@@ -659,7 +659,7 @@ if (_action == 14) exitWith
 	} foreach MCC_shapeMarker;
 	_comboBox lbSetCurSel 0;
 
-	_comboBox = _mccdialog displayCtrl MCC_TRIGGERS_LIST;		//fill combobox Active triggers 
+	_comboBox = _mccdialog displayCtrl MCC_TRIGGERS_LIST;		//fill combobox Active triggers
 	lbClear _comboBox;
 	{
 		_displayname = _x select 0;
@@ -676,9 +676,9 @@ if (_action == 15) exitWith
 
 	#define MCCVIEWDISTANCE 1006
 	#define MCCGRASSDENSITY 1007
-	
+
 	//----------------------------------------------------------Client Side settings----------------------------------------------------------------------------
-	
+
 	_comboBox = _mccdialog displayCtrl MCCGRASSDENSITY;		//fill combobox Grass
 	lbClear _comboBox;
 	{
@@ -694,9 +694,9 @@ if (_action == 15) exitWith
 		_comboBox lbAdd _displayname;
 	} foreach MCC_view_array;
 	_comboBox lbSetCurSel (MCC_terrainPref select 1); // set viewdistance index to current vd
-	
-	sleep 1; 
-	MCC_GUI1initDone = true; 
+
+	sleep 1;
+	MCC_GUI1initDone = true;
 };
 
 //-------------------------------------------------------------------------------------AIRDROP----------------------------------------------------------------------------------------------
@@ -707,7 +707,7 @@ if (_action == 16) exitWith
 
 	#define MCC_AIRDROPTYPE 1031
 	#define MCC_airdropArray 1033
-	
+
 	_comboBox = _mccdialog displayCtrl MCC_AIRDROPTYPE;		//Airdrop Type
 	lbClear _comboBox;
 	{
@@ -735,17 +735,15 @@ if (_action == 17) exitWith
 	_control ctrlShow true;
 
 	#define MCCDELETEBRUSH 1030
-	
+
 	_comboBox = _mccdialog displayCtrl MCCDELETEBRUSH;		//Delete Brush
 	lbClear _comboBox;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["Delete All","Delete All Units", "Delete Men", "Delete Vehicles", "Delete Tanks", "Delete Air", "Delete Ammoboxs","Delete Markers","Delete dead bodies","Destroy Lights",
-	           "Lock Doors(All)","Lock Doors(Random)","Atmosphere - Warzone","Atmosphere - Sandstorm","Atmosphere - Blizzard","Atmosphere - Heatwave","Atmosphere - Clear","Remove N/V from units",
-			   "Add Flashlights to all units"];
+	} foreach ["Delete All","Delete All Units", "Delete Men", "Delete Vehicles", "Delete Tanks", "Delete Air", "Delete Ammoboxs","Delete Markers","Delete dead bodies","Destroy Lights","Lock Doors(All)","Lock Doors(Random)","Unlock Doors(All)","Atmosphere - Warzone","Atmosphere - Sandstorm","Atmosphere - Blizzard","Atmosphere - Heatwave","Atmosphere - Clear","Remove N/V from units","Add Flashlights to all units"];
 	_comboBox lbSetCurSel 0;
 };
 
-sleep 1; 
-MCC_GUI1initDone = true; 
+sleep 1;
+MCC_GUI1initDone = true;

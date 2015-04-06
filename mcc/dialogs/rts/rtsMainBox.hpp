@@ -252,7 +252,7 @@ class MCC_rtsMainBox
 					h = 0.0226897 * safezoneH;
 				};
 
-				class playerClassTitle:MCC_RscText
+				class playerClassTitle: MCC_RscText
 				{
 					idc = -1;
 					text = "Yours:";
@@ -266,7 +266,7 @@ class MCC_rtsMainBox
 					h = 0.0226897 * safezoneH;
 				};
 
-				class MainClassTitle:MCC_RscText
+				class MainClassTitle: MCC_RscText
 				{
 					idc = -1;
 					text = "Cargo:";
