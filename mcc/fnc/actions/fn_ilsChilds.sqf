@@ -1,14 +1,20 @@
-//==================================================================MCC_fnc_ilsChilds===============================================================================================
+//==================================================================MCC_fnc_ilsChilds===========================================================================================
 // ILS for aircrafts based on ILS Pro II 1.0 (by TiGGa)
 //Call from an ILS logic
-//===========================================================================================================================================================================	
+//===========================================================================================================================================================================
 private ["_counter","_glideslope","_loc","_arrestingear","_runwayname","_vectorglide","_rwydirection","_angle","_numberofcircles",
-         "_distanceofcircles","_ringarray","_rwydirection2","_devhor","_ycord","_xcord","_zcord","_horizontal","_vertical","_circlepos","_ring","_helpers"]; 
-_loc 			= _this select 0;
+         "_distanceofcircles","_ringarray","_rwydirection2","_devhor","_ycord","_xcord","_zcord","_horizontal","_vertical","_circlepos","_ring","_helpers"];
+
+//If we came here from ACE get the airport
+if (typeName _this == typeName 0) then {
+	_this = ((player getVariable ["interactWith",[]]) select _this);
+};
+
+_loc 			=  _this select 0;
 _rwydirection 	= getdir _loc;
 _runwayname 	= _this select 1;
 _glideslope 	=  "Land_HelipadEmpty_F" createVehicleLocal ([_loc, (_this select 2), _rwydirection] call BIS_fnc_relPos);
-_glideslope setdir (if (_rwydirection > 180) then {_rwydirection-180} else {_rwydirection+180}); 
+_glideslope setdir (if (_rwydirection > 180) then {_rwydirection-180} else {_rwydirection+180});
 _arrestingear 	= _this select 3;
 _helpers 		= _this select 4;
 
@@ -246,7 +252,7 @@ for [{_loop=0}, {(((getPos player) select 2) > 20) and (player == driver player)
 			};
 		};
 	};
-	
+
 	cuttext [format ["\n%1 \n \n%2 \n \n%3 \n \nDeviation in m \nHorizontal: %4 \nVertical: %5 \n \nDistance: %6 \nHeight: %7",_runwayname,_horizontal,_vertical,_abshor,_absver,_glideslopedistance,_aslheight],"PLAIN",0.1,false];
 	sleep 0.5;
 };

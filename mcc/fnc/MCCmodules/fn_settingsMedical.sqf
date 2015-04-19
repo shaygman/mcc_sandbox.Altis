@@ -6,6 +6,9 @@ private ["_logic","_var"];
 
 _logic	= _this select 0;
 
+//if ACE enabled exit
+if (MCC_isACE) exitWith {};
+
 //Enable system
 MCC_medicSystemEnabled = true;
 [] spawn MCC_fnc_initMedic;

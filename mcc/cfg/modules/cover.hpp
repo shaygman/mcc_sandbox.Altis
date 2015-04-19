@@ -12,6 +12,27 @@ class mcc_sandbox_moduleCover : Module_F
 
 	class Arguments
 	{
+		class actionMenu
+		{
+			displayName = "Action Menu";
+			description = "Show MCC's options in the action menu";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
 		class cover
 		{
 			displayName = "Cover System";

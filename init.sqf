@@ -1,6 +1,7 @@
 private ["_string","_null","_nul","_dummyGroup","_dummy","_name","_keyDown","_savesArray"];
 
 MCC_isMode = isClass (configFile >> "CfgPatches" >> "mcc_sandbox");	//check if MCC is mod version
+MCC_isACE = isClass (configFile >> "CfgPatches" >> "ace_common");
 MCC_initDone = false;
 MCC_GUI1initDone = false;
 
@@ -11,12 +12,10 @@ MW_debug = true;
 if (MCC_isMode) then
 {
 	MCC_path = "\mcc_sandbox_mod\";
-	MCC_path	 = "\mcc_sandbox_mod\";
 }
 else
 {
 	MCC_path = "";
-	MCC_path	 = "";
 	enableSaving [false, false];
 };
 
@@ -91,25 +90,6 @@ if (isnil "MCC_resEast") then {MCC_resEast = [500,500,200,200,100]};
 if (isnil "MCC_resGUER") then {MCC_resGUER = [500,500,200,200,100]};
 
 //--------------------Screens -------------------------------------------------------
-//Allow start location dialog on JIP or after respawn
-//MCC_openRespawnMenu = true; //false - disabled
-
-//allow SQL PDA
-//MCC_allowsqlPDA = true; //false - disabled
-
-//allow Console
-//MCC_allowConsole = true; //false - disabled
-
-//allow squad menu
-//MCC_allowSquadDialog = true; //false - disabled
-//MCC_allowSquadDialogCamera = true; //Allow camera on squad dialog
-
-//allow MCC logistics
-//MCC_allowlogistics = true;  //false - disabled
-
-//allow MCC interaction
-//MCC_interaction = true;  //false - disabled
-
 //Teleport 2 Team
 if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- AfterRespawn, 3-Always
 
@@ -125,15 +105,16 @@ if (isnil "MCC_surviveMod") then {MCC_surviveMod = false};
 if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1};
 
 //============== Medic System ====================================
-if !(MCC_isMode) then
-{
-		MCC_interaction = true;
+if !(MCC_isMode) then {
+	MCC_interaction = true;
+	if (!MCC_isACE) then {
 		MCC_medicSystemEnabled = true;
 		//MCC_medicComplex = true;
 		MCC_medicBleedingEnabled = true;
 		MCC_medicDamageCoef = 0.9;
 
 		[] spawn MCC_fnc_initMedic;
+	};
 };
 
 //----------------------IED settings---------------------------------------------
@@ -296,7 +277,8 @@ mccPresetsObjects = [
 //*********************************************************************************************************************
 
 //---------------------------General objects---------------------------------
-MCC_dummy = "bomb"; //Dummy object for OO saving "UserTexture_1x2_F"
+//Dummy object for OO saving "UserTexture_1x2_F"
+MCC_dummy = if (MCC_isACE) then {"ACE_DefuseObject"} else {"bomb"};
 MCC_supplyTracks = ["B_Truck_01_transport_F","O_Truck_03_transport_F","I_Truck_02_transport_F"]; //[west,east,guer];
 MCC_supplyAttachPoints = [
 							[[0,0,0],[0,-2,0],[0,-4,0]],
@@ -1176,7 +1158,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	//Curator
 	if(local player && (isMultiplayer)) then
 	{
-		[compile format ["MCC_curator addCuratorEditableObjects [[objectFromNetID '%1'],false]", netID player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
+		[compile format ["MCC_curator addCuratorEditableObjects [[objectFromNetID '%1'],true]", netID player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 	};
 
 	//Handle add - action

@@ -1,6 +1,33 @@
+Change log r15:
+- ACE comptability 
+		- Open SQL PDA and Commander PDA from ACE - remove add actions. 
+       	- MCC's hostages will react to ACE restrained and escort. 
+		- MCC's IEDs can be disarmed with ACE Defusal Kit. 
+		- MCC's medical system will not start if ACE is on. 
+		- MCC's in game UI will not be shown if ACE is on. 
+		- ACE Defusal Kit and ACE lockpicks will work as MCC's multi-tool to unlock/lock doors. 
+		- Doors interaction exc breaching added to ACE self interaction menu while looking at a door.
+		- MCC's SQL commands (spot enemy, call support exc) added to to ACE self interaction menu.
+		- MCC's Interaction with civilians and enemy units moved to ACE main actions. 
+		- MCC's artillery computer added to ACE actions while inside an artillery vehicle.
+		- MCC's ILS added to ACE actions while inside a fixed winged vheicle.
+		- MCC's Taru pod attach and drop pods options added to ACE actions while flying a Taru helicopter. 
+		- MCC's logistics menu added to ACE actions while driving a MCC's logistic truck.
+		- MCC's Request drop-off from AI driver added to ACE actions while insided a vehicle with AI driver.  
+
+- Added: MCC's door interaction will work on gates and added a "check door" state before you can pick the lock. 
+- Ollem's Spectator script reintoduced. 
+- Fixed: MCC's evac helicopter fast ropes.
+- Added: MCC's evac helicopter will open ramps/doors before infil and close them after.
+
+TODO evac drops
+
+
 Change log r14:
 - Reworked on the SQL PDA
 - Fixed: Fortify on Headless client
+- Fixed: Vault animations weren't global
+- Added: Paramater to disable MCC's related action menu - "MCC_showActionKey" and an option in the MCC's settings module. 
 - Removed the weapon resting in MCC's cover system as BI implemented it in Marksman DLC. 
 
 Change log r13 Hotfix:

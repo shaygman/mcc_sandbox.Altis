@@ -17,7 +17,7 @@ _ctrlKey 	= _keyVarable select 3;
 _alt 		= _keyVarable select 4;
 
 _arrayToCheck = str [_shift,_ctrlKey,_alt,_dikCode];
-
+//hint str _this;
 _action = -1;
 {
 	if (_arrayToCheck == str _x) exitWith {_action = _forEachIndex};
@@ -25,6 +25,8 @@ _action = -1;
 
 if (tolower _ehType == "keyup") exitWith
 {
+	//ACE ui position
+	if (_dikCode == 219 && _ctrlKey && !(isnil "MCC_ACEKeyPos")) then {0 spawn {sleep 1; MCC_ACEKeyPos = nil}};
 	//Vault
 	if (missionNameSpace getVariable ["MCC_coverVault",true]) then
 	{
@@ -55,6 +57,8 @@ if (tolower _ehType == "keyup") exitWith
 
 if (tolower _ehType == "keydown") exitWith
 {
+	//ACE ui position
+	if (_dikCode == 219 && _ctrlKey && isnil "MCC_ACEKeyPos") then { MCC_ACEKeyPos =  screenToWorld [0.5,0.5];};
 	//keybinds
 	switch (_action) do
 	{

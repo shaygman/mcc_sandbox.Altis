@@ -218,6 +218,8 @@ class MCC
 		class disarmUnit		{description = "Disarm a unit and create a weapon holder";};
 		class setUnitAnim		{description = "Sets units Animation - and return it to default after a while";};
 		class stunBehav			{description = "Play unit stun behavior";};
+		class canHaltAI			{description = "Can an AI unit be halted by a player";};
+		class doHaltAI			{description = "Can an AI unit be halted by a player";};
 	};
 
 	class mp
@@ -278,6 +280,8 @@ class MCC
 		class utilityUse	{description = "use utility";};
 		class grenadeThrow	{description = "Throw grenades";};
 		class pickKit		{description = "pick up dead unit kit";};
+		class canAttachPod	{description = "check if can attach pod";};
+		class addILSChildrenACE {description = "Add ILS actions to ACE ui";};
 	};
 
 	class roleSelection
@@ -325,6 +329,16 @@ class MCC
 		class interactSelf	{description = "Interaction with self";};
 		class interactSelfClicked	{};
 		class requestDropOff	{description = "Request player or AI to drop off a cargo group in a specific place - shold run localy on the requestor";};
+		class isDoor	{description = "is the player facing a door";};
+		class isDoorLocked {description = "is the player facing a door";};
+		class checkDoor {description = "Give infor if the door is locked";};
+		class doorBreach {description = "Place a breaching charge on the door";};
+		class doorLock {description = "lock door";};
+		class doorUnlock {description = "unlock door";};
+		class doorCamera {description = "Mirror under the door";};
+		class spotEnemy {description = "spot an enmey from ACE menu";};
+		class callSupport {description = "Call support from ACE menu";};
+		class callConstruct {description = "Call construct from ACE menu";};
 	};
 
 	class radio
@@ -392,7 +406,7 @@ class MCC
 		class removeVirtualWeaponCargo {};
 		class removeVirtualMagazineCargo {};
 		class baseResourceReduce {};
-		//class baseSelected {};
+		class baseSelected {};
 		class rtsClearBuilding {};
 		class baseActionClicked {};
 		class baseActionEntered {};
@@ -401,5 +415,6 @@ class MCC
 		class baseBuildBorders {};
 		class CheckRes {};
 		class CheckBuildings {};
+		class mainBoxOpen {};
 	};
 };

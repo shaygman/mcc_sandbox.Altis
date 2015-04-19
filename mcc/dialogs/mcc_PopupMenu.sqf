@@ -110,7 +110,7 @@ if (_index == 2 && (missionNamespace getVariable ["MCC_allowSquadDialog",true]))
 };
 
 //SQL PDA
-if (_index == 3 && ((count units player > 1) && (leader player == player)) && (missionNamespace getVariable ["MCC_allowsqlPDA",true])) exitWith
+if (_index == 3 && ((count units player > 1) && (leader player == player)) && (missionNamespace getVariable ["MCC_allowsqlPDA",true]) && "ItemGPS" in (assignedItems player)) exitWith
 {
 	if (dialog) then
 	{
@@ -120,4 +120,4 @@ if (_index == 3 && ((count units player > 1) && (leader player == player)) && (m
 	{
 		createDialog "MCC_SQLPDA";
 	};
-};
+};visibleGPS

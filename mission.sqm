@@ -13,7 +13,8 @@ class Mission
 		"a3_map_altis",
 		"a3_characters_f",
 		"A3_Modules_F",
-		"A3_Modules_F_Curator_Multiplayer"
+		"A3_Modules_F_Curator_Multiplayer",
+		"A3_Modules_F_Curator_Curator"
 	};
 	addOnsAuto[]=
 	{
@@ -2496,12 +2497,11 @@ class Mission
 					id=151;
 					side="LOGIC";
 					vehicle="HeadlessClient_F";
-					forceHeadlessClient=1;
-					text="MCCHeadlessClient";
 					player="PLAY CDG";
 					leader=1;
 					lock="UNLOCKED";
-					skill=0.60000002;					
+					skill=0.60000002;
+					text="MCCHeadlessClient";
 				};
 			};
 		};

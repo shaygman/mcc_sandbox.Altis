@@ -28,6 +28,7 @@ class Box_NATO_Ammo_F;
 #include "ammoBox\tacticalItemsBox.hpp"
 #include "ammoBox\miscItemsBox.hpp"
 
+#include "ACE\aceCfg.hpp"
 class Land_Ammobox_rounds_F;
 class MCC_ammoBox : Land_Ammobox_rounds_F
 {

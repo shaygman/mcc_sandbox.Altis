@@ -54,7 +54,7 @@ if (vehicle player == player) then
 	};
 
 	//Handle house
-	if ((_target isKindof "house" || _target isKindof "AllVehicles" || _target isKindof "ReammoBox_F") && !(_target isKindof "CAManBase")) exitWith
+	if ((_target isKindof "house" || _target isKindof "wall" || _target isKindof "AllVehicles" || _target isKindof "ReammoBox_F") && !(_target isKindof "CAManBase")) exitWith
 	{
 		//[_target] execvm "mcc\fnc\interaction\fn_interactDoor.sqf";
 		_null= [_target] call MCC_fnc_interactDoor

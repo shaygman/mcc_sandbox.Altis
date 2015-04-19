@@ -5,7 +5,7 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 	y = 0.544 * safezoneH + safezoneY;
 	w = 0.665156 * safezoneW;
 	h = 0.143 * safezoneH;
-	
+
 	class controls
 	{
 		class mechanicsTittle: MCC_RscText
@@ -54,14 +54,15 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			h = 0.022 * safezoneH;
 			tooltip = "Enables interction in-game UI"; //--- ToDo: Localize;
 		};
-		class coverRecoil: MCC_RscText
+		class actionMenu: MCC_RscText
 		{
 			idc = -1;
-			text = "Cover Recoil:"; //--- ToDo: Localize;
+			text = "Action Menu:"; //--- ToDo: Localize;
 			x = 0.170156 * safezoneW;
 			y = 0.077 * safezoneH;
 			w = 0.0670312 * safezoneW;
 			h = 0.022 * safezoneH;
+			tooltip = "Show MCC's options in the action menu";
 		};
 		class CoverUICombo: MCC_RscCombo
 		{
@@ -126,7 +127,7 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			w = 0.0670312 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
-		
+
 		class weaponsBinds: MCC_RscText
 		{
 			idc = -1;
@@ -136,7 +137,7 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			w = 0.0670312 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
-		
+
 		class weaponsBindsCombo: MCC_RscCombo
 		{
 			idc = 8433;
@@ -146,7 +147,7 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			h = 0.022 * safezoneH;
 			tooltip = "Quick weapons selection with the 1-5 buttons"; //--- ToDo: Localize;
 		};
-		
+
 		class Survival: MCC_RscText
 		{
 			idc = -1;

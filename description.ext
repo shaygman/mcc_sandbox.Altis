@@ -14,8 +14,8 @@ enableDebugConsole = 1;
 
 //----- For PvP ---------
 disableChannels[]={0};
-joinUnassigned = 1;	
-	
+joinUnassigned = 1;
+
 corpseLimit = 30;
 corpseRemovalMinTime = 60;
 corpseRemovalMaxTime = 300;
@@ -39,13 +39,13 @@ class Params
                 values[] = {0,1,2,3,4};
                 texts[] = {"Regular","Night Ops(SF Only)","Divers(SF Only)","Ghillie Suit(SF Only)","Tier 1(SF Only)"};
                 default = 0;
-        }; 
-		
+        };
+
 		class f_param_nightvision
         {
                 title = "Night Vision";
                 values[] = {0,1};
                 texts[] = {"Off","On"};
                 default = 1;
-        }; 
+        };
 };

@@ -39,9 +39,14 @@ switch (true) do
 		{
 			["Restraining suspect",5] call MCC_fnc_interactProgress;
 			playsound "MCC_zip";
+			if (MCC_isACE) then {
+				[_suspect, true] call ACE_captives_fnc_setHandcuffed;
+			} else {
+				sleep 1.5;
+				[[_suspect, "AmovPercMstpSnonWnonDnon_Ease", false, -1],"MCC_fnc_setUnitAnim", _suspect, false] spawn BIS_fnc_MP;
+			};
+
 			_suspect setVariable ["MCC_disarmed",false,true];
-			sleep 1.5;
-			[[_suspect, "AmovPercMstpSnonWnonDnon_Ease", false, -1],"MCC_fnc_setUnitAnim", _suspect, false] spawn BIS_fnc_MP;
 			_suspect setVariable ["MCC_neutralize",true,true];
 		};
 	};

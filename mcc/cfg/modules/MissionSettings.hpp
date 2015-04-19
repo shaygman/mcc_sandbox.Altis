@@ -9,7 +9,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 	function = "MCC_fnc_missionSettings";
 	scope = 2;
 	isGlobal = 1;
-	
+
 	class Arguments
 	{
 		class t2t
@@ -82,7 +82,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class sync
 		{
 			displayName = "Sync JIP";
@@ -103,7 +103,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class nameTags
 		{
 			displayName = "Name Tags";
@@ -124,7 +124,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class groupMarkers
 		{
 			displayName = "Squads Markers";
@@ -145,7 +145,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class artilleryComputer
 		{
 			displayName = "Artilery Computer";
@@ -166,7 +166,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class timeAccel
 		{
 			displayName = "Time Acceleration";
@@ -202,7 +202,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class deleteBody
 		{
 			displayName = "Delete dead players' bodies";
@@ -223,7 +223,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class respawnMenu
 		{
 			displayName = "Respawn Menu";
@@ -244,7 +244,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class sqlPDA
 		{
 			displayName = "Squad Leader PDA";
@@ -265,7 +265,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class commanderConsole
 		{
 			displayName = "Commander Console";
@@ -286,7 +286,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class squadDialog
 		{
 			displayName = "Squad Dialog";
@@ -307,7 +307,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class squadDialogPip
 		{
 			displayName = "Squad Dialog (camera)";
@@ -328,7 +328,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class logistics
 		{
 			displayName = "Logistics";
@@ -349,7 +349,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
-		
+
 		class roleSelection
 		{
 			displayName = "Role Selection";
@@ -371,7 +371,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 			};
 		};
 	};
-	
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Define MCC settings";

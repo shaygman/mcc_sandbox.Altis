@@ -6,43 +6,50 @@
 //	anim:					String or side, animation set after disarm leave "" for non
 //
 // <OUT>
-//		Boolean 
-//===========================================================================================================================================================================	
-private["_pos","_npc","_wepHolder"];	
+//		Boolean
+//===========================================================================================================================================================================
+private["_pos","_npc","_wepHolder"];
 _npc = _this select 0;
-_pos = _this select 1;	
+_pos = _this select 1;
 
 if (!alive _npc || !canmove _npc || _npc != vehicle _npc || !(_npc iskindof "Man")) exitwith{};
 
-_wepHolder = "GroundWeaponHolder" createVehicle position _npc;
-_wepHolder setpos(_npc modeltoWorld [1,0,0]);
+if (MCC_isACE) then {
+	[_npc, true] call ACE_captives_fnc_setSurrendered;
+	_npc setVariable ["MCC_disarmed",true,true];
+} else {
+	_wepHolder = "GroundWeaponHolder" createVehicle position _npc;
+	_wepHolder setpos(_npc modeltoWorld [1,0,0]);
 
-{
-	_npc action ["DropWeapon",_wepHolder, _x];
-	waituntil {!(_x in (weapons _npc))};
-} foreach (weapons _npc);
-
-sleep 1;
-removeAllweapons _npc;
-_npc disableAI "MOVE";
-_npc disableAI "AUTOTARGET";
-
-_npc setVariable ["MCC_disarmed",true,true];
-[_npc, "Hold %1 to interact"] spawn MCC_fnc_createHelper;
-
-if (_pos != "") then
-{
-	_npc disableAI "ANIM"; 
-	while {alive _npc && _npc getVariable ["MCC_disarmed",false]} do
 	{
-		if ((animationState _npc)!=_pos) then
+		_npc action ["DropWeapon",_wepHolder, _x];
+		waituntil {!(_x in (weapons _npc))};
+	} foreach (weapons _npc);
+
+	sleep 1;
+	removeAllweapons _npc;
+	_npc disableAI "MOVE";
+	_npc disableAI "AUTOTARGET";
+
+	_npc setVariable ["MCC_disarmed",true,true];
+	[_npc, "Hold %1 to interact"] spawn MCC_fnc_createHelper;
+
+	if (_pos != "") then
+	{
+		_npc disableAI "ANIM";
+		while {alive _npc && _npc getVariable ["MCC_disarmed",false]} do
 		{
-			_npc playMoveNow _pos;
+			if ((animationState _npc)!=_pos) then
+			{
+				_npc playMoveNow _pos;
+			};
+			sleep 1;
 		};
-		sleep 1; 
+		_npc enableAI "ANIM";
 	};
-	_npc enableAI "ANIM"; 
 };
+
+
 
 true;
 
