@@ -3,8 +3,8 @@
 	RscAttributeUnitPos_selected
 	RscAttributeRespawnPosition_selected
 */
-#define MCC_NAMEBOX 8003 
-#define MCC_INITBOX 8004 
+#define MCC_NAMEBOX 8003
+#define MCC_INITBOX 8004
 #define MCC_PRESETS 8005
 
 class MCC_RscInitNameBox: MCC_RscControlsGroupNoScrollbars
@@ -52,7 +52,7 @@ class MCC_RscInitBox: MCC_RscControlsGroupNoScrollbars
 		class Title: MCC_RscText
 		{
 			idc = -1;
-			text = "Init Line:";
+			text = "Execute";
 			x = "0 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";
 			y = "0 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 			w = "10 * 			(			((safezoneW / safezoneH) min 1.2) / 40)";

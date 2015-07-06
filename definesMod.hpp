@@ -55,6 +55,13 @@
 #include "\mcc_sandbox_mod\configs\dialogs\gearPanel\accessoriesPanel.hpp"
 #include "\mcc_sandbox_mod\configs\dialogs\gearPanel\uniformPanel.hpp"
 
+//--------------------------Campaign----------------------------------------------------
+#include "\mcc_sandbox_mod\mcc\Dialogs\campaign\mcc_vehicleSpawner.hpp"
+
+//--------------------------Dynamic dialog--------------------------
+#include "\mcc_sandbox_mod\mcc\Dialogs\dynamicDialog\dynamicDialogUI.hpp"
+
+
 //--------------------------Others----------------------------------------------------
 #include "\mcc_sandbox_mod\bon_artillery\dialog\Artillery.hpp"
 #include "\mcc_sandbox_mod\VAS\menu.hpp"
@@ -176,7 +183,7 @@ class RscMapControl;
 class RscText;
 class RscControlsGroup;
 class RscControlsGroupNoScrollbars;
-class RscButtonMenu;
+//class RscButtonMenu;
 class RscShortcutButton;
 class RscAttributeText;
 class RscAttributeOwners;

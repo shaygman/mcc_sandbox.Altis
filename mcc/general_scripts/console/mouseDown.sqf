@@ -17,12 +17,12 @@ private ["_params","_ctrl","_pressed","_posX","_posY","_shift","_ctrlKey","_alt"
 #define MCC_ConsoleMapRulerDis 9165
 
 disableSerialization;
- 
+
 _params = _this select 0;
 
 _ctrl = _params select 0;
 _pressed = _params select 1;
-_posX = _params select 2; 
+_posX = _params select 2;
 _posY = _params select 3;
 _shift = _params select 4;
 _ctrlKey = _params select 5;
@@ -30,10 +30,10 @@ _alt = _params select 6;
 
 MCC_ConsoleMouseButtonDown = true;	//Mouse state
 MCC_ConsoleMouseButtonUp = false;
-if (isnil "MCC_doubleClicked") then {MCC_doubleClicked =false};	
+if (isnil "MCC_doubleClicked") then {MCC_doubleClicked =false};
 
 //Close Group info control
-if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then 								
+if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then
 {
 	ctrlShow [MCC_CONSOLEINFOTEXT,false];
 	ctrlShow [MCC_CONSOLEINFOLIVEFEED,false];
@@ -46,95 +46,95 @@ if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then
 	ctrlShow [MCC_CONSOLEWPREPLACE,false];
 	ctrlShow [MCC_CONSOLEWPCLEAR,false];
 	ctrlShow [MCC_CONSOLEINFOUAVCONTROL,false];
-};		
+};
 
 //CAS Request
-if (MCC_CASrequestMarker && _pressed==0) then 
+if (MCC_CASrequestMarker && _pressed==0) then
 {
 	MCC_pointA = _ctrl ctrlmapscreentoworld [_posX,_posY];									//Base of the arrow
 	_marker = [MCC_pointA,MCC_pointA,1,"mil_arrow",20,"ColorRed",300] call MCC_fnc_drawArrow;	//Drow it first
-	sleep 0.25; 
-	
+	sleep 0.25;
+
 	while {MCC_ConsoleMouseButtonDown} do {														//While mouse pressed
 		deleteMarkerLocal _marker;
 		_marker = [MCC_pointA, MCCConsoleDispPosXY,1,"mil_arrow",20,"ColorRed",300] call MCC_fnc_drawArrow;
-		sleep 0.25;  
-		}; 
-		
+		sleep 0.25;
+		};
+
 	// set plane spawn and away position
 	_markerPos 	= getmarkerpos _marker;
 	_markerDir 	= markerDir _marker;
 	_spawn 		= [_markerPos,4500,(_markerDir -180)] call BIS_fnc_relpos;
 	_away 		= [_markerPos,4500,_markerDir] call BIS_fnc_relpos;
 	_ammount	=  floor (((getMarkerSize _marker) select 1)/50) + 1; 		//Ammount of drop min 0 max 6
-	
-	hint "Air support incomming."; 
-	[[_ammount, MCC_spawnkind , getmarkerpos _marker, MCC_planeType, _spawn,_away],"MCC_fnc_airDrop",true,false] spawn BIS_fnc_MP;
-					
+
+	hint "Air support incomming.";
+	[[_ammount, MCC_spawnkind , getmarkerpos _marker, MCC_planeType, _spawn,_away,(missionNamespace getVariable ["MCC_airdropIsParachute",true])],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
+
 	MCC_CASrequestMarker = false;			//Wait and delete the marker
 	sleep 40;
 	deletemarkerlocal _marker;
 };
 
 //Ruler drawing select
-if (_pressed==0 && MCC_ConsoleRuler) then 
+if (_pressed==0 && MCC_ConsoleRuler) then
 {
 	MCC_pointA = _ctrl ctrlmapscreentoworld [_posX,_posY];									//Base of the arrow
 	_marker = [MCC_pointA,MCC_pointA,1,"mil_arrow",20,"ColorBlue",1000000] call MCC_fnc_drawArrow;	//Drow it first
-	sleep 0.25; 
-	
-	while {MCC_ConsoleMouseButtonDown} do 
+	sleep 0.25;
+
+	while {MCC_ConsoleMouseButtonDown} do
 		{														//While mouse pressed
 			deleteMarkerLocal _marker;
 			_marker = [MCC_pointA, MCCConsoleDispPosXY,1,"mil_arrow",20,"ColorBlue",1000000] call MCC_fnc_drawArrow;
-			sleep 0.25;  
-		}; 
-		
+			sleep 0.25;
+		};
+
 	sleep 0.01;
 	deletemarkerLocal _marker;
-	
+
 	//get distance and directio
 	_dir = [MCC_pointA, MCCConsoleDispPosXY] call BIS_fnc_dirTo;
 	_dir = if (_dir < 0) then {360 + _dir} else {_dir};
 
 	MCC_ConsoleRulerData set [0,floor _dir];
 	MCC_ConsoleRulerData set [1,floor (MCC_pointA distance MCCConsoleDispPosXY)];
-	
+
 	//Set control
 	ctrlSetText [MCC_ConsoleMapRulerDir,format ["Dir: %1",MCC_ConsoleRulerData select 0]];
 	ctrlSetText [MCC_ConsoleMapRulerDis,format ["Dis: %1m",MCC_ConsoleRulerData select 1]];
-	
-	MCC_ConsoleRuler = false; 
-	
+
+	MCC_ConsoleRuler = false;
+
 };
 
 //Box drawing select
-if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked) then 
+if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked) then
 {
 	private ["_marker","_markersize","_markerpos","_null","_markerposX","_markerposY","_markersize","_markersizeX","_markersizeY",
 				 "_borderXleft","_borderXright","_borderYdown","_borderYtop","_group","_groupX","_groupY","_leader","_icon","_groupControl"];
-	
+
 	//Close WP dialog
 	ctrlShow [MCC_CONSOLEWPBCKGR,false];
 	ctrlShow [MCC_CONSOLEWPCOMBO,false];
 	ctrlShow [MCC_CONSOLEWPADD,false];
 	ctrlShow [MCC_CONSOLEWPREPLACE,false];
 	ctrlShow [MCC_CONSOLEWPCLEAR,false];
-	
+
 	//Start creating the box
 	MCC_pointA = _ctrl ctrlmapscreentoworld [_posX,_posY];									//Base of the arrow
 	_marker = [MCC_pointA,MCC_pointA,1,"RECTANGLE","ColorGreen","Border"] call MCC_fnc_drawBox;	//Drow it first
-	sleep 0.1; 
+	sleep 0.1;
 	//if (!MCC_ConsoleMouseButtonDown) exitWith {};				//looks like we are not making a box
-	while {MCC_ConsoleMouseButtonDown} do 
+	while {MCC_ConsoleMouseButtonDown} do
 		{														//While mouse pressed
 			deleteMarkerLocal _marker;
 			_marker = [MCC_pointA, MCCConsoleDispPosXY,1,"RECTANGLE","ColorGreen","Border"] call MCC_fnc_drawBox;
-			sleep 0.1;  
+			sleep 0.1;
 		};
 	_markersize = getMarkerSize _marker;
 	_markerpos = markerpos  _marker;
-	deletemarkerlocal _marker;	
+	deletemarkerlocal _marker;
 
 	_markerposX = _markerpos select 0;
 	_markerposY = _markerpos select 1;
@@ -146,11 +146,11 @@ if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked) then
 	_borderYdown = _markerposY - _markersizeY;
 	_borderYtop = _markerposY + _markersizeY;
 	if (isnil "MCC_ConsoleGroupSelected") then {MCC_ConsoleGroupSelected=[]};
-	if (_markersizeX < 10 || _markersizeY<10) exitWith {}; 
+	if (_markersizeX < 10 || _markersizeY<10) exitWith {};
 	{_x removeGroupIcon (_x getvariable "MCCgroupIconDataSelected")} foreach MCC_ConsoleGroupSelected;
 	MCC_ConsoleGroupSelected = [];
 	{
-		_groupControl = nil; 
+		_groupControl = nil;
 		_leader = (leader _x);
 		_groupControl = if ((isplayer _leader) || (getText (configfile >> "CfgVehicles" >> typeOF vehicle _leader >> "vehicleClass")== "Autonomous")) then {true} else {_x getvariable ["MCC_canbecontrolled",false]};	//Can we control this group
 		if ((side _leader == side player) && alive _leader && count (units _x)>0 && _groupControl) then
@@ -161,11 +161,11 @@ if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked) then
 				_groupX = (position _leader) select 0;
 				_groupY = (position _leader) select 1;
 				if (
-					_groupX > _borderXleft && 
+					_groupX > _borderXleft &&
 					_groupX < _borderXright &&
 					_groupY > _borderYdown &&
 					_groupY < _borderYtop
-				) then 
+				) then
 				{
 					MCC_ConsoleGroupSelected = MCC_ConsoleGroupSelected + [_group];
 				};

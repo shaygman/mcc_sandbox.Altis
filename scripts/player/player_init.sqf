@@ -8,7 +8,9 @@ if (!MCC_iniDBenabled) exitWIth {systemchat "iniDB isn't running. Can't access r
 //******************************************************************************************************************************
 waituntil {alive player};
 //Disable weapon disassemble
-player addEventHandler ["WeaponDisassembled",
+player removeEventHandler ["WeaponDisassembled",(player getVariable ["MCC_disableStatic",999])];
+
+_eh = player addEventHandler ["WeaponDisassembled",
 {
 	_this spawn
 	{
@@ -18,7 +20,7 @@ player addEventHandler ["WeaponDisassembled",
 
 		_currBag = unitBackpack _unit;
 
-		titleText ["You are not allowed to disassemble static weapons.", "PLAIN DOWN", 0.5];
+		//titleText ["You are not allowed to disassemble static weapons.", "PLAIN DOWN", 0.5];
 
 		_unit action ["TakeBag", _bag1];
 
@@ -30,6 +32,8 @@ player addEventHandler ["WeaponDisassembled",
 		if (!isNull _currBag) then { _unit action ["TakeBag", _currBag] };
 	};
 }];
+
+player setVariable ["MCC_disableStatic",_eh];
 
 //Mark it zero again
 player addRating (-1 * (rating player));
@@ -149,12 +153,13 @@ CP_gearCam cameraeffect ["Terminate","back"];
 
 _safePos = [-500,-500,0];
 _rad = 10;
-while {str _safepos == "[-500,-500,0]"} do
-{
+while {str _safepos == "[-500,-500,0]"} do {
 	_safePos = [(playerDeployPos),_rad,30,1,0,900,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
 	_rad = _rad + 10;
+	sleep 0.1;
 };
 
+missionNamespace setvariable ["CP_gainXPFirstTime",true];
 player setpos _safePos;
 
 while {isnil "_role"} do {_role = player getvariable "CP_role";};
@@ -170,7 +175,7 @@ if (MCCplayerRank == "N/A") then
 };
 
 player setRank MCCplayerRank;
-
+player switchmove "";
 
 camDestroy CP_gearCam;
 deleteVehicle CP_gearCam;

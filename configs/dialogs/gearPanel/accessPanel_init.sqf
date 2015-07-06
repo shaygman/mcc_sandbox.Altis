@@ -15,25 +15,30 @@ uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 3];
 #define CP_accessoriesPanelAttachment (uiNamespace getVariable "CP_accessoriesPanelAttachment")
 #define CP_InfoText (uiNamespace getVariable "CP_InfoText")
 
+//We came here from an item and we want to change the kit
+if (isnil "CP_gearCam") then {
+	["CP_ACCESPANEL_IDD"] call MCC_fnc_createCameraOnPlayer;
+} else {
+	//Disable Esc while respawn is on
+	CP_disableEsc = CP_ACCESPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
+};
+
 CP_respawnPanelOpen = false;
-CP_gearPanelOpen	= false; 
+CP_gearPanelOpen	= false;
 
-//Disable Esc while respawn is on
-CP_disableEsc = CP_ACCESPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"]; 
-
-_weapon = primaryWeapon player;  
-_wepArray = call compile format ["CP_%1",_weapon]; 
+_weapon = primaryWeapon player;
+_wepArray = call compile format ["CP_%1",_weapon];
 
 //Load Optics
 _optics = _wepArray select 0;
 _array = [];
-for [{_i = 0},{_i < count _optics},{_i = _i+1}] do 
+for [{_i = 0},{_i < count _optics},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (_optics select _i)select 0) then {
 			_array set [count _array, (_optics select _i) select 1];
 		};
 	};
-_comboBox = CP_accessoriesPanelOptics; 
+_comboBox = CP_accessoriesPanelOptics;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -48,13 +53,13 @@ _comboBox lbSetCurSel CP_opticsIndex;
 //Load Barrel
 _optics = _wepArray select 1;
 _array = [];
-for [{_i = 0},{_i < count _optics},{_i = _i+1}] do 
+for [{_i = 0},{_i < count _optics},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (_optics select _i)select 0) then {
 			_array set [count _array, (_optics select _i) select 1];
 		};
 	};
-_comboBox = CP_accessoriesPanelBarrel; 
+_comboBox = CP_accessoriesPanelBarrel;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);
@@ -69,13 +74,13 @@ _comboBox lbSetCurSel CP_barrelIndex;
 //Load Attachments
 _optics = _wepArray select 2;
 _array = [];
-for [{_i = 0},{_i < count _optics},{_i = _i+1}] do 
+for [{_i = 0},{_i < count _optics},{_i = _i+1}] do
 	{
 		if (CP_currentLevel >= (_optics select _i)select 0) then {
 			_array set [count _array, (_optics select _i) select 1];
 		};
 	};
-_comboBox = CP_accessoriesPanelAttachment; 
+_comboBox = CP_accessoriesPanelAttachment;
 lbClear _comboBox;
 	{
 		_class			= configName(configFile >> "CfgWeapons">> _x);

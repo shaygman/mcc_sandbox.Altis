@@ -1,6 +1,6 @@
-//==================================================================MCC_fnc_construction===============================================================================================
+//==================================================================MCC_fnc_construction========================================================================================
 // Example:[_conType, _pos , _side, _dir] call MCC_fnc_construction;
-//==================================================================================================================================================================================
+//==============================================================================================================================================================================
 private ["_conType","_pos","_time","_side","_reqCrates","_vehicleType","_baseAnchor","_markerName","_markerType","_text","_complete","_newObjects","_const",
          "_bagFence","_dir","_availableCrates","_cratesArray"];
 
@@ -17,43 +17,43 @@ switch (_conType) do
 {
 	case "fob" :
 	{
-		_reqCrates = 4;
+		_reqCrates = 3;
 		_vehicleType = "fob";
 		_text = "FOB"
 	};
 	case "bunker" :
 	{
-		_reqCrates = 2;
+		_reqCrates = 1;
 		_vehicleType = "Land_BagBunker_Small_F";
 		_text = "Bunker"
 	};
 	case "hmg" :
 	{
-		_reqCrates = 4;
+		_reqCrates = 2;
 		_vehicleType = if (_side == west) then {"B_HMG_01_F"} else {"O_HMG_01_F"};
 		_text = "HMG"
 	};
 	case "gmg" :
 	{
-		_reqCrates = 6;
+		_reqCrates = 4;
 		_vehicleType = if (_side == west) then {"B_GMG_01_F"} else {"O_GMG_01_F"};
 		_text = "GMG"
 	};
 	case "at" :
 	{
-		_reqCrates = 6;
+		_reqCrates = 2;
 		_vehicleType = if (_side == west) then {"B_static_AT_F"} else {"O_static_AT_F"};
 		_text = "AT"
 	};
 	case "aa" :
 	{
-		_reqCrates = 6;
+		_reqCrates = 2;
 		_vehicleType = if (_side == west) then {"B_static_AA_F"} else {"O_static_AA_F"};
 		_text = "AA"
 	};
 	case "mortar" :
 	{
-		_reqCrates = 6;
+		_reqCrates = 4;
 		_vehicleType = if (_side == west) then {"B_Mortar_01_F"} else {"O_Mortar_01_F"};
 		_text = "Mortar"
 	};

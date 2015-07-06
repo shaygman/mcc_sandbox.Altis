@@ -1,5 +1,70 @@
+Change log r16:
+Zeus:
+- Added: MCC's Zeus will edit players. 
+- Added: Custom MCC's Zeus modules including: 
+	- IED: turn any object/unit into an IED or suicide bomber.
+	- CAS: Call MCC Close Air Support from Zeus.
+	- Add units to Zeus: Automatically assign units/objects to Zeus so the mission maker can edit them.
+	- Ambient civilians and cars - Server side ambient. MCC will create enemy/civilians units some in buildings, some patrolling, some driving cars and some locked cars in towns when players are around and delete them when no player is around. 
+	- Armed Civilians: Will transfer any friendly/natural unit into hostile unit with concealed weapons. Armed units will attack other units from the enemy faction while they have the chance.
+	- Atmosphere: Instantly create sandstorms, blizzards and Heat Waves. 
+	- CAS: Call MCC close air support from Zeus. 
+	- Damage Part: Damage any part of vehicle/unit you want and add explosion effects to keep it real. 
+	- Lock/Unlock doors: Lock or unlock all doors in the area. 
+	- Evac Vehicle: Make any vehicle serve as an evac vehicle under the players' commander command. 
+	- Garrison: Spawn units in houses in the given radius. 
+	- IED/Suicide Bomber: Turn any object/vehicle/unit into an IED or suicide bomber. 
+	- Night Effect: Destroy all lights, remove night visions and add flashlights to nearby AI or players. 
+	- War Zone: Destroy buildings, spread wrecks and fires in the given radius. 
+
+- Changed: While in Zeus hold Shift and double click a unit to open Zeus's default attributes.
+
+Mission Wizard:
+- Fixed: Non precise objectives' markers in the missions wizard where pretty precise. 
+- Changed: Mission Wizard will try to spawn on HC if available. 
+
+Supply Drop:
+- Added: Supply drop - added slingload insertion.
+
+Role Selection:
+- Added: In Role Selection players can change kits without respawning in any FOB/HQ - can be turned off from the MCC setting module or setting "MCC_allowChangingKits = false".
+- Fixed: Player stuck in parachute animation after respawning from the squad selection
+- Fixed: Level up duplicated messaged in role selection. 
+- Changed: Massive work on role selection, improved UI and functionality
+
+Logistics:
+- Added: Players can now resupply (refresh ammo, bandages exc) from ammobox (MCC logistics) - support ACE medical system. 
+- Added: Main shared cargo box to FOB. 
+- Simplified: Logistics dialog.
+- Changed: MCC logistics reduced the amount of needed resource crates for building assets. 
+
+Weather:
+- Added: Weather over time slider to the Change Weather in MCC. 
+- Disabled: MCC weather sync when ACE is on
+
+Misc:
+- Added: Support CBA keybinds if player is running CBA
+- Added: Dynamic dialog function to easy create dialogs - learn more in the functions library
+- Changed: MCC garrison units will have units patrolling buildings
+- Fixed: Player can escape unconscious dialog in MCC medic system by opening the squad dialog
+- fixed: Objects names placed in 3D editor didn't saved to sqm. 
+- Fixed: Each side's commander will have only his sides evac vehicles
+
+
+
+
+//TODO
+//Check why loading missions overwrite mission settings
+//RTS
+//Prevent deleting FOBs
+// Tutorials for everything
+//Add undercover script?
+remove I&X from init
+- check supply box ACE
+
+
 Change log r15:
-- ACE comptability 
+- ACE compatibility 
 		- Open SQL PDA and Commander PDA from ACE - remove add actions. 
        	- MCC's hostages will react to ACE restrained and escort. 
 		- MCC's IEDs can be disarmed with ACE Defusal Kit. 
@@ -10,13 +75,13 @@ Change log r15:
 		- MCC's SQL commands (spot enemy, call support exc) added to to ACE self interaction menu.
 		- MCC's Interaction with civilians and enemy units moved to ACE main actions. 
 		- MCC's artillery computer added to ACE actions while inside an artillery vehicle.
-		- MCC's ILS added to ACE actions while inside a fixed winged vheicle.
+		- MCC's ILS added to ACE actions while inside a fixed winged vehicle.
 		- MCC's Taru pod attach and drop pods options added to ACE actions while flying a Taru helicopter. 
 		- MCC's logistics menu added to ACE actions while driving a MCC's logistic truck.
-		- MCC's Request drop-off from AI driver added to ACE actions while insided a vehicle with AI driver.  
+		- MCC's Request drop-off from AI driver added to ACE actions while insides a vehicle with AI driver.  
 
 - Added: MCC's door interaction will work on gates and added a "check door" state before you can pick the lock. 
-- Ollem's Spectator script reintoduced. 
+- Ollem's Spectator script reintroduced. 
 - Fixed: MCC's evac helicopter fast ropes.
 - Added: MCC's evac helicopter will open ramps/doors before infil and close them after.
 

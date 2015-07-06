@@ -1,4 +1,4 @@
-/* 
+/*
 	MCC_fnc_MWopenBriefing
 	Open breifing map for mission wizard based on script by Author: Karel Moricky
 
@@ -31,23 +31,25 @@
 
 private ["_mapCenter","_missions","_ok","_markers","_images","_overcast","_scale","_defaultScale","_simulationEnabled","_colorOutside","_maxSatelliteAlpha",
          "_displayClass","_display","_playerIcon","_playerColor","_cloudTextures","_cloudsGrid","_cloudsMax","_cloudsSize","_map","_fade","_brief","_sounds"];
-		 
+
 disableserialization;
 
 if (isDedicated) exitWith {};
 
-_mapCenter 			= _this select 0; 
-_missions 			= _this select 1; 
-_defaultScale 		= _this select 2; 
-_brief 				= _this select 3; 
-_sounds				= if (count _this >4) then {_this select 4} else {[]}; 
+_mapCenter 			= _this select 0;
+_missions 			= _this select 1;
+_defaultScale 		= _this select 2;
+_brief 				= _this select 3;
+_sounds				= if (count _this >4) then {_this select 4} else {[]};
 
 _mapCenter 			= _mapCenter call bis_fnc_position;
 _overcast 			= overcast;
-_isNight 			= if ((date select 3)>19 || (date select 3)<6) then {true} else {false}; 
+_isNight 			= if ((date select 3)>19 || (date select 3)<6) then {true} else {false};
 
 
 _simulationEnabled = true;
+waituntil {((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false]))};
+waituntil {!dialog};
 
 //--- Calculate terrain size and outside color
 _mapSize = [] call bis_fnc_mapSize;
@@ -76,10 +78,10 @@ with uinamespace do {
 };
 
 //--- Create the control
-_ok = createdialog "MCCMW_briefingMap"; 		
-waituntil {_ok}; 
-_display = finddisplay MCCMW_briefingMap_IDD;					
-ctrlshow [MCC_MWBriefingsTooltip_IDC,false]; 
+_ok = createdialog "MCCMW_briefingMap";
+waituntil {_ok};
+_display = finddisplay MCCMW_briefingMap_IDD;
+ctrlshow [MCC_MWBriefingsTooltip_IDC,false];
 
 
 _control = (finddisplay MCCMW_briefingMap_IDD) displayCtrl MCC_MWBriefingText_IDC;
@@ -307,7 +309,7 @@ MCC_fnc_MWMapOpen_draw = {
 
 			//--- Mission
 			case 10;
-			case 9: 
+			case 9:
 			{
 				[_selected,_display,MC_MWMap_mousePos] execVM MCC_path + "mcc\fnc\missionWizard\fn_MWMapTooltip.sqf";
 				//[_selected,_display,MC_MWMap_mousePos] call MCC_fnc_MWMapTooltip;
@@ -334,7 +336,7 @@ _map ctrladdeventhandler ["draw","_this call MCC_fnc_MWMapOpen_draw;"];
 _map ctrladdeventhandler ["mousemoving","_this call MCC_MWMap_mouse;"];
 _map ctrladdeventhandler ["mouseholding","_this call MCC_MWMap_mouse;"];
 
-if (_isNight) then 
+if (_isNight) then
 {
 	_map ctrlsetbackgroundcolor [0,0,0,1];
 	_map ctrlcommit 0;
@@ -354,7 +356,7 @@ _display displayaddeventhandler [
 		MC_MWMap_mousePos = nil;
 		MCC_MWMap_mouseClickDisable = nil;
 		MCC_MWMap_selected = nil;
-		
+
 		with uinamespace do {
 			MCC_MWMap_scale = nil;
 			MCC_MWMap_maxSatelliteAlpha = nil;
@@ -370,8 +372,8 @@ endloadingscreen;
 ctrlsetfocus (_display displayctrl MCC_MINIMAP);
 
 //Sounds
-_stop = false; 
-for [{_x= 0},{(_x < count _sounds) && !_stop},{_x = _x + 1}] do 
+_stop = false;
+for [{_x= 0},{(_x < count _sounds) && !_stop},{_x = _x + 1}] do
 {
 	_sound 	= (_sounds select _x) select 0;
 	_wait 	= (_sounds select _x) select 1;

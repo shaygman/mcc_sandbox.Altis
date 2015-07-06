@@ -58,7 +58,7 @@ _unit setCaptive true;
 _unit playmoveNow "Unconscious";
 
 //Add helper
-[_unit, "Hold %1 to heal"] spawn MCC_fnc_createHelper;
+[[_unit, "Hold %1 to heal"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
 
 //Handle player
 if (isPlayer _unit) exitWith

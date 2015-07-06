@@ -55,7 +55,16 @@ class CP_GEARPANEL {
 		CP_InfoText,
 		MCC_ResourcesControlsGroup,
 		CP_ItemsLoad,
-		timeLeft
+		timeLeft,
+		PilotPic,
+		CrewmanPic,
+		SpecialistPic,
+		MarksmanPic,
+		corpsmanPic,
+		atPic,
+		riflemanPic,
+		arPic,
+		commanderPic
 	  };
 
 	 #include "RscControlsGroupItemsLoad.hpp"
@@ -81,7 +90,7 @@ class CP_GEARPANEL {
 
 	class CP_exitButton: CP_RscButtonMenu
 	{
-		idc = -1;
+		idc = 0;
 
 		text = "Exit Game"; //--- ToDo: Localize;
 		x = 0.872396 * safezoneW + safezoneX;
@@ -93,7 +102,7 @@ class CP_GEARPANEL {
 	};
 	class CP_respawnPanelButton: CP_RscButtonMenu
 	{
-		idc = -1;
+		idc = 1;
 		text = "Respawn"; //--- ToDo: Localize;
 		x = 0.15625 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
@@ -104,7 +113,7 @@ class CP_GEARPANEL {
 	};
 	class CP_squadPanelButton: CP_RscButtonMenu
 	{
-		idc = -1;
+		idc = 2;
 		text = "Squad"; //--- ToDo: Localize;
 		x = 0.259375 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
@@ -115,7 +124,7 @@ class CP_GEARPANEL {
 	};
 	class CP_gearPanelButton: CP_RscButtonMenu
 	{
-		idc = -1;
+		idc = 3;
 		text = "Gear"; //--- ToDo: Localize;
 		x = 0.3625 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
@@ -132,312 +141,421 @@ class CP_GEARPANEL {
 		h = 0.6 * safezoneH;
 		colorBackground[] = {1,1,1,0.2};
 	};
-	class CP_gearPanelCommander: CP_RscButton
+
+		class CP_gearPanelCommander: CP_RscButton
 	{
 		idc = 10;
 		text = "Officer"; //--- ToDo: Localize;
-		x = 0.15625 * safezoneW + safezoneX;
+		x = 0.21125 * safezoneW + safezoneX;
 		y = 0.280086 * safezoneH + safezoneY;
-		w = 0.25 * safezoneW;
+		w = 0.201094 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[0,0] call MCC_fnc_setGear");
 	};
+		class commanderPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH+"configs\data\Officer.paa");
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.28 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class CP_gearPanelCommanderGear: CP_RscButtonMenu
+		{
+			idc = 110;
+			text = "Gear"; //--- ToDo: Localize;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.280086 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[0,1] call MCC_fnc_setGear");
+		};
+		class CP_gearPanelCommanderUni: CP_RscButtonMenu
+		{
+			idc = 210;
+			text = "Uniforms"; //--- ToDo: Localize;
+			x = 0.511458 * safezoneW + safezoneX;
+			y = 0.280086 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {1,0,0,0.3};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[0,2] call MCC_fnc_setGear");
+		};
+
 	class CP_gearPanelAR: CP_RscButton
 	{
 		idc = 11;
 		text = "Automatic Rifleman"; //--- ToDo: Localize;
-		x = 0.15625 * safezoneW + safezoneX;
+		x = 0.21125 * safezoneW + safezoneX;
 		y = 0.335064 * safezoneH + safezoneY;
-		w = 0.25 * safezoneW;
+		w = 0.201094 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[1,0] call MCC_fnc_setGear");
 	};
+		class arPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH+"configs\data\AR.paa");
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.335064 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class CP_gearPanelARGear: CP_RscButtonMenu
+		{
+			idc = 111;
+			text = "Gear"; //--- ToDo: Localize;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.335064 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[1,1] call MCC_fnc_setGear");
+		};
+
+		class CP_gearPanelARUni: CP_RscButtonMenu
+		{
+			idc = 211;
+			text = "Uniforms"; //--- ToDo: Localize;
+			x = 0.511458 * safezoneW + safezoneX;
+			y = 0.335064 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {1,0,0,0.3};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[1,2] call MCC_fnc_setGear");
+		};
+
 	class CP_gearPanelRifleman: CP_RscButton
 	{
 		idc = 12;
 		text = "Rifleman"; //--- ToDo: Localize;
-		x = 0.15625 * safezoneW + safezoneX;
+		x = 0.21125 * safezoneW + safezoneX;
 		y = 0.390043 * safezoneH + safezoneY;
-		w = 0.25 * safezoneW;
+		w = 0.201094 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[2,0] call MCC_fnc_setGear");
 	};
+		class riflemanPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH+"configs\data\Rifleman.paa");
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.390043 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class CP_gearPanelRiflemanGear: CP_RscButtonMenu
+		{
+			idc = 112;
+			text = "Gear"; //--- ToDo: Localize;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.390043 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[2,1] call MCC_fnc_setGear");
+		};
+
+		class CP_gearPanelRiflemanUni: CP_RscButtonMenu
+		{
+			idc = 212;
+			text = "Uniforms"; //--- ToDo: Localize;
+			x = 0.511458 * safezoneW + safezoneX;
+			y = 0.390043 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {1,0,0,0.3};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[2,2] call MCC_fnc_setGear");
+		};
+
 	class CP_gearPanelAntitank: CP_RscButton
 	{
 		idc = 13;
 		text = "Anti-Tank"; //--- ToDo: Localize;
-		x = 0.15625 * safezoneW + safezoneX;
+		x = 0.21125 * safezoneW + safezoneX;
 		y = 0.445021 * safezoneH + safezoneY;
-		w = 0.25 * safezoneW;
+		w = 0.201094 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[3,0] call MCC_fnc_setGear");
 	};
+		class atPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH+"configs\data\AT.paa");
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.445021 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class CP_gearPanelAntitankGear: CP_RscButtonMenu
+		{
+			idc = 113;
+			text = "Gear"; //--- ToDo: Localize;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.445021 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[3,1] call MCC_fnc_setGear");
+		};
+
+		class CP_gearPanelAntitankUni: CP_RscButtonMenu
+		{
+			idc = 213;
+			text = "Uniforms"; //--- ToDo: Localize;
+			x = 0.511458 * safezoneW + safezoneX;
+			y = 0.445021 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {1,0,0,0.3};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[3,2] call MCC_fnc_setGear");
+		};
+
 	class CP_gearPanelCorpsman: CP_RscButton
 	{
 		idc = 14;
 		text = "Corpsman"; //--- ToDo: Localize;
-		x = 0.15625 * safezoneW + safezoneX;
+		x = 0.21125 * safezoneW + safezoneX;
 		y = 0.5 * safezoneH + safezoneY;
-		w = 0.25 * safezoneW;
+		w = 0.201094 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[4,0] call MCC_fnc_setGear");
 	};
+		class corpsmanPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH+"configs\data\Corpsman.paa");
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.5 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class CP_gearPanelCorpsmanGear: CP_RscButtonMenu
+		{
+			idc = 114;
+			text = "Gear"; //--- ToDo: Localize;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.5 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[4,1] call MCC_fnc_setGear");
+		};
+
+		class CP_gearPanelCorpsmanUni: CP_RscButtonMenu
+		{
+			idc = 214;
+			text = "Uniforms"; //--- ToDo: Localize;
+			x = 0.511458 * safezoneW + safezoneX;
+			y = 0.5 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {1,0,0,0.3};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[4,2] call MCC_fnc_setGear");
+		};
+
+
 	class CP_gearPanelMarksman: CP_RscButton
 	{
 		idc = 15;
 		text = "Marksman"; //--- ToDo: Localize;
-		x = 0.15625 * safezoneW + safezoneX;
+		x = 0.21125 * safezoneW + safezoneX;
 		y = 0.554979 * safezoneH + safezoneY;
-		w = 0.25 * safezoneW;
+		w = 0.201094 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[5,0] call MCC_fnc_setGear");
 	};
+		class MarksmanPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH+"configs\data\Marksman.paa");
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.554979 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class CP_gearPanelMarksmanGear: CP_RscButtonMenu
+		{
+			idc = 115;
+			text = "Gear"; //--- ToDo: Localize;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.554979 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[5,1] call MCC_fnc_setGear");
+		};
+
+		class CP_gearPanelMarksmanUni: CP_RscButtonMenu
+		{
+			idc = 215;
+			text = "Uniforms"; //--- ToDo: Localize;
+			x = 0.511458 * safezoneW + safezoneX;
+			y = 0.554979 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {1,0,0,0.3};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[5,2] call MCC_fnc_setGear");
+		};
+
 	class CP_gearPanelSpecialist: CP_RscButton
 	{
 		idc = 16;
 		text = "Specialist"; //--- ToDo: Localize;
-		x = 0.15625 * safezoneW + safezoneX;
+		x = 0.21125 * safezoneW + safezoneX;
 		y = 0.609957 * safezoneH + safezoneY;
-		w = 0.25 * safezoneW;
+		w = 0.201094 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[6,0] call MCC_fnc_setGear");
 	};
+		class SpecialistPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH+"configs\data\Specialist.paa");
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.609957 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class CP_gearPanelSpecialistGear: CP_RscButtonMenu
+		{
+			idc = 116;
+			text = "Gear"; //--- ToDo: Localize;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.609957 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[6,1] call MCC_fnc_setGear");
+		};
+
+		class CP_gearPanelSpecialistUni: CP_RscButtonMenu
+		{
+			idc = 216;
+			text = "Uniforms"; //--- ToDo: Localize;
+			x = 0.511458 * safezoneW + safezoneX;
+			y = 0.609957 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {1,0,0,0.3};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[6,2] call MCC_fnc_setGear");
+		};
+
 	class CP_gearPanelCrewman: CP_RscButton
 	{
 		idc = 17;
 		text = "Crewman"; //--- ToDo: Localize;
-		x = 0.15625 * safezoneW + safezoneX;
+		x = 0.21125 * safezoneW + safezoneX;
 		y = 0.664936 * safezoneH + safezoneY;
-		w = 0.25 * safezoneW;
+		w = 0.201094 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[7,0] call MCC_fnc_setGear");
 	};
+		class CrewmanPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH+"configs\data\Crew.paa");
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.664936 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class CP_gearPanelCrewmanGear: CP_RscButtonMenu
+		{
+			idc = 117;
+			text = "Gear"; //--- ToDo: Localize;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.664936 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[7,1] call MCC_fnc_setGear");
+		};
+
+		class CP_gearPanelCrewmanUni: CP_RscButtonMenu
+		{
+			idc = 217;
+			text = "Uniforms"; //--- ToDo: Localize;
+			x = 0.511458 * safezoneW + safezoneX;
+			y = 0.664936 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {1,0,0,0.3};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[7,2] call MCC_fnc_setGear");
+		};
+
 	class CP_gearPanelPilot: CP_RscButton
 	{
 		idc = 18;
 		text = "Pilot"; //--- ToDo: Localize;
-		x = 0.15625 * safezoneW + safezoneX;
+		x = 0.21125 * safezoneW + safezoneX;
 		y = 0.719914 * safezoneH + safezoneY;
-		w = 0.25 * safezoneW;
+		w = 0.201094 * safezoneW;
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		action = __EVAL("[8,0] call MCC_fnc_setGear");
 	};
-	class CP_gearPanelCommanderGear: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Gear"; //--- ToDo: Localize;
-		x = 0.419792 * safezoneW + safezoneX;
-		y = 0.280086 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[0,1] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelCommanderUni: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Uniforms"; //--- ToDo: Localize;
-		x = 0.511458 * safezoneW + safezoneX;
-		y = 0.280086 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		colorBackground[] = {1,0,0,0.3};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[0,2] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelARGear: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Gear"; //--- ToDo: Localize;
-		x = 0.419792 * safezoneW + safezoneX;
-		y = 0.335064 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[1,1] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelRiflemanGear: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Gear"; //--- ToDo: Localize;
-		x = 0.419792 * safezoneW + safezoneX;
-		y = 0.390043 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[2,1] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelAntitankGear: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Gear"; //--- ToDo: Localize;
-		x = 0.419792 * safezoneW + safezoneX;
-		y = 0.445021 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[3,1] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelCorpsmanGear: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Gear"; //--- ToDo: Localize;
-		x = 0.419792 * safezoneW + safezoneX;
-		y = 0.5 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[4,1] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelMarksmanGear: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Gear"; //--- ToDo: Localize;
-		x = 0.419792 * safezoneW + safezoneX;
-		y = 0.554979 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[5,1] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelSpecialistGear: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Gear"; //--- ToDo: Localize;
-		x = 0.419792 * safezoneW + safezoneX;
-		y = 0.609957 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[6,1] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelCrewmanGear: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Gear"; //--- ToDo: Localize;
-		x = 0.419792 * safezoneW + safezoneX;
-		y = 0.664936 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[7,1] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelPilotGear: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Gear"; //--- ToDo: Localize;
-		x = 0.419792 * safezoneW + safezoneX;
-		y = 0.719914 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[8,1] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelARUni: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Uniforms"; //--- ToDo: Localize;
-		x = 0.511458 * safezoneW + safezoneX;
-		y = 0.335064 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		colorBackground[] = {1,0,0,0.3};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[1,2] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelRiflemanUni: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Uniforms"; //--- ToDo: Localize;
-		x = 0.511458 * safezoneW + safezoneX;
-		y = 0.390043 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		colorBackground[] = {1,0,0,0.3};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[2,2] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelAntitankUni: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Uniforms"; //--- ToDo: Localize;
-		x = 0.511458 * safezoneW + safezoneX;
-		y = 0.445021 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		colorBackground[] = {1,0,0,0.3};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[3,2] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelCorpsmanUni: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Uniforms"; //--- ToDo: Localize;
-		x = 0.511458 * safezoneW + safezoneX;
-		y = 0.5 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		colorBackground[] = {1,0,0,0.3};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[4,2] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelMarksmanUni: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Uniforms"; //--- ToDo: Localize;
-		x = 0.511458 * safezoneW + safezoneX;
-		y = 0.554979 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		colorBackground[] = {1,0,0,0.3};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[5,2] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelSpecialistUni: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Uniforms"; //--- ToDo: Localize;
-		x = 0.511458 * safezoneW + safezoneX;
-		y = 0.609957 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		colorBackground[] = {1,0,0,0.3};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[6,2] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelCrewmanUni: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Uniforms"; //--- ToDo: Localize;
-		x = 0.511458 * safezoneW + safezoneX;
-		y = 0.664936 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		colorBackground[] = {1,0,0,0.3};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[7,2] call MCC_fnc_setGear");
-	};
-	class CP_gearPanelPilotUni: CP_RscButtonMenu
-	{
-		idc = -1;
-		text = "Uniforms"; //--- ToDo: Localize;
-		x = 0.511458 * safezoneW + safezoneX;
-		y = 0.719914 * safezoneH + safezoneY;
-		w = 0.08 * safezoneW;
-		h = 0.0439828 * safezoneH;
-		colorBackground[] = {1,0,0,0.3};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		action = __EVAL("[8,2] call MCC_fnc_setGear");
-	};
+		class PilotPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH+"configs\data\Pilot.paa");
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.719914 * safezoneH + safezoneY;
+			w = 0.05 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class CP_gearPanelPilotGear: CP_RscButtonMenu
+		{
+			idc = 118;
+			text = "Gear"; //--- ToDo: Localize;
+			x = 0.419792 * safezoneW + safezoneX;
+			y = 0.719914 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[8,1] call MCC_fnc_setGear");
+		};
+
+		class CP_gearPanelPilotUni: CP_RscButtonMenu
+		{
+			idc = 218;
+			text = "Uniforms"; //--- ToDo: Localize;
+			x = 0.511458 * safezoneW + safezoneX;
+			y = 0.719914 * safezoneH + safezoneY;
+			w = 0.08 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {1,0,0,0.3};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			action = __EVAL("[8,2] call MCC_fnc_setGear");
+		};
+
 	class CP_gearPanelPiP: CP_RscPicture
 	{
 		idc = 19;

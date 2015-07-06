@@ -2,7 +2,7 @@
 // Interaction with Door type
 // Example: [_object] spawn MCC_fnc_interactMan;
 //==============================================================================================================================================================================
-private ["_object","_door","_optionalDoors","_suspectCorage","_typeOfSelected","_animation","_phase","_doorTypes","_loadName","_waitTime","_array","_str","_closed","_startPos"];
+private ["_object","_door","_optionalDoors","_suspectCorage","_typeOfSelected","_animation","_phase","_doorTypes","_loadName","_waitTime","_array","_str","_closed"];
 #define MCC_CHARGE "ClaymoreDirectionalMine_Remote_Mag"
 #define MCC_MIROR ["MineDetector","MCC_videoProbe"]
 #define MCC_LOCKPICK ["ToolKit","AGM_DefusalKit","MCC_multiTool","ACE_DefusalKit","ACE_key_lockpick"]
@@ -170,6 +170,11 @@ switch (true) do
  					waituntil {!dialog};
  					_object setVariable ["mcc_mainBoxUsed", false,true];
 				};
+
+				case (_ctrlData == "kitSelect"):
+				{
+					createDialog "CP_GEARPANEL";
+				};
 			};
 		};
 
@@ -192,16 +197,16 @@ switch (true) do
 			};
 
 			//Static-drag but no inventory
-			if ((_object isKindof "StaticWeapon" || _object isKindof "ReammoBox_F") && (_object != (player getVariable ["mcc_draggedObject", objNull])) && (count attachedObjects _object == 0) && (getmass _object < 501) && (isNull attachedTo _object)) then
-			{
+			if ((_object isKindof "StaticWeapon" || _object isKindof "ReammoBox_F") && (_object != (player getVariable ["mcc_draggedObject", objNull])) && (count attachedObjects _object == 0) && (getmass _object < 501) && (isNull attachedTo _object)) then {
 				_array set [count _array,["drag",format ["Drag %1",_displayName],format ["%1data\IconAmmo.paa",MCC_path]]];
 			};
 
 			//rts main box
-			_startPos =  if !(isnil format ["MCC_START_%1",playerside]) then {call compile format ["MCC_START_%1",playerside]} else {[0,0,0]};
-			if ((_object isKindof "Box_FIA_Support_F") && (!(_object getVariable ["mcc_mainBoxUsed", false])) && !(isNull attachedTo _object) && (player distance _startPos < 20)) then
-			{
-				_array set [count _array,["mainBox","Open Cargo Box",format ["%1data\IconAmmo.paa",MCC_path]]];
+			if ((_object isKindof "Box_FIA_Support_F") && !(_object getVariable ["mcc_mainBoxUsed", false]) && count (_object getVariable ["MCC_virtual_cargo",[]]) > 0) then {
+				_array pushBack["mainBox","Open Cargo Box",format ["%1data\IconAmmo.paa",MCC_path]];
+				if (CP_activated && missionNamespace getVariable ["MCC_allowChangingKits",true]) then {
+					_array pushBack["kitSelect","Change Kit",format ["%1data\IconAmmo.paa",MCC_path]];
+				};
 			};
 
 			//Flip atv

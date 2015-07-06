@@ -130,8 +130,8 @@ if (CP_activated) then
 	_html = "<t color='#818960' size='2' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
 	messeges ctrlSetStructuredText parseText _html;
 
-	_needXP 			= (CP_XPperLevel + _oldLevel*100) + ((CP_XPperLevel + _oldLevel*100)*(_oldLevel-1));
-	_needXPPrevLevel 	= (CP_XPperLevel + (_oldLevel-1)*100)*(_oldLevel-1);
+	_needXP 			= (CP_XPperLevel * _oldLevel);
+	_needXPPrevLevel 	= (CP_XPperLevel * (_oldLevel-1));
 	XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel)));
 }
 else

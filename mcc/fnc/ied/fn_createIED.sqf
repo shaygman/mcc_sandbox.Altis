@@ -18,17 +18,16 @@ disableSerialization;
 
 if (!isServer) exitWIth {};
 
-_fakeIed			= _this select 0;
-_trapvolume 		= _this select 1;
-_IEDExplosionType 	= _this select 2;
-_IEDDisarmTime 		= _this select 3;
-_IEDJammable 		= _this select 4;
-_IEDTriggerType 	= _this select 5;
-_trapdistance 		= _this select 6;
-_iedside 			= _this select 7;
+_fakeIed			= [_this, 0, objNull, [objNull]] call BIS_fnc_param;
+_trapvolume 		= [_this, 1, "medium", [""]] call BIS_fnc_param;
+_IEDExplosionType 	= [_this, 2, 0, [0]] call BIS_fnc_param;
+_IEDDisarmTime 		= [_this, 3, 10, [0]] call BIS_fnc_param;
+_IEDJammable 		= [_this, 4, true, [true]] call BIS_fnc_param;
+_IEDTriggerType 	= [_this, 5, 0, [0]] call BIS_fnc_param;
+_trapdistance 		= [_this, 6, 10, [0]] call BIS_fnc_param;
+_iedside 			= [_this, 7, west, [west]] call BIS_fnc_param;
 
-if (typeName _iedside == "STRING") then
-{
+if (typeName _iedside == "STRING") then {
 	_iedside = switch (tolower _iedside) do
 				{
 				   case "west":	{west};
@@ -63,14 +62,14 @@ _dummy attachto [_fakeIed,[0,0,0]];
 
 _dummy setvariable ["fakeIed", _fakeIed ,true];
 _dummy setvariable ["armed", true, true];
-_dummy setvariable ["MCC_disarmTime", MCC_IEDDisarmTimeArray select _IEDDisarmTime  , true];
+_dummy setvariable ["MCC_disarmTime", _IEDDisarmTime  , true];
 _dummy setvariable ["iedMarkerName", "IED", true];
 _dummy setvariable ["iedTrigered", false, true];
 _dummy setvariable ["iedAmbush", false, true];
 _dummy setvariable ["MCC_IEDtype", "ied", true];
 
 //Create helper
-[_dummy,"Hold %1 to disarm"] spawn MCC_fnc_createHelper;
+[[_dummy,"Hold %1 to disarm"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
 
 //If it is radio IED
 if (_IEDTriggerType == 1) then

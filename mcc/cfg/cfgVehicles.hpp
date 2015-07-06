@@ -7,6 +7,7 @@ class Module_F: Logic
 	};
 	class ModuleDescription
 	{
+		class AnyPlayer;
 		class AnyBrain;
 		class EmptyDetector;
 	};
@@ -22,6 +23,7 @@ class Module_F: Logic
 #include "modules\cover.hpp"
 #include "modules\radio.hpp"
 #include "modules\medicSystem.hpp"
+#include "curator\curatorCfg.hpp"
 
 class Box_NATO_Ammo_F;
 #include "ammoBox\medicBox.hpp"

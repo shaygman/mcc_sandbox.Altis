@@ -13,12 +13,13 @@
 //		WPtimeout: number, waiting time  between condition is made till the WP is set to complete
 // SelectedGroups: Array containing all the groups to be effected
 //==============================================================================================================================================================================
-private ["_wpArray","_wp","_wpType","_objects","_wpObject","_wp2","_groups","_wpLoc","_WPTypeIndecator","_wpTypes"];
+private ["_wpArray","_wp","_wpType","_objects","_wpObject","_wp2","_groups","_wpLoc","_WPTypeIndecator","_wpTypes","_isShown"];
 
 _action 			= _this select 0;
 _wpLoc	 			= _this select 1;
 _wpArray			= _this select 2;
 _groups				= _this select 3;
+_isShown			= [_this,4,false,[false]] call bis_fnc_param;
 
 if (count _wpArray > 0) then
 {
@@ -228,6 +229,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 						_wp setWaypointBehaviour (_wpArray select 4);
 						_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
 						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
+						if (_isShown) then {_wp showWaypoint "ALWAYS"};
 					};
 			};
 		};

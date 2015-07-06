@@ -1,6 +1,6 @@
-//==================================================================MCC_fnc_curatorInitLine===============================================================================================
+//==================================================================MCC_fnc_curatorInitLine=====================================================================================
 //manage curator init line
-// Example: [] call MCC_fnc_curatorInitLine; 
+// Example: [] call MCC_fnc_curatorInitLine;
 // 	rank - 14769
 //	pos - 20276
 //	Damage - 17802
@@ -8,16 +8,16 @@
 //	Respawn - 39809
 //	Fuel - 14774
 //	Name - 15000
-//==================================================================================================================================================================================
+//=============================================================================================================================================================================
 private ["_time","_target","_avtiveControls","_curator","_idc","_control","_display","_controlPos","_posY","_ctrlBackground","_ctrlTitle","_ctrlContent",
          "_ctrlButtonOK","_ctrlButtonCancel","_ctrlBackgroundPos","_ctrlTitlePos","_ctrlContentPos","_ctrlButtonOKPos","_ctrlButtonCancelPos","_ctrlTitleOffsetY",
 		 "_ctrlContentOffsetY","_name","_ctrlButtonCustom","_ctrlButtonCustomPos","_comboBox","_displayname","_ctrlButtonCustom2","_ctrlButtonCustom2Pos",
-		 "_cargEnabled","_presetType","_preset","_targetData","_targetCategory","_targetType","_class","_cfgControl"]; 
+		 "_cargEnabled","_presetType","_preset","_targetData","_targetCategory","_targetType","_class","_cfgControl","_keyUp","_keyDown"];
 disableSerialization;
 
 #define MCCCuratorInit_IDD 10000
-#define MCC_NAMEBOX 8003 
-#define MCC_INITBOX 8004 
+#define MCC_NAMEBOX 8003
+#define MCC_INITBOX 8004
 #define MCC_PRESETS 8005
 
 #define MCC_3DCargoGen 8018
@@ -31,8 +31,12 @@ _time 			= time +0.2;
 MCC_unitInit 	= "";
 MCC_unitName 	= "";
 
-if (!alive _target || isNull _target || isplayer _target || (_target isKindof "Module_F")) exitWith {};
- 
+//Recognize shift key so we can disable MCC custom Zeus if we want to
+_keyUp = (findDisplay 312) displayAddEventHandler  ["KeyUp", "if (_this select 2) then {missionNamespace setvariable ['MCC_shiftPressed',false]}"];
+_keyDown = (findDisplay 312) displayAddEventHandler  ["KeyDown", "if ((_this select 2) && !(missionNamespace getvariable ['MCC_shiftPressed',false])) then {missionNamespace setvariable ['MCC_shiftPressed',true]}"];
+
+if (!alive _target || isNull _target || isplayer _target || (_target isKindof "Module_F") || missionNamespace getVariable ["MCC_shiftPressed",false]) exitWith {};
+
 //What are we dealing here
 _targetData = _target call bis_fnc_objectType;
 _targetCategory = _targetData select 0;
@@ -40,26 +44,26 @@ _targetType = _targetData select 1;
 
 if (_targetCategory != "Object") then
 {
-	waituntil {dialog}; 
+	waituntil {dialog};
 }
 else
 {
-	waituntil {(time > _time)}; 	
-}; 
+	waituntil {(time > _time)};
+};
 
 closeDialog 0;
 
 switch (_targetCategory) do
 {
 		case ("Soldier"):
-		{ 
+		{
 			_class = "MCC_RscDisplayAttributesMan";
 			_cargEnabled	= false;
 			missionnamespace setvariable ["MCC_CuratorInitLine_presettype","unit"];
 		};
-		
+
 		case ("Vehicle"):
-		{ 
+		{
 			if (isNull (group _target)) then
 			{
 				_class = "MCC_RscDisplayAttributesVehicleEmpty";
@@ -71,16 +75,16 @@ switch (_targetCategory) do
 			_cargEnabled	= true;
 			missionnamespace setvariable ["MCC_CuratorInitLine_presettype","vehicle"];
 		};
-		
+
 		case ("VehicleAutonomous"):
-		{ 
+		{
 			_class = "MCC_RscDisplayAttributesVehicle";
 			_cargEnabled	= false;
 			missionnamespace setvariable ["MCC_CuratorInitLine_presettype","vehicle"];
 		};
-		
+
 		case ("Object"):
-		{ 
+		{
 			_class = "MCC_RscDisplayAttributesObject";
 			_cargEnabled	= if (_targetType == "AmmoBox") then {true} else {false};
 			missionnamespace setvariable ["MCC_CuratorInitLine_presettype","object"];
@@ -91,7 +95,7 @@ switch (_targetCategory) do
 if (isNil "_class") exitWith {};
 
 createDialog _class;
-waituntil {dialog}; 
+waituntil {dialog};
 
 ctrlShow [MCC_3DCargoGen,false];
 _display 	= findDisplay MCCCuratorInit_IDD;
@@ -126,11 +130,11 @@ _avtiveControls = if (MCC_isMode) then
 							missionconfigfile >> _class >> "Controls" >> "Content" >> "Controls";
 						};
 //Set the control groups
-for "_i" from 0 to (count _avtiveControls - 1) do 
+for "_i" from 0 to (count _avtiveControls - 1) do
 {
 	_cfgControl = _avtiveControls select _i;
-	
-	if (isclass _cfgControl) then 
+
+	if (isclass _cfgControl) then
 	{
 		_idc = getnumber (_cfgControl >> "idc");
 		_control = _display displayctrl _idc;
@@ -177,9 +181,9 @@ _ctrlButtonCustom ctrlsetText "Add Preset";
 _ctrlButtonCustom ctrlcommit 0;
 
 
-		
+
 //Set the tittle
-_name = switch (typename _target) do 
+_name = switch (typename _target) do
 	{
 		case (typename objnull): {gettext (configfile >> "cfgvehicles" >> typeof _target >> "displayname")};
 		case (typename grpnull): {groupid _target};
@@ -190,7 +194,7 @@ _ctrlTitle ctrlsettext format ["(MCC) EDIT %1",toupper _name];
 
 //Add presets
 _presetType = missionnamespace getvariable ["MCC_CuratorInitLine_presettype",""];
-_preset = switch (_presetType) do 
+_preset = switch (_presetType) do
 			{
 				case (""): {[]};
 				case ("vehicle"): {mccPresetsVehicle};
@@ -224,19 +228,19 @@ _ctrlButtonCustom ctrladdeventhandler [
 		"ButtonDown",
 		{
 			_presetType = missionnamespace getvariable ["MCC_CuratorInitLine_presettype",""];
-			_preset = switch (_presetType) do 
+			_preset = switch (_presetType) do
 						{
 							case (""): {[]};
 							case ("vehicle"): {mccPresetsVehicle};
 							case ("unit"): {mccPresetsUnits};
 							case ("object"): {mccPresetsObjects};
 						};
-						
+
 			_tempText = ctrlText MCC_INITBOX;
-			_presetText = (_preset select(lbCurSel MCC_PRESETS)) select 1; 
+			_presetText = (_preset select(lbCurSel MCC_PRESETS)) select 1;
 			ctrlSetText [MCC_INITBOX,format ["%1 %2",_tempText,_presetText]];
 		}
-	];	
+	];
 
 //Cargo
 if (_cargEnabled) then
@@ -259,29 +263,29 @@ else
 };
 
 //--- Close the display when entity is altered
-[_display] spawn 
+[_display] spawn
 {
 	disableserialization;
 	_display = _this select 0;
 	_target = missionnamespace getvariable ["BIS_fnc_initCuratorAttributes_target",objnull];
-	switch (typename _target) do 
+	switch (typename _target) do
 	{
-		case (typename objnull): 
+		case (typename objnull):
 		{
 			_isAlive = alive _target;
 			waituntil {isnull _display || (_isAlive && !alive _target)};
 		};
-		case (typename grpnull): 
+		case (typename grpnull):
 		{
 			waituntil {isnull _display || isnull _target};
 		};
-		case (typename []): 
+		case (typename []):
 		{
 			_grp = _target select 0;
 			_wpCount = count waypoints _grp;
 			waituntil {isnull _display || (count waypoints _grp != _wpCount)};
 		};
-		case (typename ""): 
+		case (typename ""):
 		{
 			waituntil {isnull _display || markertype _target == ""};
 		};
@@ -290,13 +294,16 @@ else
 };
 
 //Process the init and name
-waituntil {!dialog}; 
-if (MCC_unitName != "") then 
+waituntil {!dialog};
+if (MCC_unitName != "") then
 {
 	[[[netid _target,_target], MCC_unitName], "MCC_fnc_setVehicleName", true, true] spawn BIS_fnc_MP;
 };
 
-if (MCC_unitInit != "" && (MCC_unitInit != (_target getVariable ["vehicleInit",""]))) then 
+if (MCC_unitInit != "" && (MCC_unitInit != (_target getVariable ["vehicleInit",""]))) then
 {
 	[[[netid _target,_target], MCC_unitInit], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 };
+
+_keyUp = (findDisplay 312) displayRemoveEventHandler  ["KeyUp",_keyUp];
+_keyDown = (findDisplay 312) displayRemoveEventHandler  ["KeyDown", _keyDown];

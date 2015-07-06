@@ -1,7 +1,7 @@
 //===================================================================MCC_fnc_makeBriefing======================================================================================
 //Server Only - create a Logic based briefing
 //Example:[[_string, _type ,_missionTittle],"MCC_fnc_makeBriefing",false,false] call BIS_fnc_MP;
-// Params: 
+// Params:
 // 	_string: string, the briefing string
 //	_type: interger or string, Integer - pre defined mission type or a string for custom one
 //	_missionTittle:  string,  the mission tittle can get complex string as it will turn it to array such as HTML
@@ -41,14 +41,14 @@ else
 				   case 5: {"Fire Support"};
 				};
 };
-		
+
 
 waituntil {!isnil "MCC_server"};
 _briefings = MCC_server getVariable ["briefings",[]];
 _briefings set [count _briefings, [_tittle,_string]];
 MCC_server setVariable ["briefings",_briefings, true];
 
-_dummyGroup = creategroup sidelogic; 
+_dummyGroup = creategroup sidelogic;
 _dummy = _dummyGroup createunit ["Logic", [0, 90, 90],[],0.5,"NONE"];	//Logic - placeHolder
 waituntil {!isnull _dummy};
 
@@ -65,25 +65,4 @@ _init = format ["0 = _this spawn {if (!isDedicated) then {waituntil {alive playe
 
 [[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
 
-MCC_curator addCuratorEditableObjects [[_dummy],false];
-
-if (count _missionInfo > 0) then
-{
-	//Lets wait till all the mission end --TODO presistance missions , or timed. 
-	publicVariable "MCC_activeObjectives";
-	while {count MCC_activeObjectives > 0} do
-	{
-		{
-			if (!alive _x) then 
-			{
-				MCC_activeObjectives set [_forEachIndex, -1];
-				MCC_activeObjectives = MCC_activeObjectives - [-1];
-				publicVariable "MCC_activeObjectives";
-			};
-		} foreach MCC_activeObjectives;
-		
-		sleep 5;
-	};
-	publicVariable "MCC_activeObjectives";
-	MCC_server globalChat "missions done"; 
-};
+//MCC_curator addCuratorEditableObjects [[_dummy],false];

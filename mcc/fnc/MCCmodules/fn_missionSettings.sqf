@@ -82,3 +82,7 @@ MCC_allowlogistics = if (_var == 0) then {false} else {true};
 //Role Selection
 _var 	= _logic getvariable ["roleSelection",0];
 CP_activated = if (_var == 0) then {false} else {true};
+
+//Allow changing kits without respawn in RS
+_var 	= _logic getvariable ["allowKitChange",0];
+MCC_allowChangingKits = if (_var == 0) then {false} else {true};

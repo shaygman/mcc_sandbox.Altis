@@ -8,19 +8,19 @@ class MCC_LOGISTICS_LOAD_TRUCK
 {
 	idd = -1;
 	movingEnable = 1;
-	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\mcc_logisticsLoadTruck_init.sqf'"); 
+	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\mcc_logisticsLoadTruck_init.sqf'");
 
-	controlsBackground[] = 
+	controlsBackground[] =
 	{
 	};
 
 
 	//---------------------------------------------
-	objects[] = 
-	{ 
+	objects[] =
+	{
 	};
 
-	class controls  
+	class controls
 	{
 		class MCC_loadTruckbckgs: MCC_RscText
 		{
@@ -31,7 +31,7 @@ class MCC_LOGISTICS_LOAD_TRUCK
 			w = 0.4125 * safezoneW;
 			h = 0.506 * safezoneH;
 		};
-		
+
 		class MCC_loadTruckbckgs2: MCC_RscText
 		{
 			idc = -1;
@@ -42,7 +42,7 @@ class MCC_LOGISTICS_LOAD_TRUCK
 			h = 0.055 * safezoneH;
 			colorBackground[] = {0.31,0.31,0.31,0.9};
 		};
-	
+
 		class MCC_loadTruckC1Minus: MCC_RscButton
 		{
 			idc = 1000;
@@ -50,13 +50,13 @@ class MCC_LOGISTICS_LOAD_TRUCK
 			borderSize = 0;
 			colorShadow[] = {0,0,0,0};
 		};
-		
+
 		class MCC_loadTruckC1Plus: MCC_loadTruckC1Minus
 		{
 			idc = 1001;
 			text = "+";
 		};
-		
+
 		class MCC_loadTruckC1: MCC_RscListNbox
 		{
 			idc = 0;
@@ -65,9 +65,9 @@ class MCC_LOGISTICS_LOAD_TRUCK
 			w = 0.171875 * safezoneW;
 			h = 0.176 * safezoneH;
 
-			drawSideArrows = 1; 
+			drawSideArrows = 1;
 			idcLeft = 1000;
-			idcRight = 1001; 
+			idcRight = 1001;
 		};
 
 		class MCC_loadTruckTittle: MCC_RscText
@@ -76,12 +76,12 @@ class MCC_LOGISTICS_LOAD_TRUCK
 			text = "Logistics"; //--- ToDo: Localize;
 			colorText[] = {0,1,1,1};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 2)";
-			
-			x = 0.419792 * safezoneW + safezoneX;
+
+			x = 0.425 * safezoneW + safezoneX;
 			y = 0.247 * safezoneH + safezoneY;
 			w = 0.131771 * safezoneW;
 			h = 0.066 * safezoneH;
-			
+
 		};
 		class MCC_loadTruckRepairText: MCC_RscText
 		{
@@ -142,42 +142,42 @@ class MCC_LOGISTICS_LOAD_TRUCK
 		{
 			idc = -1;
 			action = "closeDialog 0;";
-			
+
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.442708 * safezoneW + safezoneX;
 			y = 0.676 * safezoneH + safezoneY;
 			w = 0.0802083 * safezoneW;
 			h = 0.033 * safezoneH;
 		};
-		class MCC_loadTruckOutpot: MCC_RscText
+		class MCC_loadTruckOutpot: MCC_RscButton
 		{
 			idc = 4;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			colorBackground[] = { 0.21, 0.21, 0.21,0.9};
 			text = ""; //--- ToDo: Localize;
-			x = 0.368229 * safezoneW + safezoneX;
+			x = 0.34 * safezoneW + safezoneX;
 			y = 0.588 * safezoneH + safezoneY;
-			w = 0.06875 * safezoneW;
+			w = 0.1 * safezoneW;
 			h = 0.077 * safezoneH;
 		};
-		class MCC_loadTruckOutpot2: MCC_RscText
+		class MCC_loadTruckOutpot2: MCC_RscButton
 		{
 			idc = 5;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			colorBackground[] = { 0.21, 0.21, 0.21,0.9};
-			x = 0.448438 * safezoneW + safezoneX;
+			x = 0.45 * safezoneW + safezoneX;
 			y = 0.588 * safezoneH + safezoneY;
-			w = 0.06875 * safezoneW;
+			w = 0.1 * safezoneW;
 			h = 0.077 * safezoneH;
 		};
-		class MCC_loadTruckOutpot3: MCC_RscText
+		class MCC_loadTruckOutpot3: MCC_RscButton
 		{
 			idc = 6;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			colorBackground[] = { 0.21, 0.21, 0.21,0.9};
-			x = 0.528646 * safezoneW + safezoneX;
+			x = 0.56 * safezoneW + safezoneX;
 			y = 0.588 * safezoneH + safezoneY;
-			w = 0.06875 * safezoneW;
+			w = 0.1 * safezoneW;
 			h = 0.077 * safezoneH;
 		};
 	};

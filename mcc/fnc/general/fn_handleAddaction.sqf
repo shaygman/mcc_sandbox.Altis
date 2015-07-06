@@ -10,13 +10,13 @@ private ["_string","_respawnItems","_airports","_counter","_searchArray","_key",
 uiNameSpace setVariable ["MCC_interactionActive",false];
 
 ["MCC_interactionEH", "onEachFrame", {
-		if (!(missionNameSpace getVariable ["MCC_ingameUI", true]) || (MCC_isACE && MCC_isMode)) exitWith {};
+		if !(missionNameSpace getVariable ["MCC_ingameUI", true]) exitWith {};
 		_interactiveObjects = missionNameSpace getVariable ["MCC_interactionObjects",[]];
 		{
 			_obj 	= _x select 0;
 			_text 	= _x select 1;
 			_dist 	= (player distance _obj) / 10;
-			_color  = [1,1,1,1 - _dist];
+			_color  = [1,0,1,1 - _dist];
 			drawIcon3D [
 							"",
 							_color,
@@ -38,14 +38,30 @@ uiNameSpace setVariable ["MCC_interactionActive",false];
 
 
 //Find out interaction key name
-waituntil {!isnil "MCC_keyBinds"};
-_key = MCC_keyBinds select 4;
 _text = "";
-if (_key select 0) then {_text = "Shift + "};
-if (_key select 1) then {_text = _text + "Ctrl + "};
-if (_key select 2) then {_text = _text + "Alt + "};
+waituntil {!(IsNull (findDisplay 46))};
 
-_text = format ["%1%2",_text,keyName (_key select 3)];
+if ((MCC_isACE) && MCC_isMode) then {
+	_key = ["ACE3 Common","ace_interact_menu_InteractKey"] call MCC_fnc_getKeyFromCBA;
+} else {
+	if (MCC_isCBA) then {
+		_key = ["MCC","interactionKey"] call CBA_fnc_getKeybind;
+		if (((_key select 5) select 1) select 0) then {_text = "Shift + "};
+		if (((_key select 5) select 1) select 1) then {_text = _text + "Ctrl + "};
+		if (((_key select 5) select 1) select 2) then {_text = _text + "Alt + "};
+		_text = format ["%1%2",_text,keyName ((_key select 5) select 0)];
+
+	} else {
+		waituntil {!isnil "MCC_keyBinds"};
+
+		_key = MCC_keyBinds select 4;
+		if (_key select 0) then {_text = "Shift + "};
+		if (_key select 1) then {_text = _text + "Ctrl + "};
+		if (_key select 2) then {_text = _text + "Alt + "};
+		_text = format ["%1%2",_text,keyName (_key select 3)];
+	};
+};
+
 
 _text spawn
 {

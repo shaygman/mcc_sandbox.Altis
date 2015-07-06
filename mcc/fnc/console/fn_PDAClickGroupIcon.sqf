@@ -140,15 +140,18 @@ if (_button == 1) then
 	_ctrl = MCC_CONSOLEINFOTEXT;
 	_ctrl ctrlSetStructuredText parseText _html;
 
-	//Reveal background info
-	_ctrl ctrlSetPosition [_posX,_posY,0,0];
-	_ctrl ctrlShow true;
-	_ctrl ctrlCommit 0;
-	_ctrl ctrlSetPosition [_posX, _posY,0.15 * safezoneW,_UIFactor + (0.09 * safezoneH)];
-	_ctrl ctrlCommit 0.1;
-	waituntil {ctrlCommitted _ctrl};
+	while {! ctrlShown _ctrl} do {
 
-	ctrlsetFocus _ctrl;
+		//Reveal background info
+		_ctrl ctrlSetPosition [_posX,_posY,0,0];
+		_ctrl ctrlShow true;
+		_ctrl ctrlCommit 0;
+		_ctrl ctrlSetPosition [_posX, _posY,0.15 * safezoneW,_UIFactor + (0.09 * safezoneH)];
+		_ctrl ctrlCommit 0.1;
+		waituntil {ctrlCommitted _ctrl};
+
+		ctrlsetFocus _ctrl;
+	};
 
 	//Reveal Live feed button
 	if (!MCC_ConsoleLiveFeedHelmetsOnly || (headgear (leader _group) in MCC_ConsoleLiveFeedHelmets) || (vehicle(leader _group) !=  (leader _group))) then

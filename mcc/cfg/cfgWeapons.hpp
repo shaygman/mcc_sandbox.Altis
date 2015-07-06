@@ -32,6 +32,7 @@ class MCC_Item: InventoryItem_Base_f
 {
 	mass = 10;
 	uniformModel = "\A3\weapons_F\ammo\mag_univ.p3d";
+	allowedSlots[] = {801,701,901};
 }
 
 class MCC_videoProbe : MCC_ItemCore

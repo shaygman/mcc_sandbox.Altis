@@ -77,8 +77,11 @@ if !mcc_isloading then
 								";
 		};
 
-	_countVehicles = count MCC_evacVehicles; 					//Wait until the vehicle is spawned
-	waituntil {_countVehicles != count MCC_evacVehicles};
+	private ["_evacVehicles"];
+	_evacVehicles = missionNamespace getvariable [format ["MCC_evacVehicles_%1",playerSide],[]];
+	_countVehicles = count _evacVehicles; 					//Wait until the vehicle is spawned
+
+	waituntil {_countVehicles != count _evacVehicles};
 	_comboBox = _mccdialog displayCtrl MCC_EVAC_SELECTED;		//fill combobox Fly in Hight
 
 	lbClear _comboBox;
@@ -94,9 +97,9 @@ if !mcc_isloading then
 			_displayname 			= "N/A";
 			_index 					= _comboBox lbAdd _displayname;
 		};
-	} foreach MCC_evacVehicles;
+	} foreach _evacVehicles;
 
-	_comboBox lbSetCurSel MCC_evacVehicles_index;
+	_comboBox lbSetCurSel (missionNameSpace getvariable ["MCC_evacVehicles_index",0]);
 	}
 	else
 	{

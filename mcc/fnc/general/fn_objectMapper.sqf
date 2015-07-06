@@ -1,5 +1,5 @@
-/*==================================================================MCC_fnc_objectMapper===============================================================================================
-Original Script 
+/*==================================================================MCC_fnc_objectMapper=========================================================================================
+Original Script
 objectMapper.sqf Author: Joris-Jan van 't Land
 Edited by armatec
 
@@ -8,32 +8,32 @@ Edited by armatec
 
 	Parameter(s):
 	_this select 0: compositions name - "fuelDepot_us"
-	_this select 1: Direction in degrees - Number 
+	_this select 1: Direction in degrees - Number
 	_this select 2: Location to start
-	
+
 	Exsample:
 	[ getpos player, 0,"c_campSite"] call MCC_fnc_objectMapper;
-	
-	<out> 
-		if obj select 6 got a a value then it is the target vehicle. 
+
+	<out>
+		if obj select 6 got a a value then it is the target vehicle.
 */
 private ["_script","_azi","_pos","_objs","_target"];
 
 
-_pos 	= _this select 0; 
-_azi 	= _this select 1; 
+_pos 	= _this select 0;
+_azi 	= _this select 1;
 _script = _this select 2;
 
-if (!isserver) exitWith {};  
+if (!isserver) exitWith {};
 
 _objs = [];
 
 //DOC sqf or Comp Array?
-if (typeName _script == "ARRAY") then 
+if (typeName _script == "ARRAY") then
 {
 	_objs = _script;
-} 
-else 
+}
+else
 {
 	_objs = call (compile (preprocessFileLineNumbers format ["%1mcc\general_scripts\docobject\%2.sqf",MCC_path,_script]));
 };
@@ -66,7 +66,7 @@ for "_i" from 0 to ((count _objs) - 1) do
 		_damage = _obj select 4;
 		if (typeName (_obj select 5) == "STRING") then {_vehicleinit = (_obj select 5)};
 		_vehicleTarget = _obj select 6;
-						
+
 		private ["_rotMatrix", "_newRelPos", "_newPos"];
 		_rotMatrix =[[cos _azi, sin _azi],[-(sin _azi), cos _azi]];
 		_newRelPos = [_rotMatrix, _relPos] call _multiplyMatrixFunc;
@@ -78,17 +78,17 @@ for "_i" from 0 to ((count _objs) - 1) do
 		_newObj setPos _newPos;
 		sleep 0.1;
 		_newObj setPos _newPos;
-		
-		
+
+
 		_newObj setDir (_azi + _azimuth);
 		if (!isNil "_fuel") then {_newObj setFuel _fuel};
 		if (!isNil "_damage") then {_newObj setDamage _damage};
 		if (!isNil "_vehicleinit") then {[[[netID _newObj,_newObj], _vehicleinit], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP};
 		if (!isNil "_vehicleTarget") then {_target = _newObj};
 		MCC_lastSpawn set [count MCC_lastSpawn,_newObj];
-		
+
 		//Curator
 		MCC_curator addCuratorEditableObjects [[_newObj],false];
 };
 publicVariable "MCC_lastSpawn";
-if (!isNil "_target") then {_target}; 
+if (!isNil "_target") then {_target};

@@ -9,7 +9,7 @@ if (isnil "_object") exitWith {};
 if (isnull _object || !isServer) exitWith {};
 
 _helper = "UserTexture1m_F" createVehicle [0,0,0];
-_helper attachto [_object,[0,0,0]];
+_helper attachto [_object,[0,0,1]];
 _helper setVariable ["MCC_helperText",_text,true];
 
 while {alive _object} do {sleep 2};

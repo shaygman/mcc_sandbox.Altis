@@ -92,6 +92,26 @@ class ReammoBox_F: thingX {
                 showDisabled = 0;
                 priority = 1.2;
             };
+
+        class ACE_MCC_changeKit {
+                displayName = "Change<br/>Kit";
+                distance = 5;
+                condition = "(_target isKindof 'Box_FIA_Support_F') && (!(_target getVariable ['mcc_mainBoxUsed', false])) && !(isNull attachedTo _target) && (missionNamespace getVariable ['CP_activated',false])";
+                statement =  "createDialog 'CP_GEARPANEL'";
+                icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
+                showDisabled = 0;
+                priority = 1.2;
+            };
+
+        class ACE_MCC_supplyBox {
+                displayName = "Resupply";
+                distance = 5;
+                condition = "(typeof _target in ['MCC_ammoBox','MCC_crateAmmo','MCC_crateAmmoBigWest','MCC_crateAmmoBigEast','Box_NATO_AmmoVeh_F','B_Slingload_01_Ammo_F','Land_Pod_Heli_Transport_04_ammo_F'])";
+                statement =  "[_target] call MCC_fnc_interactUtility;";
+                icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
+                showDisabled = 0;
+                priority = 1.2;
+            };
 	  };
 	};
 	class ACE_SelfActions {};
@@ -145,14 +165,14 @@ class CAManBase: Man {
 
 			class ACE_MCC_door_unlock {
 				displayName = "Pick<br/>Lock";
-				condition = "(({_x in items _player} count ['ACE_DefusalKit','ACE_key_lockpick'])!=0) && (([cursorTarget] call MCC_fnc_isDoorLocked)==1)";
+				condition = "(({_x in items _player} count ['ACE_DefusalKit','ACE_key_lockpick','MCC_multiTool'])!=0) && (([cursorTarget] call MCC_fnc_isDoorLocked)==1)";
 				icon = "\z\ace\addons\vehiclelock\ui\lockpick.paa";
 				statement = "[cursorTarget] spawn MCC_fnc_doorUnlock;";
 			};
 
 			class ACE_MCC_door_lock {
 				displayName = "Wedge<br/>Door";
-				condition = "(({_x in items _player} count ['ACE_DefusalKit','ACE_key_lockpick'])!=0) && (([cursorTarget] call MCC_fnc_isDoorLocked)==2)";
+				condition = "(({_x in items _player} count ['ACE_DefusalKit','ACE_key_lockpick','MCC_multiTool'])!=0) && (([cursorTarget] call MCC_fnc_isDoorLocked)==2)";
 				icon = "\A3\ui_f\data\map\groupicons\waypoint.paa";
 				statement = "[cursorTarget] spawn MCC_fnc_doorLock;";
 			};

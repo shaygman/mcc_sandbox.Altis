@@ -61,6 +61,7 @@ class MCC
 		class ppEffects	{description = "Create effects to all players";};
 		class SetPitchBankYaw	{};
 		class openArtillery {};
+		class deleteBrush{};
 	};
 
 	class ui
@@ -83,11 +84,15 @@ class MCC
 		class createMCCZones	{description = "Create MCC zones localy";};
 		class initCuratorAttribute	{description = "Init MCC's curato Attribute";};
 		class interactProgress	{description = "Create a progress bar and anim for the player";};
-		class loadTruckUI		{description = "Open logistic truck UI";};
 		class keyDown			{description = "Handle keydown/keyUp EH";};
 		class help				{description = "Display tooltip";};
 		class playerStats		{description = "Show player stats in RS";};
 		class getKeyFromAction 	{description = "Get the keys name from an action defined in CfgActions";};
+		class setIDCText 		{description = "Set text to the current IDC";};
+		class CBAInteractionKeybind {description = "Handle CBA keybinds for interactions";};
+		class CBAKeybinds {description = "Handle CBA keybinds";};
+		class getKeyFromCBA {description = "Get a pretty name from CBA key binds";};
+		class 3Dcredits	{};
 	};
 
 	class ied
@@ -110,6 +115,7 @@ class MCC
 		class manageAC		{description = "Manage armed civilian behavior.";};
 		class SBSingle		{description = "Place suicide bomber.";};
 		class manageSB		{description = "Manage SB bomber behavior.";};
+		class mineSingle	{description = "Create a mine field.";};
 	};
 
 	class cas
@@ -123,7 +129,7 @@ class MCC
 		class CreateAmmoDrop	{description = "drop an object from a plane and attach paracute to it, thanks to BIS.";};
 		class createPlane		{description = "create a flying plane from the given type and return the plane , pilot and group.";};
 		class deletePlane		{description = "set a plane to move to a location and delete it once it come closer then 800 meters.";};
-
+		class airDrop		{description = "Handles CAS and airdrop requests on the server";};
 	};
 
 	class artillery
@@ -200,6 +206,11 @@ class MCC
 		class customTasks			{description = "Manage custom tasks.";};
 		class MWspawnAnimals		{description = "spawn animals in the area.";};
 		class MWinitMission			{description = "Init generated mission.";};
+		class populateObjective		{description = "Populate a zone with enemies.";};
+		class createConfigs			{description = "Create configs class for the MW";};
+		class campaignInit			{description = "Init campaign";};
+		class missionDone			{description = "Mission Done and allocate resources";};
+		class dayCycle				{description = "Control day and night cycle gain tickets and change weather every day";};
 	};
 
 	class ai
@@ -220,6 +231,7 @@ class MCC
 		class stunBehav			{description = "Play unit stun behavior";};
 		class canHaltAI			{description = "Can an AI unit be halted by a player";};
 		class doHaltAI			{description = "Can an AI unit be halted by a player";};
+		class enemyCAS			{description = "Can an AI unit be halted by a player";};
 	};
 
 	class mp
@@ -307,6 +319,8 @@ class MCC
 		class setVariable{};
 		class allowedDrivers{};
 		class allowedWeapons{};
+		class handleRating 		{description = "Add xp for players when rating added";};
+		class createCameraOnPlayer {description = "Create a camera object on player";};
 	};
 
 	class interaction
@@ -416,5 +430,87 @@ class MCC
 		class CheckRes {};
 		class CheckBuildings {};
 		class mainBoxOpen {};
+		class vehicleSpawnerInit {};
+		class vehicleSpawner {};
+		class makeObjectVirtualBox {};
+	};
+
+	class logistics
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\logistics";
+		#else
+		file = "mcc\fnc\logistics";
+		#endif
+
+		class loadTruckUI		{description = "Open logistic truck UI";};
+		class logTruckRefresh 	{description = "Refresh the logistics dialog";};
+		class logTruckAdd		{description = "Add or remove crates from a log truck";};
+	};
+
+	class evac
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\evac";
+		#else
+		file = "mcc\fnc\evac";
+		#endif
+
+		class evacDelete {description = "Delete the given vehicle or it's driver";};
+		class evacMove {description = "Move a vehicle to selected WP";};
+		class evacSpawn {description = "Spawn a vehicle with crew and gunners, mark it as an evac vehicle";};
+		class repairEvac {description = "Repair evac helicopter";};
+		class setEvac {description = "Sets an empty ot AI vehicle into an ecav for a specific side";};
+	};
+
+	class ambient
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\ambient";
+		#else
+		file = "mcc\fnc\ambient";
+		#endif
+
+		class ambientInit {description = "init ambient civilians";};
+		class findCivHouse {description = "find nearest civilian house";};
+		class ambientDeleteCiv {description = "Delete civilians when not in range and not seen by players";};
+		class ambientSpawnCiv {description = "Spawn civilians around the player";};
+		class ambientDeleteCar {description = "Delete cars when not in range and not seen by players";};
+		class ambientSpawnCar {description = "Spawn cars around the player";};
+		class ambientSpawnCarParked  {description = "Spawn parked cars on street shulders";};
+		class ambientDeleteCarParked {description = "Delete parked cars when not in range and not seen by players";};
+	};
+
+	class curator
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\curator";
+		#else
+		file = "mcc\fnc\curator";
+		#endif
+
+		class addToZeus {description = "add units to zeus";};
+		class curatorAmbientCivilians {description = "handles the add ambient civilians module";};
+		class curatorMCCCAS {description = "MCC CAS in Zeus";};
+		class curatorSetEvac {description = "Mark Vehicle as Evac Vehicle";};
+		class curatorSetIED {description = "Make item/object/unit an IED";};
+		class curatorSetArmedCivilian {description = "Make unit armed civilian";};
+		class curatornightEffects {description = "Manage night effects";};
+		class curatorDoorLock {description = "Manage doors status";};
+		class curatorAtmoshphere {description = "Manage atmosphere";};
+		class curatorWarZone {description = "Create war zone effect";};
+		class curatorGarrisonUnits {description = "Garrison units in the selected buildings";};
+		class curatorDamagePart {description = "Damage part of object/Unit";};
+	};
+
+	class dynamicDialog
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\dynamicDialog";
+		#else
+		file = "mcc\fnc\dynamicDialog";
+		#endif
+
+		class initDynamicDialog {description = "init the dynamic dialog";};
 	};
 };

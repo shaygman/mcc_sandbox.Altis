@@ -82,8 +82,26 @@ findDisplay 12 displayCtrl 51 ctrlAddEventHandler ["Draw","_this call MCC_fnc_ma
 
 sleep 10;
 //Loop
-private ["_wpArray","_rating","_exp","_level","_role","_oldLevel","_newLevel","_nextCheck","_time"];
+private ["_wpArray","_rating","_exp","_level","_role","_oldLevel","_newLevel","_nextCheck","_time","_fnc_supplyBox","_vehicle"];
 _nextCheck = time + 300;
+
+_fnc_supplyBox = {
+	private ["_crateClass","_type","_nearItems","_value","_text"];
+	_crateClass = _this select 0;
+	_type = _this select 1;
+	_text = _this select 2;
+
+	_nearItems = getPos player nearObjects [_crateClass, 15];
+	if (count _nearItems == 0) exitWith {false};
+
+	_box = _nearItems select 0;
+	_value = _box getVariable [_type,500];
+	titleText [_text,"PLAIN DOWN"];
+	titleFadeOut 1;
+	_value = _value - 25;
+	if (_value <= 0) then {deleteVehicle _box} else {_box setVariable [_type,_value,true]};
+	true
+};
 
 while {true} do
 {
@@ -103,6 +121,20 @@ while {true} do
 		missionNamespace setVariable ["MCC_save_secondaryWeaponMagazine",secondaryWeaponMagazine player];
 		missionNamespace setVariable ["MCC_save_handgunMagazine",handgunMagazine player];
 
+		//Repair/refuel from boxed all this ifs are to reduce unnecessary nearObjects - efficiency
+		if (!MCC_isMode && vehicle player != player) then {
+			_vehicle = vehicle player;
+			if (speed _vehicle < 10 && player == leader _vehicle) then {
+
+				if (fuel _vehicle <= 0.95) then {
+					if (["CargoNet_01_barrels_F","fuelLeft","Refuling"] call _fnc_supplyBox) then {_vehicle setFuel ((fuel _vehicle + 0.05) min 1)};
+				};
+				if (getDammage _vehicle > 0) then {
+					if (["CargoNet_01_box_F","supplyLeft","Repairing"] call _fnc_supplyBox) then {_vehicle setDamage ((getDammage _vehicle - 0.05) max 0)};
+				};
+			};
+		};
+
 		if (CP_activated) then
 		{
 			//Check if in vehicle
@@ -112,61 +144,17 @@ while {true} do
 			[] call MCC_fnc_allowedWeapons;
 
 			//Manage XP
-			if (missionNamespace getvariable ["CP_gainXP",true]) then
-			{
+			if (missionNamespace getvariable ["CP_gainXP",true]) then {
 				//Gain XP from roles check every 10 minutes
-				if (time > _nextCheck) then
-				{
+				if (time > _nextCheck) then	{
 					[] call MCC_fnc_gainXPfromRoles;
 					_nextCheck = time + 300;
 				};
-
-				//No more then 500 exp per sec
-				_rating = rating player min 500;
-
-				if (_rating > 0) then
-				{
-					if (CP_debug) then {systemchat format ["rating add: %1", _rating]};
-
-					_role = player getvariable "CP_role";
-					while {isnil "_role"} do {_role = player getvariable "CP_role";};
-
-					_exp 	 = call compile format  ["%1Level select 1",_role];
-
-
-					if (!isnil "_exp") then
-					{
-						if (_exp < 0) then {_exp = 0};
-						if (CP_debug) then {systemchat format ["rating: %1", _exp]};
-
-						_oldLevel = call compile format  ["%1Level select 0",_role];
-
-						_exp = (_exp + _rating);
-						_level =[floor(_exp/(CP_XPperLevel + _oldLevel*100))+1 ,_exp];
-
-						_newLevel = _level select 0;
-
-						 if (_oldLevel < _newLevel) then
-						 {
-							[_newLevel] call MCC_fnc_unlock;
-							_oldLevel = _newLevel;
-						 };
-
-						if (CP_debug) then {systemchat format ["level: %1",_level]};
-
-						missionNameSpace setVariable [format ["%1Level",_role], _level];
-						[[format ["%1Level",_role], player, _level, "ARRAY"], "MCC_fnc_setVariable", false, false] spawn BIS_fnc_MP;
-					};
-				};
-
-				//Mark it zero again
-				player addRating (-1 * (rating player));
 			};
 		};
 
 		//Delete Markers
-		if (!isnil "MCC_PDAMarkers") then
-		{
+		if (!isnil "MCC_PDAMarkers") then {
 			_time = time;
 			{
 				if (time > (_x +300)) then
@@ -182,8 +170,7 @@ while {true} do
 		};
 
 		//Medic effects
-		if (missionNamespace getvariable ["MCC_medicSystemEnabled",false]) then
-		{
+		if (missionNamespace getvariable ["MCC_medicSystemEnabled",false]) then {
 			[] call MCC_fnc_medicEffects;
 		};
 	};

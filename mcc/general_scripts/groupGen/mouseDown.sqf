@@ -350,7 +350,7 @@ if (mcc_missionmaker == (name player)) then
 		else
 		{
 			hint "Air support incomming.";
-			[[_ammount, MCC_spawnkind , getmarkerpos _marker, MCC_planeType, _spawn,_away],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
+			[[_ammount, MCC_spawnkind , getmarkerpos _marker, MCC_planeType, _spawn,_away,(missionNamespace getVariable ["MCC_airdropIsParachute",true])],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
 		};
 
 		MCC_CASrequestMarker = false;			//Wait and delete the marker

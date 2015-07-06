@@ -11,11 +11,11 @@ _spawnkind = _this select 1;
 _pilot = _this select 2;
 _class = format ["%1_parachute_02_F",  toString [(toArray faction _pilot) select 0]];
 _paras = [];
- 
+
  while {(_pos distance vehicle _pilot) < 20} do {sleep 0.2};
- 
+
  _drop = createVehicle [_spawnkind, _pos, [], 0, "CAN_COLLIDE"];
- 
+MCC_curator addCuratorEditableObjects [[_drop],false];
 _objectData = (_drop call bis_fnc_objectType) select 1;
 
 _para = createVehicle [_class, getpos _drop,[],0,"CAN_COLLIDE"];
@@ -23,7 +23,7 @@ _para attachTo [_drop, [0,0,0]];
 _velocity = velocity (vehicle _pilot);
 detach _para;
 
-_para setVelocity _velocity;		
+_para setVelocity _velocity;
 
 if (_objectData in ["Ship","Submarine","TrackedAPC","Tank","WheeledAPC","Car"]) then
 {
@@ -44,7 +44,7 @@ else
 
 _para setvelocity [0,0,-1];
 
-0 = [_drop, _paras] spawn 
+0 = [_drop, _paras] spawn
 {
 	private ["_veh"];
 	_veh = _this select 0;
@@ -52,16 +52,16 @@ _para setvelocity [0,0,-1];
 	_vel = velocity _veh;
 	detach _veh;
 	_veh setVelocity _vel;
-	
+
 	 playSound3D ["a3\sounds_f\weapons\Flare_Gun\flaregun_1_shoot.wss",_veh];
 
 	{
 		detach _x;
-		_x disableCollisionWith _veh;   
+		_x disableCollisionWith _veh;
 	} count (_this select 1);
-	
+
 	_smoke = "SmokeShellBlue" createVehicle (getpos _veh);			//Mark the drop with smoke
-	
+
 	_time = time + 5;
 	waitUntil {time > _time};
 	{

@@ -46,13 +46,41 @@ if (isServer) then
 					unassignCurator MCC_curator;
 					sleep 0.1;
 					_p_mcc_player assignCurator MCC_curator;
+
+					//load custom units arrays
+					//helicopters
+					missionNamespace setVariable ["MCC_vehicles_helicopters" ,["all","helicopterrtd","air"] call MCC_fnc_makeUnitsArray];
+					publicVariable "MCC_vehicles_helicopters";
+
+					//planes
+					missionNamespace setVariable ["MCC_vehicles_airplanes" ,["all","airplanex","air"] call MCC_fnc_makeUnitsArray];
+					publicVariable "MCC_vehicles_airplanes";
+
+					//cars
+					missionNamespace setVariable ["MCC_vehicles_vehicles" ,["all","carx"] call MCC_fnc_makeUnitsArray];
+					publicVariable "MCC_vehicles_vehicles";
+
+					//armor
+					missionNamespace setVariable ["MCC_vehicles_tanks" ,["all","tankx"] call MCC_fnc_makeUnitsArray];
+					publicVariable "MCC_vehicles_tanks";
+
+					//motorcycle
+					missionNamespace setVariable ["MCC_vehicles_motorcycles" ,["all","motorcyclex"] call MCC_fnc_makeUnitsArray];
+					publicVariable "MCC_vehicles_motorcycle";
+
+					//ships
+					missionNamespace setVariable ["MCC_vehicles_ships" ,["all","shipx"] call MCC_fnc_makeUnitsArray];
+					publicVariable "MCC_vehicles_ships";
+
 					publicVariable "mcc_missionmaker";
 					publicVariable "mcc_zone_pos";
 					publicVariable "mcc_zone_size";
 					publicVariable "mcc_zone_dir";
 					publicVariable "mcc_zone_locations";
 					publicVariable "MCC_zones_numbers";
-					publicvariable "MCC_evacVehicles";
+
+
+					publicvariable (format ["MCC_evacVehicles_%1",playerside]);
 
 					ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
 				}
@@ -244,45 +272,7 @@ my_pv_handler =
 
 					// Dont start using the BIS functions till they are ready for lift off sir...3...2...1.... GO
 					waituntil {!isnil "bis_fnc_init"};
-					/*
-					// MOVE TO SPAWNSTUFF
-					// What ever we do, we need a good position
-					switch (_p_mcc_classtype) do
-							{
-								case "AIR":
-								{
-									if !_p_mcc_spawnwithcrew then
-									{_safepos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos; }
-									else
-									{_safepos     =[_p_mcc_zone_markposition ,1,_p_maxrange,2,1,10,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;};
-								};
 
-								case "Reinforcement":
-								{
-									_safepos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,1,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
-								};
-
-								case "DIVER":
-								{
-									_safepos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,1,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
-								};
-
-								case "LAND":
-								{
-									_safepos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
-								};
-
-								case "WATER":
-								{
-									_safepos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,2,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
-								};
-
-								default
-								{
-									_safepos     =[_p_mcc_zone_markposition,1,_p_maxrange,2,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
-								};
-							};
-					*/
 				if (format["%1",_p_safepos] != "[-500,-500,0]" ) then
 				{
 					// As some stuff needs to be spawned from the inside of the zone to the outside we need that direction

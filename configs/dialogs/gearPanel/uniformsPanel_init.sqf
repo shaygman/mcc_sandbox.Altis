@@ -20,10 +20,13 @@ uiNamespace setVariable ["CP_InfoText", _disp displayCtrl 6];
 #define CP_uniformPanelUniforms (uiNamespace getVariable "CP_uniformPanelUniforms")
 #define CP_InfoText (uiNamespace getVariable "CP_InfoText")
 
-
-//Disable Esc while respawn is on
-CP_disableEsc = CP_UNIFORMSPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
-
+//We came here from an item and we want to change the kit
+if (isnil "CP_gearCam") then {
+	["CP_UNIFORMSPANEL_IDD"] call MCC_fnc_createCameraOnPlayer;
+} else {
+	//Disable Esc while respawn is on
+	CP_disableEsc = CP_UNIFORMSPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
+};
 
 //Load NV
 _items = CP_currentUniforms select 0;

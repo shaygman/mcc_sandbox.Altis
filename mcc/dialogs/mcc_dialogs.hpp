@@ -429,6 +429,21 @@ class RscButtonMenuCancel : RscButtonMenuOK
   text = "Cancel";
 };
 
+class RscButtonMenu : MCC_RscButtonMenu
+{
+  idc = -1;
+  color2[] = {0,0,0,1};
+  color[] = {1,1,1,1};
+  colorBackground2[] = {0.75,0.75,0.75,1};
+  colorBackground[] = {0,0,0,0.8};
+  colorBackgroundFocused[] = {1,1,1,1};
+  colorDisabled[] = {1,1,1,0.25};
+  colorFocused[] = {0,0,0,1};
+  colorText[] = {1,1,1,1};
+  shortcuts[] = {"0x00050000 + 0",28,57,156};
+  text = "";
+};
+
 class MCC_RscListbox
 {
 	access = 0;

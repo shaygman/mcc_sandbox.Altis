@@ -1,7 +1,7 @@
 //=================================================================MCC_fnc_medicUseItem=========================================================================================
 //Handle medic uses item
 //=============================================================================================================================================================================
-private ["_item","_itemType","_unit","_complex","_self","_fail","_remaineBlood","_maxBleeding","_hitArray","_hitSelections","_damage","_break","_string"];
+private ["_item","_itemType","_unit","_complex","_self","_fail","_remaineBlood","_maxBleeding","_hitArray","_hitSelections","_damage","_break","_string","_magPlayer","_magUnit"];
 _itemType 	= _this select 0;
 _unit 		= _this select 1;
 _self		= if (_unit == player) then {true} else {false};
@@ -17,15 +17,18 @@ _item = switch (_itemType) do
 			case "heal": {if (_complex) then {"MCC_firstAidKit"} else {"Medikit"}};
 		};
 
+_magPlayer =  if (_complex) then {magazines player} else {items player};
+_magUnit =  if (_complex) then {magazines _unit} else {items _unit};
+
 //Remove item in complex mode
 if (_complex) then
 {
-	if (!((_item in (magazines player))|| (_item in (magazines _unit)))|| !(alive _unit) || !(alive player)) exitWith {_break};
+	if (!((_item in _magPlayer|| (_item in _magUnit)))|| !(alive _unit) || !(alive player)) exitWith {_break};
 
 	if (_itemType != "heal") then
 	{
 		//If unit is unconscious use its items first if it had any
-		if (_item in (magazines _unit) && (_unit getVariable ["MCC_medicUnconscious",false])) then {_unit removeMagazine _item} else {player removeMagazine _item}
+		if (_item in _magUnit && (_unit getVariable ["MCC_medicUnconscious",false])) then {if (_complex) then {_unit removeMagazine _item} else {_unit removeItem _item}} else {if (_complex) then {player removeMagazine _item} else {player removeItem _item}}
 	};
 }
 else
@@ -54,7 +57,7 @@ switch (_itemType) do
 			//Gain XP
 			if ((_unit getVariable ["MCC_medicBleeding",0])>0 && !_self && CP_activated) then
 			{
-				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For bandaging %1",name _unit]} else {""};
+				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",true]) then {format ["For bandaging %1",name _unit]} else {""};
 				[getplayeruid player, 100,_string] spawn MCC_fnc_addRating;
 			};
 
@@ -74,7 +77,7 @@ switch (_itemType) do
 			//Gain XP
 			if ((getDammage _unit)>0.2 && !_self && CP_activated) then
 			{
-				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For healing %1",name _unit]} else {""};
+				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",true]) then {format ["For healing %1",name _unit]} else {""};
 				[getplayeruid player, 200,_string] spawn MCC_fnc_addRating;
 			};
 
@@ -95,7 +98,7 @@ switch (_itemType) do
 			//Gain XP
 			if ((_unit getVariable ["MCC_medicUnconscious",false]) && !_self && CP_activated) then
 			{
-				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For healing %1",name _unit]} else {""};
+				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",true]) then {format ["For healing %1",name _unit]} else {""};
 				[getplayeruid player, 300,_string] spawn MCC_fnc_addRating;
 			};
 

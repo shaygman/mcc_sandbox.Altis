@@ -1,6 +1,6 @@
 private ["_mccdialog","_comboBox","_displayname","_pic", "_index","_planeName","_counter","_type","_group","_groupControl",
 		 "_insetionArray","_control","_unitsCount","_markerType","_markerColor","_leader","_markerInf","_markerMech","_markerArmor","_markerAir",
-		"_markerName","_icon","_wpArray","_haveGPS","_behaviour","_unitsSize","_unitsSizeMarker","_arrayName"];
+		"_markerName","_icon","_wpArray","_haveGPS","_behaviour","_unitsSize","_unitsSizeMarker","_arrayName","_evacVehicles"];
 // By: Shay_gman
 // Version: 1.1 (May 2012)
 #define mcc_playerConsole_IDD 2993
@@ -59,9 +59,11 @@ ctrlSetText [MCC_ConsoleMapRulerDir,format ["Dir: %1",MCC_ConsoleRulerData selec
 ctrlSetText [MCC_ConsoleMapRulerDis,format ["Dis: %1m",MCC_ConsoleRulerData select 1]];
 
 _mccdialog = findDisplay mcc_playerConsole_IDD;
-MCC_Console1Open = true; 
-//--------------------------------------------------Evac-------------------------------------------------------------------------------	
-if (count MCC_evacVehicles > 0) then	
+MCC_Console1Open = true;
+_evacVehicles = missionNamespace getvariable [format ["MCC_evacVehicles_%1",playerSide],[]];
+
+//--------------------------------------------------Evac-------------------------------------------------------------------------------
+if (count _evacVehicles > 0) then
 {
 	_comboBox = _mccdialog displayCtrl MCC_ConsoleEvacTypeText_IDD;		//fill combobox type
 	lbClear _comboBox;
@@ -74,13 +76,13 @@ if (count MCC_evacVehicles > 0) then
 			_displayname 			= "N/A";
 			_index 					= _comboBox lbAdd _displayname;
 			};
-	} foreach MCC_evacVehicles;
-	_comboBox lbSetCurSel MCC_evacVehicles_index;
-	
-	_type = MCC_evacVehicles select (lbCurSel MCC_ConsoleEvacTypeText_IDD);
+	} foreach _evacVehicles;
+	_comboBox lbSetCurSel (missionNameSpace getvariable ["MCC_evacVehicles_index",0]);
+
+	_type = _evacVehicles select (lbCurSel MCC_ConsoleEvacTypeText_IDD);
 	ctrlShow [MCC_ConsoleEvacFlyHightComboBox_IDD,false];
-	_insetionArray = ["Move (engine on)","Move (engine off)"];	
-	
+	_insetionArray = ["Move (engine on)","Move (engine off)"];
+
 	if (_type iskindof "helicopter") then {									//Case we choose aircrft
 		ctrlShow [MCC_ConsoleEvacFlyHightComboBox_IDD,true];
 		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
@@ -92,7 +94,7 @@ if (count MCC_evacVehicles > 0) then
 		} foreach MCC_evacFlyInHight_array;
 		_comboBox lbSetCurSel 0;
 	};
-	
+
 		_comboBox = _mccdialog displayCtrl MCC_ConsoleEvacApproachComboBox_IDD;		//fill combobox Approach
 	lbClear _comboBox;
 	{
@@ -103,7 +105,7 @@ if (count MCC_evacVehicles > 0) then
 };
 
 //----------------------------------------------CAS--------------------------------------------------------------------------------------
-_arrayName	= format ["MCC_CASConsoleArray%1",(player getVariable ["CP_side",  playerside])];	
+_arrayName	= format ["MCC_CASConsoleArray%1",(player getVariable ["CP_side",  playerside])];
 
 _comboBox = _mccdialog displayCtrl MCC_ConsoleCASAvailableTextBox_IDD;		//fill list box for CAS Types
 lbClear _comboBox;
@@ -115,17 +117,18 @@ lbClear _comboBox;
 _comboBox lbSetCurSel 0;
 
 //----------------------------------------------Airdrop--------------------------------------------------------------------------------------
-_arrayName	= format ["MCC_ConsoleAirdropArray%1",(player getVariable ["CP_side",  playerside])];	
+_arrayName	= format ["MCC_ConsoleAirdropArray%1",(player getVariable ["CP_side",  playerside])];
 
 _comboBox = _mccdialog displayCtrl MCC_ConsoleAirdropAvailableTextBox_IDD;		//fill list box for Airdrop Types
 lbClear _comboBox;
-_counter = 0; 
+_counter = 0;
 {
 	_counter = _counter + 1;
 	_displayname = format ["%1: ",_counter];
 	{
-		_displayname = format ["%1, %2",_displayname, getText(configFile >> "CfgVehicles" >> _x >> "displayname")];
+		_displayname = format ["%1 %2, ",_displayname, getText(configFile >> "CfgVehicles" >> _x >> "displayname")];
 	} foreach ((_x select 0) select 0);
+	_displayname = _displayname + (if (_x select 2) then {"-= Airdrop =-"} else {"-= Slingload =-"});
 	_index = _comboBox lbAdd _displayname;
 } foreach (missionNameSpace getVariable [_arrayName,[]]);
 _comboBox lbSetCurSel 0;
@@ -147,7 +150,7 @@ onGroupIconClick
     _shift = _this select 6;
     _ctrl = _this select 7;
     _alt = _this select 8;
-    
+
 	[_group,_button,[_posx,_posy],_shift,_ctrl,_alt] execVM format ["%1mcc\fnc\console\fn_consoleClickGroupIcon.sqf",MCC_path];
 	//[_group,_button,[_posx,_posy],_shift,_ctrl,_alt] spawn MCC_fnc_consoleClickGroupIcon;
 };
@@ -158,7 +161,7 @@ if (isnil "MCC_consoleGroupSelectionEH") then
 	MCC_consoleGroupSelectionEH = (findDisplay 46) displayAddEventHandler  ["KeyDown", format ["nul = _this execVM '%1mcc\general_scripts\console\groupNumbersSelectionEH.sqf';",MCC_path]];
 };
 
-MCC_fnc_mapDrawWPConsole = 
+MCC_fnc_mapDrawWPConsole =
 {
 	_map = _this select 0;
 	{
@@ -172,17 +175,17 @@ MCC_fnc_mapDrawWPConsole =
 			if (count _wpArray > 0)then
 			{
 				private ["_wp","_wPos","_wType"];
-				MCC_lastPos = nil; 
+				MCC_lastPos = nil;
 				_texture = gettext (configfile >> "CfgMarkers" >> "waypoint" >> "icon");
 				for [{_i= currentWaypoint (group _leader)},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
-				{			
+				{
 					_wp = (_wpArray select _i);
 					_wPos  = waypointPosition _wp;
 					if ((_wPos  distance [0,0,0]) > 50) then
 					{
 						_wType = waypointType _wp;
-						
-						
+
+
 						_map drawIcon [
 							_texture,
 							[0,0,1,1],
@@ -197,29 +200,29 @@ MCC_fnc_mapDrawWPConsole =
 							"center"
 						];
 
-						if (isnil "MCC_lastPos") then {MCC_lastPos = [(getpos _leader) select 0,(getpos _leader) select 1]}; 
-						
+						if (isnil "MCC_lastPos") then {MCC_lastPos = [(getpos _leader) select 0,(getpos _leader) select 1]};
+
 						_map drawLine [
 							MCC_lastPos,
 							_wPos,
 							[0,0,1,1]
 						];
 
-						MCC_lastPos = _wPos; 
+						MCC_lastPos = _wPos;
 					};
 				};
 			};
 		};
-	} foreach allgroups; 
+	} foreach allgroups;
 };
-	
-[] call 
-{
-	private ["_handler","_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_haveGPS","_leader","_groupStatus","_wpArray","_behaviour","_groupControl","_haveGPS","_groupName"]; 
 
-	setGroupIconsVisible [true,false];	
+[] call
+{
+	private ["_handler","_markerSupport","_markerAutonomous","_markerNaval","_markerRecon","_haveGPS","_leader","_groupStatus","_wpArray","_behaviour","_groupControl","_haveGPS","_groupName"];
+
+	setGroupIconsVisible [true,false];
 	setGroupIconsSelectable true;
-	
+
 	_handler = (_mccdialog displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_fnc_mapDrawWPConsole;"];
 	while {MCC_Console1Open && (str (finddisplay mcc_playerConsole_IDD) != "no display")} do 		//Draw WP
 		{
@@ -233,7 +236,7 @@ MCC_fnc_mapDrawWPConsole =
 				if (isnil "_haveGPS") then {_haveGPS = false};
 				if ((side _leader == side player) && alive _leader && _groupControl && ((MCC_ConsoleOnlyShowUnitsWithGPS && _haveGPS) || !MCC_ConsoleOnlyShowUnitsWithGPS)) then
 					{
-						switch (side _leader) do 	
+						switch (side _leader) do
 						{
 							case east: //East
 								{
@@ -247,8 +250,8 @@ MCC_fnc_mapDrawWPConsole =
 								_markerArmor	= "o_armor";
 								_markerAir		= "o_air";
 								_markerNaval	= "o_naval";
-								}; 
-								
+								};
+
 							case west: //West
 								{
 								_side			= west;
@@ -262,7 +265,7 @@ MCC_fnc_mapDrawWPConsole =
 								_markerAir		= "b_air";
 								_markerNaval	= "b_naval";
 								};
-								
+
 							case resistance: //Resistance
 								{
 								_side			= resistance;
@@ -290,16 +293,16 @@ MCC_fnc_mapDrawWPConsole =
 								_markerNaval	= "n_naval";
 								};
 						};
-						
+
 						_groupName = _x getVariable ["name",""];
-						
+
 						_groupName = if (_groupName == "") then	{groupID _x} else {_groupName};
-						
-						_x setGroupIconParams [_markerColor,_groupName ,1,true];	
-						
+
+						_x setGroupIconParams [_markerColor,_groupName ,1,true];
+
 						_unitsCount = [group _leader] call MCC_fnc_countGroupHC;
 						_unitsSize = 0;
-						_markerType = nil; 
+						_markerType = nil;
 						if (_unitsCount select 0 > 0) then {_markerType = _markerInf; _unitsSize = _unitsSize + (1*(_unitsCount select 0))};
 						if (_unitsCount select 1 > 0) then {_markerType = _markerMech; _unitsSize = _unitsSize + (3*(_unitsCount select 1))};
 						if (_unitsCount select 2 > 0) then {_markerType = _markerArmor; _unitsSize = _unitsSize + (3*(_unitsCount select 2))};
@@ -308,7 +311,7 @@ MCC_fnc_mapDrawWPConsole =
 						if (_unitsCount select 5 > 0) then {_markerType = _markerRecon; _unitsSize = _unitsSize + (1*(_unitsCount select 5))};
 						if (_unitsCount select 6 > 0) then {_markerType = _markerSupport; _unitsSize = _unitsSize + (3*(_unitsCount select 6))};
 						if (_unitsCount select 7 > 0) then {_markerType = _markerAutonomous; _unitsSize = _unitsSize + (1*(_unitsCount select 7))};
-						
+
 						if (isnil "_markerType") then
 						{
 							_unitsCount = [group _leader] call MCC_fnc_countGroup;
@@ -318,30 +321,30 @@ MCC_fnc_mapDrawWPConsole =
 							if (_unitsCount select 3 > 0) then {_markerType = _markerAir; _unitsSize = _unitsSize + (3*(_unitsCount select 3))};
 							if (_unitsCount select 4 > 0) then {_markerType = _markerNaval; _unitsSize = _unitsSize + (3*(_unitsCount select 4))};
 						};
-						
+
 						//How big is the squad
-						_unitsSize = floor (_unitsSize/4); 
+						_unitsSize = floor (_unitsSize/4);
 						if (_unitsSize > 10) then {_unitsSize = 10};
 						_unitsSizeMarker = format ["group_%1",_unitsSize];
-						
+
 						//Set markers
-						_icon = (_x getvariable "MCCgroupIconData"); 
+						_icon = (_x getvariable "MCCgroupIconData");
 						if (!isnil "_icon") then {_x removeGroupIcon _icon};
 						_icon = _x addGroupIcon [_markerType,[0,0]];
 						_x setGroupIconParams [_markerColor,format ["%1",_groupName],1,true];
 						_x setvariable ["MCCgroupIconData",_icon,false];
-						
-						_icon = (_x getvariable "MCCgroupIconSize") select 0; 
+
+						_icon = (_x getvariable "MCCgroupIconSize") select 0;
 						if (!isnil "_icon") then {_x removeGroupIcon _icon};
 						_icon = _x addGroupIcon [_unitsSizeMarker,[0,0]];
 						_x setvariable ["MCCgroupIconSize",[_icon,_unitsSizeMarker],false];
-			
+
 						if (! isnil "_groupStatus") then 					//Draw group status
 							{
 								private ["_time","_status"];
-								_time 		= _groupStatus select 1; 
-								_status 	= _groupStatus select 0; 
-								
+								_time 		= _groupStatus select 1;
+								_status 	= _groupStatus select 0;
+
 								if (abs (time - _time) < 180) then
 									{
 										_x setGroupIconParams [_markerColor,format ["%1%2",_groupName,_status],1,true];
@@ -351,28 +354,28 @@ MCC_fnc_mapDrawWPConsole =
 										_x setGroupIconParams [_markerColor,_groupName,1,true];
 									};
 							};
-							
+
 						if (_behaviour == "COMBAT") then				//Show in combat
 							{
 								_x setGroupIconParams [[1,1,1,1],_groupName,1,true];
 							};
 					};
-			} foreach allgroups; 
+			} foreach allgroups;
 			sleep 0.5;
-		}; 
-		
+		};
+
 	//Clear stuff after exiting
 	{
-		_leader = (leader _x); 
+		_leader = (leader _x);
 		if ((side _leader == side player) && alive _leader) then
 			{
-				clearGroupIcons _x; 
-			}; 
+				clearGroupIcons _x;
+			};
 	} foreach allgroups;
-	
+
 	setGroupIconsVisible [false,false];
 	setGroupIconsSelectable false;
-	
+
 	//Remove EH
 	(_mccdialog displayCtrl 9120) ctrlRemoveEventHandler ["draw",_handler];
 };

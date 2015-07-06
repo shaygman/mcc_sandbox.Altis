@@ -1,3 +1,4 @@
+//MCC_fnc_makeTaks
 disableSerialization;
 private ["_type","_string","_exe","_markerstr","_text","_stringName","_counter","_side"];
 
@@ -16,10 +17,10 @@ _side = switch (_side) do
 				case 2 : {[east]};
 				case 3 : {[resistance]};
 		};
-		
-if (!(side player in _side)) exitWith {}; 
 
-if (isnil "_stringDescription") then {_stringDescription = ""}; 
+if (!(side player in _side)) exitWith {};
+
+if (isnil "_stringDescription") then {_stringDescription = ""};
 
 switch (_type) do
 {
@@ -35,7 +36,7 @@ switch (_type) do
 								_exe = player createSimpleTask [_stringName];
 								_exe setSimpleTaskDescription [_stringDescription, _stringName, _stringName];
 								MCC_tasks set [count MCC_tasks,[_stringName,_exe]];
-								sleep 1;'								 
+								sleep 1;'
 								,_type
 								,_stringName
 								,_stringDescription
@@ -53,7 +54,7 @@ switch (_type) do
 		_text = (MCC_tasks select _stringDescription) select 2;
 		if (isnil "_text") then {_text = ""};
 		["TaskAssigned",[_stringName,_stringName]] call bis_fnc_showNotification;
-		sleep 3; 
+		sleep 3;
 		[_pos,_text,200,200,180,0,[]] spawn BIS_fnc_establishingShot;
 		sleep 1;
 		playmusic format ["RadioAmbient%1", (floor (random 30) + 1)];
@@ -71,7 +72,7 @@ switch (_type) do
 								sleep 2;
 								[_pos,_text,200,200,180,0,[]] spawn BIS_fnc_establishingShot;
 								sleep 5;
-								"								 
+								"
 								,_type
 								,_stringName
 								,_stringDescription
@@ -84,11 +85,11 @@ switch (_type) do
 	case 2:
 	{
 		for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do {
-			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
+			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks};
 			};
-		if (isnil "_counter") exitWith {}; 
+		if (isnil "_counter") exitWith {};
 		[[2,compile format ["((MCC_tasks select %1) select 1) setTaskState 'SUCCEEDED'", _counter] ], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-		sleep 2; 
+		sleep 2;
 		['TaskSucceeded',["",_stringName]] call bis_fnc_showNotification;
 	};
 
@@ -96,10 +97,10 @@ switch (_type) do
 	case 3:
 	{
 		for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do {
-			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
+			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks};
 			};
 		[[2,compile format ["((MCC_tasks select %1) select 1) setTaskState 'FAILED'", _counter] ], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-		sleep 2; 
+		sleep 2;
 		['TaskFailed',["",_stringName]] call bis_fnc_showNotification;
 	};
 
@@ -107,10 +108,10 @@ switch (_type) do
 	case 4:
 	{
 		for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do {
-			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
+			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks};
 			};
 		[[2,compile format ["((MCC_tasks select %1) select 1) setTaskState 'CANCELED'", _counter] ], "MCC_fnc_globalExecute", true, false] spawn BIS_fnc_MP;
-		sleep 2; 
+		sleep 2;
 		['TaskCanceled',["",_stringName]] call bis_fnc_showNotification;
 	};
 
@@ -135,7 +136,7 @@ switch (_type) do
 								_stringName setMarkerType 'Warning';
 								['TaskAssigned',[_stringName,_stringName]] call bis_fnc_showNotification;
 								sleep 1;
-								"								 
+								"
 								,_type
 								,_stringName
 								,_stringDescription
@@ -164,7 +165,7 @@ switch (_type) do
 								_markerstr setMarkerShape "mil_objective";
 								_stringName setMarkerType "Warning";
 								["TaskAssigned",[_stringName,_stringName]] call bis_fnc_showNotification;
-								sleep 1;'								 
+								sleep 1;'
 								,_stringName
 								,_stringDescription
 								,_pos
@@ -174,9 +175,9 @@ switch (_type) do
 	//Delete Task
 	case 9:
 	{
-		for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do 
+		for [{_i=0},{_i < count MCC_tasks},{_i=_i+1}] do
 		{
-			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks}; 
+			if (_stringName == (MCC_tasks select _i) select 0) then {_counter = _i; _i = count MCC_tasks};
 		};
 
 		if (isnil "_counter") exitWith {};
@@ -203,11 +204,11 @@ switch (_type) do
 		_markerstr setMarkerShape "mil_objective";
 		_stringName setMarkerType "Warning";
 		['TaskAssigned',[_stringName,_stringName]] call bis_fnc_showNotification;
-		sleep 3; 
+		sleep 3;
 		[_pos,_stringDescription,200,200,180,0,[]] spawn BIS_fnc_establishingShot;
 		sleep 1;
 		playmusic format ["RadioAmbient%1", (floor (random 30) + 1)];
-		
+
 		MCC_sync=MCC_sync + FORMAT ['
 								_stringName="%1";
 								_stringDescription="%2";
@@ -223,11 +224,11 @@ switch (_type) do
 								sleep 2;
 								[_pos,_stringDescription,200,200,180,0,[]] spawn BIS_fnc_establishingShot;
 								sleep 5;
-								'								 
+								'
 								,_stringName
 								,_stringDescription
 								,_pos
 							   ];
 	};
 };
- if (isServer) then {publicVariable "MCC_sync"}; 
+ if (isServer) then {publicVariable "MCC_sync"};

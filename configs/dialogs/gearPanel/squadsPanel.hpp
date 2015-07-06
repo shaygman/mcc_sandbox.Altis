@@ -55,7 +55,8 @@ class CP_SQUADPANEL {
 		CP_RscMainXPUI,
 		MCC_Help,
 		CP_ItemsLoad,
-		timeLeft
+		timeLeft,
+		CP_feedback
 	  };
 
 	  	#include "RscControlsGroupItemsLoad.hpp"
@@ -197,6 +198,17 @@ class CP_SQUADPANEL {
 			h = 0.0439828 * safezoneH;
 			tooltip = "Switch to the opposite side"; //--- ToDo: Localize;
 			action = __EVAL("[2] execVM '"+CPPATH+"configs\dialogs\gearPanel\squadPanel_cmd.sqf'");
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		class CP_feedback: CP_RscText
+		{
+			idc = 9999;
+			style = 2;
+			colorText[] = {1,0,0,0.8};
+			x = 0.154531 * safezoneW + safezoneX;
+			y = 0.731 * safezoneH + safezoneY;
+			w = 0.3 * safezoneW;
+			h = 0.0439828 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
 		class CP_squadPanelCreateSquadButton: CP_RscButtonMenu

@@ -1,13 +1,13 @@
 private ["_string","_null","_nul","_dummyGroup","_dummy","_name","_keyDown","_savesArray"];
-
 MCC_isMode = isClass (configFile >> "CfgPatches" >> "mcc_sandbox");	//check if MCC is mod version
 MCC_isACE = isClass (configFile >> "CfgPatches" >> "ace_common");
+MCC_isCBA = isClass (configFile >> "CfgPatches" >> "cba_main");
 MCC_initDone = false;
 MCC_GUI1initDone = false;
 
 //Debug
 CP_debug = false;
-MW_debug = true;
+MW_debug = false;
 
 if (MCC_isMode) then
 {
@@ -21,13 +21,6 @@ else
 
 waituntil {!isnil "MCC_path"};
 
-//Delete all units on SP mission
-if (!isMultiplayer && !MCC_isMode) then
-{
-	{
-		if ((! isplayer _x) && !(_x in (units group player))) then {deletevehicle _x}
-	} foreach allunits;
-};
 
 //******************************************************************************************
 //==========================================================================================
@@ -58,7 +51,7 @@ if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5};
 
 //--------------------Gain XP (in role selection)--------------------------------
 //CP_gainXP = true;						//Gain XP from killing, leading, healing, driving, flying or completing objectives?
-if (isnil "CP_XPperLevel") then {CP_XPperLevel = 3000};				//Xp needed for each level, Exp will raise by 5% each level
+if (isnil "CP_XPperLevel") then {CP_XPperLevel = 4000};				//Xp needed for each level, Exp will raise by 5% each level
 if (isnil "CP_expNotifications") then {CP_expNotifications = true};	//Show Exp gaining notifications
 
 //-------------------- Group Markers (Role Selection) --------------------------------------------------
@@ -105,7 +98,7 @@ if (isnil "MCC_surviveMod") then {MCC_surviveMod = false};
 if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1};
 
 //============== Medic System ====================================
-if !(MCC_isMode) then {
+if !(MCC_isMode && MCC_isACE)  then {
 	MCC_interaction = true;
 	if (!MCC_isACE) then {
 		MCC_medicSystemEnabled = true;
@@ -162,10 +155,7 @@ if (isnil "MCC_ConsoleCanCommandAI") then {MCC_ConsoleCanCommandAI = true}; 				
 if (isnil "MCC_ConsolePlayersCanSeeWPonMap") then {MCC_ConsolePlayersCanSeeWPonMap = true};					//If set to true players with GPS or UAVTerminal or MCC conosle can see WP assigned to them on the map
 
 //------------------------Artillery---------------------------------------------------
-MCC_artilleryTypeArray = [["DPICM","GrenadeHand",0,40],["HE 120mm","Sh_120mm_HE_Tracer_Red",1,30], ["HE 155mm","Sh_155mm_AMOS",1,120], ["Cluster AP","Mo_cluster_AP",3,32],["Mines 120mm","Mine_155mm_AMOS_range",3,120],
-						["HE Laser-guided","Bo_GBU12_LGB",3,50],["HE 82mm","Sh_82mm_AMOS",1,75], ["Incendiary 82mm","Fire_82mm_AMOS",1,35],
-						["Smoke White 120mm","Smoke_120mm_AMOS_White",1,20],["Smoke White 82mm","Smoke_82mm_AMOS_White",1,20],["Smoke Green 40mm","G_40mm_SmokeGreen",1,20], ["Smoke Red 40mm","G_40mm_SmokeRed",1,20],
-						["Flare White","F_40mm_White",2,20], ["Flare Green","F_40mm_Green",2,20], ["Flare Red","F_40mm_Red",2,20]];
+MCC_artilleryTypeArray = [["DPICM","GrenadeHand",0,40],["HE 120mm","Sh_120mm_HE_Tracer_Red",1,30], ["HE 155mm","Sh_155mm_AMOS",1,120], ["Cluster AP","Mo_cluster_AP",3,32],["Mines 120mm","Mine_155mm_AMOS_range",3,120],["HE Laser-guided","Bo_GBU12_LGB",3,50],["HE 82mm","Sh_82mm_AMOS",1,75], ["Incendiary 82mm","Fire_82mm_AMOS",1,35],["Smoke White 120mm","Smoke_120mm_AMOS_White",1,20],["Smoke White 82mm","Smoke_82mm_AMOS_White",1,20],["Smoke Green 40mm","G_40mm_SmokeGreen",1,20], ["Smoke Red 40mm","G_40mm_SmokeRed",1,20],["Flare White","F_40mm_White",2,20], ["Flare Green","F_40mm_Green",2,20], ["Flare Red","F_40mm_Red",2,20]];
 MCC_artillerySpreadArray = [["On-target",0], ["Precise",100], ["Tight",200], ["Wide",400]]; //Name and spread in meters
 
 //-------------------------MCC Convoy presets---------------------------------------------
@@ -498,9 +488,6 @@ MCC_CASConsoleFirstTime = true;
 
 MCC_evacFlyInHight_array = [["50m",50],["100m",100],["150m",150],["200m",200],["300m",300],["400m",400],["500m",500]];
 MCC_evacFlyInHight_index = 1;
-MCC_evacVehicles = [];
-MCC_evacVehicles_index = 0;
-MCC_evacVehicles_last = 0;
 
 MCC_UMunitsNames = [];
 MCC_UMUnit = 0;
@@ -577,7 +564,7 @@ MCC_MWmissionsCenter = [];
 MCC_MWHVT = ["B_officer_F","O_officer_F","I_officer_F","C_Nikos"];
 MCC_MWHVTCamps = ["c_campSite","o_campSIte","b_campSIte","c_slums"];
 MCC_MWFuelDeop = ["Land_dp_smallTank_F","Land_ReservoirTank_V1_F","Land_dp_bigTank_F"];
-MCC_MWRadio = ["Land_TTowerBig_1_F","Land_TTowerBig_2_F"];
+MCC_MWRadio = ["Land_TTowerBig_2_F"];
 MCC_MWTanks = ["B_MBT_01_cannon_F","O_MBT_02_cannon_F"];
 MCC_MWAAB = ["B_APC_Tracked_01_AA_F"];
 MCC_MWAAO = ["O_APC_Tracked_02_AA_F"];
@@ -744,6 +731,13 @@ if ( isServer ) then
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 
+	//Add curator presets
+	[MCC_curator, "player",["%ALL"]] call BIS_fnc_setCuratorAttributes;
+	[MCC_curator, "object",["%ALL"]] call BIS_fnc_setCuratorAttributes;
+	[MCC_curator, "group",["%ALL"]] call BIS_fnc_setCuratorAttributes;
+	[MCC_curator, "waypoint",["%ALL"]] call BIS_fnc_setCuratorAttributes;
+	[MCC_curator, "marker",["%ALL"]] call BIS_fnc_setCuratorAttributes;
+
 	//Add addons to curator
 	private ["_cfg","_name","_newAddons"];
 	_cfg = (configFile >> "CfgPatches");
@@ -845,13 +839,13 @@ if ( isServer ) then
 		//---------------------------------------------
 		//		numbers of roles
 		//---------------------------------------------
-		CP_availablePilots = ["SERVER_misc", "RoleSelectionDefinse", "CP_availablePilots", "SCALAR"] call iniDB_read;
-		if (CP_availablePilots == 0) then
+		CP_availablePilot = ["SERVER_misc", "RoleSelectionDefinse", "CP_availablePilot", "SCALAR"] call iniDB_read;
+		if (CP_availablePilot == 0) then
 		{
-			CP_availablePilots = 100;
-			["SERVER_misc", "RoleSelectionDefinse", "CP_availablePilots",CP_availablePilots, "SCALAR"] call iniDB_write;
+			CP_availablePilot = 100;
+			["SERVER_misc", "RoleSelectionDefinse", "CP_availablePilot",CP_availablePilot, "SCALAR"] call iniDB_write;
 		};
-		publicVariable "CP_availablePilots";
+		publicVariable "CP_availablePilot";
 
 		CP_availableCrew = ["SERVER_misc", "RoleSelectionDefinse", "CP_availableCrew", "SCALAR"] call iniDB_read;
 		if (CP_availableCrew == 0) then
@@ -995,6 +989,7 @@ else
 //Curator custom menus
 //Add eventHandler when editing object
 MCC_curator addEventHandler ["CuratorObjectDoubleClicked", {_this spawn MCC_fnc_curatorInitLine}];
+MCC_curator addEventHandler ["CuratorObjectPlaced", {if (local (_this select 1)) then {missionNamespace setVariable ["MCC_curatorMouseOver",curatorMouseOver]}}];
 
 // Handler code for the server for MP purpose
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_pv_handler.sqf";
@@ -1129,14 +1124,20 @@ if (isPlayer player && !isServer && !(MCC_isLocalHC) && (missionNameSpace getVar
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 {
 	waituntil {!(IsNull (findDisplay 46))};
-																//		MCC				//		Console			//  T2T				//		Squad dialog		//			Interaction	//		SQL PDA		//
-	MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,219],[false,true,false,209],[false,true,false,219]]];
 
-	//Prevent error messages for backward comp
-	if (count MCC_keyBinds < 7) then
-	{
-		profileNamespace setVariable ["MCC_keyBinds",[[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,219],[false,true,false,209],[false,true,false,219]]];
+	//If player is using CBA add CBA keybinds
+	if (MCC_isCBA) then {
+		[] call MCC_fnc_CBAKeybinds
+	} else {
+																	//		MCC				//		Console			//  T2T				//		Squad dialog		//			Interaction	//		SQL PDA		//
 		MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,219],[false,true,false,209],[false,true,false,219]]];
+
+		//Prevent error messages for backward comp
+		if (count MCC_keyBinds < 7) then
+		{
+			profileNamespace setVariable ["MCC_keyBinds",[[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,219],[false,true,false,209],[false,true,false,219]]];
+			MCC_keyBinds = profileNamespace getVariable ["MCC_keyBinds", [[false,true,false,211],[false,true,false,207],[false,false,true,20],[false,false,false,25],[false,false,false,219],[false,true,false,209],[false,true,false,219]]];
+		};
 	};
 
 	//Handle Key
@@ -1153,7 +1154,10 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	if(local player) then {player addEventHandler ["killed",{[player] execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};
 
 	//Handle Heal
-	if(local player) then {player addEventHandler ["HandleHeal",{if (isplayer (_this select 1) && (_this select 1 != _this select 0) && (tolower ((_this select 1) getvariable ["CP_role","n/a"]) == "corpsman") ) then {(_this select 1) addrating 200; _string = "<t font='puristaMedium' size='0.5' color='#FFFFFF '>+200 Exp For Healing</t>"; [[_string,0,1,2,1,0,4], "bis_fnc_dynamictext", _this select 1, false] spawn BIS_fnc_MP};(_this select 0) setVariable ["MCC_medicBleeding",0,true]; false}]};
+	if(local player) then {player addEventHandler ["HandleHeal",{if ((_this select 1 != _this select 0) && (tolower ((_this select 1) getvariable ["CP_role","n/a"]) == "corpsman") ) then {[[getPlayerUID (_this select 1),200,"For Healing"], "MCC_fnc_addRating", _this select 1, false] spawn BIS_fnc_MP};(_this select 0) setVariable ["MCC_medicBleeding",0,true]; false}]};
+
+	//Handle rating for role selection
+	if(local player) then {player addEventHandler ["HandleRating",{_this spawn MCC_fnc_handleRating}]};
 
 	//Curator
 	if(local player && (isMultiplayer)) then
@@ -1162,11 +1166,10 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	};
 
 	//Handle add - action
-	[] call MCC_fnc_handleAddaction;
+	[] spawn MCC_fnc_handleAddaction;
 
 	//Handle Radio
-	if (missionNameSpace getVariable ["MCC_VonRadio",true]) then
-	{
+	if (missionNameSpace getVariable ["MCC_VonRadio",true]) then {
 		[]  spawn  MCC_fnc_vonRadio;
 	};
 

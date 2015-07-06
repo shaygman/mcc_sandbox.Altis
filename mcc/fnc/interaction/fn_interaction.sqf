@@ -20,13 +20,25 @@ private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePla
 disableSerialization;
 _break = false;
 
-//Find out the key
-_key = MCC_keyBinds select 4;
 _text = "";
-if (_key select 0) then {_text = "Shift + "};
-if (_key select 1) then {_text = _text + "Ctrl + "};
-if (_key select 2) then {_text = _text + "Alt + "};
-_keyName = format ["%1%2",_text, keyName (_key select 3)];
+
+//Find out the key
+if (MCC_isCBA) then {
+	_key = ["MCC","interactionKey"] call CBA_fnc_getKeybind;
+	if (((_key select 5) select 1) select 0) then {_text = "Shift + "};
+	if (((_key select 5) select 1) select 1) then {_text = _text + "Ctrl + "};
+	if (((_key select 5) select 1) select 2) then {_text = _text + "Alt + "};
+	_keyName = format ["%1%2",_text,keyName ((_key select 5) select 0)];
+
+} else {
+	waituntil {!isnil "MCC_keyBinds"};
+
+	_key = MCC_keyBinds select 4;
+	if (_key select 0) then {_text = "Shift + "};
+	if (_key select 1) then {_text = _text + "Ctrl + "};
+	if (_key select 2) then {_text = _text + "Alt + "};
+	_keyName = format ["%1%2",_text,keyName (_key select 3)];
+};
 
 //Do not fire while inside a dialog
 if (dialog) exitWith {};
@@ -53,18 +65,18 @@ if (vehicle player == player) then
 		} foreach allDeadMen;
 	};
 
+	//Handle supply crate
+	if (typeof _target in ["MCC_ammoBox","MCC_crateAmmo","MCC_crateAmmoBigWest","MCC_crateAmmoBigEast","Box_NATO_AmmoVeh_F","B_Slingload_01_Ammo_F","Land_Pod_Heli_Transport_04_ammo_F"]) exitWith	{
+
+		_null= [_target] call MCC_fnc_interactUtility;
+		_break = true;
+	};
+
 	//Handle house
 	if ((_target isKindof "house" || _target isKindof "wall" || _target isKindof "AllVehicles" || _target isKindof "ReammoBox_F") && !(_target isKindof "CAManBase")) exitWith
 	{
 		//[_target] execvm "mcc\fnc\interaction\fn_interactDoor.sqf";
 		_null= [_target] call MCC_fnc_interactDoor
-	};
-
-	//Handle supply crate
-	if (typeof _target in ["MCC_ammoBox"]) exitWith
-	{
-		//[_target] execvm "mcc\fnc\interaction\fn_interactUtility.sqf";
-		_null= [_target] call MCC_fnc_interactUtility
 	};
 
 	//Handle man

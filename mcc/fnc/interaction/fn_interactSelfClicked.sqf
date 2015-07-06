@@ -62,7 +62,7 @@ switch (true) do
 			_medkitPic = getText (configFile >> "CfgWeapons" >> _medkit >> "picture");
 		};
 
-		_itemsPlayer = magazines player;
+		_itemsPlayer = if (_complex) then {magazines player} else {items player};
 
 		_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
 		_isMedic = if (((getNumber(configFile >> "CfgVehicles" >> typeOf vehicle player >> "attendant")) == 1) || ((player getvariable ["CP_role",""]) == "Corpsman")) then {true} else {false};

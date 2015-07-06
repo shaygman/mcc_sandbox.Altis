@@ -1,46 +1,80 @@
-//======================================================MCC_fnc_MWUpdateZone=========================================================================================================
+//==================================================MCC_fnc_MWUpdateZone=========================================================================================================
 // Create a pick intel objective
-// Example:[_zoneNumber,_pos,_radius] call MCC_fnc_MWUpdateZone; 
+// Example:[_zoneNumber,_pos,_radius] call MCC_fnc_MWUpdateZone;
 // Return - handler
-//========================================================================================================================================================================================
-private ["_zoneNumber","_script_handler","_pos","_radius"];
-
+//===============================================================================================================================================================================
+private ["_zoneNumber","_script_handler","_pos","_radius","_zone_marker_X","_zone_marker_Y","_ar"];
 _zoneNumber = _this select 0;
-_pos		= _this select 1; 
-_radius		= _this select 2; 
+_pos		= _this select 1;
+_radius		= _this select 2;
 
-mcc_zone_markposition	= _pos;
-mcc_zone_number			= _zoneNumber;
-mcc_zone_marker_X		= _radius;
-mcc_zone_marker_Y		= _radius;
-mcc_zone_markername		= str _zoneNumber;
-MCC_Marker_dir			= 0;
-mcc_hc					= 0;
+_zone_marker_X		= if (typeName _radius == typeName []) then {_radius select 0} else {_radius};
+_zone_marker_Y		= if (typeName _radius == typeName []) then {_radius select 1} else {_radius};
 
-_script_handler 		= [0] execVM format ["%1mcc\general_scripts\mcc_make_the_marker.sqf",MCC_path];
-waitUntil {scriptDone _script_handler};
+//safe the zone size in the array for later use
+MCC_zones_numbers set [(_zoneNumber-1), _zoneNumber];
+mcc_zone_pos  set [_zoneNumber, _pos];
+mcc_zone_size set [_zoneNumber,[_zone_marker_X,_zone_marker_Y]];
+mcc_zone_dir set [_zoneNumber,0];
+mcc_zone_locations set [_zoneNumber,0];
 
-mcc_spawntype			= '';
-mcc_classtype			= '';
-mcc_isnewzone			= true;
-mcc_spawnwithcrew		= true;
-mcc_spawnname			= '';
-mcc_spawnfaction		= '';
-mcc_zone_number			= _zoneNumber;
-mcc_zoneinform			= 'NOTHING';
-mcc_zone_markername		= str _zoneNumber;
-mcc_spawnbehavior		= 'MOVE';
-mcc_grouptype     		= '';
-mcc_spawndisplayname 	= '';
-mcc_track_units 		= false;
-mcc_awareness 			= 'DEFAULT';
-mcc_hc 					= 0;
-_script_handler = [0] execVM format ["%1mcc\general_scripts\mcc_SpawnStuff.sqf",MCC_path];
-waitUntil {scriptDone _script_handler};
+publicVariable "mcc_zone_pos";
+publicVariable "mcc_zone_size";
+publicVariable "mcc_zone_dir";
+publicVariable "mcc_zone_locations";
+publicVariable "MCC_zones_numbers";
 
-scriptDone _script_handler;
+//time to request something so lets number it
+mcc_request=mcc_request+1;
+publicVariable "mcc_request";
+
+_ar =	[ 		  ''
+				, ''
+				, true
+				, false
+				, ''
+				, ''
+				, _zoneNumber
+				, 'NOTHING'
+				, str _zoneNumber
+				, 'MOVE'
+				, _pos
+				, [_zone_marker_X,_zone_marker_Y]
+				, (_zone_marker_X+_zone_marker_X)/2
+				, sideLogic
+				, objNull
+				, mcc_request
+				, false
+				, false
+				, "server"
+				, 'default'
+				, 0
+				, [0,0,0]
+				, 0 //(mcc_zonetype select 0 ) select 1
+				, 0 //(mcc_zonetypenr select 0 ) select 1
+				, 0
+				, [-500,-500,0]
+				, false
+				, false
+				];
+
+// Send data over the network, or when on server, execute directly
+if ( (isServer) && ( (mcc_hc == 0) || !(MCC_isHC) ) ) then {
+	[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
+	diag_log "MCC: attemping to spawn";
+
+} else {
+	if ( ( mcc_hc == 0 ) || !(MCC_isHC) ) then	{
+		[_ar, "mcc_setup", false, false] spawn BIS_fnc_MP;
+	};
+
+	if (( mcc_hc == 1 ) && (MCC_isHC)) then	{
+
+		[_ar, "mcc_setup_hc", MCC_ownerHC, false] spawn BIS_fnc_MP;
+	};
+};
+
+true;
 
 
 
-				
-		

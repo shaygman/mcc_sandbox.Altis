@@ -370,6 +370,27 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
+
+		class allowKitChange
+		{
+			displayName = "Kit Change";
+			description = "Enable changing kits in FOB/HQ - requires Role Selection enabled";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
 	};
 
 	class ModuleDescription: ModuleDescription

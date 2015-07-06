@@ -3,7 +3,7 @@
 // In: action - string
 // Out: keys names - string
 //==============================================================================================================================================================================
-private ["_action","_name","_markerColor","_mapsize","_group","_texture","_unit"];
+private ["_action","_name"];
 _action = _this select 0;
 
 _name = "";

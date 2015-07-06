@@ -77,9 +77,9 @@ if (_helpers) then
 
 //Add WP
 _circlepos=[(getposasl _glideslope select 0) + (_vectorglide select 0) *_distanceofcircles*_numberofcircles, (getposasl _glideslope select 1) + (_vectorglide select 1) *_distanceofcircles*_numberofcircles,((getposasl _glideslope select 2)+(tan _angle)*_distanceofcircles*_numberofcircles)-12];
-[1,_circlepos,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group player]] call MCC_fnc_manageWp;
+[1,_circlepos,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group player],true] call MCC_fnc_manageWp;
 
-[0,getpos _glideslope,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group player]] call MCC_fnc_manageWp;
+[0,getpos _glideslope,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group player],true] call MCC_fnc_manageWp;
 
 for [{_loop=0}, {(((getPos player) select 2) > 20) and (player == driver player) and !(player getVariable ["MCC_ILSAbort",false])}, {_loop=_loop}] do
 {

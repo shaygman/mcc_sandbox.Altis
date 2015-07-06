@@ -45,9 +45,12 @@ switch (_cmd) do
 		{
 
 			//Check if alive
-			if (isnull CP_activeSpawn) exitWith {systemchat "Select spawn point."};
+			if (isnull CP_activeSpawn) exitWith {[9999,"Select spawn point!",3,true] spawn MCC_fnc_setIDCText};
 			if (typeName CP_activeSpawn == "GROUP") then {CP_activeSpawn = leader CP_activeSpawn};
-			if (!alive CP_activeSpawn) exitWith {CP_activeSpawn setVariable ["dead",true,true];systemchat "Spawn Point has been destroyed, select another spawn point."};
+			if (!alive CP_activeSpawn) exitWith {
+				CP_activeSpawn setVariable ["dead",true,true];
+				[9999,"Spawn Point destroyed, select another!",3,true] spawn MCC_fnc_setIDCText
+			};
 
 
 			if (CP_activated) then
@@ -68,7 +71,9 @@ switch (_cmd) do
 					if ((group player) == (_groups select _i) select 0) then {_deployAvailable = true};
 				};
 
-				if (!_deployAvailable) exitWith {systemchat "You must join a squad first."};
+				if (!_deployAvailable) exitWith {
+					[9999,"You must join a squad first!",3,true] spawn MCC_fnc_setIDCText
+				};
 
 				//Check for roles
 				_countRole 			= 0;
@@ -133,8 +138,10 @@ switch (_cmd) do
 											};
 				};
 
-				if (_countRole > _roleLimit) exitWith {systemchat "All kit's have been taken! Choose another kit."};
-				if (count (units (group player)) < _minPlayersForRole) exitWith {systemchat format ["You need %1 players in your squad to use this kit! Choose another kit.",_minPlayersForRole]};
+				if (_countRole > _roleLimit) exitWith {[9999,"All kit's taken! Choose another role!",3,true] spawn MCC_fnc_setIDCText};
+				if (count (units (group player)) < _minPlayersForRole) exitWith {
+					[9999,format ["You need %1 players in your squad to use this kit!",_minPlayersForRole],3,true] spawn MCC_fnc_setIDCText
+				};
 
 				//Check if no enemy is close by
 
@@ -159,7 +166,9 @@ switch (_cmd) do
 					};
 				};
 
-				if (!_spawnAvailable) exitWith {systemchat "Spawn Point is being overrun, select another spawn point."};
+				if (!_spawnAvailable) exitWith {
+					[9999,"Spawn Point overrun, select another",3,true] spawn MCC_fnc_setIDCText
+				};
 
 
 				//looking for a spawn point
@@ -174,7 +183,9 @@ switch (_cmd) do
 					count playerDeployPos > 0;
 				};
 
-				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {systemchat " No good position found! Try again."};
+				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {
+					[9999,"No good position found! Try again.",3,true] spawn MCC_fnc_setIDCText
+				};
 				playerDeploy = true;
 
 				//Is it a spawn tent and we spawned as the squad leader - delete the tent
@@ -206,7 +217,9 @@ switch (_cmd) do
 					count playerDeployPos > 0;
 				};
 
-				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {systemchat " No good position found! Try again."};
+				if (format["%1",playerDeployPos] == "[-500,-500,0]" ) exitWith {
+					[9999,"No good position found! Try again.",3,true] spawn MCC_fnc_setIDCText;
+				};
 
 				//Is it a spawn tent and we spawned as the squad leader - delete the tent
 				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && (player == leader player)) then
@@ -245,8 +258,8 @@ switch (_cmd) do
 			_html = "<t color='#818960' size='2' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
 			messeges ctrlSetStructuredText parseText _html;
 
-			_needXP 			= (CP_XPperLevel + _oldLevel*100) + ((CP_XPperLevel + _oldLevel*100)*(_oldLevel-1));
-			_needXPPrevLevel 	= (CP_XPperLevel + (_oldLevel-1)*100)*(_oldLevel-1);
+			_needXP 			= (CP_XPperLevel * _oldLevel);
+			_needXPPrevLevel 	= (CP_XPperLevel * (_oldLevel-1));
 			XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel)));
 
 			//Gear stats

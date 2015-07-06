@@ -1,30 +1,29 @@
 //==================================================================MCC_fnc_manageSB===============================================================================================
 // Handle suicide bomber behavior
-// Example: [_sb, _iedside, _trapvolume, _IEDExplosionType] spawn MCC_fnc_manageSB; 
+// Example: [_sb, _iedside, _trapvolume, _IEDExplosionType] spawn MCC_fnc_manageSB;
 // <in>: 	_sb 			= position, center of the explosion.
 //		_iedside 			= side, which side trigger the armed civilian
 //		_trapvolume 		= String "small", "medium", "large"
 //		_IEDExplosionType	= Integer, 1- deadly 	2- Disabling	3- Fake
 // <out>	NOTHING
 //=================================================================================================================================================================================
-private ["_sb","_iedside","_trapvolume","_IEDExplosionType","_check","_close","_dummy","_init","_closeunit","_enemy","_sound","_targ","_sbspeed","_IedExplosion"]; 
+private ["_sb","_iedside","_trapvolume","_IEDExplosionType","_check","_close","_dummy","_init","_closeunit","_enemy","_sound","_targ","_sbspeed","_IedExplosion"];
 _sb					= _this select 0;
 _iedside			= _this select 1;
 _trapvolume			= _this select 2;
 _IEDExplosionType	= _this select 3;
 
-if (typeName _iedside == "STRING") then
-{
+if (typeName _iedside == "STRING") then {
 	_iedside = switch (tolower _iedside) do
 				{
 				   case "west":	{west};
 				   case "east":	{east};
-				   case "guer":	{resistance}; 
+				   case "guer":	{resistance};
 				   case "civ":	{civilian};
 				   default {west};
 				};
 };
-			
+
 _sound		=1; //choose 0 for no sounds
 _targ 		= ["Car","Tank","Man"];
 _sbspeed 	= ["LIMITED","NORMAL","FULL"];
@@ -45,12 +44,12 @@ if !(_sb getVariable ["static",false]) then {[group _sb, getPos _sb, 350] call b
 
 _check = true;
 
-while {alive _sb && _check} do 
-{  
+while {alive _sb && _check} do
+{
 	sleep 1;
 	_close = (getPos _sb) nearObjects 100;
-	
-	if(_iedside countSide _close > 0) then 
+
+	if(_iedside countSide _close > 0) then
 	{
 		while {(alive _sb) && (_check)} do
 		{
@@ -61,7 +60,7 @@ while {alive _sb && _check} do
 			for [{_x=0},{_x<_count},{_x=_x+1}] do
 			{
 				_enemy = _closeunit select _x;
-				
+
 				{
 					if(_enemy isKindOf _x && _check) then
 					{
@@ -70,9 +69,10 @@ while {alive _sb && _check} do
 						_sb setskill ["courage",1];
 						_sb domove (getpos _enemy);
 						sleep 5 + random 10;
-						if ((_sb distance _enemy) < 40) then 
+						if ((_sb distance _enemy) < 40) then
 						{
 							_sb setspeedmode "FULLSPEED";
+							_sb forceSpeed 10;
 							_sb setBehaviour "CARELESS";
 							_sb setunitpos "UP";
 							_sb disableAI "TARGET";
@@ -86,7 +86,7 @@ while {alive _sb && _check} do
 								_sb setskill ["courage",1];
 								_sb domove (getpos _enemy);
 								_sb domove (getpos _enemy);
-								if (_sound == 1) then 
+								if (_sound == 1) then
 								{
 									[[[netid _sb,_sb], format ["suicide%1", (floor random 4)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 									_sound = 0
@@ -99,29 +99,29 @@ while {alive _sb && _check} do
 			};
 		};
 	};
-};	
+};
 
 switch (_IEDExplosionType) do
 		{
-		   case 0:	
-			{ 
+		   case 0:
+			{
 				_IedExplosion = MCC_fnc_IedDeadlyExplosion;
 			};
-			
-			case 1:	
-			{ 
+
+			case 1:
+			{
 			   _IedExplosion = MCC_fnc_IedDisablingExplosion;
 			};
-			
-			case 2:	
-			{ 
+
+			case 2:
+			{
 			   _IedExplosion = MCC_fnc_IedFakeExplosion;
 			};
 		};
-		
-[getpos _sb,_trapvolume] spawn _IedExplosion; 
 
-_sb setdamage 1; 
-deleteVehicle _dummy; 
+[getpos _sb,_trapvolume] spawn _IedExplosion;
+
+_sb setdamage 1;
+deleteVehicle _dummy;
 if (true) exitWith {};
-	
+

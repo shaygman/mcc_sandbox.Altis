@@ -57,6 +57,12 @@
 #include "configs\dialogs\gearPanel\accessoriesPanel.hpp"
 #include "configs\dialogs\gearPanel\uniformPanel.hpp"
 
+//--------------------------Campaign----------------------------------------------------
+#include "mcc\Dialogs\campaign\mcc_vehicleSpawner.hpp"
+
+//--------------------------Dynamic dialog--------------------------
+#include "mcc\Dialogs\dynamicDialog\dynamicDialogUI.hpp"
+
 //--------------------------Others----------------------------------------------------
 #include "bon_artillery\dialog\Artillery.hpp"
 #include "VAS\menu.hpp"

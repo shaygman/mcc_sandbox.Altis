@@ -273,6 +273,7 @@ if (_action == 7) exitWith
 	} foreach MCC_evacFlyInHight_array;
 	_comboBox lbSetCurSel MCC_evacFlyInHight_index;
 
+	_evacVehicles = missionNamespace getvariable [format ["MCC_evacVehicles_%1",playerside],[]];
 	_comboBox =  (_mccdialog displayCtrl 42);		//fill combobox for availabe evac type
 	lbClear _comboBox;
 	{
@@ -284,16 +285,16 @@ if (_action == 7) exitWith
 			_displayname 			= "N/A";
 			_index 					= _comboBox lbAdd _displayname;
 			};
-	} foreach MCC_evacVehicles;
-	_comboBox lbSetCurSel MCC_evacVehicles_index;
+	} foreach _evacVehicles;
+	_comboBox lbSetCurSel (missionNameSpace getvariable ["MCC_evacVehicles_index",0]);
 
 	//Change evac type by vehicle class
-	if (count MCC_evacVehicles > 0) then
+	if (count _evacVehicles > 0) then
 	{
 		private ["_insetionArray","_type"];
 		_insetionArray = ["Move (engine on)","Move (engine off)"];
 		ctrlShow [(_mccdialog displayCtrl 44),false];
-		_type = MCC_evacVehicles select MCC_evacVehicles_index;
+		_type = _evacVehicles select (missionNameSpace getvariable ["MCC_evacVehicles_index",0]);
 
 		//Case we choose aircrft
 		if (_type iskindof "helicopter") then
@@ -726,6 +727,11 @@ if (_action == 16) exitWith
 		};
 	} foreach MCC_airDropArray;
 	_comboBox lbSetCurSel 0;
+
+	//set to parachute
+	_comboBox = _mccdialog displayCtrl 1037;
+	_comboBox lbSetCurSel 0;
+	missionNamespace setVariable ["MCC_airdropIsParachute",true];
 };
 
 //-------------------------------------------------------------------------------------DELETE----------------------------------------------------------------------------------------------
