@@ -18,6 +18,9 @@ if (!alive _leader) exitWith {};
 //Find nearest houses
 _nearHouses = [getpos _leader,_radius] call MCC_fnc_findCivHouse;
 
+if (isnil "_nearHouses") exitWith {};
+if (count _nearHouses == 0) exitWith {};
+
 for "_i" from 0 to MAX_WP do {
 	_building = _nearHouses call bis_fnc_selectRandom;
 	_pos = getPos _building;

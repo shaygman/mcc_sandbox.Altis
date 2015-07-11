@@ -27,13 +27,15 @@ private ["_object","_typeOfobject","_ctrl","_break","_searchTime","_animation","
          "_randomChance","_loot","_wepHolder","_class","_money","_rand","_wepArray"];
 disableSerialization;
 _object 	= _this select 0;
+if (isNil "MCC_interactionKey_holding") then {MCC_interactionKey_holding = false};
 
-if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then
-{
+if ((player distance _object < 7) && (MCC_interactionKey_holding || MCC_isACE) && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then {
+
 	missionNameSpace setVariable [format ["MCC_isInteracted%1",getpos _object], true];
 	publicvariable format ["MCC_isInteracted%1",getpos _object];
+
 	//Create progress bar
-	_searchTime = 10;
+	_searchTime = if (MCC_isACE) then {3} else {10};
 	_break		= false;
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutRsc ["MCC_interactionPB", "PLAIN"];
 	_ctrl = ((uiNameSpace getVariable "MCC_interactionPB") displayCtrl 2);
@@ -44,8 +46,8 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 	{
 
 		_ctrl progressSetPosition (_x/_searchTime);
-		//if ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic") then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
-		if ((_object distance player) > 5 || !MCC_interactionKey_holding) then {_x = _searchTime; _break = true;};
+		if (MCC_isACE && ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic")) then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
+		if ((_object distance player) > 5 || (!MCC_interactionKey_holding && !MCC_isACE)) then {_x = _searchTime; _break = true;};
 		sleep 0.1;
 	};
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
@@ -159,7 +161,7 @@ if ((player distance _object < 3) && MCC_interactionKey_holding && !(missionName
 		_array = [];
 		_array set [0,_loot select 0];	//time stamp
 		_wepArray = (weaponCargo _wepHolder) + (itemCargo _wepHolder) + (magazineCargo _wepHolder);
-		if (typeName "_wepArray" != "ARRAY") then {_wepArray = []};
+		if (isNil "_wepArray") then {_wepArray = []};
 		{
 			_array set [count _array, _x];
 		} foreach _wepArray;

@@ -20,7 +20,7 @@ if (MCC_interactionKey_holding && !(_object getVariable ["MCC_isInteracted",fals
 
 		_object = (player getVariable ["interactWith",[]]) select 0;
 		_objectAmmo = _object getVariable ["ammoLeft",getNumber (configFile / "CfgVehicles" / typeof _object / "ammo")];
-		if (_objectAmmo == 0) then {_objectAmmo = 1000};
+		if (_objectAmmo == 0) then {_objectAmmo = 200};
 		closeDialog 0;
 
 		switch (_ctrlData) do
@@ -37,11 +37,12 @@ if (MCC_interactionKey_holding && !(_object getVariable ["MCC_isInteracted",fals
 						_magazines = getArray (configFile / "CfgWeapons" / _weapon / "magazines");
 						_magazineClass = _magazines select (0 min (count _magazines - 1));
 						_magazineCount = {_x == _magazineClass} count magazines player;
+						_cost = getNumber(configFile >> "CfgMagazines" >> _magazineClass >> "mass");
 						switch _foreachIndex do
 						{
-							case 0 : {_trashHold = 2; _cost = 25};
-							case 1 : {_trashHold = 2; _cost = 8};
-							case 2 : {if ((getText((configFile / "CfgWeapons" / _weapon / "cursor")) == "mg")) then {_trashHold = 4; _cost = 20} else {_trashHold = 8; _cost = 10}};
+							case 0 : {_trashHold = 2};
+							case 1 : {_trashHold = 2};
+							case 2 : {if ((getText((configFile / "CfgWeapons" / _weapon / "cursor")) == "mg")) then {_trashHold = 4} else {_trashHold = 8}};
 						};
 
 						if (_magazineCount < _trashHold) then
@@ -71,7 +72,7 @@ if (MCC_interactionKey_holding && !(_object getVariable ["MCC_isInteracted",fals
 				for "_i" from _count to _roleCount do {
 					if (missionNamespace getVariable ["MCC_medicComplex",false]) then {
 						player addMagazine _bandage} else {player addItem _bandage};
-					_objectAmmo = _objectAmmo - 10;
+					_objectAmmo = _objectAmmo - 1;
 				};
 
 				//Add complex medical items
@@ -87,7 +88,7 @@ if (MCC_interactionKey_holding && !(_object getVariable ["MCC_isInteracted",fals
 						for "_i" from _count to _roleCount do {
 							if (missionNamespace getVariable ["MCC_medicComplex",false]) then {
 								player addMagazine _item} else {player addItem _item};
-							_objectAmmo = _objectAmmo - 5;
+							_objectAmmo = _objectAmmo - 1;
 						};
 					} forEach _bandage;
 				};
@@ -102,7 +103,7 @@ if (MCC_interactionKey_holding && !(_object getVariable ["MCC_isInteracted",fals
 
 					for "_i" from _count to 1 do {
 						player addMagazine _grnd;
-						_objectAmmo = _objectAmmo - 30;
+						_objectAmmo = _objectAmmo - 5;
 					};
 				} forEach _grenades;
 
@@ -113,7 +114,7 @@ if (MCC_interactionKey_holding && !(_object getVariable ["MCC_isInteracted",fals
 
 					for "_i" from _count to 1 do {
 						player addMagazine _bandage;
-						_objectAmmo = _objectAmmo - 30;
+						_objectAmmo = _objectAmmo - 10;
 					};
 				};
 

@@ -75,6 +75,26 @@ class mcc_sandbox_moduleStartLocations : Module_F
 				};
 			};
 		};
+
+		class construct
+		{
+			displayName = "Construct Buildings";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
 	};
 
 	class ModuleDescription: ModuleDescription

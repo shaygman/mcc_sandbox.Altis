@@ -41,11 +41,6 @@ _var 	= _logic getvariable ["artilleryComputer",1];
 missionNamespace setVariable ["MCC_artilleryComputerIndex",_var];
 enableEngineArtillery (if (_var == 0) then {false} else	{true});
 
-//Artillery computer
-_var 	= _logic getvariable ["artilleryComputer",1];
-missionNamespace setVariable ["MCC_artilleryComputerIndex",_var];
-enableEngineArtillery (if (_var == 0) then {false} else	{true});
-
 //Time Excel
 _var 	= _logic getvariable ["timeAccel",0];
 if (_var > 0) then	{setTimeMultiplier _var};
@@ -66,6 +61,19 @@ MCC_allowsqlPDA = if (_var == 0) then {false} else {true};
 //Commander Console
 _var 	= _logic getvariable ["commanderConsole",1];
 MCC_allowConsole = if (_var == 0) then {false} else {true};
+
+//Commander Console Show units without GPS
+_var 	= _logic getvariable ["commanderConsoleShowGPS",1];
+MCC_ConsoleOnlyShowUnitsWithGPS = if (_var == 0) then {true} else {false};
+
+//Commander Console Show friendly WP
+_var 	= _logic getvariable ["commanderConsoleWP",1];
+MCC_ConsoleDrawWP = if (_var == 0) then {false} else {true};
+MCC_ConsolePlayersCanSeeWPonMap = if (_var == 0) then {false} else {true};
+
+//Commander Console Can command AI
+_var 	= _logic getvariable ["commanderConsoleAI",1];
+MCC_ConsoleCanCommandAI = if (_var == 0) then {false} else {true};
 
 //Squad dialog
 _var 	= _logic getvariable ["squadDialog",1];

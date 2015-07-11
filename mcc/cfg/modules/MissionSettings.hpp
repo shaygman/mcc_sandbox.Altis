@@ -287,6 +287,66 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 			};
 		};
 
+		class commanderConsoleShowGPS
+		{
+			displayName = "Commander Console: Show groups with GPS only";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
+		class commanderConsoleWP
+		{
+			displayName = "Commander Console: Show friendly WP";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
+		class commanderConsoleAI
+		{
+			displayName = "Commander Console: Can command AI";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
 		class squadDialog
 		{
 			displayName = "Squad Dialog";

@@ -119,13 +119,12 @@ if (vehicle player == player) then
 	{
 		_selected = _pointIntersect select ((count _pointIntersect)-1);
 
-		if (player distance _selected < 5) exitWith
-		{
+		if (player distance _selected < 20) exitWith {
 			_objArray = MCC_barrels + MCC_grave + MCC_containers + MCC_food + MCC_fuel + MCC_misc + MCC_plantsFruit + MCC_garbage + MCC_wreck + MCC_wreckMil + MCC_wreckSub + MCC_ammoBox;
 			if ((({[_x , str _selected] call BIS_fnc_inString} count _objArray)>0) && (isNull attachedTo _selected)) then
 			{
 				missionNameSpace setVariable ["MCC_interactionObjects", [[getpos _selected, format ["Hold %1 to search",_keyName]]]];
-				systemChat (["I think I can dig into it", "This look interesting", "Mmm... I wounder what can I find here"] call bis_fnc_selectRandom);
+				//systemChat (["I think I can dig into it", "This look interesting", "Mmm... I wounder what can I find here"] call bis_fnc_selectRandom);
 				//_null= [_selected] execvm "mcc\fnc\interaction\fn_interactObject.sqf";
 				[_selected] call MCC_fnc_interactObject;
 				_break = true;

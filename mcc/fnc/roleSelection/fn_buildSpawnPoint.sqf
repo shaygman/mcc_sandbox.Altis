@@ -6,8 +6,10 @@
 // side: string, "west", "east" or "GUER"
 // size: string  "FOB" or  "HQ"
 // destructable: Boolean
+// animate: Boolean
+// construct: Boolean
 //==============================================================================================================================================================================
-private ["_side","_size","_destructable","_building","_dummy","_sphere","_dir","_animate","_flag","_flagTex","_name","_logic","_pos"];
+private ["_side","_size","_destructable","_building","_dummy","_sphere","_dir","_animate","_flag","_flagTex","_name","_logic","_pos","_construct"];
 if ((typeName (_this select 0)) == "OBJECT") then
 {
 	_logic			= _this select 0;
@@ -18,6 +20,7 @@ if ((typeName (_this select 0)) == "OBJECT") then
 	_size 			= toupper (_logic getvariable ["size","FOB"]);
 	_destructable	= _logic getvariable ["distractable",true];
 	_animate		= false;
+	_construct 		= (_logic getvariable ["construct",0]) ==1;
 
 }
 else
@@ -28,6 +31,7 @@ else
 	_size 			= toupper (_this select 3);
 	_destructable	= _this select 4;
 	_animate		= if (count _this > 5) then {_this select 5} else {false};
+	_construct 		= [_this, 6, false, [false]] call BIS_fnc_param;
 };
 
 //--------------------Default flags (Role selection)-------------------------------------------------------
@@ -106,6 +110,10 @@ if (_animate) then
 			};
 		};
 	};
+};
+
+if (_construct) then {
+	_null = [_pos, _dir , "MCC_rts_hq1", 0, _side] spawn MCC_fnc_construct_base;
 };
 
 switch (_side) do

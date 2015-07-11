@@ -9,7 +9,7 @@ _pos = getpos _module;
 _object = missionNamespace getVariable ["MCC_curatorMouseOver",[]];
 
 //if no object selected or not a vehicle
-if (count _object <2) exitWith {deleteVehicle _module};
+if (count _object <2) exitWith {systemchat "No vehicle selected"; deleteVehicle _module};
 _object = _object select 1;
 
 private ["_selectionsNames","_hitPointName","_hitPoints","_point","_displayNames","_displayArray","_resualtCount","_null"];

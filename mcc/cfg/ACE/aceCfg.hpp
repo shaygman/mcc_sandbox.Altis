@@ -96,7 +96,7 @@ class ReammoBox_F: thingX {
         class ACE_MCC_changeKit {
                 displayName = "Change<br/>Kit";
                 distance = 5;
-                condition = "(_target isKindof 'Box_FIA_Support_F') && (!(_target getVariable ['mcc_mainBoxUsed', false])) && !(isNull attachedTo _target) && (missionNamespace getVariable ['CP_activated',false])";
+                condition = "(_target isKindof 'Box_FIA_Support_F') && (!(_target getVariable ['mcc_mainBoxUsed', false])) && !(isNull attachedTo _target) && (missionNamespace getVariable ['CP_activated',false]) && !(missionNamespace getVariable ['MCC_surviveMod',false])";
                 statement =  "createDialog 'CP_GEARPANEL'";
                 icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
                 showDisabled = 0;
@@ -184,6 +184,15 @@ class CAManBase: Man {
 				statement = "[cursorTarget] spawn MCC_fnc_doorCamera;";
 			};
 		};
+
+		class ACE_MCC_survivalInteraction {
+			condition = "[] call MCC_fnc_isSurvivalObject";
+			displayName = "Search";
+			icon = "\A3\ui_f\data\map\markers\military\unknown_CA.paa";
+			showDisabled = 0;
+			statement = "[] spawn MCC_fnc_searchSurvivalObject;";
+		};
+
 		class ACE_MCC_SQLMenu {
 			condition = "(leader _player == _player && count units _player > 1 && (missionNameSpace getvariable ['MCC_allowsqlPDA',true]))";
 			displayName = "SQL<br/>Menu";

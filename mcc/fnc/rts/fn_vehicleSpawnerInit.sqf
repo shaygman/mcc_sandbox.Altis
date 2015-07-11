@@ -6,11 +6,43 @@
 //     1: ARRAY of STRINGS - first argument type "tank","vehicle","heli","jet","ship"
 //                           secon argument - helipad spawn name - string
 //==============================================================================================================================================================================
-private ["_object","_arguments","_null","_caller","_syncItems","_vehicleType","_spawnPad"];
+private ["_object","_arguments","_null","_caller","_syncItems","_vehicleType","_spawnPad","_syncedObjects","_billboard","_helipad","_type"];
 
-if (count _this <3) then {
+_object = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
+
+//We came here from a moudle
+if (_object isKindOf "mcc_sandbox_modulevehicleSpawner" || _object isKindOf "MCC_Module_vehicleSpawnerCurator") exitWith {
+    _syncedObjects = synchronizedObjects _object;
+
+    //No synced Objects?
+    if (count _syncedObjects <2) then {
+        _billboard = "Land_Noticeboard_F" createVehicle (_object modelToWorld [0,5,0]);
+        _helipad = "Land_HelipadEmpty_F" createVehicle (_object modelToWorld [0,15,0]);
+    } else {
+        _billboard = _syncedObjects select 0;
+        _helipad = _syncedObjects select 1;
+    };
+
+    _type = _object getVariable ["type","vehicle"];
+    //Add the objects to curator
+    [_billboard,_helipad,_type] spawn {
+        private ["_billboard","_helipad","_type"];
+        _billboard = _this select 0;
+        _helipad = _this select 1;
+        _type = _this select 2;
+
+        //[_billboard,[_type,_helipad]] call MCC_fnc_vehicleSpawnerInit;
+       [[_billboard,[_type,_helipad]], "MCC_fnc_vehicleSpawnerInit", true, false] spawn BIS_fnc_MP;
+
+        waitUntil {!isNil "MCC_curator"};
+        {
+            MCC_curator addCuratorEditableObjects [[_x],false];
+        } forEach [_billboard,_helipad];
+    };
+};
+
+if (count _this <=3) then {
     //We got here from the object
-    _object = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
     _arguments = [_this, 1, [], [[]]] call BIS_fnc_param;
 
     if (local _object) then {_object allowDamage false; _object enableSimulation false};
@@ -27,7 +59,6 @@ if (count _this <3) then {
     _null = _object addAction [format ["<t color=""#ff1111"">Purchase %1</t>",_arguments select 0], {call MCC_fnc_vehicleSpawnerInit}, _arguments,10,true,true];
 } else {
     //We got here from the addaction
-    _object = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
     _caller = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
     _arguments = [_this, 3, [], [[]]] call BIS_fnc_param;
     _vehicleType = _arguments select 0;
@@ -67,7 +98,7 @@ if (count _this <3) then {
                 _cfgclass           = (configName (_CfgVehicle));
                 _cfgFaction             = getText(_CfgVehicle >> "faction");
                 _simulation             = getText(_CfgVehicle >> "simulation");
-                _cost                   = floor (getNumber(_CfgVehicle >> "cost"))/1000;
+                _cost                   = floor (getNumber(_CfgVehicle >> "cost")/700);
                 _vehicleDisplayName = [_vehicleDisplayName, gettext(_CfgVehicle >> "picture")];
 
                 if (_simulation in _simTypesUnits) then  {

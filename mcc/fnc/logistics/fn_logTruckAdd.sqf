@@ -1,7 +1,7 @@
 //===============================================================MCC_fnc_logTruckAdd==========================================================================================
 // Add or remove crates from a log truck
 //============================================================================================================================================================================
-#define CRATE_COST 100
+#define CRATE_COST 200
 #define ANCHOR_POINT_WEST [0,-0.2,0]
 #define ANCHOR_POINT_EAST [0,-0.9,0]
 #define ANCHOR_POINT_GUER [0,+0.5,0]
@@ -77,11 +77,10 @@ if (_add) then {
 				if (_resLevel >= (CRATE_COST*_costFactor)) then
 				{
 					_crate = _crateType createVehicle [0,0,0];
-					//If ammo and not MCC mod
-					if (_crateType in ["Box_NATO_AmmoVeh_F","B_Slingload_01_Ammo_F","Land_Pod_Heli_Transport_04_ammo_F"]) then {
-						_crate setVariable ["ammoLeft",12000 * ((["Box_NATO_AmmoVeh_F","B_Slingload_01_Ammo_F","Land_Pod_Heli_Transport_04_ammo_F"] find _crateType)+1),true];
-						[[_crate, "Hold %1 to resupply"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
-					};
+
+					//Set ammo count and helper
+					_crate setVariable ["ammoLeft",200*_costFactor,true];
+					[[_crate, "Hold %1 to resupply"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
 
 					_crate setVariable ["MCC_loadedBy", getplayeruid player, true];
 					//Change mass
@@ -123,11 +122,9 @@ if (_add) then {
 
 					_crate = _crateType createVehicle [0,0,0];
 
-					//If ammo and not MCC mod
-					if (_crateType in ["Box_NATO_AmmoVeh_F","B_Slingload_01_Ammo_F","Land_Pod_Heli_Transport_04_ammo_F"]) then {
-						_crate setVariable ["ammoLeft",12000 * ((["Box_NATO_AmmoVeh_F","B_Slingload_01_Ammo_F","Land_Pod_Heli_Transport_04_ammo_F"] find _crateType)+1),true];
-						[[_crate, "Hold %1 to resupply"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
-					};
+					//Set ammo count and helper
+					_crate setVariable ["ammoLeft",100,true];
+					[[_crate, "Hold %1 to resupply"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
 
 					_crate setVariable ["MCC_loadedBy", getplayeruid player, true];
 

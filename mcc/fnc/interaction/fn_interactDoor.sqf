@@ -204,7 +204,7 @@ switch (true) do
 			//rts main box
 			if ((_object isKindof "Box_FIA_Support_F") && !(_object getVariable ["mcc_mainBoxUsed", false]) && count (_object getVariable ["MCC_virtual_cargo",[]]) > 0) then {
 				_array pushBack["mainBox","Open Cargo Box",format ["%1data\IconAmmo.paa",MCC_path]];
-				if (CP_activated && missionNamespace getVariable ["MCC_allowChangingKits",true]) then {
+				if (CP_activated && (missionNamespace getVariable ["MCC_allowChangingKits",true]) && !(missionNamespace getVariable ["MCC_surviveMod",false])) then {
 					_array pushBack["kitSelect","Change Kit",format ["%1data\IconAmmo.paa",MCC_path]];
 				};
 			};

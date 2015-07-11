@@ -62,7 +62,6 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			y = 0.077 * safezoneH;
 			w = 0.0670312 * safezoneW;
 			h = 0.022 * safezoneH;
-			tooltip = "Show MCC's options in the action menu";
 		};
 		class CoverUICombo: MCC_RscCombo
 		{
@@ -100,14 +99,14 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			w = 0.0670312 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
-		class coverRecoilCombo: MCC_RscCombo
+		class actionMenuCombo: MCC_RscCombo
 		{
 			idc = 8431;
 			x = 0.242344 * safezoneW;
 			y = 0.077 * safezoneH;
 			w = 0.0825 * safezoneW;
 			h = 0.022 * safezoneH;
-			tooltip = "While picking out of cover players will suffer less weapon's recoil"; //--- ToDo: Localize;
+			tooltip = "Show MCC's options in the action menu";
 		};
 		class VaultCombo: MCC_RscCombo
 		{

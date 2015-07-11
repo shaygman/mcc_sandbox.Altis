@@ -14,7 +14,7 @@ class CfgPatches
 
 	class mcc_sandbox_curatorExp
 	{
-		units[] = {"MCC_Module_Base","MCC_Module_addUnitsToZeus","MCC_Module_ambientCivilians","MCC_Module_MCCCAS","MCC_Module_createEvac","MCC_Module_createIED","MCC_Module_createArmedCivilian","MCC_Module_nightEffects","MCC_Module_lockDoors","MCC_Module_atmosphere","MCC_Module_warZone","MCC_Module_garrisonBuildings","MCC_Module_damagePart"};
+		units[] = {"MCC_Module_Base","MCC_Module_addUnitsToZeus","MCC_Module_ambientCivilians","MCC_Module_MCCCAS","MCC_Module_createEvac","MCC_Module_createIED","MCC_Module_createArmedCivilian","MCC_Module_nightEffects","MCC_Module_lockDoors","MCC_Module_atmosphere","MCC_Module_warZone","MCC_Module_garrisonBuildings","MCC_Module_damagePart","MCC_Module_vehicleSpawnerCurator","MCC_Module_campaignInit"};
 		weapons[] = {};
 		requiredVersion = 1.00;
 		author[] = {"shay_gman"};

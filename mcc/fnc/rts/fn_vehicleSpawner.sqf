@@ -12,9 +12,9 @@ _mccdialog = uiNamespace getVariable "MCC_VEHICLESPAWNER_IDD";
 _selectedVehicle = _vehicleArray select (lbCurSel 101);
 _cfgclass = _selectedVehicle select 0;
 _cost = _selectedVehicle select 2;
-_costAmmo = floor _cost*0.3;
-_costRepair = floor _cost*0.5;
-_costFuel = floor _cost*0.2;
+_costAmmo = floor (_cost*0.3);
+_costRepair = floor (_cost*0.5);
+_costFuel = floor (_cost*0.2);
 _array = call compile format ["MCC_res%1",playerside];
 
 _action =  [_this, 0, 0, [0]] call BIS_fnc_param;
@@ -39,7 +39,7 @@ if (_action == 0) exitWith {
 //Spawn value
 if (_action == 1) then {
     private ["_spawnPad","_spawnPadPos","_check","_vehicle"];
-    _spawnPad = call compile (missionNamespace getVariable ["MCC_private_spawnPad",objNull]);
+    _spawnPad = missionNamespace getVariable ["MCC_private_spawnPad",objNull];
 
     if (isNull _spawnPad) exitWith {};
     _spawnPadPos = getpos _spawnPad;

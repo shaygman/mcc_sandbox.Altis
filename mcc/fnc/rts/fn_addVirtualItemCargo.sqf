@@ -9,6 +9,8 @@ _classes    = [_this,1,[],["",true,[]]] call bis_fnc_param;
 _add        = [_this,2,1,[1]] call bis_fnc_param;
 _type       = [_this,3,0,[0]] call bis_fnc_param;
 
+disableSerialization;
+
 //--- Get cargo list
 _cargo = _object getvariable ["MCC_virtual_cargo",[[],[],[],[]]];
 _cargoArray = _cargo select _type;

@@ -7,7 +7,7 @@ for [{_x=8415},{_x<=8421},{_x=_x+1}]  do
 
 		_text = "Use CBA Controls";
 		ctrlEnable [_x, false];
-		(_mccdialog displayCtrl _x) ctrlSetTooltip "";
+		((findDisplay (_this select 0)) displayCtrl _x) ctrlSetTooltip "";
 
 	} else {
 

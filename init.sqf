@@ -9,12 +9,9 @@ MCC_GUI1initDone = false;
 CP_debug = false;
 MW_debug = false;
 
-if (MCC_isMode) then
-{
+if (MCC_isMode) then {
 	MCC_path = "\mcc_sandbox_mod\";
-}
-else
-{
+} else {
 	MCC_path = "";
 	enableSaving [false, false];
 };
@@ -78,9 +75,9 @@ if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
 //--------------------logistics -------------------------------------------------------
 //Default resources
 //[ammo,supply,fuel]
-if (isnil "MCC_resWest") then {MCC_resWest = [500,500,200,200,100]};
-if (isnil "MCC_resEast") then {MCC_resEast = [500,500,200,200,100]};
-if (isnil "MCC_resGUER") then {MCC_resGUER = [500,500,200,200,100]};
+if (isnil "MCC_resWest") then {MCC_resWest = [1500,500,200,200,100]};
+if (isnil "MCC_resEast") then {MCC_resEast = [1500,500,200,200,100]};
+if (isnil "MCC_resGUER") then {MCC_resGUER = [1500,500,200,200,100]};
 
 //--------------------Screens -------------------------------------------------------
 //Teleport 2 Team
@@ -147,7 +144,7 @@ if (isnil "MCC_ConsoleACAmmo") then {MCC_ConsoleACAmmo = [500,80,20]};
 if (isnil "MCC_ConsoleACTime") then {MCC_ConsoleACTime = 180};
 
 //Group markers
-if (isnil "MCC_ConsoleOnlyShowUnitsWithGPS") then {MCC_ConsoleOnlyShowUnitsWithGPS = true}; 				//Show only units were the group leader have a GPS  or inside vehicle
+if (isnil "MCC_ConsoleOnlyShowUnitsWithGPS") then {MCC_ConsoleOnlyShowUnitsWithGPS = false}; 				//Show only units were the group leader have a GPS  or inside vehicle
 if (isnil "MCC_ConsoleDrawWP") then {MCC_ConsoleDrawWP = true}; 											//Draw group's WP on the console
 if (isnil "MCC_ConsoleLiveFeedHelmetsOnly") then {MCC_ConsoleLiveFeedHelmetsOnly = false};					//Allow live feed to vehicles only and units wearing one of the specific helmets types defined in MCC_ConsoleLiveFeedHelmets
 if (isnil "MCC_ConsoleLiveFeedHelmets") then {MCC_ConsoleLiveFeedHelmets = ["H_HelmetB","H_HelmetB_paint","H_HelmetB_light","H_HelmetO_ocamo","H_HelmetLeaderO_ocamo","H_HelmetSpecO_ocamo","H_HelmetSpecO_blk"]};
@@ -521,9 +518,6 @@ MCC_aiAimIndex						= (MCC_AI_Aim*10)-1;    //0;
 MCC_aiSpotIndex						= (MCC_AI_Spot*10)-1;    //3;
 MCC_aiCommandIndex					= (MCC_AI_Command*10)-1;    //5;
 
-MCC_consoleGPSIndex						= 0;
-MCC_consoleShowFriendsIndex				= 0;
-MCC_consoleCommandAIIndex				= 0;
 MCC_nameTagsIndex						= 0;
 MCC_artilleryComputerIndex				= 1;
 MCC_saveGearIndex						= 0;

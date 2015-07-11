@@ -353,6 +353,8 @@ class MCC
 		class spotEnemy {description = "spot an enmey from ACE menu";};
 		class callSupport {description = "Call support from ACE menu";};
 		class callConstruct {description = "Call construct from ACE menu";};
+		class isSurvivalObject {description = "check if an object is a survival object";};
+		class searchSurvivalObject {description = "Search a survival object";};
 	};
 
 	class radio
@@ -501,6 +503,8 @@ class MCC
 		class curatorWarZone {description = "Create war zone effect";};
 		class curatorGarrisonUnits {description = "Garrison units in the selected buildings";};
 		class curatorDamagePart {description = "Damage part of object/Unit";};
+		class curatorVehicleSpawner {description = "Create a vhicles kiosk";};
+		class curatorCampaignInit {description = "Starts MCC Campaign";};
 	};
 
 	class dynamicDialog

@@ -106,25 +106,17 @@ if !mcc_isloading then
 	publicvariable "MCC_AI_Command";
 
 	//CONSOLE
-	missionNamespace setVariable ["MCC_consoleGPSIndex",lbCurSel MCC_MSCONSOLEGPS];
-	publicvariable "MCC_consoleGPSIndex";
-	MCC_ConsoleOnlyShowUnitsWithGPS = if ((lbCurSel MCC_MSCONSOLEGPS) == 0) then {true} else {false};
+	MCC_ConsoleOnlyShowUnitsWithGPS = lbCurSel MCC_MSCONSOLEGPS == 1;
 	publicvariable "MCC_ConsoleOnlyShowUnitsWithGPS";
 
 	//CONSOLE
-	missionNamespace setVariable ["MCC_consoleShowFriendsIndex",lbCurSel MCC_MSCONSOLESHOWFRIENDS];
-	publicvariable "MCC_consoleShowFriendsIndex";
-	MCC_ConsoleDrawWP = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};
+	MCC_ConsoleDrawWP = lbCurSel MCC_MSCONSOLESHOWFRIENDS == 0;
+	MCC_ConsolePlayersCanSeeWPonMap = lbCurSel MCC_MSCONSOLESHOWFRIENDS == 0;
 	publicvariable "MCC_ConsoleDrawWP";
-
-	//CONSOLE
-	MCC_ConsolePlayersCanSeeWPonMap = if ((lbCurSel MCC_MSCONSOLESHOWFRIENDS) == 0) then {true} else {false};
 	publicvariable "MCC_ConsolePlayersCanSeeWPonMap";
 
 	//CONSOLE
-	missionNamespace setVariable ["MCC_consoleCommandAIIndex",lbCurSel MCC_MSCONSOLECOMMANDAI];
-	publicvariable "MCC_consoleCommandAIIndex";
-	MCC_ConsoleCanCommandAI = if ((lbCurSel MCC_MSCONSOLECOMMANDAI) == 0) then {true} else {false};
+	MCC_ConsoleCanCommandAI = lbCurSel MCC_MSCONSOLECOMMANDAI == 0;
 	publicvariable "MCC_ConsoleCanCommandAI";
 
 	//NameTags
@@ -184,9 +176,7 @@ if !mcc_isloading then
 	publicvariable "MCC_GAIA_AMBIANT_CHANCE";
 
 	//GAIA Cache
-	missionNamespace setVariable ["MCC_GAIACacheDistanceIndex",lbCurSel MCC_GAIACacheDistanceIDC];
-	publicvariable "MCC_GAIACacheDistanceIndex";
-	GAIA_CACHE_STAGE_1 = (MCC_GAIACacheDistanceIndex+1)*500;
+	GAIA_CACHE_STAGE_1 = ((lbCurSel MCC_GAIACacheDistanceIDC)+1)*500;
 	publicvariable "GAIA_CACHE_STAGE_1";
 
 	//GAIA control

@@ -117,20 +117,20 @@ if (missionNamespace getvariable ["MCC_showActionKey",true]) then
 	{
 		//Add MCC Comander
 		if ((player getVariable ["MCC_actionCommander",-1]) != -1) then	{player removeAction (player getVariable ["MCC_actionCommander",nil])};
-		_string = format ["((MCC_server getVariable ['CP_commander%1','']) == getPlayerUID _this )&& (vehicle _target == vehicle _this) && (missionNamespace getVariable ['MCC_allowConsole',true])",side player];
+		_string = format ["((MCC_server getVariable ['CP_commander%1','']) == getPlayerUID _this )&& (vehicle _target == vehicle _this) && (missionNamespace getVariable ['MCC_allowConsole',true]) && (missionNamespace getvariable ['MCC_showActionKey',true])",side player];
 		_null = player addaction ["<t color=""#FFCC01"">Commander - Console</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,1],-1,false,true,"",_string];
 		player setVariable ["MCC_actionCommander",_null];
 
 		//Add MCC Squad leader PDA
 		if ((player getVariable ["MCC_actionSQLpda",-1]) != -1) then	{player removeAction (player getVariable ["MCC_actionSQLpda",nil])};
-		_string = "((count units _this > 1) && (leader _this == _this)) && (missionNamespace getVariable ['MCC_allowsqlPDA',true]) && 'ItemGPS' in (assignedItems _this)";
+		_string = "((count units _this > 1) && (leader _this == _this)) && (missionNamespace getVariable ['MCC_allowsqlPDA',true]) && 'ItemGPS' in (assignedItems _this) && (missionNamespace getvariable ['MCC_showActionKey',true])";
 		_null = player addaction ["<t color=""#FFCC01"">Squad Leader - PDA</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,3],-1,false,true,"",_string];
 		player setVariable ["MCC_actionSQLpda",_null];
 	};
 
 	// Add MCC to the action menu
 	if ((player getVariable ["MCC_actionMCCMain",-1]) != -1) then	{player removeAction (player getVariable ["MCC_actionMCCMain",nil])};
-	_string = "(vehicle _target == vehicle _this) && (getplayerUID player in (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || 'all' in  (missionNamespace getvariable ['MCC_allowedPlayers',['all']]) || serverCommandAvailable '#logout' || isServer || (player getvariable ['MCC_allowed',false]))";
+	_string = "(vehicle _target == vehicle _this) && (getplayerUID player in (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || 'all' in  (missionNamespace getvariable ['MCC_allowedPlayers',['all']]) || serverCommandAvailable '#logout' || isServer || (player getvariable ['MCC_allowed',false])) && (missionNamespace getvariable ['MCC_showActionKey',true])";
 	mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "",_string];
 	player setVariable ["MCC_actionMCCMain",mcc_actionInedx];
 };

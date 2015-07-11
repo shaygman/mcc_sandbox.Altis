@@ -261,7 +261,7 @@ publicVariable "MCC_date";
 	_var = _savedMissionSettings select _foreachIndex;
 	missionNameSpace setVariable [_x, _var];
 	publicVariable _x;
-} foreach ["MCC_AI_Skill","MCC_AI_Aim","MCC_AI_Spot","MCC_AI_Command","MCC_ConsoleOnlyShowUnitsWithGPS","MCC_ConsoleDrawWP","MCC_ConsolePlayersCanSeeWPonMap","MCC_ConsoleCanCommandAI","MCC_nameTags","MCC_saveGear","MCC_groupMarkers","MCC_Chat","MCC_GAIA_AMBIANT","MCC_GAIA_AMBIANT_CHANCE","GAIA_CACHE_STAGE_1","MCC_GAIA_MORTAR_TIMEOUT","MCC_deletePlayersBody","MCC_interaction","MCC_surviveMod","MCC_cover","MCC_coverUI","MCC_changeRecoil","MCC_coverVault","MCC_quickWeaponChange","MCC_ingameUI"];
+} foreach ["MCC_AI_Skill","MCC_AI_Aim","MCC_AI_Spot","MCC_AI_Command","MCC_ConsoleOnlyShowUnitsWithGPS","MCC_ConsoleDrawWP","MCC_ConsolePlayersCanSeeWPonMap","MCC_ConsoleCanCommandAI","MCC_nameTags","MCC_saveGear","MCC_groupMarkers","MCC_Chat","MCC_GAIA_AMBIANT","MCC_GAIA_AMBIANT_CHANCE","GAIA_CACHE_STAGE_1","MCC_GAIA_MORTAR_TIMEOUT","MCC_deletePlayersBody","MCC_interaction","MCC_surviveMod","MCC_cover","MCC_coverUI","MCC_showActionKey","MCC_coverVault","MCC_quickWeaponChange","MCC_ingameUI"];
 
 //Mission Name
 private "_name";

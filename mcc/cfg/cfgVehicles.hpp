@@ -23,6 +23,8 @@ class Module_F: Logic
 #include "modules\cover.hpp"
 #include "modules\radio.hpp"
 #include "modules\medicSystem.hpp"
+#include "modules\modulevehicleSpawner.hpp"
+
 #include "curator\curatorCfg.hpp"
 
 class Box_NATO_Ammo_F;
@@ -34,7 +36,7 @@ class Box_NATO_Ammo_F;
 class Land_Ammobox_rounds_F;
 class MCC_ammoBox : Land_Ammobox_rounds_F
 {
-	ammo = 100;
+	ammo = 200;
 };
 
 class Box_NATO_AmmoVeh_F;

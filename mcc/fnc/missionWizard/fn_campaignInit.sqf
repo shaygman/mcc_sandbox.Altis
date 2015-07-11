@@ -23,6 +23,12 @@ _difficulty  = [_this, 6, 20, [0]] call BIS_fnc_param;
 _totalPlayers = ((playersNumber _sidePlayer)+1);
 _AOSize = (20*_totalPlayers) max 300;
 
+//Time Multuplier
+if (timeMultiplier < 10) then {setTimeMultiplier 10};
+
+//Tickets
+if (([_sidePlayer] call BIS_fnc_respawnTickets)<100) then {[_sidePlayer, 100] call BIS_fnc_respawnTickets};
+
 //Build the faction's unitsArrays and send it to the server.
 _check = [_factionEnemy, _sideEnemy] call MCC_fnc_MWCreateUnitsArray;
 waituntil {_check};

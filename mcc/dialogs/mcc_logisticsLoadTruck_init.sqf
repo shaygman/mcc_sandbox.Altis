@@ -56,11 +56,11 @@ if (_startLoad) then {
 		_class			= configName(configFile >> "CfgVehicles">> _x);
 		if ((_forEachIndex <3) && ! MCC_isMode) then
 		{
-			_displayname = ["Ammo Crate - 100 Res","Supply Crate - 100 Res","Fuel Crate - 100 Res"] select _forEachIndex;
+			_displayname = ["Ammo Crate - 200 Res","Supply Crate - 200 Res","Fuel Crate - 200 Res"] select _forEachIndex;
 		}
 		else
 		{
-			_displayname 	= (getText(configFile >> "CfgVehicles">> _x >> "displayname")) + (if (_forEachIndex <3) then {" - 100 Res"} else {" - 400 Res"});
+			_displayname 	= (getText(configFile >> "CfgVehicles">> _x >> "displayname")) + (if (_forEachIndex <3) then {" - 200 Res"} else {" - 800 Res"});
 		};
 		//_pic 			= getText(configFile >> "CfgVehicles">> _x >> "picture");
 		_comboBox lbAdd _displayname;

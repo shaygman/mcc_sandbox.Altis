@@ -62,6 +62,12 @@ switch (_type) do
 		    {
 		    	[_tempBox, _class] call MCC_fnc_addVirtualMagazineCargo;
 		    	_null = [player,_class] call BIS_fnc_invRemove;
+
+		    	//add funds
+				_value = getNumber(configFile >> "CfgMagazines" >> _class >> "mass");
+				_resources = missionNamespace getVariable [format ["MCC_res%1", playerSide],[500,500,200,200,100]];
+				_resources set [0, ((_resources select 0)+_value)];
+				publicVariable (format ["MCC_res%1", playerSide,_resources]);
 		    };
 
 		    case (_cursel == 12):		//Survival
@@ -71,12 +77,9 @@ switch (_type) do
 		    	_null = [player,_class] call BIS_fnc_invRemove;
 
 		    	//save only the medical stuff the rest ditch
-		    	if (_class in ["MCC_bandage","MCC_epipen","MCC_salineBag","MCC_firstAidKit"]) then
-		    	{
+		    	if (_class in ["MCC_bandage","MCC_epipen","MCC_salineBag","MCC_firstAidKit"]) then {
 		    		[_tempBox, _class] call MCC_fnc_addVirtualMagazineCargo;
-		    	}
-		    	else
-		    	{
+		    	} else {
 			    	//add funds
 			    	_index = switch (getText(configFile >> "CfgMagazines" >> _class >> "mcc_surviveType")) do
 			    			{

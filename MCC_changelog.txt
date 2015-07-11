@@ -1,11 +1,11 @@
 Change log r16:
-Zeus:
+Zeus: 			
 - Added: MCC's Zeus will edit players. 
-- Added: Custom MCC's Zeus modules including: 
+- Added: Custom MCC's Zeus modules including: 	** New Feature **
 	- IED: turn any object/unit into an IED or suicide bomber.
 	- CAS: Call MCC Close Air Support from Zeus.
 	- Add units to Zeus: Automatically assign units/objects to Zeus so the mission maker can edit them.
-	- Ambient civilians and cars - Server side ambient. MCC will create enemy/civilians units some in buildings, some patrolling, some driving cars and some locked cars in towns when players are around and delete them when no player is around. 
+	- Ambient AI and cars - Ambient AI and cars Module - Server side ambient. MCC will create  AI units some in buildings, some patrolling, some driving cars and some parked cars in towns when players are around and delete them when no player is around.
 	- Armed Civilians: Will transfer any friendly/natural unit into hostile unit with concealed weapons. Armed units will attack other units from the enemy faction while they have the chance.
 	- Atmosphere: Instantly create sandstorms, blizzards and Heat Waves. 
 	- CAS: Call MCC close air support from Zeus. 
@@ -16,8 +16,13 @@ Zeus:
 	- IED/Suicide Bomber: Turn any object/vehicle/unit into an IED or suicide bomber. 
 	- Night Effect: Destroy all lights, remove night visions and add flashlights to nearby AI or players. 
 	- War Zone: Destroy buildings, spread wrecks and fires in the given radius. 
+	- Vehicle's Kiosk: Players can purchase vehicles from them using in game resources. 
 
 - Changed: While in Zeus hold Shift and double click a unit to open Zeus's default attributes.
+
+MCC Campaign: ** New Feature **
+- 	MCC campaign can be activated from Zeus or from the 2D editor module. It is recommended to activate MCC role selection, have at least one H.Q MCC's Start location, some vehicle kiosks and activate ambient civilians. 
+	In the campaign MCC will keep on generating new mission when the players have completed the previous one. Each mission will be generated close to the previous one and MCC will create an advancing feel for the mission. Once the players have finished a mission in an area this area will be marked by the side color and it should be relatively safe. By successfully finishing a mission the players will be awarded with resources (minus collateral damage that the players inflicted such as killing civilians) The players' commander will receive random special bonus for each successful mission such as supply drops, CAS exc. Each in game day the players will gain extra tickets if they performed well and the evac vehicle will respawn. Furthermore the enemy faction might start actively perusing the players if the player have inflicted enough casualties to the enemy. 
 
 Mission Wizard:
 - Fixed: Non precise objectives' markers in the missions wizard where pretty precise. 
@@ -42,22 +47,27 @@ Weather:
 - Added: Weather over time slider to the Change Weather in MCC. 
 - Disabled: MCC weather sync when ACE is on
 
+Survival:
+- Added: ACE support for survival - players can search loot using the ACE's self interaction key while close to a lootable object. 
+- Changed: If survival and Role selection are on players won't be able to change kits unless they respawned to prevent exploit by changing kits to gain resources. 
+
 Misc:
 - Added: Support CBA keybinds if player is running CBA
-- Added: Dynamic dialog function to easy create dialogs - learn more in the functions library
+- Added: Dynamic dialog function to easly create dialogs - learn more in the functions library
+- Added: Vehicle's Kiosk's Module - Players can purchase vehicles from them using in game resources. 
+- Added: Ambient AI and cars Module - Server side ambient. MCC will create  AI units some in buildings, some patrolling, some driving cars and some parked cars in towns when players are around and delete them when no player is around. 
 - Changed: MCC garrison units will have units patrolling buildings
+- Improved: Loading time while changing factions in MCC.
 - Fixed: Player can escape unconscious dialog in MCC medic system by opening the squad dialog
 - fixed: Objects names placed in 3D editor didn't saved to sqm. 
 - Fixed: Each side's commander will have only his sides evac vehicles
-
-
-
+- Fixed: MCC Settings didn't stick after changing them
 
 //TODO
-//Check why loading missions overwrite mission settings
+Evac helicopter module - add campaign evac
 //RTS
 //Prevent deleting FOBs
-// Tutorials for everything
+//Tutorials for everything
 //Add undercover script?
 remove I&X from init
 - check supply box ACE
