@@ -1,8 +1,8 @@
-//======================================================MCC_fnc_MWSpawnVehicles=========================================================================================================
+//======================================================MCC_fnc_MWSpawnVehicles==================================================================================================
 // Spawn infantry groups in the zone.
 // Example:[_totalEnemyUnits,_zoneNumber,_arrayGroup,_arrayUnits,_priceGroup,_priceUnit] call MCC_fnc_MWSpawnVehicles;
 // Return - handler
-//========================================================================================================================================================================================
+//=====================================================================================================================================================================
 private ["_menArraySpecial","_simType","_unitPlaced","_totalEnemyUnits","_script_handler","_spawnbehavior","_arrayGroup","_arrayUnits","_group","_priceGroup","_priceUnit","_price","_side"];
 _totalEnemyUnits	= _this select 0;
 _zoneNumber			= _this select 1;

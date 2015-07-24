@@ -331,7 +331,7 @@ _tempArray = [
                 missionNamespace getvariable ["MCC_surviveMod",false],
                 missionNamespace getvariable ["MCC_cover",false],
                 missionNamespace getvariable ["MCC_coverUI",false],
-                missionNamespace getvariable ["MCC_showActionKey",false],
+                missionNamespace getvariable ["MCC_showActionKey",true],
                 missionNamespace getvariable ["MCC_coverVault",false],
                 missionNamespace getvariable ["MCC_quickWeaponChange",false],
                 missionNamespace getvariable ["MCC_ingameUI",false]

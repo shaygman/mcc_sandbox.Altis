@@ -489,7 +489,7 @@ else
 		_wp setWaypointSpeed "NORMAL";
 		_wp setWaypointCompletionRadius 100;
 
-		if (_spawnkind == "S&D") then	{			//Set WP behaviour
+		if (_spawnkind == "SnD") then	{			//Set WP behaviour
 			_wp setWaypointType "SAD";
 			_wp setWaypointCombatMode "RED";
 			}	else	{
@@ -499,7 +499,7 @@ else
 
 		switch (_spawnkind) do
 		{
-			case "S&D":	//Seek and Destroy
+			case "SnD":	//Seek and Destroy
 			{
 				 waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 2000) || (!alive _plane1)};
 				_pilotGroup1 setSpeedMode "FULL";
@@ -565,7 +565,7 @@ else
 					};
 			};
 
-			case "AT run":	//S&D Armor
+			case "AT run":	//SnD Armor
 			{
 				waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 800) || (!alive _plane1)};
 				_targets = nearestObjects [[_pos select 0,_pos select 1,0] ,["Car","Tank"],200];	//Find targets: cars or tanks
@@ -580,7 +580,7 @@ else
 					};
 			};
 
-			case "AA run":	//S&D Air
+			case "AA run":	//SnD Air
 			{
 				_plane1 flyInHeight 150;
 				waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 1500) || (!alive _plane1)};

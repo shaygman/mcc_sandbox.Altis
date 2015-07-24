@@ -220,11 +220,8 @@ switch (_cmd) do
 		private "_counter";
 		_counter = 0;
 		{
-			if (isPlayer _x) then
-			{
-				if ((_x getVariable ["CP_side", side _x]) == _side) then {_counter = _counter +1};
-			};
-		} foreach allUnits;
+			if ((_x getVariable ["CP_side", side _x]) == _side) then {_counter = _counter +1};
+		} foreach allplayers;
 
 		if (_counter >= CP_maxPlayers) exitWith	{
 			[9999,format ["%1 side is full",_side],3,true] spawn MCC_fnc_setIDCText;
@@ -450,7 +447,7 @@ switch (_cmd) do
 					sleep 1;
 					[[format ["%1 have started a mutiny. do you want to kick the commander?", name player], "MUTINY" , "CP_mutiny"] ,"MCC_fnc_vote",(player getVariable ["CP_side",  playerside]),false] spawn BIS_fnc_MP;
 					sleep 30;
-					_numberPlayers = (player getVariable ["CP_side",  playerside]) countSide allunits;
+					_numberPlayers = (player getVariable ["CP_side",  playerside]) countSide allplayers;
 					[[{publicVariable "CP_mutiny"}], "BIS_fnc_spawn", false, false] spawn BIS_fnc_MP;
 					sleep 2;
 

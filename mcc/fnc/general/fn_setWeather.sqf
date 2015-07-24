@@ -33,6 +33,7 @@ if ((count _weather) > 3) then {_time setRain (_weather select 3)};
 if ((count _weather) > 4) then {_time setLightnings	(_weather select 4)};
 if ((count _weather) > 5) then {_time setfog [(_weather select 5), 0.03,5]};
 
+forceweatherchange;
 
 0 = [] spawn
 {

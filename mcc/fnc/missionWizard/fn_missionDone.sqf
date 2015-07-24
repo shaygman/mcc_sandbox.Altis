@@ -5,7 +5,7 @@
 // Return - nothing
 //=============================================================================================================================================================================
 //Calculate reources
-private ["_resources","_penalty","_baseResource","_succeedObjectives","_sumResource","_CompleteText","_sidePlayer","_resourceGain","_allocationRatio","_allocatedResources","_randomAsset","_totalShells"];
+private ["_resources","_penalty","_baseResource","_succeedObjectives","_sumResource","_CompleteText","_sidePlayer","_resourceGain","_allocationRatio","_allocatedResources","_randomAsset","_totalShells","_sumTickets"];
 _mission =  [_this, 0, "Main", [""]] call BIS_fnc_param;
 _activeObjectives = [_this, 1, 0, [0]] call BIS_fnc_param;
 _failedObjectives = [_this, 2, 0, [0]] call BIS_fnc_param;
@@ -14,12 +14,21 @@ _totalPlayers = [_this, 4, 10, [0]] call BIS_fnc_param;
 _difficulty = [_this, 5, 10, [0]] call BIS_fnc_param;
 _baseResource = [_this, 6, 50, [0]] call BIS_fnc_param;
 _allocationRatio = [_this, 7, [0.3,0.3,0.2,0.15,0.05], [[]]] call BIS_fnc_param;
+_sumTickets =  ([_this, 8, 0, [0]] call BIS_fnc_param) max 0;
 
 //How many resources we get
 _succeedObjectives = _activeObjectives - _failedObjectives;
 _resources = missionNamespace getvariable [format ["MCC_res%1",_sidePlayer],[500,500,200,200,100]];
-_penalty =floor (_baseResource*((missionNamespace getvariable [format ["MCC_civiliansKilled_%1",_sidePlayer],0])*3 min 10));
-_resourceGain = floor (_baseResource*_difficulty*((_totalPlayers/5) max 1))*_succeedObjectives;
+
+if (_mission != "side") then {
+	_penalty = floor (_baseResource*((missionNamespace getvariable [format ["MCC_civiliansKilled_%1",_sidePlayer],0])*3 min 10));
+	_resourceGain = floor (_baseResource*_difficulty*((_totalPlayers/5) max 1))*_succeedObjectives;
+	} else {
+		_penalty = 0;
+		_resourceGain = floor (_baseResource*_difficulty*((_totalPlayers/5) max 1))*_failedObjectives;
+		_resourceGain = _resourceGain + (floor (_sumTickets*_difficulty) max 1);
+	};
+
 _sumResource = _resourceGain - _penalty;
 
 _allocatedResources = [];
@@ -28,19 +37,30 @@ _allocatedResources = [];
 } forEach _allocationRatio;
 
 //Generate summary
-
-_CompleteText =         format ["<t align='center' size='1.8' color='#FFCF11'>%1 Mission Completed</t><br/>",_mission]
-						+"____________________<br/>"
-						+ format ["Total Objectives: %1<br/>",_activeObjectives]
-						+ format ["Objectives Succeed: <t color='#2CC916'>%1</t><br/>", _succeedObjectives]
-						+ format ["Objectives Failed: <t color='#FF0000'>%1</t><br/>", _failedObjectives]
-						+ "____________________<br/>"
-						+ format ["Resource Gained: <t color='#2CC916'>%1</t><br/>",_resourceGain]
-						+ format ["Collateral Damage Penalty: <t color='#FF0000'>%1</t><br/>", _penalty]
-						+ format ["Total Resource gained: %1<br/>",_sumResource]
-						+ "____________________<br/><br/>"
-						+ "<t align='center' size='1.2' color='#FFCF11'>Assets Gained:</t><br/>";
-
+if (_mission != "side") then {
+	_CompleteText =         format ["<t align='center' size='1.8' color='#FFCF11'>%1 Mission Completed</t><br/>",_mission]
+							+"____________________<br/>"
+							+ format ["Total Objectives: %1<br/>",_activeObjectives]
+							+ format ["Objectives Succeed: <t color='#2CC916'>%1</t><br/>", _succeedObjectives]
+							+ format ["Objectives Failed: <t color='#FF0000'>%1</t><br/>", _failedObjectives]
+							+ "____________________<br/>"
+							+ format ["Resource Gained: <t color='#2CC916'>%1</t><br/>",_resourceGain]
+							+ format ["Collateral Damage Penalty: <t color='#FF0000'>%1</t><br/>", _penalty]
+							+ format ["Total Resource gained: %1<br/>",_sumResource]
+							+ "____________________<br/><br/>"
+							+ "<t align='center' size='1.2' color='#FFCF11'>Assets Gained:</t><br/>";
+} else {
+	_CompleteText =         "<t align='center' size='1.8' color='#FFCF11'>Enemy Have Completed A Mission</t><br/>"
+							+"____________________<br/>"
+							+ format ["Total Objectives: %1<br/>",_activeObjectives]
+							+ format ["Objectives Succeed: <t color='#FF0000'>%1</t><br/>", _succeedObjectives]
+							+ format ["Objectives Failed: <t color='#2CC916'>%1</t><br/>", _failedObjectives]
+							+ "____________________<br/>"
+							+ format ["Enemy Casualties: <t color='#2CC916'>%1</t><br/>", _sumTickets]
+							+ format ["Resource Gained: <t color='#2CC916'>%1</t><br/>",_resourceGain]
+							+ "____________________<br/><br/>"
+							+ "<t align='center' size='1.2' color='#FFCF11'>Assets Gained:</t><br/>";
+};
 
 
 for "_i" from 0 to 4 do {
@@ -56,8 +76,10 @@ publicVariable format ["MCC_civiliansKilled_%1",_sidePlayer];
 
 //Assets if succeed
 _totalShells = 0;
+private ["_counter"];
+_counter = if (_mission != "side") then {_succeedObjectives} else {_failedObjectives};
 
-for "_i" from 1 to _succeedObjectives do {
+for "_i" from 1 to _counter do {
  	_randomAsset = random 1;
 
 	//Add Supply drop
@@ -115,7 +137,7 @@ for "_i" from 1 to _succeedObjectives do {
 	//CAS
 	if (_randomAsset > 0.8) then {
 		private ["_arrayName","_spawnKind","_planeType"];
-		_spawnKind = ["Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)","S&D","Rockets-run","AA run","JDAM","LGB","Bombing-run"] call bis_fnc_selectRandom;
+		_spawnKind = ["Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)","SnD","Rockets-run","AA run","JDAM","LGB","Bombing-run"] call bis_fnc_selectRandom;
 		_planeType = switch (_sidePlayer) do {
 						case west : {["B_Plane_CAS_01_F"]};
 						case east : {["O_Plane_CAS_02_F"]};

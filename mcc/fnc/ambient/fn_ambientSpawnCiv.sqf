@@ -19,6 +19,8 @@ _factionCiv	= [_this, 2, "CIV_F", [""]] call BIS_fnc_param;
 _civSpawnDistance = [_this, 3, 250, [250]] call BIS_fnc_param;
 _unitsArray = [_this, 4, [], [[]]] call BIS_fnc_param;
 
+if (count _unitsArray <=0) exitWith {};
+
 _side = [(getNumber (configfile >> "CfgFactionClasses" >> _factionCiv >> "side"))] call BIS_fnc_sideType;
 _civArray = missionNamespace getVariable ["MCC_ambientCivilians",[]];
 
@@ -38,7 +40,7 @@ _counter = _counter min (count _nearHouses);
 for "_i" from 1 to _counter do {
 	_building = _nearHouses call bis_fnc_selectRandom;
 	_pos = getpos _building;
-	_unitsArray resize 6;
+	if (count _unitsArray > 6) then {_unitsArray resize 6};
 	_civClass = _unitsArray call bis_fnc_selectRandom;
 
 	_civGroup = creategroup _side;

@@ -3,7 +3,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 	idc = 80;
 	x = 0.164844 * safezoneW + safezoneX;
 	y = 0.764 * safezoneH + safezoneY;
-	w = 0.085 * safezoneW;
+	w = 0.15 * safezoneW;
 	h = 0.209 * safezoneH;
 	class controls
 	{
@@ -14,7 +14,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 
 			x = 0.025781 * safezoneW;
 			y = 0.011 * safezoneH;
-			w = 0.04125 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
 
@@ -25,7 +25,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 
 			x = 0.025781 * safezoneW;
 			y = 0.044 * safezoneH;
-			w = 0.04125 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
 
@@ -36,7 +36,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 
 			x = 0.025781 * safezoneW;
 			y = 0.077 * safezoneH;
-			w = 0.04125 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
 		class MCC_FoodText: MCC_RscText
@@ -46,7 +46,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 
 			x = 0.025781 * safezoneW;
 			y = 0.11 * safezoneH;
-			w = 0.04125 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
 		class MCC_MedText: MCC_RscText
@@ -56,7 +56,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 
 			x = 0.025781 * safezoneW;
 			y = 0.143 * safezoneH;
-			w = 0.04125 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
 		class MCC_unitsText: MCC_RscText
@@ -65,7 +65,7 @@ class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 
 			x = 0.025781 * safezoneW;
 			y = 0.176 * safezoneH;
-			w = 0.04125 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};

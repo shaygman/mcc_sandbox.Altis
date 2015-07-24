@@ -45,11 +45,11 @@ if (_action == 1) then {
     _spawnPadPos = getpos _spawnPad;
 
     //can we spawn?
-    _check = _spawnPadPos nearObjects ["LandVehicle", 10];
+    _check = _spawnPadPos nearObjects ["LandVehicle", 5];
     if (count _check > 0) exitWith {systemChat "Can't spawn. Spawn point isn't clear"};
-    _check = _spawnPadPos nearObjects ["Ship", 10];
+    _check = _spawnPadPos nearObjects ["Ship", 5];
     if (count _check > 0) exitWith {systemChat "Can't spawn. Spawn point isn't clear"};
-    _check = _spawnPadPos nearObjects ["Air", 10];
+    _check = _spawnPadPos nearObjects ["Air", 5];
     if (count _check > 0) exitWith {systemChat "Can't spawn. Spawn point isn't clear"};
 
     _array = [(_array select 0) -_costAmmo,(_array select 1) -_costRepair,(_array select 2) -_costFuel,(_array select 3),(_array select 4)];

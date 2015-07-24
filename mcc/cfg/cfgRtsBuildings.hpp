@@ -6,14 +6,14 @@ class MCC_rts_hq1
 	picture = "data\rts\hq.paa";
 	#endif
 
-	displayName = "H.Q";
+	displayName = "HQ";
 	descriptionShort = "Basic short range radio H.Q allows scan for basic missions nearby";
 	anchorType = "Land_TBox_F";
 	requiredBuildings[] = {};
 	needelectricity = 0;
 	upgradeTo[] = {"MCC_rts_hq2"};
 	buildings[] = {"MCC_rts_barracks1","MCC_rts_workshop1","MCC_rts_triage1"};
-	actions[] = {};
+	actions[] = {"MCC_rts_scanResourcesBasic","MCC_rts_scanResourcesCancel"};
 	constType = "hq";
 	level = 1;
 	resources[] = {};
@@ -28,12 +28,13 @@ class MCC_rts_hq2 : MCC_rts_hq1
 	requiredBuildings[] = {{"workshop",2},{"barracks",1},{"elecPower",1}};
 	needelectricity = 1;
 	upgradeTo[] = {"MCC_rts_hq3"};
+	actions[] = {"MCC_rts_scanResourcesBasic","MCC_rts_scanResourcesAdvanced","MCC_rts_scanResourcesCancel"};
 	level = 2;
 	resources[] = {{"ammo",200},{"repair",500},{"food",300},{"time",10}};
 	objectsArray[] = {{"Land_PowerGenerator_F", {5,0,-0.3},{{0,1,0},{0,0,1}}},{"Land_TTowerSmall_1_F", {5,2,6},{{0,1,0},{0,0,1}}},{"Land_TableDesk_F", {4,2,-0.8},{{-1,0,0},{0,0,1}}},{"Land_Camping_Light_F", {4,2.5,-0.3},{{1,0,0},{0,0,1}}},{"Land_Metal_rack_F", {1,2.8,-0.2},{{0,1,0},{0,0,1}}},{"Land_ChairWood_F", {3.5,2,-1.15}, {{-1,0,0},{0,0,1}}},{"Land_Laptop_unfolded_F", {4,2,-0.23},{{-1,0,0},{0,0,1}}},{"Land_Map_altis_F", {4.3,0,1},{{0,-1,0},{-1,0,0}}},{"Land_WaterCooler_01_old_F", {4,0.8,-0.4},{{1,0,0},{0,0,1}}},{"Land_Sleeping_bag_brown_F", {0,2,-1.05},{{-1,0,0},{0,0,1}}},{"Land_LuggageHeap_01_F", {-2.2,2.6,-0.65},{{1,0,0},{0,0,1}}},{"Land_WaterCooler_01_old_F", {4,0.8,-0.4},{{1,0,0},{0,0,1}}},{"CamoNet_BLUFOR_open_Curator_F", {0,0,1},{{0,1,0},{0,0,1}}},{"Box_FIA_Support_F",{0,-3,0},{{0,1,0},{0,0,1}}}};
 };
 
-class MCC_rts_hq3 : MCC_rts_hq1
+class MCC_rts_hq3 : MCC_rts_hq2
 {
 	#ifdef MCCMODE
 	picture = "\mcc_sandbox_mod\data\rts\satcom.paa";
@@ -79,7 +80,7 @@ class MCC_rts_storage2 : MCC_rts_storage1
 	descriptionShort = "Increase storage capacity for all key resources by 1,000 and reduces food spoilage chance.";
 	anchorType = "Land_u_Addon_01_V1_F";
 	requiredBuildings[] = {{"workshop",2}};
-	needelectricity = 0;
+	needelectricity = 1;
 	upgradeTo[] = {"MCC_rts_storage3"};
 	constType = "storage";
 	level = 2;
@@ -93,7 +94,7 @@ class MCC_rts_storage3 : MCC_rts_storage1
 	descriptionShort = "Increase storage capacity for all key resources by 1,500 and dramatically reduces food spoilage chance.";
 	anchorType = "CamoNet_BLUFOR_Curator_F";
 	requiredBuildings[] = {{"workshop",2}};
-	needelectricity = 0;
+	needelectricity = 1;
 	upgradeTo[] = {};
 	constType = "storage";
 	level = 3;
@@ -134,7 +135,7 @@ class MCC_rts_barracks2 : MCC_rts_barracks1
 	descriptionShort = "Shack have 8 beds and allows units to rest, remove tiredness and fatigue effects.";
 	anchorType = "Land_Slum_House02_F";
 	requiredBuildings[] = {{"hq",2}};
-	needelectricity = 0;
+	needelectricity = 1;
 	upgradeTo[] = {"MCC_rts_barracks3"};
 	constType = "barracks";
 	level = 2;
@@ -154,7 +155,7 @@ class MCC_rts_barracks3 : MCC_rts_barracks1
 	descriptionShort = "Barrack have 12 beds and allows units to rest, remove tiredness and fatigue effects.";
 	anchorType = "Land_Cargo_House_V1_F";
 	requiredBuildings[] = {{"hq",3}};
-	needelectricity = 0;
+	needelectricity = 1;
 	upgradeTo[] = {};
 	constType = "barracks";
 	level = 3;
@@ -214,6 +215,7 @@ class MCC_rts_workshop3 : MCC_rts_workshop2
 	displayName = "Mechanic Workshop";
 	descriptionShort = "Builds vehicles and armor and repairs all vehicles damage.";
 	requiredBuildings[] = {{"hq",2}};
+	needelectricity = 1;
 	upgradeTo[] = {"MCC_rts_workshop4"};
 	level = 3;
 	resources[] = {{"ammo",400},{"repair",400},{"fuel",400},{"time",10}};
@@ -231,10 +233,11 @@ class MCC_rts_workshop4 : MCC_rts_workshop2
 	displayName = "Aerial Workshop";
 	descriptionShort = "Builds some air vehicles and repairs all air vehicles damage.";
 	requiredBuildings[] = {{"hq",3}};
+	needelectricity = 1;
 	upgradeTo[] = {};
 	level = 4;
 	resources[] = {{"ammo",800},{"repair",500},{"fuel",800},{"time",10}};
-	objectsArray[] = {{"Land_EngineCrane_01_F",{3,-3,0.2},{{0,1,0},{0,0,1}}},{"Land_WeldingTrolley_01_F",{-3,0,0},{{1,1,0},{0,0,1}}},{"Land_Workbench_01_F",{0,-1,-0.2},{{0,1,0},{0,0,1}}},{"Oil_Spill_F",{0,-2,-0.2},{{0,1,0},{0,0,1}}},{"Land_Camping_Light_F",{-1,-1,0.23},{{-1,-1,0},{0,0,1}}},{"Land_Cargo_House_V3_F",{0,3,0},{{0,1,0},{0,0,1}}},{"Land_MobileLandingPlatform_01_F",{-5,-1,-0.5},{{1,0,0},{0,0,1}}},{"ContainmentArea_02_sand_F",{7,-1,-0.44},{{1,0,0},{0,0,1}}},{"StorageBladder_02_water_sand_F",{7,-1,-0.2},{{1,0,0},{0,0,1}}},{"PortableHelipadLight_01_blue_F",{7,4,-0.6},{{1,0,0},{0,0,1}}},{"PortableHelipadLight_01_blue_F",{14,4,-0.6},{{1,0,0},{0,0,1}}},{"PortableHelipadLight_01_blue_F",{14,14,-0.6},{{1,0,0},{0,0,1}}},{"PortableHelipadLight_01_blue_F",{7,14,-0.6},{{1,0,0},{0,0,1}}},{"Land_HelipadCircle_F",{11,9,-0.6},{{1,0,0},{0,0,1}}}};
+	objectsArray[] = {{"Land_EngineCrane_01_F",{3,-3,0.2},{{0,1,0},{0,0,1}}},{"Land_WeldingTrolley_01_F",{-3,0,0},{{1,1,0},{0,0,1}}},{"Land_Workbench_01_F",{0,-1,-0.2},{{0,1,0},{0,0,1}}},{"Oil_Spill_F",{0,-2,-0.2},{{0,1,0},{0,0,1}}},{"Land_Camping_Light_F",{-1,-1,0.23},{{-1,-1,0},{0,0,1}}},{"Land_Cargo_House_V3_F",{0,3,0},{{0,1,0},{0,0,1}}},{"Land_MobileLandingPlatform_01_F",{-5,-1,-0.5},{{1,0,0},{0,0,1}}},{"ContainmentArea_02_sand_F",{7,-1,-0.44},{{1,0,0},{0,0,1}}},{"StorageBladder_02_water_sand_F",{7,-1,-0.2},{{1,0,0},{0,0,1}}},{"PortableHelipadLight_01_blue_F",{7,4,-0.6},{{1,0,0},{0,0,1}}},{"PortableHelipadLight_01_blue_F",{14,4,-0.6},{{1,0,0},{0,0,1}}},{"PortableHelipadLight_01_blue_F",{14,14,-0.6},{{1,0,0},{0,0,1}}},{"PortableHelipadLight_01_blue_F",{7,14,-0.6},{{1,0,0},{0,0,1}}}};
 };
 
 class MCC_rts_workshop5 : MCC_rts_workshop2
@@ -248,6 +251,7 @@ class MCC_rts_workshop5 : MCC_rts_workshop2
 	displayName = "Munitions Workshop";
 	descriptionShort = "Builds ammunitions and ordnances.";
 	requiredBuildings[] = {{"hq",2}};
+	needelectricity = 1;
 	upgradeTo[] = {};
 	level = 5;
 	resources[] = {{"ammo",300},{"repair",200},{"time",60}};
@@ -266,9 +270,9 @@ class MCC_rts_elecPower1
 	displayName = "Diesel generator";
 	descriptionShort = "Generate small electric energy, requires fuel to run";
 	buildings[] = {};
-	actions[] = {};
+	actions[] = {"MCC_rts_startElectricity","MCC_rts_stopElectricity"};
 	anchorType = "Land_dp_transformer_F";
-	requiredBuildings[] = {{"workshop",2}};
+	requiredBuildings[] = {{"workshop",1}};
 	needelectricity = 0;
 	upgradeTo[] = {"MCC_rts_elecPower2"};
 	constType = "elecPower";
@@ -288,7 +292,6 @@ class MCC_rts_elecPower2 : MCC_rts_elecPower1
 	displayName = "Advanced Diesel generator";
 	descriptionShort = "Generate greater electric energy, requires fuel to run.";
 	buildings[] = {};
-	actions[] = {};
 	anchorType = "Land_dp_transformer_F";
 	requiredBuildings[] = {{"workshop",3}};
 	needelectricity = 0;
@@ -310,7 +313,6 @@ class MCC_rts_elecPower3 : MCC_rts_elecPower1
 	displayName = "Solar generator";
 	descriptionShort = "Generate greater electric energy, does not requires fuel to run.";
 	buildings[] = {};
-	actions[] = {};
 	anchorType = "Land_dp_transformer_F";
 	requiredBuildings[] = {{"hq",3}};
 	needelectricity = 0;
@@ -334,7 +336,7 @@ class MCC_rts_triage1
 	descriptionShort = "Increases the chance of recovery from injuries and illness";
 	anchorType = "Land_Research_house_V1_F";
 	requiredBuildings[] = {{"barracks",1}};
-	needelectricity = 0;
+	needelectricity = 1;
 	upgradeTo[] = {"MCC_rts_triage2"};
 	constType = "triage";
 	level = 1;

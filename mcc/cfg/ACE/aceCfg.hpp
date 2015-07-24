@@ -107,8 +107,18 @@ class ReammoBox_F: thingX {
                 displayName = "Resupply";
                 distance = 5;
                 condition = "(typeof _target in ['MCC_ammoBox','MCC_crateAmmo','MCC_crateAmmoBigWest','MCC_crateAmmoBigEast','Box_NATO_AmmoVeh_F','B_Slingload_01_Ammo_F','Land_Pod_Heli_Transport_04_ammo_F'])";
-                statement =  "[_target] call MCC_fnc_interactUtility;";
+                statement =  "[_target] call MCC_fnc_resupply;";
                 icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
+                showDisabled = 0;
+                priority = 1.2;
+            };
+
+        class ACE_MCC_supplyBoxBreakDown {
+                displayName = "Breakdown<br/>Box";
+                distance = 5;
+                condition = "(typeof _target in ['MCC_crateAmmo','MCC_crateSupply','MCC_crateFuel'])";
+                statement =  "[_target] call MCC_fnc_breakdown;";
+                icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\transport_ca.paa";
                 showDisabled = 0;
                 priority = 1.2;
             };

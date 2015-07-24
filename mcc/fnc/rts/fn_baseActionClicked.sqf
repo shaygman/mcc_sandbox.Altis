@@ -12,8 +12,7 @@ _ctrlText 	= _this select 1;
 if (_ctrlText == "") exitWith {};
 
 _cfgName = missionNamespace getVariable [format ["MCC_ctrlData_%1", ctrlIDC _ctrl],""];
-if (isnull MCC_CONST_PLACEHOLDER) then
-{
+if (isnull MCC_CONST_PLACEHOLDER) then {
 	MCC_CONST_PLACEHOLDER = "CamoNet_BLUFOR_big_Curator_F" createVehicleLocal [0,0,100];
 };
 MCC_CONST_PLACEHOLDER setVariable ["MCC_baseBuildingToBuild",_cfgName];

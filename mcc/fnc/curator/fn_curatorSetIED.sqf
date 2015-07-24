@@ -1,11 +1,32 @@
 //============================================================MCC_fnc_curatorSetIED=============================================================================================
 // Make item/object/unit an IED
 //===========================================================================================================================================================================
-private ["_pos","_module","_object","_resualt"];
+private ["_pos","_module","_object","_resualt","_trapvolume","_IEDExplosionType","_IEDDisarmTime","_IEDJammable","_IEDTriggerType","_trapdistance","_iedside","_init"];
 _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 if (isNull _module) exitWith {};
 
 _pos = getpos _module;
+//did we get here from the 2d editor?
+if (typeName (_module getVariable ["side",true]) == typeName 0) exitWith {
+
+	_trapvolume = (_module getVariable ["size","small"]);
+	_IEDExplosionType = (_module getVariable ["effect",0]);
+	_IEDDisarmTime = (_module getVariable ["disarmTime",10]);
+	_IEDJammable =(_module getVariable ["Jammable",0]) == 1;
+	_IEDTriggerType = (_module getVariable ["ActivationType",0]);
+	_trapdistance = (_module getVariable ["Distance",10]);
+	_iedside =  [(_module getVariable ["side",1])] call BIS_fnc_sideType;
+
+	{
+		_object = _x;
+		if (_object isKindOf "Man") then {
+			[_object, _iedside, _trapvolume, _IEDExplosionType] spawn MCC_fnc_manageSB;
+		} else {
+			[_object, _trapvolume, _IEDExplosionType, _IEDDisarmTime, _IEDJammable, _IEDTriggerType, _trapdistance, _iedside] spawn MCC_fnc_createIED;
+		};
+	} forEach (synchronizedObjects _module);
+};
+
 _object = missionNamespace getVariable ["MCC_curatorMouseOver",[]];
 
 //if no object selected or not a vehicle
@@ -18,8 +39,6 @@ if (isPlayer _object || isPlayer driver _object) exitWith {deleteVehicle _module
 //if already an IED
 if (_object getVariable ["isIED", false]) exitWith {deleteVehicle _module};
 _object setVariable ["isIED",true,true];
-
-private ["_trapvolume","_IEDExplosionType","_IEDDisarmTime","_IEDJammable","_IEDTriggerType","_trapdistance","_iedside","_init"];
 
 //Suicide Bomber
 if (_object isKindOf "Man") then {

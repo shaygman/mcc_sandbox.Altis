@@ -2,7 +2,7 @@
 // Example:[_pos, _anchorDir , _anchorType, _BuildTime, _side]  call  MCC_fnc_construct_base;
 //==============================================================================================================================================================================
 private ["_cfgClass","_anchorType","_anchorDir","_pos","_objs","_constType","_anchor","_object","_BuildTime","_buildingObjs","_builtArray",
-         "_side","_level","_instant","_endTime","_boxName","_boxArray","_box"];
+         "_side","_level","_instant","_endTime","_boxName","_boxArray","_box","_text"];
 _pos			= _this select 0;
 _anchorDir 		= _this select 1;
 _cfgClass		= _this select 2;
@@ -62,7 +62,6 @@ if !(_instant) then
 
 	_builtArray = [_anchor];
 	_anchor setdir _anchorDir;
-	s1 = _anchor;
 
 	for "_i" from 0 to ((count _buildingObjs) - 1) do
 	{
@@ -88,29 +87,34 @@ waituntil {!isnil "_anchor"};
 _anchor setdir _anchorDir;
 _anchor setVariable ["mcc_side",_side,true];
 
-s1 = _anchor;		//TODO Remove
-
 //Attach module to anchor
 _module attachto [_anchor,[0,0,0]];
 _module setVariable ["mcc_construction_anchor",_anchor,true];
 
-_anchor AddEventHandler ["HandleDamage",
-							 {
-								_obj 		= _this select 0;
-								_damage		= _this select 2;
-								_source 	= _this select 3;
-								_ammo		= _this select 4;
-								_side		= _obj getVariable ["mcc_side",sidelogic];
+//Handle damage
+if (_constType != "hq") then {
+	_anchor AddEventHandler ["HandleDamage",
+								 {
+									_obj 		= _this select 0;
+									_damage		= _this select 2;
+									_source 	= _this select 3;
+									_ammo		= _this select 4;
+									_side		= _obj getVariable ["mcc_side",sidelogic];
+									_text = "<img size='5' image='\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\attack_ca.paa'/><br/><br/><t align='center' size='1.8' color='#FFCF11'> Enemy forces are attacking your base</t><br/>";
 
-								if (_ammo in ["SatchelCharge_Remote_Ammo"] && _damage > 0.6) then
-								{
+									if (_ammo in ["SatchelCharge_Remote_Ammo"] && _damage > 0.6) then
+									{
 
-									{detach _x; deleteVehicle _x} foreach attachedObjects _obj;
-									_obj setdamage 1;
-									[[[_side], {player addRating (if (playerside != (_this select 0)) then {500} else {-1000})}], "BIS_fnc_spawn", _source, false] spawn BIS_fnc_MP;
-								} else {0};
-							}
-						];
+										{detach _x; deleteVehicle _x} foreach attachedObjects _obj;
+										deleteVehicle _obj;
+										[[[_side], {player addRating (if (playerside != (_this select 0)) then {500} else {-1000})}], "BIS_fnc_spawn", _source, false] spawn BIS_fnc_MP;
+
+										[[_text,true],"MCC_fnc_globalHint",_side,false] spawn BIS_fnc_MP;
+
+									} else {0};
+								}
+							];
+};
 
 for "_i" from 0 to ((count _objs) - 1) do
 {
@@ -128,4 +132,8 @@ for "_i" from 0 to ((count _objs) - 1) do
 //find the main box and add helper
 if (_constType == "hq") then {
 	[_side, _object] call MCC_fnc_makeObjectVirtualBox
+};
+
+if (_constType == "workshop") then {
+	 [[_side, _module], "MCC_fnc_initWorkshop", false, false] spawn BIS_fnc_MP;
 };

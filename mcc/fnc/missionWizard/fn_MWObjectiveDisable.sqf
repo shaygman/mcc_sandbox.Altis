@@ -1,8 +1,8 @@
 //======================================================MCC_fnc_MWObjectiveDisable=========================================================================================================
 // Create a clear area objective
-// Example:[_objPos,_isCQB,_side,_faction] call MCC_fnc_MWObjectiveDisable; 
+// Example:[_objPos,_isCQB,_side,_faction] call MCC_fnc_MWObjectiveDisable;
 // _objPos = position, objectice position
-//_isCQB = Boolean, true - for CQB areay false if it doesn't matters. 
+//_isCQB = Boolean, true - for CQB areay false if it doesn't matters.
 //_side = enemy side
 //_faction = enemy Faction
 // Return - nothing
@@ -18,7 +18,7 @@ _sidePlayer = _this select 4;
 _preciseMarkers = _this select 5;
 
 //find a location on road
-_time = time + 3; 
+_time = time + 3;
 _range = 50;
 _roads = [];
 while {count _roads <3 && (time < _time)} do
@@ -27,25 +27,25 @@ while {count _roads <3 && (time < _time)} do
 	_range = _range +50;
 };
 
-_objPos = getpos (_roads select 0); 
+_objPos = getpos (_roads select 0);
 
 //Create the ied.
-_name = format ["MCCMWIEDObject_%1", ["MCCMWIEDObject_",1] call bis_fnc_counter]; 
-_objectType = MCC_MWIED call BIS_fnc_selectRandom;	
+_name = format ["MCCMWIEDObject_%1", ["MCCMWIEDObject_",1] call bis_fnc_counter];
+_objectType = MCC_MWIED call BIS_fnc_selectRandom;
 
 //Lets create an ambush
-_groupArray = if (count MCC_MWGroupArrayMenRecon > 0) then 
+_groupArray = if (count MCC_MWGroupArrayMenRecon > 0) then
 {
 	if (random 1 > 0.5) then {MCC_MWGroupArrayMenRecon} else {MCC_MWGroupArrayMen};
-} 
-else 
+}
+else
 {
 	MCC_MWGroupArrayMen
-}; 
+};
 
 //Spawn it
 _ied = [_objPos,_objectType,"large",0,2,false,0,15,_sidePlayer,_name,random 360,true,_side] call MCC_fnc_trapSingle;
 
-MCC_curator addCuratorEditableObjects [[_ied],false]; 
+MCC_curator addCuratorEditableObjects [[_ied],false];
 
-[_ied,"disableIED",_preciseMarkers] call MCC_fnc_MWCreateTask; 
+[_ied,"disableIED",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;

@@ -7,14 +7,14 @@
 // Return - [taskName,Task pos]
 //==============================================================================================================================================================================
 private ["_obj","_task","_preciseMarker","_type","_stringName","_stringDescription","_pos","_objectName","_missionTime","_missionIntel","_indecator","_capturVar",
-      "_stateCond","_name","_missionWherabouts","_side"];
+      "_stateCond","_name","_missionWherabouts","_side","_sidePlayer"];
 
 _obj 			= _this select 0;
 _task 			= _this select 1;
 _preciseMarker 	= _this select 2;
 _side = [_this, 3, east, [east]] call BIS_fnc_param;
-_campaignMission = [_this, 4, false, [false]] call BIS_fnc_param;
-_maxObjectivesDistance = [_this, 5, 400, [0]] call BIS_fnc_param;
+_maxObjectivesDistance = [_this, 4, 400, [0]] call BIS_fnc_param;
+_sidePlayer = [_this, 5, sideLogic, [sideLogic]] call BIS_fnc_param;
 
 _name = FORMAT ["MCCMWObject_%1", ["MCCMWObject_",1] call bis_fnc_counter];
 _nameTask = FORMAT ["Objective %1:", ["",1] call bis_fnc_counter];
@@ -234,14 +234,14 @@ private ["_group","_vehicle"];
 _group = createGroup sidelogic;
 
 _vehicle =  _group createunit ["ModuleObjective_F", _pos,[],0.5,"NONE"];
-_vehicle setvariable ["RscAttributeOwners",[west,east,resistance,civilian],true];
+_vehicle setvariable ["RscAttributeOwners",[_sidePlayer],true];
 if (typeName _obj == "OBJECT") then {_vehicle setvariable ["AttachObject_object",_obj,true]};
 _vehicle setvariable ["RscAttributeTaskState","created", true];
 _vehicle setvariable ["customTask",_task,true];
 [_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
 MCC_curator addCuratorEditableObjects [[_vehicle],false];
 _vehicle setvariable ["updated",true];
-[_vehicle,_side,_campaignMission,_maxObjectivesDistance] spawn MCC_fnc_customTasks;
+[_vehicle,_side,_maxObjectivesDistance] spawn MCC_fnc_customTasks;
 
 MCC_MWObjectivesNames = [_pos,"",_stringName,_stringDescription,"","",1,[],_vehicle];
 publicVariable "MCC_MWObjectivesNames";

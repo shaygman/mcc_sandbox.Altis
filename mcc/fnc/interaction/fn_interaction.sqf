@@ -66,7 +66,7 @@ if (vehicle player == player) then
 	};
 
 	//Handle supply crate
-	if (typeof _target in ["MCC_ammoBox","MCC_crateAmmo","MCC_crateAmmoBigWest","MCC_crateAmmoBigEast","Box_NATO_AmmoVeh_F","B_Slingload_01_Ammo_F","Land_Pod_Heli_Transport_04_ammo_F"]) exitWith	{
+	if (typeof _target in ["MCC_ammoBox","MCC_crateAmmo","MCC_crateAmmoBigWest","MCC_crateAmmoBigEast","Box_NATO_AmmoVeh_F","B_Slingload_01_Ammo_F","Land_Pod_Heli_Transport_04_ammo_F","MCC_crateSupply","MCC_crateFuel"]) exitWith {
 
 		_null= [_target] call MCC_fnc_interactUtility;
 		_break = true;

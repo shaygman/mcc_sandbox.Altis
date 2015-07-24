@@ -8,7 +8,7 @@ if (isNull _module) exitWith {};
 _pos = getpos _module;
 _object = missionNamespace getVariable ["MCC_curatorMouseOver",objNull];
 _module hideobject false;
-_casTypes = ["Gun-run short","Gun-run long","Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)","S&D","Rockets-run","AT run","AA run","JDAM","LGB","Bombing-run"];
+_casTypes = ["Gun-run short","Gun-run long","Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)","SnD","Rockets-run","AT run","AA run","JDAM","LGB","Bombing-run"];
 
 _unitsArray = (missionNamespace getVariable ["MCC_vehicles_airplanes",[]]) + (missionNamespace getVariable ["MCC_vehicles_helicopters",[]]);
 

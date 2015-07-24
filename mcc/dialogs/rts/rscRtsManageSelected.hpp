@@ -1,6 +1,6 @@
 class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 {
-	idc = 1;
+	idc = -1;
 	x = 0.654688 * safezoneW + safezoneX;
 	y = 0.786 * safezoneH + safezoneY;
 	w = 0.340312 * safezoneW;
@@ -14,9 +14,10 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 			text = "offline"; //--- ToDo: Localize;
 			x = 0.283594 * safezoneW;
 			y = 0.011 * safezoneH;
-			w = 0.020625 * safezoneW;
+			w = 0.05 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
+		/*
 		class status2Text: MCC_RscText
 		{
 			idc = 951;
@@ -48,9 +49,10 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 			w = 0.020625 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
+		*/
 		class action1: MCC_RscActivePicture
 		{
-			idc = 101;
+			idc = 9101;
 
 			x = 0.190781 * safezoneW;
 			y = 0.044 * safezoneH;
@@ -59,7 +61,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action2: MCC_RscActivePicture
 		{
-			idc = 102;
+			idc = 9102;
 
 			x = 0.226875 * safezoneW;
 			y = 0.044 * safezoneH;
@@ -68,7 +70,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action3: MCC_RscActivePicture
 		{
-			idc = 103;
+			idc = 9103;
 
 			x = 0.262969 * safezoneW;
 			y = 0.044 * safezoneH;
@@ -77,7 +79,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action4: MCC_RscActivePicture
 		{
-			idc = 104;
+			idc = 9104;
 
 			x = 0.299063 * safezoneW;
 			y = 0.044 * safezoneH;
@@ -86,7 +88,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action5: MCC_RscActivePicture
 		{
-			idc = 105;
+			idc = 9105;
 
 			x = 0.190782 * safezoneW;
 			y = 0.099 * safezoneH;
@@ -95,7 +97,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action6: MCC_RscActivePicture
 		{
-			idc = 106;
+			idc = 9106;
 
 			x = 0.226875 * safezoneW;
 			y = 0.099 * safezoneH;
@@ -104,7 +106,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action7: MCC_RscActivePicture
 		{
-			idc = 107;
+			idc = 9107;
 
 			x = 0.262969 * safezoneW;
 			y = 0.099 * safezoneH;
@@ -113,7 +115,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action8: MCC_RscActivePicture
 		{
-			idc = 108;
+			idc = 9108;
 
 			x = 0.299063 * safezoneW;
 			y = 0.099 * safezoneH;
@@ -122,7 +124,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action9: MCC_RscActivePicture
 		{
-			idc = 109;
+			idc = 9109;
 
 			x = 0.190781 * safezoneW;
 			y = 0.154 * safezoneH;
@@ -131,7 +133,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action10: MCC_RscActivePicture
 		{
-			idc = 110;
+			idc = 9110;
 
 			x = 0.226875 * safezoneW;
 			y = 0.154 * safezoneH;
@@ -140,7 +142,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action11: MCC_RscActivePicture
 		{
-			idc = 111;
+			idc = 9111;
 
 			x = 0.262969 * safezoneW;
 			y = 0.154 * safezoneH;
@@ -149,7 +151,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class action12: MCC_RscActivePicture
 		{
-			idc = 112;
+			idc = 9112;
 
 			x = 0.299062 * safezoneW;
 			y = 0.154 * safezoneH;
@@ -274,7 +276,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 
 		class upgrade1: MCC_RscActivePicture
 		{
-			idc = 160;
+			idc = 9160;
 
 			x = 0.0103127 * safezoneW;
 			y = 0.044 * safezoneH;
@@ -283,7 +285,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class upgrade2: MCC_RscActivePicture
 		{
-			idc = 161;
+			idc = 9161;
 
 			x = 0.0103125 * safezoneW;
 			y = 0.099 * safezoneH;
@@ -292,7 +294,7 @@ class interactionControlsGroup: MCC_RscControlsGroupNoScrollbars
 		};
 		class upgrade3: MCC_RscActivePicture
 		{
-			idc = 162;
+			idc = 9162;
 
 			x = 0.0103122 * safezoneW;
 			y = 0.154 * safezoneH;

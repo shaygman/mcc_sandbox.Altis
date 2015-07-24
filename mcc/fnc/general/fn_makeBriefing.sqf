@@ -6,11 +6,12 @@
 //	_type: interger or string, Integer - pre defined mission type or a string for custom one
 //	_missionTittle:  string,  the mission tittle can get complex string as it will turn it to array such as HTML
 //=========================================================================================
-private ["_type","_string","_tittle","_dummyGroup","_dummy","_missionTittle","_missionInfo","MCC_activeObjectives"];
+private ["_type","_string","_tittle","_dummyGroup","_dummy","_missionTittle","_missionInfo","MCC_activeObjectives","_sidePlayer"];
 _string 		= _this select 0;
 _type 			= _this select 1;
 _missionTittle 	= if (count _this > 2) then {toArray (_this select 2)} else {[]};
 _missionInfo	= if (count _this > 3) then {_this select 3} else {[]};
+_sidePlayer =  [_this, 4, sideLogic, [west]] call BIS_fnc_param;
 
 if !(isServer) exitWith {};
 
@@ -61,7 +62,7 @@ if (count _missionInfo > 0) then
 	_dummy setVariable ["objectives",MCC_activeObjectives ,true]; //---- Do we need that?!
 };
 
-_init = format ["0 = _this spawn {if (!isDedicated) then {waituntil {alive player};player createDiaryRecord ['diary', ['%1',(toString %3) + '%2']];(_this getVariable 'missionsInfo') call MCC_fnc_MWopenBriefing;}};",_tittle, _string ,_missionTittle];
+_init = format ["0 = _this spawn {if (!isDedicated && playerSide == %4) then {waituntil {alive player};player createDiaryRecord ['diary', ['%1',(toString %3) + '%2']];(_this getVariable 'missionsInfo') call MCC_fnc_MWopenBriefing;}};",_tittle, _string ,_missionTittle, _sidePlayer];
 
 [[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
 

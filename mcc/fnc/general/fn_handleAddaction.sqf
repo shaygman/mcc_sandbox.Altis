@@ -65,14 +65,13 @@ if ((MCC_isACE) && MCC_isMode) then {
 
 _text spawn
 {
-	private ["_keyName","_interactiveObjects","_objects","_selected","_dir","_text","_tested"];
+	private ["_keyName","_interactiveObjects","_objects","_selected","_dir","_text","_tested","_ingameText"];
 	_keyName = _this;
 
 	while {alive player} do
 	{
 		if (vehicle player == player) then
 		{
-			sleep 1;
 			_objects = player nearObjects ["UserTexture1m_F",7];
 			_interactiveObjects = [];
 
@@ -98,6 +97,14 @@ _text spawn
 			};
 			missionNameSpace setVariable ["MCC_interactionObjects",_interactiveObjects];
 		};
+
+		_ingameText = vehicle player getVariable ["MCC_ingameText",""];
+		if (_ingameText != "") then {
+			titleText [_ingameText,"PLAIN DOWN"];
+			titleFadeOut 1;
+			vehicle player setVariable ["MCC_ingameText",""];
+		};
+		sleep 1;
 	};
 };
 

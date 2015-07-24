@@ -7,7 +7,7 @@
 //_faction = enemy Faction
 // Return - nothing
 //==============================================================================================================================================================================
-private ["_objPos","_isCQB","_side","_faction","_preciseMarkers","_type","_objType","_typeSize","_spawnPos","_object","_dummyObject","_spawndir","_unitsArray","_group","_init","_range","_campaignMission"];
+private ["_objPos","_isCQB","_side","_faction","_preciseMarkers","_type","_objType","_typeSize","_spawnPos","_object","_dummyObject","_spawndir","_unitsArray","_group","_init","_range","_campaignMission","_sidePlayer"];
 
 _objPos 		= _this select 0;
 _isCQB 			= _this select 1;
@@ -15,6 +15,7 @@ _side 			= _this select 2;
 _faction 		= _this select 3;
 _preciseMarkers = _this select 4;
 _campaignMission = [_this, 6, false, [false]] call BIS_fnc_param;
+_sidePlayer = [_this, 7, west, [west]] call BIS_fnc_param;
 
 _objType = switch (_this select 5) do
 			{
@@ -221,46 +222,46 @@ switch _objType do
 {
 	case "tanks":
 	{
-		[_object,"destroy_tanks",_preciseMarkers] call MCC_fnc_MWCreateTask;
+		[_object,"destroy_tanks",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 	};
 
 	case "aa":
 	{
-		[_object,"destroy_aa",_preciseMarkers] call MCC_fnc_MWCreateTask;
+		[_object,"destroy_aa",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 	};
 
 	case "artillery":
 	{
-		[_object,"destroy_artillery",_preciseMarkers] call MCC_fnc_MWCreateTask;
+		[_object,"destroy_artillery",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 	};
 
 	case "air":
 	{
-		[_object,"destroy_tanks",_preciseMarkers] call MCC_fnc_MWCreateTask;
+		[_object,"destroy_tanks",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 	};
 
 	case "cache":
 	{
-		[_object,"destroy_cache",_preciseMarkers] call MCC_fnc_MWCreateTask;
+		[_object,"destroy_cache",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 	};
 
 	case "fuel":
 	{
-		[_object,"destroy_fuel",_preciseMarkers] call MCC_fnc_MWCreateTask;
+		[_object,"destroy_fuel",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 	};
 
 	case "radio":
 	{
-		[_object,"destroy_radio",_preciseMarkers] call MCC_fnc_MWCreateTask;
+		[_object,"destroy_radio",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 	};
 
 	case "radar":
 	{
-		[_object,"destroy_radar",_preciseMarkers] call MCC_fnc_MWCreateTask;
+		[_object,"destroy_radar",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 	};
 
 	default
 	{
-		[_object,"destroy_cache",_preciseMarkers] call MCC_fnc_MWCreateTask;
+		[_object,"destroy_cache",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 	};
 };

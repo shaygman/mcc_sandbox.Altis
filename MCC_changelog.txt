@@ -22,7 +22,19 @@ Zeus:
 
 MCC Campaign: ** New Feature **
 - 	MCC campaign can be activated from Zeus or from the 2D editor module. It is recommended to activate MCC role selection, have at least one H.Q MCC's Start location, some vehicle kiosks and activate ambient civilians. 
-	In the campaign MCC will keep on generating new mission when the players have completed the previous one. Each mission will be generated close to the previous one and MCC will create an advancing feel for the mission. Once the players have finished a mission in an area this area will be marked by the side color and it should be relatively safe. By successfully finishing a mission the players will be awarded with resources (minus collateral damage that the players inflicted such as killing civilians) The players' commander will receive random special bonus for each successful mission such as supply drops, CAS exc. Each in game day the players will gain extra tickets if they performed well and the evac vehicle will respawn. Furthermore the enemy faction might start actively perusing the players if the player have inflicted enough casualties to the enemy. 
+	In the campaign MCC will keep on generating new mission when the players have completed the previous one. Each mission will be generated close to the previous one and MCC will create an advancing feel for the mission. Once the players have finished a mission in an area this area will be marked by the side color and it should be relatively safe. By successfully finishing a mission the players will be awarded with resources (minus collateral damage that the players inflicted such as killing civilians) The players' commander will receive random special bonus for each successful mission such as supply drops, CAS exc. 
+	Each in game day the players will gain extra tickets if they performed well, the evac vehicle will respawn and the weather will change. Furthermore enemy forces might start actively perusing the players if the player have inflicted enough damage to the enemy. 
+
+Evac Vehicle:
+- Added: Evac vehicle module - sets evac vehicles from 2D editor or Zeus. 
+- Added: Campaign evac param - campaign evac's vehicles will repspawn every one ingame time. 
+
+Atmosphere:
+- Added: Atmosphere module - sets sandstorms, blizzards exc from the 2D editor or Zeus. 
+
+IED/Armed Civilians/Suicide Bombers
+- Added: IED/Suicide Bombers module - add IEDs or suicide bombers from the 2D editor or Zeus. 
+- Added: Armed Civilians module - add Armed Civilians from the 2D editor or Zeus. 
 
 Mission Wizard:
 - Fixed: Non precise objectives' markers in the missions wizard where pretty precise. 
@@ -51,6 +63,13 @@ Survival:
 - Added: ACE support for survival - players can search loot using the ACE's self interaction key while close to a lootable object. 
 - Changed: If survival and Role selection are on players won't be able to change kits unless they respawned to prevent exploit by changing kits to gain resources. 
 
+RTS:
+- Added: Workshops can outfit civilians offroads with MG.
+- Added: Workshops will repair vehicles for free.
+- Added: Players will be able to purchase vehicles from workshops: Cars from advanced workshop, Tanks and APC from mechanical workshop and helicopters from ariel workshop.
+- Added: Commander can call Random resource gathering missions every real time hour from HQ - Resource gathering mission are like easier side missions that yield resources. 
+- Added: Radio post give access advanced resource gathering missions. 
+
 Misc:
 - Added: Support CBA keybinds if player is running CBA
 - Added: Dynamic dialog function to easly create dialogs - learn more in the functions library
@@ -64,14 +83,19 @@ Misc:
 - Fixed: MCC Settings didn't stick after changing them
 
 //TODO
-Evac helicopter module - add campaign evac
+// Add custom sounds to actions 
+balance side mission with main mission resources
+
 //RTS
+break down crates
+add fortifications and turrets
+
 //Prevent deleting FOBs
 //Tutorials for everything
 //Add undercover script?
 remove I&X from init
 - check supply box ACE
-
+/*[[true,false, true, true,250,10,"rickb_walkers","CIV_F"],"MCC_fnc_ambientInit",false,false] spawn BIS_fnc_MP;*/
 
 Change log r15:
 - ACE compatibility 

@@ -6,7 +6,7 @@
 // _factionEnemy	STRING - faction enemy
 //_missionMax		INTEGER - max amount of missions before mission over
 //==============================================================================================================================================================================
-private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers"];
+private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2"];
 
 //wait for MCC
 waitUntil {!isnil "MCC_initDone"};
@@ -19,15 +19,25 @@ _factionEnemy = [_this, 3, "OPF_F", [""]] call BIS_fnc_param;
 _factionCiv	= [_this, 4, "CIV_F", [""]] call BIS_fnc_param;
 _missionMax  = [_this, 5, 10, [0]] call BIS_fnc_param;
 _difficulty  = [_this, 6, 20, [0]] call BIS_fnc_param;
+_sidePlayer2= [_this, 7, sideLogic, [sideLogic]] call BIS_fnc_param;
 
 _totalPlayers = ((playersNumber _sidePlayer)+1);
 _AOSize = (20*_totalPlayers) max 300;
+
+//Set campaign var
+missionNamespace setVariable ["MCC_isCampaignRuning",true];
+publicVariable "MCC_isCampaignRuning";
+
+missionNamespace setVariable ["MCC_campaignEnemyFaction",_factionEnemy];
+publicVariable "MCC_campaignEnemyFaction";
+
 
 //Time Multuplier
 if (timeMultiplier < 10) then {setTimeMultiplier 10};
 
 //Tickets
 if (([_sidePlayer] call BIS_fnc_respawnTickets)<100) then {[_sidePlayer, 100] call BIS_fnc_respawnTickets};
+if (([_sidePlayer2] call BIS_fnc_respawnTickets)<100) then {[_sidePlayer2, 100] call BIS_fnc_respawnTickets};
 
 //Build the faction's unitsArrays and send it to the server.
 _check = [_factionEnemy, _sideEnemy] call MCC_fnc_MWCreateUnitsArray;
@@ -213,9 +223,11 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 	};
 
 	//Wait for mission end
+	private ["_ticketsStart"];
 	_totalObjectives =  _AOlocationPos nearObjects ["ModuleObjective_F", (_AOSize*2.5)];
 	_activeObjectives = count _totalObjectives;
 	_failedObjectives = {(_x getvariable ["RscAttributeTaskState",""])=="Failed"} count _totalObjectives;
+	_ticketsStart = [_sidePlayer] call BIS_fnc_respawnTickets;
 
 	while {count _totalObjectives >0} do {
 		_failedObjectives = {(_x getvariable ["RscAttributeTaskState",""])=="Failed"} count _totalObjectives;
@@ -224,8 +236,15 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 	};
 
 	sleep 5;
+	_ticketsEnd = [_sidePlayer] call BIS_fnc_respawnTickets;
+	_sumTickets = _ticketsStart - _ticketsEnd;
 
 	["Main",_activeObjectives,_failedObjectives,_sidePlayer,_totalPlayers,_difficulty,50,[0.3,0.3,0.2,0.15,0.05]] call MCC_fnc_missionDone;
+
+	//if we have another side give him some credit
+	if (_sidePlayer2 != sideLogic) then {
+		["side",_activeObjectives,_failedObjectives,_sidePlayer2,_totalPlayers,_difficulty,50,[0.3,0.3,0.2,0.15,0.05],_sumTickets] call MCC_fnc_missionDone;
+	};
 
 	sleep 5;
 	[_AOlocationPos,_AOSize*4] spawn {sleep 600; [_this select 0,_this select 1,0] call MCC_fnc_deleteBrush};

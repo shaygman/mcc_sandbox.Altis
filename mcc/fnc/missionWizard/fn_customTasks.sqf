@@ -6,8 +6,7 @@
 private ["_logic","_attachedUnit","_owners","_taskState","_taskStateDestination","_taskDescription","_taskType","_trg","_name","_desc","_missionDone"];
 _logic = _this select 0;
 _side = [_this, 1, east, [east]] call BIS_fnc_param;
-_campaignMission = [_this, 2, false, [false]] call BIS_fnc_param;
-_maxObjectivesDistance = [_this, 3, 400, [0]] call BIS_fnc_param;
+_maxObjectivesDistance = [_this, 2, 400, [0]] call BIS_fnc_param;
 
 waituntil {!alive _logic || _logic getvariable ["updated",false]};
 

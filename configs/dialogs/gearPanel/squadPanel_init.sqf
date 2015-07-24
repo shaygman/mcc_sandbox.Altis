@@ -266,11 +266,8 @@ _comboBox lbSetCurSel CP_classesIndex;
 			//Get commanderName
 			_commanderName = "";
 			{
-				if (isPlayer _x) then
-				{
-					if ((getPlayerUID _x) == _commander) then {_commanderName = name _x};
-				};
-			} foreach allUnits;
+				if ((getPlayerUID _x) == _commander) then {_commanderName = name _x};
+			} foreach allplayers;
 
 			if (_commander == "") then
 			{

@@ -14,7 +14,7 @@ _disp = uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD";
 _cfgName = missionNamespace getVariable [format ["MCC_ctrlData_%1", ctrlIDC _ctrl],""];
 
 //Action or building?
-if !(ctrlIDC _ctrl >= 105 && ctrlIDC _ctrl <= 112) then {
+if !(ctrlIDC _ctrl >= 9105 && ctrlIDC _ctrl <= 9112) then {
 	_cfgFile =  "cfgRtsBuildings";
 	_radius = 200;
 	} else {

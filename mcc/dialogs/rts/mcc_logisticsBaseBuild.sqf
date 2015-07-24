@@ -8,10 +8,6 @@ uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD_MOUSEAREA", _disp displayCtrl
 
 #define MCC_LOGISTICS_BASE_BUILD_MOUSEAREA (uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD_MOUSEAREA")
 
-//test
-MCC_fnc_baseSelected =  compile (preprocessFileLineNumbers (MCC_path +"mcc\fnc\rts\fn_baseSelected.sqf"));
-
-
 waituntil {dialog};
 _size = 200;
 player setVariable ["MCC_baseSize",_size];
@@ -102,16 +98,15 @@ camusenvg _NVGstate;
 		(_disp displayCtrl 86) ctrlSetText str _units;
 
 		//Loop for reseting UI if the object we are watching died
-		if (isnull MCC_CONST_SELECTED) then
-		{
-			[_startPos,player getVariable ["MCC_baseSize",300]] call MCC_fnc_baseOpenConstMenu;
+		if (isnull MCC_CONST_SELECTED) then	{
+			[] call MCC_fnc_baseOpenConstMenu;
 		};
-		sleep 0.5;
+		sleep 0.1;
 	};
 };
 
 //open construction menu
-[_startPos, _size*2] call MCC_fnc_baseOpenConstMenu;
+[] call MCC_fnc_baseOpenConstMenu;
 
 //Create borders
 _createBorderScope = [MCC_CONST_CAM,_size] call MCC_fnc_baseBuildBorders;
@@ -120,7 +115,7 @@ _createBorderScope = [MCC_CONST_CAM,_size] call MCC_fnc_baseBuildBorders;
 ["mcc_constBaseID", "onEachFrame",
 {
 	disableSerialization;
-	private ["_startPos","_size","_list","_type","_pos","_sizeIcon","_icon","_text","_cfgName","_endTime","_segmentsElapsed","_startTime"];
+	private ["_startPos","_size","_list","_type","_pos","_sizeIcon","_icon","_text","_cfgName","_endTime","_segmentsElapsed","_startTime","_elec","_color"];
 	_startPos 	= _this select 0;
 	_size		= _this select 1;
 
@@ -150,13 +145,15 @@ _createBorderScope = [MCC_CONST_CAM,_size] call MCC_fnc_baseBuildBorders;
 			}
 			else
 			{
-				_text =if (MCC_isMode) then
+				if (MCC_isMode) then
 					{
-						 getText (configFile >> "cfgRtsBuildings" >> _cfgName >> "displayName");
+						 _text = getText (configFile >> "cfgRtsBuildings" >> _cfgName >> "displayName");
+						 _elec = (getNumber (configFile >> "cfgRtsBuildings" >> _cfgName >> "needelectricity"))==1;
 					}
 					else
 					{
-						 getText (missionconfigFile >> "cfgRtsBuildings" >> _cfgName >> "displayName");
+						 _text = getText (missionconfigFile >> "cfgRtsBuildings" >> _cfgName >> "displayName");
+						 _elec = (getNumber (missionconfigFile >> "cfgRtsBuildings" >> _cfgName >> "needelectricity"))==1;
 					};
 			};
 			switch (tolower _type) do
@@ -171,9 +168,19 @@ _createBorderScope = [MCC_CONST_CAM,_size] call MCC_fnc_baseBuildBorders;
 			{
 				_texture = gettext (configfile >> "CfgMarkers" >> _icon >> "icon");
 
+				private ["_color"];
+				_color = [0,0,0.6,0.6];
+
+				if (_elec && !(missionNamespace getVariable [format ["MCC_rtsElecOn_%1", playerSide],false])) then {
+					_color = [0.6,0,0,0.6];
+					_text = format ["%1 (Offline)", _text];
+				} else {
+					_color = [0,0,0.6,0.6];
+				};
+
 				drawIcon3D [
 								_texture,
-								[0,0,0.6,0.6],
+								_color,
 								[_pos select 0, _pos select 1,(_pos select 2)+ 10],
 								_sizeIcon,
 								_sizeIcon,

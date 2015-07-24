@@ -84,15 +84,7 @@ if (_isCQB) then
 					_unit = [_sidePlayer,_spawnPos,_type] call MCC_MWcreateHostage;
 					waituntil {alive _unit};
 
-					/*
-					MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Secure HVT',%2] call MCC_fnc_MWCreateTask;
-										 "
-										 ,MCC_tempName,
-										 _preciseMarkers
-										 ];
-					*/
-
-					[_unit,"Secure_HVT",_preciseMarkers] call MCC_fnc_MWCreateTask;
+					[_unit,"Secure_HVT",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 				}
 				else
 				{
@@ -107,15 +99,7 @@ if (_isCQB) then
 					_unit = [_spawnPos, _type, _sidePlayer,"Armed Civilian",random 360,true] call MCC_fnc_ACSingle;
 					waituntil {alive _unit};
 
-					/*
-					MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Kill HVT',%2] call MCC_fnc_MWCreateTask;
-										 "
-										 ,MCC_tempName,
-										 _preciseMarkers
-										 ];
-					*/
-
-					[_unit,"Kill_HVT",_preciseMarkers] call MCC_fnc_MWCreateTask;
+					[_unit,"Kill_HVT",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 				};
 
 				_unitPlaced = true;
@@ -146,16 +130,7 @@ if (_isCQB) then
 			//Start Briefings
 			waituntil {alive _unit};
 
-			/*
-			MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Secure_HVT',%2] call MCC_fnc_MWCreateTask;
-										 "
-										 ,MCC_tempName,
-										 _preciseMarkers
-										 ];
-			*/
-
-			[_unit,"Secure_HVT",_preciseMarkers] call MCC_fnc_MWCreateTask;
-
+			[_unit,"Secure_HVT",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 			//Static Patrol
 			_walking = false;
 		}
@@ -192,16 +167,7 @@ if (_isCQB) then
 				_unit = [_spawnPos, _type, _sidePlayer,"Armed Civilian",random 360,true] call MCC_fnc_ACSingle;
 			};
 
-			/*
-			//Start Briefings
-			MCC_safe = MCC_safe + FORMAT["waitUntil {!isnil '%1'}; [%1,'Kill_HVT',%2] call MCC_fnc_MWCreateTask;
-											 "
-											 ,MCC_tempName,
-											 _preciseMarkers
-											 ];
-			*/
-
-			[_unit,"Kill_HVT",_preciseMarkers] call MCC_fnc_MWCreateTask;
+			[_unit,"Kill_HVT",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;
 		};
 
 		//Lets spawn some body guards

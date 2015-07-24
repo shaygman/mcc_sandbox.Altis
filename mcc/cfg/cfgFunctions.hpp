@@ -355,6 +355,8 @@ class MCC
 		class callConstruct {description = "Call construct from ACE menu";};
 		class isSurvivalObject {description = "check if an object is a survival object";};
 		class searchSurvivalObject {description = "Search a survival object";};
+		class resupply {description = "Resupply ammo from an ammo box";};
+		class breakdown {description = "Breakdown MCC crate into supplies";};
 	};
 
 	class radio
@@ -435,6 +437,13 @@ class MCC
 		class vehicleSpawnerInit {};
 		class vehicleSpawner {};
 		class makeObjectVirtualBox {};
+		class rtsMountGuns {description = "Mount turrets on civilian vehicles";};
+		class initWorkshop {description = "Init workshop class building";};
+		class rtsStartElectricity {description = "Start electricity production";};
+		class rtsScanResourcesBasic {description = "Start basic resources mission";};
+		class rtsScanResourcesAdvanced {description = "Start advanced resources mission";};
+		class rtsScanResourcesCancel {description = "Cancel resources mission";};
+		class rtsScanResources {description = "Generate resources mission";};
 	};
 
 	class logistics

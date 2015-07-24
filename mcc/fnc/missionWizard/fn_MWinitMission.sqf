@@ -282,7 +282,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 
 		if (["Destroy", _objType] call BIS_fnc_inString) then
 		{
-			[[_objPos, _isCQB, _enemySide, _enemyfaction,_preciseMarkers,_objType,_campaignMission], "MCC_fnc_MWObjectiveDestroy", false, false] call BIS_fnc_MP;
+			[[_objPos, _isCQB, _enemySide, _enemyfaction,_preciseMarkers,_objType,_campaignMission,_sidePlayer], "MCC_fnc_MWObjectiveDestroy", false, false] call BIS_fnc_MP;
 		}
 		else
 		{
@@ -314,7 +314,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 
 			  case "Aquire Intel":
 				{
-					[[_objPos, _isCQB, _enemySide, _enemyfaction,_preciseMarkers], "MCC_fnc_MWObjectiveIntel", false, false] call BIS_fnc_MP;
+					[[_objPos, _isCQB, _enemySide, _enemyfaction,_preciseMarkers,_sidePlayer], "MCC_fnc_MWObjectiveIntel", false, false] call BIS_fnc_MP;
 				};
 
 			 case "Clear Area":
@@ -725,7 +725,7 @@ _sounds set [count _sounds, ["isMissiongo",6.2]];
 
 if (_playMusic in [0,1] ) then
 {
-	[[_html2, ((_missionName1 select 0) +" " + (_missionName2  select 0)), _missionTittle, [_missionCenter,_objectives,1,_html,_sounds]],"MCC_fnc_makeBriefing",false,false] spawn BIS_fnc_MP;
+	[[_html2, ((_missionName1 select 0) +" " + (_missionName2  select 0)), _missionTittle, [_missionCenter,_objectives,1,_html,_sounds], _sidePlayer],"MCC_fnc_makeBriefing",false,false] spawn BIS_fnc_MP;
 
 	//Publish the name
 	missionnamespace setvariable ["bis_fnc_moduleMissionName_name",((_missionName1  select 0)+" " + (_missionName2  select 0))];
