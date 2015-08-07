@@ -368,7 +368,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do
 		// Is CQB
 		if (_isCQB) then
 		{
-			[[_objPos,(_maxObjectivesDistance*0.5),0,(_totalEnemyUnits*0.008),_enemyfaction,str _enemySide],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
+			[[_objPos,(_maxObjectivesDistance*0.5),0,(_totalEnemyUnits*0.008),_enemyfaction, _enemySide],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
 		};
 
 		// Is _isCiv

@@ -12,9 +12,9 @@ private ["_obj","_task","_preciseMarker","_type","_stringName","_stringDescripti
 _obj 			= _this select 0;
 _task 			= _this select 1;
 _preciseMarker 	= _this select 2;
-_side = [_this, 3, east, [east]] call BIS_fnc_param;
+_side = [_this, 3, east] call BIS_fnc_param;
 _maxObjectivesDistance = [_this, 4, 400, [0]] call BIS_fnc_param;
-_sidePlayer = [_this, 5, sideLogic, [sideLogic]] call BIS_fnc_param;
+_sidePlayer = [_this, 5, sideLogic] call BIS_fnc_param;
 
 _name = FORMAT ["MCCMWObject_%1", ["MCCMWObject_",1] call bis_fnc_counter];
 _nameTask = FORMAT ["Objective %1:", ["",1] call bis_fnc_counter];

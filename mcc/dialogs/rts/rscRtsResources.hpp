@@ -1,8 +1,8 @@
 class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 {
 	idc = 80;
-	x = 0.164844 * safezoneW + safezoneX;
-	y = 0.764 * safezoneH + safezoneY;
+	x = 0.226719 * safezoneW + safezoneX;
+	y = 0.786 * safezoneH + safezoneY;
 	w = 0.15 * safezoneW;
 	h = 0.209 * safezoneH;
 	class controls

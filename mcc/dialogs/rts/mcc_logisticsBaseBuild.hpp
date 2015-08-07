@@ -10,17 +10,7 @@ class MCC_LOGISTICS_BASE_BUILD
 	movingEnable = 1;
 	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\rts\mcc_logisticsBaseBuild.sqf'");
 
-	controlsBackground[] =
-	{
-	};
-
-
-	//---------------------------------------------
-	objects[] =
-	{
-	};
-
-	class controls
+	class controlsBackground
 	{
 		class bottomData: MCC_RscText
 		{
@@ -32,6 +22,25 @@ class MCC_LOGISTICS_BASE_BUILD
 			h = 0.253 * safezoneH;
 		};
 
+		class mapSkirt: MCC_RscText
+		{
+			idc = -1;
+			colorBackground[] = { 0.051, 0.051, 0.051,0.9};
+			x = -0.000156274 * safezoneW + safezoneX;
+			y = 0.665 * safezoneH + safezoneY;
+			w = 0.226875 * safezoneW;
+			h = 0.088 * safezoneH;
+		};
+	};
+
+
+	//---------------------------------------------
+	objects[] =
+	{
+	};
+
+	class controls
+	{
 		class mouseArea: MCC_RscListBox
 		{
 			idc = 2;
@@ -55,21 +64,40 @@ class MCC_LOGISTICS_BASE_BUILD
 			h = 0.209 * safezoneH;
 		};
 
+		class feedBackText: MCC_RscText
+		{
+			idc = 9989;
+			style = 2;
+			//colorText[] = {1,0,0,0.8};
+			x = 0.29375 * safezoneW + safezoneX;
+			y = 0.698 * safezoneH + safezoneY;
+			w = 0.4125 * safezoneW;
+			h = 0.066 * safezoneH;
+		};
+
+		class selectBox: MCC_RscFrame
+		{
+			idc = 9929;
+			x = 0;
+			y = 0;
+			w = 0;
+			h = 0;
+		};
+		#include "rscRtsResources.hpp"
+		#include "rscRtsManageSelected.hpp"
+
 		class map: MCC_RscMapControl
 		{
 			idc = 1004;
 			x = 0.005 * safezoneW + safezoneX;
-			y = 0.764 * safezoneH + safezoneY;
-			w = 0.154687 * safezoneW;
-			h = 0.231 * safezoneH;
+			y = 0.676 * safezoneH + safezoneY;
+			w = 0.216563 * safezoneW;
+			h = 0.319 * safezoneH;
 
 			onMouseButtonDown = "";
 			onMouseButtonUp = "";
 			onMouseButtonDblClick = "";
 			onMouseMoving = "";
 		};
-
-		#include "rscRtsResources.hpp"
-		#include "rscRtsManageSelected.hpp"
 	};
 };

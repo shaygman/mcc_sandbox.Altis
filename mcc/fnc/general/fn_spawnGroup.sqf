@@ -34,7 +34,7 @@ if ((count _this) < 3) exitWith {debugLog "Log: [spawnGroup] Function requires a
 
 private ["_pos", "_side","_vehicles"];
 _pos = [_this, 0, [], [[]]] call BIS_fnc_param;
-_side = [_this, 1, sideUnknown, [sideUnknown]] call BIS_fnc_param;
+_side = [_this, 1, sideUnknown] call BIS_fnc_param;
 
 private ["_chars", "_charsType", "_types"];
 _chars = [_this, 2, [], [[], 0, configFile]] call BIS_fnc_param;

@@ -6,9 +6,9 @@
 //=============================================================================================================================================================================
 private ["_tower","_sideEnemy","_factionEnemy","_sidePlayer","_casArray","_heliArray","_spawnPos","_casGroup","_IsCAS","_vehicleClass","_casType","_cas","_casVehicle","_casPilot","_ClosestZone","_totalCASActive","_tempArray"];
 _tower = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_sideEnemy = [_this, 1, east, [east]] call BIS_fnc_param;
+_sideEnemy = [_this, 1, east] call BIS_fnc_param;
 _factionEnemy = [_this, 2, "OPF_F", [""]] call BIS_fnc_param;
-_sidePlayer = [_this, 3, west, [west]] call BIS_fnc_param;
+_sidePlayer = [_this, 3, west] call BIS_fnc_param;
 
 _totalCASActive = missionNamespace getVariable ["MCC_totalCASActive",0];
 if (_totalCASActive > 0) exitWith {};

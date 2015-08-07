@@ -15,7 +15,7 @@ _side 			= _this select 2;
 _faction 		= _this select 3;
 _preciseMarkers = _this select 4;
 _campaignMission = [_this, 6, false, [false]] call BIS_fnc_param;
-_sidePlayer = [_this, 7, west, [west]] call BIS_fnc_param;
+_sidePlayer = [_this, 7, west] call BIS_fnc_param;
 
 _objType = switch (_this select 5) do
 			{

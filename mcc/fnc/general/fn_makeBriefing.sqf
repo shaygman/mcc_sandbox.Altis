@@ -11,7 +11,7 @@ _string 		= _this select 0;
 _type 			= _this select 1;
 _missionTittle 	= if (count _this > 2) then {toArray (_this select 2)} else {[]};
 _missionInfo	= if (count _this > 3) then {_this select 3} else {[]};
-_sidePlayer =  [_this, 4, sideLogic, [west]] call BIS_fnc_param;
+_sidePlayer =  [_this, 4, sideLogic] call BIS_fnc_param;
 
 if !(isServer) exitWith {};
 

@@ -44,6 +44,7 @@ for "_i" from 1 to _total do
 	_a = "Land_VR_Block_01_F" createvehiclelocal [_xpos,_ypos,_zpos];
 	_a setpos [_xpos,_ypos,0];
 	_a setdir (_dir + 90);
+	_a enableSimulation false;
 	_border = _border + [_a];
 };
 

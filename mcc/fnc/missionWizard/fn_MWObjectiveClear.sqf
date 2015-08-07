@@ -36,7 +36,7 @@ if (_isCQB) then
 };
 
 //Lets populate it
-[_objPos,_range, 0, (if (_campaignMission) then {0.5} else {2}),_faction,str _side] call MCC_fnc_garrison;
+[_objPos,_range, 0, (if (_campaignMission) then {0.5} else {2}),_faction, _side] call MCC_fnc_garrison;
 
 sleep 2;
 

@@ -99,3 +99,123 @@ class MCC_rts_scanResourcesCancel
 	actionFNC = "MCC_fnc_rtsScanResourcesCancel";
 	resources[] = {};
 };
+
+class MCC_rts_buyTickets
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\data\rts\addTickets.paa";
+	#else
+	picture = "data\rts\addTickets.paa";
+	#endif
+
+	displayName = "Redeem Tickets";
+	descriptionShort = "Add 5 tickets";
+	condition = "";
+	requiredBuildings[] = {{"triage",1}};
+	needelectricity = 1;
+	actionFNC = "MCC_fnc_rtsBuyTickets";
+	resources[] = {{"med",50}};
+};
+
+class MCC_rts_createMeds
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\data\rts\meds.paa";
+	#else
+	picture = "data\rts\meds.paa";
+	#endif
+
+	displayName = "Create Meds";
+	descriptionShort = "Convert food and fuel into meds";
+	condition = "";
+	requiredBuildings[] = {{"triage",1}};
+	needelectricity = 1;
+	actionFNC = "MCC_fnc_rtsCreateMeds";
+	resources[] = {{"food",100},{"fuel",50}};
+};
+
+class MCC_rts_destroyLogic
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\data\rts\destroy.paa";
+	#else
+	picture = "data\rts\destroy.paa";
+	#endif
+
+	displayName = "Destroy Facility";
+	descriptionShort = "Destroy the current selected facility";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsDestroyLogic";
+	resources[] = {};
+};
+
+class MCC_rts_rtsFortUIContainer
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\data\rts\rook.paa";
+	#else
+	picture = "data\rts\rook.paa";
+	#endif
+
+	displayName = "Fortifications";
+	descriptionShort = "Build Fortifications";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsFortUIContainer";
+	resources[] = {};
+};
+
+class MCC_rts_rtsBuildUIContainer
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\data\rts\hammer.paa";
+	#else
+	picture = "data\rts\hammer.paa";
+	#endif
+
+	displayName = "Build";
+	descriptionShort = "Build Menu";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsBuildUIContainer";
+	resources[] = {};
+};
+
+class MCC_rts_rtsBuildUIContainerBack
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\data\rts\back.paa";
+	#else
+	picture = "data\rts\back.paa";
+	#endif
+
+	displayName = "Exit";
+	descriptionShort = "Exit Fortifications Menu";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsBuildUIContainerBack";
+	resources[] = {};
+};
+
+class MCC_rts_rtsbuyVehicle
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\data\rts\buyVehicle.paa";
+	#else
+	picture = "data\rts\buyVehicle.paa";
+	#endif
+
+	displayName = "Buy Vehicles";
+	descriptionShort = "Buy Vehicles";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 1;
+	actionFNC = "MCC_fnc_rtsbuyVehicle";
+	resources[] = {};
+};
+#include "forts\forts.hpp"

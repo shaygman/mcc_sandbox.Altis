@@ -16,4 +16,4 @@ _varName = format ["MCC_rtsElecOn_%1", playerSide];
 _stat = !(missionNamespace getVariable [_varName,false]);
 missionNamespace setVariable [_varName,_stat];
 publicVariable _varName;
-[MCC_CONST_SELECTED] spawn MCC_fnc_baseSelected;
+[MCC_ConsoleGroupSelected] spawn MCC_fnc_baseSelected;

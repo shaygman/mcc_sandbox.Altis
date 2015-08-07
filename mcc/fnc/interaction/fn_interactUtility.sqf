@@ -2,9 +2,6 @@
 // Interaction with utility object
 // Example: [_object] spawn MCC_fnc_interactUtility;
 //============================================================================================================================================================================
-#define MCC_fuelItems [["MCC_fuelCan"],["MCC_fuelbot"]]
-#define MCC_repairItems [["MCC_ductTape"],["MCC_butanetorch"],["MCC_oilcan"],["MCC_metalwire"],["MCC_carBat"]]
-
 private ["_object","_array","_ok","_ctrl","_class","_displayname","_pic","_index","_item"];
 disableSerialization;
 _object 	= _this select 0;

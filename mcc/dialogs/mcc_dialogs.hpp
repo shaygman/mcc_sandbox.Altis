@@ -1139,10 +1139,10 @@ class MCC_RscActivePicture
 		idc = -1;
 		shadow = 2;
 		sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-		soundClick[] = {"",0.1,1};
-		soundEnter[] = {"",0.1,1};
-		soundEscape[] = {"",0.1,1};
-		soundPush[] = {"",0.1,1};
+		soundClick[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundClick",0.09,1};
+		soundEnter[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundEnter",0.09,1};
+		soundEscape[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundEscape",0.09,1};
+		soundPush[] = {"\A3\ui_f\data\sound\RscButtonMenu\soundPush",0.09,1};
 		style = 48;
 		text = "";
 		tooltipColorBox[] = {1,1,1,1};

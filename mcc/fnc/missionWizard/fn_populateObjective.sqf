@@ -38,8 +38,8 @@ _isIED			= [_this, 11, false, [true]] call BIS_fnc_param;
 _isAS			= [_this, 12, false, [true]] call BIS_fnc_param;
 _isSB			= [_this, 13, false, [true]] call BIS_fnc_param;
 _reinforcement	= [_this, 14, 0, [0]] call BIS_fnc_param;
-_sidePlayer		= [_this, 15, west, [west]] call BIS_fnc_param;
-_enemySide		= [_this, 16, east, [east]] call BIS_fnc_param;
+_sidePlayer		= [_this, 15, west] call BIS_fnc_param;
+_enemySide		= [_this, 16, east] call BIS_fnc_param;
 
 _missionRadius 	= (((triggerArea _missionCenterTrigger) select 0)+ ((triggerArea _missionCenterTrigger) select 1))/2;
 //Let'screate the main zone and placing units

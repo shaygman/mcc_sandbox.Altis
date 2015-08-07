@@ -294,6 +294,11 @@ class MCC
 		class pickKit		{description = "pick up dead unit kit";};
 		class canAttachPod	{description = "check if can attach pod";};
 		class addILSChildrenACE {description = "Add ILS actions to ACE ui";};
+		class spotEnemy {description = "spot an enmey from ACE menu";};
+		class callSupport {description = "Call support from ACE menu";};
+		class callConstruct {description = "Call construct from ACE menu";};
+		class resupply {description = "Resupply ammo from an ammo box";};
+		class breakdown {description = "Breakdown MCC crate into supplies";};
 	};
 
 	class roleSelection
@@ -350,13 +355,8 @@ class MCC
 		class doorLock {description = "lock door";};
 		class doorUnlock {description = "unlock door";};
 		class doorCamera {description = "Mirror under the door";};
-		class spotEnemy {description = "spot an enmey from ACE menu";};
-		class callSupport {description = "Call support from ACE menu";};
-		class callConstruct {description = "Call construct from ACE menu";};
 		class isSurvivalObject {description = "check if an object is a survival object";};
 		class searchSurvivalObject {description = "Search a survival object";};
-		class resupply {description = "Resupply ammo from an ammo box";};
-		class breakdown {description = "Breakdown MCC crate into supplies";};
 	};
 
 	class radio
@@ -444,6 +444,47 @@ class MCC
 		class rtsScanResourcesAdvanced {description = "Start advanced resources mission";};
 		class rtsScanResourcesCancel {description = "Cancel resources mission";};
 		class rtsScanResources {description = "Generate resources mission";};
+		class rtsBuyTickets {description = "Adds Tickets";};
+		class rtsCreateMeds {description = "Create Meds";};
+		class rtsUpgrade {description = "Upgrad building";};
+		class rtsDestroyLogic {description = "Destroy the selected logic";};
+		class rtsDestroyObject {description = "Destroy the selected object";};
+		class rtsPopulateVehicle {description = "Populate vehicle";};
+		class vehicleSpawnerInitDialog {description = "Open vehicle spawner Dialog";};
+		class rtsBuildUIContainer {description = "create a UI container";};
+		class rtsFortUIContainer {description = "create a UI container";};
+		class rtsBuildUIContainerBack {description = "back from UI container";};
+		class rtsbuyVehicle {description = "open vehicle spawner dialog for the commander";};
+		class rtsOrderMove {description = "Move the selected units"};
+	};
+
+	class forts
+	{
+		#ifdef MCCMODE
+		file = "\mcc_sandbox_mod\mcc\fnc\forts";
+		#else
+		file = "mcc\fnc\forts";
+		#endif
+
+		class buildFort {};
+		class fortSandbagLong {};
+		class fortSandbagRound {};
+		class fortRazorwire {};
+		class fortSandbagTower {};
+		class fortHBarrierSmall {};
+		class fortHBarrierLong {};
+		class forthBarrierCatwalk{};
+		class forthBarrierCorner {};
+		class forthBarrierCorridor {};
+		class forthBarrierTower {};
+		class fortAA {};
+		class fortAT {};
+		class fortGmg {};
+		class fortGMGHigh {};
+		class fortMG {};
+		class fortMGHigh {};
+		class fortMortar {};
+		class fortTower {};
 	};
 
 	class logistics

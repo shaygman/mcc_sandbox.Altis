@@ -9,10 +9,10 @@ _ctrl = _this select 0;
 _res = param [1, [], [[]]];
 
 
-if (isNil "MCC_CONST_SELECTED") exitWith {};
-if (isNull MCC_CONST_SELECTED || !alive MCC_CONST_SELECTED) exitWith {};
+if (count MCC_ConsoleGroupSelected <=0) exitWith {};
+_obj = MCC_ConsoleGroupSelected select 0;
+if !(alive _obj) exitWith {};
 
-_obj = MCC_CONST_SELECTED;
 _pos = getPos _obj;
 _dir = getdir _obj;
 _damage = getDammage _obj;

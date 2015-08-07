@@ -14,7 +14,9 @@ _varName = format ['MCC_rtsMissionOn_%1', _side];
 if (missionNamespace getVariable [_varName ,false]) exitWith {};
 
 _time = missionNamespace getVariable [format ['MCC_rtsMissionTime_%1', _side] ,time-3600];
-if ((time - _time) < 3600) exitWith {systemChat format ["You can only scan form resources mission once every real life hour. Wait %1 more minutes", 60 - (floor ((time - _time)/60))]};
+if ((time - _time) < 3600) exitWith {
+	[9989,format ["You can only scan for resources mission once every real life hour. Wait %1 more minutes", 60 - (floor ((time - _time)/60))],5,true] call MCC_fnc_setIDCText;
+};
 
 //broadcast mission time
 missionNamespace setVariable [format ['MCC_rtsMissionTime_%1', _side] ,time];
@@ -24,6 +26,6 @@ publicVariable format ['MCC_rtsMissionTime_%1', _side];
 missionNamespace setVariable [_varName ,true];
 publicVariable _varName;
 
-[MCC_CONST_SELECTED] spawn MCC_fnc_baseSelected;
+[MCC_ConsoleGroupSelected] spawn MCC_fnc_baseSelected;
 
 [[_side,20,false],"MCC_fnc_rtsScanResources",false,false] spawn BIS_fnc_MP;

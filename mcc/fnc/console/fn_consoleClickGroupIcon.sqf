@@ -15,7 +15,7 @@
 #define MCC_CONSOLEINFOTEXT 9150
 #define MCC_CONSOLEINFOLIVEFEED 9151
 #define MCC_CONSOLEINFOUAVCONTROL 9162
-private ["_mccdialog","_group","_button","_posX","_posY","_shift","_ctrl","_alt","_html","_info","_rank","_icon","_groupControl","_groupSize","_properCfg","_lineCounter"];
+private ["_mccdialog","_group","_button","_posX","_posY","_shift","_ctrl","_alt","_html","_info","_rank","_icon","_groupControl","_groupSize","_properCfg","_lineCounter","_rtsMenuOpen"];
 disableSerialization;
 
 if (MCC_Console1Open) then {_mccdialog = findDisplay mcc_playerConsole_IDD};
@@ -33,11 +33,28 @@ _groupControl = if ((isplayer (leader _group)) || (getText (configfile >> "CfgVe
 _properCfg = 8; 		//if the cfg file is good then take from array number 8  else false - count on sim not vehicleClass take from array 5
 
 if (isnil "MCC_ConsoleGroupSelected") then {MCC_ConsoleGroupSelected = []};
+_rtsMenuOpen = !(isnil "MCC_CONST_CAM");
+
+//if it is an object
+if (typeName _group == typeName objNull) then {_group == group _group};
+
+//remove non groups
+for "_i" from 0 to (count MCC_ConsoleGroupSelected)-1 do {
+	_grp = MCC_ConsoleGroupSelected select _i;
+	if (typeName _grp != typeName grpNull) then {
+		if (isnull group _grp || side _grp in [sideLogic,civilian]) then {
+			MCC_ConsoleGroupSelected set [_i,-1];
+		} else {
+			MCC_ConsoleGroupSelected set [_i,group _grp]
+		}
+	};
+};
+
+MCC_ConsoleGroupSelected = MCC_ConsoleGroupSelected - [-1];
 
 //multi-select
-if ((_button == 0) && (_ctrl) && (!isnil "_groupControl")) then
-{
-	MCC_ConsoleGroupSelected set [count MCC_ConsoleGroupSelected, _group];
+if ((_button == 0) && (_ctrl) && (!isnil "_groupControl") && !(_group in MCC_ConsoleGroupSelected)) then {
+	MCC_ConsoleGroupSelected pushBack _group;
 	_icon = _group addGroupIcon ["selector_selectedFriendly",[0,0]];
 	_group setvariable ["MCCgroupIconDataSelected",_icon,false];
 };
@@ -47,22 +64,27 @@ if (((!isnil "_groupControl") && (_button == 0) && (!_ctrl)) || (_button == 1 ))
 {
 	MCC_ConsoleGroupFocused = _group;
 	if (isnil "_groupControl") exitWith {};
-	{_x removeGroupIcon (_x getvariable "MCCgroupIconDataSelected")} foreach MCC_ConsoleGroupSelected;
+	{_x removeGroupIcon (_x getvariable ["MCCgroupIconDataSelected",-1])} foreach MCC_ConsoleGroupSelected;
 	MCC_ConsoleGroupSelected = [];
-	MCC_ConsoleGroupSelected set [count MCC_ConsoleGroupSelected, _group];
+	MCC_ConsoleGroupSelected pushBack _group;
 	_icon = _group addGroupIcon ["selector_selectedFriendly",[0,0]];
 	_group setvariable ["MCCgroupIconDataSelected",_icon,false];
 };
 
+//If we have selected it from the 3D commander
+if (_rtsMenuOpen) then {
+	[] spawn MCC_fnc_rtsMakeMarkersGroups;
+
+	[MCC_ConsoleGroupSelected] spawn MCC_fnc_baseSelected;
+};
+
 //Left Click
-if (_button == 0) then
-{
+if (_button == 0) then {
 
 };
 
 //Right click - get info
-if (_button == 1) then
-{
+if (_button == 1) then {
 	_rank = [leader _group,"displayNameShort"] call BIS_fnc_rankParams;
 
 	_groupSize	= gettext (configfile >> "CfgMarkers" >> ((_group getvariable "MCCgroupIconSize") select 1) >> "name");

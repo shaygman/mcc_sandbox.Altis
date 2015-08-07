@@ -6,7 +6,7 @@
 //     1: _object - OBJECT vehicle that will serve as the actuall box
 //==============================================================================================================================================================================
 private ["_side","_boxName","_box","_boxArray","_object"];
-_side = [_this, 0, west, [west]] call BIS_fnc_param;
+_side = [_this, 0, west] call BIS_fnc_param;
 _object = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
 
 if (isNull _object) exitWith {};

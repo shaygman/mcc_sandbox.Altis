@@ -61,5 +61,13 @@ if (_action == 1) then {
     _vehicle setpos _spawnPadPos;
     _vehicle setdir getdir _spawnPad;
     _vehicle setVariable ["mcc_delete",false,true];
+    _vehicle setVariable ["MCC_rtsObject",true,true];
+
+    //clear cargo
+    clearMagazineCargoGlobal _vehicle;
+    clearWeaponCargoGlobal _vehicle;
+    clearBackpackCargoGlobal _vehicle;
+    clearItemCargoGlobal _vehicle;
+
     MCC_curator addCuratorEditableObjects [[_vehicle],false];
 };

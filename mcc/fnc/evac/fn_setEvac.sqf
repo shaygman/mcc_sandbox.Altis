@@ -9,7 +9,7 @@
 //==============================================================================================================================================================================
 private ["_gunnersGroup","_side","_type","_entry","_turrets","_path","_pilotClass","_evacVehicles","_addGunners","_object","_pos"];
 _object =  [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_side =  [_this, 1, west, [west]] call BIS_fnc_param;
+_side =  [_this, 1, west] call BIS_fnc_param;
 _addGunners =  [_this, 2, true, [true]] call BIS_fnc_param;
 _campaignEvac = [_this, 3, false, [false]] call BIS_fnc_param;
 
@@ -86,7 +86,7 @@ if (_campaignEvac) then {
 	[_object] spawn {
 	private ["_evac","_side","_displayName"];
 		_evac = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-		_side = [_this, 1, west, [west]] call BIS_fnc_param;
+		_side = [_this, 1, west] call BIS_fnc_param;
 		_displayName = getText(configFile >> "CfgVehicles">> typeof _evac >> "displayname");
 		while {(alive _evac && (alive driver _evac))} do {sleep 10};
 

@@ -15,7 +15,7 @@ if (str (_disp displayCtrl 150) != "No control") then {
 	(_disp displayCtrl 150) ctrlSetStructuredText parseText"";
 };
 
-if (isNull MCC_CONST_SELECTED) then {((uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD") displayCtrl 9999) ctrlSetStructuredText parseText ""};
+if (count MCC_ConsoleGroupSelected <=0) then {((uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD") displayCtrl 9999) ctrlSetStructuredText parseText ""};
 
 
 

@@ -20,7 +20,7 @@ _eh = player addEventHandler ["WeaponDisassembled",
 
 		_currBag = unitBackpack _unit;
 
-		//titleText ["You are not allowed to disassemble static weapons.", "PLAIN DOWN", 0.5];
+		titleText ["You are not allowed to disassemble static weapons.", "PLAIN DOWN", 0.5];
 
 		_unit action ["TakeBag", _bag1];
 

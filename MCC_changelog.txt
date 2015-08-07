@@ -51,12 +51,14 @@ Role Selection:
 
 Logistics:
 - Added: Players can now resupply (refresh ammo, bandages exc) from ammobox (MCC logistics) - support ACE medical system. 
+- Added: Players can now breakdown resource crates into items that they can carry in their backpacks and return to HQ or use. 
 - Added: Main shared cargo box to FOB. 
 - Simplified: Logistics dialog.
 - Changed: MCC logistics reduced the amount of needed resource crates for building assets. 
 
 Weather:
 - Added: Weather over time slider to the Change Weather in MCC. 
+- Fixed: MCC didn't work with ACE weather
 - Disabled: MCC weather sync when ACE is on
 
 Survival:
@@ -66,8 +68,8 @@ Survival:
 RTS:
 - Added: Workshops can outfit civilians offroads with MG.
 - Added: Workshops will repair vehicles for free.
-- Added: Players will be able to purchase vehicles from workshops: Cars from advanced workshop, Tanks and APC from mechanical workshop and helicopters from ariel workshop.
-- Added: Commander can call Random resource gathering missions every real time hour from HQ - Resource gathering mission are like easier side missions that yield resources. 
+- Added: Players can purchase vehicles from workshops (need resources and electricity): Cars from advanced workshop, Tanks and APC from mechanical workshop and helicopters from ariel workshop.
+- Added: Commander can call Random resource gathering missions every real time hour from HQ - Resource gathering mission are easier side missions that yield resource crates. 
 - Added: Radio post give access advanced resource gathering missions. 
 
 Misc:
@@ -83,19 +85,23 @@ Misc:
 - Fixed: MCC Settings didn't stick after changing them
 
 //TODO
-// Add custom sounds to actions 
-balance side mission with main mission resources
+MCC_CONST_SELECTED
+change construction time and needed resources
+find another way to make markers
+Add trade repair/ammo/fuel for food.
+add fuel/health/ammo sliders in ui
+Add map in rts as in console
 
-//RTS
-break down crates
-add fortifications and turrets
+Add "add resources module"
+Add in campaign number of tickets to start with and disable missions in campaign.
+
+
+balance side mission with main mission resources
 
 //Prevent deleting FOBs
 //Tutorials for everything
 //Add undercover script?
-remove I&X from init
-- check supply box ACE
-/*[[true,false, true, true,250,10,"rickb_walkers","CIV_F"],"MCC_fnc_ambientInit",false,false] spawn BIS_fnc_MP;*/
+
 
 Change log r15:
 - ACE compatibility 

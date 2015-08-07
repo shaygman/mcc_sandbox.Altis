@@ -12,14 +12,14 @@ private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_loc
 waitUntil {!isnil "MCC_initDone"};
 waitUntil {MCC_initDone};
 
-_sidePlayer	= [_this, 0, west, [west]] call BIS_fnc_param;
-_factionPlayer	= [_this, 1, "BLU_F", [""]] call BIS_fnc_param;
-_sideEnemy	= [_this, 2, east, [east]] call BIS_fnc_param;
-_factionEnemy = [_this, 3, "OPF_F", [""]] call BIS_fnc_param;
-_factionCiv	= [_this, 4, "CIV_F", [""]] call BIS_fnc_param;
-_missionMax  = [_this, 5, 10, [0]] call BIS_fnc_param;
-_difficulty  = [_this, 6, 20, [0]] call BIS_fnc_param;
-_sidePlayer2= [_this, 7, sideLogic, [sideLogic]] call BIS_fnc_param;
+_sidePlayer	= [_this, 0, west] call BIS_fnc_param;
+_factionPlayer	= [_this, 1, "BLU_F"] call BIS_fnc_param;
+_sideEnemy	= [_this, 2, east] call BIS_fnc_param;
+_factionEnemy = [_this, 3, "OPF_F"] call BIS_fnc_param;
+_factionCiv	= [_this, 4, "CIV_F"] call BIS_fnc_param;
+_missionMax  = [_this, 5, 10] call BIS_fnc_param;
+_difficulty  = [_this, 6, 20] call BIS_fnc_param;
+_sidePlayer2= [_this, 7, sideLogic] call BIS_fnc_param;
 
 _totalPlayers = ((playersNumber _sidePlayer)+1);
 _AOSize = (20*_totalPlayers) max 300;
@@ -33,11 +33,11 @@ publicVariable "MCC_campaignEnemyFaction";
 
 
 //Time Multuplier
-if (timeMultiplier < 10) then {setTimeMultiplier 10};
+if (timeMultiplier < 12) then {setTimeMultiplier 12};
 
 //Tickets
 if (([_sidePlayer] call BIS_fnc_respawnTickets)<100) then {[_sidePlayer, 100] call BIS_fnc_respawnTickets};
-if (([_sidePlayer2] call BIS_fnc_respawnTickets)<100) then {[_sidePlayer2, 100] call BIS_fnc_respawnTickets};
+if (([_sidePlayer2] call BIS_fnc_respawnTickets)<100 && _sidePlayer2 != sideLogic) then {[_sidePlayer2, 100] call BIS_fnc_respawnTickets};
 
 //Build the faction's unitsArrays and send it to the server.
 _check = [_factionEnemy, _sideEnemy] call MCC_fnc_MWCreateUnitsArray;
@@ -80,6 +80,14 @@ if (count _locations == 0) then {
 			_locations pushBack [getpos (_x select 0), _x select 1];
 		} forEach _temploc;
 	} forEach ["city","mil","nature"]; //,"mil","hill","nature","marine"
+};
+
+//Still no location go bruth force
+if (count _locations == 0) then {
+	for "_i" from 1 to 100  do {
+		_temploc = [[getpos hsim_worldArea, hsim_worldArea], "ground", ["water","out"],{}] call BIS_fnc_randomPos;
+		_locations pushBack [_temploc, ""];
+	};
 };
 
 //Pick first location
@@ -239,11 +247,11 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 	_ticketsEnd = [_sidePlayer] call BIS_fnc_respawnTickets;
 	_sumTickets = _ticketsStart - _ticketsEnd;
 
-	["Main",_activeObjectives,_failedObjectives,_sidePlayer,_totalPlayers,_difficulty,50,[0.3,0.3,0.2,0.15,0.05]] call MCC_fnc_missionDone;
+	["Main",_activeObjectives,_failedObjectives,_sidePlayer,_totalPlayers,_difficulty,60,[0.2,0.4,0.2,0.15,0.05]] call MCC_fnc_missionDone;
 
 	//if we have another side give him some credit
 	if (_sidePlayer2 != sideLogic) then {
-		["side",_activeObjectives,_failedObjectives,_sidePlayer2,_totalPlayers,_difficulty,50,[0.3,0.3,0.2,0.15,0.05],_sumTickets] call MCC_fnc_missionDone;
+		["side",_activeObjectives,_failedObjectives,_sidePlayer2,_totalPlayers,_difficulty,60,[0.2,0.4,0.2,0.15,0.05],_sumTickets] call MCC_fnc_missionDone;
 	};
 
 	sleep 5;

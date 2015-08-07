@@ -25,7 +25,7 @@ _IEDDisarmTime 		= [_this, 3, 10, [0]] call BIS_fnc_param;
 _IEDJammable 		= [_this, 4, true, [true]] call BIS_fnc_param;
 _IEDTriggerType 	= [_this, 5, 0, [0]] call BIS_fnc_param;
 _trapdistance 		= [_this, 6, 10, [0]] call BIS_fnc_param;
-_iedside 			= [_this, 7, west, [west]] call BIS_fnc_param;
+_iedside 			= [_this, 7, west] call BIS_fnc_param;
 
 if (typeName _iedside == "STRING") then {
 	_iedside = switch (tolower _iedside) do

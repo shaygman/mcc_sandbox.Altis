@@ -7,21 +7,22 @@ _uav = _this select 0;
 //--- UAV ID
 if (isnil "MCC_uavlastID") then {MCC_uav_lastID = -1};
 MCC_uav_lastID = MCC_uav_lastID + 1;
-MCC_uav = _uav; 
+MCC_uav = _uav;
 _uav setvehiclevarname "MCC_uav";
 publicvariable "MCC_uav";
 //call compile format ["MCC_uav_%1 = _uav; _uav setvehiclevarname 'MCC_uav_%1';publicvariable 'MCC_uav_%1'",MCC_uav_lastID];
 _uav setVariable ["ID",MCC_uav_lastID, true];
 
+/*
 //--- First call
 if (MCC_uav_lastID == 0) then {
 
 	//--- Execute MARTA
 	if (isnil "bis_marta_mainscope") then {
 		_logicMARTA = (group _uav) createunit ["MartaManager",position _uav,[],0,"none"];
-	};	
+	};
 };
-
+*/
 sleep 0.01;
 //--- UAV waypoints --------------------------------------------------------------------------------------
 

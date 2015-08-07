@@ -128,7 +128,7 @@ _missionItems pushBack _effect;
 
 _crateNumbers = if (_dif == 10) then {(floor random 3)+1} else {(floor random 5)+1};
 for "_i" from 1 to _crateNumbers do {
-	_crateType = _crates call bis_fnc_selectRandom;
+	_crateType = [_crates,[0.3,0.5,0.2]] call bis_fnc_selectRandomWeighted;
 	_object = _crateType createVehicle _missionPos;
 	_missionItems pushBack _object;
 };

@@ -17,14 +17,14 @@ private ["_center","_radius","_spawnVehicles","_intanse","_faction","_unitsArray
 
 disableSerialization;
 
-_center			= [_this, 0, [], [[]]] call BIS_fnc_param;
-_radius			= [_this, 1, 100, [0]] call BIS_fnc_param;
+_center			= [_this, 0, []] call BIS_fnc_param;
+_radius			= [_this, 1, 100] call BIS_fnc_param;
 _spawnVehicles 	= if (typeName (_this select 2) == typeName 0) then {(_this select 2)==1} else {_this select 2};
-_intanse		= [_this, 3, 5, [0]] call BIS_fnc_param;
-_faction		= [_this, 4, "CIV_F", [""]] call BIS_fnc_param;
-_side			= [_this, 5, civilian, [civilian]] call BIS_fnc_param;
-_groupUnits 	= [_this, 6, false, [false]] call BIS_fnc_param;
-_locked			= [_this, 7, false, [false]] call BIS_fnc_param;
+_intanse		= [_this, 3, 5] call BIS_fnc_param;
+_faction		= [_this, 4, "CIV_F"] call BIS_fnc_param;
+_side			= [_this, 5, civilian] call BIS_fnc_param;
+_groupUnits 	= [_this, 6, false] call BIS_fnc_param;
+_locked			= [_this, 7, false] call BIS_fnc_param;
 
 _unitsArray 	= [_faction,"soldier","men"] call MCC_fnc_makeUnitsArray;		//Let's build the faction unit's array
 if(count _unitsArray < 4) then {
@@ -42,6 +42,7 @@ _unitsCount		= count _unitsArray;
 _vehiclesCount	= count _vehiclesArray;
 _buildingscount	= count _buildingsArray;
 
+
 if (typeName _side == "STRING") then {
 	switch (toLower _side) do
 	{
@@ -56,10 +57,11 @@ if (isnil "_side") exitWith {};
 
 if (_buildingscount < 1) exitwith {hint "No buildings found"};	//No available buildings? stop the script!
 {
-	if (_groupUnits) then {_group = creategroup _side};
 	_buildingPos = _x call MCC_fnc_buildingPosCount;
 	if (_buildingPos > 0) then
 	{	//If the building have an interrior positions
+		if (_groupUnits) then {_group = creategroup _side};
+
 		for [{_i=0},{_i<_buildingPos},{_i=_i+1}] do
 		{
 			_spawnPos	= _x buildingPos _i;

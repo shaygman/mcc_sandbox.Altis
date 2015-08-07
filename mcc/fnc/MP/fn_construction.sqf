@@ -35,7 +35,7 @@ switch (_conType) do
 	};
 	case "gmg" :
 	{
-		_reqCrates = 4;
+		_reqCrates = 3;
 		_vehicleType = if (_side == west) then {"B_GMG_01_F"} else {"O_GMG_01_F"};
 		_text = "GMG"
 	};
@@ -53,7 +53,7 @@ switch (_conType) do
 	};
 	case "mortar" :
 	{
-		_reqCrates = 4;
+		_reqCrates = 2;
 		_vehicleType = if (_side == west) then {"B_Mortar_01_F"} else {"O_Mortar_01_F"};
 		_text = "Mortar"
 	};

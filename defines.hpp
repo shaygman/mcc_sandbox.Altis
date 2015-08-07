@@ -98,12 +98,22 @@ class CfgNotifications
 
 class cfgRtsBuildings
 {
-	#include "mcc\cfg\cfgRtsBuildings.hpp"
+	#include "mcc\cfg\rts\cfgRtsBuildings.hpp"
 };
 
 class cfgRtsActions
 {
-	#include "mcc\cfg\cfgRtsActions.hpp"
+	#include "mcc\cfg\rts\cfgRtsActions.hpp"
+};
+
+class cfgRtsVehiclesActions
+{
+	#include "mcc\cfg\rts\cfgRtsVehiclesActions.hpp"
+};
+
+class cfgRtsNonBuildingsActions
+{
+	#include "mcc\cfg\rts\cfgRtsNonBuildingsActions.hpp"
 };
 
 

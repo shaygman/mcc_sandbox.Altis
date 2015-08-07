@@ -105,7 +105,7 @@ if (_isCQB) then
 				_unitPlaced = true;
 
 				//Lets spawn some body guards
-				[[getpos _unit,30,0,2,_faction,str _side],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
+				[[getpos _unit,30,0,2,_faction, _side],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
 			};
 		};
 	}

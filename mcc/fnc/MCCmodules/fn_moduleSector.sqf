@@ -3,7 +3,7 @@
 
 	based on the script by BIS's Karel Moricky extended for MCC_fnc_moduleSector
 
-	Description: 
+	Description:
 	Initialize a sector module. Can be also used to get sector parameters.
 
 	--- Get all sectors ---
@@ -37,8 +37,8 @@
 */
 
 private ["_logic","_units","_activated"];
-_logic = [_this,0,objnull,[objnull,sideunknown,true]] call bis_fnc_param;
-_units = [_this,1,[],[[],sideunknown]] call bis_fnc_param;
+_logic = [_this,0,objnull] call bis_fnc_param;
+_units = [_this,1,[]] call bis_fnc_param;
 _activated = [_this,2,true,[true]] call bis_fnc_param;
 
 //--- Return all sectors
@@ -246,7 +246,7 @@ switch _mode do {
 						} foreach (synchronizedobjects _x);
 					};
 				};
-			} foreach (synchronizedobjects _trigger);	
+			} foreach (synchronizedobjects _trigger);
 		};
 
 		{

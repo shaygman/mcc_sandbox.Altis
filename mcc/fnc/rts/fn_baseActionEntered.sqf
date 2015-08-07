@@ -10,26 +10,19 @@ disableSerialization;
 _ctrl 		= (_this select 0) select 0;
 _ctrlText 	= _this select 1;
 _disp = uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD";
+_radius = 200;
 
 _cfgName = missionNamespace getVariable [format ["MCC_ctrlData_%1", ctrlIDC _ctrl],""];
 
-//Action or building?
-if !(ctrlIDC _ctrl >= 9105 && ctrlIDC _ctrl <= 9112) then {
-	_cfgFile =  "cfgRtsBuildings";
-	_radius = 200;
-	} else {
-		_cfgFile = "cfgrtsActions";
-		_radius = 50;
-};
 
-if (MCC_isMode) then
-{
+//Action or building?
+if (MCC_isMode) then {
+	_cfgFile =  if (isClass (configFile >> "cfgRtsBuildings" >> _cfgName)) then {"cfgRtsBuildings"} else {"cfgrtsActions"};
 	_cfgtext = [getText (configFile >> _cfgFile >> _cfgName >> "displayName"),getText (configFile >> _cfgFile >> _cfgName >> "descriptionShort")];
 	_res = getArray (configFile >> _cfgFile >> _cfgName >> "resources");
 	_req = getArray (configFile >> _cfgFile >> _cfgName >> "requiredBuildings");
-}
-else
-{
+} else {
+	_cfgFile =  if (isClass (missionconfigFile >> "cfgRtsBuildings" >> _cfgName)) then {"cfgRtsBuildings"} else {"cfgrtsActions"};
 	_cfgtext = [getText (missionconfigFile >> _cfgFile >> _cfgName >> "displayName"),getText (missionconfigFile >> _cfgFile >> _cfgName >> "descriptionShort")];
 	_res = getArray (missionconfigFile >> _cfgFile >> _cfgName >> "resources");
 	_req = getArray (missionconfigFile >> _cfgFile >> _cfgName >> "requiredBuildings");
@@ -38,7 +31,7 @@ else
 //Required buildings
 _reqText = "";
 {
-	if !([_x, MCC_CONST_SELECTED, _radius] call MCC_fnc_CheckBuildings) then {
+	if !([_x, (MCC_ConsoleGroupSelected select 0), _radius] call MCC_fnc_CheckBuildings) then {
 		if (_forEachIndex != 0) then {_reqText = _reqText + ", "};
 		_reqText = _reqText + (if (MCC_isMode) then
 		                {

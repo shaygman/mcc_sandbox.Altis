@@ -9,7 +9,7 @@ private ["_resources","_penalty","_baseResource","_succeedObjectives","_sumResou
 _mission =  [_this, 0, "Main", [""]] call BIS_fnc_param;
 _activeObjectives = [_this, 1, 0, [0]] call BIS_fnc_param;
 _failedObjectives = [_this, 2, 0, [0]] call BIS_fnc_param;
-_sidePlayer = [_this, 3, west, [west]] call BIS_fnc_param;
+_sidePlayer = [_this, 3, west] call BIS_fnc_param;
 _totalPlayers = [_this, 4, 10, [0]] call BIS_fnc_param;
 _difficulty = [_this, 5, 10, [0]] call BIS_fnc_param;
 _baseResource = [_this, 6, 50, [0]] call BIS_fnc_param;
@@ -20,7 +20,7 @@ _sumTickets =  ([_this, 8, 0, [0]] call BIS_fnc_param) max 0;
 _succeedObjectives = _activeObjectives - _failedObjectives;
 _resources = missionNamespace getvariable [format ["MCC_res%1",_sidePlayer],[500,500,200,200,100]];
 
-if (_mission != "side") then {
+if (_mission == "Main") then {
 	_penalty = floor (_baseResource*((missionNamespace getvariable [format ["MCC_civiliansKilled_%1",_sidePlayer],0])*3 min 10));
 	_resourceGain = floor (_baseResource*_difficulty*((_totalPlayers/5) max 1))*_succeedObjectives;
 	} else {
@@ -74,51 +74,57 @@ publicVariable format ["MCC_res%1",_sidePlayer];
 missionNamespace setvariable [format ["MCC_civiliansKilled_%1",_sidePlayer],0];
 publicVariable format ["MCC_civiliansKilled_%1",_sidePlayer];
 
+private ["_counter","_totalShells","_startPos"];
 //Assets if succeed
 _totalShells = 0;
-private ["_counter"];
+
+
 _counter = if (_mission != "side") then {_succeedObjectives} else {_failedObjectives};
+
+_startPos = call compile format ["MCC_START_%1",_sidePlayer];
 
 for "_i" from 1 to _counter do {
  	_randomAsset = random 1;
 
 	//Add Supply drop
-	private ["_arrayName","_spawnKind","_planeType","_isParachute","_tempArray","_boxArray","_displayName"];
-	_boxArray = [];
-	_tempArray = if (_sidePlayer == east) then {MCC_logisticsCrates_TypesEast} else {MCC_logisticsCrates_TypesWest};
-	_isParachute = random 1 > 0.5;
-	for "_x" from 0 to 2 do {
-		_boxArray pushBack (_tempArray select _x);
-	};
-
-	switch (floor random 6) do {
-	    case 0: {
-		    _displayName = "Supply";
-		    _spawnKind = [_boxArray select 1];
+	if (_randomAsset > 0.2 &&  ([["hq",2], _startPos, 200] call MCC_fnc_CheckBuildings)) then {
+		private ["_arrayName","_spawnKind","_planeType","_isParachute","_tempArray","_boxArray","_displayName"];
+		_boxArray = [];
+		_tempArray = if (_sidePlayer == east) then {MCC_logisticsCrates_TypesEast} else {MCC_logisticsCrates_TypesWest};
+		_isParachute = random 1 > 0.5;
+		for "_x" from 0 to 2 do {
+			_boxArray pushBack (_tempArray select _x);
 		};
 
-		case 1: {
-		    _displayName = "Fuel";
-		    _spawnKind = [_boxArray select 2];
+		switch (floor random 6) do {
+		    case 0: {
+			    _displayName = "Supply";
+			    _spawnKind = [_boxArray select 1];
+			};
+
+			case 1: {
+			    _displayName = "Fuel";
+			    _spawnKind = [_boxArray select 2];
+			};
+
+		    default {
+			    _displayName = "Ammo";
+			    _spawnKind = [_boxArray select 0];
+		    };
 		};
 
-	    default {
-		    _displayName = "Ammo";
-		    _spawnKind = [_boxArray select 0];
-	    };
+		_planeType = ["I_Heli_Transport_02_F"];
+		_arrayName = format ["MCC_ConsoleAirdropArray%1",_sidePlayer];
+		_array = missionNameSpace getVariable [_arrayName,[]];
+		_array pushBack [[_spawnKind], _planeType,_isParachute];
+		missionNameSpace setVariable [_arrayName,_array];
+		publicvariable _arrayName;
+
+		_CompleteText = _CompleteText + format ["1 X %1 Box Drop <br/>",_displayName];
 	};
-
-	_planeType = ["I_Heli_Transport_02_F"];
-	_arrayName = format ["MCC_ConsoleAirdropArray%1",_sidePlayer];
-	_array = missionNameSpace getVariable [_arrayName,[]];
-	_array pushBack [[_spawnKind], _planeType,_isParachute];
-	missionNameSpace setVariable [_arrayName,_array];
-	publicvariable _arrayName;
-
-	_CompleteText = _CompleteText + format ["1 X %1 Box Drop <br/>",_displayName];
 
 	//Aritllery add
-	if (_randomAsset > 0.3) then {
+	if (_randomAsset > 0.4) then {
 
 		private ["_nshell"];
 		_nshell = ((floor random 3) +1) * 10;
@@ -135,7 +141,7 @@ for "_i" from 1 to _counter do {
 	};
 
 	//CAS
-	if (_randomAsset > 0.8) then {
+	if (_randomAsset > 0.6 && ([["hq",3], _startPos, 200] call MCC_fnc_CheckBuildings)) then {
 		private ["_arrayName","_spawnKind","_planeType"];
 		_spawnKind = ["Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)","SnD","Rockets-run","AA run","JDAM","LGB","Bombing-run"] call bis_fnc_selectRandom;
 		_planeType = switch (_sidePlayer) do {

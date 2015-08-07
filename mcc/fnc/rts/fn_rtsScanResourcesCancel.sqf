@@ -17,6 +17,6 @@ if !(missionNamespace getVariable [_varName ,false]) exitWith {};
 missionNamespace setVariable [_varName ,false];
 publicVariable _varName;
 
-[MCC_CONST_SELECTED] spawn MCC_fnc_baseSelected;
+[MCC_ConsoleGroupSelected] spawn MCC_fnc_baseSelected;
 
 [[_side,10,true],"MCC_fnc_rtsScanResources",false,false] spawn BIS_fnc_MP;

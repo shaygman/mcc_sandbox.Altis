@@ -35,6 +35,11 @@ switch (_level) do {
     	_billboardPos = [2,-2.1,-0.3];
     	_helipadPos = [11,9,-0.6];
 	};
+	case 5: {
+    	_class = "jet";
+    	_billboardPos = [2,-2.1,-0.3];
+    	_helipadPos = [11,9,-0.6];
+	};
 	default {
     	_class = "";
 	};
@@ -46,7 +51,7 @@ if (_class != "") then {
 
 	_billboard attachto [_anchor,_billboardPos];
 	_helipad attachto [_anchor,_helipadPos];
-
+	_helipad setVariable ["MCC_vehicleSpawnerHelipad",true,true];
 	[[_billboard,[_class,_helipad]], "MCC_fnc_vehicleSpawnerInit", true, true] spawn BIS_fnc_MP;
 };
 
@@ -76,6 +81,10 @@ if (_class != "") then {
 		    	_damage = 0;
 		    };
 		    case 4: {
+		    	_class = ["Air"];
+		    	_damage = 0;
+		    };
+		    case 5: {
 		    	_class = ["Air"];
 		    	_damage = 0;
 		    };

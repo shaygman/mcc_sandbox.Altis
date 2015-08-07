@@ -6,7 +6,7 @@
 //     1: ARRAY of STRINGS - first argument type "tank","vehicle","heli","jet","ship"
 //                           secon argument - helipad spawn name - string
 //==============================================================================================================================================================================
-private ["_object","_arguments","_null","_caller","_syncItems","_vehicleType","_spawnPad","_syncedObjects","_billboard","_helipad","_type"];
+private ["_object","_arguments","_null","_syncItems","_syncedObjects","_billboard","_helipad","_type"];
 
 _object = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 
@@ -58,6 +58,8 @@ if (count _this <=3) then {
     _object setObjectTexture [2,'#(rgb,8,8,3)color(0.5,0.5,0.5,0.1)'];
     _null = _object addAction [format ["<t color=""#ff1111"">Purchase %1</t>",_arguments select 0], {call MCC_fnc_vehicleSpawnerInit}, _arguments,10,true,true];
 } else {
+    private ["_simTypesUnits","_faction","_CfgVehicles","_CfgVehicle","_vehicleDisplayName","_cfgclass","_cfgFaction","_simulation","_vehicleArray","_comboBox","_mccdialog","_displayname","_index","_array","_rtsAnchor","_caller","_vehicleType","_spawnPad"];
+
     //We got here from the addaction
     _caller = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
     _arguments = [_this, 3, [], [[]]] call BIS_fnc_param;
@@ -66,71 +68,6 @@ if (count _this <=3) then {
 
     if (isNull _caller) exitWith {};
 
-    createDialog "MCC_VEHICLESPAWNER";
-    waitUntil {dialog};
 
-    private ["_simTypesUnits","_faction","_CfgVehicles","_CfgVehicle","_vehicleDisplayName","_cfgclass","_cfgFaction","_simulation","_vehicleArray","_comboBox","_mccdialog","_displayname","_index","_array"];
-    _simTypesUnits = switch (tolower _vehicleType) do {
-                                case "vehicle": {["car","carx", "motorcycle"]};
-                                case "tank":  {["tank","tankX"]};
-                                case "heli":  {["helicopter","helicopterX", "helicopterrtd"]};
-                                case "jet":  {["airplane","airplanex"]};
-                                case "ship":  {["ship","shipx", "shipX","submarinex"]};
-                                default  {["car","carx", "motorcycle"]};
-                            };
-
-    _faction = faction _caller;
-    if (isNil "_faction") exitWith {};
-
-    //Is there a user designed vehicle costs?
-    _vehicleArray = missionNamespace getVariable ([format["%1_%2",tolower _vehicleType,_faction],[]]);
-
-    if (count _vehicleArray == 0) then {
-        _CfgVehicles        = configFile >> "CfgVehicles" ;
-
-        for "_i" from 1 to (count _CfgVehicles - 1) do {
-            _CfgVehicle = _CfgVehicles select _i;
-
-            //Keep going when it is a public entry
-            if ((getNumber(_CfgVehicle >> "scope") == 2)) then {
-
-                _vehicleDisplayName     = getText(_CfgVehicle >> "displayname");
-                _cfgclass           = (configName (_CfgVehicle));
-                _cfgFaction             = getText(_CfgVehicle >> "faction");
-                _simulation             = getText(_CfgVehicle >> "simulation");
-                _cost                   = floor (getNumber(_CfgVehicle >> "cost")/700);
-                _vehicleDisplayName = [_vehicleDisplayName, gettext(_CfgVehicle >> "picture")];
-
-                if (_simulation in _simTypesUnits) then  {
-                    if (toUpper(_cfgFaction) == _faction && !(tolower(getText(_CfgVehicle >> "vehicleClass")) in ["static","support","autonomous"])) then {
-                        _vehicleArray pushback [_cfgclass,_vehicleDisplayName,_cost];
-                    };
-                };
-            };
-        };
-    };
-
-    missionNamespace setVariable ["MCC_private_vehicleArray",_vehicleArray];
-    missionNamespace setVariable ["MCC_private_spawnPad",_spawnPad];
-
-    disableSerialization;
-    _mccdialog = uiNamespace getVariable "MCC_VEHICLESPAWNER_IDD";
-
-    //Fill comboBox
-    _comboBox = _mccdialog displayCtrl 101;
-    lbClear _comboBox;
-    {
-        _displayname = (_x select 1) select 0;
-        _index = _comboBox lbAdd _displayname;
-        _comboBox lbSetPicture [_index,(_x select 1) select 1];
-    } foreach _vehicleArray;
-    _comboBox lbSetCurSel 0;
-
-    while {(str (_mccdialog displayCtrl 101) != "No control")} do
-    {
-        //Load available resources
-        _array = call compile format ["MCC_res%1",playerside];
-        {_mccdialog displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85];
-        sleep 1;
-    };
+    [_caller, _arguments] spawn MCC_fnc_vehicleSpawnerInitDialog;
 };

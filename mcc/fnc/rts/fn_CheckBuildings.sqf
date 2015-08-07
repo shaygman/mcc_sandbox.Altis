@@ -28,8 +28,8 @@ _facility = [];
 	};
 } foreach _buildings;
 
-_var   = _x select 0;
-_level = _x select 1;
+_var   = _req select 0;
+_level = _req select 1;
 
 if (({(_x select 0) == _var && (_x select 1) >= _level}count _facility)<=0) then {_available = false};
 

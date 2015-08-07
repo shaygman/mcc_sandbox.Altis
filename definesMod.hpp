@@ -120,12 +120,22 @@ class CfgNotifications
 
 class cfgRtsBuildings
 {
-	#include "\mcc_sandbox_mod\mcc\cfg\cfgRtsBuildings.hpp"
+	#include "\mcc_sandbox_mod\mcc\cfg\rts\cfgRtsBuildings.hpp"
 };
 
 class cfgRtsActions
 {
-	#include "\mcc_sandbox_mod\mcc\cfg\cfgRtsActions.hpp"
+	#include "\mcc_sandbox_mod\mcc\cfg\rts\cfgRtsActions.hpp"
+};
+
+class cfgRtsVehiclesActions
+{
+	#include "\mcc_sandbox_mod\mcc\cfg\rts\cfgRtsVehiclesActions.hpp"
+};
+
+class cfgRtsNonBuildingsActions
+{
+	#include "\mcc_sandbox_mod\mcc\cfg\rts\cfgRtsNonBuildingsActions.hpp"
 };
 
 class RscTitles

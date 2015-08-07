@@ -114,10 +114,11 @@ if (_constType != "hq") then {
 									} else {0};
 								}
 							];
+} else {
+	_anchor AddEventHandler ["HandleDamage",{}];
 };
 
-for "_i" from 0 to ((count _objs) - 1) do
-{
+for "_i" from 0 to ((count _objs) - 1) do {
 	_object = nil;
 	_object = ((_objs select _i) select  0) createVehicle [0,0,0];
 	waituntil {!isnil "_object"};

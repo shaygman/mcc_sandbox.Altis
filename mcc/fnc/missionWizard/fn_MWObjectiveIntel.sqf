@@ -14,7 +14,7 @@ _isCQB = _this select 1;
 _side = _this select 2;
 _faction = _this select 3;
 _preciseMarkers = _this select 4;
-_sidePlayer =  [_this, 5, west, [west]] call BIS_fnc_param;
+_sidePlayer =  [_this, 5, west] call BIS_fnc_param;
 
 _objType = MCC_MWIntelObjects call BIS_fnc_selectRandom;
 
@@ -43,7 +43,7 @@ if (_isCQB) then
 			_unitPlaced = true;
 
 			//Lets spawn some body guards
-			[[getpos _object,30,0,2,_faction,str _side],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
+			[[getpos _object,30,0,2,_faction, _side],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
 		};
 	};
 }
