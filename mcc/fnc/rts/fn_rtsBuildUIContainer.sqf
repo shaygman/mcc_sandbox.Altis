@@ -20,17 +20,14 @@ _elecOn = missionNamespace getVariable [format ["MCC_rtsElecOn_%1", playerSide],
 
 _constType 	= format ["MCC_rts_%1%2",_consType,_constLevel];
 
-if (MCC_isMode) then
-{
-	_cfgtext = [getText (configFile >> "cfgRtsBuildings" >> _constType >> "displayName"),getText (configFile >> "cfgRtsBuildings" >> _constType >> "descriptionShort")];
-	_availableActions = getArray (configFile >> "cfgRtsBuildings" >> _constType >> "buildings");
-	_elec = getNumber (configFile >> "cfgRtsBuildings" >> _constType >> "needelectricity");
-}
-else
-{
+if (isClass(missionconfigFile >> "cfgRtsBuildings")) then {
 	_cfgtext = [getText (missionconfigFile >> "cfgRtsBuildings" >> _constType >> "displayName"),getText (missionconfigFile >> "cfgRtsBuildings" >> _constType >> "descriptionShort")];
 	_availableActions = getArray (missionconfigFile >> "cfgRtsBuildings" >> _constType >> "buildings");
 	_elec = getNumber (missionconfigFile >> "cfgRtsBuildings" >> _constType >> "needelectricity");
+} else {
+	_cfgtext = [getText (configFile >> "cfgRtsBuildings" >> _constType >> "displayName"),getText (configFile >> "cfgRtsBuildings" >> _constType >> "descriptionShort")];
+	_availableActions = getArray (configFile >> "cfgRtsBuildings" >> _constType >> "buildings");
+	_elec = getNumber (configFile >> "cfgRtsBuildings" >> _constType >> "needelectricity");
 };
 
 //Add back button
@@ -112,7 +109,7 @@ for "_i" from 9101 to 9112 do
 
 		//add EH
 		if (_available && _online) then {_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["[_this select 0, '%2'] spawn %1",_fnc,_action]]};
-		_ctrl ctrlAddEventHandler ["MouseHolding",format ["[_this,'%1'] call MCC_fnc_baseActionEntered",_action]];
+		_ctrl ctrlAddEventHandler ["MouseHolding","[_this,'cfgRtsBuildings'] call MCC_fnc_baseActionEntered"];
 		_ctrl ctrlAddEventHandler ["MouseExit",format ["[_this,'%1'] call MCC_fnc_baseActionExit",_action]];
 	}
 	else

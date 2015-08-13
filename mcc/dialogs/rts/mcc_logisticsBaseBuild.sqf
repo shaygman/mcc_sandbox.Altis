@@ -16,6 +16,12 @@ uiNamespace setVariable ["MCC_idcCounter",1212];
 
 waituntil {dialog};
 
+//open compass
+ (["MCC_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_compass", "PLAIN"];
+
+for "_i" from 5 to 6 do {
+	((uiNamespace getVariable "MCC_compass") displayCtrl _i) ctrlShow false;
+};
 
 //hide selection box
  (_disp displayCtrl 9929) ctrlShow false;
@@ -61,6 +67,9 @@ camusenvg _NVGstate;
 missionNamespace setVariable ["MCC_playerViewDistance",viewDistance];
 setViewDistance 1800;
 
+//add map draw EH
+_handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_fnc_mapDrawWPConsole;"];
+
 //Loop while open
 [_startPos,_size] spawn {
 	private ["_startPos","_size","_buildings","_cargoSpace","_value","_ctrl","_units","_unitsSpace"];
@@ -72,8 +81,7 @@ setViewDistance 1800;
 
 	//Load available resources
 	_array = call compile format ["MCC_res%1",playerside];
-	while {(str (_disp displayCtrl 2) != "No control")} do
-	{
+	while {(str (_disp displayCtrl 2) != "No control")} do {
 		//get number of storage
 		_buildings = _startPos nearEntities [["logic"], _size];
 		_cargoSpace = 500;
@@ -118,14 +126,130 @@ setViewDistance 1800;
 		};
 
 		//Fog of war
-		private ["_fog"];
+		private ["_fog","_cam"];
+		_cam = missionnamespace getVariable ["MCC_CONST_CAM",objNull];
+		if (isNull _cam) exitWith {};
+
 		_fog = true;
 		{
 			if (side _x == playerSide) exitWith {_fog = false}
-		} forEach ((position MCC_CONST_CAM) nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 200]);
+		} forEach ((position _cam) nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 100]);
 
-		if (_fog && (viewDistance > 200) && (MCC_CONST_CAM distance _startPos > 300)) then {setViewDistance 200};
-		if ((!_fog || (MCC_CONST_CAM distance _startPos < 300)) && viewDistance <= 300 ) then {setViewDistance 1800};
+		if (_fog && (viewDistance > 100) && (_cam distance _startPos > 300)) then {setViewDistance 100};
+		if ((!_fog || (_cam distance _startPos < 300)) && viewDistance < 1800 ) then {setViewDistance 1800};
+
+		//Buildings UI
+		private ["_type","_endTime","_startTime","_cfgName","_text","_segmentsElapsed","_elec","_icon","_texture","_color","_buildingIcons"];
+
+		_buildingIcons = [];
+		{
+			if (isNull _cam) exitWith {};
+
+			_type = _x getVariable ["mcc_constructionItemType",""];
+
+			if (_type != "") then {
+				_endTime = _x getVariable ["mcc_constructionendTime",-30];
+				_startTime = _x getVariable ["mcc_constructionStartTime",time];
+				_cfgName 	= format ["MCC_rts_%1%2",_type,(_x getVariable ["mcc_constructionItemTypeLevel",1])];
+
+				if ((_startTime+_endTime) > time) then {
+					_text = "";
+					_segmentsElapsed = round((time -_startTime)/_endTime * 20);
+					for "_i" from 1 to _segmentsElapsed do
+					{
+						_text = _text + "|";
+					};
+
+				} else {
+					if (isClass (missionconfigFile >> "cfgRtsBuildings")) then {
+							_text = getText (missionconfigFile >> "cfgRtsBuildings" >> _cfgName >> "displayName");
+							_elec = (getNumber (missionconfigFile >> "cfgRtsBuildings" >> _cfgName >> "needelectricity"))==1;
+						} else {
+							_text = getText (configFile >> "cfgRtsBuildings" >> _cfgName >> "displayName");
+							_elec = (getNumber (configFile >> "cfgRtsBuildings" >> _cfgName >> "needelectricity"))==1;
+						};
+				};
+
+				switch (tolower _type) do {
+					case "hq": {_icon = "n_hq"};
+					case "storage": {_icon = "n_unknown"};
+					case "barracks": {_icon = "n_inf"};
+					case "workshop": {_icon = "n_service"};
+				};
+
+				if (!isnil "_icon") then {
+					_texture = gettext (configfile >> "CfgMarkers" >> _icon >> "icon");
+					_color = [0,0,0.6,0.6];
+
+					if (_elec && !(missionNamespace getVariable [format ["MCC_rtsElecOn_%1", playerSide],false])) then {
+						_color = [0.6,0,0,0.6];
+						_text = format ["%1 (Offline)", _text];
+					} else {
+						_color = [0,0,0.6,0.6];
+					};
+
+					_buildingIcons pushBack [_x, _texture, _color, _text];
+				};
+			};
+		} foreach _buildings;
+
+		missionNamespace setvariable ["MCC_rtsBuildingsIcons",_buildingIcons];
+
+		//Group Icons
+		private ["_leader","_side","_group","_uiPos","_display","_ctrl","_ratio","_groupCtrls","_inFOV","_ctrlIndex","_ctrlPos","_texture","_unit","_hiddenUnits"];
+
+		_display = uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD", displayNull];
+		_groupCtrls = missionNamespace getVariable ["MCC_rtsUIGroupsIcons", []];
+		_hiddenUnits = missionNamespace getVariable ["MCC_rtsHiddenUnits", []];
+
+		{
+			if (isnull (_x select 1)) then {(_x select 0) ctrlShow false};
+		} forEach _groupCtrls;
+
+		//add icons to groups
+		{
+			if (isNull _cam) exitWith {};
+
+			_group = _x;
+			_leader = leader _x;
+
+			if !(isnil "_leader") then {
+
+				_inFOV = ((worldToScreen (visiblePosition _leader)) select 0 > (0 * safezoneW + safezoneX)) && ((worldToScreen (visiblePosition _leader)) select 0 <(1 * safezoneW + safezoneX)) && _cam distance _leader < 2000;
+
+				if (isNil "_inFOV") then {_inFOV = false};
+
+				if (_inFOV) then {
+					_side = side _x;
+					_pos = position _leader;
+
+					if (_side == playerside) then {
+						_ctrlIndex = [_groupCtrls, _group] call bis_fnc_findNestedElement;
+						_ctrl = if (count _ctrlIndex <= 0) then {controlNull} else {(_groupCtrls select (_ctrlIndex select 0)) select 0};
+
+						if (isNull _ctrl) then {
+							_ctrl = [_group] call MCC_fnc_rtsCreateUICtrl;
+
+							_groupCtrls pushBack [_ctrl,_group];
+							 missionNamespace setVariable ["MCC_rtsUIGroupsIcons", _groupCtrls];
+						};
+					} else {
+						//Hide unkonwn units
+						{
+							_unit = _x;
+
+							if (playerside knowsAbout _unit < 3 && (isNull (_unit findNearestEnemy _unit))) then {
+								_unit hideObject true;
+								_hiddenUnits pushBack _unit;
+							} else {
+								_unit hideObject false;
+							};
+						} forEach units _group;
+					};
+				};
+			};
+		} foreach allGroups;
+		 missionNamespace setVariable ["MCC_rtsHiddenUnits", _hiddenUnits];
 
 		sleep 0.5;
 	};
@@ -140,7 +264,7 @@ MCC_fnc_rtsDrawWpGroup = {
 	{
 		_unit = _x;
 
-		if((_camera distance vehicle _unit)<1000) then {
+		if((_camera distance vehicle _unit)<500) then {
 			_bbr = boundingBoxReal vehicle _unit;
 			_p1 = _bbr select 0;
 			_p2 = _bbr select 1;
@@ -153,6 +277,7 @@ MCC_fnc_rtsDrawWpGroup = {
 					_color
 				];
 			};
+		};
 
 		//Draw the current WP
 		_wpArray = waypoints _group;
@@ -164,7 +289,7 @@ MCC_fnc_rtsDrawWpGroup = {
 			for [{_i= currentWaypoint _group},{_i < count _wpArray},{_i=_i+1}] do {
 				_wp = (_wpArray select _i);
 				_wPos  = waypointPosition _wp;
-				_wPos set [2, (_wPos select 2) + 10];
+				_wPos set [2, (_wPos select 2) + 2];
 
 				if ((_wPos  distance [0,0,0]) > 50) then {
 					_wType = waypointType _wp;
@@ -191,7 +316,7 @@ MCC_fnc_rtsDrawWpGroup = {
 				};
 			};
 		};
-		};
+
 	} foreach (units _group);
 };
 MCC_fnc_rtsCreateUICtrl = {
@@ -208,9 +333,27 @@ MCC_fnc_rtsCreateUICtrl = {
 
 	_ctrl = _display ctrlCreate ["RscActivePicture", _idc];
 	_group setVariable ["MCC_rtsGroupIcon",ctrlidc _ctrl];
-	_texture = if (vehicle _leader isKindOf "Man" ) then {"\A3\ui_f\data\map\vehicleicons\iconManLeader_ca.paa"} else {gettext (configfile >> "CfgVehicles" >> typeof (vehicle _leader) >> "Icon")};
+
+	_texture =gettext (configfile >> "CfgVehicles" >> typeof (vehicle _leader) >> "Icon");
+
+	if !(["paa", _texture] call BIS_fnc_inString) then {
+		_texture = switch (true) do {
+		    case ( (vehicle _leader) isKindOf "Man" )			:{"\A3\ui_f\data\map\vehicleicons\iconManLeader_ca.paa"};
+			case ( (vehicle _leader) isKindOf "Car" )			:{"\A3\ui_f\data\map\vehicleicons\iconCar_ca.paa"};
+			case ( (vehicle _leader) isKindOf "Motorcycle" )	:{"\A3\ui_f\data\map\vehicleicons\iconCar_ca.paa"};
+			case ( (vehicle _leader) isKindOf "Wheeled_APC_F" )	:{"\A3\ui_f\data\map\vehicleicons\iconAPC_ca.paa"};
+			case ( (vehicle _leader) isKindOf "Tank" )			:{"\A3\ui_f\data\map\vehicleicons\iconTank_ca.paa"};
+			case ( (vehicle _leader) isKindOf "helicopter" )	:{"\A3\ui_f\data\map\vehicleicons\iconhelicopter_ca.paa"};
+			case ( (vehicle _leader) isKindOf "Air" )			:{"\A3\ui_f\data\map\vehicleicons\iconPlane_ca.paa"};
+			case ( (vehicle _leader) isKindOf "Ship" )			:{"\A3\ui_f\data\map\vehicleicons\iconShip_ca.paa"};
+			case ( (vehicle _leader) isKindOf "StaticWeapon" )	:{"\A3\ui_f\data\map\vehicleicons\iconStaticCannon_ca.paa"};
+			default {"\A3\ui_f\data\map\vehicleicons\iconobject_ca.paa"};
+		};
+	};
+
 	_ctrl ctrlSetText _texture;
 	_ctrlColor = (side _leader) call bis_fnc_sideColor;
+	_ctrlColor set [3,0.8];
 	_ctrl ctrlSetTextColor _ctrlColor;
 
 	_ctrl ctrlAddEventHandler ["MouseButtonClick","_this call MCC_fnc_rtsSelectGroup"];
@@ -257,7 +400,7 @@ MCC_fnc_rtsMakeMarkers = {
 };
 
 MCC_fnc_rtsSelectGroup = {
-	private ["_groupCtrls","_ctrl","_index","_group","_pos"];
+	private ["_groupCtrls","_ctrl","_index","_group","_pos","_groups"];
 	_ctrl = _this select 0;
 	_key = _this select 1;
 
@@ -273,9 +416,19 @@ MCC_fnc_rtsSelectGroup = {
 			_group = _x;
 			_pos = ctrlPosition (_this select 0);
 			_pos resize 2;
-			if (typeName _group == typeName grpNull) then {
+
+			_groups = [];
+			{
+				if (typeName _x == typeName grpNull) then {
+					if (canMove leader _x && (vehicle leader _x isKindOf "Man")) then {_groups pushBack _x};
+				};
+			} forEach MCC_ConsoleGroupSelected;
+
+			if (count _groups > 0) then {
 				player globalRadio "CuratorWaypointPlaced";
-				[[1,screentoworld _pos,[2,"YELLOW","NO CHANGE","FULL","AWARE","true","",0],[_group],true],"MCC_fnc_manageWp", false, false] spawn BIS_fnc_MP;
+				{
+					[[1,screentoworld _pos,[2,"YELLOW","NO CHANGE","FULL","AWARE","true","",0],[_x],true],"MCC_fnc_manageWp", leader _x, false] spawn BIS_fnc_MP;
+				} forEach _groups;
 			};
 		} forEach MCC_ConsoleGroupSelected;
 	} else {
@@ -289,6 +442,12 @@ MCC_fnc_rtsMakeMarkersGroups = {
 	disableSerialization;
 	private ["_marker","_obj","_group","_ctrl","_disp","_ctrlColor"];
 	_disp = uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD", displayNull];
+
+	//remove logic markers
+	{
+		detach _x;
+		deletevehicle _x;
+	} forEach MCC_CONST_SELECTOR;
 
 	//remove all markers
 	{
@@ -311,19 +470,31 @@ MCC_fnc_rtsMakeMarkersGroups = {
 };
 
 MCC_fnc_highlightUICtrl = {
-	private ["_ctrl","_increase","_disp","_group","_ctrlColor"];
+	disableSerialization;
+	private ["_ctrl","_increase","_disp","_group","_ctrlColor","_group","_groupCtrls","_index"];
 	_ctrl = _this select 0;
 	_increase = _this select 1;
 	_ctrlColor = _this select 2;
 	_disp = uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD", displayNull];
 
+	//find group
+	_groupCtrls = missionNamespace getVariable ["MCC_rtsUIGroupsIcons", []];
+	if (count _groupCtrls == 0) exitWith {};
+	_index = ([_groupCtrls,_ctrl] call bis_fnc_findNestedElement) select 0;
+	if (isNil "_index") exitWith {};
+
+	_group = (_groupCtrls select _index) select 1;
+
 	if (_increase) then {
-		_ctrl ctrlSetScale 1.5;
+		_ctrl ctrlSetScale 1.1;
 		_ctrl ctrlSetTextColor [1,1,1,1];
+		_group setVariable ["MCC_rtsHighlightedGroup",true];
 	} else {
 		if ({_ctrl == (_disp displayCtrl (_x getVariable ["MCC_rtsGroupIcon",-1]))} count MCC_ConsoleGroupSelected ==  0) then {
+			_ctrlColor set [3,0.8];
 			_ctrl ctrlSetScale 1;
 			_ctrl ctrlSetTextColor _ctrlColor;
+			_group setVariable ["MCC_rtsHighlightedGroup",false];
 		};
 	};
 	_ctrl ctrlCommit 0;
@@ -341,126 +512,66 @@ _createBorderScope = [MCC_CONST_CAM,_size] call MCC_fnc_baseBuildBorders;
 ["mcc_constBaseID", "onEachFrame",
 {
 	disableSerialization;
-	private ["_startPos","_size","_list","_type","_pos","_sizeIcon","_icon","_text","_cfgName","_endTime","_segmentsElapsed","_startTime","_elec","_color"];
+	private ["_startPos","_size","_pos","_sizeIcon","_texture","_text","_obj","_color","_group","_leader","_inFOV","_ctrl","_uiPos","_visPos"];
 	_startPos 	= _this select 0;
 	_size		= _this select 1;
 
-	_list = _startPos nearEntities ["logic", _size];
+	//building Icons
+	{
+		_obj =(_x select 0);
+		_pos = getpos _obj;
+		_texture = (_x select 1);
+		_color = (_x select 2);
+		_text = (_x select 3);
+		_sizeIcon =if ((1.5 - ((MCC_CONST_CAM distance _obj)*0.0005)) < 0) then {0} else {(1.5 - ((MCC_CONST_CAM distance _obj)*0.0005))};
+		drawIcon3D [
+									_texture,
+									_color,
+									[_pos select 0, _pos select 1,(_pos select 2)+ 10],
+									_sizeIcon,
+									_sizeIcon,
+									0,
+									_text
+								];
+	} forEach (missionNamespace getvariable ["MCC_rtsBuildingsIcons",[]]);
 
 	{
-		_type = _x getVariable ["mcc_constructionItemType",""];
+		_ctrl = _x select 0;
+		_group = _x select 1;
+		_leader = leader _group;
+		_pos = visiblePosition _leader;
+		_pos set [2,(_pos select 2)+3];
 
-		if (_type != "") then {
-			_pos = getpos _x;
-			_sizeIcon =if ((1.5 - ((MCC_CONST_CAM distance _x)*0.0005)) < 0) then {0} else {(1.5 - ((MCC_CONST_CAM distance _x)*0.0005))};
-
-			_endTime = _x getVariable ["mcc_constructionendTime",30];
-			_startTime = _x getVariable ["mcc_constructionStartTime",time];
-			_cfgName 	= format ["MCC_rts_%1%2",_type,(_x getVariable ["mcc_constructionItemTypeLevel",1])];
-
-			if ((_startTime+_endTime) > time) then {
-				_text = "";
-				_segmentsElapsed = round((time -_startTime)/_endTime * 20);
-				for "_i" from 1 to _segmentsElapsed do
-				{
-					_text = _text + "|";
-				};
-
-			} else {
-				if (MCC_isMode) then {
-						 _text = getText (configFile >> "cfgRtsBuildings" >> _cfgName >> "displayName");
-						 _elec = (getNumber (configFile >> "cfgRtsBuildings" >> _cfgName >> "needelectricity"))==1;
-					} else {
-						 _text = getText (missionconfigFile >> "cfgRtsBuildings" >> _cfgName >> "displayName");
-						 _elec = (getNumber (missionconfigFile >> "cfgRtsBuildings" >> _cfgName >> "needelectricity"))==1;
-					};
-			};
-
-			switch (tolower _type) do {
-				case "hq": {_icon = "n_hq"};
-				case "storage": {_icon = "n_unknown"};
-				case "barracks": {_icon = "n_inf"};
-				case "workshop": {_icon = "n_service"};
-			};
-
-			if (!isnil "_icon") then {
-				_texture = gettext (configfile >> "CfgMarkers" >> _icon >> "icon");
-
-				private ["_color"];
-				_color = [0,0,0.6,0.6];
-
-				if (_elec && !(missionNamespace getVariable [format ["MCC_rtsElecOn_%1", playerSide],false])) then {
-					_color = [0.6,0,0,0.6];
-					_text = format ["%1 (Offline)", _text];
-				} else {
-					_color = [0,0,0.6,0.6];
-				};
-
-				drawIcon3D [
-								_texture,
-								_color,
-								[_pos select 0, _pos select 1,(_pos select 2)+ 10],
-								_sizeIcon,
-								_sizeIcon,
-								0,
-								_text
-							];
-			};
+		//In FOV
+		_visPos = (worldToScreen (visiblePosition _leader));
+		if (count _visPos > 1) then {
+			_inFOV = (_visPos select 0 > (0 * safezoneW + safezoneX)) && (_visPos select 0 <(1 * safezoneW + safezoneX)) && (_visPos select 1 > (0 * safezoneH + safezoneY)) && (_visPos select 1 < (0.676 * safezoneH + safezoneY)) && MCC_CONST_CAM distance _leader < 2000;
 		};
-	} foreach _list;
 
-	//group icons
-	private ["_leader","_side","_group","_uiPos","_display","_ctrl","_ratio","_groupCtrls","_inFOV","_ctrlIndex","_ctrlPos","_texture"];
+		if (isNil "_inFOV") then {_inFOV = false};
 
-	_display = uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD", displayNull];
-	_groupCtrls = missionNamespace getVariable ["MCC_rtsUIGroupsIcons", []];
-	{
-		if (isnull (_x select 1)) then {(_x select 0) ctrlShow false};
-	} forEach _groupCtrls;
-	//add icons to groups
-	{
-		_group = _x;
-		_leader = leader _x;
-		if !(isnil "_leader") then {
-			_side = side _x;
-			_pos = position _leader;
+		if (_inFOV && group (vehicle _leader) == _group) then {
+			if !(ctrlshown _ctrl) then {_ctrl ctrlShow true};
+			_ctrlPos = ctrlPosition _ctrl;
+			_uiPos = worldToScreen _pos;
 
-			_inFOV = ((worldToScreen (visiblePosition _leader)) select 0 > (0 * safezoneW + safezoneX)) && ((worldToScreen (visiblePosition _leader)) select 0 <(1 * safezoneW + safezoneX)) && MCC_CONST_CAM distance _leader < 2000;
-
-			if (_side == playerside) then {
-				_ctrlIndex = [_groupCtrls, _group] call bis_fnc_findNestedElement;
-				_ctrl = if (count _ctrlIndex <= 0) then {controlNull} else {(_groupCtrls select (_ctrlIndex select 0)) select 0};
-
-				if (isNull _ctrl && _inFOV) then {
-					_ctrl = [_group] call MCC_fnc_rtsCreateUICtrl;
-
-					_groupCtrls pushBack [_ctrl,_group];
-					 missionNamespace setVariable ["MCC_rtsUIGroupsIcons", _groupCtrls];
-				};
-
-				if (_inFOV) then {
-					if !(ctrlshown _ctrl) then {_ctrl ctrlShow true};
-					_ctrlPos = ctrlPosition _ctrl;
-					_uiPos = worldToScreen _pos;
-					if ((abs ((_ctrlPos select 0) - (_uiPos select 0)) > 0.05) || (abs ((_ctrlPos select 1) - (_uiPos select 1)) > 0.05)) then {
-						_ratio = 100/(MCC_CONST_CAM distance _leader) min 1;
-						_ctrl ctrlSetPosition [_uiPos select 0, (_uiPos select 1) -0.2*_ratio, 0.05*_ratio,0.06*_ratio];
-						_ctrl ctrlCommit 0;
-						_ctrl ctrlEnable true;
-						ctrlSetFocus _ctrl;
-					};
-				} else {
-					_ctrl ctrlShow false
-				};
-
-				//draw WP
-				if (_group in MCC_ConsoleGroupSelected) then {
-					[_group,MCC_CONST_CAM] spawn MCC_fnc_rtsDrawWpGroup;
-				};
+			if (count _uiPos > 1) then {
+				_ratio = 100/(MCC_CONST_CAM distance _leader) min 1;
+				_ctrl ctrlSetPosition [_uiPos select 0, _uiPos select 1, (0.1*_ratio) max 0.04,(0.12*_ratio) max 0.05];
+				_ctrl ctrlCommit 0;
+				_ctrl ctrlEnable true;
+				ctrlSetFocus _ctrl;
 			};
-		};
-	} foreach allGroups;
 
+		} else {
+			_ctrl ctrlShow false
+		};
+
+		//draw WP
+		if (_group in MCC_ConsoleGroupSelected || _group getVariable ["MCC_rtsHighlightedGroup",false]) then {
+			[_group,MCC_CONST_CAM] call MCC_fnc_rtsDrawWpGroup;
+		};
+	} forEach ( missionNamespace getVariable ["MCC_rtsUIGroupsIcons", []]);
 },[_startPos,_size]] call BIS_fnc_addStackedEventHandler;
 
 MCCCONSBASEKeyDown			=	(uinamespace getvariable "MCC_LOGISTICS_BASE_BUILD") displayAddEventHandler  ["KeyDown",		"if !(isnil 'MCC_CONST_CAM_Handler') then {MCC_temp = ['keydown',_this,commandingmenu] spawn MCC_CONST_CAM_Handler; MCC_temp = nil;}"];
@@ -546,28 +657,28 @@ MCC_CONST_CAM_Handler =
 		//--- Forward
 		if (_key in _keyForward) then
 		{
-			_pos = [_camera, (((getpos _camera) select 2)/40 min 40)* _factor, getdir _camera] call BIS_fnc_relPos;
+			_pos = [_camera, (((getpos _camera) select 2)/35 min 40)* _factor, getdir _camera] call BIS_fnc_relPos;
 			MCC_CONST_CAM SetPos _pos;
 		};
 
 		//--- Back
 		if (_key in _keyBack) then
 		{
-			_pos = [_camera, (((getpos _camera) select 2)/40 min 40)*_factor, (getdir _camera)-180] call BIS_fnc_relPos;
+			_pos = [_camera, (((getpos _camera) select 2)/35 min 40)*_factor, (getdir _camera)-180] call BIS_fnc_relPos;
 			MCC_CONST_CAM SetPos _pos;
 		};
 
 		//--- Left
 		if (_key in _keyLeft) then
 		{
-			_pos = [_camera, (((getpos _camera) select 2)/40 min 40)*_factor, (getdir _camera)-90] call BIS_fnc_relPos;
+			_pos = [_camera, (((getpos _camera) select 2)/35 min 40)*_factor, (getdir _camera)-90] call BIS_fnc_relPos;
 			MCC_CONST_CAM SetPos _pos;
 		};
 
 		//--- Right
 		if (_key in _keyRight) then
 		{
-			_pos = [_camera, (((getpos _camera) select 2)/40 min 40)*_factor, (getdir _camera)+90] call BIS_fnc_relPos;
+			_pos = [_camera, (((getpos _camera) select 2)/35 min 40)*_factor, (getdir _camera)+90] call BIS_fnc_relPos;
 			MCC_CONST_CAM SetPos _pos;
 		};
 
@@ -575,7 +686,7 @@ MCC_CONST_CAM_Handler =
 		if (_key in _keyUp) then
 		{
 			_pos = getpos MCC_CONST_CAM;
-			_pos set [2, (_pos select 2) + (((getpos _camera) select 2)/20 min 10)*_factor];
+			_pos set [2, ((_pos select 2) + (((getpos _camera) select 2)/20 min 10)*_factor) min 150];
 			MCC_CONST_CAM SetPos _pos;
 		};
 
@@ -583,7 +694,7 @@ MCC_CONST_CAM_Handler =
 		if (_key in _keyDown) then
 		{
 			_pos = getpos MCC_CONST_CAM;
-			_pos set [2, (_pos select 2) -(((getpos _camera) select 2)/20 min 10)*_factor];
+			_pos set [2, ((_pos select 2) -(((getpos _camera) select 2)/20 min 10)*_factor) max 20];
 			MCC_CONST_CAM SetPos _pos;
 		};
 	};
@@ -725,16 +836,16 @@ MCC_CONST_CAM_Handler =
 			};
 		};
 
-		if (_key == 1) exitWith
-		{
+		if (_key == 1) exitWith	{
 			//Cancel Build
 			if (!isnull MCC_CONST_PLACEHOLDER) then {
 				deleteVehicle MCC_CONST_PLACEHOLDER;
 				MCC_CONST_PLACEHOLDER = objnull;
 			};
 
-			if (isnull MCC_CONST_PLACEHOLDER && abs (_posX - ((uiNamespace getVariable ["MCC_rtsMenuXYpos",[0,0]]) select 0))<0.01) then {
-				private ["_group","_action","_groupCtrls"];
+			//Add WP
+			if (isnull MCC_CONST_PLACEHOLDER && abs (_posX - ((uiNamespace getVariable ["MCC_rtsMenuXYpos",[0,0]]) select 0))<0.005) then {
+				private ["_groups","_action","_groupCtrls"];
 				_groupCtrls = missionNamespace getVariable ['MCC_rtsUIGroupsIcons', []];
 				_action = switch (true) do {
 							//Get In
@@ -742,14 +853,56 @@ MCC_CONST_CAM_Handler =
 						    //move
 						    default {0};
 						};
+
+				_groups = [];
 				{
-					_group = _x;
-					if (typeName _group == typeName grpNull) then {
-						//Call the server to handle WP
-						player globalRadio "CuratorWaypointPlaced";
-						[[1,screenToWorld [_posX,_posY],[0,"YELLOW","NO CHANGE","FULL","AWARE","true","",0],[_group],true],"MCC_fnc_manageWp", false, false] spawn BIS_fnc_MP;
+					if (typeName _x == typeName grpNull) then {
+						if (canMove leader _x && !(vehicle leader _x isKindOf "StaticWeapon")) then {_groups pushBack _x};
 					};
 				} forEach MCC_ConsoleGroupSelected;
+
+				if (count _groups > 0) then {
+					private ["_wpPos","_string","_wpType"];
+
+					_wpPos = screenToWorld [_posX,_posY];
+					_wpType = 0;
+					_string = "";
+
+					player globalRadio "CuratorWaypointPlaced";
+
+					{
+						if (leader _x isKindOf "Man") then {
+							_list = (_wpPos nearObjects ["LandVehicle", 10]);
+							_list = _list + (_wpPos nearObjects ["Ship", 10]);
+
+							//Fortify buildings
+							if ((nearestBuilding _wpPos) distance _wpPos < 5) then {
+								_buildingPos = [(nearestBuilding _wpPos), count units _x] call BIS_fnc_buildingPositions;
+								_x setVariable ["MCC_rtsIsFortified",true,true];
+
+								_string = format ["{
+								                      _unit = (thislist select  _forEachIndex);
+								                      _unit domove _x;
+								                      _unit setSpeedMode 'FULL';
+								                      _unit spawn {
+								                      	sleep 5;
+								                      	waituntil {unitready _this};
+								                      	_this disableai 'move';
+								                      	while {(unitready leader _this)} do {sleep 1};
+								                      	_this enableai 'move';
+								                       };
+								                  } forEach %1;",_buildingPos];
+							} else {
+								//Board empty vehicles
+								if ({count crew _x ==0} count _list > 0) then {
+									_wpType = 15;
+								};
+							};
+						};
+
+						[[if (_ctrlK) then {0} else {1},_wpPos,[_wpType,"YELLOW","NO CHANGE","FULL","AWARE","true",_string,0],[_x],true],"MCC_fnc_manageWp", leader _x, false] spawn BIS_fnc_MP;
+					} forEach _groups;
+				};
 			};
 		};
 	};
@@ -779,6 +932,19 @@ MCC_CONST_CAM_Handler =
 			_ctrlPosY 	= _ctrlPos select 1;
 			_ctrlPosW 	= _ctrlPos select 2;
 			_ctrlPosH 	= _ctrlPos select 3;
+
+			//Compass
+			_cam = missionNamespace getVariable ["MCC_CONST_CAM",objNull];
+
+			if (_mode == "mousemoving" && !isNull _cam) then {
+				for [{_i = 0;_j = 0},{_i < 360;_j < 4},{_i = _i + 90;_j = _j + 1}] do {
+					_x = (0.476 + sin(_i - (getdir _cam))*(SafeZoneW/8 - SafeZoneW/200));
+					_y = (0.42 - cos(_i - (getdir _cam))*(SafeZoneH/8 - SafeZoneH/200));
+
+					((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlSetPosition  [_x,_y];
+					((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlCommit 0;
+				};
+			};
 
 			if (!isnull MCC_CONST_PLACEHOLDER) then {
 				if (uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD_MBDOWN",false]) exitWith {
@@ -818,35 +984,33 @@ MCC_CONST_CAM_Handler =
 				{MCC_CONST_PLACEHOLDER setObjectTexture [_x,_color]} foreach [0,1,2];
 			};
 
-			if (_mode =="mouseholding") then {
+			/*
+			if (_mode =="mouseholding" && !(isNil "_camera")) then {
 				//Mouse pan left
-				if ((MCC_mousePos select 0) < (_ctrlPosX + (_ctrlPosW * 0.04))) then
-				{
-					_pos = [_camera, (((getpos _camera) select 2)/40 min 40), (getdir _camera)-90] call BIS_fnc_relPos;
+				if ((MCC_mousePos select 0) < (_ctrlPosX + (_ctrlPosW * 0.04))) then {
+					_pos = [_camera, (((getpos _camera) select 2)/20 min 40), (getdir _camera)-90] call BIS_fnc_relPos;
 					MCC_CONST_CAM SetPos _pos;
 				};
 
 				//Mouse pan right
-				if ((MCC_mousePos select 0) > (_ctrlPosX + (_ctrlPosW * 0.96))) then
-				{
-					_pos = [_camera, (((getpos _camera) select 2)/40 min 40), (getdir _camera)+90] call BIS_fnc_relPos;
+				if ((MCC_mousePos select 0) > (_ctrlPosX + (_ctrlPosW * 0.96))) then {
+					_pos = [_camera, (((getpos _camera) select 2)/20 min 40), (getdir _camera)+90] call BIS_fnc_relPos;
 					MCC_CONST_CAM SetPos _pos;
 				};
 
 				//Mouse pan UP
-				if ((MCC_mousePos select 1) < (_ctrlPosY + (_ctrlPosH *0.1))) then
-				{
-					_pos = [_camera, (((getpos _camera) select 2)/40 min 40), getdir _camera] call BIS_fnc_relPos;
+				if ((MCC_mousePos select 1) < (_ctrlPosY + (_ctrlPosH *0.1))) then {
+					_pos = [_camera, (((getpos _camera) select 2)/20 min 40), getdir _camera] call BIS_fnc_relPos;
 					MCC_CONST_CAM SetPos _pos;
 				};
 
 				//Mouse pan down
-				if ((MCC_mousePos select 1) > (_ctrlPosY + (_ctrlPosH *0.98))) then
-				{
-					_pos = [_camera, (((getpos _camera) select 2)/40 min 40), (getdir _camera)-180] call BIS_fnc_relPos;
+				if ((MCC_mousePos select 1) > (_ctrlPosY + (_ctrlPosH *0.98))) then {
+					_pos = [_camera, (((getpos _camera) select 2)/20 min 40), (getdir _camera)-180] call BIS_fnc_relPos;
 					MCC_CONST_CAM SetPos _pos;
 				};
 			};
+			*/
 
 			//selection box
 			if (uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD_MBDOWNLeft",false] && (isnull MCC_CONST_PLACEHOLDER)) then {
@@ -860,11 +1024,13 @@ MCC_CONST_CAM_Handler =
 
 				_ctrl = _disp displayCtrl 9929;
 				_ctrl ctrlShow true;
-				_ctrl ctrlSetTextColor [1,1,1,1];
+				_ctrl ctrlSetTextColor [0,1,0,1];
 				_ctrl ctrlSetPosition _start + [_hight] + [_width];
 				_ctrl ctrlCommit 0;
 			};
 		};
+
+
 
 		uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD_MOUSEXY",[_posX,_posY]];
 	};
@@ -902,3 +1068,10 @@ MCC_ConsoleGroupSelected = [];
 //remove fog effects
 setViewDistance (missionNamespace getVariable ["MCC_playerViewDistance",1800]);
 
+//Clean Compass
+(["MCC_compass"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
+
+//Unhide units
+{
+	_x hideObject false;
+} forEach (missionNamespace getVariable ["MCC_rtsHiddenUnits", []]);

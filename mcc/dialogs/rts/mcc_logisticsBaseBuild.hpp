@@ -88,16 +88,16 @@ class MCC_LOGISTICS_BASE_BUILD
 
 		class map: MCC_RscMapControl
 		{
-			idc = 1004;
+			idc = 9120;
 			x = 0.005 * safezoneW + safezoneX;
 			y = 0.676 * safezoneH + safezoneY;
 			w = 0.216563 * safezoneW;
 			h = 0.319 * safezoneH;
 
-			onMouseButtonDown = "";
-			onMouseButtonUp = "";
-			onMouseButtonDblClick = "";
-			onMouseMoving = "";
+			onMouseButtonDown = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\console\mouseDown.sqf'");
+			onMouseButtonUp = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\console\mouseUp.sqf'");
+			onMouseButtonDblClick = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\console\mouseDblClick.sqf'");
+			onMouseMoving = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\console\mouseMoving.sqf'");
 		};
 	};
 };

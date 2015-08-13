@@ -7,8 +7,9 @@
 private ["_ctrl","_ctrlPic","_ctrlText","_disp","_text","_res","_action","_cfgtext","_cfgName","_reqText","_req","_cfgFile","_radius"];
 disableSerialization;
 
-_ctrl 		= (_this select 0) select 0;
-_ctrlText 	= _this select 1;
+_ctrl = (_this select 0) select 0;
+_cfgFile = _this select 1;
+
 _disp = uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD";
 _radius = 200;
 
@@ -16,16 +17,14 @@ _cfgName = missionNamespace getVariable [format ["MCC_ctrlData_%1", ctrlIDC _ctr
 
 
 //Action or building?
-if (MCC_isMode) then {
-	_cfgFile =  if (isClass (configFile >> "cfgRtsBuildings" >> _cfgName)) then {"cfgRtsBuildings"} else {"cfgrtsActions"};
-	_cfgtext = [getText (configFile >> _cfgFile >> _cfgName >> "displayName"),getText (configFile >> _cfgFile >> _cfgName >> "descriptionShort")];
-	_res = getArray (configFile >> _cfgFile >> _cfgName >> "resources");
-	_req = getArray (configFile >> _cfgFile >> _cfgName >> "requiredBuildings");
-} else {
-	_cfgFile =  if (isClass (missionconfigFile >> "cfgRtsBuildings" >> _cfgName)) then {"cfgRtsBuildings"} else {"cfgrtsActions"};
+if (isClass (missionconfigFile >> _cfgFile)) then {
 	_cfgtext = [getText (missionconfigFile >> _cfgFile >> _cfgName >> "displayName"),getText (missionconfigFile >> _cfgFile >> _cfgName >> "descriptionShort")];
 	_res = getArray (missionconfigFile >> _cfgFile >> _cfgName >> "resources");
 	_req = getArray (missionconfigFile >> _cfgFile >> _cfgName >> "requiredBuildings");
+} else {
+	_cfgtext = [getText (configFile >> _cfgFile >> _cfgName >> "displayName"),getText (configFile >> _cfgFile >> _cfgName >> "descriptionShort")];
+	_res = getArray (configFile >> _cfgFile >> _cfgName >> "resources");
+	_req = getArray (configFile >> _cfgFile >> _cfgName >> "requiredBuildings");
 };
 
 //Required buildings

@@ -455,7 +455,9 @@ class MCC
 		class rtsFortUIContainer {description = "create a UI container";};
 		class rtsBuildUIContainerBack {description = "back from UI container";};
 		class rtsbuyVehicle {description = "open vehicle spawner dialog for the commander";};
-		class rtsOrderMove {description = "Move the selected units"};
+		class rtsOrderStop {description = "Stop WP"};
+		class rtsOrderGetout {description = "Disembark units from vehicle"};
+		class rtsOrderLand {description = "Order land"}
 	};
 
 	class forts

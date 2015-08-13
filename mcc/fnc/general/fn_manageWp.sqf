@@ -41,7 +41,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 						//Find nearest transport
 						_objects 	= nearestObjects [[_wpLoc select 0,_wpLoc select 1,0],["Car","Tank","AIR"], 100];
 						{
-							if ((_x emptyPositions "cargo")>3) exitWith {_wpObject = _x};
+							if ((_x emptyPositions "cargo")>1) exitWith {_wpObject = _x};
 						} foreach _objects;
 
 						if (isnil "_wpObject") exitWith 				//Exit - no vehicle found

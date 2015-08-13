@@ -41,7 +41,7 @@ for "_i" from 1 to _total do
 	_ypos = (_center select 1) + (cos _dir * _size);
 	_zpos = (_center select 2);
 
-	_a = "Land_VR_Block_01_F" createvehiclelocal [_xpos,_ypos,_zpos];
+	_a = "Sign_Circle_F" createvehiclelocal [_xpos,_ypos,_zpos];
 	_a setpos [_xpos,_ypos,0];
 	_a setdir (_dir + 90);
 	_a enableSimulation false;

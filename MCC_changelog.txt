@@ -87,10 +87,12 @@ Misc:
 //TODO
 MCC_CONST_SELECTED
 change construction time and needed resources
-find another way to make markers
+
 Add trade repair/ammo/fuel for food.
 add fuel/health/ammo sliders in ui
-Add map in rts as in console
+Add vehicles actions (add units)
+Add logistics dialog
+
 
 Add "add resources module"
 Add in campaign number of tickets to start with and disable missions in campaign.

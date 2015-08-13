@@ -44,7 +44,7 @@ class MCC_rts_populateVehicle
 
 	displayName = "Spawn Crew";
 	descriptionShort = "Spawn Crew to the selected vehicle/weapon";
-	condition = "((_obj getVariable ['MCC_rtsObject',false]) && (_obj emptyPositions 'Driver' > 0 || _obj emptyPositions 'Gunner' > 0))";
+	condition = "((_target getVariable ['MCC_rtsObject',false]) && (_target emptyPositions 'Driver' > 0 || _target emptyPositions 'Gunner' > 0))";
 	dontShowDisabled = 1;
 	requiredBuildings[] = {{"barracks",1}};
 	needelectricity = 0;
@@ -52,20 +52,56 @@ class MCC_rts_populateVehicle
 	resources[] = {{"food",100}};
 };
 
-class MCC_rts_orderMove
+class MCC_rts_orderStop
 {
 	#ifdef MCCMODE
-	picture = "\mcc_sandbox_mod\data\rts\back.paa";
+	picture = "\mcc_sandbox_mod\data\rts\stop.paa";
 	#else
-	picture = "data\rts\back.paa";
+	picture = "data\rts\stop.paa";
 	#endif
 
-	displayName = "Move";
-	descriptionShort = "Move the selected units";
-	condition = "alive _obj";
+	displayName = "Stop";
+	descriptionShort = "Stop Current Actions";
+	condition = "alive _target";
 	dontShowDisabled = 1;
 	requiredBuildings[] = {};
 	needelectricity = 0;
-	actionFNC = "MCC_fnc_rtsOrderMove";
+	actionFNC = "MCC_fnc_rtsOrderStop";
+	resources[] = {};
+};
+
+class MCC_rts_OrderGetout
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\data\rts\out.paa";
+	#else
+	picture = "data\rts\out.paa";
+	#endif
+
+	displayName = "Disembark";
+	descriptionShort = "Disembark cargo units";
+	condition = "alive _target && {count assignedCargo vehicle _x > 0} count (units _target) > 0";
+	dontShowDisabled = 1;
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsOrderGetout";
+	resources[] = {};
+};
+
+class MCC_rts_OrderLand
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\data\rts\land.paa";
+	#else
+	picture = "data\rts\land.paa";
+	#endif
+
+	displayName = "Land";
+	descriptionShort = "Order the helicopter to land";
+	condition = "alive _target";
+	dontShowDisabled = 1;
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsOrderLand";
 	resources[] = {};
 };

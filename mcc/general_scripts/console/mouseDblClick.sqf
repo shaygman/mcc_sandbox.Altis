@@ -1,5 +1,5 @@
 //Returns the control, the pressed button, the x and y coordinates and the state of Shift, Ctrl and Alt.
-private ["_params","_ctrl","_button","_posX","_posY","_shift","_ctrlKey","_alt","_mccdialog","_html","_comboBox","_displayname","_index"];
+private ["_params","_ctrl","_button","_posX","_posY","_shift","_ctrlKey","_alt","_mccdialog","_html","_comboBox","_displayname","_index","_3dCommander"];
 #define mcc_playerConsole_IDD 2993
 #define mcc_playerConsole2_IDD 5000
 #define mcc_playerConsole3_IDD 5010
@@ -30,30 +30,16 @@ _shift = _params select 4;
 _ctrlKey = _params select 5;
 _alt = _params select 6;
 
+//is 3d commander online?
+_3dCommander = !(isnull (uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD"));
+
 //Define which control
 if (MCC_Console1Open) then {_mccdialog = findDisplay mcc_playerConsole_IDD};
 if (MCC_Console2Open) then {_mccdialog = findDisplay mcc_playerConsole2_IDD};
 if (MCC_Console3Open) then {_mccdialog = findDisplay mcc_playerConsole3_IDD};
 
-//Quick WP
-if (_button == 0  && _ctrlKey && (count MCC_ConsoleGroupSelected > 0)) then
-{
-	private ["_groups","_pos"];
-	_groups = [];
-	_pos = _ctrl ctrlmapscreentoworld [_posX,_posY];
-	{
-		if (MCC_ConsoleCanCommandAI || (!MCC_ConsoleCanCommandAI && isplayer leader _x)) then
-		{
-			_groups set [count _groups, _x];
-		};
-	} foreach MCC_ConsoleGroupSelected;
-
-	//Call the server to handle WP
-	[[1,_pos,[0,"NO CHANGE","NO CHANGE","NO CHANGE","NO CHANGE","true","",0],_groups,true],"MCC_fnc_manageWp", false, false] spawn BIS_fnc_MP;
-};
-
-if ((_button == 0) && (count MCC_ConsoleGroupSelected > 0) && !_ctrlKey)  then 								//Close Group info control
-{
+//Close Group info control
+if ((_button == 0) && (count MCC_ConsoleGroupSelected > 0) && !_ctrlKey && !_3dCommander)  then {
 	//worldPos
 	MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
 	ctrlShow [MCC_CONSOLEINFOTEXT,false];
@@ -165,8 +151,15 @@ if ((_button == 0) && (count MCC_ConsoleGroupSelected > 0) && !_ctrlKey)  then 	
 	waituntil {ctrlCommitted (_mccdialog displayctrl MCC_CONSOLEWPCLEAR)};
 };
 
+if (_3dCommander) then {
+	private ["_cam","_hight","_pos"];
+	_cam = missionNamespace getVariable ["MCC_CONST_CAM",objNull];
+	if !(isNull _cam) then {
+		_hight = (getpos _cam) select 2;
+		_pos = _ctrl ctrlmapscreentoworld [_posX,_posY];
+		_pos set [2,_hight];
+		MCC_CONST_CAM setpos _pos;
+	};
+};
+
 MCC_doubleClicked = false;
-
-
-
-//hint format ["_ctrl: %1; _button: %2; _pos: %3, _shift: %4; _ctrl: %5; _alt: %6;",_ctrl,_button,[_posX,_posY],_shift,_ctrl,_alt];

@@ -30,6 +30,9 @@ _alt = _params select 6;
 
 MCC_ConsoleMouseButtonDown = true;	//Mouse state
 MCC_ConsoleMouseButtonUp = false;
+
+missionNamespace setVariable ["MCCConsoleDispPosXYScreen",[_posX,_posY]];
+
 if (isnil "MCC_doubleClicked") then {MCC_doubleClicked =false};
 
 //Close Group info control

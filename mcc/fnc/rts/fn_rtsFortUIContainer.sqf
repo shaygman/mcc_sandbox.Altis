@@ -46,23 +46,20 @@ for "_i" from 9101 to 9112 do
 		_availableActions = _availableActions - [-1];
 
 		//Get CFG
-		if (MCC_isMode) then
-		{
-			_pic = getText (configFile >> "cfgRtsActions" >> _action >> "picture");
-			_res = getArray (configFile >> "cfgRtsActions" >> _action >> "resources");
-			_req = getArray (configFile >> "cfgRtsActions" >> _action >> "requiredBuildings");
-			_elec = getNumber (configFile >> "cfgRtsActions" >> _action >> "needelectricity");
-			_fnc = getText (configFile >> "cfgRtsActions" >> _action >> "actionFNC");
-			_cnd = getText (configFile >> "cfgRtsActions" >> _action >> "condition");
-		}
-		else
-		{
+		if (isClass (missionconfigFile >> "cfgRtsActions")) then {
 			_pic = getText (missionconfigFile >> "cfgRtsActions" >> _action >> "picture");
 			_res = getArray (missionconfigFile >> "cfgRtsActions" >> _action >> "resources");
 			_req = getArray (missionconfigFile >> "cfgRtsActions" >> _action >> "requiredBuildings");
 			_elec = getNumber (missionconfigFile >> "cfgRtsActions" >> _action >> "needelectricity");
 			_fnc = getText (missionconfigFile >> "cfgRtsActions" >> _action >> "actionFNC");
 			_cnd = getText (missionconfigFile >> "cfgRtsActions" >> _action >> "condition");
+		} else {
+			_pic = getText (configFile >> "cfgRtsActions" >> _action >> "picture");
+			_res = getArray (configFile >> "cfgRtsActions" >> _action >> "resources");
+			_req = getArray (configFile >> "cfgRtsActions" >> _action >> "requiredBuildings");
+			_elec = getNumber (configFile >> "cfgRtsActions" >> _action >> "needelectricity");
+			_fnc = getText (configFile >> "cfgRtsActions" >> _action >> "actionFNC");
+			_cnd = getText (configFile >> "cfgRtsActions" >> _action >> "condition");
 		};
 
 		_ctrl ctrlShow true;
@@ -109,7 +106,7 @@ for "_i" from 9101 to 9112 do
 
 		//add EH
 		if (_available && _online) then {_ctrl ctrlAddEventHandler ["MouseButtonClick",format ['[_this select 0, %2] spawn %1',_fnc,_res]]};
-		_ctrl ctrlAddEventHandler ["MouseHolding",format ["[_this,'%1'] call MCC_fnc_baseActionEntered",_action]];
+		_ctrl ctrlAddEventHandler ["MouseHolding","[_this,'cfgRtsActions'] call MCC_fnc_baseActionEntered"];
 		_ctrl ctrlAddEventHandler ["MouseExit",format ["[_this,'%1'] call MCC_fnc_baseActionExit",_action]];
 	}
 	else
