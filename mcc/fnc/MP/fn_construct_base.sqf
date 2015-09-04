@@ -2,7 +2,7 @@
 // Example:[_pos, _anchorDir , _anchorType, _BuildTime, _side]  call  MCC_fnc_construct_base;
 //==============================================================================================================================================================================
 private ["_cfgClass","_anchorType","_anchorDir","_pos","_objs","_constType","_anchor","_object","_BuildTime","_buildingObjs","_builtArray",
-         "_side","_level","_instant","_endTime","_boxName","_boxArray","_box","_text"];
+         "_side","_level","_instant","_endTime","_boxName","_boxArray","_box","_text","_res"];
 _pos			= _this select 0;
 _anchorDir 		= _this select 1;
 _cfgClass		= _this select 2;
@@ -13,32 +13,25 @@ _instant = if (_BuildTime <=0) then {true} else {false};
 
 //Wait for mission start
 waituntil {time > 0};
-//Do we have a box for our side?
 
-if (MCC_isMode) then
-{
-	_anchorType = getText (configFile >> "cfgRtsBuildings" >> _cfgClass >> "anchorType");
-	_constType = getText (configFile >> "cfgRtsBuildings" >> _cfgClass >> "constType");
-	_level = getNumber (configFile >> "cfgRtsBuildings" >> _cfgClass >> "level");
-	_res = getArray (configFile >> "cfgRtsBuildings" >> _cfgClass >> "resources");
-	_objs = getArray (configFile >> "cfgRtsBuildings" >> _cfgClass >> "objectsArray");
 
-	{
-		if ((_x select 0)=="time") exitWith {_BuildTime = (_x select 1)};
-	} foreach _res;
-}
-else
-{
+if (isClass (missionconfigFile >> "cfgRtsBuildings")) then {
 	_anchorType = getText (missionconfigFile >> "cfgRtsBuildings" >> _cfgClass >> "anchorType");
 	_constType = getText (missionconfigFile >> "cfgRtsBuildings" >> _cfgClass >> "constType");
 	_level = getNumber (missionconfigFile >> "cfgRtsBuildings" >> _cfgClass >> "level");
 	_res = getArray (missionconfigFile >> "cfgRtsBuildings" >> _cfgClass >> "resources");
 	_objs = getArray (missionconfigFile >> "cfgRtsBuildings" >> _cfgClass >> "objectsArray");
-
-	{
-		if ((_x select 0)=="time") exitWith {_BuildTime = (_x select 1)};
-	} foreach _res;
+} else {
+	_anchorType = getText (configFile >> "cfgRtsBuildings" >> _cfgClass >> "anchorType");
+	_constType = getText (configFile >> "cfgRtsBuildings" >> _cfgClass >> "constType");
+	_level = getNumber (configFile >> "cfgRtsBuildings" >> _cfgClass >> "level");
+	_res = getArray (configFile >> "cfgRtsBuildings" >> _cfgClass >> "resources");
+	_objs = getArray (configFile >> "cfgRtsBuildings" >> _cfgClass >> "objectsArray");
 };
+
+{
+	if ((_x select 0)=="time") exitWith {_BuildTime = (_x select 1)};
+} foreach _res;
 
 _buildingObjs = [
 					["Land_Pipes_large_F", [-7,0,-1],70],
@@ -48,9 +41,14 @@ _buildingObjs = [
                 ];
 
 if (isnil "_constType") exitWith {};
+
 //Build module
+/*
 if (isNil "MCC_dummyLogicGroup") then {MCC_dummyLogicGroup = createGroup sideLogic};
 _module = MCC_dummyLogicGroup createunit ["Logic", _pos,[],0.5,"NONE"];
+*/
+_module = "UserTexture10m_F" createVehicle _pos;
+
 _module setVariable ["mcc_constructionItemType",_constType,true];
 _module setVariable ["mcc_constructionItemTypeLevel",_level,true];
 
@@ -102,7 +100,7 @@ if (_constType != "hq") then {
 									_side		= _obj getVariable ["mcc_side",sidelogic];
 									_text = "<img size='5' image='\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\attack_ca.paa'/><br/><br/><t align='center' size='1.8' color='#FFCF11'> Enemy forces are attacking your base</t><br/>";
 
-									if (_ammo in ["SatchelCharge_Remote_Ammo"] && _damage > 0.6) then
+									if (_ammo in ["SatchelCharge_Remote_Ammo","SatchelCharge_Remote_Ammo_Scripted"] && _damage > 0.6) then
 									{
 
 										{detach _x; deleteVehicle _x} foreach attachedObjects _obj;

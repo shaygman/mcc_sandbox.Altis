@@ -1,4 +1,4 @@
-class MCC_Module_warZone : MCC_Module_Base
+class MCC_Module_warZoneCurator : MCC_Module_Base
 {
 	scopeCurator = 2;
 	category = "MCC";

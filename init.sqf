@@ -75,9 +75,9 @@ if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
 //--------------------logistics -------------------------------------------------------
 //Default resources
 //[ammo,supply,fuel]
-if (isnil "MCC_resWest") then {MCC_resWest = [1500,500,200,200,100]};
-if (isnil "MCC_resEast") then {MCC_resEast = [1500,500,200,200,100]};
-if (isnil "MCC_resGUER") then {MCC_resGUER = [1500,500,200,200,100]};
+if (isnil "MCC_resWest") then {MCC_resWest = [1500,500,200,200,200]};
+if (isnil "MCC_resEast") then {MCC_resEast = [1500,500,200,200,200]};
+if (isnil "MCC_resGUER") then {MCC_resGUER = [1500,500,200,200,200]};
 
 //--------------------Screens -------------------------------------------------------
 //Teleport 2 Team
@@ -617,7 +617,6 @@ mcc_track_units			= false;
 mcc_safe				= "";
 mcc_load				= "";
 mcc_isloading			= false;
-mcc_request				= 0;
 mcc_resetmissionmaker	= false;
 if (isnil "mcc_missionmaker") then {mcc_missionmaker = ""};
 mcc_firstTime			= true; //First time runing?
@@ -1240,8 +1239,7 @@ if (isServer || MCC_isLocalHC) then
 				//Store ALL original group setups
 				if (count(_gaia_respawn)==0) then {[(_x)] call GAIA_fnc_cacheOriginalGroup;};
 
-				if ((({alive _x} count units _x) == 0) && !(_x getVariable ["MCC_CPGroup",false])) then
-				{
+				if ((({alive _x} count units _x) == 0) && !(_x getVariable ["MCC_CPGroup",false]) && !( leader _x isKindof "logic")) then {
 					//Before we send him to heaven check if he should be reincarnated
 					if (count(_gaia_respawn)==2) then {	[_gaia_respawn,(_x getVariable  ["MCC_GAIA_RESPAWN",-1]),(_x getVariable  ["MCC_GAIA_CACHE",false]),(_x getVariable  ["GAIA_zone_intend",[]])] call GAIA_fnc_uncacheOriginalGroup;};
 

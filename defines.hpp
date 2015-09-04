@@ -1,6 +1,7 @@
 #define MCCPATH ""
 #define MCCVersion "0.1"
 
+
 //--------------------------Dialogs----------------------------------------------------
 #include "mcc\dialogs\mcc_dialogs.hpp"
 
@@ -8,7 +9,6 @@
 #include "mcc\dialogs\mcc_3d_dialog.hpp"
 #include "mcc\Dialogs\mcc_boxGen.hpp"
 #include "mcc\Dialogs\mcc_groupsGen.hpp"
-#include "mcc\Dialogs\mcc_loginDialog.hpp"
 #include "mcc\Dialogs\mcc_MWMainDialog.hpp"
 
 //----Console-----------------
@@ -30,8 +30,6 @@
 
 //----Logistics-----------------
 #include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
-#include "mcc\Dialogs\rts\mcc_logisticsBaseBuild.hpp"
-#include "mcc\Dialogs\rts\rtsMainBox.hpp"
 
 //----Interaction-----------------
 #include "mcc\Dialogs\mcc_interactionMenu.hpp"
@@ -68,12 +66,25 @@
 #include "VAS\menu.hpp"
 #include "spectator\spectating.hpp"
 
+//--------------------------features----------------------------------------------------
+#include "mcc\login\cfg.hpp"
+#include "mcc\rts\cfg.hpp"
+
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
 {
 	#include "gaia\cfgFunctions.hpp"
-	#include "mcc\cfg\cfgFunctions.hpp"
 	#include "VAS\cfgFunctions.hpp"
+
+	class MCC
+	{
+		tag = "MCC";
+		#include "mcc\cfg\cfgFunctions.hpp"
+		#include "mcc\login\cfgFunctions.hpp"
+		#include "mcc\rts\cfgFunctions.hpp"
+		#include "mcc\cfg\modules\cfgFunctions.hpp"
+		#include "mcc\cfg\curator\cfgFunctions.hpp"
+	};
 };
 
 class CfgObjectCompositions
@@ -96,25 +107,7 @@ class CfgNotifications
 	#include "mcc\cfg\CfgNotifications.hpp"
 };
 
-class cfgRtsBuildings
-{
-	#include "mcc\cfg\rts\cfgRtsBuildings.hpp"
-};
 
-class cfgRtsActions
-{
-	#include "mcc\cfg\rts\cfgRtsActions.hpp"
-};
-
-class cfgRtsVehiclesActions
-{
-	#include "mcc\cfg\rts\cfgRtsVehiclesActions.hpp"
-};
-
-class cfgRtsNonBuildingsActions
-{
-	#include "mcc\cfg\rts\cfgRtsNonBuildingsActions.hpp"
-};
 
 
 class RscTitles

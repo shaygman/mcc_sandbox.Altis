@@ -451,6 +451,27 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
+
+		class allowRTS
+		{
+			displayName = "Real Time Strategy";
+			description = "Enable RTS interface in the commander console";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
 	};
 
 	class ModuleDescription: ModuleDescription

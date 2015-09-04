@@ -13,19 +13,8 @@ class Module_F: Logic
 	};
 };
 
-#include "modules\access.hpp"
-#include "modules\sf.hpp"
-#include "modules\RestrictedZone.hpp"
-#include "modules\ILS.hpp"
-#include "modules\StartLocations.hpp"
-#include "modules\MissionSettings.hpp"
-#include "modules\GAIASettings.hpp"
-#include "modules\cover.hpp"
-#include "modules\radio.hpp"
-#include "modules\medicSystem.hpp"
-#include "modules\modulevehicleSpawner.hpp"
-
-#include "curator\curatorCfg.hpp"
+#include "modules\cfgVehicles.hpp"
+#include "curator\cfgVehicles.hpp"
 
 class Box_NATO_Ammo_F;
 #include "ammoBox\medicBox.hpp"

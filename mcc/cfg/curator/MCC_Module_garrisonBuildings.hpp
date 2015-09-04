@@ -1,4 +1,4 @@
-class MCC_Module_garrisonBuildings : MCC_Module_Base
+class MCC_Module_garrisonBuildingsCurator : MCC_Module_Base
 {
 	scopeCurator = 2;
 	category = "MCC";

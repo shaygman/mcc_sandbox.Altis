@@ -14,7 +14,7 @@ class CfgPatches
 
 	class mcc_sandbox_curatorExp
 	{
-		units[] = {"MCC_Module_Base","MCC_Module_addUnitsToZeus","MCC_Module_ambientCivilians","MCC_Module_MCCCAS","MCC_Module_createEvac","MCC_Module_createIED","MCC_Module_createArmedCivilian","MCC_Module_nightEffects","MCC_Module_lockDoors","MCC_Module_atmosphere","MCC_Module_warZone","MCC_Module_garrisonBuildings","MCC_Module_damagePart","MCC_Module_vehicleSpawnerCurator","MCC_Module_campaignInit"};
+		units[] = {"MCC_Module_Base","MCC_Module_addUnitsToZeusCurator","MCC_Module_ambientCiviliansCurator","MCC_Module_MCCCASCurator","MCC_Module_createEvacCurator","MCC_Module_createIEDCurator","MCC_Module_createArmedCivilianCurator","MCC_Module_nightEffectsCurator","MCC_Module_lockDoorsCurator","MCC_Module_atmosphereCurator","MCC_Module_warZoneCurator","MCC_Module_garrisonBuildingsCurator","MCC_Module_damagePartCurator","MCC_Module_vehicleSpawnerCurator","MCC_Module_campaignInitCurator","MCC_Module_setResourcesCurator"};
 		weapons[] = {};
 		requiredVersion = 1.00;
 		author[] = {"shay_gman"};
@@ -90,6 +90,3 @@ class CfgMissions
 };
 
 #include "\mcc_sandbox_mod\definesMod.hpp"
-
-//super_flash
-#include "\mcc_sandbox_mod\super_flash\config.cpp"

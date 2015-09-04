@@ -1,8 +1,8 @@
 //================================================================MCC_fnc_keyDown===============================================================================================
-//Handle keydown/keyUp EH
+// Handle keydown/keyUp EH
 // Example: ['keyup',_this] call MCC_fnc_keyDown;
 // "keyUp" 		string: "keyUp" or "KeyDown"
-//_this 			ctrl varable
+// _this 			ctrl varable
 //==============================================================================================================================================================================
 private ["_keyVarable","_ehType","_ctrl","_dikCode","_shift","_ctrlKey","_alt","_arrayToCheck","_action","_null"];
 disableSerialization;

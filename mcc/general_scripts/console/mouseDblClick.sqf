@@ -39,7 +39,7 @@ if (MCC_Console2Open) then {_mccdialog = findDisplay mcc_playerConsole2_IDD};
 if (MCC_Console3Open) then {_mccdialog = findDisplay mcc_playerConsole3_IDD};
 
 //Close Group info control
-if ((_button == 0) && (count MCC_ConsoleGroupSelected > 0) && !_ctrlKey && !_3dCommander)  then {
+if ((_button == 0) && (count (missionNamespace getVariable ["MCC_ConsoleGroupSelected",[]]) > 0) && !_ctrlKey && !_3dCommander)  then {
 	//worldPos
 	MCC_ConsoleWPpos = _ctrl ctrlMapScreenToWorld [_posX,_posY];
 	ctrlShow [MCC_CONSOLEINFOTEXT,false];

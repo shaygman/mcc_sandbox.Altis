@@ -1,4 +1,4 @@
-class MCC_Module_nightEffects : MCC_Module_Base
+class MCC_Module_nightEffectsCurator : MCC_Module_Base
 {
 	scopeCurator = 2;
 	category = "MCC";

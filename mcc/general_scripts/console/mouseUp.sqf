@@ -1,5 +1,5 @@
 //Returns the control, the pressed button, the x and y coordinates and the state of Shift, Ctrl and Alt.
-private ["_params", "_ctrl", "_pressed", "_posX", "_posY", "_shift", "_ctrlKey", "_alt", "_eib_marker","_pointB","_nearObjectsA","_nearObjectsB"];
+private ["_params", "_ctrl", "_pressed", "_posX", "_posY", "_shift", "_ctrlKey", "_alt", "_eib_marker","_pointB","_nearObjectsA","_nearObjectsB","_groupSelected"];
 disableSerialization;
 
 _params = _this select 0;
@@ -14,9 +14,10 @@ _alt = _params select 6;
 
 MCC_ConsoleMouseButtonDown = false;	//Mouse state
 MCC_ConsoleMouseButtonUp = true;
+_groupSelected = missionNamespace getVariable ["MCC_ConsoleGroupSelected",[]];
 
 //Quick WP
-if (_pressed == 1  && (count MCC_ConsoleGroupSelected > 0) && abs (_posX - ((missionNamespace getVariable ["MCCConsoleDispPosXYScreen",[0,0]]) select 0))<0.005) then {
+if (_pressed == 1  && (count _groupSelected > 0) && abs (_posX - ((missionNamespace getVariable ["MCCConsoleDispPosXYScreen",[0,0]]) select 0))<0.005) then {
 	private ["_groups","_pos"];
 	_groups = [];
 	_pos = _ctrl ctrlmapscreentoworld [_posX,_posY];
@@ -24,7 +25,7 @@ if (_pressed == 1  && (count MCC_ConsoleGroupSelected > 0) && abs (_posX - ((mis
 		if ((MCC_ConsoleCanCommandAI || (!MCC_ConsoleCanCommandAI && isplayer leader _x))&& (leader _x distance _pos > 10)) then {
 			_groups pushBack _x;
 		};
-	} foreach MCC_ConsoleGroupSelected;
+	} foreach _groupSelected;
 
 	//Call the server to handle WP
 	if (count _groups > 0) then {

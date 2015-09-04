@@ -59,6 +59,13 @@ _WPTypeIndecator 	= _wpArray select 0;
 						if ({alive _x} count crew _wpObject != 0) then
 							{
 								while {(count (waypoints (group _wpObject))) > 0} do {deleteWaypoint ((waypoints (group _wpObject)) select 0)};
+
+								{_x assignAsCargo _wpObject;} foreach (units _x);
+								if (isNull driver _wpObject) then {(leader _x) assignAsDriver _wpObject};
+								if ((isNull gunner _wpObject) && ((count units _x) > 1)) then {(units _x select 1) assignAsGunner _wpObject};
+								if ((isNull commander _wpObject) && ((count units _x) > 2)) then {(units _x) select 2 assignAsCommander _wpObject};
+								(units _x) orderGetIn true;
+
 								_wp = _x addWaypoint [_wpLoc, 0];
 								_wp setWaypointType _wpType;
 								_wp setWaypointCombatMode (_wpArray select 1);
@@ -230,6 +237,7 @@ _WPTypeIndecator 	= _wpArray select 0;
 						_wp setWaypointStatements [(_wpArray select 5),(_wpArray select 6)];
 						_wp setWaypointTimeout [_wpArray select 7,_wpArray select 7,_wpArray select 7];
 						if (_isShown) then {_wp showWaypoint "ALWAYS"};
+						if (_action != 0) then {{_x doMove _wpLoc} forEach units _x};
 					};
 			};
 		};

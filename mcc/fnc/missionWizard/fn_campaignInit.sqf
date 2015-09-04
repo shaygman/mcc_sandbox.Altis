@@ -6,7 +6,7 @@
 // _factionEnemy	STRING - faction enemy
 //_missionMax		INTEGER - max amount of missions before mission over
 //==============================================================================================================================================================================
-private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2"];
+private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets"];
 
 //wait for MCC
 waitUntil {!isnil "MCC_initDone"};
@@ -20,6 +20,7 @@ _factionCiv	= [_this, 4, "CIV_F"] call BIS_fnc_param;
 _missionMax  = [_this, 5, 10] call BIS_fnc_param;
 _difficulty  = [_this, 6, 20] call BIS_fnc_param;
 _sidePlayer2= [_this, 7, sideLogic] call BIS_fnc_param;
+_tickets = [_this, 8, 100] call BIS_fnc_param;
 
 _totalPlayers = ((playersNumber _sidePlayer)+1);
 _AOSize = (20*_totalPlayers) max 300;
@@ -36,8 +37,8 @@ publicVariable "MCC_campaignEnemyFaction";
 if (timeMultiplier < 12) then {setTimeMultiplier 12};
 
 //Tickets
-if (([_sidePlayer] call BIS_fnc_respawnTickets)<100) then {[_sidePlayer, 100] call BIS_fnc_respawnTickets};
-if (([_sidePlayer2] call BIS_fnc_respawnTickets)<100 && _sidePlayer2 != sideLogic) then {[_sidePlayer2, 100] call BIS_fnc_respawnTickets};
+if (([_sidePlayer] call BIS_fnc_respawnTickets)<_tickets) then {[_sidePlayer, _tickets] call BIS_fnc_respawnTickets};
+if (([_sidePlayer2] call BIS_fnc_respawnTickets)<_tickets && _sidePlayer2 != sideLogic) then {[_sidePlayer2, _tickets] call BIS_fnc_respawnTickets};
 
 //Build the faction's unitsArrays and send it to the server.
 _check = [_factionEnemy, _sideEnemy] call MCC_fnc_MWCreateUnitsArray;
@@ -104,6 +105,9 @@ _locations = _locations - [-1];
 
 //Sort locations by distance from the first location
 _locations = [_locations,[_AOlocationPos],{_input0 distance (_x select 0)},"ASCEND"] call BIS_fnc_sortBy;
+
+//Start the campaign missions?
+if (_missionMax == 0) exitWith {};
 
 while {count _locations > 0 && _missionDone <= _missionMax} do {
 

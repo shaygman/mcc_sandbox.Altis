@@ -2,14 +2,14 @@
 #define MCCVersion "0.1"
 #define MCCMODE true
 
+
+
 //--------------------------Dialogs----------------------------------------------------
 #include "\mcc_sandbox_mod\mcc\dialogs\mcc_dialogs.hpp"
-
 #include "\mcc_sandbox_mod\mcc\dialogs\mcc_saveLoadScreen.hpp"
 #include "\mcc_sandbox_mod\mcc\dialogs\mcc_3d_dialog.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_boxGen.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_groupsGen.hpp"
-#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_loginDialog.hpp"
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_MWMainDialog.hpp"
 
 //----Console-----------------
@@ -31,8 +31,6 @@
 
 //----Logistics-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
-#include "\mcc_sandbox_mod\mcc\Dialogs\rts\mcc_logisticsBaseBuild.hpp"
-#include "\mcc_sandbox_mod\mcc\Dialogs\rts\rtsMainBox.hpp"
 
 //----Interaction-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_interactionMenu.hpp"
@@ -68,15 +66,25 @@
 #include "\mcc_sandbox_mod\hcam\hcam.hpp"
 #include "\mcc_sandbox_mod\spectator\spectating.hpp"
 
+//--------------------------features----------------------------------------------------
+#include "\mcc_sandbox_mod\mcc\login\cfg.hpp"
+#include "\mcc_sandbox_mod\mcc\rts\cfg.hpp"
+
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
 {
 	#include "\mcc_sandbox_mod\gaia\cfgFunctions.hpp"
-	#include "\mcc_sandbox_mod\mcc\cfg\cfgFunctions.hpp"
 	#include "\mcc_sandbox_mod\VAS\cfgFunctions.hpp"
 
-	//super_flash
-	#include "\mcc_sandbox_mod\super_flash\CfgFunctions.hpp"
+	class MCC
+	{
+		tag = "MCC";
+		#include "\mcc_sandbox_mod\mcc\cfg\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\login\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\rts\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\cfg\modules\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\cfg\curator\cfgFunctions.hpp"
+	};
 };
 
 class CfgObjectCompositions
@@ -87,55 +95,16 @@ class CfgObjectCompositions
 class CfgMusic
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgMusic.hpp"
-
-	//super_flash
-	#include "\mcc_sandbox_mod\super_flash\music\CfgMusic.hpp"
 };
 
 class CfgSounds
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgSounds.hpp"
-
-	//super_flash
-	#include "\mcc_sandbox_mod\super_flash\sounds\CfgSounds.hpp"
-};
-
-class CfgCloudlets
-{
-	//super_flash
-	class Default;
-	#include "\mcc_sandbox_mod\super_flash\CfgCloudlets.hpp"
-};
-
-class CfgLights
-{
-	//super_flash
-	#include "\mcc_sandbox_mod\super_flash\CfgLights.hpp"
 };
 
 class CfgNotifications
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgNotifications.hpp"
-};
-
-class cfgRtsBuildings
-{
-	#include "\mcc_sandbox_mod\mcc\cfg\rts\cfgRtsBuildings.hpp"
-};
-
-class cfgRtsActions
-{
-	#include "\mcc_sandbox_mod\mcc\cfg\rts\cfgRtsActions.hpp"
-};
-
-class cfgRtsVehiclesActions
-{
-	#include "\mcc_sandbox_mod\mcc\cfg\rts\cfgRtsVehiclesActions.hpp"
-};
-
-class cfgRtsNonBuildingsActions
-{
-	#include "\mcc_sandbox_mod\mcc\cfg\rts\cfgRtsNonBuildingsActions.hpp"
 };
 
 class RscTitles
@@ -152,14 +121,6 @@ class cfgVehicles
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgVehicles.hpp"
 };
 
-class CfgAmmo
-{
-	//super_flash
-	class GrenadeHand;
-	class G_40mm_HE;
-	#include "\mcc_sandbox_mod\super_flash\CfgAmmo.hpp"
-};
-
 class cfgMagazines
 {
 	class Default;
@@ -168,9 +129,6 @@ class cfgMagazines
 	class 1Rnd_HE_Grenade_shell;
 
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgMagazines.hpp"
-
-	//super_flash
-	#include "\mcc_sandbox_mod\super_flash\cfgMagazines.hpp"
 };
 
 class cfgWeapons
@@ -182,9 +140,6 @@ class cfgWeapons
 	class InventoryItem_Base_F;
 	class Launcher_Base_F;
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgWeapons.hpp"
-
-	//super_flash
-	#include "\mcc_sandbox_mod\super_flash\CfgWeapons.hpp"
 };
 
 

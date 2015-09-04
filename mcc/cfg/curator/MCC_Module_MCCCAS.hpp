@@ -1,5 +1,5 @@
 class ModuleCASGun_F;
-class MCC_Module_MCCCAS : ModuleCASGun_F
+class MCC_Module_MCCCASCurator : ModuleCASGun_F
 {
 	scopeCurator = 2;
 	curatorInfoType = "";

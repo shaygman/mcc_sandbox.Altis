@@ -2,7 +2,7 @@
 private ["_ar","_diaryrecord","_behavior","_safepos"];
 
 //time to request something so lets number it
-mcc_request=mcc_request+1;
+mcc_request= (missionNamespace getVariable ["mcc_request",0])+1;
 publicVariable "mcc_request";
 
 // What ever we do, we need a good position

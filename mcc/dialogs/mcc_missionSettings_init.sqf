@@ -225,9 +225,9 @@ _comboBox lbSetCurSel (missionNamespace getVariable ["mcc_deletePlayerBodyIndex"
 _tempArray = [];
 {
 	_tempArray pushBack (missionNameSpace getVariable [_x,false]);
-} foreach ["MCC_interaction","MCC_surviveMod","MCC_cover","MCC_coverUI","MCC_showActionKey","MCC_coverVault","MCC_quickWeaponChange","MCC_ingameUI"];
+} foreach ["MCC_interaction","MCC_surviveMod","MCC_cover","MCC_coverUI","MCC_showActionKey","MCC_coverVault","MCC_quickWeaponChange","MCC_ingameUI","MCC_allowRTS"];
 
-for "_i" from 8427 to 8434 do
+for "_i" from 8427 to 8435 do
 {
 	_comboBox = _mccdialog displayCtrl _i;
 	lbClear _comboBox;

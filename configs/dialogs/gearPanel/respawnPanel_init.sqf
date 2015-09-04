@@ -158,7 +158,7 @@ missionNamespace setVariable ["MCCActiveSpawnPosArray",[player] call BIS_fnc_get
 missionNamespace setVariable ["MCCActiveSpawnPosArray",[player] call BIS_fnc_getRespawnPositions];
 
 //Set side flag
-CP_flag ctrlSetText call compile format ["CP_flag%1", _sidePlayer];
+CP_flag ctrlSetText (missionNamespace getVariable [format ["CP_flag%1", _sidePlayer],""]);
 
 if (CP_activated) then
 {

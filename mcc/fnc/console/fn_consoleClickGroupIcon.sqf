@@ -91,8 +91,7 @@ if (_button == 1) then {
 	_html = "<t color='#818960' size='1' shadow='1' align='left' underline='true'>" +groupID _group + " - " + toupper _groupSize +"</t><br/>";
 
 	_info = [_group] call MCC_fnc_countGroupHC;
-	if (_info select 0 == 0 && _info select 1 == 0 && _info select 2 == 0 && _info select 3 == 0 && _info select 4 == 0 && _info select 5 == 0 && _info select 6 == 0 && _info select 5 == 0) then
-	{
+	if (_info select 0 == 0 && _info select 1 == 0 && _info select 2 == 0 && _info select 3 == 0 && _info select 4 == 0 && _info select 5 == 0 && _info select 6 == 0 && _info select 5 == 0) then {
 		_info = [_group] call MCC_fnc_countGroup;
 		_properCfg = 5;
 	};

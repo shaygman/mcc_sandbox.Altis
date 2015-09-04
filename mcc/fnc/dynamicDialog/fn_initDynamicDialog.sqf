@@ -24,6 +24,9 @@ _title = [_this, 0, "", [""]] call BIS_fnc_param;
 _array = [_this, 1, [], [[]]] call BIS_fnc_param;
 _function = [_this, 2, "", [""]] call BIS_fnc_param;
 
+//avoid double
+if (tolower str (findDisplay 1031982) != "no display") exitWith {[]};
+
 _ok = createDialog "MCC_DynamicDialog";
 waitUntil {dialog};
 

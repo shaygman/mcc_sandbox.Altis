@@ -12,6 +12,7 @@ class MCC_compass
 
 	class Controls
 	{
+		/*
 		class Compass: MCC_RscControlsGroupNoScrollbars
 		{
 			x = "0.5 - 8 * 							(			((safezoneW / safezoneH) min 1.2) / 40)";
@@ -50,7 +51,7 @@ class MCC_compass
 				};
 			};
 		};
-		/*
+		*/
 		class MCC_ConsoleCompassN: MCC_RscText
 		{
 			idc = 0;
@@ -113,6 +114,5 @@ class MCC_compass
 			colorText[] = { 1, 1, 1, 0};
 			text = "";
 		};
-		*/
 	};
 };

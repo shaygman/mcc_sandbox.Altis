@@ -1,4 +1,4 @@
-class MCC_Module_lockDoors : MCC_Module_Base
+class MCC_Module_lockDoorsCurator : MCC_Module_Base
 {
 	scopeCurator = 2;
 	category = "MCC";

@@ -328,7 +328,7 @@ class mcc_groupGen
 			h = 0.0329871 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			tooltip = "Login or logout as the mission maker";
-			onButtonClick = __EVAL("nul=[0] execVM '"+MCCPATH+"mcc\pop_menu\mcc_login.sqf'");
+			onButtonClick = "_null = [] spawn MCC_fnc_loginDialog";
 		};
 
 		class MCC_ghostMode: MCC_RscButton

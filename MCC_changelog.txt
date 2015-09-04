@@ -66,11 +66,13 @@ Survival:
 - Changed: If survival and Role selection are on players won't be able to change kits unless they respawned to prevent exploit by changing kits to gain resources. 
 
 RTS:
+- Added: A complete workout on the RTS elements of MCC.
 - Added: Workshops can outfit civilians offroads with MG.
 - Added: Workshops will repair vehicles for free.
 - Added: Players can purchase vehicles from workshops (need resources and electricity): Cars from advanced workshop, Tanks and APC from mechanical workshop and helicopters from ariel workshop.
 - Added: Commander can call Random resource gathering missions every real time hour from HQ - Resource gathering mission are easier side missions that yield resource crates. 
 - Added: Radio post give access advanced resource gathering missions. 
+- Added: Resources module to 2D editor and Zeus - sets the initial resources for each side. 
 
 Misc:
 - Added: Support CBA keybinds if player is running CBA
@@ -79,26 +81,15 @@ Misc:
 - Added: Ambient AI and cars Module - Server side ambient. MCC will create  AI units some in buildings, some patrolling, some driving cars and some parked cars in towns when players are around and delete them when no player is around. 
 - Changed: MCC garrison units will have units patrolling buildings
 - Improved: Loading time while changing factions in MCC.
+- Fixed: MCC stays on login screen after a player successfully logged in. 
 - Fixed: Player can escape unconscious dialog in MCC medic system by opening the squad dialog
 - fixed: Objects names placed in 3D editor didn't saved to sqm. 
 - Fixed: Each side's commander will have only his sides evac vehicles
 - Fixed: MCC Settings didn't stick after changing them
 
 //TODO
-MCC_CONST_SELECTED
 change construction time and needed resources
-
-Add trade repair/ammo/fuel for food.
-add fuel/health/ammo sliders in ui
-Add vehicles actions (add units)
-Add logistics dialog
-
-
-Add "add resources module"
-Add in campaign number of tickets to start with and disable missions in campaign.
-
-
-balance side mission with main mission resources
+build outside the circle near fob for example
 
 //Prevent deleting FOBs
 //Tutorials for everything

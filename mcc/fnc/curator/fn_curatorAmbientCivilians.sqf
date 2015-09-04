@@ -3,7 +3,7 @@
 //===========================================================================================================================================================================
 private ["_pos","_module","_factionArray","_resualt"];
 _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-if (isNull _module) exitWith {};
+if (isNull _module) exitWith {systemChat "no module"};
 
 //did we get here from the 2d editor?
 if (typeName (_module getVariable ["isCiv",true]) == typeName 0) exitWith {

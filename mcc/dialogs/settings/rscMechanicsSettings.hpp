@@ -165,5 +165,25 @@ class rscMechanicsSettings: MCC_RscControlsGroupNoScrollbars
 			h = 0.022 * safezoneH;
 			tooltip = "Enables survival mode - search map items foor lot every 24 hours"; //--- ToDo: Localize;
 		};
+
+		class RTSText: MCC_RscText
+		{
+			idc = -1;
+			text = "RTS:"; //--- ToDo: Localize;
+			x = 0.335156 * safezoneW;
+			y = 0.11 * safezoneH;
+			w = 0.0670312 * safezoneW;
+			h = 0.022 * safezoneH;
+		};
+
+		class RTSCombo: MCC_RscCombo
+		{
+			idc = 8435;
+			x = 0.407344 * safezoneW;
+			y = 0.11 * safezoneH;
+			w = 0.0825 * safezoneW;
+			h = 0.022 * safezoneH;
+			tooltip = "Enables RTS interfac";
+		};
 	};
 };
