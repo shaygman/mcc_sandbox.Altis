@@ -14,3 +14,4 @@
 #include "MCC_Module_vehicleSpawnerCurator.hpp"
 #include "MCC_Module_campaignInit.hpp"
 #include "MCC_Module_setResources.hpp"
+#include "MCC_Module_underCover.hpp"

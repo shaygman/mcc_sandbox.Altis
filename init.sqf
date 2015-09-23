@@ -95,7 +95,7 @@ if (isnil "MCC_surviveMod") then {MCC_surviveMod = false};
 if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1};
 
 //============== Medic System ====================================
-if !(MCC_isMode && MCC_isACE)  then {
+if (!MCC_isMode && !MCC_isACE)  then {
 	MCC_interaction = true;
 	if (!MCC_isACE) then {
 		MCC_medicSystemEnabled = true;

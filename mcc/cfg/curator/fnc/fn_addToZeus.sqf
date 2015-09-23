@@ -22,7 +22,7 @@ if (count _resualt == 0) exitWith {deleteVehicle _module};
 
 {
 	if !(_x isKindOf "Animal") then {
-		MCC_curator addCuratorEditableObjects [[_x],true];
+		[[[_x], {MCC_curator addCuratorEditableObjects [[_this select 0],true];}], "BIS_fnc_spawn", false, false, false] call BIS_fnc_MP;
 	};
 
 } forEach (nearestObjects [_pos, [], (_resualt select 0)]);

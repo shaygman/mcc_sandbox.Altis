@@ -36,7 +36,7 @@ if (_object isKindOf "mcc_sandbox_modulevehicleSpawner" || _object isKindOf "MCC
 
         waitUntil {!isNil "MCC_curator"};
         {
-            MCC_curator addCuratorEditableObjects [[_x],false];
+            [[[_x], {MCC_curator addCuratorEditableObjects [[_this select 0],false];}], "BIS_fnc_spawn", false, false, false] call BIS_fnc_MP;
         } forEach [_billboard,_helipad];
     };
 };

@@ -17,6 +17,8 @@ if (typeName (_module getVariable ["side",true]) == typeName 0) exitWith {
 	} forEach (synchronizedObjects _module);
 };
 
+//Not curator exit
+if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
 
 _object = missionNamespace getVariable ["MCC_curatorMouseOver",[]];
 

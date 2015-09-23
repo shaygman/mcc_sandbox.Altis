@@ -27,6 +27,9 @@ if (typeName (_module getVariable ["factionPlayer",true]) == typeName "") exitWi
 	[[_sidePlayer,_sidePlayer2],"MCC_fnc_dayCycle",false,false] spawn BIS_fnc_MP;
 };
 
+//Not curator exit
+if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+
 _pos = getpos _module;
 
 _factionArray = [];

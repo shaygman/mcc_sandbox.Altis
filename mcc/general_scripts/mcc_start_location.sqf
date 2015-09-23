@@ -143,10 +143,10 @@ if !mcc_isloading then
 		case 6:	//Enable CP
 		{
 			private "_answer";
+			if !(missionNamespace getVariable ["MCC_iniDBenabled",false]) exitWIth {systemchat "iniDB isn't running. Can't access role selection"};
 			_answer = ["<t font='TahomaB'>Are you sure you want to enable/disable role selection?</t>","Role Selection",nil,true] call BIS_fnc_guiMessage;
 			waituntil {!isnil "_answer"};
-			if (_answer) then
-			{
+			if (_answer) then {
 				CP_activated = missionnamespace getVariable ["CP_activated", false];
 				missionnamespace setVariable ["CP_activated", !CP_activated];
 				publicVariable "CP_activated";

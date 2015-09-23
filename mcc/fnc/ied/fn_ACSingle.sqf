@@ -35,7 +35,7 @@ _sb setdir _iedDir;
 _sb setrank _rank;
 _group setformdir _iedDir;
 
-_init = FORMAT [";%2 = _this;[_this, %1,25] spawn MCC_fnc_manageAC;"
+_init = FORMAT [";%2 = _this;[_this, '%1',25] spawn MCC_fnc_manageAC;"
 				,_iedside
 				,MCC_tempName
 				];

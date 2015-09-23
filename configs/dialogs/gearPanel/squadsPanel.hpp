@@ -41,8 +41,6 @@ class CP_SQUADPANEL {
 		CP_Mutiny,
 		CP_commanderName,
 		CP_commander,
-		CP_respawnPanelRoleTittle,
-		CP_respawnPanelRoleCombo,
 		CP_deployPanelButton,
 		CP_flag,
 		CP_side1,
@@ -117,7 +115,7 @@ class CP_SQUADPANEL {
 		class CP_gearPanelButton: CP_RscButtonMenu
 		{
 			idc = 11;
-			text = "Gear"; //--- ToDo: Localize;
+			text = "Role"; //--- ToDo: Localize;
 			x = 0.3625 * safezoneW + safezoneX;
 			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;

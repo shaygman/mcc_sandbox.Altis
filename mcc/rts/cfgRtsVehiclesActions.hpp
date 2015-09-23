@@ -248,3 +248,21 @@ class MCC_rts_orderPlaceSatchel
 	actionFNC = "MCC_fnc_rtsOrderPlaceSatchel";
 	resources[] = {{"ammo",50}};
 };
+
+class MCC_rts_takeControl
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\mcc\rts\data\remoteControl.paa";
+	#else
+	picture = "mcc\rts\data\remoteControl.paa";
+	#endif
+
+	displayName = "Remote Control";
+	descriptionShort = "Remote control the selected unit";
+	condition = "alive _target && !(isplayer leader _target);";
+	dontShowDisabled = 1;
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsTakeControl";
+	resources[] = {};
+};

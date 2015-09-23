@@ -69,5 +69,5 @@ if (_action == 1) then {
     clearBackpackCargoGlobal _vehicle;
     clearItemCargoGlobal _vehicle;
 
-    MCC_curator addCuratorEditableObjects [[_vehicle],false];
+    [[[_vehicle], {MCC_curator addCuratorEditableObjects [[_this select 0],false];}], "BIS_fnc_spawn", false, false, false] call BIS_fnc_MP;
 };

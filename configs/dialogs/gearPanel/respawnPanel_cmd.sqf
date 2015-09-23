@@ -53,8 +53,7 @@ switch (_cmd) do
 			};
 
 
-			if (CP_activated) then
-			{
+			if (CP_activated) then {
 
 				//Check if player assigned to group
 				_groups	 = switch (side player) do
@@ -75,12 +74,18 @@ switch (_cmd) do
 					[9999,"You must join a squad first!",3,true] spawn MCC_fnc_setIDCText
 				};
 
+				if (player getvariable ["CP_role","n/a"] == "n/a") exitWith {
+					[9999,"Select a role",3,true] spawn MCC_fnc_setIDCText
+				};
+
+				/*
 				//Check for roles
 				_countRole 			= 0;
 				_minPlayersForRole	= 0;
 				_roleLimit			= 1;
-				switch (lbCurSel CP_respawnPanelRoleCombo) do
-				{
+
+
+				switch (lbCurSel CP_respawnPanelRoleCombo) do {
 						case 0:				{				//officer
 												{
 													if ((_x getvariable "CP_role") == "Officer") then {_countRole = _countRole +1};
@@ -142,6 +147,7 @@ switch (_cmd) do
 				if (count (units (group player)) < _minPlayersForRole) exitWith {
 					[9999,format ["You need %1 players in your squad to use this kit!",_minPlayersForRole],3,true] spawn MCC_fnc_setIDCText
 				};
+				*/
 
 				//Check if no enemy is close by
 
@@ -176,8 +182,7 @@ switch (_cmd) do
 				_maxPos = 1;
 				_cpPos = getpos CP_activeSpawn;
 
-				waitUntil
-				{
+				waitUntil {
 					_maxPos = _maxPos +1;
 					playerDeployPos  =_cpPos findEmptyPosition [0,_maxPos];
 					count playerDeployPos > 0;

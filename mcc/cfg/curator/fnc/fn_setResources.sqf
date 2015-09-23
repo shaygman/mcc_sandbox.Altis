@@ -20,6 +20,9 @@ if (typeName (_module getVariable ["side",true]) == typeName 1) exitWith {
 	missionNamespace setVariable [_argName,_res];
 };
 
+//Not curator exit
+if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+
 _pos = getpos _module;
 
  _resualt = ["Set Resources",[

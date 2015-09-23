@@ -5,6 +5,9 @@ private ["_pos","_module","_object","_displayNames","_resualt","_unitsArray","_c
 _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 if (isNull _module) exitWith {};
 
+//Not curator exit
+if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+
 _pos = getpos _module;
 _object = missionNamespace getVariable ["MCC_curatorMouseOver",objNull];
 _module hideobject false;

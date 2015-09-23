@@ -17,8 +17,6 @@ class MCC_Module_Base : Module_F
 	functionPriority = 1;
 	isGlobal = 1;
 	isTriggerActivated = 0;
-	isDisposable = 0;
-
 
 	class Arguments {};
 	class ModuleDescription: ModuleDescription

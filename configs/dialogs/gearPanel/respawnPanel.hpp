@@ -26,8 +26,6 @@ class CP_RESPAWNPANEL {
 		CP_respawnPointsList,
 		CP_deployPanelMiniMap,
 		CP_deployPanelButton,
-		CP_respawnPanelRoleTittle,
-		CP_respawnPanelRoleCombo,
 		CP_respawnPanelSpawnpointsTittle,
 		CP_gearPanelPiP,
 		CP_gearPanelPiPFake,
@@ -119,7 +117,7 @@ class CP_RESPAWNPANEL {
 		{
 			idc = 29;
 			type = 16;
-			text = "Gear"; //--- ToDo: Localize;
+			text = "Role"; //--- ToDo: Localize;
 			x = 0.3625 * safezoneW + safezoneX;
 			y = 0.225107 * safezoneH + safezoneY;
 			w = 0.0973958 * safezoneW;

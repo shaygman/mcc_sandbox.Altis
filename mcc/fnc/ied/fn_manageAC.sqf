@@ -1,6 +1,6 @@
 //==================================================================MCC_fnc_manageAC===============================================================================================
 // Create a an armed civilian at the given position
-// Example: [_suspect,_side,_rad,_iedMarkerName] spawn MCC_fnc_manageAC; 
+// Example: [_suspect,_side,_rad,_iedMarkerName] spawn MCC_fnc_manageAC;
 // <in>: 	_suspect = unit, the suspect.
 // 		_side = side, which side trigger the armed civilian
 //		_rad = integer, how far the armed civilian will look for threats
@@ -18,11 +18,12 @@ if (typeName _side == "STRING") then
 				{
 				   case "west":	{west};
 				   case "east":	{east};
-				   case "guer":	{resistance}; 
+				   case "guer":	{resistance};
 				   case "civ":	{civilian};
 				   default {west};
 				};
-};			
+};
+
 _weaponList = [
                 ["hgun_P07_F", "16Rnd_9x21_Mag"],
 				["hgun_Rook40_F", "16Rnd_9x21_Mag"],
@@ -33,13 +34,13 @@ _weaponList = [
 				["SMG_02_F", "30Rnd_9x21_Mag"],
 				["hgun_PDW2000_F", "30Rnd_9x21_Mag"]
 			  ];
-			  
+
 _randWeapon = floor random (count _weaponList);
 _weapon = (_weaponList select _randWeapon) select 0;
 _mag = (_weaponList select _randWeapon) select 1;
 
 removeallweapons _suspect;
-_suspect setbehaviour "CARELESS"; 
+_suspect setbehaviour "CARELESS";
 _suspect allowfleeing 0;
 
 _dummy = MCC_dummy createVehicle (getpos _suspect);
@@ -56,7 +57,7 @@ _dummy attachto [_suspect,[0,0,0]];
 	sleep 1;
 	deletevehicle _dummy;
 };
-	
+
 _dummy setvariable ["armed", true, true];
 _dummy setvariable ["iedMarkerName", "Armed Civilian", true];
 
@@ -68,15 +69,15 @@ _targ = ["Car","Man"];
 // =============================Chase script by Shay_Gman=================
  _check=true;
 
-while {alive _suspect && _check} do 
-{  
+while {alive _suspect && _check} do
+{
 	sleep 1;
 	_check = _suspect getvariable ["armed",true];
 	_close = (getPos _suspect) nearObjects 50;
-	if(_side countSide _close > 0) then	
+	if(_side countSide _close > 0) then
 	{
 		_t=600;
-		while {(alive _suspect) && (_check) && (_t > 0)} do	
+		while {(alive _suspect) && (_check) && (_t > 0)} do
 		{
 			sleep 1;
 			_check = _suspect getvariable ["armed",true];
@@ -84,38 +85,38 @@ while {alive _suspect && _check} do
 			{
 				if(side _x == _side) then {_closeunit = _closeunit + [_x]}
 			} forEach _close;
-			
+
 			_count=count _closeunit;
-			
-			for [{_x=0},{_x<_count},{_x=_x+1}] do	
+
+			for [{_x=0},{_x<_count},{_x=_x+1}] do
 			{
 				_enemy = _closeunit select _x;
 				{
-					if(_enemy isKindOf _x && _check) then	
+					if(_enemy isKindOf _x && _check) then
 					{
-						while {alive _suspect && _check} do	
+						while {alive _suspect && _check} do
 						{
 							sleep 2;
 							_check = _suspect getvariable ["armed",true];
 							_rand = random 100;
 
-							if (((_suspect distance _enemy ) <=_rad) &&  (alive _enemy) && (_rand < 5)) then	
+							if (((_suspect distance _enemy ) <=_rad) &&  (alive _enemy) && (_rand < 5)) then
 							{
-								_suspect setbehaviour "COMBAT"; 
-								if (alive _suspect) then	
+								_suspect setbehaviour "COMBAT";
+								if (alive _suspect) then
 								{
-									if (!(_suspect hasweapon _weapon)) then 
+									if (!(_suspect hasweapon _weapon)) then
 									{
-										switch (_side) do 
+										switch (_side) do
 										{
 											case west: {_grp = createGroup east};
 											case east: {_grp = createGroup west};
-											case resistance: 
+											case resistance:
 											{if ((west getFriend resistance)>0.5)then {_grp = createGroup east} else {_grp = createGroup west}};
 											case civilian: {if ((west getFriend civilian)>0.5) then {_grp = createGroup east} else {_grp = createGroup west}};
 											default {_grp = createGroup east};
 										};
-										
+
 										[_suspect] joinSilent grpNull;
 										sleep 1;
 										[_suspect] joinsilent _grp;
@@ -125,11 +126,11 @@ while {alive _suspect && _check} do
 										_suspect selectweapon _weapon;
 										[[[netid _suspect,_suspect], "pig"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 									};
-									
-									
+
+
 									_suspect dotarget  _enemy;
 									_suspect addrating -1;
-	
+
 									_check =false;
 								};
 							};
@@ -137,13 +138,13 @@ while {alive _suspect && _check} do
 					};
 				} forEach _targ;
 			};
-			
+
 			_t=_t-1;
 		};
 	};
 };
 
-if (!alive _suspect) then 
+if (!alive _suspect) then
 {
 	{deleteVehicle _x} forEach attachedObjects _suspect;
 };

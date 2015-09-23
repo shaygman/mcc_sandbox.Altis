@@ -84,6 +84,7 @@ class CfgFunctions
 		#include "mcc\rts\cfgFunctions.hpp"
 		#include "mcc\cfg\modules\cfgFunctions.hpp"
 		#include "mcc\cfg\curator\cfgFunctions.hpp"
+		#include "mcc\undercover\cfgFunctions.hpp"
 	};
 };
 

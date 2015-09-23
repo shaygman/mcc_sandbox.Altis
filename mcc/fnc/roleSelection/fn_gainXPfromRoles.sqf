@@ -7,8 +7,7 @@ _playerVehicle	= vehicle player;
 _notes = missionNamespace getvariable ["CP_expNotifications",true];
 
 //Gain XP Officer
-if (_role == "officer") then
-{
+if (_role == "officer") then {
 	if (CP_debug) then {systemchat format ["rating: %1", rating player]};
 
 	_counter = 0;
@@ -31,24 +30,20 @@ if (_role == "officer") then
 };
 
 //Gain XP as Pilot
-if (((_playerVehicle iskindof "Air") && _role == "pilot") && (isengineon _playerVehicle)) then
-{
+if (((_playerVehicle iskindof "Air") && _role == "pilot") && (isengineon _playerVehicle)) then {
 	if (CP_debug) then {systemchat format ["rating: %1", rating player]};
 
 	_counter = 0;
 	{
-		if (!isnil "_x") then
-		{
-				if ((isPlayer _x) && (vehicle _x == vehicle player)) then
-				{
+		if (!isnil "_x") then {
+				if ((isPlayer _x) && (vehicle _x == vehicle player)) then {
 					_counter = _counter + 50;
 					player addrating 50;
 				};
 		};
 	} foreach (assignedCargo _playerVehicle);
 
-	if (_counter > 0 && _notes) then
-	{
+	if (_counter > 0 && _notes) then {
 		_string = format ["<t font='puristaMedium' size='0.5' color='#FFFFFF '>+%1 Exp For Flying Taxi</t>",_counter];
 		[_string,0,1,2,1,0,4] spawn BIS_fnc_dynamicText;
 	};

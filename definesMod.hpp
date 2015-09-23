@@ -84,6 +84,7 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\rts\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\cfg\modules\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\cfg\curator\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\undercover\cfgFunctions.hpp"
 	};
 };
 

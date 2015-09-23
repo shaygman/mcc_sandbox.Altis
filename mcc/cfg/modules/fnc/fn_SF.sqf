@@ -14,8 +14,7 @@ _synced = synchronizedobjects _logic;		//Who synced with the module
 _goggles = call compile (_logic getvariable ["hcam_goggles","[]"]);
 _headGear = call compile (_logic getvariable ["hcam_headgear","[]"]);
 
-if (player in _synced)then
-{
+if (player in _synced)then {
 	//Action key
 	 hcam_Key = (_logic getvariable ["hcam_actionKey",1]);
 

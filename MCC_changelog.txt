@@ -1,3 +1,12 @@
+Change log r16 hotfix:
+- Added: In RTS mode the commander can take first person control over it's units. 
+- Added: Undercover Agents module (2D or Zeus) covert units into undercover agents , wiki will come soon. You can holster a handgun and get close to enemy units without raising suspicious. Getting to close to an enemy, crouching, proning, running around or drawing your handgun will blow your cover. 
+- Fixed: login hang bug.
+- Fixed: MCC Zeus's modules worked globaly. 
+- Fixed: MCC Zeus module duplicated on all clients.
+- Fixed: Unable to use parachute while role selection on. 
+- Fixed: Armed civilian error spamming the RPT.
+
 Change log r16:
 Zeus: 			
 - Added: MCC's Zeus will edit players. 

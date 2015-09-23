@@ -47,6 +47,17 @@ if (isServer) then
 					sleep 0.1;
 					_p_mcc_player assignCurator MCC_curator;
 
+					publicVariable "mcc_missionmaker";
+					publicVariable "mcc_zone_pos";
+					publicVariable "mcc_zone_size";
+					publicVariable "mcc_zone_dir";
+					publicVariable "mcc_zone_locations";
+					publicVariable "MCC_zones_numbers";
+
+					publicvariable (format ["MCC_evacVehicles_%1",playerside]);
+
+					ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
+
 					//load custom units arrays
 					//helicopters
 					missionNamespace setVariable ["MCC_vehicles_helicopters" ,["all","helicopterrtd","air"] call MCC_fnc_makeUnitsArray];
@@ -71,18 +82,6 @@ if (isServer) then
 					//ships
 					missionNamespace setVariable ["MCC_vehicles_ships" ,["all","shipx"] call MCC_fnc_makeUnitsArray];
 					publicVariable "MCC_vehicles_ships";
-
-					publicVariable "mcc_missionmaker";
-					publicVariable "mcc_zone_pos";
-					publicVariable "mcc_zone_size";
-					publicVariable "mcc_zone_dir";
-					publicVariable "mcc_zone_locations";
-					publicVariable "MCC_zones_numbers";
-
-
-					publicvariable (format ["MCC_evacVehicles_%1",playerside]);
-
-					ctrlSetText [MCCMISSIONMAKERNAME, format["%1",mcc_missionmaker]];
 				}
 	};
 

@@ -125,7 +125,7 @@ class CP_GEARPANEL {
 	class CP_gearPanelButton: CP_RscButtonMenu
 	{
 		idc = 3;
-		text = "Gear"; //--- ToDo: Localize;
+		text = "Role"; //--- ToDo: Localize;
 		x = 0.3625 * safezoneW + safezoneX;
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.0973958 * safezoneW;

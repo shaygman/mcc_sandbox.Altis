@@ -14,6 +14,9 @@ if (typeName (_module getVariable ["atmosphere",true]) == typeName 0) exitWith {
 	[_pos, 0, _atmosphere] call MCC_fnc_deleteBrush;
 };
 
+//Not curator exit
+if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+
 _resualt = ["Add Atmosphere",[
  						["Atmosphere",["Sandstorm","Blizzard","Heat Wave","Clear All"]]
  					  ]] call MCC_fnc_initDynamicDialog;

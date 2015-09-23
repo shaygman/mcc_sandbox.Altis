@@ -21,4 +21,5 @@ class curator
 	class curatorVehicleSpawner {description = "Create a vhicles kiosk";};
 	class curatorCampaignInit {description = "Starts MCC Campaign";};
 	class setResources {description = "Sets resources for each side";};
+	class curatorunderCover {description = "Sets player as undercover unit";};
 };

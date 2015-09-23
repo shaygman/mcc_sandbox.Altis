@@ -8,11 +8,12 @@ if (isNull _module) exitWith {};
 _pos = getpos _module;
 _array = ["vehicle","tank","heli","jet","ship"];
 
-_resualt = ["Vehicle Kiosk",[
-						["Type",["Vehicles","Armored","Helicopters","Fixed-Winged","Ships"]]
- 					  ]] call MCC_fnc_initDynamicDialog;
+//Not curator exit
+if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
 
-if (count _resualt == 0) exitWith {deleteVehicle _module};
+_resualt = ["Vehicle Kiosk",[["Type",["Vehicles","Armored","Helicopters","Fixed Wing","Ships"]]]] call MCC_fnc_initDynamicDialog;
+
+if (count _resualt == 0) exitWith {};
 
 _module setVariable ["type", (_array select (_resualt select 0)) ,true];
 [_module,[]] call MCC_fnc_vehicleSpawnerInit;

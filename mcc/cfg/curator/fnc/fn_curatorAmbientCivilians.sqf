@@ -3,7 +3,7 @@
 //===========================================================================================================================================================================
 private ["_pos","_module","_factionArray","_resualt"];
 _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-if (isNull _module) exitWith {};
+if (isNull _module) exitWith {deleteVehicle _module};
 
 //did we get here from the 2d editor?
 if (typeName (_module getVariable ["isCiv",true]) == typeName 0) exitWith {
@@ -21,6 +21,9 @@ if (typeName (_module getVariable ["isCiv",true]) == typeName 0) exitWith {
 	//Start ambient civilians
 	[[_isCiv,_isCar,_isParkedCar,_isLocked,_civSpawnDistance,_maxCivSpawn,_factionCiv,_factionCivCar],"MCC_fnc_ambientInit",false,false] spawn BIS_fnc_MP;
 };
+
+//Not curator exit
+if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
 
 _pos = getpos _module;
 

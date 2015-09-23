@@ -60,4 +60,5 @@ class rts
 	class rtsIsRespawnUnits{description = "checks if we can respawn units"};
 	class rtsRespawnUnits {description = "Respawn dead units in a group"};
 	class rtsOrderPlaceSatchel {description = "Place satchel"};
+	class rtsTakeControl {description = "Remote control the selected unit"};
 };

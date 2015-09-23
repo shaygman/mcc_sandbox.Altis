@@ -35,7 +35,7 @@ class MCC_rtsGroup_FT
 	unitsWest[] = {"B_Soldier_TL_F","B_soldier_AR_F","B_Soldier_GL_F","B_soldier_LAT_F"};
 	unitsGuer[] = {"I_Soldier_TL_F","I_soldier_AR_F","I_Soldier_GL_F","I_soldier_LAT_F"};
 	needelectricity = 0;
-	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","","MCC_rts_respawnUnits"};
+	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","MCC_rts_takeControl","MCC_rts_respawnUnits"};
 	actionFNC = "MCC_fnc_rtsCreateGroup";
 	resources[] = {{"ammo",300},{"food",200},{"time",15}};
 };
@@ -56,7 +56,7 @@ class MCC_rtsGroup_MG
 	unitsWest[] = {"B_HeavyGunner_F","B_Soldier_A_F"};
 	unitsGuer[] = {"I_soldier_AR_F","I_Soldier_A_F"};
 	needelectricity = 0;
-	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","","MCC_rts_respawnUnits"};
+	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","MCC_rts_takeControl","MCC_rts_respawnUnits"};
 	actionFNC = "MCC_fnc_rtsCreateGroup";
 	resources[] = {{"ammo",400},{"food",100},{"time",15}};
 };
@@ -77,7 +77,7 @@ class MCC_rtsGroup_AT
 	unitsWest[] = {"B_Soldier_AT_F","B_Soldier_AAT_F"};
 	unitsGuer[] = {"I_Soldier_AT_F","I_Soldier_AAT_F"};
 	needelectricity = 0;
-	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","","MCC_rts_respawnUnits"};
+	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","MCC_rts_takeControl","MCC_rts_respawnUnits"};
 	actionFNC = "MCC_fnc_rtsCreateGroup";
 	resources[] = {{"ammo",500},{"food",100},{"time",15}};
 };
@@ -98,7 +98,7 @@ class MCC_rtsGroup_AA
 	unitsWest[] = {"B_Soldier_AA_F","B_Soldier_AAA_F"};
 	unitsGuer[] = {"I_Soldier_AA_F","I_Soldier_AAA_F"};
 	needelectricity = 0;
-	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","","MCC_rts_respawnUnits"};
+	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","MCC_rts_takeControl","MCC_rts_respawnUnits"};
 	actionFNC = "MCC_fnc_rtsCreateGroup";
 	resources[] = {{"ammo",600},{"food",100},{"time",15}};
 };
@@ -119,7 +119,7 @@ class MCC_rtsGroup_platoon
 	unitsWest[] = {"B_Soldier_SL_F","B_soldier_AR_F","B_Soldier_GL_F","B_soldier_AT_F","B_soldier_AAT_F","B_Soldier_A_F","B_medic_F"};
 	unitsGuer[] = {"I_Soldier_SL_F","I_soldier_AR_F","I_Soldier_GL_F","I_soldier_AT_F","I_soldier_AAT_F","I_Soldier_A_F","I_medic_F"};
 	needelectricity = 0;
-	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","","MCC_rts_respawnUnits"};
+	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","MCC_rts_takeControl","MCC_rts_respawnUnits"};
 	actionFNC = "MCC_fnc_rtsCreateGroup";
 	resources[] = {{"ammo",700},{"food",350},{"time",15}};
 };
@@ -140,7 +140,7 @@ class MCC_rtsGroup_sniper
 	unitsWest[] = {"B_sniper_F","B_spotter_F"};
 	unitsGuer[] = {"I_sniper_F","I_spotter_F"};
 	needelectricity = 0;
-	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","","MCC_rts_respawnUnits"};
+	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","MCC_rts_takeControl","MCC_rts_respawnUnits"};
 	actionFNC = "MCC_fnc_rtsCreateGroup";
 	resources[] = {{"ammo",800},{"food",100},{"time",15}};
 };
