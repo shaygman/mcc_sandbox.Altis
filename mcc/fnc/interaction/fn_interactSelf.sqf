@@ -4,7 +4,7 @@
 //=================================================================================================================================================================================
 private ["_suspect","_men","_rand","_factor","_null","_suspectCorage","_keyName","_pos"];
 _suspect 	= _this select 0;
-if (MCC_isACE) exitWith {};
+if ((MCC_isACE && MCC_isMode)) exitWith {};
 
 disableSerialization;
 

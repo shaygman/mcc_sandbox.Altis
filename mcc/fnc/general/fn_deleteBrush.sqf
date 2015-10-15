@@ -207,15 +207,14 @@ switch _type do
 	};
 
 {
-	if ((count crew _x >0) &&  (_x getVariable ["mcc_delete",true])) then
-	{
-			_crew = crew _x;
-			deletevehicle _x;
-			{deletevehicle _x; sleep 0.1} foreach _crew;
-	}
-	else
-	{
-		if (_x getVariable ["mcc_delete",true]) then {deletevehicle _x};
+	if (_x getVariable ["mcc_delete",true] && !(isPlayer _x || isPlayer driver vehicle _x || isPlayer commander vehicle _x || isPlayer gunner vehicle _x)) then {
+		if (count crew _x >0) then {
+				_crew = crew _x;
+
+				{deletevehicle _x; sleep 0.1} foreach _crew;
+		};
+
+		deletevehicle _x;
 	};
 } foreach _nearObjects;
 

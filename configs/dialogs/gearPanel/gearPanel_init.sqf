@@ -54,8 +54,9 @@ _updateRoles = {
 
 	{
 		_roleName = _x;
-		_roleLimit = ["SERVER_misc", "RoleSelectionDefinse", format ["CP_%1PerGroup", toLower _roleName], "SCALAR"] call iniDB_read;
-		_minPlayersForRole = ["SERVER_misc", "RoleSelectionDefinse", format ["CP_%1MinPlayersInGroup", toLower _roleName], "SCALAR"] call iniDB_read;
+		_roleLimit = call compile format ["CP_%1PerGroup", toLower _roleName];
+		_minPlayersForRole = call compile format ["CP_%1MinPlayersInGroup", toLower _roleName];
+
 		_countRole = {(_x getvariable "CP_role") == _roleName} count units player;
 
 		if ((_countRole >= _roleLimit || count units player <  _minPlayersForRole) && _roleName != _playerRole) then {
@@ -81,7 +82,7 @@ _updateRoles = {
 	//pilot & crewmen
 	{
 		_roleName = _x;
-		_roleLimit = ["SERVER_misc", "RoleSelectionDefinse", format ["CP_available%1",_roleName], "SCALAR"] call iniDB_read;
+		_roleLimit = call compile format ["CP_%1PerGroup", toLower _roleName];
 		_countRole = {isPlayer _x && side _x == playerSide && tolower (_x getvariable ["CP_role","n/a"]) == tolower _roleName} count allUnits;
 		if (_countRole >= _roleLimit  && _roleName != toLower (player getVariable ["CP_role","N/A"])) then {
 			(_disp displayCtrl (17 + _forEachIndex)) ctrlEnable false;

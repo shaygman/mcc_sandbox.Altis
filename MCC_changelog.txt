@@ -1,3 +1,16 @@
+Change log r18:
+- Added: Can use MCC interaction while ACE is on - just don't forget to bind it to another key - TOOD check on ACE
+- Fixed: After fisnihing a campaign mission MCC will not delete manned players' vehicles or FOBs. 
+- Changed: ILS Available to all air vehicles.
+- Fixed: Quick weapon (Shift +1 .... Shift + 4) select always on
+
+
+Change log r17:
+- Fixed: Convoy didn't worked on dedicated server.
+- Fixed - MCC ammobox items didn't show up on ACE. 
+- Fixed - Resource module's names vice versa. 
+- Fixed - Limiting the number of kits per squad didn't worked in Role Selection
+
 Change log r16 hotfix:
 - Added: In RTS mode the commander can take first person control over it's units. 
 - Added: Undercover Agents module (2D or Zeus) covert units into undercover agents , wiki will come soon. You can holster a handgun and get close to enemy units without raising suspicious. Getting to close to an enemy, crouching, proning, running around or drawing your handgun will blow your cover. 

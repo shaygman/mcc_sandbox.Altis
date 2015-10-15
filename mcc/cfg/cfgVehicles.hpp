@@ -22,13 +22,15 @@ class Box_NATO_Ammo_F;
 #include "ammoBox\miscItemsBox.hpp"
 
 #include "ACE\aceCfg.hpp"
-class Land_Ammobox_rounds_F;
-class MCC_ammoBox : Land_Ammobox_rounds_F
-{
-	ammo = 200;
-};
 
 class Box_NATO_AmmoVeh_F;
+
+class MCC_ammoBox : Box_NATO_AmmoVeh_F
+{
+	ammo = 200;
+	model = "\A3\Structures_F_EPB\Items\Military\Ammobox_rounds_F.p3d";
+};
+
 class MCC_crateAmmo : Box_NATO_AmmoVeh_F
 {
 	displayName = "Ammo Crate";

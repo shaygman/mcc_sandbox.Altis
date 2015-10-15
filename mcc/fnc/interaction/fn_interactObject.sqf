@@ -29,13 +29,13 @@ disableSerialization;
 _object 	= _this select 0;
 if (isNil "MCC_interactionKey_holding") then {MCC_interactionKey_holding = false};
 
-if ((player distance _object < 7) && (MCC_interactionKey_holding || MCC_isACE) && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then {
+if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE && MCC_isMode)) && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then {
 
 	missionNameSpace setVariable [format ["MCC_isInteracted%1",getpos _object], true];
 	publicvariable format ["MCC_isInteracted%1",getpos _object];
 
 	//Create progress bar
-	_searchTime = if (MCC_isACE) then {3} else {10};
+	_searchTime = if ((MCC_isACE && MCC_isMode)) then {3} else {10};
 	_break		= false;
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutRsc ["MCC_interactionPB", "PLAIN"];
 	_ctrl = ((uiNameSpace getVariable "MCC_interactionPB") displayCtrl 2);
@@ -46,8 +46,8 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || MCC_isACE) &
 	{
 
 		_ctrl progressSetPosition (_x/_searchTime);
-		if (MCC_isACE && ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic")) then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
-		if ((_object distance player) > 5 || (!MCC_interactionKey_holding && !MCC_isACE)) then {_x = _searchTime; _break = true;};
+		if ((MCC_isACE && MCC_isMode) && ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic")) then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
+		if ((_object distance player) > 5 || (!MCC_interactionKey_holding && !(MCC_isACE && MCC_isMode))) then {_x = _searchTime; _break = true;};
 		sleep 0.1;
 	};
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];

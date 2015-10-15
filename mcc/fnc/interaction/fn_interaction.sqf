@@ -19,7 +19,7 @@ private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePla
 
 disableSerialization;
 _break = false;
-if (MCC_isACE) exitWith {};
+if (MCC_isACE && MCC_isMode) exitWith {};
 
 _text = "";
 
@@ -237,7 +237,7 @@ else
 	};
 
 	//MCC ILS
-	if ((_vehiclePlayer isKindOf "Plane") && (player == Driver _vehiclePlayer)) then
+	if ((_vehiclePlayer isKindOf "air") && (player == Driver _vehiclePlayer)) then
 	{
 		_airports = [];
 		_counter = 0;

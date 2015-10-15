@@ -276,6 +276,7 @@ class actions
 	class callConstruct {description = "Call construct from ACE menu";};
 	class resupply {description = "Resupply ammo from an ammo box";};
 	class breakdown {description = "Breakdown MCC crate into supplies";};
+	class ACEdropAmmobox {description = "Drop MCC ammbox in ACE";};
 };
 
 class roleSelection
