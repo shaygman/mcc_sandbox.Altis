@@ -10,7 +10,7 @@ _newLevel = _this select 0;
 _unlockLayer = ["MCC_unlock"] call BIS_fnc_rscLayer;
 _levelingLayer = ["MCC_unlock"] call BIS_fnc_rscLayer;
 
-							
+
 //Level notification
 _name = name player;
 _rank = [(floor (_newLevel/10)) min 6,"texture"] call BIS_fnc_rankParams;
@@ -22,10 +22,10 @@ _string = format ["<t font='puristaMedium' size='1' color='#FFFFFF '><img size='
 waituntil {!isnil "CP_currentWeaponArray"};
 //New Gear notification
 {
-	for [{_i = 0},{_i < count _x},{_i = _i+1}] do 
+	for [{_i = 0},{_i < count _x},{_i = _i+1}] do
 	{
 		_wep = _x select _i;
-		if (_newLevel ==  _wep select 0) then 
+		if (_newLevel ==  _wep select 0) then
 		{
 			sleep 10;
 			_displayname 	= getText(configFile >> "CfgWeapons">> (_wep select 1) >> "displayname");
@@ -40,10 +40,10 @@ waituntil {!isnil "CP_currentWeaponArray"};
 
 //New Mag notification
 {
-	for [{_i = 0},{_i < count _x},{_i = _i+1}] do 
+	for [{_i = 0},{_i < count _x},{_i = _i+1}] do
 	{
 		_wep = _x select _i;
-		if (_newLevel ==  _wep select 0) then 
+		if (_newLevel ==  _wep select 0) then
 		{
 			sleep 10;
 			_displayname 	= getText(configFile >> "CfgMagazines">> (_wep select 1) >> "displayname");
@@ -59,18 +59,16 @@ waituntil {!isnil "CP_currentWeaponArray"};
 //New accessories notification
 _weapon = primaryWeapon player;
 
-if (!isnil "_weapon") then
-{
+if (!isnil "_weapon") then {
 	_weaponName = getText(configFile >> "CfgWeapons">> _weapon >> "displayname");
 	_weaponPic	= getText(configFile >> "CfgWeapons">> _weapon >> "picture");
-	
-	_wepArray = call compile format ["CP_%1",_weapon]; 
+
+	_wepArray = call compile format ["CP_%1",_weapon];
 	{
-		for [{_i = 0},{_i < count _x},{_i = _i+1}] do 
+		for [{_i = 0},{_i < count _x},{_i = _i+1}] do
 		{
 			_wep = _x select _i;
-			if (_newLevel ==  _wep select 0) then 
-			{
+			if (_newLevel ==  _wep select 0) then {
 				sleep 10;
 				_displayname 	= getText(configFile >> "CfgWeapons">> (_wep select 1) >> "displayname");
 				_pic 			= getText(configFile >> "CfgWeapons">> (_wep select 1) >> "picture");

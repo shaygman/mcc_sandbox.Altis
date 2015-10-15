@@ -26,15 +26,13 @@
 ["MCC", "vaultOver", ["Climb Over", "Climb over obstacles"], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false]) && (missionNameSpace getVariable ["MCC_coverVault",true]) && !(player getVariable ["MCC_vaultOver",false]) && (player getVariable ["MCC_wallAhead",""]) != "") then {[] spawn MCC_fnc_vault;true}}, {}, [47, [false,false,true]],false] call cba_fnc_addKeybind;
 
 //Switch weapon 1 - Primary/handgun
-["MCC", "switchWeapon1", ["Switch Weapons 1: Primary/handgun", ""], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false])) then {[2] spawn MCC_fnc_weaponSelect;true}}, {}, [2, [true,false,false]],false] call cba_fnc_addKeybind;
+["MCC", "switchWeapon1", ["Switch Weapons 1: Primary/handgun", ""], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false]) && (missionNamespace getvariable ["MCC_quickWeaponChange",false])) then {[2] spawn MCC_fnc_weaponSelect;true}}, {}, [2, [true,false,false]],false] call cba_fnc_addKeybind;
 
 //Switch weapon 2 - Launcher
-["MCC", "switchWeapon2", ["Switch Weapons 2: Launcher", ""], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false])) then {[3] spawn MCC_fnc_weaponSelect;true}}, {}, [3, [true,false,false]],false] call cba_fnc_addKeybind;
+["MCC", "switchWeapon2", ["Switch Weapons 2: Launcher", ""], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false]) && (missionNamespace getvariable ["MCC_quickWeaponChange",false])) then {[3] spawn MCC_fnc_weaponSelect;true}}, {}, [3, [true,false,false]],false] call cba_fnc_addKeybind;
 
 //Switch weapon 3 - Grenade
-["MCC", "switchWeapon3", ["Switch Weapons 3: Grenades", ""], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false])) then {[4] spawn MCC_fnc_weaponSelect;true}}, {}, [4, [true,false,false]],false] call cba_fnc_addKeybind;
+["MCC", "switchWeapon3", ["Switch Weapons 3: Grenades", ""], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false]) && (missionNamespace getvariable ["MCC_quickWeaponChange",false])) then {[4] spawn MCC_fnc_weaponSelect;true}}, {}, [4, [true,false,false]],false] call cba_fnc_addKeybind;
 
 //Switch weapon 4 - Primary/handgun
-["MCC", "switchWeapon4", ["Switch Weapons 4: Utility", ""], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false])) then {[5] spawn MCC_fnc_weaponSelect;true}}, {}, [5, [true,false,false]],false] call cba_fnc_addKeybind;
-
-
+["MCC", "switchWeapon4", ["Switch Weapons 4: Utility", ""], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false]) && (missionNamespace getvariable ["MCC_quickWeaponChange",false])) then {[5] spawn MCC_fnc_weaponSelect;true}}, {}, [5, [true,false,false]],false] call cba_fnc_addKeybind;

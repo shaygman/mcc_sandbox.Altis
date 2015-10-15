@@ -1,15 +1,11 @@
 disableSerialization;
-private ["_vehicle1","_vehicle2","_vehicle3","_vehicle4","_vehicle5","_pos1","_pos2","_escrot","_escrotDriver",
-		 "_faction","_vipclass","_vipcar","_x1","_y1","_x2","_y2","_group","_driver","_cargo1","_dummy","_cargoNum","_x","_pos"];
+private ["_vehicleArray","_vehicleClass","_pos1","_pos2","_escrot","_escrotDriver","_hvtCar","_vipclass","_vipcar","_x1","_y1","_x2","_y2","_group","_cargo","_unit","_cargoNum","_pos","_convoyArray","_vehicle","_x","_var"];
 
-
-//diag_log str ["place_convoy START", _this];		 
-		 
-_vehicle1 = _this select 0; 		//get params
-_vehicle2 = _this select 1; 
-_vehicle3 = _this select 2;
-_vehicle4 = _this select 3;
-_vehicle5 = _this select 4;
+_vehicleArray = [];
+for "_i" from 0 to 4 do {
+	_var = _this select _i;
+	if !(isNil "_var") then {_vehicleArray pushBack _var}
+};
 
 _pos1 = _this select 5;
 _pos2 = _this select 6;
@@ -23,106 +19,98 @@ _y1 = _pos1 select 1;
 _x2 = _pos2 select 0;
 _y2 = _pos2 select 1;
 
+_convoyArray = [];
+
 _angle = (_x2 - _x1) atan2 (_y2 - _y1);			//define convoy heading
 if (_angle < 0) then { _angle = 360 + _angle; };
 
-switch (toLower _side) do	
-{
+switch (toLower _side) do {
 	case "west": {_side =  west; _escrot = MCCConvoyWestEscort; _escrotDriver = MCCConvoyWestDriver};
 	case "east": {_side =  east;  _escrot = MCCConvoyEastEscort; _escrotDriver = MCCConvoyEastDriver};
 	case "guer": {_side =  resistance;  _escrot = MCCConvoyGueEscort; _escrotDriver = MCCConvoyGueDriver};
 	case "civ": {_side =  civilian;  _escrot = MCCConvoyCivEscort; _escrotDriver = MCCConvoyCivDriver};
 };
-	
-_group = creategroup _side;	
 
-car1 = [[(_pos1 select 0),(_pos1 select 1)] , _angle, _vehicle1, _group] call BIS_fnc_spawnVehicle;
-sleep 0.5;
-_group setFormation "COLUMN";	
-(car1 select 0) lockdriver true;
-_pos = (car1 select 0) modelToWorld [0,-25,0];
-MCC_curator addCuratorEditableObjects [[(car1 select 0)],true];	
+//Spawn group
+_group = creategroup _side;
+_group setFormation "COLUMN";
 
-sleep 0.05;
-
-if !( isNil "_vehicle2" ) then
-{ 
-	car2 = [[_pos select 0, _pos select 1, 0] , getdir (car1 select 0), _vehicle2, _side] call BIS_fnc_spawnVehicle;
-	(car2 select 0) setposatl (getpos (car2 select 0));
-	(car2 select 0) lockdriver true;
-	sleep 0.1;
-	(car2 select 1) joinsilent (car1 select 2);
-	MCC_curator addCuratorEditableObjects [[(car2 select 0)],true];	
-};
-
-sleep 0.05;
-
-if (_vipclass=="0") then
-{ 
-	if !( isNil "_vehicle3" ) then
-	{ 
-		_pos = (car1 select 0) modelToWorld [0,-50,0];
-		car3 = [[_pos select 0, _pos select 1, 0]  , getdir (car1 select 0), _vehicle3, _side] call BIS_fnc_spawnVehicle;
-		(car3 select 0) setposatl (getpos (car3 select 0));
-		(car3 select 0) lockdriver true;
-		sleep 0.1;
-		(car3 select 1) joinsilent (car1 select 2);
-		MCC_curator addCuratorEditableObjects [[(car3 select 0)],true];	
-	};
-}
-else 
+_pos = _pos1;
 {
-	car3 = _vipcar createvehicle ((car1 select 0) modelToWorld [0,-50,0]);
-	car3 setdir (getdir (car1 select 0)); 
-	MCC_curator addCuratorEditableObjects [[car3],false];	
-	
-	_driver = _group createUnit [_escrotDriver, _pos1, [], 0, "CORPORAL"];
-	_driver assignAsDriver car3;
-	_driver moveindriver car3;
-	MCC_curator addCuratorEditableObjects [[_driver],false];	
-	
-	car3 lockdriver true;
-	_cargoNum = car3 emptyPositions "cargo";
-	
-	for [{_x=1},{_x<_cargoNum-1},{_x=_x+1}] do 
-	{
-		_cargo1 = _group createUnit [_escrot, _pos1, [], 0, "CORPORAL"];
-		_cargo1 assignAsCargo car3;
-		_cargo1 MoveInCargo car3;
+	_vehicleClass = _x;
+	if (!isNil "_vehicleClass") then {
+		//_angle = if (count _convoyArray > _foreachindex) then {getdir (_convoyArray select (_foreachindex -1))} else {_angle};
+		_vehicle = ([_pos , _angle, _vehicleClass, _group] call BIS_fnc_spawnVehicle) select 0;
+		_group setFormation "COLUMN";
+		//_vehicle setposatl (getpos _vehicle);
+		_vehicle lockdriver true;
+		_pos = _vehicle modelToWorld [0,-25,0];
+		MCC_curator addCuratorEditableObjects [[_vehicle],true];
+		_convoyArray pushBack _vehicle;
 	};
-	_dummy = _vipclass createunit [_pos1, _group,"this setcaptive true; this assignAsCargo car3;this MoveInCargo car3;_null = this addaction [""Secure HVT"",'"+MCC_path+"mcc\general_scripts\hostages\hostage.sqf',[0],6,true,false];
-	removeAllWeapons this ;this allowFleeing 0;"];
+} forEach _vehicleArray;
+
+
+//Hnadle HVT
+if (_vipclass != "0") then {
+	_hvtCar = _convoyArray select floor ((count _convoyArray)/2);
+
+	//switch cars
+	if (_vipcar != "") then {
+
+		private ["_driver","_hvtCarNew","_index"];
+		_index = _convoyArray find _hvtCar;
+		_pos = getpos _hvtCar;
+		_angle = getdir _hvtCar;
+		_driver = driver _hvtCar;
+
+		_hvtCarNew = _vipcar createVehicle _pos1;
+		unassignVehicle _driver;
+		waitUntil {vehicle _driver == _driver};
+
+		_driver assignAsDriver _hvtCarNew;
+		_driver moveInDriver _hvtCarNew;
+
+		{deleteVehicle _x} forEach crew _hvtCar;
+		deleteVehicle _hvtCar;
+
+		_hvtCar = _hvtCarNew;
+		_hvtCar setpos _pos;
+		_hvtCar setdir _angle;
+		_convoyArray set [_index,_hvtCar];
+		MCC_curator addCuratorEditableObjects [[_hvtCar],true];
+	};
+
+	_cargoNum = _hvtCar emptyPositions "cargo";
+	_group = group driver _hvtCar;
+
+	for "_i" from 1 to (_cargoNum-1) do {
+		_cargo = _group createUnit [_escrot, _pos1, [], 0, "CORPORAL"];
+		_cargo assignAsCargo _hvtCar;
+		_cargo MoveInCargo _hvtCar;
+	};
+
+	sleep 1;
+
+	_unit = _group createUnit [_vipclass, _pos2, [], 0, "FORM"];
+	_unit setCaptive true;
+	removeallweapons _unit;
+
+	sleep 1;
+
+	_unit assignAsCargo _hvtCar;
+	_unit MoveInCargo _hvtCar;
+
+	if (MCC_isACE) then {
+	 	[_unit, true] call ACE_captives_fnc_setHandcuffed;
+	} else {
+		_unit setVariable ["MCC_disarmed",true,true];
+	};
+
+
+
 	{MCC_curator addCuratorEditableObjects [[_x],false]} foreach (units _group);
-	sleep 0.3;
-	(units _group) joinsilent (car1 select 2);
 };
 
-sleep 0.05;
-
-if !( isNil "_vehicle4" ) then
-{ 
-	_pos = (car1 select 0) modelToWorld [0,-75,0];
-	car4 = [[_pos select 0, _pos select 1, 0] , getdir (car1 select 0), _vehicle4, _side] call BIS_fnc_spawnVehicle;
-	(car4 select 0) setposatl (getpos (car4 select 0));
-	(car4 select 0) lockdriver true;
-	sleep 0.1;
-	(car4 select 1) joinsilent (car1 select 2);
-	MCC_curator addCuratorEditableObjects [[(car4 select 0)],true];
-};
-	
-sleep 0.05;
-
-if !( isNil "_vehicle5" ) then
-{ 
-	_pos = (car1 select 0) modelToWorld [0,-100,0];
-	car5 = [[_pos select 0, _pos select 1, 0]  , getdir (car1 select 0), _vehicle5, _side] call BIS_fnc_spawnVehicle;
-	(car5 select 0) setposatl (getpos (car5 select 0));
-	(car5 select 0) lockdriver true;
-	sleep 0.1;
-	(car5 select 1) joinsilent (car1 select 2);
-	MCC_curator addCuratorEditableObjects [[(car5 select 0)],true];
-};
-
-sleep 0.05;
-
-//diag_log str ["place_convoy END"];
+missionNamespace setVariable ["MCC_convoyVehicles",_convoyArray];
+publicVariable "MCC_convoyVehicles";

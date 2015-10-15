@@ -154,6 +154,14 @@ class CAManBase: Man {
 			showDisabled = 0;
 		};
 
+		class ACE_MCC_DropAmmobox {
+			condition = "('MCC_ammoBoxMag' in magazines _player)";
+			displayName = "Drop<br/>Ammobox";
+			icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
+			statement = "['MCC_ammoBoxMag','MCC_ammoBox'] spawn MCC_fnc_ACEdropAmmobox;";
+			showDisabled = 0;
+		};
+
 		class ACE_MCC_doorinteraction {
 			condition = "([cursorTarget] call MCC_fnc_isDoor) != ''";
 			displayName = "Door<br/>Interaction";

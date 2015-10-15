@@ -26,6 +26,7 @@ class MCC_ItemCore: MineDetector
     type = 4096;
     detectRange = -1;
     simulation = "ItemMineDetector";
+    scope = 1;
 };
 
 class MCC_Item: InventoryItem_Base_f

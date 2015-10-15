@@ -259,7 +259,8 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 	};
 
 	sleep 5;
-	[_AOlocationPos,_AOSize*4] spawn {sleep 600; [_this select 0,_this select 1,0] call MCC_fnc_deleteBrush};
+	//clean up
+	[_AOlocationPos,_AOSize*4] spawn {sleep 1200; [_this select 0,_this select 1,0] call MCC_fnc_deleteBrush};
 	[2, "", "", "", "", "", "MCC_campaignMarker", []] call MCC_fnc_makeMarker;
 
 	//Mark area as captured
