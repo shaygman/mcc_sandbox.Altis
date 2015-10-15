@@ -5,13 +5,13 @@
     <a href="">
         <img src="https://img.shields.io/badge/Version-R17-blue.svg" alt="MCC Version">
     </a>
-    <a href="https://www.dropbox.com/s/cbpinx8knu5fw42/%40mcc_sandbox.rar">
+    <a href="https://www.dropbox.com/s/cbpinx8knu5fw42/%40mcc_sandbox.rar?dl=1">
         <img src="https://img.shields.io/badge/Download-Mod-green.svg" alt="MCC Download Mod">
     </a>
-    <a href="https://www.dropbox.com/s/vk1makz2q2vnfpn/mcc_sandbox.Stratis.pbo">
+    <a href="https://www.dropbox.com/s/vk1makz2q2vnfpn/mcc_sandbox.Stratis.pbo?dl=1">
         <img src="https://img.shields.io/badge/Download-Stratis-yellowgreen.svg" alt="MCC Download Stratis">
     </a>
-    <a href="https://www.dropbox.com/s/d25xly1ln63dgd6/mcc_sandbox.altis.pbo">
+    <a href="https://www.dropbox.com/s/d25xly1ln63dgd6/mcc_sandbox.altis.pbo?dl=1">
         <img src="https://img.shields.io/badge/Download-Altis-yellow.svg" alt="MCC Download Altis">
     </a>
     
