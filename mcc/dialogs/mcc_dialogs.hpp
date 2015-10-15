@@ -1372,3 +1372,72 @@ class MCC_keyBindsGroup: MCC_RscControlsGroup
 		};
 	};
 };
+// Credit to ACE 3 for buttonbase
+class MCC_gui_buttonBase {
+  idc = -1;
+  type = 16;
+  style = ST_LEFT;
+  text = "";
+  action = "";
+  x = 0.0;
+  y = 0.0;
+  w = 0.25;
+  h = 0.04;
+  size = 0.03921;
+  sizeEx = 0.03921;
+  color[] = {1.0, 1.0, 1.0, 1};
+  color2[] = {1.0, 1.0, 1.0, 1};
+  colorBackground[] = {1,1,1,0.95};
+  colorbackground2[] = {1,1,1,0.95};
+  colorDisabled[] = {1,1,1,0.6};
+  colorFocused[] = {1,1,1,1};
+  colorBackgroundFocused[] = {1,1,1,1};
+  periodFocus = 1.2;
+  periodOver = 0.8;
+  default = false;
+  class HitZone {
+    left = 0.00;
+    top = 0.00;
+    right = 0.00;
+    bottom = 0.00;
+  };
+
+  class ShortcutPos {
+    left = 0.00;
+    top = 0.00;
+    w = 0.00;
+    h = 0.00;
+  };
+
+  class TextPos {
+    left = 0.002;
+    top = 0.0004;
+    right = 0.0;
+    bottom = 0.00;
+  };
+  textureNoShortcut = "";
+  animTextureNormal = "#(argb,8,8,3)color(0,0,0,0.9)";
+  animTextureDisabled = "#(argb,8,8,3)color(0,0,0,0.8)";
+  animTextureOver = "#(argb,8,8,3)color(1,1,1,1)";
+  animTextureFocused = "#(argb,8,8,3)color(1,1,1,1)";
+  animTexturePressed = "#(argb,8,8,3)color(1,1,1,1)";
+  animTextureDefault = "#(argb,8,8,3)color(1,1,1,1)";
+  period = 0.5;
+  font = FontCSE;
+  soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.09,1};
+  soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.0,0};
+  soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.07,1};
+  soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1};
+  class Attributes {
+    font = FontCSE;
+    color = "#E5E5E5";
+    align = "center";
+    shadow = "true";
+  };
+  class AttributesImage {
+    font = FontCSE;
+    color = "#E5E5E5";
+    align = "left";
+    shadow = "true";
+  };
+};
