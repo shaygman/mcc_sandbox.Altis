@@ -20,8 +20,6 @@ class GAIA
         class ShowLocationOwner {};
         
     };
-
-
     class Cache
     {
         #ifdef MCCMODE
@@ -40,7 +38,6 @@ class GAIA
         class uncacheFar {};
         class uncacheOriginalGroup {};
     };
-
     class General
     {
         #ifdef MCCMODE
@@ -66,7 +63,6 @@ class GAIA
         class rotatePosition {};
         class startGaia {};
     };
-
     class Control
     {
         #ifdef MCCMODE
@@ -104,7 +100,6 @@ class GAIA
         class removeWaypoints {};
         
     };
-
     class Orders
     {
         #ifdef MCCMODE
@@ -147,7 +142,6 @@ class GAIA
         class doTransportTank {};
         class doWait {};
     };
-
     class Fortify
     {
         #ifdef MCCMODE
