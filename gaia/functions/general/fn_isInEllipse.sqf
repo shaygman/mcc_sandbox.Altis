@@ -1,4 +1,4 @@
-//  In: [position,ellipseMarker]
+// In: [position,ellipseMarker]
 // Out: boolean
 
 private ["_pos","_area","_return"];

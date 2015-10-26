@@ -1,4 +1,5 @@
-/* ----------------------------------------------------------------------------
+/* 
+----------------------------------------------------------------------------
 Function: fnc_AddGroupToGAIA
 
 Description:
@@ -16,18 +17,15 @@ Returns:
 Author:
 	Spirit, 7-1-2014
 
----------------------------------------------------------------------------- */
+----------------------------------------------------------------------------
+*/
 
 private ["_group","_zone","_intend"];
 
-_group 		= _this select 0;
-_zone 		= _this select 1;
-_intend		= _this select 2;
-
-
-
+_group = _this select 0;
+_zone = _this select 1;
+_intend = _this select 2;
 
 _group setVariable ["GAIA_ZONE_INTEND",[_zone,_intend], false];
-
 
 true;
