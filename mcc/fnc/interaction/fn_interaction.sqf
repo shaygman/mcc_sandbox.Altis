@@ -19,7 +19,8 @@ private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePla
 
 disableSerialization;
 _break = false;
-if (MCC_isACE && MCC_isMode) exitWith {};
+
+//if (MCC_isACE && MCC_isMode) exitWith {};
 
 _text = "";
 

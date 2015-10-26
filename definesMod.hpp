@@ -69,6 +69,8 @@
 //--------------------------features----------------------------------------------------
 #include "\mcc_sandbox_mod\mcc\login\cfg.hpp"
 #include "\mcc_sandbox_mod\mcc\rts\cfg.hpp"
+#include "\mcc_sandbox_mod\mcc\bombDefuse\cfg.hpp"
+#include "\mcc_sandbox_mod\mcc\survive\cfg.hpp"
 
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
@@ -85,6 +87,8 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\cfg\modules\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\cfg\curator\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\undercover\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\bombDefuse\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\survive\cfgFunctions.hpp"
 	};
 };
 
@@ -110,11 +114,13 @@ class CfgNotifications
 
 class RscTitles
 {
+	#include "\mcc_sandbox_mod\mcc\cfg\modules\dialogs\mcc_captureProgressRsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\compass.hpp"
 	#include "\mcc_sandbox_mod\hcam\hcam.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_3dObject.hpp"
-	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
+	#include "\mcc_sandbox_mod\mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
+	#include "\mcc_sandbox_mod\mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
 };
 
 class cfgVehicles
@@ -143,7 +149,10 @@ class cfgWeapons
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgWeapons.hpp"
 };
 
-
+class CfgMarkers
+{
+	#include "\mcc_sandbox_mod\mcc\cfg\CfgMarkers.hpp"
+};
 
 class RscMapControl;
 class RscText;

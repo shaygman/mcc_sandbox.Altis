@@ -66,7 +66,7 @@ if (_object isKindOf "Man") then {
 	 						["Explosion Effect",["Deadly","Disabling","Fake","None"]],
 	 						["Disarm Time",300],
 	 						["Can be jammed using ECM vehicle",true],
-	 						["Activation Type",["Proximity","Radio/Spotter","Mission Maker Only"]],
+	 						["Activation Type",["Proximity","Radio/Spotter","Mission Maker Only","Mini-Game"]],
 	 						["Activation Distance",60],
 	 						["Activation Side",["East","West","Resistance"]]
 	 					  ]] call MCC_fnc_initDynamicDialog;

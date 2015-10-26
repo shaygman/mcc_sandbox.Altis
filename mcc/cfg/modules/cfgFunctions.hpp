@@ -16,4 +16,5 @@ class MCCmodules
 	class GAIASettings {description = "GAIA settings";};
 	class settingsCover {description = "Cover settings";};
 	class settingsMedical {description = "Medical system settings";};
+	class moduleCapturePoint {description = "Sets a capture point";};
 };

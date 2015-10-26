@@ -200,11 +200,15 @@ if !mcc_isloading then
 	private ["_tempArray","_var"];
 	_tempArray = ["MCC_interaction","MCC_surviveMod","MCC_cover","MCC_coverUI","MCC_showActionKey","MCC_coverVault","MCC_quickWeaponChange","MCC_ingameUI","MCC_allowRTS"];
 
-	for "_i" from 8427 to 8435 do
-	{
+	for "_i" from 8427 to 8435 do {
 		_var = _tempArray select (_i-8427);
 		missionNameSpace setVariable [_var, if ((lbCurSel _i)==0) then {false} else {true}];
 		publicVariable _var;
+	};
+
+	//fire local EH
+	if (missionNamespace getVariable ["MCC_surviveMod",false]) then {
+		[] spawn MCC_fnc_surviveInit;
 	};
 
 	Hint "Mission Settings Saved";

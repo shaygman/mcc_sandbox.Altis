@@ -4,12 +4,11 @@
 //=================================================================================================================================================================================
 private ["_suspect","_men","_rand","_factor","_null","_suspectCorage","_keyName","_pos"];
 _suspect 	= _this select 0;
-if ((MCC_isACE && MCC_isMode)) exitWith {};
+//if ((MCC_isACE && MCC_isMode)) exitWith {};
 
 disableSerialization;
 
-if (!dialog) exitWith
-{
+if (!dialog) exitWith {
 	_array = [["",format ["-= %1 =-",if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect}],""],
 			  ["medic","Medical Examine",format ["%1data\IconMed.paa",MCC_path]],
 			  ["enemy","Spot Enemy","\a3\Ui_F_Curator\Data\CfgMarkers\kia_ca.paa"],
@@ -18,13 +17,11 @@ if (!dialog) exitWith
 			  ["close","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"]];
 
 	//If MCC medic system off
-	if !(missionNamespace getVariable ["MCC_medicSystemEnabled",false]) then
-	{
+	if !(missionNamespace getVariable ["MCC_medicSystemEnabled",false]) then {
 		_array set [1,-1];
 	};
 
-	if (leader player != player) then
-	{
+	if (leader player != player) then {
 		_array set [3,-1];
 		_array set [4,-1];
 	};

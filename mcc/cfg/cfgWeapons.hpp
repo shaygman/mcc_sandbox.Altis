@@ -61,3 +61,51 @@ class MCC_multiTool : MCC_ItemCore
 		mass = 10;
 	};
 };
+
+class MCC_axe_fire : MCC_ItemCore
+{
+	scope = 2;
+	displayName = "Fire Axe";
+	picture = "\mcc_sandbox_mod\data\items\axe_fire.paa";
+	model = "\A3\Structures_F\Items\Tools\Axe_fire_F.p3d";
+	class ItemInfo : MCC_Item
+	{
+		mass = 40;
+	};
+};
+
+class MCC_axe : MCC_ItemCore
+{
+	scope = 2;
+	displayName = "Axe";
+	picture = "\mcc_sandbox_mod\data\items\axe.paa";
+	model = "\A3\Structures_F\Items\Tools\Axe_F.p3d";
+	class ItemInfo : MCC_Item
+	{
+		mass = 40;
+	};
+};
+
+class MCC_shovel : MCC_ItemCore
+{
+	scope = 2;
+	displayName = "Shovel";
+	picture = "\mcc_sandbox_mod\data\items\shovel.paa";
+	model = "\A3\Structures_F_EPA\Items\Tools\Shovel_F.p3d";
+	class ItemInfo : MCC_Item
+	{
+		mass = 40;
+	};
+};
+
+class MCC_headTorch : MCC_ItemCore
+{
+	scope = 2;
+	displayName = "Head Torch";
+	picture = "\mcc_sandbox_mod\data\items\headTorch.paa";
+	model = "\A3\Weapons_F\Items\MineDetector";
+	class ItemInfo : MCC_Item
+	{
+		mass = 5;
+	};
+};
