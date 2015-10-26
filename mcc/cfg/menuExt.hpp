@@ -79,7 +79,7 @@ class RscDisplayMPInterrupt: RscStandardDisplay {
 	onMouseMoving = "((_this select 0) displayCtrl 100000) ctrlShow !MCC_isCBA";
 	class controls {
 		class MCC_Open_settingsMenu_Btn : MCC_Open_SettingsMenu_BtnBase {
-			idc = 100000
+			idc = 100000;
 		};
 	};
 };
@@ -87,7 +87,7 @@ class RscDisplayInterrupt: RscStandardDisplay {
 	onMouseMoving = "((_this select 0) displayCtrl 100001) ctrlShow !MCC_isCBA";
 	class controls {
 		class MCC_Open_settingsMenu_Btn : MCC_Open_SettingsMenu_BtnBase {
-			idc = 100001
+			idc = 100001;
 		};
 	};
 };
@@ -96,7 +96,7 @@ class RscDisplayInterruptEditorPreview: RscStandardDisplay {
 	class controls 
 	{	
 		class MCC_Open_settingsMenu_Btn : MCC_Open_SettingsMenu_BtnBase {
-			idc = 100002
+			idc = 100002;
 		};
 	};
 };
