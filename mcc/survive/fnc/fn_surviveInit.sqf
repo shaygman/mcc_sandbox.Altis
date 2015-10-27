@@ -38,10 +38,27 @@ if((missionNamespace getVariable ["MCC_surviveMod",false]) && !isDedicated && !(
 			_displayname = lbText [_ctrlIDC, _index];
 		} else {
 			_index = 0;
-			_itemClass = "";
-			_displayname = ctrltext _ctrl;
+			_itemClass =switch (_ctrlIDC) do {
+						    case 6191: {backpack player};
+						    case 6238: {binocular player};
+						    case 6216: {goggles player};
+						    case 612: {handgunWeapon player};
+						    case 630: {(handgunItems player) select 1};
+						    case 628: {(handgunItems player) select 0};
+						    case 629: {(handgunItems player) select 2};
+						    case 6240: {headgear player};
+						    case 610: {primaryWeapon player};
+						    case 622: {(primaryWeaponItems player) select 1};
+						    case 620: {(primaryWeaponItems player) select 0};
+						    case 621: {(primaryWeaponItems player) select 2};
+						    case 641: {(primaryWeaponItems player) select 2};
+						    case 611: {secondaryWeapon player};
+						    case 6331: {uniform player};
+						    case 6381: {vest player};
+						    case 6217: {hmd player};
+						    default {""};
+						};
 		};
-
 
 		//No Item class....demn you BI we'll have to use BRUTH FORCE
 		if (_itemClass == "") then {
@@ -234,7 +251,7 @@ if((missionNamespace getVariable ["MCC_surviveMod",false]) && !isDedicated && !(
 
 			{
 				((findDisplay 602) displayCtrl _x) ctrlSetEventHandler ["MouseButtonDblClick", "_this call MCC_fnc_handleInventoryClick"];
-			} forEach [6191,6238,6212,6216,6215,612,630,631,628,629,643,6240,6217,6211,610,622,623,620,621,641,6214,611,6213,6331,6381];
+			} forEach [6191,6238,6216,612,630,628,629,6240,610,622,620,621,641,611,6331,6381,6217];
 		};
 
 		waituntil {isnull (finddisplay 602)};

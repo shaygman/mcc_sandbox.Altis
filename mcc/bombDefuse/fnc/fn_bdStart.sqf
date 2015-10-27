@@ -2,9 +2,17 @@
   randomize the defuse bomb panel
 */
 private ["_difficulty","_modules","_noModules","_isEngineer","_disarmTime","_pos","_target","_realIED"];
-_target = _this select 0;
-_realIED = _target getVariable ["realIed",objNull];
+_targetIsRealIED = param [1,false,[true]];
 
+if (_targetIsRealIED) then {
+	_realIED = _this select 0;
+	_target = _realIED getvariable ["fakeIed",objNull];
+} else {
+	_target = _this select 0;
+	_realIED = _target getVariable ["realIed",objNull];
+};
+
+systemChat str [_target,_realIED];
 if (isNull _realIED) exitWith {};
 
 //is engineer

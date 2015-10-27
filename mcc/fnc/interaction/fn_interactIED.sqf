@@ -17,10 +17,9 @@ _isEngineer = if (((getNumber(configFile >> "CfgVehicles" >> typeOf _men >> "can
 _disarmTime =  _ied getvariable "MCC_disarmTime";
 _pos=[((getposATL _ied) select 0),(getposATL _ied) select 1,((getPosATL _ied) select 2)];
 
-
 //Is it a mini-game
 if (_ied getVariable ["MCC_isIEDMiniGame",false]) exitWith {
-	[_ied] call MCC_fnc_bdStart;
+	[_ied,true] spawn MCC_fnc_bdStart;
 	player setVariable ["MCC_interactionActive",false];
 };
 
