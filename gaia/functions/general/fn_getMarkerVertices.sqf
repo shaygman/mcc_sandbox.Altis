@@ -1,7 +1,7 @@
-//  In: marker
+// In: marker
 // Out: array of positions
 private ["_area","_corners"];
-_area    = _this;
+_area = _this;
 _corners = [];
 
 // Center point
