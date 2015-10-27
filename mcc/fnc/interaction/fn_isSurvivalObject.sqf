@@ -24,6 +24,7 @@ if (!(missionNamespace getVariable ["MCC_surviveMod",false])  && !(missionNamesp
 #define MCC_wreckSub ["uwreck"]
 #define MCC_ammoBox ["woodenbox","luggageheap","pallet_milboxes_f"]
 
+if !(missionNamespace getVariable ["MCC_surviveMod",false]) exitWith {false};
 //Not MCC object
 _positionStart 	= eyePos player;
 _positionEnd 	= ATLtoASL screenToWorld [0.5,0.5];

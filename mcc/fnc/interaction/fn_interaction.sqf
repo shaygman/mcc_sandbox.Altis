@@ -19,7 +19,8 @@ private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePla
 
 disableSerialization;
 _break = false;
-if (MCC_isACE && MCC_isMode) exitWith {};
+
+//if (MCC_isACE && MCC_isMode) exitWith {};
 
 _text = "";
 
@@ -94,15 +95,12 @@ if (vehicle player == player) then
 	_objects = player nearObjects [MCC_dummy,10];
 
 	//Handle IED
-	if (count _objects > 0) then
-	{
+	if (count _objects > 0) then {
 		_selected = ([_objects,[],{player distance _x},"ASCEND"] call BIS_fnc_sortBy) select 0;
 		_dir	  = [player, _selected] call BIS_fnc_relativeDirTo;
-		if (_dir>340 || _dir < 20) exitWith
-		{
+		if (_dir>340 || _dir < 20) exitWith {
 			//IED
-			if (((_selected getVariable ["MCC_IEDtype",""]) == "ied") && !(_selected getVariable ["MCC_isInteracted",false])) then
-			{
+			if (((_selected getVariable ["MCC_IEDtype",""]) == "ied") && !(_selected getVariable ["MCC_isInteracted",false])) then {
 				_null= [player,_selected] call MCC_fnc_interactIED;
 				//_null= [player,_selected] execvm "mcc\fnc\interaction\fn_interactIED.sqf";
 				_break = true;

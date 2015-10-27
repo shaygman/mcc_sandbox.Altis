@@ -1,9 +1,19 @@
 Change log r18:
 - Added: Can use MCC interaction while ACE is on - just don't forget to bind it to another key - TOOD check on ACE
-- Fixed: After fisnihing a campaign mission MCC will not delete manned players' vehicles or FOBs. 
+- Added: Mini-game IED disarm, as shown in "keep talking and nobody explodes" game. http://mccsandbox.wikia.com/wiki/Mini-game_IED
+- Added: Resources capture zones. http://mccsandbox.wikia.com/wiki/Capture_Zone
+- Added: Survival system. TODO - wiki
+
 - Changed: ILS Available to all air vehicles.
 - Fixed: Quick weapon (Shift +1 .... Shift + 4) select always on
+- Fixed: While playing with CBA you'll no longer see the change MCC keys - thanks to Sargken.
+- Fixed: MCC survival option "Search" enabled on ACE even when survival mode disabled. 
+- Fixed: After fisnihing a campaign mission MCC will not delete manned players' vehicles or FOBs.
+- Fixed: Lock/unlock door typo
 
+TODO - mission templates, test dedicated
+TODO - valor system
+TODO - change the disarm IED to minigame
 
 Change log r17:
 - Fixed: Convoy didn't worked on dedicated server.
@@ -1523,8 +1533,3 @@ Change log r7:
 - Fixed space between mines in minefields doubled. 
 - Fixed Fog over created on MCC sync. 
 - Fixed 3D editor sometimes break when pressing apply
-
-To do:
-0 ctursc "RscSpectator"
-0 cutRsc ["RscSpectator","Plain",2];
-cutRsc ["binocular","PLAIN"]

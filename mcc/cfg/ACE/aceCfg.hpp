@@ -211,6 +211,14 @@ class CAManBase: Man {
 			statement = "[] spawn MCC_fnc_searchSurvivalObject;";
 		};
 
+		class ACE_MCC_miniGameDefuse {
+            displayName = "Bomb Defuse";
+            condition ="((cursorTarget getVariable ['realIed',objnull]) getVariable ['MCC_isIEDMiniGame',false]) && (_player distance cursorTarget < 5)";
+            statement = "[cursorTarget] spawn MCC_fnc_bdStart";
+            showDisabled = 0;
+            icon = "\A3\ui_f\data\map\markers\military\unknown_CA.paa";
+        };
+
 		class ACE_MCC_SQLMenu {
 			condition = "(leader _player == _player && count units _player > 1 && (missionNameSpace getvariable ['MCC_allowsqlPDA',true]))";
 			displayName = "SQL<br/>Menu";

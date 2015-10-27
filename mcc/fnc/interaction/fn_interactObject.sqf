@@ -18,10 +18,10 @@
 
 #define MCC_medItems [["MCC_antibiotics"],["MCC_painkillers"],["MCC_bandage"],["MCC_vitamine"]]
 #define MCC_fuelItems [["MCC_fuelCan"],["MCC_fuelbot"]]
-#define MCC_repairItems [["MCC_ductTape"],["MCC_butanetorch"],["MCC_oilcan"],["MCC_metalwire"],["MCC_carBat"]]
-#define MCC_foodItem [["MCC_foodcontainer"],["MCC_cerealbox"],["MCC_bacon"],["MCC_rice"]]
+#define MCC_repairItems [["MCC_ductTape"],["MCC_butanetorch"],["MCC_oilcan"],["MCC_metalwire"],["MCC_carBat"],["MCC_canOpener"],["MCC_screwdriver"],["MCC_matches"]]
+#define MCC_foodItem [["MCC_foodcontainer"],["MCC_cerealbox"],["MCC_bacon"],["MCC_rice"],["MCC_bottle_water"],["MCC_franta"],["MCC_bottle_empty"],["MCC_powderedMilk"],["MCC_RedGull"],["MCC_Spirit"],["MCC_can_dented"]]
 #define MCC_money [["MCC_waterpure"]]
-#define MCC_fruits ["MCC_fruit1","MCC_fruit2"]
+#define MCC_fruits ["MCC_fruit1","MCC_fruit2","MCC_wood"]
 
 private ["_object","_typeOfobject","_ctrl","_break","_searchTime","_animation","_phase","_doorTypes","_isHouse","_loadName","_waitTime","_array","_displayname",
          "_randomChance","_loot","_wepHolder","_class","_money","_rand","_wepArray"];
@@ -107,7 +107,7 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 				{
 					_array = [];
 					{
-						_array set [count _array,_x];
+						_array pushBack _x;
 					} foreach MCC_fruits;
 
 					_loot set [count _loot, _array call BIS_fnc_selectRandom];

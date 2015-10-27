@@ -69,6 +69,8 @@
 //--------------------------features----------------------------------------------------
 #include "mcc\login\cfg.hpp"
 #include "mcc\rts\cfg.hpp"
+#include "mcc\bombDefuse\cfg.hpp"
+#include "mcc\survive\cfg.hpp"
 
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
@@ -85,6 +87,8 @@ class CfgFunctions
 		#include "mcc\cfg\modules\cfgFunctions.hpp"
 		#include "mcc\cfg\curator\cfgFunctions.hpp"
 		#include "mcc\undercover\cfgFunctions.hpp"
+		#include "mcc\bombDefuse\cfgFunctions.hpp"
+		#include "mcc\survive\cfgFunctions.hpp"
 	};
 };
 
@@ -108,6 +112,10 @@ class CfgNotifications
 	#include "mcc\cfg\CfgNotifications.hpp"
 };
 
+class CfgMarkers
+{
+	#include "mcc\cfg\CfgMarkers.hpp"
+};
 
 
 
@@ -137,8 +145,10 @@ class RscTitles
         };
 	};
 
+	#include "mcc\cfg\modules\dialogs\mcc_captureProgressRsc.hpp"
 	#include "mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "mcc\dialogs\compass.hpp"
 	#include "mcc\dialogs\mcc_3dObject.hpp"
 	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
+	#include "mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
 };

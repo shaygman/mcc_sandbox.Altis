@@ -8,7 +8,7 @@
 //		<nothing>
 //===========================================================================================================================================================================
 #define MCC_fuelItems [["MCC_fuelCan"],["MCC_fuelbot"]]
-#define MCC_repairItems [["MCC_ductTape"],["MCC_butanetorch"],["MCC_oilcan"],["MCC_metalwire"],["MCC_carBat"]]
+#define MCC_repairItems [["MCC_ductTape"],["MCC_butanetorch"],["MCC_oilcan"],["MCC_metalwire"],["MCC_carBat"],["MCC_canOpener"],["MCC_screwdriver"],["MCC_matches"]]
 
 private ["_breakdownArray","_counter","_itemClass","_object","_wepHolder"];
 _object = [_this, 0, objNull, [objNull]] call bis_fnc_param;

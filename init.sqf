@@ -89,7 +89,10 @@ if (isnil "MCC_nonLeathal") then {MCC_nonLeathal = "prpl_6Rnd_12Gauge_Slug"};
 
 //MCC Survive mod
 // Set to true to activate survival mode - scavange for loot to survive
-if (isnil "MCC_surviveMod") then {MCC_surviveMod = false};
+if (isnil "MCC_surviveMod") then {missionNamespace setVariable ["MCC_surviveMod",false]};
+"MCC_surviveMod" addPublicVariableEventHandler {
+	[] spawn MCC_fnc_surviveInit;
+};
 
 //How long in days(24H-game time) will it take for spawn position to refresh
 if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1};
@@ -1299,8 +1302,7 @@ if (isnil "MCC_terrainPref") then
 };
 
 //============= Start public EH locally ===========================
-if(CP_activated && !isDedicated && !MCC_isLocalHC) then
-{
+if(CP_activated && !isDedicated && !MCC_isLocalHC) then {
 	_null=[] execVM MCC_path + "scripts\player\player_init.sqf"
 };
 
