@@ -12,18 +12,18 @@ if (_targetIsRealIED) then {
 	_realIED = _target getVariable ["realIed",objNull];
 };
 
-systemChat str [_target,_realIED];
+_pos = position _target;
+_pos set [2,(_pos select 2) + 0.2];
+
 if (isNull _realIED) exitWith {};
 
 //is engineer
 _isEngineer = if (((getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMines")) == 1) || ((player getvariable ["CP_role",""]) == "Specialist")) then {true} else {false};
-_disarmTime = (_realIED getvariable ["MCC_disarmTime",0]) max 30;
-_pos = [((getposATL _target) select 0),(getposATL _target) select 1,((getPosATL _target) select 2)];
+_disarmTime = (_realIED getvariable ["MCC_disarmTime",0]) max 60;
 
 _difficulty = if (_disarmTime < 30 || _isEngineer) then {["easy","medium"] call bis_fnc_selectRandom} else {["medium","hard"] call bis_fnc_selectRandom};
-_noModules = (floor (_disarmTime/30) max 2) min 11;
+_noModules = (floor (_disarmTime/40) max 2) min 11;
 _modules = [];
-
 for "_i" from 1 to _noModules do {
   _modules pushBack (["wires","buttons","numpad"] call bis_fnc_selectRandom);
 };
@@ -31,7 +31,7 @@ for "_i" from 1 to _noModules do {
 if !([_difficulty,_modules,_disarmTime] call MCC_fnc_initBombDefuse) then {
   _realIED setvariable ["armed",false,true];
   "SmallSecondary" createVehicle _pos;
-  sleep 1;
+  sleep 0.5;
   _realIED setvariable ["iedTrigered",true,true];
 } else {
   player addrating 500;

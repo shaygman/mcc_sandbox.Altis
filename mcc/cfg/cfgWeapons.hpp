@@ -102,6 +102,7 @@ class MCC_headTorch : MCC_ItemCore
 {
 	scope = 2;
 	displayName = "Head Torch";
+	descriptionShort = "Gold diggers starter kit.";
 	picture = "\mcc_sandbox_mod\data\items\headTorch.paa";
 	model = "\A3\Weapons_F\Items\MineDetector";
 	class ItemInfo : MCC_Item
