@@ -61,4 +61,6 @@ class rts
 	class rtsRespawnUnits {description = "Respawn dead units in a group";};
 	class rtsOrderPlaceSatchel {description = "Place satchel";};
 	class rtsTakeControl {description = "Remote control the selected unit";};
+	class mainBoxInit {};
+	class saveCargoBox {description = "save or load the cargo box items from the server using iniDB";};
 };

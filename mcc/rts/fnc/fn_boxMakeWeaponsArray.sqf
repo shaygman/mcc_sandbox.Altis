@@ -11,12 +11,9 @@ if !(_player) then {_box = _this select 2};
 
 _returnArray = [];
 
-_Cfg =if (_weaponType <= 7) then
-		{
+_Cfg =if (_weaponType <= 7) then {
 			 configFile >> "CfgWeapons";
-		}
-	else
-		{
+		} else {
 			 configFile >> "cfgMagazines";
 		};
 
@@ -158,8 +155,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (getNumber(_Cfg>> _x >> "count")<4 && (_type == 1111))  then
-    		{
+    		if (getNumber(_Cfg>> _x >> "count")<4 && (_type == 1111))  then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {magazines player} else {[_box] call MCC_fnc_getVirtualMagazineCargo});

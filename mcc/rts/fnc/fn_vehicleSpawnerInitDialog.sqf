@@ -82,10 +82,11 @@ lbClear _comboBox;
 } foreach _vehicleArray;
 _comboBox lbSetCurSel 0;
 
-while {(str (_mccdialog displayCtrl 101) != "No control")} do
-{
+while {(str (_mccdialog displayCtrl 101) != "No control")} do {
     //Load available resources
     _array = call compile format ["MCC_res%1",playerside];
-    {_mccdialog displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85];
+
+    {_mccdialog displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83];
+    _mccdialog displayCtrl 84 ctrlSetText str floor (player getVariable ["MCC_valorPoints",50]);
     sleep 1;
 };

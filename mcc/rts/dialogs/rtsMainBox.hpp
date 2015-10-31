@@ -2,7 +2,7 @@ class MCC_rtsMainBox
 {
 	idd = -1;
 	movingEnable = false;
-	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\rts\scripts\rtsMainBox_init.sqf'");
+	onLoad = "uiNamespace setVariable ['MCC_rtsMainBox', (_this select 0)];";
 
 	controlsBackground[] =
 	{
@@ -87,6 +87,7 @@ class MCC_rtsMainBox
 					idc = -1;
 
 					text =  __EVAL(MCCPATH +"mcc\rts\data\IconAmmo.paa");
+					tooltip = "Ammo";
 					x = 0.00515625 * safezoneW;
 					y = 0.011 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -97,6 +98,7 @@ class MCC_rtsMainBox
 					idc = -1;
 
 					text = __EVAL(MCCPATH +"mcc\rts\data\IconRepair.paa");
+					tooltip = "Supplies";
 					x = 0.00515625 * safezoneW;
 					y = 0.055 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -107,6 +109,7 @@ class MCC_rtsMainBox
 					idc = -1;
 
 					text = __EVAL(MCCPATH +"mcc\rts\data\IconFuel.paa");
+					tooltip = "Fuel";
 					x = 0.00515625 * safezoneW;
 					y = 0.099 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -117,6 +120,7 @@ class MCC_rtsMainBox
 					idc = -1;
 
 					text = __EVAL(MCCPATH +"mcc\rts\data\IconFood.paa");
+					tooltip = "Food";
 					x = 0.00515625 * safezoneW;
 					y = 0.143 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -127,6 +131,7 @@ class MCC_rtsMainBox
 					idc = -1;
 
 					text = __EVAL(MCCPATH +"mcc\rts\data\IconMed.paa");
+					tooltip = "Meds";
 					x = 0.00515625 * safezoneW;
 					y = 0.187 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -294,6 +299,7 @@ class MCC_rtsMainBox
 				{
 					idc = -1;
 					text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
+					tooltip = "Fame";
 					x = 0.335156 * safezoneW;
 					y = 0.011 * safezoneH;
 					w = 0.020625 * safezoneW;

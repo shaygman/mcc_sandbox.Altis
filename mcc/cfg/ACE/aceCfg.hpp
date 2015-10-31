@@ -84,9 +84,9 @@ class ReammoBox_F: thingX {
 	class ACE_Actions {
 	  class ACE_MainActions {
 	    class ACE_MCC_mainBox {
-                displayName = "Cargo<br/>Box";
+                displayName = "Open<br/>Vault";
                 distance = 5;
-                condition = "(_target isKindof 'Box_FIA_Support_F') && (!(_target getVariable ['mcc_mainBoxUsed', false])) && !(isNull attachedTo _target)";
+                condition = "(_target isKindof 'Box_FIA_Support_F') && (!(_target getVariable ['mcc_mainBoxUsed', false])) && !(isNull attachedTo _target) && (missionNamespace getVariable ['MCC_surviveMod',false])";
                 statement =  "[_target] spawn MCC_fnc_mainBoxOpen";
                 icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
                 showDisabled = 0;

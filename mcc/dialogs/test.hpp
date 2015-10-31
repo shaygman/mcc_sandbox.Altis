@@ -16,299 +16,230 @@ class mcc_test
 
 	class controls
 	{
-		class status1Text: MCC_RscText
+		class frame: MCC_RscText
 		{
-			idc = 950;
-
-			text = "offline"; //--- ToDo: Localize;
-			x = 0.283594 * safezoneW;
-			y = 0.011 * safezoneH;
-			w = 0.05 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		/*
-		class status2Text: MCC_RscText
-		{
-			idc = 951;
-
-			text = "offline"; //--- ToDo: Localize;
-			x = 0.309375 * safezoneW;
-			y = 0.011 * safezoneH;
-			w = 0.020625 * safezoneW;
-			h = 0.022 * safezoneH;
+			colorBackground[] = {0,0,0,0.9};
+			idc = -1;
+			x = 0.29375 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.417656 * safezoneW;
+			h = 0.385 * safezoneH;
 		};
 
-		class constructionTab: MCC_RscButton
+		class vehicleClass: MCC_RscCombo
 		{
-			idc = 952;
-
-			text = "Build"; //--- ToDo: Localize;
-			x = 0.190781 * safezoneW;
-			y = 0.011 * safezoneH;
-			w = 0.020625 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class unitsTab: MCC_RscButton
-		{
-			idc = 953;
-
-			text = "Units"; //--- ToDo: Localize;
-			x = 0.216563 * safezoneW;
-			y = 0.011 * safezoneH;
-			w = 0.020625 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		*/
-		class action1: MCC_RscActivePicture
-		{
-			idc = 9101;
-
-			x = 0.190781 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action2: MCC_RscActivePicture
-		{
-			idc = 9102;
-
-			x = 0.226875 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action3: MCC_RscActivePicture
-		{
-			idc = 9103;
-
-			x = 0.262969 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action4: MCC_RscActivePicture
-		{
-			idc = 9104;
-
-			x = 0.299063 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action5: MCC_RscActivePicture
-		{
-			idc = 9105;
-
-			x = 0.190782 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action6: MCC_RscActivePicture
-		{
-			idc = 9106;
-
-			x = 0.226875 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action7: MCC_RscActivePicture
-		{
-			idc = 9107;
-
-			x = 0.262969 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action8: MCC_RscActivePicture
-		{
-			idc = 9108;
-
-			x = 0.299063 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action9: MCC_RscActivePicture
-		{
-			idc = 9109;
-
-			x = 0.190781 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action10: MCC_RscActivePicture
-		{
-			idc = 9110;
-
-			x = 0.226875 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action11: MCC_RscActivePicture
-		{
-			idc = 9111;
-
-			x = 0.262969 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action12: MCC_RscActivePicture
-		{
-			idc = 9112;
-
-			x = 0.299062 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
+			idc = 101;
+			onLBSelChanged = "[0] spawn MCC_fnc_vehicleSpawner";
+			x = 0.304062 * safezoneW + safezoneX;
+			y = 0.346 * safezoneH + safezoneY;
+			w = 0.216563 * safezoneW;
+			h = 0.055 * safezoneH;
 		};
 
-		class respic1: MCC_RscPicture
+		class SpawnButton: MCC_RscButton
 		{
-			idc = 120;
-
-			x = 0.0464065 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class resText1: MCC_RscText
-		{
-			idc = 121;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.0618752 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class respic2: MCC_RscPicture
-		{
-			idc = 122;
-
-			x = 0.0825002 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class resText2: MCC_RscText
-		{
-			idc = 123;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.097969 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class respic3: MCC_RscPicture
-		{
-			idc = 124;
-
-			x = 0.118594 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class resText3: MCC_RscText
-		{
-			idc = 125;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.134063 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class respic4: MCC_RscPicture
-		{
-			idc = 126;
-
-			x = 0.154688 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class resText4: MCC_RscText
-		{
-			idc = 127;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.170156 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class desc: MCC_RscStructuredText
-		{
-			idc = 150;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.0464067 * safezoneW;
-			y = 0.044 * safezoneH;
+			idc = 102;
+			text = "Purchase";
+			x = 0.319531 * safezoneW + safezoneX;
+			y = 0.544 * safezoneH + safezoneY;
 			w = 0.139219 * safezoneW;
-			h = 0.154 * safezoneH;
+			h = 0.055 * safezoneH;
+			onButtonClick = "[1] spawn MCC_fnc_vehicleSpawner";
 		};
-		class sep1: MCC_RscFrame
+
+		class close: MCC_RscButton
 		{
 			idc = -1;
-
-			x = 0.190781 * safezoneW;
-			y = 0.033 * safezoneH;
-			w = 0.139219 * safezoneW;
-			h = 0.0055 * safezoneH;
+			text = "Close"; //--- ToDo: Localize;
+			x = 0.639219 * safezoneW + safezoneX;
+			y = 0.544 * safezoneH + safezoneY;
+			w = 0.061875 * safezoneW;
+			h = 0.055 * safezoneH;
+			onButtonClick = "closeDialog 0;";
 		};
-		class sep2: MCC_RscFrame
+
+		class ammoPic: MCC_RscPicture
 		{
 			idc = -1;
-
-			x = 0.0464063 * safezoneW;
-			y = 1.02445e-008 * safezoneH;
-			w = 0.28875 * safezoneW;
-			h = 0.198 * safezoneH;
+			text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
+			x = 0.304062 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.0257812 * safezoneW;
+			h = 0.044 * safezoneH;
 		};
-		class sep3: MCC_RscFrame
+		class repairPic: MCC_RscPicture
 		{
 			idc = -1;
-
-			x = 0.00515625 * safezoneW;
-			y = 0.022 * safezoneH;
+			text = __EVAL(MCCPATH +"data\IconRepair.paa");
+			x = 0.381406 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.0257812 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class fuelPic: MCC_RscPicture
+		{
+			idc = -1;
+			text = __EVAL(MCCPATH +"data\IconFuel.paa");
+			x = 0.45875 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.0257812 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class ammoText: MCC_RscText
+		{
+			idc = 1000;
+			x = 0.329844 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
 			w = 0.04125 * safezoneW;
-			h = 0.176 * safezoneH;
-		};
-
-
-		class upgrade1: MCC_RscActivePicture
-		{
-			idc = 9160;
-
-			x = 0.0103127 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
 			h = 0.044 * safezoneH;
 		};
-		class upgrade2: MCC_RscActivePicture
+		class repairText: MCC_RscText
 		{
-			idc = 9161;
-
-			x = 0.0103125 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
+			idc = 1001;
+			x = 0.407187 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.04125 * safezoneW;
 			h = 0.044 * safezoneH;
 		};
-		class upgrade3: MCC_RscActivePicture
+		class fuelText: MCC_RscText
 		{
-			idc = 9162;
-
-			x = 0.0103122 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
+			idc = 1002;
+			x = 0.484531 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.04125 * safezoneW;
 			h = 0.044 * safezoneH;
+		};
+		class tittle: MCC_RscText
+		{
+			idc = -1;
+			text = "Vehicle Spawn";
+			x = 0.319531 * safezoneW + safezoneX;
+			y = 0.258 * safezoneH + safezoneY;
+			w = 0.170156 * safezoneW;
+			h = 0.055 * safezoneH;
+			colorText[] = {0,1,1,1};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		};
+
+		class availableResourcesTittle: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Available Resources";
+			x = 0.592812 * safezoneW + safezoneX;
+			y = 0.247 * safezoneH + safezoneY;
+			w = 0.108281 * safezoneW;
+			h = 0.055 * safezoneH;
+			colorText[] = {0,1,1,1};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
+		{
+			idc = 80;
+			x = 0.592813 * safezoneW + safezoneX;
+			y = 0.313 * safezoneH + safezoneY;
+			w = 0.108281 * safezoneW;
+			h = 0.22 * safezoneH;
+			class controls
+			{
+				class MCC_AmmoText: MCC_RscText
+				{
+					idc = 81;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.04125 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+
+				class MCC_RepairText: MCC_RscText
+				{
+					idc = 82;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.055 * safezoneH;
+					w = 0.04125 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+
+				class MCC_FuelText: MCC_RscText
+				{
+					idc = 83;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.099 * safezoneH;
+					w = 0.04125 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_FoodText: MCC_RscText
+				{
+					idc = 84;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.143 * safezoneH;
+					w = 0.04125 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_MedText: MCC_RscText
+				{
+					idc = 85;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.187 * safezoneH;
+					w = 0.04125 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_Ammo: MCC_RscPicture
+				{
+					idc = -1;
+
+					text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
+					x = 0.00515625 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.0154688 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_Repair: MCC_RscPicture
+				{
+					idc = -1;
+
+					text = __EVAL(MCCPATH +"data\IconRepair.paa");
+					x = 0.00515625 * safezoneW;
+					y = 0.055 * safezoneH;
+					w = 0.0154688 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_Fuel: MCC_RscPicture
+				{
+					idc = -1;
+
+					text = __EVAL(MCCPATH +"data\IconFuel.paa");
+					x = 0.00515625 * safezoneW;
+					y = 0.099 * safezoneH;
+					w = 0.0154688 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_FoodPic: MCC_RscPicture
+				{
+					idc = -1;
+
+					text = __EVAL(MCCPATH +"data\IconFood.paa");
+					x = 0.00515625 * safezoneW;
+					y = 0.143 * safezoneH;
+					w = 0.0154688 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_MedPic: MCC_RscPicture
+				{
+					idc = -1;
+
+					text = __EVAL(MCCPATH +"data\IconMed.paa");
+					x = 0.00515625 * safezoneW;
+					y = 0.187 * safezoneH;
+					w = 0.0154688 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+			};
 		};
 	};
 };

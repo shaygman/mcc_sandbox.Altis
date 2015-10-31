@@ -75,28 +75,23 @@ switch (_type) do
 		    	private ["_resources","_value"];
 
 		    	_null = [player,_class] call BIS_fnc_invRemove;
+	    		_null = [_tempBox, _class] call MCC_fnc_addVirtualMagazineCargo;
 
-		    	//save only the medical stuff the rest ditch
-		    	if (_class in ["MCC_bandage","MCC_epipen","MCC_salineBag","MCC_firstAidKit"]) then {
-		    		[_tempBox, _class] call MCC_fnc_addVirtualMagazineCargo;
-		    	} else {
-			    	//add funds
-			    	_index = switch (getText(configFile >> "CfgMagazines" >> _class >> "mcc_surviveType")) do
-			    			{
-					    	    case "repair":  {1};
-					    	    case "fuel":  {2};
-					    	    case "food":  {3};
-					    	    case "med":  {4};
-					    	    default {0};
-					    	};
-					_value = getNumber(configFile >> "CfgMagazines" >> _class >> "value");
-					_resources = missionNamespace getVariable [format ["MCC_res%1", playerSide],[500,500,200,200,100]];
-					_resources set [_index, ((_resources select _index)+_value)];
-					publicVariable (format ["MCC_res%1", playerSide,_resources]);
-				};
+		    	//add funds
+		    	_index = switch (getText(configFile >> "CfgMagazines" >> _class >> "mcc_surviveType")) do
+		    			{
+				    	    case "repair":  {1};
+				    	    case "fuel":  {2};
+				    	    case "food":  {3};
+				    	    case "med":  {4};
+				    	    default {0};
+				    	};
+				_value = getNumber(configFile >> "CfgMagazines" >> _class >> "value");
+				_resources = missionNamespace getVariable [format ["MCC_res%1", playerSide],[500,500,200,200,100]];
+				_resources set [_index, ((_resources select _index)+_value)];
+				publicVariable (format ["MCC_res%1", playerSide,_resources]);
 		    };
 		};
-
 
 		player setVariable ["MCC_valorPoints",_playerValor + _valor];
     };
