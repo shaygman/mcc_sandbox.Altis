@@ -187,6 +187,10 @@ for "_i" from 0 to ((count CONFIG) - 1)  do
 														{
 															_air = _air +1;
 														};
+														case "helicopterrtd":
+														{
+															_air = _air +1;
+														};
 														case "airplane":
 														{
 															_air = _air +1;

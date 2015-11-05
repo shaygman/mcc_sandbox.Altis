@@ -9,16 +9,13 @@ private ["_effect","_effects","_handle","_colorParams","_grainParams","_parray",
 _effect = _this select 0;
 _jip	= _this select 1;
 
-if (isServer) then
-{
+if (isServer) then {
 	missionNameSpace setVariable ["MCC_ppEffect",_effect];
 	publicVariable "MCC_ppEffect";
 };
 
-switch (tolower _effect) do
-{
-	case "sandstorm":
-	{
+switch (tolower _effect) do {
+	case "sandstorm": {
 		_dust	= true;
 		_ash	= true;
 		_news	= true;
@@ -57,8 +54,24 @@ switch (tolower _effect) do
 		};
 	};
 
-	case "storm":
-	{
+	case "storm": {
+		_dust	= true;
+		_ash	= true;
+		_news	= false;
+		_colorParams 	=  [];
+		_grainParams 	=  [];
+		_parray = [["a3\data_f\ParticleEffects\Universal\Universal.p3d", 16, 14, 2, 0], "", "Billboard", 1, 22, [0, 0, 6], wind, (0), 1.69, 1, 1, [1.5], [[1,1,1,0],[1,1,1,1],[1,1,1,1]],[1000], 0, 0, "", "", vehicle player];
+
+		//extra
+		if !(_jip) then {
+			setWind [10, 10, true];
+			0 setWindStr 1;
+			[[ 1, 1, 1, 0.3, 1,0.7]]  call MCC_fnc_setWeather;
+		};
+		player setVariable ["MCC_ppEffectRuning",_effect];
+	};
+
+	case "snow": {
 		_dust	= true;
 		_ash	= true;
 		_news	= false;
@@ -71,7 +84,7 @@ switch (tolower _effect) do
 					0.1,
 					4,
 					[0,0,0],
-					[0,0,0],
+					wind,
 					1,
 					0.00002,
 					0,
@@ -90,17 +103,13 @@ switch (tolower _effect) do
 				];
 
 		//extra
-		if !(_jip) then
-		{
-			setWind [10, 10, true];
-			0 setWindStr 1;
-			[[ 1, 1, 1, 0.4, 1,0.7]]  call MCC_fnc_setWeather;
+		if !(_jip) then {
+			[[0.8, 0.3, waves, 0, 0.3,0.4]]  call MCC_fnc_setWeather;
 		};
 		player setVariable ["MCC_ppEffectRuning",_effect];
 	};
 
-	case "heatwave":
-	{
+	case "heatwave": {
 		_dust	= true;
 		_ash	= false;
 		_news	= false;
@@ -139,8 +148,7 @@ switch (tolower _effect) do
 		player setVariable ["MCC_ppEffectRuning",_effect];
 	};
 
-	case "bf":
-	{
+	case "bf": {
 		_dust	= true;
 		_ash	= false;
 		_news	= true;
@@ -171,8 +179,7 @@ switch (tolower _effect) do
 				];
 	};
 
-	case "clear":
-	{
+	case "clear": {
 		_colorParams 	=  [];
 		_grainParams 	=  [];
 		player setVariable ["MCC_ppEffectRuning",_effect];
@@ -204,17 +211,14 @@ _effects = [];
 player setVariable ["MCC_ppEffect",_effects];
 
 //Dust
-if (_dust) then
-{
-	[_effect] spawn
-	{
+if (_dust) then {
+	[_effect] spawn {
 		waituntil {isplayer player};
-		while {(player getVariable ["MCC_ppEffectRuning",""]) == (_this select 0)} do
-		{
+		while {(player getVariable ["MCC_ppEffectRuning",""]) == (_this select 0)} do {
 			_obj = vehicle player;
 			_pos = position _obj;
 
-			if ((_this select 0) in ["storm", "sandstorm"]) then {playsound format ["MCC_wind%1",floor random 4]} else {playsound format ["wind%1",ceil random 5]};
+			//if ((_this select 0) in ["storm", "sandstorm"]) then {playsound format ["MCC_wind%1",floor random 4]} else {playsound format ["wind%1",ceil random 5]};
 
 			//--- Dust
 			_duration = 2;
@@ -237,41 +241,39 @@ if (_dust) then
 	};
 };
 
-if (_ash) then
-{
+if (_ash) then {
 	//--- Ash
-	[_effect,_parray] spawn
-	{
+	[_effect,_parray] spawn {
+		private ["_snow1"];
 		_effect = _this select 0;
 		_parray = _this select 1;
 
 		waituntil {isplayer player};
+
 		_pos = position player;
 
-		_snow = "#particlesource" createVehicleLocal _pos;
-		_snow setParticleParams _parray;
-		_snow setParticleRandom [0, [10, 10, 7], [0, 0, 0], 0, 0.01, [0, 0, 0, 0.1], 0, 0];
-		_snow setParticleCircle [0.0, [0, 0, 0]];
-		if (_effect == "storm") then {_snow setDropInterval 0.001} else {_snow setDropInterval 0.01};
-
+		_snow1 = "#particlesource" createVehicleLocal _pos;
+		_snow1 setParticleParams _parray;
+		_snow1 setParticleRandom [0, [16+random 3, 16+random 3, 4], [0, 0, 0], 0, 0.01, [0, 0, 0, 0.03], 0, 0];
+		_snow1 setParticleCircle [0.0, [0, 0, 0]];
+		if (_effect in ["storm","snow"]) then {_snow1 setDropInterval 0.001} else {_snow1 setDropInterval 0.01};
 
 		_oldPlayer = vehicle player;
-		while {(player getVariable ["MCC_ppEffectRuning","sandstorm"]) == _effect} do
-		{
-			waituntil {vehicle player != _oldPlayer || ((player getVariable ["MCC_ppEffectRuning","sandstorm"]) != _effect)};
+		while {(player getVariable ["MCC_ppEffectRuning","sandstorm"]) == _effect} do {
+			waituntil {vehicle player != _oldPlayer || ((player getVariable ["MCC_ppEffectRuning","sandstorm"]) != _effect) || time mod 30 ==0};
 			_parray set [18,vehicle player];
-			_snow setParticleParams _parray;
+			_parray set [6,wind];
+			_snow1 setParticleParams _parray;
 			_oldPlayer = vehicle player;
 		};
-		deleteVehicle _snow;
+
+		deleteVehicle _snow1;
 	};
 };
 
-if (_news) then
-{
+if (_news) then {
 	//--- Newspapers
-	[_effect] spawn
-	{
+	[_effect] spawn {
 		_effect = _this select 0;
 		_duration = 2;
 		_velocity = [0,7,0];

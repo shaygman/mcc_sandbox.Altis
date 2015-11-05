@@ -1,3 +1,8 @@
+     /*============================================= GAIA_fnc_getTurretWeapons =========================================================================
+     *
+     *
+     */
+
      private ["_result", "_getAnyMagazines", "_findRecurse", "_class"];
      _result = [];
      _getAnyMagazines = {

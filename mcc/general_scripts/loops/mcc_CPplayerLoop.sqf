@@ -103,10 +103,8 @@ _fnc_supplyBox = {
 	true
 };
 
-while {true} do
-{
-	if (alive player) then
-	{
+while {true} do {
+	if (alive player) then {
 		missionNamespace setVariable ["MCC_save_Backpack",backPackItems player];
 		missionNamespace setVariable ["MCC_save_primaryWeaponItems",primaryWeaponItems player];
 		missionNamespace setVariable ["MCC_save_secondaryWeaponItems",secondaryWeaponItems player];
@@ -120,6 +118,9 @@ while {true} do
 		missionNamespace setVariable ["MCC_save_primaryWeaponMagazine",primaryWeaponMagazine player];
 		missionNamespace setVariable ["MCC_save_secondaryWeaponMagazine",secondaryWeaponMagazine player];
 		missionNamespace setVariable ["MCC_save_handgunMagazine",handgunMagazine player];
+
+		//Add XP/Fame
+		_null = [] spawn MCC_fnc_handleRating;
 
 		//Repair/refuel from boxed all this ifs are to reduce unnecessary nearObjects - efficiency
 		if (!MCC_isMode && vehicle player != player) then {
@@ -135,8 +136,7 @@ while {true} do
 			};
 		};
 
-		if (CP_activated) then
-		{
+		if (CP_activated) then {
 			//Check if in vehicle
 			[] call MCC_fnc_allowedDrivers;
 

@@ -15,7 +15,7 @@ if (typeName (_module getVariable ["atmosphere",true]) == typeName 0) exitWith {
 };
 
 _resualt = ["Add Atmosphere",[
- 						["Atmosphere",["Sandstorm","Blizzard","Heat Wave","Clear All"]]
+ 						["Atmosphere",["Sandstorm","Blizzard","Snow","Heat Wave","Clear All"]]
  					  ]] call MCC_fnc_initDynamicDialog;
 
 if (count _resualt == 0) exitWith {deleteVehicle _module};

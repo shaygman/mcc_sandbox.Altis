@@ -12,7 +12,7 @@ private ["_pos","_radius","_type","_nearObjects","_crew","_markers","_ignorePlay
 
 _pos = _this select 0;
 _radius = _this select 1;
-_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","doorsAll","doorsRandom","doorsAllunlock","Buildings","sandstorm","storm","heatwave","clear","N/V","Flashlights"] select (_this select 2);
+_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","doorsAll","doorsRandom","doorsAllunlock","Buildings","sandstorm","storm","snow","heatwave","clear","N/V","Flashlights"] select (_this select 2);
 _ignorePlayers = [_this, 3, false, [false]] call BIS_fnc_param;
 
 _nearObjects = [];
@@ -146,6 +146,11 @@ switch _type do
 		case "heatwave":
 			{
 				[["heatwave",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
+			};
+
+		case "snow":
+			{
+				[["snow",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
 			};
 
 		case "clear":

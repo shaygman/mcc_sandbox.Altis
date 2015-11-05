@@ -12,18 +12,15 @@ if (_role == "officer") then {
 
 	_counter = 0;
 	{
-		if (!isnil "_x") then
-		{
-			if ((isPlayer _x) && (player != _x)) then
-			{
+		if (!isnil "_x") then {
+			if ((isPlayer _x) && (player != _x)) then {
 				_counter = _counter + 10;
 				player addrating 10;
 			};
 		};
 	} foreach (units (group player));
 
-	if (_counter > 0 && _notes) then
-	{
+	if (_counter > 0 && _notes) then {
 		_string = format ["<t font='puristaMedium' size='0.5' color='#FFFFFF '>+%1 Exp For Leading</t>",_counter];
 		[_string,0,1,2,1,0,4] spawn BIS_fnc_dynamicText;
 	};

@@ -6,8 +6,7 @@ _killer = if (count _this > 1) then {_this select 1} else {objnull};
 
 
 //Case we in role selection and have tickets
-if (CP_activated) then
-{
+if (CP_activated) then {
 	private ["_side","_sideTickets","_tickets"];
 
 	_side = _unit getVariable ["CP_side", playerside];
@@ -16,13 +15,12 @@ if (CP_activated) then
 	//Delete utility placed by the player
 	{deleteVehicle _x} foreach (player getVariable ["MCC_utilityActiveCharges",[]]);
 
-	if (_tickets > 1) then
-	{
+	if (_tickets > 1) then {
 		_tickets = -1;
 		[_side, _tickets] call BIS_fnc_respawnTickets;
-	}
-	else	//Mission end
-	{
+	} else {
+
+		//Mission end
 		/*
 		[west, missionNameSpace getVariable ["MCC_ticketsWest",200]] call BIS_fnc_respawnTickets;
 		[east, missionNameSpace getVariable ["MCC_ticketsEast",200]] call BIS_fnc_respawnTickets;

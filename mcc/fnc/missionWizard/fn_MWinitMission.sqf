@@ -473,8 +473,7 @@ if (_weatherChange != 0) then
 
 	//------------------- Weather ---------------------------------------------------------------------------------
 
-	if !(_weatherChange in [2,3]) then
-	{
+	if !(_weatherChange in [2,3,4]) then {
 		private "_monthFactor";
 		[["clear",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
 
@@ -485,8 +484,7 @@ if (_weatherChange != 0) then
 		MCC_WindForce 	= (random (_monthFactor/2)) + _monthFactor/2;
 		MCC_Waves 		= (random (_monthFactor/2)) + _monthFactor/2;
 
-		if (MCC_Overcast > 0.6) then
-		{
+		if (MCC_Overcast > 0.6) then {
 			MCC_Rain 		= (random (_monthFactor/2)) + _monthFactor/2;
 			MCC_Lightnings	= (random (_monthFactor/2)) + _monthFactor/2;
 			MCC_Fog 		= ((random (_monthFactor/2)) + _monthFactor/2)/5;
@@ -499,19 +497,16 @@ if (_weatherChange != 0) then
 			publicVariable "MCC_Fog";
 
 			[[[MCC_Overcast, MCC_WindForce, MCC_Waves, MCC_Rain, MCC_Lightnings, MCC_Fog]],"MCC_fnc_setWeather",true,false] call BIS_fnc_MP;
-		}
-		else
-		{
+		} else {
 			[[[MCC_Overcast, MCC_WindForce, MCC_Waves]],"MCC_fnc_setWeather",true,false] call BIS_fnc_MP;
 			publicVariable "MCC_Overcast";
 			publicVariable "MCC_WindForce";
 			publicVariable "MCC_Waves";
 		};
-	}
-	else
-	{
+	} else {
 		if (_weatherChange == 2) then {[["sandstorm",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP};
 		if (_weatherChange == 3) then {[["storm",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP};
+		if (_weatherChange == 4) then {[["snow",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP};
 	};
 };
 /*

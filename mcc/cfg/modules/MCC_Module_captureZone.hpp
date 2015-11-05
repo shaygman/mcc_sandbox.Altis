@@ -30,6 +30,11 @@ class MCC_Module_captureZone : Module_F
 					name = "Fuel";
 					value = 2;
 				};
+				class Tickets
+				{
+					name = "Tickets";
+					value = 3;
+				};
 			};
 		};
 
@@ -39,25 +44,70 @@ class MCC_Module_captureZone : Module_F
 			typeName = "NUMBER";
 			defaultValue = 50;
 		};
+
+		class flag
+		{
+			displayName = "Flag";
+			typeName = "NUMBER";
+			class values
+			{
+				class change
+				{
+					name = "Change";
+					value = 0;
+					default = 1;
+				};
+				class dontChange
+				{
+					name = "Don't Change";
+					value = 1;
+				};
+			};
+		};
 	};
 
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Create a capture zone that yield resources over time";
-		sync[] = {"EmptyDetector","FlagPole_F"};
+		sync[] = {"LocationArea_F","MiscUnlock_F","FlagPole_F"};
 
-		class EmptyDetector
+		class LocationArea_F
+		{
+			description = "";
+			duplicate = 1;
+			sync[] = {"TriggerArea"};
+		};
+
+		class TriggerArea
 		{
 			description[] = {
 				"Sync at least one trigger",
-				"With the module - will be the capture zone"
+				"With the area - will act as the capture zone"
 			};
+			area = 1;
 			position = 1;
 			direction = 1;
 			optional = 0;
 			duplicate = 0;
-			synced[] = {"AnyVehicle"};
+			vehicle = "EmptyDetector";
 		};
+
+		class MiscUnlock_F
+		{
+			description = "";
+			duplicate = 1;
+			optional = 1;
+			sync[] = {"TriggerUnlock"};
+		};
+
+		class TriggerUnlock
+		{
+			description = "This trigger have to be activated to enable the capture point.";
+			duplicate = 1;
+			optional = 1;
+			vehicle = "EmptyDetector";
+		};
+
 		class FlagPole_F
 		{
 			description[] = {
@@ -68,7 +118,7 @@ class MCC_Module_captureZone : Module_F
 			direction = 1;
 			optional = 0;
 			duplicate = 0;
-			synced[] = {"AnyVehicle"};
+			vehicle = "FlagPole_F";
 		};
 	};
 };

@@ -228,7 +228,7 @@ switch _mode do {
 						{
 							_xCfg = configfile >> "cfgvehicles" >> typeof _x;
 							_xSimulation = tolower gettext (_xCfg >> "simulation");
-							if (_xSimulation in ["carx","tankx","helicopterx","planex","shipx","submarinex"]) then {
+							if (_xSimulation in ["carx","tankx","helicopterx","planex","shipx","submarinex","helicopterrtd"]) then {
 								_xName = gettext (_xCfg >> "displayName");
 								_xPicture = (gettext (_xCfg >> "picture")) call bis_fnc_textureVehicleIcon;
 								_xPosition = (_xLogic getvariable ["Position","0"]) call bis_fnc_parsenumber;

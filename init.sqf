@@ -1117,8 +1117,7 @@ if (isPlayer player && !isServer && !(MCC_isLocalHC) && (missionNameSpace getVar
 	Hint "Synchronizing Done";
 };
 
-if ( !( isDedicated) && !(MCC_isLocalHC) ) then
-{
+if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	waituntil {!(IsNull (findDisplay 46))};
 
 	//If player is using CBA add CBA keybinds
@@ -1153,7 +1152,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 	if(local player) then {player addEventHandler ["HandleHeal",{if ((_this select 1 != _this select 0) && (tolower ((_this select 1) getvariable ["CP_role","n/a"]) == "corpsman") ) then {[[getPlayerUID (_this select 1),200,"For Healing"], "MCC_fnc_addRating", _this select 1, false] spawn BIS_fnc_MP};(_this select 0) setVariable ["MCC_medicBleeding",0,true]; false}]};
 
 	//Handle rating for role selection
-	if(local player) then {player addEventHandler ["HandleRating",{_this spawn MCC_fnc_handleRating}]};
+	if (local player) then {player addEventHandler ["HandleRating",{_this spawn MCC_fnc_handleRating}]};
 
 	//Curator
 	if(local player && (isMultiplayer)) then

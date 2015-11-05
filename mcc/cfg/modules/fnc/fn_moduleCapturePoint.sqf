@@ -13,7 +13,7 @@
 	Returns:
 	ARRAY of OBJECTs
 
-	--- Get number of sectors held by a side ---
+	--- Get list of sectors held by a side ---
 	Parameter(s):
 		0: SIDE
 
@@ -80,8 +80,7 @@ switch _mode do {
 			//Zeus
 			private ["_resualt","_type","_scoreReward","_flag","_radius"];
 
-			_resualt = ["Create a cpature point",[
- 						["Type",[["Ammo",format ["%1data\IconAmmo.paa",MCC_path]],["Supply",format ["%1data\IconRepair.paa",MCC_path]],["Fuel",format ["%1data\IconFuel.paa",MCC_path]]]],
+			_resualt = ["Create a cpature point",[["Type",[["Ammo",format ["%1data\IconAmmo.paa",MCC_path]],["Supply",format ["%1data\IconRepair.paa",MCC_path]],["Fuel",format ["%1data\IconFuel.paa",MCC_path]],["Tickets",""]]],
  						["Radius",300],
  						["Score Reward",50],
  						["Flag",false]
@@ -115,8 +114,24 @@ switch _mode do {
 		_type = (_logic getvariable ["type",0]) call bis_fnc_parsenumber;
 		_radius = (_logic getvariable ["radius",50]) call bis_fnc_parsenumber;
 		_flag = _logic getvariable ["flag",false];
+		_enableHUD = _logic getvariable ["enableHUD",true];
+
+		if (typeName _flag == typeName 0) then {_flag = _flag == 0};
+
 		_sides = [west,east,resistance];
 		_iconsPaths = ["markerAmmo","markerRepair","markerFuel"];
+
+		//Enable HUD
+		if (_enableHUD) then {
+			{
+				[[_logic,[],true,"initHUDLocal",false],"MCC_fnc_moduleCapturePoint",_x,true] call bis_fnc_mp;
+			} forEach _sides;
+		};
+
+		//Start ticket bleed
+		if (_type == 3) then {
+			_null = [_logic,[],true,"initTickets"] spawn MCC_fnc_moduleCapturePoint;
+		};
 
 		//--- Register the expression as a scripted event handler
 		[_logic,"ownerChanged",_onOwnerChange] call bis_fnc_addscriptedeventhandler;
@@ -134,14 +149,15 @@ switch _mode do {
 		_markerName = if ((toarray _name select 0) == (toarray _designation select 0)) then {_name} else {format ["%1: %2",_designation,_name];};
 		if !(MCC_isMode) then {
 			switch (_type) do {
-			    case 0: {_markerName = _markerName + " (Supply)"};
-			    case 1: {_markerName = _markerName + " (Fuel)"};
-			    default {_markerName = _markerName + " (Ammo)"};
+			    case 0: {_markerName = _markerName + " (Ammo)"};
+			    case 1: {_markerName = _markerName + " (Supply)"};
+			    case 2: {_markerName = _markerName + " (Fuel)"};
 			};
 		};
 
-		_icon = if (MCC_isMode) then {format ["MCC_n_%1",_iconsPaths select _type]} else {"n_installation"};
+		_icon = if (MCC_isMode && _type <3) then {format ["MCC_n_%1",_iconsPaths select _type]} else {"n_installation"};
 		_iconTexture = _icon call bis_fnc_textureMarker;
+		_logic setVariable ["texture",_iconTexture,true];
 
 		//--- Load synced objects
 		_sectors = missionnamespace getvariable ["MCC_fnc_moduleCapturPoints_all",[]];
@@ -194,9 +210,24 @@ switch _mode do {
 			_trigger setvariable ["pos",[0,0,0]];
 		};
 
+		//Find zones
 		{
-			if (_x iskindof "EmptyDetector") then {
-				_x call _fnc_initArea;
+			switch (true) do {
+				case (typeof _x == "MiscUnlock_F"): {
+					{
+						if (_x iskindof "EmptyDetector") then {
+							waituntil {triggerActivated _x};
+						};
+					} forEach (synchronizedobjects _x);
+				};
+
+				case (typeof _x == "LocationArea_F"): {
+					{
+						if (_x iskindof "EmptyDetector") then {
+							_x call _fnc_initArea;
+						};
+					} forEach (synchronizedobjects _x);
+				};
 			};
 		} foreach (synchronizedobjects _logic);
 
@@ -315,7 +346,7 @@ switch _mode do {
 					_markerColor = [_owner,true] call bis_fnc_sidecolor;
 				};
 
-				if (MCC_isMode) then {
+				if (MCC_isMode && _type <3) then {
 					_icon = format ["MCC_%1_%2",["o","b","n"] select ((_owner call bis_fnc_sideID) min 2), _iconsPaths select _type];
 				} else {
 					_icon = ["o_installation","b_installation","n_installation"] select ((_owner call bis_fnc_sideID) min 2);
@@ -324,6 +355,7 @@ switch _mode do {
 				_iconTexture = _icon call bis_fnc_texturemarker;
 				_markerIcon setmarkertype _icon;
 				_markerIcon setmarkercolor _markerColor;
+				_logic setVariable ["texture",_iconTexture,true];
 
 				{
 					_x setmarkercolor _markerColor;
@@ -366,7 +398,7 @@ switch _mode do {
 			_logic setvariable ["sectorScore",_sectorScore,true];
 
 			//Add resources
-			if (_step mod 5 == 0 && _owner != sideUnknown) then {
+			if (_step mod 5 == 0 && _owner != sideUnknown && _type <3) then {
 				private ["_array","_res"];
 				_array = call compile format ["MCC_res%1",_owner];
 				_res = (_array select _type)+5;
@@ -432,5 +464,95 @@ switch _mode do {
 		_ctrl = ((uiNameSpace getVariable "MCC_captureProgressRsc") displayCtrl 1);
 
 		_ctrl progressSetPosition _progress;
+	};
+
+	case "initHUDLocal": {
+		if (missionNamespace getVariable ["MCC_capturePointsHudEnabled",false]) exitWith {};
+		missionNamespace setVariable ["MCC_capturePointsHudEnabled",true];
+
+		//Create structures Icons
+		["MCC_capturePointsHudID", "onEachFrame",
+		{
+			private ["_obj","_text","_color","_texture","_pos"];
+			{
+				_obj 	= _x;
+				_text 	= _obj getvariable ["name",""];
+				_texture = _obj getVariable ["texture",""];
+				_color = [(_obj getvariable ["owner",sideUnknown])] call bis_fnc_sidecolor;
+				_color set [3,0.7];
+				_text = _text + format [" %1 m",floor (player distance _obj)];
+				_pos = position _obj;
+				_pos set [2,30];
+
+				drawIcon3D [
+								_texture,
+								_color,
+								_pos,
+								1,
+								1,
+								0,
+								_text,
+								1,
+								0.04,
+								"PuristaMedium"
+							];
+			} forEach ([true] call MCC_fnc_moduleCapturePoint);
+		}] call BIS_fnc_addStackedEventHandler;
+	};
+
+	case "initTickets": {
+		if (missionNamespace getVariable ["MCC_capturePointsinitTickets",false]) exitWith {};
+		missionNamespace setVariable ["MCC_capturePointsinitTickets",true];
+
+		private ["_scoreWest","_scoreEast","_scoreReistance","_winingSide","_sides","_side"];
+
+		while {true} do {
+		    _scoreEast = 0;
+			_scoreWest = 0;
+			_scoreReistance = 0;
+			_sides = [west,east,resistance];
+			_winingSide = sideUnknown;
+
+			{
+				if ((_x getvariable ["type",0])==3) then {
+					switch (_x getvariable ["owner",sideUnknown]) do {
+					    case east: {_scoreEast = _scoreEast +1};
+					    case west: {_scoreWest = _scoreWest +1};
+					    case resistance: {_scoreReistance = _scoreReistance +1};
+					};
+				};
+			} forEach ([true] call MCC_fnc_moduleCapturePoint);
+
+
+			if (_scoreEast > _scoreWest && _scoreEast > _scoreReistance) then {
+				_winingSide = east;
+			} else {
+				if (_scoreWest > _scoreEast && _scoreWest > _scoreReistance) then {
+					_winingSide = west;
+				} else {
+					if (_scoreReistance > _scoreEast && _scoreReistance > _scoreWest) then {
+						_winingSide = resistance;
+					};
+				};
+			};
+
+			if (_winingSide != sideUnknown) then {
+				_sides = _sides - [_winingSide];
+
+				//Bleed tickets
+				{
+					_side = _x;
+					if ({side _x == _side} count allUnits > 2) then {
+						[_side,-1] call BIS_fnc_respawnTickets;
+					};
+
+					if (([_side] call BIS_fnc_respawnTickets)<1) exitWith {
+						[["sidetickets"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
+					};
+				} forEach _sides;
+			};
+
+			sleep 10;
+		};
 	};
 };

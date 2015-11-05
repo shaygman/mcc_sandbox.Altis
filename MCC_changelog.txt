@@ -18,17 +18,17 @@ Change log r18:
 
 -= Misc =- 
 - Added: Can use MCC interaction while ACE is on - just don't forget to bind it to another key.
+- Added: Snow weather effect to MCC atmospheres. 
 - Changed: ILS Available to all air vehicles.
 - Changed: When placing IEDs MCC will not close the 3d editor so you can place multiple IEDs. 
+- Fixed: GAIA doesn't recognize mod vehicles such as RHS helicopters
+- Fixed: Double clikck WP in the commander console didn't work
 - Fixed: Quick weapon (Shift +1 .... Shift + 4) select always on
 - Fixed: While playing with CBA you'll no longer see the change MCC keys - thanks to Sargken.
 - Fixed: After a campaign mission has been finished MCC will not delete manned players' vehicles or FOBs.
 - Fixed: Lock/unlock door typo
 
-TODO - module tickets. 3d icons
 TODO - mission templates, test dedicated
-TODO - valor system
-TODO - change the disarm IED to minigame
 
 Change log r17:
 - Fixed: Convoy didn't worked on dedicated server.

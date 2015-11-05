@@ -1,7 +1,4 @@
-/*
-babba= [units group player] call fnc_countgroup;abba = [units group player] call fnc_gaia_Classifygroup; cabba = [vehicle player] call fnc_countunit;
-*/
-//==================================================================MCC_fnc_countGroup===============================================================================================
+//=============================================================GAIA_fnc_getUnitsClassification==================================================================================
 //
 //
 //
@@ -18,19 +15,19 @@ _class			= "";
 _Assets = [_units] call GAIA_fnc_getUnitTypeAmounts;
 
 _infantryCount 		= _Assets select 0;
-_reconCount				=	_Assets select 6;
-_CarCount	 				= _Assets select 1;
-_tankCount		 		= _Assets select 2;
+_reconCount			=	_Assets select 6;
+_CarCount	 		= _Assets select 1;
+_tankCount		 	= _Assets select 2;
 _artilleryCount 	= _Assets select 3;
-_airCount				 	= _Assets select 4;
-_shipCount				= _Assets select 5;
-_supportCount			=	_Assets select 7;
+_airCount			= _Assets select 4;
+_shipCount			= _Assets select 5;
+_supportCount		=	_Assets select 7;
 _autonomousCount	= _Assets select 8;
-_staticCount			=	_Assets select 9;
+_staticCount		=	_Assets select 9;
 _submarineCount		=	_Assets select 10;
-_AACount					=	_Assets select 11;
-_CargoCount				=	_Assets select 12;
-_MortarCount			=	_Assets select 13;
+_AACount			=	_Assets select 11;
+_CargoCount			=	_Assets select 12;
+_MortarCount		=	_Assets select 13;
 
 //What is the total shit we got
 _totalCount				= _infantryCount+_CarCount+_tankCount+_artilleryCount+_airCount+_shipCount+_reconCount+_supportCount+_autonomousCount+_staticCount+_submarineCount+_AACount+_mortarcount;
@@ -44,14 +41,14 @@ _NrOfVehicleGuns  = 0;
 _DoClear 			= ['DoClear'];
 _DoPatrol			= ['DoPatrol'];
 _DoRecon			= ['DoRecon'];
-_DoAttack			=	['DoAttack'];
+_DoAttack			= ['DoAttack'];
 _DoHide				= ['DoHide'];
-_DoMortar			=	['DoMortar'];
-_DoArtillery	=	['DoArtillery'];
-_DoTransport	= ['DoTransport'];
+_DoMortar			= ['DoMortar'];
+_DoArtillery		= ['DoArtillery'];
+_DoTransport		= ['DoTransport'];
 _DoCAS				= ['DoCAS'];
-_DoSupport		= ['DoSupport'];
-_DoGuard			=	['DoGuard'];
+_DoSupport			= ['DoSupport'];
+_DoGuard			= ['DoGuard'];
 _DoPark				= ['DoPark'];
 _DoWait				= ['DoWait'];
 
@@ -230,27 +227,25 @@ switch(true)do
 
 
 		//This conclusion is incorrect, but sufficient for first release. We handle planes and jets in next release.
-		case (_airCount					 				==  _totalCount):
+		case (_airCount	==  _totalCount):
 			{
 				_class = "Helicopter";
-				_speed													= "FAST";
-				_portfolio = _portfolio					+ _DoWait;
+				_speed = "FAST";
+				_portfolio = _portfolio	+ _DoWait;
 
 
 				//No guns but do hold space? We are a transporter
+				/*
+				if (!_VehicleHasGuns and _EnoughCargo ) then {
 
-				if (!_VehicleHasGuns and _EnoughCargo ) then
-				{
-
-				_portfolio = _portfolio					+_DoPatrol;
+					_portfolio = _portfolio	+_DoPatrol;
 				};
-
+				*/
 				//Please, for the love of god check if we have guns before we charge in.
-				if (_VehicleHasGuns) then
-				{
-				_portfolio = _portfolio					+ _DoAttack;
-
-
+				if (_VehicleHasGuns) then {
+					_portfolio = _portfolio	+ _DoAttack;
+				} else {
+					_portfolio = _portfolio	+_DoPatrol;
 				};
 			};
 
