@@ -101,10 +101,8 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 			_loot set [0, dateToNumber date];
 
 			//Fruit
-			if (_typeOfobject == "fruit") then
-			{
-				if (random 1 > 0.5) then
-				{
+			if (_typeOfobject == "fruit") then {
+				if (random 1 > 0.5) then {
 					_array = [];
 					{
 						_array pushBack _x;
@@ -112,9 +110,7 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 
 					_loot set [count _loot, _array call BIS_fnc_selectRandom];
 				};
-			}
-			else
-			{
+			} else {
 				{
 					_array = [W_BINOS + W_ATTACHMENTS + W_LAUNCHERS +W_MG + W_PISTOLS + W_RIFLES + W_SNIPER,
 					          U_MAGAZINES + U_UNDERBARREL +U_GRENADE + U_EXPLOSIVE,
@@ -124,30 +120,26 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 					          MCC_foodItem,
 					          MCC_money] select _foreachIndex;
 
-					if (count _array > 0) then
-					{
-						for "_i" from 0 to (_x/0.1) do
-						{
-							if (random 1 < _x) then {_loot set [count _loot, (_array call BIS_fnc_selectRandom) select 0]};
+					if (count _array > 0) then {
+						for "_i" from 0 to (_x/0.1) do {
+							if (random 0.5 < _x) then {_loot set [count _loot, (_array call BIS_fnc_selectRandom) select 0]};
 						};
 					};
 				} forEach _randomChance;
 			};
 		};
 
-		for "_i" from 1 to (count _loot -1) do
-		{
+		for "_i" from 1 to (count _loot -1) do {
 			_class = _loot select _i;
-			if (_class in (MCC_foodItem + MCC_money + MCC_fruits + MCC_repairItems + MCC_fuelItems + MCC_medItems) || ({_x select 0 == _class} count W_ATTACHMENTS)>0) then
-			{
-				_wepHolder addMagazineCargoGlobal [_class,1]
-			}
-			else
-			{
-				switch (true) do
-				{
+			if (_class in (MCC_foodItem + MCC_money + MCC_fruits + MCC_repairItems + MCC_fuelItems + MCC_medItems) || ({_x select 0 == _class} count W_ATTACHMENTS)>0) then {
+				switch (true) do {
+					case (isClass (configFile >> "CfgMagazines" >> _class)) : {_wepHolder addMagazineCargoGlobal [_class,1]};
+					case (isClass (configFile >> "CfgWeapons" >> _class)) : {_wepHolder addWeaponCargoGlobal [_class,1]; if !(_class in weaponCargo _wepHolder) then {_wepHolder addItemCargoGlobal [_class,1]}};
+				};
+			} else {
+				switch (true) do {
 					case (isClass (configFile >> "CfgMagazines" >> _class)) : {_wepHolder addMagazineCargo [_class,1]};
-					case (isClass (configFile >> "CfgWeapons" >> _class)) : {_wepHolder addWeaponCargo [_class,1]};
+					case (isClass (configFile >> "CfgWeapons" >> _class)) : {_wepHolder addWeaponCargo [_class,1]; if !(_class in weaponCargo _wepHolder) then {_wepHolder addItemCargo [_class,1]}};
 				};
 			};
 		};

@@ -134,6 +134,9 @@ CP_gearCam camcommitprepared 0;
 CP_gearCam camcommit 0;
 
 player switchmove "AidlPercMstpSlowWrflDnon_G03";
+
+//Make sure players will have their default kit once respawn - but not before they choosed a kit
+[missionNameSpace getvariable ["CP_classesIndex",2],0] call MCC_fnc_setGear;
 sleep 0.3;
 
 //--------------------------------------------------------------------
@@ -145,7 +148,9 @@ sleep 0.1;
 _ok = createDialog "CP_RESPAWNPANEL";
 if !(_ok) exitWith { hint "createDialog failed"; diag_log  "CP: create respawn Dialog failed";};
 
-waituntil {playerDeploy};
+waituntil {missionNameSpace getvariable ["playerDeploy",false]};
+
+
 //Spawn point found clearing not needed stuff
 detach player;
 detach CP_gearCam;
@@ -169,8 +174,7 @@ if ( (tolower _role == "officer" ) && (player != leader player)) then {group pla
 
 //Set Rank
 _level 	 = call compile format  ["%1Level select 0",_role];
-if (MCCplayerRank == "N/A") then
-{
+if (MCCplayerRank == "N/A") then {
 	MCCplayerRank = [(floor (_level/10)) min 6,"classname"] call BIS_fnc_rankParams;
 };
 

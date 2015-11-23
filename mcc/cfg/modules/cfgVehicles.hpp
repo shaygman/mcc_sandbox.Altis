@@ -18,3 +18,4 @@
 #include "MCC_Module_setResources.hpp"
 #include "underCover.hpp"
 #include "MCC_Module_captureZone.hpp"
+#include "MCC_Module_ambientCiviliansDenied.hpp"

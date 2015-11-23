@@ -47,22 +47,16 @@ _missionWherabouts =
 
 _pos = if (typeName _obj == "OBJECT") then {getpos _obj} else {_obj};
 
-if !(_preciseMarker) then
-{
+if !(_preciseMarker) then {
 	_pos =  [(_pos select 0) + (random 300 - random 300),(_pos select 1) + (random 300 - random 300),(_pos select 2)];
 };
 
-switch (_task) do
-{
+switch (_task) do {
    //Hostage
-   case "Secure_HVT":
-   {
-      if (side _obj != civilian) then
-      {
+   case "Secure_HVT": {
+      if (side _obj != civilian) then {
          _objectName = ([_obj,"displayName"] call BIS_fnc_rankParams) + " " + name _obj;
-      }
-      else
-      {
+      } else {
          _objectName = name _obj;
       };
 
@@ -79,14 +73,10 @@ switch (_task) do
    };
 
    //Kill
-   case "Kill_HVT":
-   {
-      if (side _obj != civilian) then
-      {
+   case "Kill_HVT": {
+      if (side _obj != civilian) then {
          _objectName = ([_obj,"displayName"] call BIS_fnc_rankParams) + " " + name _obj;
-      }
-      else
-      {
+      } else {
          _objectName = name _obj;
       };
 
@@ -101,8 +91,7 @@ switch (_task) do
    };
 
    //destroy_tanks
-   case "destroy_tanks":
-   {
+   case "destroy_tanks": {
       _objectName = getText(configFile >> "CfgVehicles" >> typeof _obj >> "displayname");
       _stringName   = FORMAT ["%2 Destroy the prototype %1", _objectName,_nameTask];
       _stringDescription =  FORMAT ["Task: Destroy the prototype %2.<br/><br/>%1 HQ received intel suggesting that the enemy has obtained a prototype %2.<br/>This is a game-changer and we must eliminate it by any means necessary.<br/>%3 the vehicle is hidden %4."
@@ -115,8 +104,7 @@ switch (_task) do
    };
 
    //destroy_aa
-   case "destroy_aa":
-   {
+   case "destroy_aa": {
       _objectName = getText(configFile >> "CfgVehicles" >> typeof _obj >> "displayname");
       _stringName   = FORMAT ["%2 Destroy %1", _objectName,_nameTask];
       _stringDescription =  FORMAT ["Task: Destroy %2.<br/><br/>%1 one of our planes got shot down.<br/>HQ believes that a %2 is behind it.<br/>This threat must be eliminated.<br/>%3 the AA is operating %4. Find and destroy it, soldier."
@@ -129,8 +117,7 @@ switch (_task) do
    };
 
    //destroy_artillery
-   case "destroy_artillery":
-   {
+   case "destroy_artillery": {
       _objectName = getText(configFile >> "CfgVehicles" >> typeof _obj >> "displayname");
       _stringName   = FORMAT ["%2 Destroy %1", _objectName,_nameTask];
       _stringDescription =  FORMAT ["Task: Destroy %2.<br/><br/>%1 enemy artillery began pounding our troops. This threat must be eliminated.<br/>%3 the %2 is operating %4.<br/>Find and destroy it ASAP."
@@ -143,8 +130,7 @@ switch (_task) do
    };
 
    //destroy_cache
-   case "destroy_cache":
-   {
+   case "destroy_cache": {
       _stringName   =FORMAT ["%1 Destroy the enemy weapons cache",_nameTask];
       _stringDescription =  FORMAT ["Task: Destroy the enemy weapons cache.<br/><br/>%2 received %1, we believe that the enemy is hiding a weapons cache %3.<br/>Destroying it will severely damage the enemy war effort.<br/>Find and destroy it ASAP."
                              , _missionTime call BIS_fnc_selectRandom
@@ -156,8 +142,7 @@ switch (_task) do
    };
 
    //destroy_fuel
-   case "destroy_fuel":
-   {
+   case "destroy_fuel": {
       _stringName   = FORMAT ["%1 Destroy the enemy fuel depot",_nameTask];
       _stringDescription =  FORMAT ["Task: Destroy the enemy fuel depot.<br/><br/>%2 received %1, we believe that the enemy have a fuel depot %3.<br/>Destroying it will severely damage the enemy war effort.<br/>Find and destroy it ASAP."
                              , _missionTime call BIS_fnc_selectRandom
@@ -169,8 +154,7 @@ switch (_task) do
    };
 
    //destroy_radio
-   case "destroy_radio":
-   {
+   case "destroy_radio": {
       _stringName   = FORMAT ["%1 Destroy the enemy radio tower",_nameTask];
       _stringDescription =  FORMAT ["Task: Destroy the enemy radio tower.<br/><br/>%2 received %1 the enemy have a radio tower %3. They are using it to coordinate their attacks.<br/>Destroying it will severely damage the enemy war effort.<br/>Find and destroy it ASAP."
                              , _missionTime call BIS_fnc_selectRandom
@@ -181,8 +165,7 @@ switch (_task) do
    };
 
    //destroy_radar
-   case "destroy_radar":
-   {
+   case "destroy_radar": {
       _stringName   = FORMAT ["%1 Destroy the enemy radar",_nameTask];
       _stringDescription =  FORMAT ["Task: Destroy the enemy radar.<br/><br/>%2 received %1 the enemy have a radar installation %3. They are using it to pinpoint the location of our troops.<br/>By destroying it we can regain the element of surprise.<br/>Find and destroy it ASAP."
                              , _missionTime call BIS_fnc_selectRandom
@@ -193,8 +176,7 @@ switch (_task) do
    };
 
    //pick_intel
-   case "pick_intel":
-   {
+   case "pick_intel": {
       _objectName = getText(configFile >> "CfgVehicles" >> typeof _obj >> "displayname");
       _stringName   = FORMAT ["%2 Acquire the %1", _objectName,_nameTask];
       _stringDescription =  FORMAT ["Task: Acquire Intel.<br/><br/>HQ believe that we have an opportunity to acquire top notch information about enemy forces operating in the area.<br/>%3 the target data is in a %2, located %4.<br/>Retrieve the information and bring it back for analysis."
@@ -207,8 +189,7 @@ switch (_task) do
    };
 
    //clear_area
-   case "clear_area":
-   {
+   case "clear_area": {
       _stringName   = FORMAT ["%1 Clear Area",_nameTask];
       _stringDescription =  FORMAT ["Task: Clear Area.<br/><br/>%1 enemy forces established a foothold %2.<br/>We can not allow this to continue!<br/>Go there and kick them out!!"
                              , _missionTime call BIS_fnc_selectRandom
@@ -218,10 +199,9 @@ switch (_task) do
    };
 
    //disableIED
-   case "disableIED":
-   {
+   case "disableIED": {
       _stringName   = FORMAT ["%1 Disable IED",_nameTask];
-      _stringDescription =  FORMAT ["Task: Disable IED.<br/><br/>%1 enemy forces have placed a massive Improvised Explosive Device (IED) on a road %2.<br/>We must disable it before it can cause any damage.<br/>Tread carefully, find the IED and disarm it."
+      _stringDescription =  FORMAT ["Task: Disable IED.<br/><br/>%1 enemy forces managed to put their hands on a massive Improvised Explosive Device (IED) %2.<br/>We must disable it before they will be able to use it against civilian population.<br/>Tread carefully, find the IED and disarm it."
                              , _missionIntel call BIS_fnc_selectRandom
                              , _missionWherabouts call BIS_fnc_selectRandom
                              , _stringName

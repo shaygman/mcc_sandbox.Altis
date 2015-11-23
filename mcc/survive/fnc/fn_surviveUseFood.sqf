@@ -16,10 +16,12 @@ _returnItem = param [3,"",[""]];
 _eating = if (param [4,true,[true]]) then {"Eating"} else {"Drinking"};
 _foodPoisionChance =  param [5,5,[0]];
 
-_displayName = getText (configfile >> "CfgMagazines" >> _itemClass >> "displayName");
-
 player playMoveNow "AinvPknlMstpSlayWrflDnon_medic";
-player removeMagazine _itemClass;
+switch (true) do {
+  case (isClass (configFile >> "CfgMagazines" >> _itemClass)) : {player removeMagazine _itemClass;_displayName = getText (configfile >> "CfgMagazines" >> _itemClass >> "displayName");};
+  case (isClass (configFile >> "CfgWeapons" >> _itemClass)) : {player removeItem _itemClass;_displayName = getText (configfile >> "CfgWeapons" >> _itemClass >> "displayName");};
+  case (isClass (configFile >> "CfgGlasses" >> _itemClass)) : {player removeItem _itemClass;_displayName = getText (configfile >> "CfgGlasses" >> _itemClass >> "displayName");};
+};
 
 TitleText [format ["%1 %2...",_eating, _displayName], "PLAIN DOWN",0.5];
 _preCal = player getVariable ["MCC_calories",4000];
@@ -31,7 +33,11 @@ player setVariable ["MCC_calories",_calories];
 player setVariable ["MCC_water",_water];
 
 if (_returnItem != "") then {
-	player addMagazine _returnItem;
+	switch (true) do {
+    case (isClass (configFile >> "CfgMagazines" >> _returnItem)) : {player addMagazine _returnItem;};
+    case (isClass (configFile >> "CfgWeapons" >> _returnItem)) : {player additem _returnItem;};
+    case (isClass (configFile >> "CfgGlasses" >> _returnItem)) : {player additem _returnItem;};
+  };
 };
 
 //Sick chance

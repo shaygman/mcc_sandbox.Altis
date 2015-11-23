@@ -19,26 +19,24 @@ if (_objectAmmo == 0) then {_objectAmmo = 200};
 player playactionNow "putdown";
 {
 	_weapon = _x;
-	if (_weapon != "") then
-	{
+	if (_weapon != "") then {
 		_magazines = getArray (configFile / "CfgWeapons" / _weapon / "magazines");
-		_magazineClass = _magazines select (0 min (count _magazines - 1));
-		_magazineCount = {_x == _magazineClass} count magazines player;
-		_cost = getNumber(configFile >> "CfgMagazines" >> _magazineClass >> "mass");
-		switch _foreachIndex do
-		{
-			case 0 : {_trashHold = 2};
-			case 1 : {_trashHold = 2};
-			case 2 : {if ((getText((configFile / "CfgWeapons" / _weapon / "cursor")) == "mg")) then {_trashHold = 4} else {_trashHold = 8}};
-		};
+		if (count _magazines > 0) then {
+			_magazineClass = _magazines select (0 min (count _magazines - 1));
+			_magazineCount = {_x == _magazineClass} count magazines player;
+			_cost = getNumber(configFile >> "CfgMagazines" >> _magazineClass >> "mass");
+			switch _foreachIndex do	{
+				case 0 : {_trashHold = 2};
+				case 1 : {_trashHold = 2};
+				case 2 : {if ((getText((configFile / "CfgWeapons" / _weapon / "cursor")) == "mg")) then {_trashHold = 4} else {_trashHold = 8}};
+			};
 
-		if (_magazineCount < _trashHold) then
-		{
-			for "_i" from _magazineCount to (_trashHold-1) do
-			{
-				player addMagazine _magazineClass;
-				_objectAmmo = _objectAmmo - _cost;
-				if (_objectAmmo <= 0) exitWith {deleteVehicle _object};
+			if (_magazineCount < _trashHold) then {
+				for "_i" from _magazineCount to (_trashHold-1) do {
+					player addMagazine _magazineClass;
+					_objectAmmo = _objectAmmo - _cost;
+					if (_objectAmmo <= 0) exitWith {deleteVehicle _object};
+				};
 			};
 		};
 	};

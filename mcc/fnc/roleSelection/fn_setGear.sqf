@@ -5,6 +5,7 @@
 // Gear: 0- select, 1-gear, 2-uniform
 //==============================================================================================================================================================================
 private ["_role","_select","_mag","_magazines","_muzzles","_ok","_wepItems","_image"];
+disableSerialization;
 _role 	= _this select 0;
 _select	= _this select 1;
 

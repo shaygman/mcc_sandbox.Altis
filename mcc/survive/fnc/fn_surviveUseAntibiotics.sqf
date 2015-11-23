@@ -9,7 +9,12 @@ _itemClass = _this select 0;
 _perement = _this select 1;
 
 player playMoveNow "AinvPknlMstpSlayWrflDnon_medic";
-player removeMagazine _itemClass;
+switch (true) do {
+  case (isClass (configFile >> "CfgMagazines" >> _itemClass)) : {player removeMagazine _itemClass;};
+  case (isClass (configFile >> "CfgWeapons" >> _itemClass)) : {player removeItem _itemClass;};
+  case (isClass (configFile >> "CfgGlasses" >> _itemClass)) : {player removeItem _itemClass;};
+};
+
 
 if (player getVariable ["MCC_surviveIsSick",false]) then {
 	_perement spawn {

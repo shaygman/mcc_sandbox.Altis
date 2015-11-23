@@ -15,7 +15,7 @@ _itemClass = param [1, "", [""]];
 
 if (_mag == "" || _itemClass == "") exitWith {};
 
-player removeMagazine _mag;
+player removeItem _mag;
 player playactionNow "putdown";
 sleep 0.3;
 _handPos = player selectionPosition "LeftHand";

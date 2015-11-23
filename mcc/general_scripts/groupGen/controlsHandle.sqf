@@ -392,7 +392,7 @@ if (_action == 8) exitWith
 	{
 		_displayname = _x;
 		_index = _comboBox lbAdd _displayname;
-	} foreach ["Proximity", "Radio - Spotter", "Mission maker only","Mini-Game"];
+	} foreach ["Proximity", "Radio - Spotter", "Mission maker only","Mini-Game(Proximity)","Mini-Game(Manual)"];
 	_comboBox lbSetCurSel 0;
 
 	_comboBox = _mccdialog displayCtrl MCC_TRAPS_AMBUSH;		//fill combobox IED Ambush group

@@ -82,7 +82,7 @@ _updateRoles = {
 	//pilot & crewmen
 	{
 		_roleName = _x;
-		_roleLimit = call compile format ["CP_%1PerGroup", toLower _roleName];
+		_roleLimit = call compile format ["CP_available%1", toLower _roleName];
 		_countRole = {isPlayer _x && side _x == playerSide && tolower (_x getvariable ["CP_role","n/a"]) == tolower _roleName} count allUnits;
 		if (_countRole >= _roleLimit  && _roleName != toLower (player getVariable ["CP_role","N/A"])) then {
 			(_disp displayCtrl (17 + _forEachIndex)) ctrlEnable false;
@@ -104,8 +104,7 @@ _updateRoles = {
 //Gear stats
 [CP_GEARPANEL_IDD] call MCC_fnc_playerStats;
 
-_updateRoles spawn
-{
+_updateRoles spawn {
 	private ["_array","_disp"];
 	disableSerialization;
 	while {(str (CP_GEARPANEL_IDD displayCtrl 10) != "No control")} do

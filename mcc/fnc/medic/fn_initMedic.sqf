@@ -27,11 +27,19 @@ private ["_maxBleeding","_bleeding","_remaineBlood","_unit"];
 					{
 						//Gear scripts exc
 						sleep 5;
-						if (missionNamespace getVariable ["MCC_medicComplex",false]) then
-						{
+						if (missionNamespace getVariable ["MCC_medicComplex",false]) then {
 							{
-								if (_x == "FirstAidKit") then {_this removeItem _x; _this addMagazines ["MCC_bandage",1]};
-								if (_x == "Medikit") then {_this removeItem _x; _this addMagazines ["MCC_bandage",8]; _this addMagazines ["MCC_epipen",6]; _this addMagazines ["MCC_salineBag",2]; _this addMagazines ["MCC_firstAidKit",1]};
+								if (_x == "FirstAidKit") then {
+									_this removeItem _x;
+									{_this additem "MCC_bandage"} forEach [1,2];
+								};
+								if (_x == "Medikit") then {
+									_this removeItem _x;
+									{_this additem "MCC_bandage"} forEach [1,2,3,4,5,6,7,8,9,10,11,12];
+									{_this additem "MCC_epipen"} forEach [1,2,3,4,5,6,7,8,9,10,11,12];
+									{_this additem "MCC_salineBag"} forEach [1,2,3,4];
+									_this additem "MCC_firstAidKit";
+								};
 							} forEach (items _this);
 						};
 					};
@@ -61,9 +69,9 @@ private ["_maxBleeding","_bleeding","_remaineBlood","_unit"];
 								}
 								else
 								{
-									if ("MCC_bandage" in (magazines _unit)) then
+									if ("MCC_bandage" in (items _unit)) then
 									{
-										_unit removeMagazine "MCC_bandage";
+										_unit removeItem "MCC_bandage";
 										_unit addItem "FirstAidKit";
 										_unit action ["HealSoldierSelf", _unit];
 										_unit setVariable ["MCC_medicBleeding",0,true];

@@ -13,11 +13,19 @@ _removeObject =  param [2,"",[""]];
 _removeMainObject =  param [3,false,[true]];
 
 if (_removeObject != "") then {
-	player removeMagazine _removeObject;
+	switch (true) do {
+		case (isClass (configFile >> "CfgMagazines" >> _removeObject)) : {player removeMagazine _removeObject;};
+		case (isClass (configFile >> "CfgWeapons" >> _removeObject)) : {player removeItem _removeObject;};
+		case (isClass (configFile >> "CfgGlasses" >> _removeObject)) : {player removeItem _removeObject;};
+	};
 };
 
 if (_removeMainObject) then {
-	player removeMagazine _itemClass;
+	switch (true) do {
+		case (isClass (configFile >> "CfgMagazines" >> _itemClass)) : {player removeMagazine _itemClass;};
+		case (isClass (configFile >> "CfgWeapons" >> _itemClass)) : {player removeItem _itemClass;};
+		case (isClass (configFile >> "CfgGlasses" >> _itemClass)) : {player removeItem _itemClass;};
+	};
 };
 
 _buildClass createVehicle (player modelToWorld [0,1,0]);

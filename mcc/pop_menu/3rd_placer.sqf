@@ -32,8 +32,7 @@ if (isnil "Object3D" && !isnil "MCC_preview3DClass") then {
 	};
 };
 
-if (isnil "MCC_Camera") then
-{
+if (isnil "MCC_Camera") then {
 	createcenter sidelogic;
 	_logicGrp = creategroup sidelogic;
 	_logicASL = _logicGrp createunit ["Logic",position player,[],0,"none"];
@@ -60,13 +59,11 @@ startLoadingScreen ["3D Placing","RscDisplayLoadMission"];
 (["MCC_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_compass", "PLAIN"];
 
 //track Units
-if (!_conMenu) then
-{
+if (!_conMenu) then {
 	MCC_trackMarkerHandler3D = ((uiNamespace getVariable "MCC_compass") displayCtrl 5) ctrladdeventhandler ["draw","_this call MCC_fnc_trackUnits;"];
 };
 
-if (isnil "MCC_3D_CAM") then
-{
+if (isnil "MCC_3D_CAM") then {
 	//_camera = "camCurator" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
 	_camera = "camconstruct" camcreate [_pos select 0, _pos select 1,((getpos player) select 2) +15];
 	_camera cameraeffect ["internal","back"];
@@ -79,12 +76,9 @@ if (isnil "MCC_3D_CAM") then
 	_camera camCommitPrepared 0;
 
 	_pos set [2,0];
-	if (_conMenu) then
-	{
+	if (_conMenu) then {
 		_camera camConstuctionSetParams ([_pos]+[150,50]);
-	}
-	else
-	{
+	} else {
 		_camera camConstuctionSetParams ([_pos]+[200000,500]);
 	}
 };
@@ -105,8 +99,7 @@ MCC3DMouseZChanged		=	(uinamespace getvariable "MCC_3D_displayMain") displayAddE
 
 MCC_3D_CAM_keys = [];
 
-if (isnil "MCC_3D_CAM_ASL") then
-{
+if (isnil "MCC_3D_CAM_ASL") then {
 	createcenter sidelogic;
 	_logicGrp = creategroup sidelogic;
 	_logicASL = _logicGrp createunit ["Logic",position player,[],0,"none"];
@@ -117,17 +110,14 @@ _logic setvariable ["MCC_3D_menu","#USER:BIS_Coin_categories_0"];
 
 //NV State
 _nvgstate = if ( sunOrMoon < 0.5 ) then {2} else {4};
-if (_nvgstate == 2) then
-{
+if (_nvgstate == 2) then {
 	camusenvg true;
 	[] spawn {
 				((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "N/V";
 				sleep 1.5;
 				((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "";
 			};
-}
-else
-{
+} else {
 	[] spawn {
 				((uiNamespace getVariable "MCC_compass") displayCtrl 4) ctrlSettext "Normal";
 				sleep 1.5;
@@ -140,12 +130,9 @@ _GUIstate = true;
 _logic setvariable ["MCC_3D_GUI",_GUIstate];
 
 //Create the placeholder
-if (_conMenu) then
-{
+if (_conMenu) then {
 	MCC_dummyObject = Object3D;
-}
-else
-{
+} else {
 	MCC_dummyObject =  "Sign_Sphere25cm_F" createvehiclelocal (screentoworld [0.5,0.5]);
 	MCC_dummyObject addEventHandler ["handleDamage",""];
 };
@@ -164,8 +151,7 @@ MCC_3DeditorMarker setMarkerDirLocal getdir MCC_3D_CAM;
 MCC_3DeditorMarker setMarkerSizeLocal [1, 1];
 
 //Create borders
-if (_conMenu) then
-{
+if (_conMenu) then {
 	_createBorder =
 	{
 		_center = position _this;
@@ -251,19 +237,36 @@ MCC_3D_CAM_Handler =
 	if (_mode in ["mousemoving", "mouseholding"]) then
 	{
 		_key = _input select 1;
-		if (! isnil "MCC_3D_CAM") then
-		{
+		if (! isnil "MCC_3D_CAM") then {
 			MCC_3D_CAM camsettarget MCC_dummyObject;
 			MCC_3D_CAM camcommit 0;
 
 			//Compass
-			for [{_i = 0;_j = 0},{_i < 360;_j < 4},{_i = _i + 90;_j = _j + 1}] do
-			{
+			/*
+			for [{_i = 0;_j = 0},{_i < 360;_j < 4},{_i = _i + 90;_j = _j + 1}] do {
 				_x = (0.476 + sin(_i - (getdir MCC_3D_CAM))*(SafeZoneW/8 - SafeZoneW/200));
 				_y = (0.42 - cos(_i - (getdir MCC_3D_CAM))*(SafeZoneH/8 - SafeZoneH/200));
 
 				((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlSetPosition  [_x,_y];
 				((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlCommit 0;
+			};
+			*/
+			private ["_offset","_ctrlClass","_ctrl","_camPos"];
+			disableSerialization;
+
+			_camPos = positionCameraToWorld [0,0,7];
+
+			for "_i" from 10 to 21 do {
+				_ctrl = (uiNamespace getVariable "MCC_compass") displayCtrl _i;
+				_ctrlClass = ctrlClassName _ctrl;
+				if (isClass(missionConfigFile >>"RscTitles" >> "MCC_compass")) then {
+					_offset = getArray(missionconfigFile >>"RscTitles" >> "MCC_compass" >> "controls" >> _ctrlClass >> "offSet");
+				} else {
+					_offset = getArray(configFile >>"RscTitles" >> "MCC_compass" >> "controls" >> _ctrlClass >> "offSet");
+				};
+
+				_ctrl ctrlSetPosition (worldToScreen (_camPos vectoradd _offset));
+				_ctrl ctrlCommit 0;
 			};
 
 			//Anim Map
@@ -514,27 +517,21 @@ MCC_3D_CAM_Handler =
 		};
 
 	//--- Key UP
-	if (_mode == "keyup") then
-	{
+	if (_mode == "keyup") then {
 		_key = _input select 1;
 		_ctrlKey = _input select 3;
 
-		if (_key in _keyplace) then
-		{
+		if (_key in _keyplace) then {
 			_objectPos = [getpos Object3D select 0, getpos Object3D select 1, z3DHight] ;
 			_objectDir = getdir Object3D;
 
-			if (_conMenu) then
-			{
-				if (MCC_canSpawn3DConst) then
-				{
+			if (_conMenu) then {
+				if (MCC_canSpawn3DConst) then {
 					_terminate = true;
 					[[_objectPos, _objectDir , _conType,3, playerside], "MCC_fnc_construct_base", false, false] spawn BIS_fnc_MP;
 					deletevehicle Object3D;
 				};
-			}
-			else
-			{
+			} else {
 
 				deletevehicle Object3D;
 				sleep 0.2;
@@ -543,14 +540,11 @@ MCC_3D_CAM_Handler =
 				hint "Object placed";
 				deletevehicle Object3D;
 
-				if (mcc_spawntype == "MINES") then
-					{
+				if (mcc_spawntype == "MINES") then {
 						Object3D = createMine [mcc_spawnname,[0,0,500], [], 0];
 						Object3D enableSimulation false;
 						Object3D AddEventHandler ["HandleDamage", {False}];
-					}
-					else
-					{
+					} else {
 						deletevehicle Object3D;
 						sleep 0.01;
 						Object3D = mcc_spawnname createvehiclelocal [0,0,500];
@@ -560,31 +554,26 @@ MCC_3D_CAM_Handler =
 			};
 		};
 
-		if (_key in _keyalt && !_conMenu) then 		//Align
-		{
-			if (MCC_align3D) then
-			{
+
+		//Align
+		if (_key in _keyalt && !_conMenu) then {
+			if (MCC_align3D) then  {
 				MCC_align3D=false;
 				publicVariable "MCC_align3D";
 				MCC_align3DText = "Enabled";
-			}
-			else
-			{
+			} else {
 				MCC_align3D=true;
 				publicVariable "MCC_align3D";
 				MCC_align3DText = "Disabled";
 			};
 		};
 
-		if (_key in _keysShift && !_conMenu) then 			//Smooth
-		{
-			if (MCC_smooth3D) then
-			{
+		//Smooth
+		if (_key in _keysShift && !_conMenu) then {
+			if (MCC_smooth3D) then {
 				MCC_smooth3D=false;
 				MCC_smooth3DText = "Disabled";
-			}
-			else
-			{
+			} else {
 				MCC_smooth3D=true;
 				MCC_smooth3DText = "Enabled";
 			};
@@ -618,8 +607,7 @@ MCC_3D_CAM_Handler =
 	};
 
 	//--- Deselect or CloseTerminate
-	if (_terminate || MCC_3Dterminate || MCC_3DterminateNoMCC) then
-	{
+	if (_terminate || MCC_3Dterminate || MCC_3DterminateNoMCC) then {
 		MCC_mcc_screen=2;
 		//--- Close
 		MCC3DRuning = false;
@@ -638,8 +626,7 @@ MCC_3D_CAM_Handler =
 	};
 
 		//--- Camera no longer exists - terminate and start cleanup
-	if (isnil "MCC_3D_CAM" || player != DOperator || !alive player) exitwith
-	{
+	if (isnil "MCC_3D_CAM" || player != DOperator || !alive player) exitwith {
 		//////////////////////////////////////////////////
 		startLoadingScreen ["MCC 3D","RscDisplayLoadMission"];
 		//////////////////////////////////////////////////

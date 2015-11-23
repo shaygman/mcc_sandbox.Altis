@@ -1044,12 +1044,22 @@ MCC_CONST_CAM_Handler =
 			_cam = missionNamespace getVariable ["MCC_CONST_CAM",objNull];
 
 			if (_mode == "mousemoving" && !isNull _cam) then {
-				for [{_i = 0;_j = 0},{_i < 360;_j < 4},{_i = _i + 90;_j = _j + 1}] do {
-					_x = (0.476 + sin(_i - (getdir _cam))*(SafeZoneW/8 - SafeZoneW/200));
-					_y = (0.42 - cos(_i - (getdir _cam))*(SafeZoneH/8 - SafeZoneH/200));
+				private ["_offset","_ctrlClass","_ctrl","_camPos"];
+				disableSerialization;
 
-					((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlSetPosition  [_x,_y];
-					((uiNamespace getVariable "MCC_compass") displayCtrl _j) ctrlCommit 0;
+				_camPos = positionCameraToWorld [0,4.3,10];
+
+				for "_i" from 10 to 21 do {
+					_ctrl = (uiNamespace getVariable "MCC_compass") displayCtrl _i;
+					_ctrlClass = ctrlClassName _ctrl;
+					if (isClass(missionConfigFile >>"RscTitles" >> "MCC_compass")) then {
+						_offset = getArray(missionconfigFile >>"RscTitles" >> "MCC_compass" >> "controls" >> _ctrlClass >> "offSet");
+					} else {
+						_offset = getArray(configFile >>"RscTitles" >> "MCC_compass" >> "controls" >> _ctrlClass >> "offSet");
+					};
+
+					_ctrl ctrlSetPosition (worldToScreen (_camPos vectoradd _offset));
+					_ctrl ctrlCommit 0;
 				};
 			};
 

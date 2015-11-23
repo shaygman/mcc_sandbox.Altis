@@ -48,19 +48,39 @@ class MCC_Module_captureZone : Module_F
 		class flag
 		{
 			displayName = "Flag";
-			typeName = "NUMBER";
+			typeName = "BOOL";
 			class values
 			{
-				class change
+				class Enabled
 				{
-					name = "Change";
-					value = 0;
+					name = "On";
+					value = true;
 					default = 1;
 				};
-				class dontChange
+				class Disabled
 				{
-					name = "Don't Change";
-					value = 1;
+					name = "Off";
+					value = false;
+				};
+			};
+		};
+
+		class enableHUD
+		{
+			displayName = "HUD";
+			typeName = "BOOL";
+			class values
+			{
+				class Enabled
+				{
+					name = "On";
+					value = true;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "Off";
+					value = false;
 				};
 			};
 		};

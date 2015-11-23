@@ -31,13 +31,23 @@ if (_houseConuter < 1 || count _carArray >= MAX_PARKED_CARS) exitWith {};
 _carInArea = (MAX_PARKED_CARS_PER_AREA - ({_x distance _pos < _carSpawnDistance} count _carArray));
 if (_counter > _carInArea) then {_counter = _carInArea};
 
+//Denied zones
+_deniedZones = (player nearEntities ["MCC_Module_ambientCiviliansDenied", 2000]) + (player nearEntities ["MCC_Module_ambientCiviliansCuratorDenied", 2000]);
+
 for "_i" from 1 to (_houseConuter min _counter) do
 {
 	_house = _nearHouses call BIS_fnc_selectRandom;
 	_nearHouses = _nearHouses - [_house];
 	_road = [getpos _house,20,[]] call bis_fnc_nearestRoad;
 
-	if !(isNull _road) then {
+	//Are we inside denied zone
+	private ["_spawn"];
+	_spawn = true;
+	{
+		if (_x distance _road < (_x getVariable ["radius",100])) exitWith {_spawn = false};
+	} forEach _deniedZones;
+
+	if (!(isNull _road) && _spawn) then {
 		_roadConnectedTo 	= roadsConnectedTo _road;
 		_connectedRoad 		= _roadConnectedTo select 0;
 

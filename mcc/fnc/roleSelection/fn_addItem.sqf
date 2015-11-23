@@ -6,12 +6,14 @@ private ["_currentWeapon","_mag"];
 _currentWeapon = _this select 0;
 
 _mag = (_currentWeapon select 1);
+if (typeName (_currentWeapon select 2) == typeName []) then {_currentWeapon set [2,1]};
 
 if (_mag == "") exitWith {};
-for [{_i = 0},{_i < (_currentWeapon select 2)},{_i = _i+1}] do
-	{
-		if (isClass (configFile >> "CfgMagazines" >> _mag)) then {player addmagazine _mag};
-		if (isClass (configFile >> "CfgWeapons" >> _mag)) then {player additem _mag};
-		if (isClass (configFile >> "CfgWeapons" >> _mag) && (_mag in ["ItemMap","ItemCompass","ItemWatch","ItemRadio","B_UavTerminal","MCC_Console","ItemGPS"])) then {player assignItem _mag};
-		if (isClass (configFile >> "CfgGlasses" >> _mag)) then {player additem _mag};
+for [{_i = 0},{_i < (_currentWeapon select 2)},{_i = _i+1}] do {
+	switch (true) do {
+	    case (isClass (configFile >> "CfgMagazines" >> _mag)): {player addmagazine _mag};
+	    case (isClass (configFile >> "CfgWeapons" >> _mag)): {player additem _mag; if !(_mag in items player) then {player addWeapon _mag}};
+	    case (isClass (configFile >> "CfgWeapons" >> _mag) && (_mag in ["ItemMap","ItemCompass","ItemWatch","ItemRadio","B_UavTerminal","MCC_Console","ItemGPS"])): {player assignItem _mag};
+	    case (isClass (configFile >> "CfgGlasses" >> _mag)): {player additem _mag};
 	};
+};

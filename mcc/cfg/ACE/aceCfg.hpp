@@ -155,7 +155,7 @@ class CAManBase: Man {
 		};
 
 		class ACE_MCC_DropAmmobox {
-			condition = "('MCC_ammoBoxMag' in magazines _player)";
+			condition = "('MCC_ammoBoxMag' in items _player)";
 			displayName = "Drop<br/>Ammobox";
 			icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
 			statement = "['MCC_ammoBoxMag','MCC_ammoBox'] spawn MCC_fnc_ACEdropAmmobox;";
@@ -213,7 +213,7 @@ class CAManBase: Man {
 
 		class ACE_MCC_miniGameDefuse {
             displayName = "Bomb Defuse";
-            condition ="((cursorTarget getVariable ['realIed',objnull]) getVariable ['MCC_isIEDMiniGame',false]) && (_player distance cursorTarget < 5)";
+            condition ="((cursorTarget getVariable ['realIed',objnull]) getVariable ['MCC_isIEDMiniGame',false]) && (_player distance cursorTarget < 8)";
             statement = "[cursorTarget] spawn MCC_fnc_bdStart";
             showDisabled = 0;
             icon = "\A3\ui_f\data\map\markers\military\unknown_CA.paa";

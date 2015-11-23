@@ -14,6 +14,7 @@ if !(hasInterface || isServer) exitWith {};
 _logic 		= _this select 0;
 _namesList 	= call compile (_logic getvariable ["names","[]"]);
 _namesList = _namesList + (missionNameSpace getVariable ["MCC_allowedPlayers",[]]);
+missionNamespace setVariable ["MCC_allowAdmin",_logic getvariable ["allowAdmin",true]];
 
 _logic setpos [1000,10,0];
 waituntil {isplayer player && alive player && MCC_initDone};

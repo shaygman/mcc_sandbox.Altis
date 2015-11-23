@@ -16,12 +16,15 @@ if (count _key > 4) then {
 _screen = missionNamespace getvariable ["MCC_mcc_screen",0];
 
 if (_index == 0) exitWith {
-	if !((getplayerUID player in (missionNamespace getvariable ["MCC_allowedPlayers",[]]) || "all" in  (missionNamespace getvariable ["MCC_allowedPlayers",["all"]]) || serverCommandAvailable "#logout" || isServer || (player getvariable ["MCC_allowed",false]))) exitWith {};
+	if !((getplayerUID player in (missionNamespace getvariable ["MCC_allowedPlayers",[]]) || "all" in  (missionNamespace getvariable ["MCC_allowedPlayers",["all"]]) || (serverCommandAvailable "#logout" && missionNamespace getvariable ["MCC_allowAdmin",true]) || (isServer && missionNamespace getvariable ["MCC_allowAdmin",true]) || (player getvariable ["MCC_allowed",false]))) exitWith {};
 
 	if (str findDisplay 2994 != "No display") then {
 		while {dialog} do {closeDialog 0};
 	} else {
-		_screen = (if (name player != (missionNamespace getvariable ["mcc_missionMaker",""])) then {0} else {2});
+		//If not the mission maker move to default screen
+		if (name player != (missionNamespace getvariable ["mcc_missionMaker",""])) then {_screen =0} else {
+			if (_screen == 0) then {_screen =2};
+		};
 
 		switch (_screen) do
 		{

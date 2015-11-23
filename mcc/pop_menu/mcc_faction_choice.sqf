@@ -74,9 +74,10 @@ call mcc_make_array_units;
 GEN_DOC1 = [];
 GEN_DOC1 = [mcc_faction,0]  call mcc_make_array_comp;
 
-if (!mcc_firstTime) then
-{
+ //If it's not first time refresh the menu
+if !(missionNamespace getVariable ["mcc_firstTime",true]) then {
 	while {dialog} do {closeDialog 0};
 	nul=[nil,nil,nil,nil,0] execVM MCC_path + "mcc\Dialogs\mcc_PopupMenu.sqf";
-}
-else {mcc_firstTime=false}; //If it's not first time refresh the menu
+} else {
+	missionNamespace setVariable ["mcc_firstTime",false];
+};

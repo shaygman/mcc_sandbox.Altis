@@ -1,9 +1,9 @@
-//==================================================================MCC_fnc_setGear======================================================================================
+//==================================================================MCC_fnc_assignGear======================================================================================
 // Sets gear to role
-// Example: [roleNumber, gear/uniform/select],_id], "MCC_fnc_setGear", true, false] spawn BIS_fnc_MP;
+// Example: [roleNumber, gear/uniform/select],_id], "MCC_fnc_assignGear", true, false] spawn BIS_fnc_MP;
 //roleNumber: 0-officer, 1-AR, 2-Rifleman, 3-AT, 4-medic, 5-marksman, 6- specialist, 7- crewman, 8-pilot
-// Gear: 0- select, 1-gear, 2-uniform 
-//==============================================================================================================================================================================	
+// Gear: 0- select, 1-gear, 2-uniform
+//==============================================================================================================================================================================
 private ["_role","_muzzles","_wepItems","_currentWeapon"];
 _role = _this select 0;
 
@@ -14,10 +14,9 @@ removeGoggles player;
 removeAllAssignedItems player;
 
 // Remove NVGs
-if("NVGoggles" in (assignedItems player)) then
-{
-player unassignItem "NVGoggles";
-player removeItem "NVGoggles";
+if("NVGoggles" in (assignedItems player)) then {
+	player unassignItem "NVGoggles";
+	player removeItem "NVGoggles";
 };
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -26,8 +25,8 @@ player removeItem "NVGoggles";
 if ((CP_playerUniforms select 0) != "") then {
 	player additem (CP_playerUniforms select 0);
 	player assignItem (CP_playerUniforms select 0);
-	};
-	
+};
+
 //Add headgear
 if ((Headgear player) != "") then {removeHeadgear player};
 if ((CP_playerUniforms select 1) != "") then {player addHeadgear (CP_playerUniforms select 1)};
@@ -62,7 +61,7 @@ if (!isnil "_currentWeapon") then {[_currentWeapon] call MCC_fnc_addWeapon};
 
 //Items1
 _currentWeapon = missionNamespace getVariable format ["CP_player%1Items1_%2_%3",_role, getplayerUID player, side player];
-if (!isnil "_currentWeapon") then {[_currentWeapon] call MCC_fnc_addWeapon};
+if (!isnil "_currentWeapon") then {[_currentWeapon] call MCC_fnc_addItem};
 
 //Items2
 _currentWeapon = missionNamespace getVariable format ["CP_player%1Items2_%2_%3",_role, getplayerUID player, side player];
@@ -94,7 +93,7 @@ _wepItems = primaryWeaponItems player;
 
 //Add generic items
 _currentWeapon = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role, getplayerUID player, side player];
-if (!isnil "_currentWeapon") then 
+if (!isnil "_currentWeapon") then
 {
 	{
 		[_x] call MCC_fnc_addItem;

@@ -53,17 +53,17 @@ if (dialog && !MCC_ACConsoleUp) then {
 		ctrlSetText [MCC_CONSOLE_AC_BCKG, "Error connecting to AC-130, connection failed"];
 		};
 
-//Create the AC		
-if (dialog && MCC_ACConsoleUp) then 
-{				
+//Create the AC
+if (dialog && MCC_ACConsoleUp) then
+{
 		//Get rid of the connecting text
 		ctrlSetText [MCC_CONSOLE_AC_BCKG, ""];
 		_control = _mccdialog displayCtrl MCC_CONSOLE_ACPIP;
 		[_control] call MCC_fnc_pipOpen;
 		ctrlSetText [MCC_CONSOLE_ACPIP, "#(argb,512,512,1)r2t(rendertarget8,1.0);"];
-		
+
 		// Create fake AC
-		if (isNil "MCC_fakeAC") then 
+		if (isNil "MCC_fakeAC") then
 		{
 			MCC_fakeAC 		= "Camera" camCreate [10,10,10];
 			if (!isnil "MCC_fakeACCenter") then {deletevehicle MCC_fakeACCenter};
@@ -81,26 +81,26 @@ if (dialog && MCC_ACConsoleUp) then
 			MCC_fakeAC camsetFOV MCC_fakeACFOV;
 			MCC_fakeAC camCommit 0;
 		};
-		
+
 		ctrlSetText [MCC_CONSOLE_AC_ZOOM_TEXT, format ["ZOOM: %1x",(10-(10*MCC_fakeACFOV))]];
 		ctrlSetText [MCC_CONSOLE_AC_VISION_TEXT, MCC_ConsoleACvision];
 		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT, format ["25mm: %1",MCC_ConsoleACAmmo select 0]];
 		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT2, format ["40mm: %1",MCC_ConsoleACAmmo select 1]];
 		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT3, format ["105mm: %1",MCC_ConsoleACAmmo select 2]];
-		
+
 		switch (MCC_ConsoleACCameraMod) do {
 			// Normal
 			case 0: {
 				_effectParams = [3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]];
 				MCC_ConsoleACvision = "VIDEO";
 			};
-			
+
 			// Night vision
 			case 1: {
 				_effectParams = [1];
 				MCC_ConsoleACvision = "N/V";
 			};
-			
+
 			// Thermal imaging
 			case 2: {
 				_effectParams = [2];
@@ -108,42 +108,42 @@ if (dialog && MCC_ACConsoleUp) then
 			};
 		};
 		"rendertarget8" setPiPEffect _effectParams;
-		
+
 		switch (MCC_ConsoleACweaponSelected) do {
 			// 20mm
 			case 0: {
 				ctrlSetText [MCC_CONSOLE_AC_TARGET, MCC_path +"data\consuleTarget1.paa"];
 			};
-			
+
 			// 40mm
 			case 1: {
 				ctrlSetText [MCC_CONSOLE_AC_TARGET, MCC_path +"data\consuleTarget2.paa"];
 			};
-			
+
 			// 105mm
 			case 2: {
 				ctrlSetText [MCC_CONSOLE_AC_TARGET, MCC_path +"data\consuleTarget3.paa"];
 			};
 		};
-		
+
 		ctrlshow [MCC_CONSOLE_AC_TARGET,true];
 		ctrlShow [MCC_CONSOLE_COMPASS_N,true];
 		ctrlShow [MCC_CONSOLE_COMPASS_E,true];
 		ctrlShow [MCC_CONSOLE_COMPASS_S,true];
 		ctrlShow [MCC_CONSOLE_COMPASS_W,true];
 		ctrlShow [MCC_CONSOLE_AC_MAP,true];
-		
+
 		//Handle on screen data
-		[] spawn 
+		[] spawn
 		{
 			private ["_structured","_data","_mccdialog"];
 			disableSerialization;
-			
-			while {MCC_Console3Open && dialog} do 
+
+			while {MCC_Console3Open && dialog} do
 			{
 				_mccdialog = findDisplay mcc_playerConsole3_IDD;
 				_structured = composeText [""];
-				_data = 
+				_data =
 					[
 					format ["Time: %1:%2",[date select 3]call MCC_fnc_time2string,[date select 4]call MCC_fnc_time2string],
 					format ["Remain: %1",[MCC_ConsoleACTime -(time - (missionNameSpace getVariable ["MCC_ConsoleACTimeStart",0]))] call MCC_fnc_time],
@@ -152,55 +152,55 @@ if (dialog && MCC_ACConsoleUp) then
 				{_structured = composeText [_structured,_x,lineBreak]} forEach _data;
 				(_mccdialog displayctrl MCC_CONSOLE_AC_TIME_TEXT) ctrlSetStructuredText _structured;
 				ctrlSetText [MCC_CONSOLE_AC_DIR_TEXT, format ["Dir: %1",floor (getdir MCC_fakeAC)]];
-				
+
 				//Compass
-				for [{_i = 0;_j = 0},{_i < 360;_j < 4},{_i = _i + 90;_j = _j + 1}] do 
+				for [{_i = 0;_j = 0},{_i < 360;_j < 4},{_i = _i + 90;_j = _j + 1}] do
 				{
 					_x = (0.476 + sin(_i - (getdir MCC_fakeAC))*(SafeZoneW/8 - SafeZoneW/200));
 					_y = (0.42 - cos(_i - (getdir MCC_fakeAC))*(SafeZoneH/8 - SafeZoneH/200));
-					
+
 					(_mccdialog displayCtrl 9116+_j) ctrlSetPosition [_x,_y];
 					(_mccdialog displayCtrl 9116+_j) ctrlCommit 0;
 
 				};
-				
-				if !(MCC_ACConsoleUp) exitWith 
+
+				if !(MCC_ACConsoleUp) exitWith
 				{
-					MCC_ConsoleACMouseButtonDown = false; 
-					while {dialog} do {closeDialog 0};		
-					MCC_ConsoleACMouseButtonDown = false; 					
+					MCC_ConsoleACMouseButtonDown = false;
+					while {dialog} do {closeDialog 0};
+					MCC_ConsoleACMouseButtonDown = false;
 				};
-				
+
 				sleep 0.1;
 			};
-			
+
 			if !(isnil "MCC_fakeAC") then {MCC_fakeAC cameraeffect ["terminate","back"];camdestroy MCC_fakeAC;};
 			MCC_fakeAC = nil;
 		};
-	
+
 		MCC_ACcenter = getpos MCC_fakeACCenter;
-		
+
 		// Move camera in a circle
-		[getpos MCC_fakeACCenter, _alt, _rad] spawn 
+		[getpos MCC_fakeACCenter, _alt, _rad] spawn
 		{
 			private ["_pos", "_alt", "_rad", "_coords"];
 			disableSerialization;
-			
+
 			_pos = _this select 0;
 			_alt = _this select 1;
 			_rad = _this select 2;
-								
-			while {!isnil "MCC_fakeAC"} do 
+
+			while {!isnil "MCC_fakeAC"} do
 			{
 				MCC_ACAng = MCC_ACAng - 0.5;
 				_coords = [_pos, _rad, MCC_ACAng] call BIS_fnc_relPos;
 				_coords set [2, _alt];
-				
+
 				if (!isnil "MCC_fakeAC") then {MCC_fakeAC camPreparePos _coords};
 				if (!isnil "MCC_fakeACCenter") then {MCC_fakeACCenter setdir getdir (MCC_fakeAC)};
 				if (!isnil "MCC_fakeAC") then {MCC_fakeAC camCommitPrepared 0.3};
 				sleep 0.3;
-				
+
 				if (!isnil "MCC_fakeAC") then {MCC_fakeAC camPreparePos _coords};
 				if (!isnil "MCC_fakeAC") then {MCC_fakeAC camCommitPrepared 0};
 			};

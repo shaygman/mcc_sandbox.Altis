@@ -572,7 +572,7 @@ MCC_MWArtilleryI = ["I_Mortar_01_F"];
 MCC_MWAir = ["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_UAV_02_F","O_UAV_02_CAS_F","B_Heli_Attack_01_F","I_Plane_Fighter_03_CAS_F","I_Plane_Fighter_03_AA_F"];
 MCC_MWcache = ["Box_East_AmmoVeh_F"];
 MCC_MWradar = ["Land_Radar_Small_F"];
-MCC_MWIntelObjects = ["Land_File2_F","Land_FilePhotos_F","Land_Laptop_unfolded_F","Land_SatellitePhone_F","Land_Suitcase_F"]; //s2 setPos (s3 modelToWorld [0,0,0.41]);
+MCC_MWIntelObjects = ["Land_File2_F","Land_FilePhotos_F","Land_Laptop_unfolded_F","Land_SatellitePhone_F","Land_Suitcase_F"];
 MCC_MWIED = ["IEDLandSmall_Remote_Ammo","IEDLandBig_Remote_Ammo","IEDUrbanSmall_Remote_Ammo","IEDUrbanBig_Remote_Ammo"];
 
 //StratigicMap
@@ -1017,7 +1017,7 @@ CP_dialogInitDone = true; 				//define if dialog is been initialize
 //---------------------------------------------
 CP_respawnPointsIndex 	= 0;
 CP_squadListIndex		= 0;
-CP_classesIndex 		= 0;
+CP_classesIndex 		= 2;
 CP_NVIndex 				= 0;
 CP_headgearIndex 		= 0;
 CP_gogglesIndex 		= 0;

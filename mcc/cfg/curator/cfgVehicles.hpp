@@ -16,3 +16,4 @@
 #include "MCC_Module_setResources.hpp"
 #include "MCC_Module_underCover.hpp"
 #include "MCC_ModuleCapturePoint.hpp"
+#include "MCC_Module_ambientCiviliansCuratorDenied.hpp"

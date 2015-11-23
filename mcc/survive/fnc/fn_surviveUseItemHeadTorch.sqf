@@ -25,7 +25,12 @@ switch _mod do {
     };
 
     case 2: {
-    	player removeMagazine "MCC_battery";
+      _itemClass = "MCC_battery";
+    	switch (true) do {
+        case (isClass (configFile >> "CfgMagazines" >> _itemClass)) : {player removeMagazine _itemClass;};
+        case (isClass (configFile >> "CfgWeapons" >> _itemClass)) : {player removeItem _itemClass;};
+        case (isClass (configFile >> "CfgGlasses" >> _itemClass)) : {player removeItem _itemClass;};
+      };
     	player setVariable ['MCC_headTorchBattery',100];
     };
 };

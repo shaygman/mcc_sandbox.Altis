@@ -28,129 +28,93 @@ if (isnil "CP_gearCam") then {
 	CP_disableEsc = CP_WEAPONSPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 };
 
+_fnc_getDisplay = {
+	private ["_var","_cfgName","_return"];
+	_cfgName = _this select 0;
+	_var = _this select 1;
+	_return = "";
 
+	if (isClass(configFile >> "CfgWeapons">> _cfgName)) then {
+		_return = getText(configFile >> "CfgWeapons">> _cfgName >> _var);
+	} else {
+		_return = getText(configFile >> "CfgMagazines">> _cfgName >> _var);
+	};
+
+	_return
+};
+
+_fnc_setComboBox = {
+	private ["_array","_comboBox","_indexCel"];
+	_comboBox = _this select 0;
+	_array = _this select 1;
+	_indexCel = _this select 2;
+
+	lbClear _comboBox;
+	{
+		_class			= configName(configFile >> "CfgWeapons">> _x);
+		_displayname 	= [_x,"displayname"] call _fnc_getDisplay;
+		_pic 			= [_x,"picture"] call _fnc_getDisplay;
+		_index = _comboBox lbAdd _displayname;
+		_comboBox lbSetPicture [_index, _pic];
+		_comboBox lbSetData [_index, _class];
+	} foreach _array;
+	_comboBox lbSetCurSel _indexCel;
+};
 
 //Load primary weapons
 _array = [];
-for [{_i = 0},{_i < count CP_currentWeaponArray},{_i = _i+1}] do
-	{
-		if (CP_currentLevel >= (CP_currentWeaponArray select _i)select 0) then
-		{
-			_array set [count _array, (CP_currentWeaponArray select _i) select 1];
-		};
+for [{_i = 0},{_i < count CP_currentWeaponArray},{_i = _i+1}] do {
+	if (CP_currentLevel >= (CP_currentWeaponArray select _i)select 0) then {
+		_array set [count _array, (CP_currentWeaponArray select _i) select 1];
 	};
-_comboBox = CP_weaponsPanelPrimary;
-lbClear _comboBox;
-	{
-		_class			= configName(configFile >> "CfgWeapons">> _x);
-		_displayname 	= getText(configFile >> "CfgWeapons">> _x >> "displayname");
-		_pic 			= getText(configFile >> "CfgWeapons">> _x >> "picture");
-		_index = _comboBox lbAdd _displayname;
-		_comboBox lbSetPicture [_index, _pic];
-		_comboBox lbSetData [_index, _class];
-	} foreach _array;
-_comboBox lbSetCurSel CP_currentWeaponIndex;
+};
+_null = [CP_weaponsPanelPrimary,_array,CP_currentWeaponIndex] call _fnc_setComboBox;
+
 
 //Load Secondary weapons
 _array = [];
-for [{_i = 0},{_i < count CP_currentWeaponSecArray},{_i = _i+1}] do
-	{
-		if (CP_currentLevel >= (CP_currentWeaponSecArray select _i)select 0) then {
-			_array set [count _array, (CP_currentWeaponSecArray select _i) select 1];
-		};
+for [{_i = 0},{_i < count CP_currentWeaponSecArray},{_i = _i+1}] do {
+	if (CP_currentLevel >= (CP_currentWeaponSecArray select _i)select 0) then {
+		_array set [count _array, (CP_currentWeaponSecArray select _i) select 1];
 	};
-_comboBox = CP_weaponsPanelSecondary;
-lbClear _comboBox;
-	{
-		_class			= configName(configFile >> "CfgWeapons">> _x);
-		_displayname 	= getText(configFile >> "CfgWeapons">> _x >> "displayname");
-		_pic 			= getText(configFile >> "CfgWeapons">> _x >> "picture");
-		_index = _comboBox lbAdd _displayname;
-		_comboBox lbSetPicture [_index, _pic];
-		_comboBox lbSetData [_index, _class];
-	} foreach _array;
-_comboBox lbSetCurSel CP_currentSecWeaponIndex;
+};
+_null = [CP_weaponsPanelSecondary,_array,CP_currentSecWeaponIndex] call _fnc_setComboBox;
 
 //Load Handguns
 _array = [];
-for [{_i = 0},{_i < count CP_handguns},{_i = _i+1}] do
-	{
-		if (CP_currentLevel >= (CP_handguns select _i)select 0) then
-		{
-			_array set [count _array, (CP_handguns select _i) select 1];
-		};
+for [{_i = 0},{_i < count CP_handguns},{_i = _i+1}] do {
+	if (CP_currentLevel >= (CP_handguns select _i)select 0) then {
+		_array set [count _array, (CP_handguns select _i) select 1];
 	};
-_comboBox = CP_weaponsPanelHandgun;
-lbClear _comboBox;
-	{
-		_class			= configName(configFile >> "CfgWeapons">> _x);
-		_displayname 	= getText(configFile >> "CfgWeapons">> _x >> "displayname");
-		_pic 			= getText(configFile >> "CfgWeapons">> _x >> "picture");
-		_index = _comboBox lbAdd _displayname;
-		_comboBox lbSetPicture [_index, _pic];
-		_comboBox lbSetData [_index, _class];
-	} foreach _array;
-_comboBox lbSetCurSel CP_currentHandgunsIndex;
+};
+_null = [CP_weaponsPanelHandgun,_array,CP_currentHandgunsIndex] call _fnc_setComboBox;
 
 //Load Items1
 _array = [];
-for [{_i = 0},{_i < count CP_currentItmes1},{_i = _i+1}] do
-	{
-		if (CP_currentLevel >= (CP_currentItmes1 select _i)select 0) then {
-			_array set [count _array, (CP_currentItmes1 select _i) select 1];
-		};
+for [{_i = 0},{_i < count CP_currentItmes1},{_i = _i+1}] do {
+	if (CP_currentLevel >= (CP_currentItmes1 select _i)select 0) then {
+		_array set [count _array, (CP_currentItmes1 select _i) select 1];
 	};
-_comboBox = CP_weaponsPanelItem1;
-lbClear _comboBox;
-	{
-		_class			= configName(configFile >> "CfgWeapons">> _x);
-		_displayname 	= getText(configFile >> "CfgWeapons">> _x >> "displayname");
-		_pic 			= getText(configFile >> "CfgWeapons">> _x >> "picture");
-		_index = _comboBox lbAdd _displayname;
-		_comboBox lbSetPicture [_index, _pic];
-		_comboBox lbSetData [_index, _class];
-	} foreach _array;
-_comboBox lbSetCurSel CP_currentItems1Index;
+};
+_null = [CP_weaponsPanelItem1,_array,CP_currentItems1Index] call _fnc_setComboBox;
 
 //Load Items2
 _array = [];
-for [{_i = 0},{_i < count CP_currentItmes2},{_i = _i+1}] do
-	{
-		if (CP_currentLevel >= (CP_currentItmes2 select _i)select 0) then {
-			_array set [count _array, (CP_currentItmes2 select _i) select 1];
-		};
+for [{_i = 0},{_i < count CP_currentItmes2},{_i = _i+1}] do {
+	if (CP_currentLevel >= (CP_currentItmes2 select _i)select 0) then {
+		_array set [count _array, (CP_currentItmes2 select _i) select 1];
 	};
-_comboBox = CP_weaponsPanelItem2;
-lbClear _comboBox;
-	{
-		_class			= configName(configFile >> "CfgMagazines">> _x);
-		_displayname 	= getText(configFile >> "CfgMagazines">> _x >> "displayname");
-		_pic 			= getText(configFile >> "CfgMagazines">> _x >> "picture");
-		_index = _comboBox lbAdd _displayname;
-		_comboBox lbSetPicture [_index, _pic];
-		_comboBox lbSetData [_index, _class];
-	} foreach _array;
-_comboBox lbSetCurSel CP_currentItems2Index;
+};
+_null = [CP_weaponsPanelItem2,_array,CP_currentItems2Index] call _fnc_setComboBox;
 
 //Load Items3
 _array = [];
-for [{_i = 0},{_i < count CP_currentItmes3},{_i = _i+1}] do
-	{
-		if (CP_currentLevel >= (CP_currentItmes3 select _i)select 0) then {
-			_array set [count _array, (CP_currentItmes3 select _i) select 1];
-		};
+for [{_i = 0},{_i < count CP_currentItmes3},{_i = _i+1}] do {
+	if (CP_currentLevel >= (CP_currentItmes3 select _i)select 0) then {
+		_array set [count _array, (CP_currentItmes3 select _i) select 1];
 	};
-_comboBox = CP_weaponsPanelItem3;
-lbClear _comboBox;
-	{
-		_class			= configName(configFile >> "CfgMagazines">> _x);
-		_displayname 	= getText(configFile >> "CfgMagazines">> _x >> "displayname");
-		_pic 			= getText(configFile >> "CfgMagazines">> _x >> "picture");
-		_index = _comboBox lbAdd _displayname;
-		_comboBox lbSetPicture [_index, _pic];
-		_comboBox lbSetData [_index, _class];
-	} foreach _array;
-_comboBox lbSetCurSel CP_currentItems3Index;
+};
+_null = [CP_weaponsPanelItem3,_array,CP_currentItems3Index] call _fnc_setComboBox;
 
 CP_InfoText ctrlSetPosition [0.1 * safezoneW + safezoneX, 0.225107 * safezoneH + safezoneY, 0.161476 * safezoneW, 0.544025 * safezoneH];
 CP_InfoText ctrlCommit 1;

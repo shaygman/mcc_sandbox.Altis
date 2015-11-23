@@ -12,17 +12,27 @@ _returnItem = param [1,"",[""]];
 _removeObject = param [2,"",[""]];
 _text = param [3,"",[""]];
 
-_displayName = getText (configfile >> "CfgMagazines" >> _itemClass >> "displayName");
-
 player playMoveNow "AinvPknlMstpSlayWrflDnon_medic";
-player removeMagazine _itemClass;
+switch (true) do {
+  case (isClass (configFile >> "CfgMagazines" >> _itemClass)) : {player removeMagazine _itemClass;_displayName = getText (configfile >> "CfgMagazines" >> _itemClass >> "displayName");};
+  case (isClass (configFile >> "CfgWeapons" >> _itemClass)) : {player removeItem _itemClass;_displayName = getText (configfile >> "CfgWeapons" >> _itemClass >> "displayName");};
+  case (isClass (configFile >> "CfgGlasses" >> _itemClass)) : {player removeItem _itemClass;_displayName = getText (configfile >> "CfgGlasses" >> _itemClass >> "displayName");};
+};
 
 if (_returnItem != "") then {
-  player addMagazine _returnItem;
+	switch (true) do {
+    case (isClass (configFile >> "CfgMagazines" >> _returnItem)) : {player addMagazine _returnItem;};
+    case (isClass (configFile >> "CfgWeapons" >> _returnItem)) : {player additem _returnItem;};
+    case (isClass (configFile >> "CfgGlasses" >> _returnItem)) : {player additem _returnItem;};
+  };
 };
 
 TitleText [format ["%1 %2...",_text, _displayName], "PLAIN DOWN",0.5];
 
 if (_removeObject != "") then {
-  player removeMagazine _removeObject;
+	switch (true) do {
+        case (isClass (configFile >> "CfgMagazines" >> _removeObject)) : {player removeMagazine _removeObject;};
+        case (isClass (configFile >> "CfgWeapons" >> _removeObject)) : {player removeItem _removeObject;};
+        case (isClass (configFile >> "CfgGlasses" >> _removeObject)) : {player removeItem _removeObject;};
+      };
 };

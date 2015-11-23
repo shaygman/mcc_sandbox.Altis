@@ -11,6 +11,9 @@ private ["_pos","_module","_object","_house","_resualt"];
 _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 if (isNull _module) exitWith {};
 
+//Not curator exit
+if (!(local _module) || isnull curatorcamera) exitWith {};
+
 _pos = getpos _module;
 _object = missionNamespace getVariable ["MCC_curatorMouseOver",objNull];
 

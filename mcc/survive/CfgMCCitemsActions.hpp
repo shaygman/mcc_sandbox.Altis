@@ -234,7 +234,7 @@ class CfgMCCitemsActions
 			icon = "";
 			#endif
 
-			condition = "('MCC_canOpener' in (magazines player) || 'MCC_screwdriver' in (magazines player))";
+			condition = "('MCC_canOpener' in (items player) || 'MCC_screwdriver' in (items player))";
 			function = "[_itemClass,'MCC_bakedBeans_open'] spawn MCC_fnc_surviveOpenCan;";
 			displayName = "Open Can";
 		};
@@ -250,7 +250,7 @@ class CfgMCCitemsActions
 			icon = "";
 			#endif
 
-			condition = "('MCC_canOpener' in (magazines player) || 'MCC_screwdriver' in (magazines player))";
+			condition = "('MCC_canOpener' in (items player) || 'MCC_screwdriver' in (items player))";
 			function = "[_itemClass,'MCC_bacon_open'] spawn MCC_fnc_surviveOpenCan;";
 			displayName = "Open Can";
 		};
@@ -311,7 +311,7 @@ class CfgMCCitemsActions
 			icon = "";
 			#endif
 
-			condition = "'MCC_waterpure' in (magazines player)";
+			condition = "'MCC_waterpure' in (items player)";
 			function = "[_itemClass,'MCC_bottle_water','MCC_waterpure','Purificatting Water'] spawn MCC_fnc_surviveWaterTreatment;";
 			displayName = "Purificat Water";
 		};
@@ -420,7 +420,7 @@ class CfgMCCitemsActions
 			icon = "";
 			#endif
 
-			condition = "'MCC_waterpure' in (magazines player)";
+			condition = "'MCC_waterpure' in (items player)";
 			function = "[_itemClass,'MCC_canteenWater','MCC_waterpure','Purificatting Water'] spawn MCC_fnc_surviveWaterTreatment;";
 			displayName = "Purificat Water";
 		};
@@ -475,7 +475,7 @@ class CfgMCCitemsActions
 			icon = "";
 			#endif
 
-			condition = "'MCC_battery' in magazines player";
+			condition = "'MCC_battery' in items player";
 			function = "[_itemClass,2] spawn MCC_fnc_surviveUseItemHeadTorch;";
 			displayName = "Load Battery";
 		};
@@ -491,7 +491,7 @@ class CfgMCCitemsActions
 			icon = "";
 			#endif
 
-			condition = "'MCC_wood' in magazines player";
+			condition = "'MCC_wood' in items player";
 			function = "[_itemClass,'Land_Campfire_F','MCC_wood',true] spawn MCC_fnc_surviveBuild;";
 			displayName = "Create Camp Fire";
 		};

@@ -108,13 +108,13 @@ switch (_type) do
 
 				_ppgrain ppEffectEnable false;
 				MCC_hijack_effect = ppEffectCreate ["radialBlur", 100];
-				MCC_hijack_effect ppEffectAdjust [1, 1, 0.4, 0.4];
+				MCC_hijack_effect ppEffectAdjust [0.05, 0.05, 0.5, 0.35];
 				MCC_hijack_effect ppEffectCommit 0;
 				MCC_hijack_effect ppEffectEnable true;
 
 				MCC_backToplayerIndex = _targetUnit addaction ["<t color=""#CC0000"">Back To Player</t>", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "","vehicle _target == vehicle _this"];
 
-				_string = "(vehicle _target == vehicle _this) && (getplayerUID player in (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || 'all' in  (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || serverCommandAvailable '#logout' || isServer || (player getvariable ['MCC_allowed',false]))";
+				_string = "(vehicle _target == vehicle _this) && (getplayerUID player in (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || 'all' in  (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || (serverCommandAvailable '#logout' && missionNamespace getvariable ['MCC_allowAdmin',true]) || (isServer && missionNamespace getvariable ['MCC_allowAdmin',true]) || (player getvariable ['MCC_allowed',false]))";
 				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>",MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "",_string];
 				player setVariable ["MCC_allowed",true,true];
 				_ok = _targetUnit addEventHandler ["Killed", format ["[_this select 0] execVM '%1mcc\general_scripts\unitManage\backToPlayer.sqf'",MCC_path]];

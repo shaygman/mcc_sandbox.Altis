@@ -14,6 +14,7 @@ if (!dialog) exitWith {
 			  ["enemy","Spot Enemy","\a3\Ui_F_Curator\Data\CfgMarkers\kia_ca.paa"],
 			  ["support","Call Support",format["%1data\ammo_icon.paa",MCC_path]],
 			  ["build","Construct",format["%1data\IconRepair.paa",MCC_path]],
+			  ["gear","Attach",format ["%1data\IconAmmo.paa",MCC_path]],
 			  ["close","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"]];
 
 	//If MCC medic system off

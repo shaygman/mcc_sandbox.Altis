@@ -172,8 +172,13 @@ class MCC_Module_createIED : Module_F
 				};
 				class miniGame
 				{
-					name = "Mini-Game";
+					name = "Mini-Game(Proximity)";
 					value = 3;
+				};
+				class miniGameManual
+				{
+					name = "Mini-Game(Manual)";
+					value = 4;
 				};
 			};
 		};

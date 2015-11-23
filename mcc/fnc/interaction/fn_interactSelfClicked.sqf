@@ -35,34 +35,24 @@ switch (_ctrlIDC) do
 };
 
 //Close dialog
-if !(_ctrlData in ["physical","medic","enemy","inf","mech_inf","motor_inf","armor","air","plane","naval","art","support","build","pulse"]) then {closeDialog 0};
+if !(_ctrlData in ["physical","medic","enemy","inf","mech_inf","motor_inf","armor","air","plane","naval","art","support","build","pulse","gear"]) then {closeDialog 0};
 _pos = screenToWorld [0.5,0.5];
 
-switch (true) do
-{
-	case (_ctrlData == "medic"):
-	{
+switch (true) do {
+	case (_ctrlData == "medic"): {
 		private ["_bandage","_medkit","_maxBleeding","_complex","_isMedic","_itemsPlayer","_itemsSuspect","_bandagePic","_medkitPic"];
 		_child =  MCC_interactionMenu1;
 		_complex = missionNamespace getVariable ["MCC_medicComplex",false];
-		if (_complex) then
-		{
+		if (_complex) then {
 			_bandage = "MCC_bandage";
-			_bandagePic = getText (configFile >> "CfgMagazines" >> _bandage >> "picture");
-
 			_medkit = "MCC_firstAidKit";
-			_medkitPic = getText (configFile >> "CfgMagazines" >> _medkit >> "picture");
-		}
-		else
-		{
+		} else {
 			_bandage = "FirstAidKit";
-			_bandagePic = getText (configFile >> "CfgWeapons" >> _bandage >> "picture");
-
 			_medkit = "Medikit";
-			_medkitPic = getText (configFile >> "CfgWeapons" >> _medkit >> "picture");
 		};
-
-		_itemsPlayer = if (_complex) then {magazines player} else {items player};
+		_bandagePic = getText (configFile >> "cfgWeapons" >> _bandage >> "picture");
+		_medkitPic = getText (configFile >> "cfgWeapons" >> _medkit >> "picture");
+		_itemsPlayer = items player;
 
 		_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
 		_isMedic = if (((getNumber(configFile >> "CfgVehicles" >> typeOf vehicle player >> "attendant")) == 1) || ((player getvariable ["CP_role",""]) == "Corpsman")) then {true} else {false};
@@ -80,13 +70,11 @@ switch (true) do
 		_array = _array - [-1];
 	};
 
-	case (_ctrlData in ["bandage","heal"]):
-	{
+	case (_ctrlData in ["bandage","heal"]):	{
 		[_ctrlData, _suspect] call MCC_fnc_medicUseItem;
 	};
 
-	case (_ctrlData == "pulse"):
-	{
+	case (_ctrlData == "pulse"): {
 		private ["_string","_maxBleeding","_remaineBlood","_subArray","_fatigueEffect"];
 		_child =  MCC_interactionMenu2;
 		_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
@@ -96,21 +84,19 @@ switch (true) do
 		MCC_interactionMenu2 ctrlShow false;
 
 		//Blood loss
-		switch (true) do
-					{
-						case (!alive _suspect) : {_string = "No pulse, he is Dead";  _subArray = [1,1,1,1];};
-						case (_remaineBlood == _maxBleeding) : {_string = format ["%1 - No blood loss",(floor (random 5))+80+_fatigueEffect]; _subArray = [1,1,1,1];};
-						case (_remaineBlood/_maxBleeding < 0.4) : {_string = format ["%1 - Severe blood Loss",(floor (random 5))+160+_fatigueEffect]; _subArray = [1,0,0,1];};
-						case (_remaineBlood/_maxBleeding < 0.7) : {_string = format ["%1 - Mild blood loss",(floor (random 5))+120+_fatigueEffect]; _subArray = [1,1,0,1];};
-						case (_remaineBlood/_maxBleeding >= 0.7) : {_string = format ["%1 - Minor blood loss",(floor (random 5))+95+_fatigueEffect]; _subArray = [0,1,0,1];};
-					};
+		switch (true) do {
+			case (!alive _suspect) : {_string = "No pulse, he is Dead";  _subArray = [1,1,1,1];};
+			case (_remaineBlood == _maxBleeding) : {_string = format ["%1 - No blood loss",(floor (random 5))+80+_fatigueEffect]; _subArray = [1,1,1,1];};
+			case (_remaineBlood/_maxBleeding < 0.4) : {_string = format ["%1 - Severe blood Loss",(floor (random 5))+160+_fatigueEffect]; _subArray = [1,0,0,1];};
+			case (_remaineBlood/_maxBleeding < 0.7) : {_string = format ["%1 - Mild blood loss",(floor (random 5))+120+_fatigueEffect]; _subArray = [1,1,0,1];};
+			case (_remaineBlood/_maxBleeding >= 0.7) : {_string = format ["%1 - Minor blood loss",(floor (random 5))+95+_fatigueEffect]; _subArray = [0,1,0,1];};
+		};
 		_array = [
 				   ["pulseReport",_string,"",_subArray]
 				 ];
 	};
 
-	case (_ctrlData == "physical"):
-	{
+	case (_ctrlData == "physical"):	{
 		private ["_string","_damage","_hitPoints","_subArray","_partName","_bleeding"];
 		_child =  MCC_interactionMenu2;
 		_hitPoints = ["HitHead","HitBody","hitLegs","hitHands"];
@@ -161,14 +147,12 @@ switch (true) do
 		_array pushBack _subArray;
 	};
 
-	case (_ctrlData in ["drag","carry"] ):
-	{
+	case (_ctrlData in ["drag","carry"] ): {
 
 		[player,_suspect, _ctrlData == "carry"] call MCC_fnc_medicDragCarry;
 	};
 
-	case (_ctrlData == "enemy"):
-	{
+	case (_ctrlData == "enemy"): {
 		//enemy
 		_child =  MCC_interactionMenu1;
 		_path = if (playerside == east) then {"b_"} else {"o_"};
@@ -188,8 +172,7 @@ switch (true) do
 	};
 
 	//Menu - enemy - markers - Size
-	case (_ctrlData in ["inf","mech_inf","motor_inf","armor","air","plane","naval","art"]):
-	{
+	case (_ctrlData in ["inf","mech_inf","motor_inf","armor","air","plane","naval","art"]):	{
 		_child =  MCC_interactionMenu2;
 		_path ="\A3\ui_f\data\map\markers\nato\group";
 		_array = [
@@ -202,57 +185,45 @@ switch (true) do
 	};
 
 	//Menu - enemy - markers - Size (no size)
-	case (_ctrlData in ["installation","unknown","MinefieldAP"]):
-	{
+	case (_ctrlData in ["installation","unknown","MinefieldAP"]): {
 		_child =  MCC_interactionMenu2;
 		_array = [];
 
 		//Create marker
 		_markerName = (getplayerUID player) + (uinamespace getVariable "MCC_interactionMenu1Data") + str floor time;
 		_text = uinamespace getVariable "MCC_interactionMenu1Data";
-		if (_ctrlData == "MinefieldAP") then
-		{
+		if (_ctrlData == "MinefieldAP") then {
 			_path = "";
 			_text = "";
-		}
-		else
-		{
+		} else {
 			if (playerside == east) then {_path = "b_"} else {_path = "o_"};
 		};
 
-		if (_pos distance player < 1500) then
-		{
+		if (_pos distance player < 1500) then {
 			player globalRadio "SentEnemyDetectedClose";
 			[[_markerName, _path, _pos, uinamespace getVariable "MCC_interactionMenu1Data",_text, time, "default"] ,"MCC_fnc_PDAcreatemarker", playerside,false] call BIS_fnc_MP;
-		}
-		else
-		{
+		} else {
 			player globalRadio "SentNoTarget";
 		};
 	};
 
 	//Menu - enemy - markers - Size set
-	case (_ctrlData in ["Fire Team","Squad","Section","Platoon","Company"]):
-	{
+	case (_ctrlData in ["Fire Team","Squad","Section","Platoon","Company"]): {
 		_array = [];
 
-		if (_pos distance player < 1500) then
-		{
+		if (_pos distance player < 1500) then {
 			//Create marker
 			_markerName = (getplayerUID player) + (uinamespace getVariable "MCC_interactionMenu1Data") + str floor time;
 			_path = if (playerside == east) then {"b_"} else {"o_"};
 
 			player globalRadio "CuratorWaypointPlacedAttack";
 			[[_markerName, _path, _pos, uinamespace getVariable "MCC_interactionMenu1Data", uinamespace getVariable "MCC_interactionMenu2Data", time, "default"] ,"MCC_fnc_PDAcreatemarker", playerside,false] call BIS_fnc_MP;
-		}
-		else
-		{
+		} else {
 			player globalRadio "SentNoTarget";
 		};
 	};
 
-	case (_ctrlData == "support"):
-	{
+	case (_ctrlData == "support"): {
 		MCC_interactionMenu1 ctrlShow false;
 		MCC_interactionMenu2 ctrlShow false;
 
@@ -271,15 +242,13 @@ switch (true) do
 	};
 
 	//Menu - support selected
-	case (_ctrlData in ["mil_destroy","mil_pickup","mil_objective","mil_marker","mil_warning"]):
-	{
+	case (_ctrlData in ["mil_destroy","mil_pickup","mil_objective","mil_marker","mil_warning"]): {
 		_array = [];
 		_text = ["Need CAS","Need Transport","Need Area attack","Need Support","Need Medic","Need Ammo","Need Repairs","Need Fuel"] select _index;
 
 		if (_ctrlData in ["mil_warning","mil_pickup"]) then {_pos = getpos player};
 
-		if (_pos distance player < 3000) then
-		{
+		if (_pos distance player < 3000) then {
 			//Create marker
 			_markerName = (getplayerUID player) + (uinamespace getVariable "MCC_interactionMenu1Data") + str floor time;
 			_path = "";
@@ -334,15 +303,12 @@ switch (true) do
 			[[player,_radioGlobal] ,"MCC_fnc_radioSupport", playerside,false] call BIS_fnc_MP;
 
 			[[_markerName, _path, _pos, uinamespace getVariable "MCC_interactionMenu1Data", _text, time, "default"] ,"MCC_fnc_PDAcreatemarker", playerside,false] call BIS_fnc_MP;
-		}
-		else
-		{
+		} else {
 			player globalRadio "SentCommandFailed";
 		};
 	};
 
-	case (_ctrlData == "build"):
-	{
+	case (_ctrlData == "build"): {
 		MCC_interactionMenu1 ctrlShow false;
 		MCC_interactionMenu2 ctrlShow false;
 
@@ -359,8 +325,7 @@ switch (true) do
 				 ];
 	};
 
-	case (_ctrlData in ["fob","bunker","hmg","gmg","at","aa","mortar"]):
-	{
+	case (_ctrlData in ["fob","bunker","hmg","gmg","at","aa","mortar"]): {
 		private ["_conType","_available","_errorMessegeIndex","_errorMessege","_check","_respawPositions"];
 		_conType = uinamespace getVariable "MCC_interactionMenu1Data";
 
@@ -380,14 +345,11 @@ switch (true) do
 
 		//Check Near FOB
 		_respawPositions = [player] call BIS_fnc_getRespawnPositions;
-		if (_conType == "fob") then
-		{
+		if (_conType == "fob") then {
 			_check = {_pos distance _x < REQUIRE_FOB_FOB_MIN_DISTANCE} count _respawPositions;
 			_check = _check + ({((_x getVariable ["MCC_conType",""])=="fob") && (playerside == _x getVariable ["MCC_side",sidelogic])} count (_pos nearObjects [ANCHOR_ITEM, REQUIRE_FOB_FOB_MIN_DISTANCE]));
 			if (_check > 0) then {_available = false; _errorMessegeIndex = 2};
-		}
-		else
-		{
+		} else {
 			_check = {_pos distance _x < REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE} count _respawPositions;
 			if (_check == 0) then {_available = false; _errorMessegeIndex = 3};
 		};
@@ -400,26 +362,61 @@ switch (true) do
 
 
 		//Create structure
-		if (_available) then
-		{
+		if (_available) then {
 			_path = "";
 			[[_conType, _pos, playerside, str (getdir player)] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
 
 			//broadcast
 			player globalRadio "SentAssemble";
 			[[player,(if (side player == west) then {format["mp_groundsupport_01_slingloadrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_slingloadrequested_IHQ_%1",floor random 3]})] ,"MCC_fnc_radioSupport", playerside,false] call BIS_fnc_MP;
-		}
-		else
-		{
+		} else {
 			systemchat (_errorMessege select _errorMessegeIndex);
 			player globalRadio "SentCommandFailed";
-		}
+		};
+	};
+
+	//Menu - gear
+	case (_ctrlData in ["gear"]): {
+		MCC_interactionMenu1 ctrlShow false;
+		MCC_interactionMenu2 ctrlShow false;
+
+		_child =  MCC_interactionMenu1;
+		if (isNull(player getVariable ["MCC_playerAttachedGearItem",objNull])) then {
+			_array = [];
+			{
+				if (_x in magazines player) then {
+					_array pushBack [_x, format ["%1",getText(configFile >> "cfgMagazines" >> _x >> "displayname")], getText(configFile >> "cfgMagazines" >> _x >> "picture")];
+				};
+			} forEach ["Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue","B_IR_Grenade","O_IR_Grenade","I_IR_Grenade"];
+		} else {
+			_array = [["detach","Detach Item",format ["%1data\IconAmmo.paa",MCC_path]]];
+		};
+	};
+
+	case (_ctrlData in ["Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue","B_IR_Grenade","O_IR_Grenade","I_IR_Grenade"]): {
+		MCC_interactionMenu1 ctrlShow false;
+		MCC_interactionMenu2 ctrlShow false;
+
+		player removeMagazine _ctrlData;
+		_ammo = getText(configFile >> "cfgMagazines" >> _ctrlData >> "ammo");
+		_item = _ammo createVehicle [0,0,0];
+    	_item attachTo [player, [-0.05, 0, .09], "rightshoulder"];
+    	player setVariable ["MCC_playerAttachedGearItem",_item];
+    	player setVariable ["MCC_playerAttachedGearItemClass",_ctrlData];
+	};
+
+	case (_ctrlData == "detach"): {
+		_item = (player getVariable ["MCC_playerAttachedGearItem",objNull]);
+		detach _item;
+		_item setPos [-999,-999,-999];
+		sleep 1;
+		deleteVehicle _item;
+		player addMagazine (player getVariable ["MCC_playerAttachedGearItemClass",""]);
 	};
 };
 
 //Reveal
-if (!isnil "_child") then
-{
+if (!isnil "_child") then {
 	_child ctrlShow true;
 	_child ctrlSetPosition [_posX,_posY,0.12 * safezoneW, ((count _array)) * (0.025* safezoneH)];
 	_child ctrlCommit 0;

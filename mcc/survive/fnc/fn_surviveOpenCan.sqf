@@ -8,13 +8,19 @@ private ["_itemClass","_displayName","_returnItem"];
 _itemClass = param [0,"",[""]];
 _returnItem = param [1,"",[""]];
 
-_displayName = getText (configfile >> "CfgMagazines" >> _itemClass >> "displayName");
-
 player playMoveNow "AinvPknlMstpSlayWrflDnon_medic";
-player removeMagazine _itemClass;
+switch (true) do {
+	case (isClass (configFile >> "CfgMagazines" >> _itemClass)) : {player removeMagazine _itemClass;_displayName = getText (configfile >> "CfgMagazines" >> _itemClass >> "displayName");};
+	case (isClass (configFile >> "CfgWeapons" >> _itemClass)) : {player removeItem _itemClass;_displayName = getText (configfile >> "CfgWeapons" >> _itemClass >> "displayName");};
+	case (isClass (configFile >> "CfgGlasses" >> _itemClass)) : {player removeItem _itemClass;_displayName = getText (configfile >> "CfgGlasses" >> _itemClass >> "displayName");};
+};
 
 TitleText [format ["Opening %1...",_displayName], "PLAIN DOWN",0.5];
 
 if (_returnItem != "") then {
-  player addMagazine _returnItem;
+	switch (true) do {
+		case (isClass (configFile >> "CfgMagazines" >> _returnItem)) : {player addMagazine _returnItem;};
+		case (isClass (configFile >> "CfgWeapons" >> _returnItem)) : {player additem _returnItem;};
+		case (isClass (configFile >> "CfgGlasses" >> _returnItem)) : {player additem _returnItem;};
+	};
 };

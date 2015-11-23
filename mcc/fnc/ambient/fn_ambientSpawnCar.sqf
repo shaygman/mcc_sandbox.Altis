@@ -43,6 +43,9 @@ if (_counter > _carInArea) then {_counter = _carInArea};
 //Don't spawn more AI then roads
 _counter = _counter min (count _nearRoads);
 
+//Denied zones
+_deniedZones = (player nearEntities ["MCC_Module_ambientCiviliansDenied", 2000]) + (player nearEntities ["MCC_Module_ambientCiviliansCuratorDenied", 2000]);
+
 //Spawn moving vehicels
 for "_i" from 1 to _counter do {
 	_road = _nearRoads call bis_fnc_selectRandom;
@@ -50,42 +53,51 @@ for "_i" from 1 to _counter do {
 	_vehiclesArray resize 6;
 	_carClass = (_vehiclesArray call bis_fnc_selectRandom) select 0;
 
-	_carGroup = creategroup _side;
-	_car = ([_pos,getdir _road ,_carClass, _carGroup] call BIS_fnc_spawnVehicle) select 0;
+	//Are we inside denied zone
+	private ["_spawn"];
+	_spawn = true;
+	{
+		if (_x distance _road < (_x getVariable ["radius",100])) exitWith {_spawn = false};
+	} forEach _deniedZones;
+
+	if (_spawn) then {
+		_carGroup = creategroup _side;
+		_car = ([_pos,getdir _road ,_carClass, _carGroup] call BIS_fnc_spawnVehicle) select 0;
 
 
-	if (_side == civilian) then {
-		_unit = driver _car;
-		//Add coleteral damage EH
-		_unit addEventHandler ["killed", {
-											_killer = _this select 1;
-											if (isplayer _killer) then {
-												_killed = missionNamespace getvariable [format ["MCC_civiliansKilled_%1",side _killer],0];
-												_killed = _killed +1;
-												missionNamespace setvariable [format ["MCC_civiliansKilled_%1",side _killer],_killed];
-												publicVariable format ["MCC_civiliansKilled_%1",side _killer];
-											}}];
+		if (_side == civilian) then {
+			_unit = driver _car;
+			//Add coleteral damage EH
+			_unit addEventHandler ["killed", {
+												_killer = _this select 1;
+												if (isplayer _killer) then {
+													_killed = missionNamespace getvariable [format ["MCC_civiliansKilled_%1",side _killer],0];
+													_killed = _killed +1;
+													missionNamespace setvariable [format ["MCC_civiliansKilled_%1",side _killer],_killed];
+													publicVariable format ["MCC_civiliansKilled_%1",side _killer];
+												}}];
+		};
+		_carArray pushBack _car;
+
+		_carGroup setspeedmode "LIMITED";
+		_carGroup setBehaviour "SAFE";
+
+		_nearRoads = _pos nearRoads _carSpawnDistance;
+
+		for "_i" from 0 to MAX_WP do {
+			_road = _nearRoads call bis_fnc_selectRandom;
+			_pos = getPosASL _road;
+			_wp = _carGroup addWaypoint [(getPos _road), 0];
+			_wp setWaypointType "MOVE";
+			_wp waypointAttachObject _road;
+			[_carGroup,0] setWaypointCompletionRadius 50;
+		};
+
+		_wp = _carGroup addWaypoint [_pos,(count waypoints _carGroup)];
+		_wp setWaypointType "Cycle";
+
+		MCC_curator addCuratorEditableObjects [[_car],true];
 	};
-	_carArray pushBack _car;
-
-	_carGroup setspeedmode "LIMITED";
-	_carGroup setBehaviour "SAFE";
-
-	_nearRoads = _pos nearRoads _carSpawnDistance;
-
-	for "_i" from 0 to MAX_WP do {
-		_road = _nearRoads call bis_fnc_selectRandom;
-		_pos = getPosASL _road;
-		_wp = _carGroup addWaypoint [(getPos _road), 0];
-		_wp setWaypointType "MOVE";
-		_wp waypointAttachObject _road;
-		[_carGroup,0] setWaypointCompletionRadius 50;
-	};
-
-	_wp = _carGroup addWaypoint [_pos,(count waypoints _carGroup)];
-	_wp setWaypointType "Cycle";
-
-	MCC_curator addCuratorEditableObjects [[_car],true];
 };
 
 missionNamespace setVariable ["MCC_ambientCars",_carArray];

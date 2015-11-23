@@ -74,31 +74,7 @@ switch _mode do {
 
 	case "init": {
 		//did we get here from the 2d editor?
-		if (typeName (_logic getVariable ["type",true]) == typeName 0) then {
-			_null = [_logic,[],_activated,"server"] spawn MCC_fnc_moduleCapturePoint;
-		} else {
-			//Zeus
-			private ["_resualt","_type","_scoreReward","_flag","_radius"];
-
-			_resualt = ["Create a cpature point",[["Type",[["Ammo",format ["%1data\IconAmmo.paa",MCC_path]],["Supply",format ["%1data\IconRepair.paa",MCC_path]],["Fuel",format ["%1data\IconFuel.paa",MCC_path]],["Tickets",""]]],
- 						["Radius",300],
- 						["Score Reward",50],
- 						["Flag",false]
- 					  ]] call MCC_fnc_initDynamicDialog;
-
-			_type = _resualt select 0;
-			_radius = _resualt select 1;
-			_scoreReward = _resualt select 2;
-			_flag = _resualt select 3;
-
-			if (count _resualt == 0) exitWith {deleteVehicle _logic};
-			_logic setvariable ["type",_type,true];
-			_logic setvariable ["ScoreReward",_scoreReward,true];
-			_logic setvariable ["flag",_flag,true];
-			_logic setvariable ["radius",_radius,true];
-
-			_null = [[_logic,[],_activated,"server"],"MCC_fnc_moduleCapturePoint",false] call bis_fnc_mp;
-		};
+		_null = [_logic,[],_activated,"server"] spawn MCC_fnc_moduleCapturePoint;
 	};
 
 	case "server": {

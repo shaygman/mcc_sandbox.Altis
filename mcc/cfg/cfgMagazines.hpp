@@ -1,6 +1,8 @@
+/*
 class MCC_magazine : CA_Magazine
 {
-	type = 1111;
+	type = 256;
+	weight = 0;
 };
 
 class MCC_ammoBoxMag : MCC_magazine
@@ -11,7 +13,7 @@ class MCC_ammoBoxMag : MCC_magazine
 	model = "\A3\Structures_F_EPB\Items\Military\Ammobox_rounds_F.p3d";
 	value = 50;
 	count = 1;
-	mass = 100;
+	mass = 50;
 };
 class MCC_antibiotics : MCC_magazine
 {
@@ -60,7 +62,7 @@ class MCC_salineBag : MCC_antibiotics
 	picture = "\mcc_sandbox_mod\data\items\saline.paa";
 	model = "\A3\Structures_F_EPA\Items\Medical\BloodBag_F.p3d";
 	value = 40;
-	mass = 30;
+	mass = 15;
 };
 
 class MCC_firstAidKit : MCC_antibiotics
@@ -69,7 +71,7 @@ class MCC_firstAidKit : MCC_antibiotics
 	picture = "\mcc_sandbox_mod\data\items\firstaidKit.paa";
 	model = "\A3\Weapons_F\Items\Medikit";
 	value = 50;
-	mass = 80;
+	mass = 40;
 };
 
 class MCC_waterpure : MCC_antibiotics
@@ -101,7 +103,7 @@ class MCC_fuelCan : MCC_magazine
 	mcc_surviveType = "fuel";
 	value = 50;
 	count = 1;
-	mass = 100;
+	mass = 50;
 };
 
 class MCC_fuelCan_empty : MCC_magazine
@@ -114,8 +116,8 @@ class MCC_fuelCan_empty : MCC_magazine
 	mcc_surviveType = "fuel";
 	value = 10;
 	count = 1;
-	mass = 20;
-}
+	mass = 10;
+};
 
 class MCC_fuelbot : MCC_magazine
 {
@@ -127,7 +129,7 @@ class MCC_fuelbot : MCC_magazine
 	mcc_surviveType = "fuel";
 	value = 10;
 	count = 1;
-	mass = 15;
+	mass = 7;
 };
 
 class MCC_ductTape : MCC_magazine
@@ -139,7 +141,7 @@ class MCC_ductTape : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 10;
 	count = 1;
-	mass = 5;
+	mass = 3;
 };
 
 class MCC_butanetorch : MCC_magazine
@@ -151,7 +153,7 @@ class MCC_butanetorch : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 30;
 	count = 1;
-	mass = 30;
+	mass = 15;
 };
 
 class MCC_oilcan : MCC_magazine
@@ -163,7 +165,7 @@ class MCC_oilcan : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 40;
 	count = 1;
-	mass = 40;
+	mass = 20;
 };
 
 class MCC_metalwire : MCC_magazine
@@ -175,7 +177,7 @@ class MCC_metalwire : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 30;
 	count = 1;
-	mass = 15;
+	mass = 7;
 };
 
 class MCC_carBat : MCC_magazine
@@ -187,7 +189,7 @@ class MCC_carBat : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 50;
 	count = 1;
-	mass = 80;
+	mass = 40;
 };
 
 class MCC_screwdriver : MCC_magazine
@@ -226,7 +228,7 @@ class MCC_foodcontainer : MCC_magazine
 	mcc_surviveType = "food";
 	value = 50;
 	count = 1;
-	mass = 50;
+	mass = 25;
 };
 
 class MCC_cerealbox : MCC_magazine
@@ -239,7 +241,7 @@ class MCC_cerealbox : MCC_magazine
 	mcc_surviveType = "food";
 	value = 20;
 	count = 1;
-	mass = 15;
+	mass = 8;
 };
 
 class MCC_bakedBeans : MCC_magazine
@@ -252,7 +254,7 @@ class MCC_bakedBeans : MCC_magazine
 	mcc_surviveType = "food";
 	value = 10;
 	count = 1;
-	mass = 10;
+	mass = 8;
 };
 
 class MCC_bakedBeans_open : MCC_magazine
@@ -265,7 +267,7 @@ class MCC_bakedBeans_open : MCC_magazine
 	mcc_surviveType = "food";
 	value = 10;
 	count = 1;
-	mass = 10;
+	mass = 8;
 };
 
 class MCC_bacon : MCC_magazine
@@ -278,7 +280,7 @@ class MCC_bacon : MCC_magazine
 	mcc_surviveType = "food";
 	value = 10;
 	count = 1;
-	mass = 10;
+	mass = 8;
 };
 
 class MCC_bacon_open : MCC_magazine
@@ -291,7 +293,7 @@ class MCC_bacon_open : MCC_magazine
 	mcc_surviveType = "food";
 	value = 10;
 	count = 1;
-	mass = 10;
+	mass = 8;
 };
 
 class MCC_rice : MCC_magazine
@@ -304,7 +306,7 @@ class MCC_rice : MCC_magazine
 	mcc_surviveType = "food";
 	value = 30;
 	count = 1;
-	mass = 25;
+	mass = 16;
 };
 
 class MCC_bottle_water : MCC_magazine
@@ -316,7 +318,7 @@ class MCC_bottle_water : MCC_magazine
 	mcc_surviveType = "food";
 	value = 10;
 	count = 1;
-	mass = 15;
+	mass = 8;
 };
 
 class MCC_bottle_murky : MCC_magazine
@@ -329,7 +331,7 @@ class MCC_bottle_murky : MCC_magazine
 	mcc_surviveType = "food";
 	value = 2;
 	count = 1;
-	mass = 15;
+	mass = 8;
 };
 
 class MCC_bottle_empty : MCC_magazine
@@ -354,7 +356,7 @@ class MCC_canteenWater : MCC_magazine
 	mcc_surviveType = "food";
 	value = 10;
 	count = 1;
-	mass = 15;
+	mass = 8;
 };
 
 class MCC_canteenMurky : MCC_magazine
@@ -366,7 +368,7 @@ class MCC_canteenMurky : MCC_magazine
 	mcc_surviveType = "food";
 	value = 2;
 	count = 1;
-	mass = 15;
+	mass = 8;
 };
 
 class MCC_canteen : MCC_magazine
@@ -391,7 +393,7 @@ class MCC_powderedMilk : MCC_magazine
 	mcc_surviveType = "food";
 	value = 15;
 	count = 1;
-	mass = 5;
+	mass = 4;
 };
 
 class MCC_franta : MCC_magazine
@@ -403,7 +405,7 @@ class MCC_franta : MCC_magazine
 	mcc_surviveType = "food";
 	value = 15;
 	count = 1;
-	mass = 6;
+	mass = 3;
 };
 
 class MCC_RedGull : MCC_magazine
@@ -415,7 +417,7 @@ class MCC_RedGull : MCC_magazine
 	mcc_surviveType = "food";
 	value = 15;
 	count = 1;
-	mass = 6;
+	mass = 3;
 };
 
 class MCC_Spirit : MCC_magazine
@@ -427,7 +429,7 @@ class MCC_Spirit : MCC_magazine
 	mcc_surviveType = "food";
 	value = 15;
 	count = 1;
-	mass = 6;
+	mass = 3;
 };
 
 class MCC_can_dented : MCC_magazine
@@ -467,7 +469,7 @@ class MCC_canOpener : MCC_magazine
 	model = "\A3\Structures_F_EPA\Items\Tools\CanOpener_F.p3d";
 	value = 5;
 	count = 1;
-	mass = 2;
+	mass = 1;
 };
 
 class MCC_wood : MCC_magazine

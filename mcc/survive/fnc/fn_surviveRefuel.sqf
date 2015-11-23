@@ -15,12 +15,16 @@ _take = param [3,true,[true]];
 _vehicle = cursorTarget;
 
 player playMoveNow "AinvPknlMstpSlayWrflDnon_medic";
-player removeMagazine _itemClass;
+switch (true) do {
+  case (isClass (configFile >> "CfgMagazines" >> _itemClass)) : {player removeMagazine _itemClass;_displayName = getText (configfile >> "CfgMagazines" >> _itemClass >> "displayName");};
+  case (isClass (configFile >> "CfgWeapons" >> _itemClass)) : {player removeItem _itemClass;_displayName = getText (configfile >> "CfgWeapons" >> _itemClass >> "displayName");};
+  case (isClass (configFile >> "CfgGlasses" >> _itemClass)) : {player removeItem _itemClass;_displayName = getText (configfile >> "CfgGlasses" >> _itemClass >> "displayName");};
+};
 
 if (_vehicle isKindof "LandVehicle" || _vehicle isKindof "LandVehicle") then {
   if (_take) then {
     _fuel = (fuel _vehicle) - _amount;
-    _displayName = getText (configfile >> "CfgMagazines" >> _itemClass >> "displayName");
+
     TitleText [format ["Filling %1...",_displayName], "PLAIN DOWN",0.5];
   } else {
     _fuel = (fuel _vehicle) + _amount;
@@ -31,5 +35,9 @@ if (_vehicle isKindof "LandVehicle" || _vehicle isKindof "LandVehicle") then {
 };
 
 if (_returnItem != "") then {
-  player addMagazine _returnItem;
+  switch (true) do {
+    case (isClass (configFile >> "CfgMagazines" >> _returnItem)) : {player addMagazine _returnItem;};
+    case (isClass (configFile >> "CfgWeapons" >> _returnItem)) : {player additem _returnItem;};
+    case (isClass (configFile >> "CfgGlasses" >> _returnItem)) : {player additem _returnItem;};
+  };
 };

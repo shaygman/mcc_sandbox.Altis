@@ -44,7 +44,7 @@ _iedDir =  getdir _fakeIed;
 _dummy = createVehicle [MCC_dummy, _pos, [], 0, "NONE"];
 
 //If it is a mini-game
-if (_IEDTriggerType ==3) then {
+if (_IEDTriggerType >=3) then {
 	_dummy setVariable ["MCC_isIEDMiniGame",true,true];
 } else {
 	if (MCC_isACE) then {

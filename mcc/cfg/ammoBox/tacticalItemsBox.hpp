@@ -1,17 +1,14 @@
 class Box_MCC_tacticalItems : Box_NATO_Ammo_F
 {
-	displayName = "MCC Tactical Items Box";
-	class TransportMagazines
+	displayName = "(MCC)Tactical Items Box";
+	class TransportWeapons
 	{
 		class _xx_MCC_ammoBoxMag
 		{
 			count = 10;
-			magazine = "MCC_ammoBoxMag";
+			weapon = "MCC_ammoBoxMag";
 		};
-	};
 
-	class TransportWeapons
-	{
 		class _xx_MCC_TentDome
 		{
 			count = 5;
