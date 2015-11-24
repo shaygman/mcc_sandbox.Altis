@@ -815,8 +815,7 @@ if ( isServer ) then
 
 
 	//----------------------iniDB------------------------------------------------------
-	if (isclass(configFile >> "CfgPatches" >> "iniDBI")) then
-	{
+	if (isclass(configFile >> "CfgPatches" >> "iniDBI")) then {
 		private "_names";
 		MCC_iniDBenabled = true;
 		call compile preProcessFile "\inidbi\init.sqf";

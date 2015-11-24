@@ -17,9 +17,24 @@ if (isNull _player || !(isPlayer _player)) exitWith {};
 
 _id = getPlayerUID _player;
 
-if (_read) exitWith
-{
-	_value = [_varName1, _varName2, _varName3, _varType] call iniDB_read;
+if (_read) exitWith {
+	if (missionNamespace getVariable ["MCC_iniDBenabled",false]) then {
+			_value = [_varName1, _varName2, _varName3, _varType] call iniDB_read;
+		} else {
+			switch (toupper _varType) do {
+			    case "ARRAY": {
+			    	_value = missionNamespace getVariable [_varName1 + _varName2 + _varName3,[]];
+			    };
+
+			    case "SCALAR": {
+			    	_value = missionNamespace getVariable [_varName1 + _varName2 + _varName3,0];
+			    };
+
+			    default {
+			     	_value = missionNamespace getVariable [_varName1 + _varName2 + _varName3,""];
+			    };
+			};
+		};
 
 	//returns value
 	[[_value,_id], "MCC_fnc_inidbSet", _player, false] spawn BIS_fnc_MP;
@@ -27,5 +42,10 @@ if (_read) exitWith
 
 
 //Update server
-[_varName1, _varName2,_varName3,_value, _varType] call iniDB_write;
+if (missionNamespace getVariable ["MCC_iniDBenabled",false]) then {
+	[_varName1, _varName2,_varName3,_value, _varType] call iniDB_write;
+} else {
+	missionNamespace setVariable [_varName1 + _varName2 + _varName3,_value];
+};
+
 true;

@@ -227,6 +227,7 @@ if((missionNamespace getVariable ["MCC_surviveMod",false]) && !isDedicated && !(
 			sleep 1;
 		};
 	};
+
 	while {true && (missionNamespace getVariable ["MCC_surviveMod",false])} do 	{
 
 		waituntil {!(isnull (finddisplay 602))};

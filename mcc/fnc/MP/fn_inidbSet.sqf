@@ -5,7 +5,6 @@ private ["_id","_value"];
 _value 		= _this select 0;
 _id			= _this select 1;
 
-if (getPlayerUID player == _id) then
-{
+if (getPlayerUID player == _id) then {
 	player setVariable ["MCC_readValue",_value];
 };

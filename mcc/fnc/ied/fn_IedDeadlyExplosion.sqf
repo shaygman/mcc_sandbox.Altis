@@ -17,5 +17,5 @@ _class = switch (_volume) do {
 _bomb = createvehicle [_class,_pos,[],0,"none"];
 hideObjectGlobal _bomb;
 _bomb setposATL _pos;
-sleep 0.5;
+sleep 0.1;
 _bomb setdamage 1;

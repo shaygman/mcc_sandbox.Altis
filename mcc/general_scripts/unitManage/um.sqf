@@ -12,33 +12,29 @@ _comboBox = _mccdialog displayCtrl MCC_UM_LIST;
 _type = _this select 0;
 _indices = lbSelection _comboBox;
 
-switch (_type) do
-	{
-		case 0: //Teleport
-		{
-			mapClick = false;
-			hint "Click on the map";
-			onMapSingleClick " 	hint format ['%1 teleported', UMName];
-								teleportPos = _pos;
-								mapClick = true;
-								onMapSingleClick """";";
-			waituntil {mapClick};
-			if (MCC_UMUnit==0) then
+switch (_type) do {
+	//Teleport
+	case 0:{
+		mapClick = false;
+		hint "Click on the map";
+		onMapSingleClick " 	hint format ['%1 teleported', UMName];
+							teleportPos = _pos;
+							mapClick = true;
+							onMapSingleClick """";";
+		waituntil {mapClick};
+		if (MCC_UMUnit==0) then {
+			{
+				[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", _x, false] spawn BIS_fnc_MP;
+			} foreach MCC_selectedUnits;
+		} else {
 			{
 				{
 					[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", _x, false] spawn BIS_fnc_MP;
-				} foreach MCC_selectedUnits;
-			}
-			else
-			{
-				{
-					{
-						[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", _x, false] spawn BIS_fnc_MP;
-						sleep 0.2;
-					} foreach (units _x);
-				} foreach MCC_selectedUnits;
-			};
+					sleep 0.2;
+				} foreach (units _x);
+			} foreach MCC_selectedUnits;
 		};
+	};
 
 		case 1:	//Teleport to LHD
 		{
