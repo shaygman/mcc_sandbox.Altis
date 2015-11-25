@@ -14,4 +14,5 @@ class survive {
 	class surviveWaterTreatment {};
 	class surviveUseItemHeadTorch {};
 	class surviveBuild {};
+	class getSurvivalPlaceHolders {};
 };

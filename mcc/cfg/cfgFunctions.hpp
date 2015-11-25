@@ -113,6 +113,7 @@ class ied
 	class SBSingle		{description = "Place suicide bomber.";};
 	class manageSB		{description = "Manage SB bomber behavior.";};
 	class mineSingle	{description = "Create a mine field.";};
+	class iedSync {};
 };
 
 class cas
@@ -146,6 +147,7 @@ class artillery
 	class calcSolution	{description = "calculate artillery solution high or low";};
 	class artyGetSolution	{description = "Broadcast artillery solution high or low";};
 	class consoleFireArtillery	{description = "Broadcast artillery to artillery units";};
+	class artillery {};
 };
 
 class groupGen
@@ -381,35 +383,6 @@ class helpers
 
 	class createHelper		{description = "Create ingame UI helper for interacted objects";};
 	class deleteHelper		{description = "Delete ingame UI helper for interacted objects";};
-};
-
-class forts
-{
-	#ifdef MCCMODE
-	file = "\mcc_sandbox_mod\mcc\fnc\forts";
-	#else
-	file = "mcc\fnc\forts";
-	#endif
-
-	class buildFort {};
-	class fortSandbagLong {};
-	class fortSandbagRound {};
-	class fortRazorwire {};
-	class fortSandbagTower {};
-	class fortHBarrierSmall {};
-	class fortHBarrierLong {};
-	class forthBarrierCatwalk{};
-	class forthBarrierCorner {};
-	class forthBarrierCorridor {};
-	class forthBarrierTower {};
-	class fortAA {};
-	class fortAT {};
-	class fortGmg {};
-	class fortGMGHigh {};
-	class fortMG {};
-	class fortMGHigh {};
-	class fortMortar {};
-	class fortTower {};
 };
 
 class logistics

@@ -34,17 +34,6 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 		missionNamespace setVariable ["MCC_survivalAttachments",W_ATTACHMENTS];
 	};
 
-	//Get what object spawn loot
-	{
-		if (isNil _x) then {
-			if (isClass (missionconfigFile >> "CfgMCCspawnObjects" >> _x)) then {
-				missionNamespace setVariable [_x,getArray (missionconfigFile >> "CfgMCCspawnObjects" >> _x >> "itemClasses")];
-			} else {
-				missionNamespace setVariable [_x,getArray (configFile >> "CfgMCCspawnObjects" >> _x >> "itemClasses")];
-			};
-		};
-	} forEach ["MCC_barrels","MCC_grave","MCC_containers","MCC_food","MCC_fuel","MCC_plantsFruit","MCC_misc","MCC_garbage","MCC_wreck","MCC_wreckMil","MCC_wreckSub","MCC_ammoBox"];
-
 	missionNameSpace setVariable [format ["MCC_isInteracted%1",getpos _object], true];
 	publicvariable format ["MCC_isInteracted%1",getpos _object];
 
@@ -79,7 +68,7 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 		{
 			if ([_x , str _object] call BIS_fnc_inString) exitWith {_typeOfobject = _varName};
 		} forEach (missionNamespace getVariable [_varName,[]]);
-	} forEach ["MCC_barrels","MCC_grave","MCC_containers","MCC_food","MCC_fuel","MCC_plantsFruit","MCC_misc","MCC_garbage","MCC_wreck","MCC_wreckMil","MCC_wreckSub","MCC_ammoBox"];
+	} forEach ([false] call MCC_fnc_getSurvivalPlaceHolders);
 
 	if (!isnil "_typeOfobject") then {
 		_randomChance = [];
@@ -92,7 +81,7 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 				_randomChance pushBack (getNumber (configFile >> "CfgMCCspawnObjects" >> _typeOfobject >> format ["chance%1",_x]));
 				_randomAmmount pushBack (getNumber (configFile >> "CfgMCCspawnObjects" >> _typeOfobject >> format ["max%1",_x]));
 			};
-		} forEach ["Weapon","Ammo","Med","Fuel","Repair","Food","Money"];
+		} forEach ["Weapon","Ammo","Med","Fuel","Repair","Food","Money","fruit"];
 
 		//createvirtual wepholder
 		_wepHolder = "GroundWeaponHolder" createVehiclelocal getpos player;
@@ -127,7 +116,8 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 				          MCC_fuelItems,
 				          MCC_repairItems,
 				          MCC_foodItem,
-				          MCC_money] select _foreachIndex;
+				          MCC_money,
+				          MCC_fruits] select _foreachIndex;
 
 				if (count _array > 0 && random 100 < _x) then {
 					_max = (floor random (_randomAmmount select _foreachIndex)) +1;

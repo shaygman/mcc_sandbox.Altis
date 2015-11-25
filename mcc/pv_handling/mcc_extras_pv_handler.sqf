@@ -44,18 +44,6 @@ if (isServer) then
 //==============================================================================================================================================================================
 	MCC_fnc_boxGenerator = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)] execVM MCC_path + "mcc\general_scripts\boxGen\box_spawn.sqf";};
 
-//===================================================================MCC_fnc_artillery======================================================================================
-// Create an artillery shell above the location
-// Example:[[_pos, shelltype, shellspread, nshell,simulate],"MCC_fnc_artillery",true,false] spawn BIS_fnc_MP;
-// Params:
-// 	_pos: array, position
-// 	shelltype: string, vehicleClass ["GrenadeHand","Sh_120_HE","Cluster_120mm_AMOS","Mo_cluster_AP","Mine_120mm_AMOS_range","Sh_120mm_AMOS_LG","Sh_82mm_AMOS","Fire_82mm_AMOS","Smoke_120mm_AMOS_White","Smoke_82mm_AMOS_White","G_40mm_SmokeGreen","G_40mm_SmokeRed","F_40mm_White""F_40mm_Green","F_40mm_Red"];
-//	shellspread: number, 1st: weapon class 2nd: ammount [["weaponClass1","weaponClass2"],[1,5]]
-//	nshell: number, ammount of artillery per salvo
-//	simulate: number, shell simulation 0-DPICM, 1- bomb, 2 - flare, 3 - laser guided
-//==============================================================================================================================================================================
-	MCC_fnc_artillery = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5)] execVM MCC_path + "mcc\general_scripts\artillery\artillery_fire.sqf";};
-
 //===================================================================MCC_fnc_placeConvoy======================================================================================
 // Place a convoy up to 5 cars facing the direction stated with ot without an HVT
 // Example:[[vehicle1, vehicle2, vehicle3, vehicle4, vehicle5,start, heading, side,VIPcalss,VIPcar],'MCC_fnc_placeConvoy',true,false] spawn BIS_fnc_MP;
@@ -77,9 +65,3 @@ if (isServer) then
 // 	isVIP: string, if = "0" no vip else there is a vip
 //==============================================================================================================================================================================
 	MCC_fnc_startConvoy = {[(_this select 0), (_this select 1)] execVM MCC_path + "mcc\general_scripts\convoy\start_convoy_execute.sqf"};
-
-//===================================================================MCC_fnc_iedSync======================================================================================
-//Note to be used outside MCC
-//==============================================================================================================================================================================
-	MCC_fnc_iedSync = {[(_this select 0), (_this select 1), (_this select 2)] execVM MCC_path + "mcc\general_scripts\traps\ied_sync.sqf"};
-};

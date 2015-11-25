@@ -64,3 +64,32 @@ class rts
 	class mainBoxInit {};
 	class saveCargoBox {description = "save or load the cargo box items from the server using iniDB";};
 };
+
+class forts
+{
+	#ifdef MCCMODE
+	file = "\mcc_sandbox_mod\mcc\rts\fnc\forts";
+	#else
+	file = "mcc\rts\fnc\forts";
+	#endif
+
+	class buildFort {};
+	class fortSandbagLong {};
+	class fortSandbagRound {};
+	class fortRazorwire {};
+	class fortSandbagTower {};
+	class fortHBarrierSmall {};
+	class fortHBarrierLong {};
+	class forthBarrierCatwalk{};
+	class forthBarrierCorner {};
+	class forthBarrierCorridor {};
+	class forthBarrierTower {};
+	class fortAA {};
+	class fortAT {};
+	class fortGmg {};
+	class fortGMGHigh {};
+	class fortMG {};
+	class fortMGHigh {};
+	class fortMortar {};
+	class fortTower {};
+};

@@ -22,7 +22,9 @@ Change log r18:
 - Added: Snow weather effect to MCC atmospheres. 
 - Added: MCC ammo boxes, medic boxes, supply crates & pods (logistics) to Zeus.
 - Added: MCC items (medic survial exc) add to BI arsenal. 
-- Added: Can attach chemlights and IR strobes using MCC self interaction. 
+- Added: Can attach chemlights and IR strobes using MCC self interaction.
+- Added: MCC survival will work without iniDBI mod but items will not be persistante between missions or server restart.  
+- Added: Easy to configure survival loot place holders objects and items spawn chance and ammount in them via missions config files.
 - Changed: MCC Mission Generator - disable IED mission will use the disarm minigame and changed the IED type to the military device.
 - Changed: ILS Available to all air vehicles.
 - Changed: When placing IEDs MCC will not close the 3d editor so you can place multiple IEDs. 
@@ -37,7 +39,6 @@ Change log r18:
 - Fiexd: Teleporting boats on water teleported the vehicle to map corner.
 - Fixed: Lock/unlock door typo
 
-TODO - finish survival cfg
 TODO - survival spawn crates in houses?!
 TODO - mission templates, test dedicated
 
