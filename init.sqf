@@ -298,20 +298,16 @@ call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];
 _nul = [] execVM MCC_path +"bon_artillery\bon_arti_init.sqf";
 
 // HEADLESS CLIENT CHECK
-if (isNil "MCC_isHC" ) then
-{
+if (isNil "MCC_isHC" ) then {
 	MCC_isHC = false;
 };
-if (isNil "MCC_isLocalHC" ) then
-{
+if (isNil "MCC_isLocalHC" ) then {
 	MCC_isLocalHC = false;
 };
 
 
-if (!hasInterface && !isServer) then
-{
-	0 spawn
-	{
+if (!hasInterface && !isServer) then {
+	0 spawn {
 	    // is HC
 	    waituntil {alive player};
 	    MCC_isHC = true;
@@ -698,8 +694,16 @@ MCC_3DobjectsCounter	= -1;
 //Lets create our MCC subject in the diary
 _index = player createDiarySubject ["MCCZones","MCC Zones"];
 
-if ( isServer ) then
-{
+if ( isServer ) then {
+	//Create Custom radio channels
+	missionNamespace setVariable ["MCC_radioChannel_1",radioChannelCreate [[0, 0.96, 0.96, 0.8], localize "str_channel_side", "%UNIT_GRP_NAME", [], false]];
+	publicVariable "MCC_radioChannel_1";
+
+	/*
+	missionNamespace setVariable ["MCC_radioChannel_2",radioChannelCreate [[0.96, 0.96,0, 0.8], localize "str_channel_command", "%UNIT_GRP_NAME", [player], false]];
+	publicVariable "MCC_radioChannel_2";
+	*/
+
 	//Make sure about who is at war with who or it will be a very peacefull game
 	_SideHQ_East   = createCenter east;
 	_SideHQ_Resist = createCenter resistance;
@@ -739,8 +743,7 @@ if ( isServer ) then
 	_cfg = (configFile >> "CfgPatches");
 	_newAddons = [];
 
-	for "_i" from 0 to ((count _cfg) - 1) do
-	{
+	for "_i" from 0 to ((count _cfg) - 1) do {
 		_name = configName (_cfg select _i);
 		if (! (["a3_", _name] call BIS_fnc_inString)) then {_newAddons pushBack _name};
 	};
@@ -967,15 +970,10 @@ if ( isServer ) then
 		MCC_iniDBenabled = false;
 	};
 	publicVariable "MCC_iniDBenabled"
-}
-else
-{
-	if (isMultiplayer) then
-	{
+} else {
+	if (isMultiplayer) then {
 		waituntil {!isnil "MCC_iniDBenabled"};
-	}
-	else
-	{
+	} else {
 		MCC_iniDBenabled = false;
 	};
 };
@@ -1005,8 +1003,7 @@ CP_dialogInitDone = true; 				//define if dialog is been initialize
 
 "CP_activated" addPublicVariableEventHandler
 {
-	if(CP_activated && !isDedicated) then
-	{
+	if(CP_activated && !isDedicated) then {
 		_null=[] execVM MCC_path + "scripts\player\player_init.sqf"
 	};
 };
@@ -1088,8 +1085,7 @@ if (hasInterface && !isDedicated) then {waituntil {alive player}};
 
 MCC_groupGenGroupStatus = [west,east,resistance,civilian];
 
-if (isPlayer player && !isServer && !(MCC_isLocalHC) && (missionNameSpace getVariable ["MCC_syncOn",true])) then
-{
+if (isPlayer player && !isServer && !(MCC_isLocalHC) && (missionNameSpace getVariable ["MCC_syncOn",true])) then {
 	private ["_html","_loop"];
 	waituntil {!(IsNull (findDisplay 46))};
 	sleep 2;
@@ -1163,8 +1159,8 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	[] spawn MCC_fnc_handleAddaction;
 
 	//Handle Radio
-	if (missionNameSpace getVariable ["MCC_VonRadio",true]) then {
-		[]  spawn  MCC_fnc_vonRadio;
+	if (missionNameSpace getVariable ["MCC_VonRadio",false]) then {
+		[] spawn MCC_fnc_vonRadio;
 	};
 
 	//Add start locations script
@@ -1191,8 +1187,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 MCC_CPplayerLoop = compile preprocessFile format ["%1mcc\general_scripts\loops\mcc_CPplayerLoop.sqf",MCC_path];
 MCC_NameTagsPlayerLoop = compile preprocessFile format ["%1mcc\general_scripts\loops\MCC_NameTagsPlayerLoop.sqf",MCC_path];
 
-if ( !( isDedicated) && !(MCC_isLocalHC) ) then
-{
+if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	//Handle CP stuff
 	[] spawn MCC_CPplayerLoop;
 
@@ -1224,8 +1219,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then
 };
 
 //===============Delete Groups (server and HC client only)====================
-if (isServer || MCC_isLocalHC) then
-{
+if (isServer || MCC_isLocalHC) then {
 	[] spawn
 	{
 		//Let the mission load first

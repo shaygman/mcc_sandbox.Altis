@@ -152,3 +152,13 @@ class RscTitles
 	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
 	#include "mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
 };
+
+class CfgDebriefing
+{
+	class KickRadio
+	{
+		title = "You were kicked";
+		subtitle = "For abusing the radio";
+		description = "You were kicked";
+	};
+};

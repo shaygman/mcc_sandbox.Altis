@@ -156,7 +156,7 @@ class MCC_bandage : MCC_antibiotics
 class MCC_epipen : MCC_antibiotics
 {
 	displayName = "Epipen(MCC)";
-	descriptionShort = "What I need is a big fat magic marker";
+	descriptionShort = "What I need is a big fat magic marker. Revive downed unconscious soldiers";
 	picture = "\mcc_sandbox_mod\data\items\epipen.paa";
 	model = "\A3\Structures_F\Items\Stationery\PencilYellow_F.p3d";
 	value = 40;
@@ -165,7 +165,7 @@ class MCC_epipen : MCC_antibiotics
 class MCC_salineBag : MCC_antibiotics
 {
 	displayName = "Saline Bag(MCC)";
-	descriptionShort = "I'm all out of blood i'm so lost with out you";
+	descriptionShort = "I'm all out of blood i'm so lost with out you. Recover from blood loss effects";
 	picture = "\mcc_sandbox_mod\data\items\saline.paa";
 	model = "\A3\Structures_F_EPA\Items\Medical\BloodBag_F.p3d";
 	value = 40;
@@ -178,6 +178,7 @@ class MCC_salineBag : MCC_antibiotics
 class MCC_firstAidKit : MCC_antibiotics
 {
 	displayName = "First aid kit(MCC)";
+	descriptionShort = "Heals completely";
 	picture = "\mcc_sandbox_mod\data\items\firstaidKit.paa";
 	model = "\A3\Weapons_F\Items\Medikit";
 	value = 50;

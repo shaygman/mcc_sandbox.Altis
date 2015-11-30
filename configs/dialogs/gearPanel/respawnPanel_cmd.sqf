@@ -65,8 +65,7 @@ switch (_cmd) do
 							};
 
 				_deployAvailable = false;
-				for [{_i=0},{_i < count _groups},{_i=_i+1}] do
-				{
+				for [{_i=0},{_i < count _groups},{_i=_i+1}] do {
 					if ((group player) == (_groups select _i) select 0) then {_deployAvailable = true};
 				};
 
@@ -153,13 +152,11 @@ switch (_cmd) do
 
 				_spawnAvailable = true;
 
-				if ((CP_activeSpawn getvariable ["type","FOB"]) != "HQ") then
-				{
+				if ((CP_activeSpawn getvariable ["type","FOB"]) != "HQ") then {
 					_targets = ["Car","Tank","Man"];
 					_nearObjects = (getpos CP_activeSpawn) nearObjects 50;
 
-					if ((count _nearObjects) > 0) then
-					{
+					if ((count _nearObjects) > 0) then {
 						private ["_enemySides"];
 						_enemySides = [player] call BIS_fnc_enemySides;
 
@@ -207,16 +204,13 @@ switch (_cmd) do
 				if (!isnil "CP_ACCESPANEL_IDD") then {CP_ACCESPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
 				if (!isnil "CP_UNIFORMSPANEL_IDD") then {CP_UNIFORMSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
 				CP_respawnPanelOpen = false;
-			}
-			else
-			{
+			} else {
 				//looking for a spawn point
 				private ["_maxPos","_cpPos"];
 				_maxPos = 1;
 				_cpPos = getpos CP_activeSpawn;
 
-				waitUntil
-				{
+				waitUntil {
 					_maxPos = _maxPos +1;
 					playerDeployPos  =_cpPos findEmptyPosition [0,_maxPos];
 					count playerDeployPos > 0;
@@ -227,8 +221,7 @@ switch (_cmd) do
 				};
 
 				//Is it a spawn tent and we spawned as the squad leader - delete the tent
-				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && (player == leader player)) then
-				{
+				if (((CP_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && (player == leader player)) then {
 					CP_activeSpawn setDamage 1;
 				};
 

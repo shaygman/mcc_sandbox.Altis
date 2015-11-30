@@ -204,8 +204,8 @@ class CAManBase: Man {
 		};
 
 		class ACE_MCC_survivalInteraction {
-			condition = "[] call MCC_fnc_isSurvivalObject";
 			displayName = "Search";
+			condition = "[] call MCC_fnc_isSurvivalObject";
 			icon = "\A3\ui_f\data\map\markers\military\unknown_CA.paa";
 			showDisabled = 0;
 			statement = "[] spawn MCC_fnc_searchSurvivalObject;";

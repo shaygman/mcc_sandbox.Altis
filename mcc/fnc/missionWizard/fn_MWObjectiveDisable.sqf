@@ -53,7 +53,7 @@ if (_isCQB) then {
 			//Spawn the intel
 			_dummyObject = "Land_WoodenTable_small_F" createvehicle _spawnPos;
 			_dummyObject setPos _spawnPos;
-			_object = [_objPos,_objectType,"large",0,2,false,4,15,_sidePlayer,_name,random 360,true,_side] call MCC_fnc_trapSingle;
+			_object = [_objPos,_objectType,"large",0,8,false,4,15,_sidePlayer,_name,random 360,true,_side] call MCC_fnc_trapSingle;
 			_object setPos (_dummyObject modelToWorld [0,0,0.43]);
 			_object setdir (getdir _dummyObject);
 			_unitPlaced = true;
@@ -77,7 +77,7 @@ if (_isCQB) then {
 	};
 
 	//Create the object
-	_object = [_objPos,_objectType,"large",0,2,false,4,15,_sidePlayer,_name,random 360,true,_side] call MCC_fnc_trapSingle;
+	_object = [_objPos,_objectType,"large",0,8,false,4,15,_sidePlayer,_name,random 360,true,_side] call MCC_fnc_trapSingle;
 	_object setdir random 360;
 };
 

@@ -39,22 +39,18 @@ player setFatigue 1;
 var(_i)    = 0;
 var(_exit) = false;
 
-while {_i <= _waitTime && !_exit} do
-{
-	if _inside then
-	{
+while {_i <= _waitTime && !_exit} do {
+	if _inside then {
 		//Check if the player should be inside or outside the zone
 		if (vehicle player in (list _trigger)) then {_exit = true}; //Break loop if player got out of the zone
-	}
-	else
-	{
+	} else {
 		if !(vehicle player in (list _trigger)) then {_exit = true}; //Break loop if player got inside the zone
 	};
 
 	["MCC_restrictWarning"] call BIS_fnc_rscLayer cutText [format ["GET BACK TO THE FIGHT! %1s",_waitTime - _i], "PLAIN DOWN", 1];
 	if (_i mod 5 == 0) then {((player getVariable ["CP_side", playerside]) call bis_fnc_moduleHQ) sideradio "SentGenLeavingAO"};
 	_i = _i + 1;
-	sleep 1;	
+	sleep 1;
 };
 
 ["MCC_restrictWarning"] call BIS_fnc_rscLayer cutText ["", "PLAIN DOWN"];

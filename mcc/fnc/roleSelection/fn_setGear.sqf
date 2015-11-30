@@ -12,10 +12,9 @@ _select	= _this select 1;
 if (CP_classesIndex != _role) then {CP_playerUniforms =  nil; CP_weaponAttachments = []};
 CP_classesIndex = _role;
 
-switch (_role) do
-	{
-		case 0:	//Officer
-		{
+switch (_role) do {
+		//Officer
+		case 0: {
 			//Fets correct weapons Arrays
 			if (side player == west) then {
 				CP_currentWeaponArray 		= CP_officerWeaponWest;

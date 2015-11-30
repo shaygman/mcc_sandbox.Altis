@@ -19,15 +19,12 @@ private ["_logic","_markerShape","_sides","_trg","_time","_air","_delete","_pos"
 _logic	= _this select 0;
 
 //Did we got here by  a function call or by module
-if (isNull _logic) then
-{
+if (isNull _logic) then {
 	_sides      = _this select 1;
 	_time       = _this select 2;
 	_air        = _this select 3;
 	_delete     = _this select 4;
-}
-else
-{
+} else {
 	_sides 	= _logic getvariable ["sides",-1];
 	_time 	= _logic getvariable ["time",10];
 	_air 	= (_logic getvariable ["air",1]) == 1;
@@ -38,22 +35,18 @@ else
 
 //[_logic,  _sides ,_time , _air ,_delete] execVM "test.sqf";
 _trgs = [];
+_markers = [];
 
-
-if (isServer) then
-{
+if (isServer) then {
 	//Get all triggers
 	{
-		if (typeOf _x == "LocationArea_F") then
-		{
+		if (typeOf _x == "LocationArea_F") then {
 			_location = _x;
 			{
-				if (typeOf _x == "EmptyDetector") then
-				{
+				if (typeOf _x == "EmptyDetector") then {
 					_x setTriggerActivation["ANY","PRESENT",true];
 					//Should we create markers for the trigger
-					if (_delete) then
-					{
+					if (_delete) then {
 						_mName = createMarker [str _x, getpos _x];
 						_mName setMarkerColor "colorRed";
 						_mName setMarkerShape (if ((triggerArea _x) select 3) then {"RECTANGLE"} else {"ELLIPSE"});
@@ -61,7 +54,8 @@ if (isServer) then
 						_mName setMarkerDir ((triggerArea _x) select 2);
 						_mName setMarkerBrush "DIAGGRID";
 					};
-					_trgs = _trgs + [_x];
+					_trgs pushBack _x;
+					_markers pushBack _mName;
 				}
 			} forEach synchronizedObjects _location;
 		};
@@ -72,8 +66,7 @@ if (isServer) then
 };
 
 
-if (!isdedicated) then
-{
+if (!isdedicated) then {
 	sleep 10;
 	while {isNil {_logic getVariable "triggers"}} do {sleep 0.5};
 	//waituntil {!(isNil {_logic getVariable "triggers"})};
@@ -88,8 +81,7 @@ if (!isdedicated) then
 
 
 	//Main loop
-	while {!isnull _logic} do
-	{
+	while {!isnull _logic} do {
 		{
 			_myList = list _x;
 			if ((vehicle player in _myList) && (((player getVariable ["CP_side", playerside])) in _sides)) then {[_x,_time,false,_air] spawn MCC_fnc_RestrictZoneEffect};
@@ -99,10 +91,13 @@ if (!isdedicated) then
 };
 
 //if the logic have beeen deleted delete triggers
-if (isServer) exitWith
-{
+if (isServer) exitWith {
 	waituntil {isnull _logic};
 	{
 		deleteVehicle _x;
 	} foreach _trgs;
+
+	{
+		deleteMarker _x;
+	} forEach _markers;
 };

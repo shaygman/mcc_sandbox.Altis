@@ -123,6 +123,16 @@ class RscTitles
 	#include "\mcc_sandbox_mod\mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
 };
 
+class CfgDebriefing
+{
+	class KickRadio
+	{
+		title = "You were kicked";
+		subtitle = "For abusing the radio";
+		description = "You were kicked";
+	};
+};
+
 class cfgVehicles
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgVehicles.hpp"

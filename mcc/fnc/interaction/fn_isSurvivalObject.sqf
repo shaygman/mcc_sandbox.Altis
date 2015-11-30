@@ -8,7 +8,6 @@
 //		Boolean
 //===========================================================================================================================================================================
 private ["_positionStart","_positionEnd","_pointIntersect","_selected","_resault","_objArray"];
-if (!(missionNamespace getVariable ["MCC_surviveMod",false])  && !(missionNamespace getVariable ["MCC_iniDBenabled",false])) exitWith {};
 if !(missionNamespace getVariable ["MCC_surviveMod",false]) exitWith {false};
 
 //Not MCC object
@@ -24,8 +23,6 @@ if (count _pointIntersect > 0) then {
 
 		if ((({[_x , str _selected] call BIS_fnc_inString} count _objArray)>0) && (isNull attachedTo _selected)) then {
 			_resault = true;
-			//_null= [_selected] execvm "mcc\fnc\interaction\fn_interactObject.sqf";
-			//[_selected] call MCC_fnc_interactObject;
 		};
 	};
 };

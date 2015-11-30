@@ -21,12 +21,12 @@ _buttons = switch (toLower _difficulty) do {
 };
 
 if ((_serialNumber mod 3) == 0 && (_serialNumber mod 7) == 0) then {
-    _buttonsCombinations = [["@",false],["1",false],["^",true],["~",true],[")",true],["]",true],["(",false],["[",true],["|",true],["\",false],["/",false],["?",false],["3",false],["%",false],["&",true],["*",true],["<",true],[">",false],[";",true],["A",false],["a",true],["g",false],["G",true],["b",false],["B",true],["p",false],["P",true],["w",true],["W",false],["m",true],["n",false],["N",true],["M",false],["t",true],["T",false],["`",true],[":",false],["o",true],["0",false]];
+    _buttonsCombinations = [["@",false],["1",false],["^",true],["~",true],[")",true],["]",true],["(",false],["[",true],["|",true],["\",false],["/",false],["?",false],["3",false],["%",false],["*",true],["L",true],["8",true],["5",false],[";",true],["A",false],["a",true],["g",false],["G",true],["b",false],["B",true],["p",false],["P",true],["w",true],["W",false],["m",true],["n",false],["N",true],["M",false],["t",true],["T",false],["`",true],[":",false],["o",true],["0",false]];
 } else {
     if ((_serialNumber mod 3) == 0) then {
-     _buttonsCombinations = [["@",false],["1",false],["^",false],["~",true],[")",true],["]",true],["(",false],["[",true],["|",true],["\",false],["/",false],["?",false],["3",false],["%",true],["&",false],["*",true],["<",false],[">",false],[";",true],["A",true],["a",false],["g",false],["G",true],["b",true],["B",true],["p",true],["P",false],["w",true],["W",false],["m",false],["n",false],["N",false],["M",true],["t",true],["T",true],["`",false],[":",false],["o",true],["0",false]];
+     _buttonsCombinations = [["@",false],["1",false],["^",false],["~",true],[")",true],["]",true],["(",false],["[",true],["|",true],["\",false],["/",false],["?",false],["3",false],["%",true],["*",false],["L",true],["8",false],["5",false],[";",true],["A",true],["a",false],["g",false],["G",true],["b",true],["B",true],["p",true],["P",false],["w",true],["W",false],["m",false],["n",false],["N",false],["M",true],["t",true],["T",true],["`",false],[":",false],["o",true],["0",false]];
     } else {
-        _buttonsCombinations = [["@",false],["1",false],["^",true],["~",false],[")",true],["]",false],["(",true],["[",false],["|",false],["\",false],["/",false],["?",true],["3",true],["%",true],["&",true],["*",true],["<",true],[">",false],[";",false],["A",false],["a",true],["g",true],["G",false],["b",false],["B",true],["p",false],["P",false],["w",false],["W",false],["m",true],["n",false],["N",true],["M",false],["t",true],["T",false],["`",true],[":",false],["o",false],["0",false]];
+        _buttonsCombinations = [["@",false],["1",false],["^",true],["~",false],[")",true],["]",false],["(",true],["[",false],["|",false],["\",false],["/",false],["?",true],["3",true],["%",true],["*",true],["L",true],["8",true],["5",false],[";",false],["A",false],["a",true],["g",true],["G",false],["b",false],["B",true],["p",false],["P",false],["w",false],["W",false],["m",true],["n",false],["N",true],["M",false],["t",true],["T",false],["`",true],[":",false],["o",false],["0",false]];
     };
 };
 

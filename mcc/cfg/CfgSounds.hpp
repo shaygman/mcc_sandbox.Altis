@@ -1936,9 +1936,9 @@ class MCC_wind0
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind0.ogg", 0.1, 0.1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind0.ogg", 0.4, 0.4};
 	#else
-	sound[] = {"mcc\sounds\wind0.ogg", 0.1, 0.1};
+	sound[] = {"mcc\sounds\wind0.ogg", 0.4, 0.4};
 	#endif
 };
 
@@ -1948,9 +1948,9 @@ class MCC_wind1
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind0.5.ogg", 0.1, 0.1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind0.5.ogg", 0.4, 0.4};
 	#else
-	sound[] = {"mcc\sounds\wind0.5.ogg", 0.1, 0.1};
+	sound[] = {"mcc\sounds\wind0.5.ogg", 0.4, 0.4};
 	#endif
 };
 
@@ -1960,9 +1960,9 @@ class MCC_wind2
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind2.ogg", 0.1, 0.1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind2.ogg", 0.4, 0.4};
 	#else
-	sound[] = {"mcc\sounds\wind2.ogg", 0.1, 0.1};
+	sound[] = {"mcc\sounds\wind2.ogg", 0.4, 0.4};
 	#endif
 };
 
@@ -1972,9 +1972,9 @@ class MCC_wind3
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind3.ogg", 0.1, 0.1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\wind3.ogg", 0.4, 0.4};
 	#else
-	sound[] = {"mcc\sounds\wind3.ogg", 0.1, 0.1};
+	sound[] = {"mcc\sounds\wind3.ogg", 0.4, 0.4};
 	#endif
 };
 
@@ -2010,9 +2010,9 @@ class beep
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\beep.ogg", db+10, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\beep.ogg", db+2, 1};
 	#else
-	sound[] = {"mcc\sounds\radio\beep.ogg", 1, 1};
+	sound[] = {"mcc\sounds\radio\beep.ogg", db+2, 1};
 	#endif
 };
 
@@ -2022,9 +2022,9 @@ class radioNormalStatic_0
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioNormalStatic_0.ogg",db+10, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioNormalStatic_0.ogg",db+3, 1};
 	#else
-	sound[] = {"mcc\sounds\radio\radioNormalStatic_0.ogg", db+10, 1};
+	sound[] = {"mcc\sounds\radio\radioNormalStatic_0.ogg", db+3, 1};
 	#endif
 };
 
@@ -2034,9 +2034,9 @@ class radioNormalStatic_1
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioNormalStatic_1.ogg",db+10, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioNormalStatic_1.ogg",db+3, 1};
 	#else
-	sound[] = {"mcc\sounds\radio\radioNormalStatic_1.ogg", db+10, 1};
+	sound[] = {"mcc\sounds\radio\radioNormalStatic_1.ogg", db+3, 1};
 	#endif
 };
 
@@ -2046,9 +2046,9 @@ class radioNormalStatic_2
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioNormalStatic_2.ogg",db+10, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioNormalStatic_2.ogg",db+3, 1};
 	#else
-	sound[] = {"mcc\sounds\radio\radioNormalStatic_2.ogg", db+10, 1};
+	sound[] = {"mcc\sounds\radio\radioNormalStatic_2.ogg", db+3, 1};
 	#endif
 };
 
@@ -2058,9 +2058,9 @@ class radioHardStatic_0
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioHardStatic_0.ogg", db+20, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioHardStatic_0.ogg", db+1, 1};
 	#else
-	sound[] = {"mcc\sounds\radio\radioHardStatic_0.ogg", db+10, 1};
+	sound[] = {"mcc\sounds\radio\radioHardStatic_0.ogg", db+3, 1};
 	#endif
 };
 
@@ -2070,9 +2070,9 @@ class radioHardStatic_1
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioHardStatic_1.ogg", db+20, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioHardStatic_1.ogg", db+1, 1};
 	#else
-	sound[] = {"mcc\sounds\radio\radioHardStatic_1.ogg", db+10, 1};
+	sound[] = {"mcc\sounds\radio\radioHardStatic_1.ogg", db+3, 1};
 	#endif
 };
 
@@ -2082,9 +2082,9 @@ class radioHardStatic_2
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioHardStatic_2.ogg", db+20, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioHardStatic_2.ogg", db+1, 1};
 	#else
-	sound[] = {"mcc\sounds\radio\radioHardStatic_2.ogg", db+10, 1};
+	sound[] = {"mcc\sounds\radio\radioHardStatic_2.ogg", db+3, 1};
 	#endif
 };
 
@@ -2094,9 +2094,9 @@ class radioStaticBreak_0
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioStaticBreak_0.ogg", db+10, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioStaticBreak_0.ogg", db+2, 1};
 	#else
-	sound[] = {"mcc\sounds\radio\radioStaticBreak_0.ogg", db+10, 1};
+	sound[] = {"mcc\sounds\radio\radioStaticBreak_0.ogg", db+4, 1};
 	#endif
 };
 
@@ -2106,8 +2106,8 @@ class radioStaticBreak_1
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioStaticBreak_1.ogg", db+10, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\radio\radioStaticBreak_1.ogg", db+2, 1};
 	#else
-	sound[] = {"mcc\sounds\radio\radioStaticBreak_1.ogg",db+10, 1};
+	sound[] = {"mcc\sounds\radio\radioStaticBreak_1.ogg",db+2, 1};
 	#endif
 };

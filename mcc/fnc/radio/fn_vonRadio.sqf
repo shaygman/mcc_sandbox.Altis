@@ -10,10 +10,8 @@ _channelID = -1;
 
 _fncKeyDown =
 {
-	if (!(player getVariable ["MCC_radioBroadcasting",false])) then
-	{
-		if (!isNull findDisplay 55 && !isNull findDisplay 63) then
-		{
+	if (!(player getVariable ["MCC_radioBroadcasting",false])) then	{
+		if (!isNull findDisplay 55 && !isNull findDisplay 63) then {
 			player setVariable ["MCC_radioBroadcasting",true];
 			(ctrlText (findDisplay 63 displayCtrl 101)) call MCC_fnc_VONRadioPressed;
 
@@ -25,11 +23,9 @@ _fncKeyDown =
 
 _fncKeyUp =
 {
-	if (player getVariable ["MCC_radioBroadcasting",false]) then
-	{
+	if (player getVariable ["MCC_radioBroadcasting",false]) then {
 		_ctrlText = ctrlText (findDisplay 63 displayCtrl 101);
-		if ((missionNameSpace getVariable ["MCC_radioBroadcastingChannel",""]) != _ctrlText) then
-		{
+		if ((missionNameSpace getVariable ["MCC_radioBroadcastingChannel",""]) != _ctrlText) then {
 			_ctrlText call MCC_fnc_VONRadioPressed;
 		};
 	};

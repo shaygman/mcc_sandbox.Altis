@@ -21,11 +21,9 @@ publicvariable "CP_ARWeaponWest";
 	_weapon = _x select 1;
 	_factor		= _forEachIndex * 13;
 
-	if (!isnil "_weapon") then
-	{
+	if (!isnil "_weapon") then {
 		_weaponAttachments = ["SERVER_AR", "primary_attachments_west", format ["CP_%1",_weapon] , "ARRAY"] call iniDB_read;
-		if (count _weaponAttachments == 0) then
-		{
+		if (count _weaponAttachments == 0) then {
 			_weaponAttachments	=	call compileFinal str[
 									[[0,""],[_factor+2,"optic_Aco"],[_factor+4,"optic_Holosight"],[_factor+6,"optic_MRCO"],[_factor+8,"optic_Hamr"],[_factor+10,"optic_Arco"],[_factor+20,"optic_tws"]], //optics
 									[[0,""],[_factor+11,"muzzle_snds_h"]], //Barrel

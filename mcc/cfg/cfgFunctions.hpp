@@ -352,6 +352,7 @@ class radio
 	class VONRadioBroadcast {};
 	class VONRadiofindChannel {};
 	class VONRadioPressed {};
+	class assignChannelServer{};
 };
 
 class medic

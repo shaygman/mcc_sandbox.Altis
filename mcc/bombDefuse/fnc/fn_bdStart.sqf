@@ -19,10 +19,10 @@ if (isNull _realIED) exitWith {};
 
 //is engineer
 _isEngineer = if (((getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMines")) == 1) || ((player getvariable ["CP_role",""]) == "Specialist")) then {true} else {false};
-_disarmTime = (_realIED getvariable ["MCC_disarmTime",0]) max 60;
+_disarmTime = (_realIED getvariable ["MCC_disarmTime",0]) max 120;
 
-_difficulty = if (_disarmTime < 30 || _isEngineer) then {["easy","medium"] call bis_fnc_selectRandom} else {["medium","hard"] call bis_fnc_selectRandom};
-_noModules = (floor (_disarmTime/40) max 2) min 11;
+_difficulty = ["easy","medium","hard"] call bis_fnc_selectRandom;
+_noModules = (floor (_disarmTime/60) max 2) min 11;
 _modules = [];
 for "_i" from 1 to _noModules do {
   _modules pushBack (["wires","buttons","numpad"] call bis_fnc_selectRandom);

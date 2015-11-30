@@ -4,14 +4,13 @@ if (isDedicated || MCC_isLocalHC) exitWith {}; // not a player machine
 
 // Basicly wait till mission start
 while { (isnil ("MCC_TRAINING"))  } do {sleep 3};
-while { true } do
-{
+while { true } do {
 	"RESPAWN_GUERRILA" setMarkerPosLocal [-9999, -9999, 0.5];
 	"RESPAWN_EAST" setMarkerPosLocal [-9999, -9999, 0.5];
 	"RESPAWN_WEST" setMarkerPosLocal [-9999, -9999, 0.5];
 	"RESPAWN_CIVILIANS" setMarkerPosLocal [-9999, -9999, 0.5];
 
-	while { (alive player) } do {sleep 1};
+	while { (isNull player) || (alive player) } do {sleep 1};
 
     waitUntil { (alive player) && (player isKindOf "CAManBase") };
 

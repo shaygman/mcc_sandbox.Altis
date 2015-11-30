@@ -5,7 +5,7 @@
 // 		_effect =  effectType, String: "sandstorm", "bf"
 // 		_jip=	Boolean, is it a JIP player or not (JIP player will not change weather as sync function already does that)
 //==================================================================================================================================================================================
-private ["_effect","_effects","_handle","_colorParams","_grainParams","_parray","_jip","_dust","_ash","_news","_radialParams"];
+private ["_effect","_effects","_handle","_colorParams","_grainParams","_parray","_jip","_dust","_ash","_news","_radialParams","_mist"];
 _effect = _this select 0;
 _jip	= _this select 1;
 _radialParams = [];
@@ -22,6 +22,7 @@ switch (tolower _effect) do {
 		_dust	= true;
 		_ash	= true;
 		_news	= true;
+		_mist	= true;
 		_colorParams 	=  [[1, 0.8, -0.001, [0.0, 0.0, 0.0, 0.0], [0.8*2, 0.5*2, 0.0, 0.7], [0.9, 0.9, 0.9, 0.0]]];
 		_grainParams 	=  [[.8, 15, 6, 0.5, 0.5,true]];
 		_parray = [
@@ -59,8 +60,9 @@ switch (tolower _effect) do {
 
 	case "storm": {
 		_dust	= true;
-		_ash	= true;
+		_ash	= false;
 		_news	= true;
+		_mist	= true;
 		_colorParams 	=  [[0.9,
 							0.9,
 							0,
@@ -85,6 +87,7 @@ switch (tolower _effect) do {
 		_dust	= true;
 		_ash	= true;
 		_news	= false;
+		_mist	= true;
 		_colorParams 	=  [[1.1,
 							1.25,
 							0,
@@ -129,6 +132,7 @@ switch (tolower _effect) do {
 		_dust	= true;
 		_ash	= false;
 		_news	= false;
+		_mist	= false;
 		_colorParams 	=  [[1, 0.5, 0, [0.0, 0.0, 0.0, 0.0], [0.8*2, 0.5*2, 0.0, 0.7], [0.9, 0.9, 0.9, 0.0]],[1, 0.8, -0.001, [0.0, 0.0, 0.0, 0.0], [0.8*2, 0.5*2, 0.0, 0.7], [0.9, 0.9, 0.9, 0.0]]];
 
 		_parray = [
@@ -167,6 +171,7 @@ switch (tolower _effect) do {
 		_dust	= true;
 		_ash	= false;
 		_news	= true;
+		_mist	= false;
 		player setVariable ["MCC_ppEffectRuning",_effect];
 
 		_parray = [
@@ -254,6 +259,52 @@ if (_dust) then {
 			_ps setDropInterval 0.02;
 
 			_delay = 10 + random 20;
+			sleep _delay;
+
+			deletevehicle _ps;
+		};
+	};
+};
+
+//mist
+if (_mist) then {
+	[_effect] spawn {
+		waituntil {isplayer player};
+		while {(player getVariable ["MCC_ppEffectRuning",""]) == (_this select 0)} do {
+			_obj = vehicle player;
+			_pos = position _obj;
+
+			//--- fog
+			_duration = 8;
+			_windstrength = windStr;
+			_velocity = [((wind select 0) max 5) * _windstrength, ((wind select 0) max 5) * _windstrength,0];
+			_relPos = [-((_velocity select 1) * (_duration / 2)), 0, -6];
+			_color = [1.0, 0.9, 0.8];
+			_subColor = [1,1,1,0.22];
+			_alpha = 0.6;
+			_ps = "#particlesource" createVehicleLocal _pos;
+			_ps setParticleParams [
+			["A3\data_f\ParticleEffects\Universal\universal.p3d", 16, 12, 8],
+			"",
+			"Billboard",
+			15 + (random 1),
+			_duration,
+			_relPos,
+			_velocity,
+			5,
+			0.2,
+			0.1568,
+			0,
+			[8 + random 5],
+			[_color + [0],_subColor,_subColor,_subColor,_subColor,_subColor,_subColor,[1,1,1,0]],
+			[0], 0, 0, "", "", _obj];
+
+			//_ps setParticleRandom [3, [30, 30, 0], [0, 0, 0], 1, 0, [0, 0, 0, 0.01], 0, 0];
+			_ps setParticleRandom  [3, [50+random 10, 50+random 10, 10], [0, 0, 0], 0, 0.3, [0, 0, 0, 0.08], 0, 0];
+			_ps setParticleCircle [0.1, [0, 0, 0]];
+			_ps setDropInterval 0.02;
+
+			_delay = 10 + random 10;
 			sleep _delay;
 
 			deletevehicle _ps;

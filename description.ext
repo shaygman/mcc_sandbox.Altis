@@ -13,7 +13,7 @@ disabledAI   = 1;
 enableDebugConsole = 1;
 
 //----- For PvP ---------
-disableChannels[]={0};
+disableChannels[]={0,1};
 joinUnassigned = 1;
 
 corpseLimit = 30;
@@ -22,7 +22,7 @@ corpseRemovalMaxTime = 300;
 
 wreckLimit = 15;
 wreckRemovalMinTime = 60;
-wreckRemovalMaxTime = 1200
+wreckRemovalMaxTime = 1200;
 
 class Header
 {

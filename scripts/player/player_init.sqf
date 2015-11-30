@@ -153,13 +153,15 @@ waituntil {missionNameSpace getvariable ["playerDeploy",false]};
 
 //Spawn point found clearing not needed stuff
 detach player;
+
 detach CP_gearCam;
 CP_gearCam cameraeffect ["Terminate","back"];
 
-_safePos = [-500,-500,0];
+_safePos = [];
 _rad = 10;
-while {str _safepos == "[-500,-500,0]"} do {
-	_safePos = [(playerDeployPos),_rad,30,1,0,900,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
+while {count _safepos == 0} do {
+	_safepos = playerDeployPos findEmptyPosition [0,_rad,"CAManBase"];
+	//_safePos = [(playerDeployPos),_rad,30,1,0,900,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
 	_rad = _rad + 10;
 	sleep 0.1;
 };
@@ -167,7 +169,7 @@ while {str _safepos == "[-500,-500,0]"} do {
 missionNamespace setvariable ["CP_gainXPFirstTime",true];
 player setpos _safePos;
 
-while {isnil "_role"} do {_role = player getvariable "CP_role";};
+while {isnil "_role"} do {_role = player getvariable "CP_role";sleep 0.1;};
 
 //If an officer and not leader make him the leader
 if ( (tolower _role == "officer" ) && (player != leader player)) then {group player selectLeader player};

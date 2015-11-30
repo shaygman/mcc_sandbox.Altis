@@ -17,4 +17,5 @@ class MCCmodules
 	class settingsCover {description = "Cover settings";};
 	class settingsMedical {description = "Medical system settings";};
 	class moduleCapturePoint {description = "Sets a capture point";};
+	class vehicleRespawn {description = "respawn empty vehicles";};
 };
