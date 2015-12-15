@@ -180,18 +180,14 @@ if (missionNamespace getvariable ["MCC_saveGear",false]) then
 //Handle add - action
 [] call MCC_fnc_handleAddaction;
 
-if (isnil "MCC_TRAINING") then
-{
+if (isnil "MCC_TRAINING") then {
 	//------------T2T---------------------------------
 	if (MCC_t2tIndex == 2) then {MCC_teleportToTeam = true};
 
 	//-------------------Role selection -------------------------------------------
-	if (CP_activated) then
-	{
+	if (CP_activated) then	{
 		_null=[] execVM MCC_path + "scripts\player\player_init.sqf";
-	}
-	else
-	{
+	} else {
 		 []  call MCC_fnc_startLocations;
 	};
 };

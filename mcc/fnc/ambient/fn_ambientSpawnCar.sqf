@@ -44,7 +44,7 @@ if (_counter > _carInArea) then {_counter = _carInArea};
 _counter = _counter min (count _nearRoads);
 
 //Denied zones
-_deniedZones = (player nearEntities ["MCC_Module_ambientCiviliansDenied", 2000]) + (player nearEntities ["MCC_Module_ambientCiviliansCuratorDenied", 2000]);
+_deniedZones = (_pos nearEntities ["MCC_Module_ambientCiviliansDenied", 2000]) + (_pos nearEntities ["MCC_Module_ambientCiviliansCuratorDenied", 2000]);
 
 //Spawn moving vehicels
 for "_i" from 1 to _counter do {

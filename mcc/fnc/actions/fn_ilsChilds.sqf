@@ -262,4 +262,4 @@ deletevehicle _glideslope;
 _ringarray=[];
 
 //Clear up
-[2,getpos _ring,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group player]] call MCC_fnc_manageWp;
+[2,getpos _loc,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group player]] call MCC_fnc_manageWp;

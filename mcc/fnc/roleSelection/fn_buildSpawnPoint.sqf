@@ -9,9 +9,8 @@
 // animate: Boolean
 // construct: Boolean
 //==============================================================================================================================================================================
-private ["_side","_size","_destructable","_building","_dummy","_sphere","_dir","_animate","_flag","_flagTex","_name","_logic","_pos","_construct"];
-if ((typeName (_this select 0)) == "OBJECT") then
-{
+private ["_side","_size","_destructable","_building","_dummy","_sphere","_dir","_animate","_flag","_flagTex","_name","_logic","_pos","_construct","_teleport"];
+if ((typeName (_this select 0)) == "OBJECT") then {
 	_logic			= _this select 0;
 	_pos			= getpos _logic;
 	_dir			= getdir _logic;
@@ -21,17 +20,17 @@ if ((typeName (_this select 0)) == "OBJECT") then
 	_destructable	= _logic getvariable ["distractable",true];
 	_animate		= false;
 	_construct 		= (_logic getvariable ["construct",0]) ==1;
+	_teleport 		= _logic getVariable ["teleportAtStart",0];
 
-}
-else
-{
+} else {
 	_pos			= _this select 0;
 	_dir			= _this select 1;
 	_side 			= _this select 2;
 	_size 			= toupper (_this select 3);
 	_destructable	= _this select 4;
 	_animate		= if (count _this > 5) then {_this select 5} else {false};
-	_construct 		= [_this, 6, false, [false]] call BIS_fnc_param;
+	_construct 		= param [6, false, [false]];
+	_teleport 		= param [7, 0, [0]];
 };
 
 //--------------------Default flags (Role selection)-------------------------------------------------------
@@ -43,8 +42,7 @@ if (isnil "CP_flagGUER") then {CP_flagGUER = "\a3\Data_f\Flags\flag_AAF_co.paa"}
 
 if !(isServer) exitWith {};
 
-if (typeName _side == "STRING") then
-{
+if (typeName _side == "STRING") then {
 	_side = switch (toupper _side) do
 			{
 				case "WEST":		{west};
@@ -55,8 +53,7 @@ if (typeName _side == "STRING") then
 };
 
 //animate the process of building a FOB
-if (_animate) then
-{
+if (_animate) then {
 	//Phase 1
 	private ["_anchor","_prop","_class","_modelWorld","_objects","_propPos","_newObjects","_anchorPos","_time"];
 	_anchor = "Land_PaperBox_closed_F" createvehicle _pos;
@@ -116,17 +113,13 @@ if (_construct) then {
 	_null = [_pos, _dir , "MCC_rts_hq1", 0, _side] spawn MCC_fnc_construct_base;
 };
 
-switch (_side) do
-{
+switch (_side) do {
 	case west:	//west
 	{
-		if (_size == "FOB") then
-		{
+		if (_size == "FOB") then{
 			_building = "Land_BagBunker_Tower_F";
 			_flagTex = CP_flagWest;
-		}
-		else
-		{
+		} else {
 			_building = "ProtectionZone_Invisible_F";
 			_flagTex = CP_flagWest;
 		};
@@ -134,33 +127,26 @@ switch (_side) do
 
 	case east:	//east
 	{
-		if (_size == "FOB") then
-		{
+		if (_size == "FOB") then {
 			_building = "Land_BagBunker_Tower_F";
 			_flagTex = CP_flagEast;
-		}
-		else
-		{
+		} else {
 			_building = "ProtectionZone_Invisible_F";
 			_flagTex = CP_flagEast;
 		};
 	};
 	case resistance:	//east
 	{
-		if (_size == "FOB") then
-		{
+		if (_size == "FOB") then {
 			_building = "Land_BagBunker_Tower_F";
 			_flagTex = CP_flagGUER;
-		}
-		else
-		{
+		} else {
 			_building = "ProtectionZone_Invisible_F";
 			_flagTex = CP_flagGUER;
 		};
 	};
 
-	default
-	{
+	default	{
 		_building = "ProtectionZone_Invisible_F";
 		_flagTex = CP_flagGUER;
 	};
@@ -178,10 +164,11 @@ _dummy setvariable ["type",_size,true];
 _dummy setvariable ["side",_side,true];
 _dummy setvariable ["mcc_flag",_flag,true];
 _dummy setVariable ["mcc_delete",false,true];
-
+_dummy setVariable ["teleport",_teleport,true];
+missionNamespace setVariable [format ["MCC_%1_BUILDING",_side],_dummy];
+publicVariable format ["MCC_%1_BUILDING",_side];
 //If is FOB
-if (_size == "FOB") then
-{
+if (_size == "FOB") then {
 	//Attach flag
 	_flag attachto [_dummy,[2.8,2,1.5]];
 	_box = "Box_FIA_Support_F" createvehicle _pos;
@@ -217,9 +204,7 @@ if (_size == "FOB") then
 
 	//Create marker
 	[[[_name], _pos, "colorGreen", "loc_Bunker",_name,false],"BIS_fnc_markerCreate", _side,false] call BIS_fnc_MP;
-}
-else
-{
+} else {
 	//Not destroyable
 	_dummy addEventHandler ["handledamage",{0}];
 	missionNameSpace setVariable [format ["MCC_START_%1",_side],_pos];
@@ -229,8 +214,7 @@ else
 	_dummy spawn MCC_fnc_medicArea;
 };
 
-if (!_destructable) then
-{
+if (!_destructable) then {
 	_sphere = "ProtectionZone_Invisible_F" createvehicle (getpos _dummy);
 	_sphere setpos (getpos _dummy);
 	_sphere setVariable ["mcc_delete",false,true];

@@ -41,7 +41,6 @@ class CP_SQUADPANEL {
 		CP_Mutiny,
 		CP_commanderName,
 		CP_commander,
-		CP_deployPanelButton,
 		CP_flag,
 		CP_side1,
 		CP_side1Score,

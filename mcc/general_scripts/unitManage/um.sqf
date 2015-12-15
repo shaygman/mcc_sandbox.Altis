@@ -55,6 +55,7 @@ switch (_type) do {
 			{
 				_targetUnit = MCC_UMunitsNames select (lbCurSel MCC_UM_LIST);	//Hijacked unit
 				if (isplayer _targetUnit) exitwith {hint "Can't hijak other players"};
+				if (isNil "_targetUnit" || isNull _targetUnit) exitWith {};
 				MCC_PrevHijacked_Group = netID (group _targetUnit);
 				MCC_Prev_HijackedGroupIsLeader = if (leader group _targetUnit == _targetUnit) then {true} else {false};
 

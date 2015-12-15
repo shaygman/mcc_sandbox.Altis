@@ -2,7 +2,6 @@
 MCC_3D_PLACER = compile preProcessFileLineNumbers format["%1mcc\pop_menu\3rd_placer.sqf",MCC_path];
 
 MCC_fnc_makeTaks = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4)] execVM MCC_path + "mcc\pop_menu\tasks_add.sqf"};
-MCC_fnc_MusicTrigger = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7)] execVM MCC_path + "mcc\general_scripts\jukebox\jukebox_execute.sqf"};
 /*
 sf_para = compile preProcessFileLineNumbers format["%1mcc\general_scripts\paradrop\parastart.sqf",MCC_path];
 uav = compile preProcessFileLineNumbers format["%1mcc\general_scripts\uav\create_uav_site.sqf",MCC_path];
@@ -11,8 +10,7 @@ uav = compile preProcessFileLineNumbers format["%1mcc\general_scripts\uav\create
 */
 
 //------------------------------- SERVER FUNCTIONS------------------------------------------
-if ( (isServer) || (MCC_isLocalHC) ) then
-{
+if ( (isServer) || (MCC_isLocalHC) ) then {
 	//mcc_patrol_switch = compile preProcessFileLineNumbers format["%1mcc\pop_menu\patrol_switch.sqf",MCC_path];
 	mcc_fps_running = false;
 	MCC_fnc_simpleSpawn = {[(_this select 0), (_this select 1), (_this select 2), (_this select 3), (_this select 4), (_this select 5), (_this select 6), (_this select 7), (_this select 8)] execVM MCC_path + "mcc\pop_menu\simple_spawn.sqf"};
@@ -20,8 +18,7 @@ if ( (isServer) || (MCC_isLocalHC) ) then
 };
 
 
-if (isServer) then
-{
+if (isServer) then {
 //===================================================================MCC_fnc_highCommand======================================================================================
 // Create a suiside bombers  that will randomly run ove and explode himself on target faction's units
 //Example:[[netID _commander,_commander],_action],"MCC_fnc_highCommand",true,false] call BIS_fnc_MP;
@@ -65,3 +62,4 @@ if (isServer) then
 // 	isVIP: string, if = "0" no vip else there is a vip
 //==============================================================================================================================================================================
 	MCC_fnc_startConvoy = {[(_this select 0), (_this select 1)] execVM MCC_path + "mcc\general_scripts\convoy\start_convoy_execute.sqf"};
+};

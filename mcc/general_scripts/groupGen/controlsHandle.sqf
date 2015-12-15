@@ -555,8 +555,7 @@ if (_action == 12) exitWith
 };
 
 //-------------------------------------------------------------------------------------JUKEBOX----------------------------------------------------------------------------------------------
-if (_action == 13) exitWith
-{
+if (_action == 13) exitWith {
 	_control = (_mccdialog displayCtrl 514);
 	_control ctrlShow true;
 
@@ -567,25 +566,33 @@ if (_action == 13) exitWith
 	#define MCC_JUKEBOX_CONDITION 3062
 	#define MCC_JUKEBOX_ZONE 3063
 
-	if (MCC_jukeboxMusic) then
+	private ["_trackArray","_tracksCfg","_track","_cfgname","_cfgclass"];
+	_trackArray = [];
+
+	_tracksCfg = if (missionNamespace getvariable ["MCC_jukeboxMusic",true]) then {[missionConfigFile >> "CfgMusic",configFile >> "CfgMusic"]} else {[missionConfigFile >> "CfgSounds",ConfigFile >> "CfgSounds",configFile >> "CfgSFX"]};
+
 	{
-		_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_TRACK; //fill combobox music tracks
-		lbClear _comboBox;
-		{
-			_displayname = format ["%1",_x  select 0];
-			_comboBox lbAdd _displayname;
-		} foreach MCC_musicTracks_array;
-		_comboBox lbSetCurSel MCC_musicTracks_index;
-	} else
+		for "_i" from 0 to ((count _x) - 1) do {
+			_track = _x select _i;
+			if (isClass _track) then {
+				_cfgname = getText (_track >> "name");
+				_cfgclass = configName(_track);
+				_trackArray pushBack [_cfgname,_cfgclass,_foreachindex];
+			};
+		};
+	} forEach _tracksCfg;
+
+
+	//fill combobox music tracks
+	_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_TRACK;
+	lbClear _comboBox;
+
 	{
-		_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_TRACK; //fill combobox sound tracks
-		lbClear _comboBox;
-		{
-			_displayname = format ["%1",_x  select 0];
-			_comboBox lbAdd _displayname;
-		} foreach MCC_soundTracks_array;
-		_comboBox lbSetCurSel MCC_musicTracks_index;
-	};
+		_displayname = format ["%1",_x select 0];
+		_comboBox lbAdd _displayname;
+		_comboBox lbSetData [_foreachindex,_x select 1];
+	} foreach _trackArray;
+	_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_musicTracks_index",0]);
 
 	_comboBox = _mccdialog displayCtrl MCC_JUKEBOX_ACTIVATE; //fill combobox Activate by
 

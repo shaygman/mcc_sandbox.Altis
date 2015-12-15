@@ -32,7 +32,7 @@ _carInArea = (MAX_PARKED_CARS_PER_AREA - ({_x distance _pos < _carSpawnDistance}
 if (_counter > _carInArea) then {_counter = _carInArea};
 
 //Denied zones
-_deniedZones = (player nearEntities ["MCC_Module_ambientCiviliansDenied", 2000]) + (player nearEntities ["MCC_Module_ambientCiviliansCuratorDenied", 2000]);
+_deniedZones = (_pos nearEntities ["MCC_Module_ambientCiviliansDenied", 2000]) + (_pos nearEntities ["MCC_Module_ambientCiviliansCuratorDenied", 2000]);
 
 for "_i" from 1 to (_houseConuter min _counter) do
 {

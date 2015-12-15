@@ -4,22 +4,18 @@ disableSerialization;
 
 _side = _this select 0;
 if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21)==1) then {_side = _side + 7};
-
-if !mcc_isloading then
-{
+MCC_teleportAtStart = lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 20);
+if !mcc_isloading then {
 	switch (_side) do
 	{
 		case 0:	//West
 		{
-			MCC_teleportAtStartWest = lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 20);
-			publicVariable "MCC_teleportAtStartWest";
-
 			hint "click on map where you want your start location";
 			onMapSingleClick "
 					MCC_START_WEST  = _pos;
 					publicVariable ""MCC_START_WEST"";
 
-					[[_pos, 0, 'west','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'west','HQ',false,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					[_pos, random 360 , 'MCC_rts_hq1', 0, west] spawn MCC_fnc_construct_base;
 					onMapSingleClick """";
 
@@ -27,14 +23,13 @@ if !mcc_isloading then
 												MCC_START_WEST  = %1;
 												publicVariable 'MCC_START_WEST';
 
-												MCC_teleportAtStartWest = %2;
-												publicVariable 'MCC_teleportAtStartWest';
+												MCC_teleportAtStart = %2;
 
-												[[MCC_START_WEST, 0, 'west','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+												[[MCC_START_WEST, 0, 'west','HQ',false,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 												[MCC_START_WEST, random 360 , 'MCC_rts_hq1', 0, west] spawn MCC_fnc_construct_base;
 												""
 												,MCC_START_WEST
-												,MCC_teleportAtStartWest
+												,MCC_teleportAtStart
 												];
 					hint ""Start WEST location updated.""
 				";
@@ -42,15 +37,12 @@ if !mcc_isloading then
 
 		case 1:	//East
 		{
-			MCC_teleportAtStartEast = lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 20);
-			publicVariable "MCC_teleportAtStartEast";
-
 			hint "click on map where you want your start location";
 			onMapSingleClick "
 					MCC_START_EAST  = _pos;
 					publicVariable ""MCC_START_EAST"";
 
-					[[_pos, 0, 'east','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'east','HQ',false,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					[_pos, random 360 , 'MCC_rts_hq1', 0, east] spawn MCC_fnc_construct_base;
 					onMapSingleClick """";
 
@@ -58,14 +50,13 @@ if !mcc_isloading then
 												MCC_START_EAST  = %1;
 												publicVariable 'MCC_START_EAST';
 
-												MCC_teleportAtStartEast = %2;
-												publicVariable 'MCC_teleportAtStartEast';
+												MCC_teleportAtStart = %2;
 
-												[[MCC_START_EAST, 0, 'east','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+												[[MCC_START_EAST, 0, 'east','HQ',false,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 												[MCC_START_EAST, random 360 ,'MCC_rts_hq1', 0, east] spawn MCC_fnc_construct_base;
 												""
 												,MCC_START_EAST
-												,MCC_teleportAtStartEast
+												,MCC_teleportAtStart
 												];
 					hint ""Start East location updated.""
 				";
@@ -73,15 +64,12 @@ if !mcc_isloading then
 
 		case 2:	//Guer
 		{
-			MCC_teleportAtStartGuer = lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 20);
-			publicVariable "MCC_teleportAtStartGuer";
-
 			hint "click on map where you want your start location";
 			onMapSingleClick "
 					MCC_START_GUER  = _pos;
 					publicVariable ""MCC_START_GUER"";
 
-					[[_pos, 0, 'GUER','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'GUER','HQ',false,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					[_pos, random 360 ,'MCC_rts_hq1', 0, resistance] spawn MCC_fnc_construct_base;
 					onMapSingleClick """";
 
@@ -89,14 +77,13 @@ if !mcc_isloading then
 												MCC_START_GUER  = %1;
 												publicVariable 'MCC_START_GUER';
 
-												MCC_teleportAtStartGuer = %2;
-												publicVariable 'MCC_teleportAtStartGuer';
+												MCC_teleportAtStart = %2;
 
-												[[MCC_START_GUER, 0, 'GUER','HQ',false], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+												[[MCC_START_GUER, 0, 'GUER','HQ',false,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 												[MCC_START_GUER, random 360 ,'MCC_rts_hq1', 0, resistance] spawn MCC_fnc_construct_base;
 												""
 												,MCC_START_GUER
-												,MCC_teleportAtStartGuer
+												,MCC_teleportAtStart
 												];
 					hint ""Start Guer location updated.""
 				";
@@ -104,9 +91,6 @@ if !mcc_isloading then
 
 		case 3:	//Civ
 		{
-			MCC_teleportAtStartCiv = lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 20);
-			publicVariable "MCC_teleportAtStartCiv";
-
 			hint "click on map where you want your start location";
 			onMapSingleClick "
 					MCC_START_CIV  = _pos;
@@ -118,11 +102,10 @@ if !mcc_isloading then
 												MCC_START_CIV  = %1;
 												publicVariable 'MCC_START_CIV';
 
-												MCC_teleportAtStartCiv = %2;
-												publicVariable 'MCC_teleportAtStartCiv';
+												MCC_teleportAtStart = %2;
 												""
 												,MCC_START_CIV
-												,MCC_teleportAtStartCiv
+												,MCC_teleportAtStart
 												];
 					hint ""Start Guer location updated.""
 				";
@@ -186,7 +169,7 @@ if !mcc_isloading then
 		{
 			hint "click on map inorder to place the FOB";
 			onMapSingleClick "
-					[[_pos, 0, 'west' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'west' ,'FOB',true,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					mcc_safe=mcc_safe + FORMAT [""
 												[[%1, 0, 'west' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
@@ -201,7 +184,7 @@ if !mcc_isloading then
 		{
 			hint "click on map inorder to place the FOB";
 			onMapSingleClick "
-					[[_pos, 0, 'east' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'east' ,'FOB',true,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					mcc_safe=mcc_safe + FORMAT [""
 												[[%1, 0, 'east' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
@@ -216,7 +199,7 @@ if !mcc_isloading then
 		{
 			hint "click on map inorder to place the FOB";
 			onMapSingleClick "
-					[[_pos, 0, 'GUER' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'GUER' ,'FOB',true,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					mcc_safe=mcc_safe + FORMAT [""
 												[[%1, 0, 'RESISTANCE' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
@@ -231,7 +214,7 @@ if !mcc_isloading then
 		{
 			hint "click on map inorder to place the FOB";
 			onMapSingleClick "
-					[[_pos, 0, 'CIV' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'CIV' ,'FOB',true,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					mcc_safe=mcc_safe + FORMAT [""
 												[[%1, 0, 'CIV' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;

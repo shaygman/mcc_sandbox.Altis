@@ -89,6 +89,7 @@ class CfgFunctions
 		#include "mcc\undercover\cfgFunctions.hpp"
 		#include "mcc\bombDefuse\cfgFunctions.hpp"
 		#include "mcc\survive\cfgFunctions.hpp"
+		#include "mcc\compassHUD\cfgFunctions.hpp"
 	};
 };
 
@@ -151,6 +152,7 @@ class RscTitles
 	#include "mcc\dialogs\mcc_3dObject.hpp"
 	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
 	#include "mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
+	#include "mcc\compassHUD\dialogs\compassDialog.hpp"
 };
 
 class CfgDebriefing
@@ -161,4 +163,8 @@ class CfgDebriefing
 		subtitle = "For abusing the radio";
 		description = "You were kicked";
 	};
+};
+
+class cfgRemoteExec {
+	#include "mcc\cfg\cfgRemoteExec.hpp"
 };

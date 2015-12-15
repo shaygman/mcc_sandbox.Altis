@@ -5,17 +5,16 @@ MCC_fnc_mapDrawPlayersWPConsole =
 	if (MCC_ConsolePlayersCanSeeWPonMap && ("ItemGPS" in (assignedItems player) || "B_UavTerminal" in (assignedItems player) || "MCC_Console" in (assignedItems player))) then
 	{
 		_wpArray = waypoints (group player);
-		if (count _wpArray > 0)then
-		{
+		if (count _wpArray > 0)then {
 			private ["_wp","_wPos","_wType","_lastPos"];
 			_lastPos = nil;
 			_texture = gettext (configfile >> "CfgMarkers" >> "waypoint" >> "icon");
-			for [{_i= currentWaypoint (group player)},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
-			{
+
+			//Draw the current WP
+			for [{_i= currentWaypoint (group player)},{_i < count _wpArray},{_i=_i+1}] do {
 				_wp = (_wpArray select _i);
 				_wPos  = waypointPosition _wp;
-				if ((_wPos  distance [0,0,0]) > 50) then
-				{
+				if ((_wPos  distance [0,0,0]) > 50) then {
 					_wType = waypointType _wp;
 
 					_map drawIcon [
@@ -47,8 +46,7 @@ MCC_fnc_mapDrawPlayersWPConsole =
 	};
 
 	//Custom Group Markers
-	if (MCC_groupMarkers) then
-	{
+	if (MCC_groupMarkers) then {
 		private ["_groups","_texture"];
 		_groups	 = switch (side player) do
 				{

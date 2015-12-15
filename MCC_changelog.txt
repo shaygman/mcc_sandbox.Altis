@@ -1,3 +1,16 @@
+Change log r19:
+- Added: Force 1st Person camera module - force always, allow vheicles only or air only. 
+- Added: Start Location modules spawn options (none/teleport/halo/paradrop) for each individual spawn point. 
+- Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
+- Fixed: ILS module error when no rings selected
+- Fixed: Restricted ambient civilians module didn't work on dedicated
+- Fixed: Logistic dialogs for helicopters won't show crates that the helicopter can't slingload. 
+- Fiexd: Convoy not working. 
+- Fixed: RPT errors regarding ; at the end of file
+
+TODO - mission templates, test dedicated
+TODO - Compass 
+
 Change log r18:
 -= New IED Mini Game =-
 - Added: Mini-game IED disarm, as shown in "keep talking and nobody explodes" game. Http://mccsandbox.wikia.com/wiki/Mini-game_IED

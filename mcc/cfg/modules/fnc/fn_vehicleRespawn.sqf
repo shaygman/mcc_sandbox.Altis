@@ -38,7 +38,7 @@ if (typeName (_object getVariable ["abondanDistance",true]) == typeName 0) exitW
 	_vehicles = synchronizedObjects _object;
 
 	{
-		[_x,_abondanDistance,_waitTime,_tickets,_destroyEffect,_code] spawn MCC_fnc_vehicleRespawn;
+		[_x,_abondanDistance,_waitTime,_tickets,_destroyEffect,_respawnDisabled,_code] spawn MCC_fnc_vehicleRespawn;
 	} forEach _vehicles;
 };
 
@@ -61,14 +61,11 @@ while { true } Do {
 	//No trickets quit
 	if (_tickets ==0) exitWith {};
 
-	//Wait until the vehicle has moved
-	waitUntil {_object distance _vehPos > 100};
-
 	//No crew lets see if we abonadand the vehicle
 	_abandoned = if (count (crew _object) == 0 && _abondanDistance > 0) then {count ((position _object) nearEntities [["Man"], _abondanDistance])<=0} else {false};
 
 	//see if we have been damaged or disabled
-	if ((_abandoned || !(alive _object) || (!(canMove _object) && _respawnDisabled))) then {
+	if (((_abandoned && _object distance _vehPos > 50) || !(alive _object) || (!(canMove _object) && _respawnDisabled))) then {
 
 		_tickets = _tickets -1;
 		if (_destroyEffect) then {[position _object,"medium"] spawn MCC_fnc_IedDeadlyExplosion};

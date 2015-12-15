@@ -11,6 +11,7 @@ class general
 	file = "mcc\fnc\general";
 	#endif
 
+	class login {};
 	class activateAddons {preInit = 1; description = "Pre init addon";};
 	class gear	{preInit = 1; description = "Assign gear by roles";};
 
@@ -90,6 +91,8 @@ class ui
 	class getKeyFromCBA {description = "Get a pretty name from CBA key binds";};
 	class getGroupIconData {description = "get group icon depends on the group type and size";};
 	class 3Dcredits	{};
+	class forceCamera {description = "force 1st person camera";};
+	class musicTrigger {description = "Execute music or sound on all clients triggers";};
 };
 
 class ied

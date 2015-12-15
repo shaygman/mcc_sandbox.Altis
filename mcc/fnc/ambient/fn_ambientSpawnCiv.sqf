@@ -38,7 +38,7 @@ if (_counter > _civInArea) then {_counter = _civInArea};
 _counter = _counter min (count _nearHouses);
 
 //Denied zones
-_deniedZones = (player nearEntities ["MCC_Module_ambientCiviliansDenied", 2000]) + (player nearEntities ["MCC_Module_ambientCiviliansCuratorDenied", 2000]);
+_deniedZones = (_pos nearEntities ["MCC_Module_ambientCiviliansDenied", 2000]) + (_pos nearEntities ["MCC_Module_ambientCiviliansCuratorDenied", 2000]);
 
 for "_i" from 1 to _counter do {
 	_building = _nearHouses call bis_fnc_selectRandom;

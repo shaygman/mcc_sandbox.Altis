@@ -89,6 +89,7 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\undercover\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\bombDefuse\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\survive\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\compassHUD\cfgFunctions.hpp"
 	};
 };
 
@@ -121,6 +122,7 @@ class RscTitles
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_3dObject.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
+	#include "\mcc_sandbox_mod\mcc\compassHUD\dialogs\compassDialog.hpp"
 };
 
 class CfgDebriefing
@@ -162,6 +164,10 @@ class cfgWeapons
 class CfgMarkers
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgMarkers.hpp"
+};
+
+class cfgRemoteExec {
+	#include "\mcc_sandbox_mod\mcc\cfg\cfgRemoteExec.hpp"
 };
 
 class RscMapControl;

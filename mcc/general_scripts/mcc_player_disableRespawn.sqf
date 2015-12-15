@@ -1,7 +1,5 @@
 if (isDedicated || MCC_isLocalHC) exitWith {}; // not a player machine
 
-//[] spawn MCC_fnc_startLocations;
-
 // Basicly wait till mission start
 while { (isnil ("MCC_TRAINING"))  } do {sleep 3};
 while { true } do {
