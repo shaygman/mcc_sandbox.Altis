@@ -527,7 +527,7 @@ if (_action == 10) exitWith
 	{
 		_displayname = _x;
 		_index = _comboBox lbAdd _displayname;
-	} foreach MCC_activeMarkers;
+	} foreach (missionNamespace getVariable ["MCC_activeMarkers",[]]);
 	_comboBox lbSetCurSel 0;
 };
 

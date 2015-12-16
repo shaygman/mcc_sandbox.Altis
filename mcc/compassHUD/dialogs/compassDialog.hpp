@@ -35,21 +35,22 @@ class MCC_hud_compass {
 					x = 0;
 					y = 0;
 					w = 0.023;
-					h = 0.023 * (4/3);
+					h = 0.03 * (4/3);
+					text = __EVAL(MCCPATH +"mcc\compassHUD\data\needleGreen.paa");
+					colorText[] = {1,1,1,1};
+				};
+				class Needle : MCC_RscPicture
+				{
+					idc = -1;
+					x = 0.21;
+					y =  0.04;
+					w = 0.023;
+					h = 0.03 * (4/3);
 					text = __EVAL(MCCPATH +"mcc\compassHUD\data\needle.paa");
 					colorText[] = {1,1,1,1};
 				};
 			};
 		};
-		class Needle : MCC_RscPicture
-		{
-			idc = 2;
-			x = 0.5 - 0.03/2;
-			y =  safeZoneY + safeZoneH - (2.5/(2048/64)*(4/3))+ 0.1;
-			w = 0.023;
-			h = 0.023 * (4/3);
-			text = __EVAL(MCCPATH +"mcc\compassHUD\data\needle.paa");
-			colorText[] = {1,1,1,1};
-		};
+
 	};
 };

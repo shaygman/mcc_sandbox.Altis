@@ -10,6 +10,8 @@ Change log r19:
 
 TODO - mission templates, test dedicated
 TODO - Compass 
+TODO - check fast rope
+TODO - check defuse after defused in mini-game
 
 Change log r18:
 -= New IED Mini Game =-
