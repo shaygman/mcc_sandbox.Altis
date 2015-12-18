@@ -61,12 +61,12 @@ missionNameSpace setVariable ["MCC_startLocationsRuning", false];
 //Black Screen on mission startup
 if (!_cpActivated && _respawnDialog) then {
 
+	cutText ["","BLACK",0.1];
+	sleep 3;
 	_startLocations = [player] call BIS_fnc_getRespawnPositions;
 	_openDialog = {(_x getVariable ["teleport",0]) != 0} count _startLocations > 0;
 
 	if (_openDialog) then {
-		cutText ["","BLACK",0.1];
-		sleep 1;
 		player setVariable ["cpReady",false,true];
 		playerDeploy = false;
 		sleep 0.1;
@@ -80,9 +80,9 @@ if (!_cpActivated && _respawnDialog) then {
 		//Respawning
 
 		player setVariable ["cpReady",true,true];
-
-		cutText ["Deploying ....","BLACK IN",5];
 	};
+
+	cutText ["Deploying ....","BLACK IN",5];
 
 	_starLoc = missionNamespace getVariable ["CP_activeSpawn",objNull];
 

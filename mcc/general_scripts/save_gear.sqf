@@ -19,19 +19,11 @@ if (CP_activated) then {
 		_tickets = -1;
 		[_side, _tickets] call BIS_fnc_respawnTickets;
 	} else {
-
-		//Mission end
-		/*
-		[west, missionNameSpace getVariable ["MCC_ticketsWest",200]] call BIS_fnc_respawnTickets;
-		[east, missionNameSpace getVariable ["MCC_ticketsEast",200]] call BIS_fnc_respawnTickets;
-		[resistance, missionNameSpace getVariable ["MCC_ticketsGUER",200]] call BIS_fnc_respawnTickets;
-		*/
 		[["sidetickets"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
 	};
 };
 
-if (missionNamespace getvariable ["MCC_saveGear",false]) then
-{
+if (missionNamespace getvariable ["MCC_saveGear",false]) then {
 	_goggles = goggles _unit; 			//Can't  save gear after killed EH
 	_headgear = headgear _unit;
 	_uniform = uniform _unit;
@@ -70,8 +62,7 @@ if (missionNameSpace getVariable ["MCC_deletePlayersBody",false]) then {deleteVe
 
 _null = [(compile format ["MCC_curator addCuratorEditableObjects [[objectFromNetId '%1'],false];",netid player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 
-if (missionNamespace getvariable ["MCC_saveGear",false]) then
-{
+if (missionNamespace getvariable ["MCC_saveGear",false]) then {
 	removeGoggles player;
 	removeHeadgear player;
 	removeUniform player;
@@ -179,6 +170,12 @@ if (missionNamespace getvariable ["MCC_saveGear",false]) then
 
 //Handle add - action
 [] call MCC_fnc_handleAddaction;
+
+//if lost curator for some reason
+if (((missionNamespace getvariable ["mcc_missionmaker",""])== name player) && (player != getAssignedCuratorUnit MCC_curator)) then {
+	[player, "MCC_fnc_assignCurator", false, false] spawn BIS_fnc_MP;
+};
+
 
 if (isnil "MCC_TRAINING") then {
 	//------------T2T---------------------------------

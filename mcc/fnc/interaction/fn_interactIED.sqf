@@ -18,7 +18,7 @@ _disarmTime =  _ied getvariable "MCC_disarmTime";
 _pos=[((getposATL _ied) select 0),(getposATL _ied) select 1,((getPosATL _ied) select 2)];
 
 //Is it a mini-game
-if (_ied getVariable ["MCC_isIEDMiniGame",false]) exitWith {
+if ((_ied getVariable ["MCC_isIEDMiniGame",false]) && (_ied getvariable ["armed",false])) exitWith {
 	[_ied,true] spawn MCC_fnc_bdStart;
 	player setVariable ["MCC_interactionActive",false];
 };

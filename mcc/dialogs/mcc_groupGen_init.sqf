@@ -20,6 +20,10 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index", "_array", "_c
 disableSerialization;
 MCC_mcc_screen = 2;	//Group gen for poping up the same menu again
 
+//Clear old data
+missionNamespace setVariable ["MCC_selectedUnits",[]];
+missionNamespace setVariable ["MCC_GroupGenGroupSelected",[]];
+
 uiNamespace setVariable ["MCC_groupGen_Dialog", _this select 0];
 
 //Add delete button

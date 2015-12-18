@@ -1,7 +1,7 @@
 //===============================================================MCC_fnc_handleDamage=========================================================================================
 // Handle damage on players and AI
 //==============================================================================================================================================================================
-private ["_unit","_selectionName","_damage","_source","_bleeding","_unconscious","_string"];
+private ["_unit","_selectionName","_damage","_source","_bleeding","_string"];
 _unit 			= _this select 0;
 _selectionName	= tolower (_this select 1);
 _damage			= _this select 2;
@@ -10,19 +10,11 @@ _fatal			= true;
 
 if (_damage < 0.0001) exitWith {};
 
-//Get params
-_severeInjury 	= _unit getVariable ["MCC_medicSeverInjury",false];
-_unconscious 	= _unit getVariable ["MCC_medicUnconscious",false];
-
-if (!local _unit || (damage _unit >=1)) then
-{
+if (!local _unit || (damage _unit >=1)) then {
 	0;
-}
-else
-{
+} else {
 	//Effects
-	if (_unit == player) then
-	{
+	if (_unit == player) then {
 		//Effects
 		"dynamicBlur" ppEffectEnable true;
 		"dynamicBlur" ppEffectAdjust [3];
@@ -33,33 +25,27 @@ else
 	};
 
 
-	if (_selectionName in ["","head","body"] && _damage >= 1) then
-	{
+	if (_selectionName in ["","head","body","spine2","spine3","face_hub"] && _damage >= 1) then {
 		//AI will not always get unconscious and sometimes just die
-		if  (!(isPlayer _unit) && (random 1 > 0.3)) then
-		{
+		if  (!(isPlayer _unit) && (random 1 > 0.3)) then {
 			//GetXP
-			if (CP_activated) then
-			{
+			if (CP_activated) then {
 				_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For killing %1",name _unit]} else {""};
 				[[getplayeruid _source, 500,_string], "MCC_fnc_addRating", _source] spawn BIS_fnc_MP;
 			};
 
 			_damage;
-		}
-		else
-		{
+		} else {
 			_damage = 0.9;
 			[_unit,_source] spawn MCC_fnc_unconscious;
 			_damage;
 		}
-	}
-	else
-	{
+	} else {
 		_bleeding = (getDammage _unit) max (_unit getVariable ["MCC_medicBleeding",0]);
 		_unit setVariable ["MCC_medicBleeding",_bleeding min 1,true];
 
 		//Set damage coef
-		(_damage * (if (isPlayer _unit) then {(missionNamespace getVariable ["MCC_medicDamageCoef",0.6])} else {1.6}));
+		_damage = if (isPlayer _unit) then {((missionNamespace getVariable ["MCC_medicDamageCoef",0.6])*_damage) min 0.95} else {_damage* 1.3};
+		_damage
 	};
 };

@@ -2,16 +2,23 @@ Change log r19:
 - Added: Force 1st Person camera module - force always, allow vheicles only or air only. 
 - Added: Start Location modules spawn options (none/teleport/halo/paradrop) for each individual spawn point. 
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
+- Fixed: Can't login to MCC after the latest patch. 
+- Fixed: Medical system was broken (players died instantly instead of falling unconcious) and added a new WIKI page - http://mccsandbox.wikia.com/wiki/MeidcalSystem
+- Fixed: Pressing the delete button while opening MCC delete the last selected group/unit. 
+- Fixed: Fast rope didn't worked well on MP. 
+- Fixed: Losing Zeus after respawn.
+- Fiexd: Zeus editing unit/object didn't work after update. 
 - Fixed: ILS module error when no rings selected
 - Fixed: Restricted ambient civilians module didn't work on dedicated
 - Fixed: Logistic dialogs for helicopters won't show crates that the helicopter can't slingload. 
-- Fiexd: Convoy not working. 
+- Fixed: Convoy not working. 
+- Fixed: Convoy spawn to many cargo units.  
+- Fixed: Mini game IED can be disarmed again even after disarming
 - Fixed: RPT errors regarding ; at the end of file
 
 TODO - mission templates, test dedicated
 TODO - Compass 
 TODO - check fast rope
-TODO - check defuse after defused in mini-game
 
 Change log r18:
 -= New IED Mini Game =-

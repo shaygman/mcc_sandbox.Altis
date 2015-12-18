@@ -91,7 +91,6 @@ class ui
 	class getKeyFromCBA {description = "Get a pretty name from CBA key binds";};
 	class getGroupIconData {description = "get group icon depends on the group type and size";};
 	class 3Dcredits	{};
-	class forceCamera {description = "force 1st person camera";};
 	class musicTrigger {description = "Execute music or sound on all clients triggers";};
 };
 
@@ -415,6 +414,7 @@ class evac
 	class evacSpawn {description = "Spawn a vehicle with crew and gunners, mark it as an evac vehicle";};
 	class repairEvac {description = "Repair evac helicopter";};
 	class setEvac {description = "Sets an empty ot AI vehicle into an ecav for a specific side";};
+	class fastRopeLocal {description = "handles fast rope on clients"};
 };
 
 class ambient

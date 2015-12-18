@@ -17,15 +17,13 @@ _convoyGroupArray = [];
  //Find cargo space
 _cargoNum = (_vehicle emptyPositions "cargo") - 2;
 
-if (_cargoNum > 0) then
-{
+if (_cargoNum > 0) then {
 	// random but at least majority of seats occupied
 	_fillSlots = _cargoNum - (round random (_cargoNum/4));
 	_locGr =  _pos findEmptyPosition [10, 100];
 
 	sleep 0.1;
-	if (_locGr select 0 > 0)then
-	{
+	if (_locGr select 0 > 0)then {
 		// Check if default group config is available
 		// get group configs
 		{
@@ -35,16 +33,12 @@ if (_cargoNum > 0) then
 			};
 		} forEach ([side _vehicle, faction _vehicle, "Infantry", "LAND"] call mcc_make_array_grps);
 
-		While { true } do
-		{
+		While { true } do {
 
-			if !( (count _convoyGroupArray) == 0 ) then
-			{
+			if !( (count _convoyGroupArray) == 0 ) then {
 				_group = [_locGr, side _vehicle, (call compile (_convoyGroupArray select 0)),[],[],[0.1,MCC_AI_Skill],[],[_fillSlots, 0]] call MCC_fnc_spawnGroup;
 				sleep 0.1;
-			}
-			else
-			{
+			} else {
 				// no default groups found so let's build the faction custom unit's array
 				_unitsArray = [];
 
@@ -53,11 +47,9 @@ if (_cargoNum > 0) then
 				} foreach ( [faction _vehicle,"soldier"] call MCC_fnc_makeUnitsArray );
 
 
-				if !( (count _unitsArray) == 0 ) then
-				{
+				if !( (count _unitsArray) == 0 ) then {
 					_group = creategroup side _vehicle;
-					for [{_i=1},{_i<=8},{_i=_i+1}] do
-					{
+					for [{_i=1},{_i<=_fillSlots},{_i=_i+1}] do {
 						// select random type soldier - assuming pilots, divers etc are above type #5 in the array
 						_type = _unitsArray select round (random (5 min (count _unitsArray-1)));
 						_unit = _group createUnit [_type, _locGr, [], 0.5, "NONE"];

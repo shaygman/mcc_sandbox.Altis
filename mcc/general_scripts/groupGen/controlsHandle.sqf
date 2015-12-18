@@ -289,8 +289,7 @@ if (_action == 7) exitWith
 	_comboBox lbSetCurSel (missionNameSpace getvariable ["MCC_evacVehicles_index",0]);
 
 	//Change evac type by vehicle class
-	if (count _evacVehicles > 0) then
-	{
+	if (count _evacVehicles > 0) then {
 		private ["_insetionArray","_type"];
 		_insetionArray = ["Move (engine on)","Move (engine off)"];
 		ctrlShow [(_mccdialog displayCtrl 44),false];

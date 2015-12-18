@@ -727,13 +727,7 @@ if ( isServer ) then {
 	call compile (_name + " = _dummy");
 	publicVariable _name;
 
-	//Add curator presets
-	[MCC_curator, "player",["%ALL"]] call BIS_fnc_setCuratorAttributes;
-	[MCC_curator, "object",["%ALL"]] call BIS_fnc_setCuratorAttributes;
-	[MCC_curator, "group",["%ALL"]] call BIS_fnc_setCuratorAttributes;
-	[MCC_curator, "waypoint",["%ALL"]] call BIS_fnc_setCuratorAttributes;
-	[MCC_curator, "marker",["%ALL"]] call BIS_fnc_setCuratorAttributes;
-
+	/*
 	//Add addons to curator
 	private ["_cfg","_name","_newAddons"];
 	_cfg = (configFile >> "CfgPatches");
@@ -744,6 +738,16 @@ if ( isServer ) then {
 		if (! (["a3_", _name] call BIS_fnc_inString)) then {_newAddons pushBack _name};
 	};
 	if (count _newAddons > 0) then {_dummy addCuratorAddons _newAddons};
+	*/
+
+	_null = [_dummy,[],true] call BIS_fnc_moduleCurator;
+
+	//Add curator presets
+	[MCC_curator, "player",["%ALL"]] call BIS_fnc_setCuratorAttributes;
+	[MCC_curator, "object",["%ALL"]] call BIS_fnc_setCuratorAttributes;
+	[MCC_curator, "group",["%ALL"]] call BIS_fnc_setCuratorAttributes;
+	[MCC_curator, "waypoint",["%ALL"]] call BIS_fnc_setCuratorAttributes;
+	[MCC_curator, "marker",["%ALL"]] call BIS_fnc_setCuratorAttributes;
 
 	//west
 	MCC_dummyLogicGroup = createGroup west;

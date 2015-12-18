@@ -86,7 +86,7 @@ class Functions {
 	class MCC_fnc_getKeyFromCBA {allowedTargets=0;};
 	class MCC_fnc_getGroupIconData {allowedTargets=0;};
 	class MCC_fnc_3Dcredits	{allowedTargets=0;};
-	class MCC_fnc_forceCamera {allowedTargets=0;};
+	class MCC_fnc_inGameUI {allowedTargets=0;};
 	class MCC_fnc_musicTrigger {allowedTargets=0;};
 	//IED
 	class MCC_fnc_IedFakeExplosion	{allowedTargets=0;};
@@ -404,4 +404,5 @@ class Functions {
 	class MCC_fnc_curatorunderCover {allowedTargets=0;};
 	class MCC_fnc_curatorModuleCapturePoint {allowedTargets=0;};
 	class MCC_fnc_ambientDenied {allowedTargets=0;};
+	class MCC_fnc_assignCurator {allowedTargets=0;};
 };

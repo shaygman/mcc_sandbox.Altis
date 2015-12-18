@@ -26,7 +26,11 @@ _hidden = ["IEDLandSmall_Remote_Ammo","IEDLandBig_Remote_Ammo","IEDUrbanSmall_Re
 
 //manual detonation
 if (_IEDTriggerType in [2,4]) then	{
-		while {! _triggered} do {_triggered = _dummy getvariable "iedTrigered";sleep 0.5};
+		while {! _triggered && _armed} do {
+			_triggered 	= _dummy getvariable ["iedTrigered",false];
+			_armed 		= _dummy getvariable ["armed",true];
+			sleep 0.5;
+		};
 } else {
 //Proximity or radio
 	while {alive _fakeIed && !isNull _fakeIed && _loop && _armed && !_triggered} do

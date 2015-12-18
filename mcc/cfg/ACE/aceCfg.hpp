@@ -213,7 +213,7 @@ class CAManBase: Man {
 
 		class ACE_MCC_miniGameDefuse {
             displayName = "Bomb Defuse";
-            condition ="((cursorTarget getVariable ['realIed',objnull]) getVariable ['MCC_isIEDMiniGame',false]) && (_player distance cursorTarget < 8)";
+            condition ="((cursorTarget getVariable ['realIed',objnull]) getVariable ['MCC_isIEDMiniGame',false]) && ((cursorTarget getVariable ['realIed',objnull]) getVariable ['armed',false]) && (_player distance cursorTarget < 8)";
             statement = "[cursorTarget] spawn MCC_fnc_bdStart";
             showDisabled = 0;
             icon = "\A3\ui_f\data\map\markers\military\unknown_CA.paa";

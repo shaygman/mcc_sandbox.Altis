@@ -42,53 +42,42 @@ _targetData = _target call bis_fnc_objectType;
 _targetCategory = _targetData select 0;
 _targetType = _targetData select 1;
 
-if (_targetCategory != "Object") then
-{
+if (_targetCategory != "Object") then {
 	waituntil {dialog};
-}
-else
-{
+} else {
 	waituntil {(time > _time)};
 };
 
 closeDialog 0;
 
-switch (_targetCategory) do
-{
-		case ("Soldier"):
-		{
-			_class = "MCC_RscDisplayAttributesMan";
-			_cargEnabled	= false;
-			missionnamespace setvariable ["MCC_CuratorInitLine_presettype","unit"];
-		};
+switch (_targetCategory) do {
+	case ("Soldier"): {
+		_class = "MCC_RscDisplayAttributesMan";
+		_cargEnabled	= false;
+		missionnamespace setvariable ["MCC_CuratorInitLine_presettype","unit"];
+	};
 
-		case ("Vehicle"):
-		{
-			if (isNull (group _target)) then
-			{
-				_class = "MCC_RscDisplayAttributesVehicleEmpty";
-			}
-			else
-			{
-				_class = "MCC_RscDisplayAttributesVehicle";
-			};
-			_cargEnabled	= true;
-			missionnamespace setvariable ["MCC_CuratorInitLine_presettype","vehicle"];
-		};
-
-		case ("VehicleAutonomous"):
-		{
+	case ("Vehicle"): {
+		if (isNull (group _target)) then {
+			_class = "MCC_RscDisplayAttributesVehicleEmpty";
+		} else {
 			_class = "MCC_RscDisplayAttributesVehicle";
-			_cargEnabled	= false;
-			missionnamespace setvariable ["MCC_CuratorInitLine_presettype","vehicle"];
 		};
+		_cargEnabled	= true;
+		missionnamespace setvariable ["MCC_CuratorInitLine_presettype","vehicle"];
+	};
 
-		case ("Object"):
-		{
-			_class = "MCC_RscDisplayAttributesObject";
-			_cargEnabled	= if (_targetType == "AmmoBox") then {true} else {false};
-			missionnamespace setvariable ["MCC_CuratorInitLine_presettype","object"];
-		};
+	case ("VehicleAutonomous"):	{
+		_class = "MCC_RscDisplayAttributesVehicle";
+		_cargEnabled	= false;
+		missionnamespace setvariable ["MCC_CuratorInitLine_presettype","vehicle"];
+	};
+
+	case ("Object"): {
+		_class = "MCC_RscDisplayAttributesObject";
+		_cargEnabled	= if (_targetType == "AmmoBox") then {true} else {false};
+		missionnamespace setvariable ["MCC_CuratorInitLine_presettype","object"];
+	};
 };
 
 

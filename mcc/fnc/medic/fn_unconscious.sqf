@@ -11,13 +11,10 @@ _unit allowDamage false;
 _unit setVariable ["MCC_medicSeverInjury",false,true];
 _unit setVariable ["MCC_medicUnconscious",true,true];
 
-if (isplayer _source && _source != _unit) then
-{
+if (isplayer _source && _source != _unit) then {
 	//Teamkill
-	if (side _source == side _unit && (missionNamespace getVariable ["MCC_medicPunishTK",false])) then
-	{
-		[_source] spawn
-		{
+	if (side _source == side _unit && (missionNamespace getVariable ["MCC_medicPunishTK",false])) then {
+		[_source] spawn {
 			private ["_answer","_string","_source"];
 			_source = _this select 0;
 
@@ -31,12 +28,9 @@ if (isplayer _source && _source != _unit) then
 				_source setDamage 1;
 			};
 		};
-	}
-	else
-	{
+	} else {
 		//GetXP
-		if (CP_activated) then
-		{
+		if (CP_activated) then {
 			_string = if (missionNamespace getVariable ["MCC_medicXPmesseges",false]) then {format ["For killing %1",name _unit]} else {""};
 			[[getplayeruid _source, 500,_string], "MCC_fnc_addRating", side _source] spawn BIS_fnc_MP;
 		};
@@ -49,8 +43,7 @@ waitUntil {isTouchingGround _unit};
 _unit allowDamage true;
 
 //If we are falling from too high
-if (_ypos > 10) exitWith
-{
+if (_ypos > 10) exitWith {
 	_unit setDamage 1;
 };
 
@@ -61,8 +54,7 @@ _unit playmoveNow "Unconscious";
 [[_unit, "Hold %1 to heal"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
 
 //Handle player
-if (isPlayer _unit) exitWith
-{
+if (isPlayer _unit) exitWith {
 	//Close Map
 	if (visibleMap) then {openMap false};
 
@@ -77,8 +69,7 @@ if (isPlayer _unit) exitWith
 	createDialog "mcc_uncMain";
 };
 
-_unit spawn
-{
+_unit spawn {
 	private "_t";
 	_t = time + 360;
 	_this disableAI "MOVE";
@@ -91,12 +82,10 @@ _unit spawn
 	sleep 1;
 	_this allowDamage true;
 
-	while {alive _this && time < _t && (_this getVariable ["MCC_medicUnconscious",false])} do
-	{
+	while {alive _this && time < _t && (_this getVariable ["MCC_medicUnconscious",false])} do {
 		if (animationState _this != "unconscious") then {_this playmoveNow "Unconscious"};
 		//It wake up
-		if (random 100 < 0.05) then
-		{
+		if (random 100 < 0.05) then	{
 			_this setVariable ["MCC_medicUnconscious",false,true];
 		};
 		sleep 2 + random 5;
