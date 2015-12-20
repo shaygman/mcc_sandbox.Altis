@@ -22,19 +22,9 @@ _var 	= _logic getvariable ["messages",1];
 missionNamespace setVariable ["MCC_MessagesIndex",_var];
 MCC_Chat = if (_var == 0) then {false} else {true};
 
-//NameTags
-_var 	= _logic getvariable ["nameTags",1];
-missionNamespace setVariable ["MCC_nameTagsIndex",_var];
-MCC_nameTags = if (_var == 0) then {false} else {true};
-
 //Sync
 _var 	= _logic getvariable ["sync",1];
 MCC_syncOn = if (_var == 0) then {false} else {true};
-
-//Group Markers
-_var 	= _logic getvariable ["groupMarkers",1];
-missionNamespace setVariable ["MCC_groupMarkersIndex",_var];
-MCC_groupMarkers = if (_var == 0) then {false} else {true};
 
 //Artillery computer
 _var 	= _logic getvariable ["artilleryComputer",1];

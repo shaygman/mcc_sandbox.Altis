@@ -15,47 +15,37 @@ _waitTime = 1;
 
 _door = [_object] call MCC_fnc_isDoor;
 
-switch (true) do
-{
+switch (true) do {
 	//House
-	case (_object isKindof "house" || _object isKindof "wall") :
-	{
+	case (_object isKindof "house" || _object isKindof "wall") : {
 		if (_door == "") exitWith {};
 
-		if (tolower worldName in MCC_ARMA2MAPS) then
-		{
+		if (tolower worldName in MCC_ARMA2MAPS) then {
 			_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
 			_animation = "dvere"+_str;
 			//_animation = _door + "_rot";
-		}
-		else
-		{
+		} else {
 			_animation = _door + "_rot";
 		};
 
 		_phase = if ((_object animationPhase _animation) > 0) then {0} else {1};
 
 		//Check if locked
-		if (((_object getVariable [format ["bis_disabled_%1",_door],0])==1) && !MCC_interactionKey_holding) exitWith
-		{
+		if (((_object getVariable [format ["bis_disabled_%1",_door],0])==1) && !MCC_interactionKey_holding) exitWith {
 			_object animate [_animation, 0.1];
 			sleep 0.1;
 			_object animate [_animation, 0];
 		};
 
 		//ArmA2 maps have it all viceversa way to go BI
-		_closed = if (tolower worldName in MCC_ARMA2MAPS) then
-					{
+		_closed = if (tolower worldName in MCC_ARMA2MAPS) then {
 						if (_phase == 0) then {true} else {false};
-					}
-					else
-					{
+					} else {
 						if (_phase == 0) then {false} else {true};
 					};
 
 		//Open dialog
-		if (MCC_interactionKey_holding && _closed && !dialog) exitWith
-		{
+		if (MCC_interactionKey_holding && _closed && !dialog) exitWith {
 
 			_array = [["charge",format ["Place Breaching Charge (%1)",{_x == MCC_CHARGE} count magazines player],getText(configFile >> "CfgMagazines">> MCC_CHARGE >> "picture")],
 					  ["check","Check door","\A3\ui_f\data\map\markers\military\unknown_CA.paa"],
@@ -128,30 +118,26 @@ switch (true) do
 			_object		= player getVariable ["interactWith",objNull];
 
 			closeDialog 0;
-			switch (true) do
-			{
+			switch (true) do {
 				case (_ctrlData in ["commander","driver","gunner","cargo"]) : {player action [format ["getIn%1",_ctrlData], _object]};
 				case (_ctrlData == "gear") : {player action ["Gear", _object]};
 				case (_ctrlData == "drag") : {[_object] call MCC_fnc_dragObject};
-				case (_ctrlData == "flip") :
-				{
+				case (_ctrlData == "flip") : {
 					_pos = getpos _object;
 					_pos set [2, (_pos select 2)+1];
 					_object setpos _pos;
 					[_object ,0, 0] call bis_fnc_setpitchbank;
 				};
-				case (_ctrlData == "push") :
-				{
+
+				case (_ctrlData == "push") : {
 					_dir = direction player;
 					_object setVelocity [(sin _dir * 2), (cos _dir * 2), 0];
 				};
 
-				case (_ctrlData == "unload"):
-				{
+				case (_ctrlData == "unload"): {
 					{
 
-						if (_x getVariable ["MCC_medicUnconscious",false]) then
-						{
+						if (_x getVariable ["MCC_medicUnconscious",false]) then	{
 							[[[_x],{
 								_unit = _this select 0;
 								moveOut _unit; unassignVehicle _unit;
@@ -163,16 +149,18 @@ switch (true) do
 					} forEach (crew _object);
 				};
 
-				case (_ctrlData == "mainBox"):
-				{
+				case (_ctrlData == "mainBox"): {
 					_object setVariable ["mcc_mainBoxUsed", true,true];
 					_null = [] call MCC_fnc_mainBoxInit;
  					waituntil {!dialog};
  					_object setVariable ["mcc_mainBoxUsed", false,true];
 				};
 
-				case (_ctrlData == "kitSelect"):
-				{
+				case (_ctrlData == "resupply"): {
+					[_object,true] spawn MCC_fnc_resupply;
+				};
+
+				case (_ctrlData == "kitSelect"): {
 					createDialog "CP_GEARPANEL";
 				};
 			};
@@ -201,11 +189,22 @@ switch (true) do
 				_array set [count _array,["drag",format ["Drag %1",_displayName],format ["%1data\IconAmmo.paa",MCC_path]]];
 			};
 
-			//rts main box
-			if ((_object isKindof "Box_FIA_Support_F") && !(_object getVariable ["mcc_mainBoxUsed", false]) && count (_object getVariable ["MCC_virtual_cargo",[]]) > 0 && (missionNamespace getVariable ["MCC_surviveMod",false])) then {
-				_array pushBack["mainBox","Open Vault",format ["%1data\IconAmmo.paa",MCC_path]];
+			//FOB BOX
+			if (_object isKindof "Box_FIA_Support_F" && !(isNull attachedTo _object)) then {
+
+				//rts main box
+				if ((_object getVariable ["mcc_mainBoxUsed", false]) && count (_object getVariable ["MCC_virtual_cargo",[]]) > 0 && (missionNamespace getVariable ["MCC_surviveMod",false])) then {
+						_array pushBack["mainBox","Open Vault",format ["%1data\IconAmmo.paa",MCC_path]];
+				};
+
+				//Change Kits
 				if (CP_activated && (missionNamespace getVariable ["MCC_allowChangingKits",true]) && !(missionNamespace getVariable ["MCC_surviveMod",false])) then {
 					_array pushBack["kitSelect","Change Kit",format ["%1data\IconAmmo.paa",MCC_path]];
+				};
+
+				//Resupply
+				if (!(missionNamespace getVariable ["MCC_surviveMod",false])) then {
+					_array pushBack["resupply","Resupply",format ["%1data\IconAmmo.paa",MCC_path]];
 				};
 			};
 

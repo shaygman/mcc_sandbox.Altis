@@ -166,7 +166,7 @@ if !mcc_isloading then {
 		{
 			hint "click on map inorder to place the FOB";
 			onMapSingleClick "
-					[[_pos, 0, 'west' ,'FOB',true,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'west' ,'FOB',true,false,false,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					mcc_safe=mcc_safe + FORMAT [""
 												[[%1, 0, 'west' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
@@ -181,7 +181,7 @@ if !mcc_isloading then {
 		{
 			hint "click on map inorder to place the FOB";
 			onMapSingleClick "
-					[[_pos, 0, 'east' ,'FOB',true,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'east' ,'FOB',true,false,false,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					mcc_safe=mcc_safe + FORMAT [""
 												[[%1, 0, 'east' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
@@ -196,7 +196,7 @@ if !mcc_isloading then {
 		{
 			hint "click on map inorder to place the FOB";
 			onMapSingleClick "
-					[[_pos, 0, 'GUER' ,'FOB',true,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'GUER' ,'FOB',true,false,false,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					mcc_safe=mcc_safe + FORMAT [""
 												[[%1, 0, 'RESISTANCE' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
@@ -211,7 +211,7 @@ if !mcc_isloading then {
 		{
 			hint "click on map inorder to place the FOB";
 			onMapSingleClick "
-					[[_pos, 0, 'CIV' ,'FOB',true,false,true,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
+					[[_pos, 0, 'CIV' ,'FOB',true,false,false,MCC_teleportAtStart], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;
 					onMapSingleClick """";
 					mcc_safe=mcc_safe + FORMAT [""
 												[[%1, 0, 'CIV' ,'FOB',true], 'MCC_fnc_buildSpawnPoint', false, false] spawn BIS_fnc_MP;

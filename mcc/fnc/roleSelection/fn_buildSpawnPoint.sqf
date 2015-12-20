@@ -117,7 +117,7 @@ switch (_side) do {
 	case west:	//west
 	{
 		if (_size == "FOB") then{
-			_building = "Land_BagBunker_Tower_F";
+			_building = "Land_TBox_F"; //"Land_BagBunker_Tower_F"
 			_flagTex = CP_flagWest;
 		} else {
 			_building = "ProtectionZone_Invisible_F";
@@ -128,7 +128,7 @@ switch (_side) do {
 	case east:	//east
 	{
 		if (_size == "FOB") then {
-			_building = "Land_BagBunker_Tower_F";
+			_building = "Land_TBox_F";
 			_flagTex = CP_flagEast;
 		} else {
 			_building = "ProtectionZone_Invisible_F";
@@ -138,7 +138,7 @@ switch (_side) do {
 	case resistance:	//east
 	{
 		if (_size == "FOB") then {
-			_building = "Land_BagBunker_Tower_F";
+			_building = "Land_TBox_F";
 			_flagTex = CP_flagGUER;
 		} else {
 			_building = "ProtectionZone_Invisible_F";
@@ -170,11 +170,11 @@ publicVariable format ["MCC_%1_BUILDING",_side];
 //If is FOB
 if (_size == "FOB") then {
 	//Attach flag
-	_flag attachto [_dummy,[2.8,2,1.5]];
+	_flag attachto [_dummy,[2.5,0,2]];
 	_box = "Box_FIA_Support_F" createvehicle _pos;
 	_box setdir _dir;
 	_box setVariable ["mcc_delete",false,true];
-	_box attachto [_dummy,[4,3,-1]];
+	_box attachto [_dummy,[-3.5,0,-0.8]];
 	[_side, _box] call MCC_fnc_makeObjectVirtualBox;
 
 	//Only destroyable with satchel or demo charges

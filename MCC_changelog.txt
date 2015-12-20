@@ -1,7 +1,13 @@
 Change log r19:
-- Added: Force 1st Person camera module - force always, allow vheicles only or air only. 
+- Added: UI Module: Handles 3d camera for vehicles, in game compass and teammates overlay, Name tags and more. New WIKI page - http://mccsandbox.wikia.com/wiki/UI_Module?venotify=created
+- Changed: Name tags, group markers moved to the inGame UI settings module
 - Added: Start Location modules spawn options (none/teleport/halo/paradrop) for each individual spawn point. 
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
+- Added: Resupply option to FOB.
+- Added: Resupply will resupply EGLM. 
+- Added: Ability to build sand bags around FOB - Squad leader - doesn't need resources but there is a limit to 14 fences per FOB
+- Added: Units that are not in your squad will show in blue while name tags is on. 
+- Added: Units markers (mission settings module) Show units markers on the map for all players while playing in a squad from the Squad Dialog
 - Fixed: Can't login to MCC after the latest patch. 
 - Fixed: Medical system was broken (players died instantly instead of falling unconcious) and added a new WIKI page - http://mccsandbox.wikia.com/wiki/MeidcalSystem
 - Fixed: Pressing the delete button while opening MCC delete the last selected group/unit. 
@@ -12,13 +18,12 @@ Change log r19:
 - Fixed: Restricted ambient civilians module didn't work on dedicated
 - Fixed: Logistic dialogs for helicopters won't show crates that the helicopter can't slingload. 
 - Fixed: Convoy not working. 
-- Fixed: Convoy spawn to many cargo units.  
+- Fixed: Convoy spawn too many cargo units.  
 - Fixed: Mini game IED can be disarmed again even after disarming
 - Fixed: RPT errors regarding ; at the end of file
 
 TODO - mission templates, test dedicated
 TODO - Compass 
-TODO - check fast rope
 
 Change log r18:
 -= New IED Mini Game =-

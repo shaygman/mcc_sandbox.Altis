@@ -132,8 +132,6 @@ if !mcc_isloading then
 	publicvariable "MCC_saveGear";
 
 	//Group Markers
-	missionNamespace setVariable ["MCC_groupMarkersIndex",lbCurSel mcc_showGRPMarkerComboIDC];
-	publicvariable "MCC_groupMarkersIndex";
 	MCC_groupMarkers = if ((lbCurSel mcc_showGRPMarkerComboIDC) == 0) then {false} else {true};
 	publicvariable "MCC_groupMarkers";
 

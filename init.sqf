@@ -513,10 +513,8 @@ MCC_aiAimIndex						= (MCC_AI_Aim*10)-1;    //0;
 MCC_aiSpotIndex						= (MCC_AI_Spot*10)-1;    //3;
 MCC_aiCommandIndex					= (MCC_AI_Command*10)-1;    //5;
 
-MCC_nameTagsIndex						= 0;
 MCC_artilleryComputerIndex				= 1;
 MCC_saveGearIndex						= 0;
-MCC_groupMarkersIndex					= 1;
 MCC_MessagesIndex						= 1;
 
 

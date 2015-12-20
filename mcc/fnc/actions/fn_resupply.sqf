@@ -1,20 +1,27 @@
 //==================================================================MCC_fnc_resupply=========================================================================================
 // Resupply ammo from an ammo box
-// Example:[_object] spawn MCC_fnc_resupply;
+// Example:[_object,false] spawn MCC_fnc_resupply;
 // <IN>
 //	_object:					Object- object.
+//	_infinate:					BOOLEAN -
+//									true - infinate resupply.
+//									false - default, supply object will deleted after depleted
 //
 // <OUT>
 //		<nothing>
 //===========================================================================================================================================================================
 //Add magazines
-private ["_magazineCount","_magazineClass","_magazines","_trashHold","_weapon","_cost","_roleCount","_objectAmmo","_object"];
-_object = [_this, 0, objNull, [objNull]] call bis_fnc_param;
+private ["_magazineCount","_magazineClass","_magazines","_trashHold","_weapon","_cost","_roleCount","_objectAmmo","_object","_infinate"];
+_object = param [0, objNull, [objNull]];
+_infinate = param [1, false, [false]];
 
 if (isNull _object) exitWith {};
 
 _objectAmmo = _object getVariable ["ammoLeft",getNumber (configFile / "CfgVehicles" / typeof _object / "ammo")];
 if (_objectAmmo == 0) then {_objectAmmo = 200};
+
+//Infinate
+if (_infinate) then {_objectAmmo = 9999999};
 
 player playactionNow "putdown";
 {
@@ -41,6 +48,27 @@ player playactionNow "putdown";
 		};
 	};
 } foreach [secondaryWeapon player,handgunWeapon player, primaryWeapon player];
+
+//IF EGLM
+_weapon = primaryWeapon player;
+_eglms = getArray (configFile / "CfgWeapons" / _weapon / "muzzles");
+if (count _eglms >1) then {
+	_magazines = getArray (configFile / "CfgWeapons" / _weapon / (_eglms select 1) / "magazines");
+	if (count _magazines > 0) then {
+		_magazineClass = _magazines select (0 min (count _magazines - 1));
+		_magazineCount = {_x == _magazineClass} count magazines player;
+		_cost = getNumber(configFile >> "CfgMagazines" >> _magazineClass >> "mass");
+		_trashHold = 8;
+
+		if (_magazineCount < _trashHold) then {
+			for "_i" from _magazineCount to (_trashHold-1) do {
+				player addMagazine _magazineClass;
+				_objectAmmo = _objectAmmo - _cost;
+				if (_objectAmmo <= 0) exitWith {deleteVehicle _object};
+			};
+		};
+	};
+};
 
 //Add FAIK
 private ["_bandage","_count"];

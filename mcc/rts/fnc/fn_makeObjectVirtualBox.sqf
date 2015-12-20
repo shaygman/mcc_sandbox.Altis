@@ -26,4 +26,4 @@ clearMagazineCargoGlobal _object;
 clearWeaponCargoGlobal _object;
 clearBackpackCargoGlobal _object;
 _object setVariable ["MCC_virtual_cargo",_boxArray,true];
-[[_object,"Hold %1 to open vault"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
+[[_object,"Hold %1 to open"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;

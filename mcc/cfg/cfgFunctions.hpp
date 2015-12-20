@@ -339,6 +339,7 @@ class interaction
 	class doorCamera {description = "Mirror under the door";};
 	class isSurvivalObject {description = "check if an object is a survival object";};
 	class searchSurvivalObject {description = "Search a survival object";};
+	class initConstract {description = "Init Construction";};
 };
 
 class radio

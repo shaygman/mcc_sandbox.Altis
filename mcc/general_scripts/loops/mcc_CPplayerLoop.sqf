@@ -46,7 +46,7 @@ MCC_fnc_mapDrawPlayersWPConsole =
 	};
 
 	//Custom Group Markers
-	if (MCC_groupMarkers) then {
+	if (missionNamespace getVariable ["MCC_groupMarkers",true]) then {
 		private ["_groups","_texture"];
 		_groups	 = switch (side player) do
 				{
@@ -72,6 +72,31 @@ MCC_fnc_mapDrawPlayersWPConsole =
 						0.06,
 						"PuristaBold"
 					];
+
+			if (missionNamespace getVariable ["MCC_indevidualMarkers",false]) then {
+				_color = if (group player == (_x select 0)) then {[0,1,0,0.8]} else {[0,0,1,0.8]};
+				_unitText = toArray (_x select 1);
+				_unitText resize 2;
+
+				{
+					if (_x != leader _x) then {
+						_texture = gettext (configfile >> "CfgVehicles" >> typeof _x >> "icon");
+						_map drawIcon [
+							_texture,
+							_color,
+							position _x,
+							18,
+							18,
+							direction _x,
+							toString _unitText ,
+							1,
+							0.03,
+							"PuristaBold",
+							"Right"
+						];
+					};
+				} forEach units (_x select 0);
+			};
 		} foreach _groups;
 	};
 };

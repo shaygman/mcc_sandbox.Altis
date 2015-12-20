@@ -103,6 +103,15 @@ class ReammoBox_F: thingX {
                 priority = 1.2;
             };
 
+        class ACE_MCC_supplyBoxFOB {
+                displayName = "Resupply";
+                distance = 5;
+               condition = "(_target isKindof 'Box_FIA_Support_F') && !(isNull attachedTo _target)";
+                statement =  "[_target,true] call MCC_fnc_resupply;";
+                icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
+                showDisabled = 0;
+        };
+
         class ACE_MCC_supplyBox {
                 displayName = "Resupply";
                 distance = 5;
@@ -344,14 +353,21 @@ class CAManBase: Man {
 
 				class ACE_MCC_FOB {
 					displayName = "F.O.B";
-					icon = "\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa";
+					icon = "\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa";
 					statement = "['fob'] call MCC_fnc_callConstruct";
 				};
 				class ACE_MCC_Bunker {
 					displayName = "Bunker";
-					icon = "\A3\ui_f\data\map\mapcontrol\Stack_CA.paa";
+					icon = "\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa";
 					statement = "['bunker'] call MCC_fnc_callConstruct";
 				};
+
+				class ACE_MCC_wall {
+					displayName = "Beg Fence";
+					icon = "\A3\ui_f\data\map\mapcontrol\Stack_CA.paa";
+					statement = "['wall'] call MCC_fnc_callConstruct";
+				};
+
 				class ACE_MCC_HMG {
 					displayName = "HMG";
 					icon = "\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa";

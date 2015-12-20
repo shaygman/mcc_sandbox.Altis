@@ -20,15 +20,8 @@ uiNamespace setVariable ["MCC_interactionMenu2", _disp displayCtrl 2];
 #define MCC_interactionMenu1 (uiNamespace getVariable "MCC_interactionMenu1")
 #define MCC_interactionMenu2 (uiNamespace getVariable "MCC_interactionMenu2")
 
-#define REQUIRE_SQL_CONSTRUCT_DISTANCE 200
-#define REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE 300
-#define REQUIRE_FOB_FOB_MIN_DISTANCE 1000
-#define REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE 500
-#define ANCHOR_ITEM "Land_Rampart_F"
-
 //saveData
-switch (_ctrlIDC) do
-{
+switch (_ctrlIDC) do {
 	case 0:	{uinamespace setVariable ["MCC_interactionMenu0Data", _ctrlData]};
 	case 1:	{uinamespace setVariable ["MCC_interactionMenu1Data", _ctrlData]};
 	case 2:	{uinamespace setVariable ["MCC_interactionMenu2Data", _ctrlData]};
@@ -315,8 +308,9 @@ switch (true) do {
 		_child =  MCC_interactionMenu1;
 		_path = "\A3\ui_f\data\map\markers\military\";
 		_array = [
-				   ["fob","Forward Outpost","\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa"],
-				   ["bunker","Small Bunker","\A3\ui_f\data\map\mapcontrol\Stack_CA.paa"],
+				   ["fob","Forward Outpost","\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"],
+				   ["bunker","Small Bunker","\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa"],
+				   ["wall","Bag Fence","\A3\ui_f\data\map\mapcontrol\Stack_CA.paa"],
 				   ["hmg","HMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa"],
 				   ["gmg","GMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_GMG_CA.paa"],
 				   ["at","AT Pit","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AT_CA.paa"],
@@ -325,54 +319,33 @@ switch (true) do {
 				 ];
 	};
 
-	case (_ctrlData in ["fob","bunker","hmg","gmg","at","aa","mortar"]): {
-		private ["_conType","_available","_errorMessegeIndex","_errorMessege","_check","_respawPositions"];
+	case (_ctrlData in ["fob","bunker","hmg","gmg","at","aa","mortar","wall"]): {
 		_conType = uinamespace getVariable "MCC_interactionMenu1Data";
+		[_conType,_pos] spawn MCC_fnc_initConstract;
+	};
 
-		_available = true;
-		_errorMessegeIndex = 0;
-		_errorMessege = [
-							format ["Can't order to build deployables further then %1m from the player",REQUIRE_SQL_CONSTRUCT_DISTANCE],
-							"Can't build on water",
-							format ["FOB must be build in a minimum distance of %1m from another FOB or HQ",REQUIRE_FOB_FOB_MIN_DISTANCE],
-							format ["Deployables can be build in a maximum distance of %1m from an FOB",REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE],
-							format ["Only one construction can be built at the same time in %1 meters radius",REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE]
-	                    ];
+	//Open SQL PDA
+	case (_ctrlData == "sqlpda"): {
+		MCC_interactionMenu1 ctrlShow false;
+		MCC_interactionMenu2 ctrlShow false;
 
-		//Check if no more then one construct from the same type is beeing build in the area and
-		_check = ({alive _x} count (_pos nearObjects [ANCHOR_ITEM, REQUIRE_CONSTRUCT_CONSTRUCT_DISTANCE]));
-		if (_check != 0) then {_available = false; _errorMessegeIndex = 4};
+		_null = [nil,nil,nil,nil,3] execVM format["%1mcc\dialogs\mcc_PopupMenu.sqf",MCC_path];
+	};
 
-		//Check Near FOB
-		_respawPositions = [player] call BIS_fnc_getRespawnPositions;
-		if (_conType == "fob") then {
-			_check = {_pos distance _x < REQUIRE_FOB_FOB_MIN_DISTANCE} count _respawPositions;
-			_check = _check + ({((_x getVariable ["MCC_conType",""])=="fob") && (playerside == _x getVariable ["MCC_side",sidelogic])} count (_pos nearObjects [ANCHOR_ITEM, REQUIRE_FOB_FOB_MIN_DISTANCE]));
-			if (_check > 0) then {_available = false; _errorMessegeIndex = 2};
-		} else {
-			_check = {_pos distance _x < REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE} count _respawPositions;
-			if (_check == 0) then {_available = false; _errorMessegeIndex = 3};
-		};
+	//Rally Point
+	case (_ctrlData == "rallypoint"): {
+		MCC_interactionMenu1 ctrlShow false;
+		MCC_interactionMenu2 ctrlShow false;
 
-		//Check if not on water
-		if (surfaceIsWater _pos) then {_available = false; _errorMessegeIndex = 1};
+		[player,player,nil] execVM format ["%1mcc\general_scripts\respawnTents\DeployRespawnTents.sqf",MCC_path];
+	};
 
-		//Check if not too far
-		if (_pos distance player > REQUIRE_SQL_CONSTRUCT_DISTANCE) then {_available = false; _errorMessegeIndex = 0};
+	//Open Commander Console
+	case (_ctrlData == "commander"): {
+		MCC_interactionMenu1 ctrlShow false;
+		MCC_interactionMenu2 ctrlShow false;
 
-
-		//Create structure
-		if (_available) then {
-			_path = "";
-			[[_conType, _pos, playerside, str (getdir player)] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
-
-			//broadcast
-			player globalRadio "SentAssemble";
-			[[player,(if (side player == west) then {format["mp_groundsupport_01_slingloadrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_slingloadrequested_IHQ_%1",floor random 3]})] ,"MCC_fnc_radioSupport", playerside,false] call BIS_fnc_MP;
-		} else {
-			systemchat (_errorMessege select _errorMessegeIndex);
-			player globalRadio "SentCommandFailed";
-		};
+		_null = [nil,nil,nil,nil,1] execVM format["%1mcc\dialogs\mcc_PopupMenu.sqf",MCC_path];
 	};
 
 	//Menu - gear
@@ -381,16 +354,12 @@ switch (true) do {
 		MCC_interactionMenu2 ctrlShow false;
 
 		_child =  MCC_interactionMenu1;
-		if (isNull(player getVariable ["MCC_playerAttachedGearItem",objNull])) then {
-			_array = [];
-			{
-				if (_x in magazines player) then {
-					_array pushBack [_x, format ["%1",getText(configFile >> "cfgMagazines" >> _x >> "displayname")], getText(configFile >> "cfgMagazines" >> _x >> "picture")];
-				};
-			} forEach ["Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue","B_IR_Grenade","O_IR_Grenade","I_IR_Grenade"];
-		} else {
-			_array = [["detach","Detach Item",format ["%1data\IconAmmo.paa",MCC_path]]];
-		};
+		_array = [];
+		{
+			if (_x in magazines player) then {
+				_array pushBack [_x, format ["%1",getText(configFile >> "cfgMagazines" >> _x >> "displayname")], getText(configFile >> "cfgMagazines" >> _x >> "picture")];
+			};
+		} forEach ["Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue","B_IR_Grenade","O_IR_Grenade","I_IR_Grenade"];
 	};
 
 	case (_ctrlData in ["Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue","B_IR_Grenade","O_IR_Grenade","I_IR_Grenade"]): {

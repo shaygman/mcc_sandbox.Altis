@@ -19,7 +19,7 @@
 
 private ["_loadedCrates","_loadedCratesIDC","_ctrl","_displayname","_truck","_isHeli","_startLoad","_pos"];
 disableSerialization;
-_isHeli = _this select 0;
+_isHeli = param [0,false,[false]];
 _truck = vehicle player;
 _startLoad = player getVariable ["mcc_logTruck_screenStart",false];
 

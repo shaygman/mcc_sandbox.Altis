@@ -33,6 +33,9 @@ uiNamespace setVariable ["MCC_loadTruckOutpot3", _disp displayCtrl 6];
 _sideID = playerside call BIS_fnc_sideID;
 _startLoad = player getVariable ["mcc_logTruck_screenStart",false];
 
+_isHeli = (vehicle player isKindOf "helicopter");
+MCC_logisticsCrates_Types = MCC_logisticsCrates_TypesWest;
+
 //Are we next to the HQ?
 if (_startLoad) then {
 
@@ -43,17 +46,13 @@ if (_startLoad) then {
 		//Are we using the Tarou
 		if (typeof vehicle player == "O_Heli_Transport_04_F") then {
 			MCC_logisticsCrates_Types = MCC_logisticsCrates_TypesEast;
-		} else {
-			MCC_logisticsCrates_Types = MCC_logisticsCrates_TypesWest;
 		};
 
-		_isHeli = true;
 		_maxLoad = getNumber(configfile >> "CfgVehicles" >> typeof vehicle player >> "maximumLoad");
 
 		//Limit heavy boxes for small helicopters
 		_maxCounter = if (_maxLoad < 4500) then {2} else {(count MCC_logisticsCrates_Types)-1};
 	} else {
-		_isHeli = false;
 		_maxCounter = 2;
 		_maxLoad = 9999;
 	};

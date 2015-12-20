@@ -1,4 +1,4 @@
-//==================================================================MCC_fnc_createRestrictedZones===============================================================================================
+//==================================================================MCC_fnc_createRestrictedZones===========================================================================
 /************************************************************
 Author:	Shay_gman
 
@@ -53,9 +53,9 @@ if (isServer) then {
 						_mName setMarkerSize [(triggerArea _x) select 0,(triggerArea _x) select 1];
 						_mName setMarkerDir ((triggerArea _x) select 2);
 						_mName setMarkerBrush "DIAGGRID";
+						_markers pushBack _mName;
 					};
 					_trgs pushBack _x;
-					_markers pushBack _mName;
 				}
 			} forEach synchronizedObjects _location;
 		};

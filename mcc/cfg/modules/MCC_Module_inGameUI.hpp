@@ -18,6 +18,12 @@ class MCC_Module_inGameUI : Module_F
 			typeName = "NUMBER";
 			class values
 			{
+				class disabled
+				{
+					name = "Everyone";
+					value = -1;
+				};
+
 				class noOne
 				{
 					name = "No One";
@@ -62,7 +68,7 @@ class MCC_Module_inGameUI : Module_F
 
 		class compassTeamMates
 		{
-			displayName = "Compass Show Team";
+			displayName = "Compass Show Squad";
 			typeName = "BOOL";
 			class values
 			{
@@ -80,10 +86,76 @@ class MCC_Module_inGameUI : Module_F
 				};
 			};
 		};
+
+		class nameTags
+		{
+			displayName = "Name Tags";
+			description = "Show in-game name tags, ranks (role and health stats while Role Selection is active)";
+			typeName = "BOOL";
+			class values
+			{
+				class disable
+				{
+					name = "Disable";
+					value = false;
+					default = 1;
+				};
+
+				class enable
+				{
+					name = "Enable";
+					value = true;
+				};
+			};
+		};
+
+		class groupMarkers
+		{
+			displayName = "Squads Markers";
+			description = "Show Squads markers on the map for all players while playing in a squad from the Squad Dialog";
+			typeName = "BOOL";
+			class values
+			{
+				class disable
+				{
+					name = "Disable";
+					value = false;
+				};
+
+				class enable
+				{
+					name = "Enable";
+					value = true;
+					default = 1;
+				};
+			};
+		};
+
+		class indevidualMarkers
+		{
+			displayName = "Units Markers";
+			description = "Show units markers on the map for all players while playing in a squad from the Squad Dialog";
+			typeName = "BOOL";
+			class values
+			{
+				class disable
+				{
+					name = "Disable";
+					value = false;
+					default = 1;
+				};
+
+				class enable
+				{
+					name = "Enable";
+					value = true;
+				};
+			};
+		};
 	};
 
 	class ModuleDescription: ModuleDescription
 	{
-		description = "Force 1st person camera";
+		description = "Set MCC in-game UI and HUD options";
 	};
 };

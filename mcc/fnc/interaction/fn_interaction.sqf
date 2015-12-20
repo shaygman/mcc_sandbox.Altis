@@ -40,13 +40,11 @@ player setVariable ["MCC_interactionActive",true];
 player setVariable ["MCC_interactionActiveTime",time];
 
 //Outside of vehicle
-if (vehicle player == player) then
-{
+if (vehicle player == player) then {
 	_target = cursorTarget;
 	player reveal _target;
 
-	if (_target isKindof "weaponHolderSimulated") then
-	{
+	if (_target isKindof "weaponHolderSimulated") then {
 		{
 			if (_x distance _target < 2) exitWith {_target = _x};
 		} foreach allDeadMen;

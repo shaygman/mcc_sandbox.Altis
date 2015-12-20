@@ -120,8 +120,8 @@ _comboBox = _mccdialog displayCtrl MCC_IDCNAMETAGS;
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_nameTagsIndex",0]);
+	} foreach ["Enabled","Disabled"];
+_comboBox lbSetCurSel (if (missionNamespace getVariable ["MCC_nameTags",false]) then {0} else {1});
 
 //Artillery Computer
 _comboBox = _mccdialog displayCtrl mcc_artilleryTitleIDC;
@@ -148,7 +148,7 @@ _comboBox = _mccdialog displayCtrl mcc_showGRPMarkerComboIDC;
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
 	} foreach ["Disabled","Enabled"];
-_comboBox lbSetCurSel (missionNamespace getVariable ["MCC_groupMarkersIndex",1]);
+_comboBox lbSetCurSel ( if (missionNamespace getVariable ["MCC_groupMarkers",true]) then {1} else {0});
 
 //Messages
 _comboBox = _mccdialog displayCtrl mcc_showMessagesComboIDC;
