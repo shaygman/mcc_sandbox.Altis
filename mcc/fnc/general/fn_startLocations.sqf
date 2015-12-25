@@ -8,7 +8,7 @@ private ["_playerClass","_playerSideNr","_safePos","_null","_side","_startLocati
 _side = _this select 0;
 if (!local player || missionNameSpace getVariable ["MCC_startLocationsRuning", false]) exitWith {};
 
-waituntil {alive player};
+waituntil {alive player && !(IsNull (findDisplay 46))};
 
 _playerClass = typeOf player;
 _playerSideNr =  getNumber (configFile >> "CfgVehicles" >> _playerClass >> "side");
@@ -121,8 +121,10 @@ _markerName setMarkerTypeLocal  "mil_start";
 _markerName setMarkerColorLocal "ColorGreen";
 
 //create the respawn locations
-if (!isnil _respawnName) then {deleteMarkerLocal _respawnName};
-missionNamespace setVariable [_respawnName,createMarkerLocal [_respawnName, _pos]];
+
+if (str getMarkerPos _respawnName != "[0,0,0]") then {deleteMarkerLocal _respawnName};
+//missionNamespace setVariable [_respawnName,createMarkerLocal [_respawnName, _pos]];
+createMarkerLocal [_respawnName, _pos];
 _respawnName setMarkerShapeLocal "ICON";
 _respawnName setMarkerTypeLocal  "mil_objective";
 _respawnName setMarkerColorLocal "ColorRed";

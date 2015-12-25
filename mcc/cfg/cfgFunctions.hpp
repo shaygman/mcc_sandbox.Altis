@@ -252,6 +252,7 @@ class mp
 	class radioSupport		{description = "Broadcast radio support to all elements not including the broadcaster group";};
 	class inidbGet	{};
 	class inidbSet 	{};
+	class handleDB {};
 };
 
 class actions
@@ -281,33 +282,6 @@ class actions
 	class resupply {description = "Resupply ammo from an ammo box";};
 	class breakdown {description = "Breakdown MCC crate into supplies";};
 	class ACEdropAmmobox {description = "Drop MCC ammbox in ACE";};
-};
-
-class roleSelection
-{
-	#ifdef MCCMODE
-	file = "\mcc_sandbox_mod\mcc\fnc\roleSelection";
-	#else
-	file = "mcc\fnc\roleSelection";
-	#endif
-
-	class unlock	{description = "Check for gear unlocks and notify the player.";};
-	class gainXPfromRoles	{description = "gain XP from specific roles.";};
-	class createRespawnTent	{description = "Creates a respawn tent";};
-	class getVariable		{description = "Global execute a command on server only  - SERVER ONLY";};
-	class setValue			{description = "Sets variable with custom value on a specific player";};
-	class buildSpawnPoint	{description = "Create a spawn point to the given side - SERVER ONLY";};
-	class setGroupID		{description = "Set group ID - SERVER ONLY";};
-	class getGroupID		{description = "get group ID";};
-	class setGear			{description = "Sets gear to role";};
-	class assignGear		{description = " Sets gear to role";};
-	class addWeapon			{description = " Sets gear to role";};
-	class addItem {};
-	class setVariable{};
-	class allowedDrivers{};
-	class allowedWeapons{};
-	class handleRating 		{description = "Add xp for players when rating added";};
-	class createCameraOnPlayer {description = "Create a camera object on player";};
 };
 
 class interaction

@@ -1,6 +1,7 @@
 Change log r19:
 - Added: UI Module: Handles 3d camera for vehicles, in game compass and teammates overlay, Name tags and more. New WIKI page - http://mccsandbox.wikia.com/wiki/UI_Module?venotify=created
 - Changed: Name tags, group markers moved to the inGame UI settings module
+- Changed: Moved to inidbi2 - support local db files for each mission - TODO WIKI
 - Added: Start Location modules spawn options (none/teleport/halo/paradrop) for each individual spawn point. 
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
 - Added: Resupply option to FOB.
@@ -8,6 +9,7 @@ Change log r19:
 - Added: Ability to build sand bags around FOB - Squad leader - doesn't need resources but there is a limit to 14 fences per FOB
 - Added: Units that are not in your squad will show in blue while name tags is on. 
 - Added: Units markers (mission settings module) Show units markers on the map for all players while playing in a squad from the Squad Dialog
+- Fixed: Self interaction kept working even when disabled when CBA is on.
 - Fixed: Can't login to MCC after the latest patch. 
 - Fixed: Medical system was broken (players died instantly instead of falling unconcious) and added a new WIKI page - http://mccsandbox.wikia.com/wiki/MeidcalSystem
 - Fixed: Pressing the delete button while opening MCC delete the last selected group/unit. 

@@ -142,13 +142,13 @@ if !mcc_isloading then {
 				mcc_safe=mcc_safe + format ['
 												missionnamespace setVariable ["CP_activated", %1];
 												publicVariable "CP_activated";
-												_null=[] execVM "%2scripts\player\player_init.sqf";
+												_null=[] execVM "%2mcc\roleSelection\scripts\player_init.sqf";
 											'
 											,CP_activated
 											,MCC_path
 											];
 
-				if (CP_activated) then {_null=[] execVM MCC_path + "scripts\player\player_init.sqf"};
+				if (CP_activated) then {_null=[] execVM MCC_path + "mcc\roleSelection\scripts\player_init.sqf"};
 
 				//Set tickets on server otherwise EH will be broadcast to the server
 				if (isServer) then

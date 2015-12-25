@@ -45,13 +45,7 @@
 #define CPPATH "\mcc_sandbox_mod\"
 #define CPVersion "0.1"
 
-#include "\mcc_sandbox_mod\configs\dialogs\cp_dialogs.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\respawnPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\squadsPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\gearPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\weaponsPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\accessoriesPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\uniformPanel.hpp"
+#include "\mcc_sandbox_mod\mcc\roleSelection\cfg.hpp"
 
 //--------------------------Campaign----------------------------------------------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\campaign\mcc_vehicleSpawner.hpp"
@@ -90,6 +84,7 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\bombDefuse\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\survive\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\compassHUD\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\roleSelection\cfgFunctions.hpp"
 	};
 };
 

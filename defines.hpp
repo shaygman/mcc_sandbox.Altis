@@ -47,13 +47,7 @@
 #define CPPATH ""
 #define CPVersion "0.1"
 
-#include "configs\dialogs\cp_dialogs.hpp"
-#include "configs\dialogs\gearPanel\respawnPanel.hpp"
-#include "configs\dialogs\gearPanel\squadsPanel.hpp"
-#include "configs\dialogs\gearPanel\gearPanel.hpp"
-#include "configs\dialogs\gearPanel\weaponsPanel.hpp"
-#include "configs\dialogs\gearPanel\accessoriesPanel.hpp"
-#include "configs\dialogs\gearPanel\uniformPanel.hpp"
+#include "mcc\roleSelection\cfg.hpp"
 
 //--------------------------Campaign----------------------------------------------------
 #include "mcc\Dialogs\campaign\mcc_vehicleSpawner.hpp"
@@ -90,6 +84,7 @@ class CfgFunctions
 		#include "mcc\bombDefuse\cfgFunctions.hpp"
 		#include "mcc\survive\cfgFunctions.hpp"
 		#include "mcc\compassHUD\cfgFunctions.hpp"
+		#include "mcc\roleSelection\cfgFunctions.hpp"
 	};
 };
 

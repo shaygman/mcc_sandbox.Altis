@@ -193,7 +193,7 @@ switch (true) do {
 			if (_object isKindof "Box_FIA_Support_F" && !(isNull attachedTo _object)) then {
 
 				//rts main box
-				if ((_object getVariable ["mcc_mainBoxUsed", false]) && count (_object getVariable ["MCC_virtual_cargo",[]]) > 0 && (missionNamespace getVariable ["MCC_surviveMod",false])) then {
+				if (!(_object getVariable ["mcc_mainBoxUsed", false]) && count (_object getVariable ["MCC_virtual_cargo",[]]) > 0 && (missionNamespace getVariable ["MCC_surviveMod",false])) then {
 						_array pushBack["mainBox","Open Vault",format ["%1data\IconAmmo.paa",MCC_path]];
 				};
 

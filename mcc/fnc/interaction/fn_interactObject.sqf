@@ -92,7 +92,6 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 		//create the random loot
 		player setVariable ["MCC_readValue",nil];
 
-		//[format ["SERVER_%1",toupper worldName], "Loot Positions", format ["Object_%1",(getpos _object)], "ARRAY",player,true,[]] call MCC_fnc_inidbGet;
 		[[format ["SERVER_%1",toupper worldName], "Loot Positions", format ["Object_%1",(getpos _object)], "ARRAY",player,true,[]], "MCC_fnc_inidbGet", false, false] call BIS_fnc_MP;
 
 		while {isnil "_loot"} do {sleep 0.1;_loot = player getVariable ["MCC_readValue",nil]};

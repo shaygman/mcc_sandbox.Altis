@@ -183,7 +183,7 @@ if (isnil "MCC_TRAINING") then {
 
 	//-------------------Role selection -------------------------------------------
 	if (CP_activated) then	{
-		_null=[] execVM MCC_path + "scripts\player\player_init.sqf";
+		_null=[] execVM MCC_path + "mcc\roleSelection\scripts\player_init.sqf";
 	} else {
 		 []  call MCC_fnc_startLocations;
 	};
