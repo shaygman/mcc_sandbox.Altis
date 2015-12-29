@@ -1015,9 +1015,6 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	// Teleport to team on Alt + T
 	if (isnil "MCC_teleportToTeam") then {MCC_teleportToTeam = true};
 
-	//Squad Dialog
-	MCC_squadDialogOpen = false;
-
 	//Save gear EH
 	if(local player) then {player addEventHandler ["killed",{[player] execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};
 
@@ -1098,14 +1095,12 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 
 //===============Delete Groups (server and HC client only)====================
 if (isServer || MCC_isLocalHC) then {
-	[] spawn
-	{
+	[] spawn {
 		//Let the mission load first
 		while {time <120} do {sleep 1};
 
 		_gaia_respawn = [];
-		while {true} do
-		{
+		while {true} do {
 			{
 				_gaia_respawn = (missionNamespace getVariable [ "GAIA_RESPAWN_" + str(_x),[] ]);
 

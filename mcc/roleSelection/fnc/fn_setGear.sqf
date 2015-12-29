@@ -1,13 +1,13 @@
 //==================================================================MCC_fnc_setGear======================================================================================
 // Sets gear to role
-// Example: [roleNumber, gear/uniform/select],_id], "MCC_fnc_setGear", true, false] spawn BIS_fnc_MP;
+// Example: [roleNumber, gear/uniform/select] call MCC_fnc_setGear;
 //roleNumber: 0-officer, 1-AR, 2-Rifleman, 3-AT, 4-medic, 5-marksman, 6- specialist, 7- crewman, 8-pilot
 // Gear: 0- select, 1-gear, 2-uniform
 //==============================================================================================================================================================================
 private ["_role","_select","_mag","_magazines","_muzzles","_ok","_wepItems","_image","_cfg","_side","_array","_cfgWeapon","_cfgName"];
 disableSerialization;
-_role 	= _this select 0;
-_select	= _this select 1;
+_role 	= param [0,2,[0]];
+_select	= param [1,0,[0]];
 
 if (CP_classesIndex != _role) then {CP_playerUniforms =  nil; CP_weaponAttachments = []};
 CP_classesIndex = _role;

@@ -265,8 +265,7 @@ switch (_cmd) do
 		};
 
 		//Rename squad if it is not a predefined squad
-		if ((ctrlText CP_squadPanelCreateSquadButton ==  "Rename")) then
-		{
+		if ((ctrlText CP_squadPanelCreateSquadButton ==  "Rename")) then {
 			if  ((lbCurSel CP_squadPanelSquadList) < (count CP_defaultGroups)) then	{
 				[9999,"Can't rename predefined squad name",3,true] spawn MCC_fnc_setIDCText;
 			}
@@ -280,9 +279,7 @@ switch (_cmd) do
 					case resistance:	{CP_guarGroups set [(lbCurSel CP_squadPanelSquadList),[CP_activeGroup select 0,_text]]};
 				};
 			};
-		}
-		else
-		{
+		} else {
 
 				//check if player in group
 				if ((count (units (group player)) > 0) && ((group player) in _array)) exitWith {

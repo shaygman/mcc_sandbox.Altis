@@ -8,7 +8,7 @@ if (!MCC_iniDBenabled) exitWIth {systemchat "iniDB isn't running. Can't access r
 //******************************************************************************************************************************
 
 waituntil {alive player};
-
+player setVariable ["cpReady",false,true];
 CP_classes = ["Officer","AR","Rifleman","AT","Corpsman","Marksman","Specialist","Crew","Pilot"];
 CP_classesPic = [	MCC_path +"mcc\roleSelection\data\Officer.paa",
 					MCC_path +"mcc\roleSelection\data\AR.paa",
@@ -52,8 +52,6 @@ player setVariable ["MCC_disableStatic",_eh];
 
 //Mark it zero again
 player addRating (-1 * (rating player));
-
-player setVariable ["cpReady",false,true];
 
 //Get rank from the server
 [["MCCplayerRank", player, "N/A", "STRING"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;

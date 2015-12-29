@@ -21,7 +21,7 @@ class CP_RESPAWNPANEL {
 			x = 0.005 * safezoneW + safezoneX;
 			y = 0.00500001 * safezoneH + safezoneY;
 			w = 0.149531 * safezoneW;
-			h = 0.99 * safezoneH;
+			h = 1.001 * safezoneH;
 			colorBackground[] = {0.192,0.192,0.192,0.9};
 		};
 
@@ -48,11 +48,46 @@ class CP_RESPAWNPANEL {
 				{
 					idc = 1021;
 
-					x = 0.00515597 * safezoneW;
-					y = 0.011 * safezoneH;
-					w = 0.180469 * safezoneW;
-					h = 0.088 * safezoneH;
+					x = 0.00515628 * safezoneW;
+					y = 0.055 * safezoneH;
+					w = 0.175313 * safezoneW;
+					h = 0.033 * safezoneH;
 				};
+
+				class commanderTittle: CP_RscPicture
+				{
+					idc = -1;
+					text = "\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa";
+					tooltip = "Commander";
+					x = 0.00515628 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.04 * safezoneW;
+					h = 0.044 * safezoneH;
+					sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+					colorBackground[] = {0,1,1,1};
+				};
+				class commanderName: CP_RscText
+				{
+					idc = 919191;
+					x = 0.045 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.0928125 * safezoneW;
+					h = 0.044 * safezoneH;
+					sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+					colorText[] = {0,1,1,1};
+				};
+				class commanderButton: CP_RscButtonMenu
+				{
+					idc = 919192;
+					text = "Take";
+					style = 2;
+					action =  "0 spawn MCC_fnc_RSTakeCommander";
+					x = 0.144375 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.05 * safezoneW;
+					h = 0.044 * safezoneH;
+				};
+
 				class CP_exitButton: CP_RscButtonMenu
 				{
 					action = "endMission 'END1' ";
@@ -367,7 +402,7 @@ class CP_RESPAWNPANEL {
 			w = 0.0670311 * safezoneW;
 			h = 0.044 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			action = __EVAL("[1] execVM '"+CPPATH+"mcc\roleSelection\scripts\switchDialog.sqf'");
+			action = __EVAL("[0] execVM '"+CPPATH+"mcc\roleSelection\scripts\switchDialog.sqf'");
 		};
 		class CP_gearPanelButton: CP_RscButtonMenu
 		{
@@ -379,7 +414,7 @@ class CP_RESPAWNPANEL {
 			w = 0.0670311 * safezoneW;
 			h = 0.044 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			action = __EVAL("[2] execVM '"+CPPATH+"mcc\roleSelection\scripts\switchDialog.sqf'");
+			action = __EVAL("[1] execVM '"+CPPATH+"mcc\roleSelection\scripts\switchDialog.sqf'");
 		};
 
 		class CP_squadList: MCC_RscControlsGroup
@@ -405,17 +440,26 @@ class CP_RESPAWNPANEL {
 
 		};
 
-		/*
-		class CP_respawnPointsList: CP_RscListbox
+		class CreateSquad: CP_RscButtonMenu
 		{
-			idc = 0;
-			x = 0.0101562 * safezoneW + safezoneX;
-			y = 0.17 * safezoneH + safezoneY;
-			w = 0.211406 * safezoneW;
-			h = 0.737 * safezoneH;
-			colorBackground[] = {0,0,0,0.8};
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-			onLBSelChanged = __EVAL("[0] execVM '"+CPPATH+"mcc\roleSelection\scripts\respawnPanel_cmd.sqf'");
+			idc = -1;
+			text = "Create Squad";
+			style = 2;
+			onButtonClick = "_this spawn MCC_fnc_RSSquadCreate";
+			x = 0.0410937 * safezoneW + safezoneX;
+			y = 0.951 * safezoneH + safezoneY;
+			w = 0.0721875 * safezoneW;
+			h = 0.033 * safezoneH;
+		};
+		/*
+		class CreateSquadName: CP_RscText
+		{
+			idc = 151511;
+			type = 2;
+			x = 0.0258 * safezoneW + safezoneX;
+			y = 0.919 * safezoneH + safezoneY;
+			w = 00 * safezoneW;
+			h = 0.022 * safezoneH;
 		};
 		*/
 	};

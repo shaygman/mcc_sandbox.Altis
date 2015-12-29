@@ -29,6 +29,18 @@ uiNamespace setVariable ["CP_missionName",_disp displayCtrl 1021];
 #define CP_side3 (uiNamespace getVariable "CP_side3")
 #define CP_side3Score (uiNamespace getVariable "CP_side3Score")
 #define CP_missionName (uiNamespace getVariable "CP_missionName")
+#define CP_CreateSquadName (uiNamespace getVariable "CP_CreateSquadName")
+
+#define CP_maxUnits 10
+
+//If we did not got here after respawn
+if (player getVariable ["cpReady",true]) then {
+	{
+		(_disp displayCtrl _x) ctrlShow false;
+	} forEach [28,29,4,32,44,1006];
+} else {
+	CP_deployPanelMiniMap ctrlAddEventHandler ["Draw","_this call MCC_fnc_mapDrawPlayersWPConsole"];
+};
 
 //Roles enables or just after regular respawn
 if !(CP_activated) then {
@@ -163,29 +175,51 @@ if (CP_activated) then {
 
 //Refresh
 [] spawn {
-	private ["_comboBox","_idc","_activeSides","_array","_disp","_ctrlGroup","_createGroupButton"];
+	private ["_comboBox","_idc","_activeSides","_array","_disp","_ctrlGroup","_createGroupButton","_groupCtrls","_groupNames","_oldCommander","_commander"];
 	disableSerialization;
 
 	_createGroupButton = {
 		params ["_disp","_idc","_ctrlGroup","_hight","_groupName","_group"];
 		_buttonCtrlGroup = _disp ctrlCreate ["RscControlsGroupNoScrollbars",_idc,_ctrlGroup];
+		_buttonCtrlGroup ctrlSetPosition [0*safezoneW, 0, 0.15 * safezoneW, _hight];
+		_buttonCtrlGroup ctrlCommit 0;
 
 		//Button
-		_ctrl = _disp ctrlCreate ["RscText",_idc+200,_buttonCtrlGroup];
+		_ctrl = _disp ctrlCreate ["RscText",_idc+300,_buttonCtrlGroup];
 		_ctrl ctrlSetPosition [0*safezoneW, 0, 0.2 * safezoneW, _hight];
 		_ctrl ctrlsetText _groupName;
 		_ctrl ctrlSetBackgroundColor [0.292,0.292,0.292,0.9];
 		_ctrl ctrlCommit 0;
 
 		//Join
-		_ctrl = _disp ctrlCreate ["RscButton",_idc+201,_buttonCtrlGroup];
-		_ctrl ctrlSetPosition [0.105*safezoneW, 0.003* safezoneH, 0.03 * safezoneW, _hight*0.8];
+		_ctrl = _disp ctrlCreate ["RscButton",_idc+400,_buttonCtrlGroup];
+		_ctrl ctrlSetPosition [0.113*safezoneW, 0.003* safezoneH, 0.025 * safezoneW, _hight*0.8];
 		_ctrl ctrlsetText "Join";
 		_ctrl ctrlSetBackgroundColor [0,0,0,0.9];
-		_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["[player] join groupFromNetId '%1'",netId _group]];
+		_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["['%1','%2',%3] spawn MCC_fnc_RSSquadJoin",netId _group, _groupName, _idc-500]];
+		_ctrl ctrlCommit 0;
+
+		//Lock
+		_ctrl = _disp ctrlCreate ["RscActivePicture",_idc+500,_buttonCtrlGroup];
+		_ctrl ctrlSetPosition [0.091*safezoneW, 0.003* safezoneH, 0.015 * safezoneW, _hight*0.8];
+		_ctrl ctrlsetText (if (_group getVariable ["locked",false]) then {(MCC_path +"data\locked.paa")} else {(MCC_path +"data\unlocked.paa")});
+		_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["[%1] spawn MCC_fnc_RSSquadLock",_idc-500]];
+		_ctrl ctrlCommit 0;
+
+		//edit
+		_ctrl = _disp ctrlCreate ["RscActivePicture",_idc+600,_buttonCtrlGroup];
+		_ctrl ctrlSetPosition [0.055*safezoneW, 0.003* safezoneH, 0.012 * safezoneW, _hight*0.7];
+		_ctrl ctrlsetText (MCC_path +"mcc\roleSelection\data\edit.paa");
+		_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["[%1,%2,_this select 0] spawn MCC_fnc_RSSquadRename",_idc-500,_idc]];
+		_ctrl ctrlCommit 0;
+
+		//units count
+		_ctrl = _disp ctrlCreate ["RscText",_idc+800,_buttonCtrlGroup];
+		_ctrl ctrlSetPosition [0.07*safezoneW, 0.003* safezoneH, 0.02 * safezoneW, _hight*0.7];
+		_ctrl ctrlSetFontHeight (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8);
+		_ctrl ctrlsetText "";
 		_ctrl ctrlCommit 0;
 	};
-
 
 	_disp = CP_RESPAWNPANEL_IDD;
 	if (count ([player] call BIS_fnc_getRespawnPositions)>0) then {
@@ -194,6 +228,9 @@ if (CP_activated) then {
 	};
 
 	_ctrlGroup =_disp displayCtrl 2302;
+	_groupNames = [];
+	_oldCommander =  "";
+
 	while {dialog && (missionNamespace getVariable ["CP_respawnPanelOpen",false])} do {
 
 		missionNamespace setVariable ["MCCActiveSpawnPosArray",[player] call BIS_fnc_getRespawnPositions];
@@ -233,6 +270,31 @@ if (CP_activated) then {
 						case resistance:	{CP_guarGroups};
 					};
 
+		//Commander name
+		_commander = MCC_server getVariable [format ["CP_commander%1",side player],""];
+
+		//We have a new commander
+		if (_oldCommander != _commander) then {
+			//Get commanderName
+			_commanderName = "";
+			{
+				if ((getPlayerUID _x) == _commander) then {_commanderName = name _x};
+			} foreach allplayers;
+
+			if (_commander == "") then {
+				(_disp displayCtrl 919192) ctrlSetText "Take";
+			} else {
+				if (_commander == getPlayerUID player) then	{
+					(_disp displayCtrl 919192) ctrlSetText "Leave";
+				} else {
+					(_disp displayCtrl 919192) ctrlSetText "Mutiny";
+				};
+			};
+
+			(_disp displayCtrl 919191) ctrlSetText _commanderName;
+			_oldCommander = _commander;
+		};
+
 		_xPos = 0;
 		_yPos = 0;
 		_space = 0.001* safezoneH;
@@ -243,82 +305,81 @@ if (CP_activated) then {
 
 		{
 			_group = (_x select 0);
-			_groupName = _x select 1;
-			_idc = _group getvariable ["MCC_squadMenuIdc",-1];
+			_groupName = (_x select 1);
 
-			if (count units _group > 0) then {
-				//No IDC
-				if (_idc == -1) then {
-					_idc = (["MCC_squadMenuIdcCounter",1] call bis_fnc_counter)+500;
-					_null = [_disp,_idc,_ctrlGroup,_hight,_groupName,_group] call _createGroupButton;
-					_group setVariable ["MCC_squadMenuIdc",_idc];
+			//Not exist
+			if !(_foreachIndex in _groupNames) then {
+				_groupNames pushBack _foreachIndex;
+				_idc = _foreachIndex+500;
+				_null = [_disp,_idc,_ctrlGroup,_hight,_groupName,_group] call _createGroupButton;
+			};
+
+			_idc = _foreachIndex+500;
+
+			//Have IDC but no control
+			if ((isnull (_disp displayCtrl _idc) || !ctrlShown (_disp displayCtrl _idc))) then {
+				if (isnull (_disp displayCtrl _idc)) then {
+					_null =[_disp,_idc,_ctrlGroup,_hight,_groupName,_group] call _createGroupButton;
+				} else {
+					(_disp displayCtrl _idc) ctrlShow true;
 				};
+			};
 
+			//Set group name again if it has been edited
+			(_disp displayCtrl _idc+300) ctrlsetText _groupName;
+			(_disp displayCtrl _idc) ctrlCommit 0;
+
+			//Number of units
+			(_disp displayCtrl _idc+800) ctrlsetText format ["%1/%2",count units _group, CP_maxUnits];
+			(_disp displayCtrl _idc) ctrlCommit 0;
+
+			if (ctrlShown (_disp displayCtrl _idc) && !isNull(_disp displayCtrl _idc)) then {
+				(_disp displayCtrl _idc) ctrlSetPosition [_xPos*safezoneW, _yPos, 0.2 * safezoneW, _hight];
+				(_disp displayCtrl _idc) ctrlCommit 0;
+
+				//In group
+				(_disp displayCtrl _idc+400) ctrlenable !(group player == _group);
+				(_disp displayCtrl _idc+500) ctrlsetText (if (_group getVariable ["locked",false]) then {(MCC_path +"data\locked.paa")} else {(MCC_path +"data\unlocked.paa")});
+				(_disp displayCtrl _idc+600) ctrlShow (player == leader _group);
+				_yPos = _yPos + _hight + _space;
+
+				//Units
+				_idc = _idc+100;
 				//Have IDC but no control
-				if ((isnull (_disp displayCtrl _idc) || !ctrlShown (_disp displayCtrl _idc))) then {
+				if ((isnull (_disp displayCtrl _idc) || !ctrlShown (_disp displayCtrl _idc)) && (count units _group > 0 )) then {
 					if (isnull (_disp displayCtrl _idc)) then {
-						_null =[_disp,_idc,_ctrlGroup,_hight,_groupName,_group] call _createGroupButton;
+						_ctrl = _disp ctrlCreate ["RscListbox",_idc,_ctrlGroup];
+						(_disp displayCtrl _idc) ctrlAddEventHandler ["LBSelChanged",format ["if ((_this select 1) > -1) then {
+																							(_this select 0) lbSetCurSel -1;
+																							[(_this select 0),((_this select 0) lbData (_this select 1)),(_this select 1),%1] spawn MCC_fnc_RSunitSelected;
+																						}",ctrlIDC _ctrlGroup]];
 					} else {
 						(_disp displayCtrl _idc) ctrlShow true;
-					};
-				} else {
-					//Have control but empty
-					if (count units _group == 0) then {
-						(_disp displayCtrl _idc) ctrlShow false;
 					};
 				};
 
 				(_disp displayCtrl _idc) ctrlCommit 0;
-
 				if (ctrlShown (_disp displayCtrl _idc) && !isNull(_disp displayCtrl _idc)) then {
-					(_disp displayCtrl _idc) ctrlSetPosition [_xPos*safezoneW, _yPos, 0.2 * safezoneW, _hight];
+					_buffer = count units _group * _lbHight;
+					(_disp displayCtrl _idc) ctrlSetPosition [_xPos*safezoneW, _yPos, 0.14 * safezoneW, _buffer];
 					(_disp displayCtrl _idc) ctrlCommit 0;
 
-					//In group
-					(_disp displayCtrl _idc+201) ctrlenable !(group player == _group);
+					lbClear (_disp displayCtrl _idc);
+					{
+						_class			= netId _x;
+						_displayname 	= name _x;
+						_pic 			= _x getvariable ["CP_roleImage",""];
+						_index 			= (_disp displayCtrl _idc) lbAdd _displayname;
+						(_disp displayCtrl _idc) lbSetPicture [_index, _pic];
+						(_disp displayCtrl _idc) lbSetData [_index, _class];
+						if (_x == leader _group) then {(_disp displayCtrl _idc) lbSetPictureRight [_index, "\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"]};
+					} forEach units _group;
 
-					_yPos = _yPos + _hight + _space;
-
-					//Units
-					_idc = _idc+100;
-					//Have IDC but no control
-					if ((isnull (_disp displayCtrl _idc) || !ctrlShown (_disp displayCtrl _idc)) && (count units _group > 0 )) then {
-						if (isnull (_disp displayCtrl _idc)) then {
-							_ctrl = _disp ctrlCreate ["RscListbox",_idc,_ctrlGroup];
-							(_disp displayCtrl _idc) ctrlAddEventHandler ["MouseMoving",{(_this select 0) lbSetCurSel -1}];
-							(_disp displayCtrl _idc) ctrlAddEventHandler ["LBSelChanged",{if ((_this select 1) > -1) then {
-																								(_this select 0) lbSetCurSel -1;
-																								systemChat str ((_this select 0) lbData (_this select 1));
-																							}}];
-						} else {
-							(_disp displayCtrl _idc) ctrlShow true;
-						};
-					};
-
-					(_disp displayCtrl _idc) ctrlCommit 0;
-					if (ctrlShown (_disp displayCtrl _idc) && !isNull(_disp displayCtrl _idc)) then {
-						_buffer = count units _group * _lbHight;
-						(_disp displayCtrl _idc) ctrlSetPosition [_xPos*safezoneW, _yPos, 0.2 * safezoneW, _buffer];
-						(_disp displayCtrl _idc) ctrlCommit 0;
-
-						lbClear (_disp displayCtrl _idc);
-						{
-							_class			= str _x;
-							_displayname 	= name _x;
-							_pic 			= _x getvariable ["CP_roleImage",""];
-							_index 			= (_disp displayCtrl _idc) lbAdd _displayname;
-							(_disp displayCtrl _idc) lbSetPicture [_index, _pic];
-							(_disp displayCtrl _idc) lbSetData [_index, _class];
-						} forEach units _group;
-
-						_yPos = _yPos + _buffer;
-					};
-				} else {
-					(_disp displayCtrl _idc) ctrlShow false;
+					_yPos = _yPos + _buffer;
 				};
 			};
 
 		} forEach _groups;
-		sleep 0.1;
+		sleep 0.01;
 	};
 };

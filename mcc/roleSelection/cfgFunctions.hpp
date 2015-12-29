@@ -22,4 +22,11 @@ class roleSelection {
 	class allowedWeapons{};
 	class handleRating 		{description = "Add xp for players when rating added";};
 	class createCameraOnPlayer {description = "Create a camera object on player";};
+	class RSSquadJoin {description = "Handles player joining a squad";};
+	class RSSquadCreate {description = "Create a new sqaud";};
+	class RSSquadLock {description = "Lock sqaud";};
+	class RSSquadRename {description = "Rename sqaud";};
+	class RSunitSelected {description = "Selecting a unit from squadMenu";};
+	class RSunitSelectedClicked {description = "Executing selected unit";};
+	class RSTakeCommander {description = "Become a commander";};
 };

@@ -16,102 +16,111 @@ class mcc_test
 
 	class controls
 	{
-		class MCC_AmmoText: MCC_RscText
+		class upperBckg1: MCC_RscText
 		{
-			idc = 81;
+			idc = -1;
+			x = 0 * safezoneW;
+			y = 0 * safezoneH;
+			w = 0.840469 * safezoneW;
+			h = 0.11 * safezoneH;
+			colorBackground[] = {0.192,0.192,0.192,0.9};
+		};
+		class MCC_missionName: MCC_RscText
+		{
+			idc = 1021;
 
-			x = 0.0257812 * safezoneW;
+			x = 0.00515597 * safezoneW;
 			y = 0.011 * safezoneH;
-			w = 0.04125 * safezoneW;
-			h = 0.033 * safezoneH;
+			w = 0.180469 * safezoneW;
+			h = 0.088 * safezoneH;
 		};
-
-		class MCC_RepairText: MCC_RscText
+		class MCC_exitButton: MCC_RscButtonMenu
 		{
-			idc = 82;
+			action = "endMission 'END1' ";
 
-			x = 0.0257812 * safezoneW;
-			y = 0.055 * safezoneH;
-			w = 0.04125 * safezoneW;
-			h = 0.033 * safezoneH;
-		};
-
-		class MCC_FuelText: MCC_RscText
-		{
-			idc = 83;
-
-			x = 0.0257812 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.04125 * safezoneW;
-			h = 0.033 * safezoneH;
-		};
-		class MCC_FoodText: MCC_RscText
-		{
-			idc = 84;
-
-			x = 0.0257812 * safezoneW;
-			y = 0.143 * safezoneH;
-			w = 0.04125 * safezoneW;
-			h = 0.033 * safezoneH;
-		};
-		class MCC_MedText: MCC_RscText
-		{
-			idc = 85;
-
-			x = 0.0257812 * safezoneW;
-			y = 0.187 * safezoneH;
-			w = 0.04125 * safezoneW;
-			h = 0.033 * safezoneH;
-		};
-		class MCC_Ammo: MCC_RscPicture
-		{
-			idc = -1;
-
-			text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
-			x = 0.00515625 * safezoneW;
+			idc = 1006;
+			text = "Exit Game";
+			x = 0.737343 * safezoneW;
 			y = 0.011 * safezoneH;
-			w = 0.0154688 * safezoneW;
+			w = 0.0928125 * safezoneW;
+			h = 0.044 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+
+		class MCC_flag: MCC_RscPicture
+		{
+			idc = 20;
+
+			x = 0.567187 * safezoneW;
+			y = 0.066 * safezoneH;
+			w = 0.0567187 * safezoneW;
 			h = 0.033 * safezoneH;
 		};
-		class MCC_Repair: MCC_RscPicture
+		class MCC_side1: MCC_RscText
 		{
-			idc = -1;
+			idc = 21;
 
-			text = __EVAL(MCCPATH +"data\IconRepair.paa");
-			x = 0.00515625 * safezoneW;
-			y = 0.055 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.033 * safezoneH;
+			x = 0.53625 * safezoneW;
+			y = 0.011 * safezoneH;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			colorText[] = {0,1,1,1};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
-		class MCC_Fuel: MCC_RscPicture
+		class MCC_side1Score: MCC_RscText
 		{
-			idc = -1;
+			idc = 22;
+			style = 2;
 
-			text = __EVAL(MCCPATH +"data\IconFuel.paa");
-			x = 0.00515625 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.033 * safezoneH;
+			x = 0.53625 * safezoneW;
+			y = 0.033 * safezoneH;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
-		class MCC_FoodPic: MCC_RscPicture
+		class MCC_side2: MCC_RscText
 		{
-			idc = -1;
+			idc = 23;
 
-			text = __EVAL(MCCPATH +"data\IconFood.paa");
-			x = 0.00515625 * safezoneW;
-			y = 0.143 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.033 * safezoneH;
+			x = 0.5775 * safezoneW;
+			y = 0.011 * safezoneH;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			colorText[] = {0,1,1,1};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
-		class MCC_MedPic: MCC_RscPicture
+		class MCC_side2Score: MCC_RscText
 		{
-			idc = -1;
+			idc = 24;
+			style = 2;
 
-			text = __EVAL(MCCPATH +"data\IconMed.paa");
-			x = 0.00515625 * safezoneW;
-			y = 0.187 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.033 * safezoneH;
+			x = 0.5775 * safezoneW;
+			y = 0.033 * safezoneH;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		};
+		class MCC_side3: MCC_RscText
+		{
+			idc = 25;
+
+			x = 0.61875 * safezoneW;
+			y = 0.011 * safezoneH;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			colorText[] = {0,1,1,1};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+		};
+		class MCC_side3Score: MCC_RscText
+		{
+			idc = 26;
+			style = 2;
+
+			x = 0.61875 * safezoneW;
+			y = 0.033 * safezoneH;
+			w = 0.034375 * safezoneW;
+			h = 0.0219914 * safezoneH;
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
 	};
 };

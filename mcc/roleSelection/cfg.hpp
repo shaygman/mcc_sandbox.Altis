@@ -3,7 +3,6 @@
 #include "dialogs\gearPanel.hpp"
 #include "dialogs\respawnPanel.hpp"
 #include "dialogs\RscControlsGroupItemsLoad.hpp"
-#include "dialogs\squadsPanel.hpp"
 #include "dialogs\uniformPanel.hpp"
 #include "dialogs\weaponsPanel.hpp"
 //Kits

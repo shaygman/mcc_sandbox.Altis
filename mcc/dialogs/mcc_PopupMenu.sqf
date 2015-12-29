@@ -1,4 +1,4 @@
-#define CP_SQUADPANEL_IDD (uiNamespace getVariable "CP_SQUADPANEL_IDD")
+#define CP_RESPAWNPANEL_IDD (uiNamespace getVariable "CP_RESPAWNPANEL_IDD")
 
 private ["_ok","_key","_index","_commander","_screen"];
 disableSerialization;
@@ -72,21 +72,10 @@ if ((_index == 1) && (_commander == getPlayerUID player) && (missionNamespace ge
 //Squad Dialog
 if (_index == 2 && (missionNamespace getVariable ["MCC_allowSquadDialog",true])) exitWith {
 	if (dialog) then {
-
-		if (str (CP_SQUADPANEL_IDD displayCtrl 0) != "No control") then {MCC_squadDialogOpen = false};
-		while {dialog} do {closeDialog 0};
-
-		if !(isnil "CP_gearCam") then {
-			detach CP_gearCam;
-			CP_gearCam cameraeffect ["Terminate","back"];
-			camDestroy CP_gearCam;
-			deleteVehicle CP_gearCam;
-			CP_gearCam = nil;
-		};
+		while {dialog} do {closeDialog 0; sleep 0.01};
 	} else {
 		while {dialog} do {closeDialog 0; sleep 0.01};
-		MCC_squadDialogOpen = true;
-		createDialog "CP_SQUADPANEL";
+		createDialog "CP_RESPAWNPANEL";
 	};
 };
 
