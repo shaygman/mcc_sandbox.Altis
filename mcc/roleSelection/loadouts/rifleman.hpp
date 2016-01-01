@@ -2,6 +2,9 @@ class rifleman
 {
 	name    = "Rifleman";
 	picture =  __EVAL(MCCPATH +"mcc\roleSelection\data\Rifleman.paa");
+	minPlayersForKit = 0;
+	maxKitsInGroup = 99;
+	maxKitsInSide = 999;
 
 	class west
 	{
@@ -31,7 +34,7 @@ class rifleman
 
 			class arifle_MX_Black_F
 			{
-				unlockLevel = 13;
+				unlockLevel = 23;
 				cfgname = "arifle_MX_Black_F";
 				magazines[]= {"30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2};
 				attachments1[]= {{3,"optic_Aco"},{4,"optic_Holosight"},{6,"optic_MRCO"},{8,"optic_Hamr"},{10,"optic_Arco"}};
@@ -44,6 +47,64 @@ class rifleman
 		class secondary
 		{
 
+		};
+
+		class handgun
+		{
+			class hgun_Rook40_F
+			{
+				unlockLevel = 4;
+				cfgname = "hgun_Rook40_F";
+				magazines[]= {"16Rnd_9x21_Mag",2};
+				attachments1[]= {};
+				attachments2[]= {{2,"muzzle_snds_L"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_P07_F
+			{
+				unlockLevel = 8;
+				cfgname = "hgun_P07_F";
+				magazines[]= {"16Rnd_9x21_Mag",2};
+				attachments1[]= {};
+				attachments2[]= {{2,"muzzle_snds_L"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_ACPC2_F
+			{
+				unlockLevel = 12;
+				cfgname = "hgun_ACPC2_F";
+				magazines[]= {"9Rnd_45ACP_Mag",2};
+				attachments1[]= {};
+				attachments2[]= {{2,"muzzle_snds_acp"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_Pistol_heavy_02_F
+			{
+				unlockLevel = 16;
+				cfgname = "hgun_Pistol_heavy_02_F";
+				magazines[]= {"6Rnd_45ACP_Cylinder",2};
+				attachments1[]= {{2,"optic_Yorris"}};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_Pistol_heavy_01_F
+			{
+				unlockLevel = 16;
+				cfgname = "hgun_Pistol_heavy_01_F";
+				magazines[]= {"11Rnd_45ACP_Mag",2};
+				attachments1[]= {{4,"optic_MRD"}};
+				attachments2[]= {{2,"muzzle_snds_acp"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
 		};
 
 		items1[]={{20,"Binocular", {}},{40,"Rangefinder", {}}};
@@ -86,7 +147,7 @@ class rifleman
 
 			class arifle_MX_Black_F
 			{
-				unlockLevel = 13;
+				unlockLevel = 23;
 				cfgname = "arifle_MX_Black_F";
 				magazines[]= {"30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2};
 				attachments1[]= {{3,"optic_ACO_grn"},{4,"optic_Holosight"},{6,"optic_MRCO"},{8,"optic_Hamr"},{10,"optic_Arco"}};
@@ -99,6 +160,64 @@ class rifleman
 		class secondary
 		{
 
+		};
+
+		class handgun
+		{
+			class hgun_Rook40_F
+			{
+				unlockLevel = 4;
+				cfgname = "hgun_Rook40_F";
+				magazines[]= {"16Rnd_9x21_Mag",2};
+				attachments1[]= {};
+				attachments2[]= {{2,"muzzle_snds_L"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_P07_F
+			{
+				unlockLevel = 8;
+				cfgname = "hgun_P07_F";
+				magazines[]= {"16Rnd_9x21_Mag",2};
+				attachments1[]= {};
+				attachments2[]= {{2,"muzzle_snds_L"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_ACPC2_F
+			{
+				unlockLevel = 12;
+				cfgname = "hgun_ACPC2_F";
+				magazines[]= {"9Rnd_45ACP_Mag",2};
+				attachments1[]= {};
+				attachments2[]= {{2,"muzzle_snds_acp"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_Pistol_heavy_02_F
+			{
+				unlockLevel = 16;
+				cfgname = "hgun_Pistol_heavy_02_F";
+				magazines[]= {"6Rnd_45ACP_Cylinder",2};
+				attachments1[]= {{2,"optic_Yorris"}};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_Pistol_heavy_01_F
+			{
+				unlockLevel = 16;
+				cfgname = "hgun_Pistol_heavy_01_F";
+				magazines[]= {"11Rnd_45ACP_Mag",2};
+				attachments1[]= {{4,"optic_MRD"}};
+				attachments2[]= {{2,"muzzle_snds_acp"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
 		};
 
 		items1[]={{20,"Binocular", {}},{40,"Rangefinder", {}}};
@@ -141,7 +260,7 @@ class rifleman
 
 			class arifle_MX_Black_F
 			{
-				unlockLevel = 13;
+				unlockLevel = 23;
 				cfgname = "arifle_MX_Black_F";
 				magazines[]= {"30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2};
 				attachments1[]= {{3,"optic_Aco"},{4,"optic_Holosight"},{6,"optic_MRCO"},{8,"optic_Hamr"},{10,"optic_Arco"}};
@@ -154,6 +273,64 @@ class rifleman
 		class secondary
 		{
 
+		};
+
+		class handgun
+		{
+			class hgun_Rook40_F
+			{
+				unlockLevel = 4;
+				cfgname = "hgun_Rook40_F";
+				magazines[]= {"16Rnd_9x21_Mag",2};
+				attachments1[]= {};
+				attachments2[]= {{2,"muzzle_snds_L"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_P07_F
+			{
+				unlockLevel = 8;
+				cfgname = "hgun_P07_F";
+				magazines[]= {"16Rnd_9x21_Mag",2};
+				attachments1[]= {};
+				attachments2[]= {{2,"muzzle_snds_L"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_ACPC2_F
+			{
+				unlockLevel = 12;
+				cfgname = "hgun_ACPC2_F";
+				magazines[]= {"9Rnd_45ACP_Mag",2};
+				attachments1[]= {};
+				attachments2[]= {{2,"muzzle_snds_acp"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_Pistol_heavy_02_F
+			{
+				unlockLevel = 16;
+				cfgname = "hgun_Pistol_heavy_02_F";
+				magazines[]= {"6Rnd_45ACP_Cylinder",2};
+				attachments1[]= {{2,"optic_Yorris"}};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class hgun_Pistol_heavy_01_F
+			{
+				unlockLevel = 16;
+				cfgname = "hgun_Pistol_heavy_01_F";
+				magazines[]= {"11Rnd_45ACP_Mag",2};
+				attachments1[]= {{4,"optic_MRD"}};
+				attachments2[]= {{2,"muzzle_snds_acp"}};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
 		};
 
 		items1[]={{20,"Binocular", {}},{40,"Rangefinder", {}}};

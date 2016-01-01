@@ -265,8 +265,10 @@ MCC_3D_CAM_Handler =
 					_offset = getArray(configFile >>"RscTitles" >> "MCC_compass" >> "controls" >> _ctrlClass >> "offSet");
 				};
 
-				_ctrl ctrlSetPosition (worldToScreen (_camPos vectoradd _offset));
-				_ctrl ctrlCommit 0;
+				if (count _offset == 3) then {
+					_ctrl ctrlSetPosition (worldToScreen (_camPos vectoradd _offset));
+					_ctrl ctrlCommit 0;
+				};
 			};
 
 			//Anim Map

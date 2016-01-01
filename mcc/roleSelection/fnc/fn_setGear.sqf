@@ -6,24 +6,40 @@
 //==============================================================================================================================================================================
 private ["_role","_select","_mag","_magazines","_muzzles","_ok","_wepItems","_image","_cfg","_side","_array","_cfgWeapon","_cfgName"];
 disableSerialization;
-_role 	= param [0,2,[0]];
+_role 	= param [0,2,[0,""]];
 _select	= param [1,0,[0]];
 
-if (CP_classesIndex != _role) then {CP_playerUniforms =  nil; CP_weaponAttachments = []};
-CP_classesIndex = _role;
+if (typeName _role == typeName 0) then {
+	//Set player role
+	_image = [	MCC_path +"mcc\roleSelection\data\Officer.paa",
+				MCC_path +"mcc\roleSelection\data\AR.paa",
+				MCC_path +"mcc\roleSelection\data\Rifleman.paa",
+				MCC_path +"mcc\roleSelection\data\AT.paa",
+				MCC_path +"mcc\roleSelection\data\Corpsman.paa",
+				MCC_path +"mcc\roleSelection\data\Marksman.paa",
+				MCC_path +"mcc\roleSelection\data\Specialist.paa",
+				MCC_path +"mcc\roleSelection\data\Crew.paa",
+				MCC_path +"mcc\roleSelection\data\Pilot.paa"
+			] select _role;
 
-_role = switch (_role) do {
-			case 0: {"Officer"};
-			case 1: {"AR"};
-			case 2: {"Rifleman"};
-			case 3: {"AT"};
-			case 4: {"Corpsman"};
-			case 5: {"Marksman"};
-			case 6: {"Specialist"};
-			case 7: {"Crew"};
-			case 8: {"Pilot"};
-			default {"Rifleman"};
-		};
+	_role = switch (_role) do {
+				case 0: {"Officer"};
+				case 1: {"AR"};
+				case 2: {"Rifleman"};
+				case 3: {"AT"};
+				case 4: {"Corpsman"};
+				case 5: {"Marksman"};
+				case 6: {"Specialist"};
+				case 7: {"Crew"};
+				case 8: {"Pilot"};
+				default {"Rifleman"};
+			};
+} else {
+	_image = if (isClass (missionconfigFile >> "MCC_loadouts" >> _role)) then {getText(missionconfigFile >> "MCC_loadouts" >> _role >> "picture")} else {getText(configFile >> "MCC_loadouts" >> _role >> "picture")};
+};
+
+if (toLower (player getvariable ["CP_role","n/a"]) != toLower _role) then {CP_playerUniforms =  nil; CP_weaponAttachments = []};
+
 _side = tolower str side player;
 
 if !(_side in ["east","west","guer"]) exitWith {systemChat "Player is not in any side"};
@@ -63,6 +79,22 @@ for "_i" from 0 to (count(_cfg >> _side >> "secondary")-1) do {
 	};
 };
 
+//Handguns
+CP_handguns = [];
+_array = [];
+for "_i" from 0 to (count(_cfg >> _side >> "handgun")-1) do {
+	_cfgWeapon = ((_cfg >> _side >> "handgun") select _i);
+	if (isClass (_cfgWeapon)) then {
+		_cfgName = configName _cfgWeapon;
+		_array = [getNumber(_cfg >> _side >> "handgun" >> _cfgName >> "unlockLevel"),
+		          getText(_cfg >> _side >> "handgun" >> _cfgName >> "cfgname"),
+		          getArray(_cfg >> _side >> "handgun" >> _cfgName >> "magazines")
+		         ];
+
+		CP_handguns pushBack _array;
+	};
+};
+
 //Items
 {
 	_cfgWeapon = (_cfg >> _side >> format["items%1",_foreachindex+1]);
@@ -83,9 +115,6 @@ CP_currentUniforms = [];
 
 //Set playr level
 CP_currentLevel = officerLevel select 0;
-
-//Set player role
-_image = CP_classesPic select (CP_classes find _role);
 
 //Set Primary weapon
 CP_currentWeapon = missionNamespace getVariable format ["CP_player%1Weapon_%2_%3",_role,getplayerUID player,side player];
@@ -160,7 +189,7 @@ if (isnil "CP_playerUniforms") then {
 							((CP_currentUniforms select 5) select 0) select 1
 						];
 	};
-[CP_classes select CP_classesIndex] call MCC_fnc_assignGear;
+[_role] call MCC_fnc_assignGear;
 
 private ["_disp"];
 _disp = uiNamespace getVariable "CP_GEARPANEL_IDD";

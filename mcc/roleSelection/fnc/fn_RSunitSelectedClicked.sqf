@@ -19,6 +19,7 @@ switch (toLower _data) do {
 			_str = "<t size='0.6' font = 'puristaLight' color='#FFFFFF'>" + format ["%1 kicked %2 from the squad",name player, name _unit] + "</t>";
 			[[_str,0,0.2,5,1,0.0], "bis_fnc_dynamictext", group _unit, false] spawn BIS_fnc_MP;
 			[_unit] join grpNull;
+            [[], "MCC_fnc_setGear", _unit, false] spawn BIS_fnc_MP;
 		};
     };
 

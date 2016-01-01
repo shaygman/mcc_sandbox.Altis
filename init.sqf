@@ -571,14 +571,13 @@ MCC_MWMissions			= []; 	//Store all the mission objectives = (MCC_MWMissions sel
 
 //====================================================================================MCC Engine Init============================================================================================================================
 
-if (!isDedicated && !MCC_isLocalHC) then
-{
+if (!isDedicated && !MCC_isLocalHC) then {
 	// Disable Respawn & Organise start on death location
 	_null=[] execVM MCC_path + "mcc\general_scripts\mcc_player_disableRespawn.sqf";
-
-	// Initialize and load the pop up menu
-	_null=[] execVM MCC_path + "mcc\pop_menu\mcc_init_menu.sqf";
 };
+
+// Initialize and load the pop up menu
+_null=[] execVM MCC_path + "mcc\pop_menu\mcc_init_menu.sqf";
 
 mcc_delayed_spawn		= false;
 mcc_caching				= false;
@@ -828,41 +827,6 @@ if ( isServer ) then {
 		} else {
 			MCC_allowedPlayers = _names;
 		};
-
-		//---------------------------------------------
-		//		numbers of roles
-		//---------------------------------------------
-		private ["_var","_varName"];
-		{
-			_varName = (_x select 0);
-			_var = [format ["%1_SERVER",missionName], "RoleSelectionDefinse", _varName, "read",0,"DEFAULT_SERVER"] call MCC_fnc_handleDB;
-
-			if (_var ==0) then {
-				missionNamespace setVariable [_varName,(_x select 1)];
-				[format ["%1_SERVER",missionName], "RoleSelectionDefinse", _varName, "write",(_x select 1),"DEFAULT_SERVER"] call MCC_fnc_handleDB;
-			} else {
-				missionNamespace setVariable [_varName,_var];
-			};
-
-			publicVariable _varName;
-		} forEach [
-		            ["CP_availablePilot",100],
-		            ["CP_availableCrew",100],
-		            ["CP_officerPerGroup",1],
-		            ["CP_officerMinPlayersInGroup",1],
-		            ["CP_ARPerGroup",2],
-		            ["CP_ARMinPlayersInGroup",3],
-		            ["CP_riflemanPerGroup",20],
-		            ["CP_riflemanMinPlayersInGroup",0],
-		            ["CP_ATPerGroup",2],
-		            ["CP_ATMinPlayersInGroup",4],
-		            ["CP_CorpsmanPerGroup",2],
-		            ["CP_CorpsmanMinPlayersInGroup",3],
-		            ["CP_MarksmanPerGroup",2],
-		            ["CP_MarksmanMinPlayersInGroup",5],
-		            ["CP_SpecialistPerGroup",2],
-		            ["CP_SpecialistMinPlayersInGroup",3]
-		          ];
 	} else {
 		MCC_iniDBenabled = false;
 	};
@@ -908,7 +872,6 @@ CP_dialogInitDone = true; 				//define if dialog is been initialize
 //		Index
 //---------------------------------------------
 CP_squadListIndex		= 0;
-CP_classesIndex 		= 2;
 CP_NVIndex 				= 0;
 CP_headgearIndex 		= 0;
 CP_gogglesIndex 		= 0;

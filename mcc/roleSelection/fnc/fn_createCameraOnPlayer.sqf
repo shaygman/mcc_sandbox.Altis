@@ -5,23 +5,16 @@
 private ["_camLogic","_displayVar"];
 _displayVar = [_this, 0, "No display", [""]] call BIS_fnc_param;
 
-//--- Camera
 _camLogic = vehicle player;
-CP_gearCamFOV = 0.15;
-CP_gearCam = "camera" camcreate position _camLogic;
-CP_gearCam cameraeffect ["internal", "BACK", "rendertarget7"];
-CP_gearCam campreparefocus [-1,-1];
-CP_gearCam camSetFov CP_gearCamFOV;
-CP_gearCam camcommitprepared 0;
+
+//--- Camera
+CP_gearCam = "camera" camcreate (player modelToWorld [0,2.45,1.7]);
+CP_gearCam cameraeffect ["internal", "BACK"];
 cameraEffectEnableHUD true;
 showcinemaborder false;
-player setvariable ["CPCenter", _camLogic];
-
-CP_gearCam attachto [_camLogic,[0.5,8,2],""];
-player setvariable ["attachObject",_camLogic];
-CP_gearCam campreparetarget _camLogic;
-CP_gearCam camcommitprepared 0;
-CP_gearCam camcommit 0;
+CP_gearCam camSetFocus [-1,-1];
+CP_gearCam camsettarget _camLogic;
+CP_gearCam camCommit 0;
 
 _displayVar spawn {
 	waitUntil {str (uiNamespace getVariable [_this, 0]) == "No display"};

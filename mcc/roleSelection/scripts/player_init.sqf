@@ -8,19 +8,8 @@ if (!MCC_iniDBenabled) exitWIth {systemchat "iniDB isn't running. Can't access r
 //******************************************************************************************************************************
 
 waituntil {alive player};
+cutText ["","BLACK IN",5];
 player setVariable ["cpReady",false,true];
-CP_classes = ["Officer","AR","Rifleman","AT","Corpsman","Marksman","Specialist","Crew","Pilot"];
-CP_classesPic = [	MCC_path +"mcc\roleSelection\data\Officer.paa",
-					MCC_path +"mcc\roleSelection\data\AR.paa",
-					MCC_path +"mcc\roleSelection\data\Rifleman.paa",
-					MCC_path +"mcc\roleSelection\data\AT.paa",
-					MCC_path +"mcc\roleSelection\data\Corpsman.paa",
-					MCC_path +"mcc\roleSelection\data\Marksman.paa",
-					MCC_path +"mcc\roleSelection\data\Specialist.paa",
-					MCC_path +"mcc\roleSelection\data\Crew.paa",
-					MCC_path +"mcc\roleSelection\data\Pilot.paa"
-				];
-
 
 //Disable weapon disassemble
 player removeEventHandler ["WeaponDisassembled",(player getVariable ["MCC_disableStatic",999])];
@@ -92,43 +81,29 @@ if (CP_debug) then {systemchat format ["position: %1",_logicPos]};
 _camLogic = createagent ["Logic",_logicPos,[],0,"none"];
 _camLogic setpos _logicPos;
 _camLogic setdir 180;
-_camBuildings = "Land_u_Addon_01_V1_F" createvehiclelocal _logicPos;
-_camBuildings attachto [_camLogic,[3.5,4.5,0]];
-_camBuildings setdir (getdir _camLogic);
-_camLight = "Land_PortableLight_double_F" createvehiclelocal _logicPos;
-_camLight attachto [_camLogic,[1,2,0]];
-_camLight setdir 140;
-//_camLight setpos [(_logicPos select 0) - 2, (_logicPos select 1) - 3,(_logicPos select 2)];
-player attachto [_camLogic,[0,4,0]];
+player attachto [_camLogic,[-2,4,-0.3]];
+player setvariable ["CPCenter", _camLogic];
 
 //--- Camera
 setviewdistance 3;
-CP_gearCamFOV = 0.15;
-CP_gearCam = "camera" camcreate position _camLogic;
-CP_gearCam cameraeffect ["internal", "BACK", "rendertarget7"];
-CP_gearCam campreparefocus [-1,-1];
-CP_gearCam camSetFov CP_gearCamFOV;
-CP_gearCam camcommitprepared 0;
+CP_gearCam = "camera" camcreate (player modelToWorld [0,2.45,1.7]);
+CP_gearCam cameraeffect ["internal", "BACK"];
 cameraEffectEnableHUD true;
 showcinemaborder false;
-player setvariable ["CPCenter", _camLogic];
+CP_gearCam camSetFocus [-1,-1];
+CP_gearCam camsettarget _camLogic;
+CP_gearCam camCommit 0;
+
 
 //handle NV
-/*
-_nvgstate = if (daytime > 19 || daytime < 5.5) then {[1]} else {[3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]]};
-"rendertarget7" setPiPEffect _nvgstate;
-*/
-//CP_gearCampos = [[0,0,1.5],12,0] call bis_fnc_relpos;
-CP_gearCam attachto [_camLogic,[0.5,12,2.6],""];
-player setvariable ["attachObject",_camLogic];
-CP_gearCam campreparetarget _camLogic;
-CP_gearCam camcommitprepared 0;
-CP_gearCam camcommit 0;
+if (daytime > 19 || daytime < 5.5) then {camUseNVG true};
+
 
 player switchmove "AidlPercMstpSlowWrflDnon_G03";
 
 //Make sure players will have their default kit once respawn - but not before they choosed a kit
-[missionNameSpace getvariable ["CP_classesIndex",2],0] call MCC_fnc_setGear;
+[(player getvariable ["CP_role","rifleman"]),0] call MCC_fnc_setGear;
+
 sleep 0.3;
 
 //--------------------------------------------------------------------
@@ -180,14 +155,12 @@ deleteVehicle CP_gearCam;
 CP_gearCam = nil;
 
 deleteVehicle _camLogic;
-deleteVehicle _camBuildings;
-deleteVehicle _camLight;
 setviewdistance 2500;
 closedialog 0;
 waituntil {!dialog};
 //Respawning
 
 cutText ["Deploying ....","BLACK IN",5];
-
+camUseNVG false;
 sleep 2;
 player setVariable ["cpReady",true,true];

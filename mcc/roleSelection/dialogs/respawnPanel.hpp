@@ -2,6 +2,7 @@ class CP_RESPAWNPANEL {
 	idd = -1;
 	movingEnable = false;
 	onLoad =  __EVAL("_this execVM '"+CPPATH+"mcc\roleSelection\scripts\respawnPanel_init.sqf'");
+	onUnLoad = "missionNameSpace setvariable ['CP_respawnPanelOpen',false];";
 
 	controlsBackground[] =
 	{
@@ -344,8 +345,8 @@ class CP_RESPAWNPANEL {
 					idc = 9999;
 					style = 2;
 
-					x = 0.0721872 * safezoneW;
-					y = 0.011 * safezoneH;
+					x = 0.0721875 * safezoneW;
+					y = 0.008 * safezoneH;
 					w = 0.324844 * safezoneW;
 					h = 0.066 * safezoneH;
 					colorText[] = {1,0,0,0.8};
@@ -375,6 +376,42 @@ class CP_RESPAWNPANEL {
 					tooltip = "Press Deploy to get into the action"; //--- ToDo: Localize;
 					sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
 					action = __EVAL("[1] execVM '"+CPPATH+"mcc\roleSelection\scripts\respawnPanel_cmd.sqf'");
+				};
+
+				class CP_XPProgress: MCC_RscProgress
+				{
+					idc = 104;
+					style = 2;
+
+					x = 0.0721875 * safezoneW;
+					y = 0.052 * safezoneH;
+					w = 0.324844 * safezoneW;
+					h = 0.022 * safezoneH;
+					colorText[] = {1,0,0,0.8};
+					sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+					colorFrame[] = {1,1,1,0.8};
+					colorBackground[] = {0,0,0,0.3};
+				};
+				class RscText_1005: CP_RscStructuredText
+				{
+					idc = 102;
+					style = 2;
+
+					x = 0.0721875 * safezoneW;
+					y = 0.074 * safezoneH;
+					w = 0.324844 * safezoneW;
+					h = 0.033 * safezoneH;
+					colorText[] = {1,0,0,0.8};
+					sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+				};
+				class CP_XP: CP_RscText
+				{
+					idc = 103;
+					text = "XP";
+					x = 0.04125 * safezoneW;
+					y = 0.049 * safezoneH;
+					w = 0.0257812 * safezoneW;
+					h = 0.033 * safezoneH;
 				};
 			};
 		};
@@ -451,16 +488,5 @@ class CP_RESPAWNPANEL {
 			w = 0.0721875 * safezoneW;
 			h = 0.033 * safezoneH;
 		};
-		/*
-		class CreateSquadName: CP_RscText
-		{
-			idc = 151511;
-			type = 2;
-			x = 0.0258 * safezoneW + safezoneX;
-			y = 0.919 * safezoneH + safezoneY;
-			w = 00 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		*/
 	};
 };

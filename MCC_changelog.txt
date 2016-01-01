@@ -23,9 +23,12 @@ Change log r19:
 - Fixed: Convoy spawn too many cargo units.  
 - Fixed: Mini game IED can be disarmed again even after disarming
 - Fixed: RPT errors regarding ; at the end of file
+- Fixed: Stuck when enabling Survival mod from module. 
+- Fixed: MCC_makr_arrya_group error on server. 
 
 TODO - mission templates, test dedicated
 TODO - Compass 
+TODO - add XP and loadout weight
 
 Change log r18:
 -= New IED Mini Game =-

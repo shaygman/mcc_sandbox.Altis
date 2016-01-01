@@ -16,6 +16,14 @@ uiNamespace setVariable ["CP_side3", _disp displayCtrl 25];
 uiNamespace setVariable ["CP_side3Score", _disp displayCtrl 26];
 uiNamespace setVariable ["CP_missionName",_disp displayCtrl 1021];
 
+uiNamespace setVariable ["messeges", _disp displayCtrl 102];
+uiNamespace setVariable ["XPTitle", _disp displayCtrl 103];
+uiNamespace setVariable ["XPValue", _disp displayCtrl 104];
+
+#define messeges (uiNamespace getVariable "messeges")
+#define XPTitle (uiNamespace getVariable "XPTitle")
+#define XPValue (uiNamespace getVariable "XPValue")
+
 #define CP_RESPAWNPANEL_IDD (uiNamespace getVariable "CP_RESPAWNPANEL_IDD")
 #define CP_ticketsWestText (uiNamespace getVariable "CP_ticketsWestText")
 #define CP_ticketsEastText (uiNamespace getVariable "CP_ticketsEastText")
@@ -32,6 +40,9 @@ uiNamespace setVariable ["CP_missionName",_disp displayCtrl 1021];
 #define CP_CreateSquadName (uiNamespace getVariable "CP_CreateSquadName")
 
 #define CP_maxUnits 10
+
+//Respawn panel indecator
+missionNamespace setVariable ["CP_respawnPanelOpen",true];
 
 //If we did not got here after respawn
 if (player getVariable ["cpReady",true]) then {
@@ -138,9 +149,6 @@ _map ctrladdeventhandler ["mousemoving","_this call MCC_CPMap_mouseMoving;"];
 _map ctrladdeventhandler ["mouseholding","_this call MCC_CPMap_mouseMoving;"];
 _map ctrladdeventhandler ["MouseButtonUp","_this call MCC_CPMap_mouseUp;"];
 
-//Respawn panel indecator
-CP_respawnPanelOpen = true;
-
 //Disable Esc while respawn is on
 CP_disableEsc = CP_RESPAWNPANEL_IDD displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
@@ -153,17 +161,15 @@ CP_flag ctrlSetText (missionNamespace getVariable [format ["CP_flag%1", _sidePla
 //Mission Name
 CP_missionName ctrlSetText missionName;
 
-if (CP_activated) then {
+if (missionNamespace getvariable ["CP_activated",false]) then {
 	//Sets sides Tickets
-	if (CP_activated) then {
-		_activeSides = [] call MCC_fnc_getActiveSides;
+	_activeSides = [] call MCC_fnc_getActiveSides;
 
-		_idc = 21;
-		{
-			ctrlSetText [_idc, str _x];
-			_idc = _idc + 2;
-		} foreach _activeSides;
-	};
+	_idc = 21;
+	{
+		ctrlSetText [_idc, str _x];
+		_idc = _idc + 2;
+	} foreach _activeSides;
 
 	//Set XP
 	_role = player getvariable "CP_role";
@@ -171,6 +177,20 @@ if (CP_activated) then {
 
 	_exp 	 = call compile format  ["%1Level select 1",_role];
 	if (isnil "_exp") exitWith {};
+
+	if (_exp < 0) then {_exp = 0};
+	_oldLevel = call compile format  ["%1Level select 0",_role];
+	_html = "<t color='#818960' size='0.8' shadow='1' align='center' underline='false'>"+ _role+ " Level " + str _oldLevel + "</t>";
+	messeges ctrlSetStructuredText parseText _html;
+
+	_needXP 			= (CP_XPperLevel * _oldLevel);
+	_needXPPrevLevel 	= (CP_XPperLevel * (_oldLevel-1));
+
+	XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel)));
+} else {
+	{
+		(_disp displayCtrl _x) ctrlShow false
+	} forEach [102,103,104];
 };
 
 //Refresh
@@ -250,7 +270,7 @@ if (CP_activated) then {
 		_t = if ((estimatedEndServerTime - serverTime)>0) then {[estimatedEndServerTime - serverTime] call MCC_fnc_time} else {"00:00:00"};
 		ctrlSetText [1919,_t];
 
-		//Tickets
+		//Tickets && XP
 		if (missionNamespace getVariable ["CP_activated",false]) then {
 			_activeSides = [] call MCC_fnc_getActiveSides;
 
@@ -337,7 +357,7 @@ if (CP_activated) then {
 				(_disp displayCtrl _idc) ctrlSetPosition [_xPos*safezoneW, _yPos, 0.2 * safezoneW, _hight];
 				(_disp displayCtrl _idc) ctrlCommit 0;
 
-				//In group
+				//disable buttons
 				(_disp displayCtrl _idc+400) ctrlenable !(group player == _group);
 				(_disp displayCtrl _idc+500) ctrlsetText (if (_group getVariable ["locked",false]) then {(MCC_path +"data\locked.paa")} else {(MCC_path +"data\unlocked.paa")});
 				(_disp displayCtrl _idc+600) ctrlShow (player == leader _group);

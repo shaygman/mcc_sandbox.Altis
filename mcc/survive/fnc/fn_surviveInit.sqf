@@ -4,7 +4,9 @@
 //waitUntil {missionNamespace getVariable ["MCC_initDone",false]};
 
 //============= Start items dialog ===========================
-if((missionNamespace getVariable ["MCC_surviveMod",false]) && !isDedicated && !(missionNamespace getVariable ["MCC_isLocalHC",false])) then {
+if ((missionNamespace getVariable ["MCC_isLocalHC",false]) || !hasInterface) exitWith {};
+
+if(missionNamespace getVariable ["MCC_surviveMod",false]) then {
 	disableSerialization;
 
 	MCC_fnc_surviveItemClicked = {

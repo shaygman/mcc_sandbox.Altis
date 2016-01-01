@@ -2,15 +2,18 @@ class at
 {
 	name    = "Anti-Tank";
 	picture =  __EVAL(MCCPATH +"mcc\roleSelection\data\AT.paa");
+	minPlayersForKit = 3;
+	maxKitsInGroup = 2;
+	maxKitsInSide = 999;
 
 	class west
 	{
 		class primary
 		{
-			class arifle_TRG21_F
+			class arifle_TRG20_F
 			{
 				unlockLevel = 0;
-				cfgname = "arifle_TRG21_F";
+				cfgname = "arifle_TRG20_F";
 				magazines[]= {"30Rnd_556x45_Stanag",9,"30Rnd_556x45_Stanag_Tracer_Red",2};
 				attachments1[]= {{3,"optic_Aco"},{4,"optic_Holosight"},{6,"optic_MRCO"},{8,"optic_Hamr"},{10,"optic_Arco"}};
 				attachments2[]= {{9,"muzzle_snds_M"}};
@@ -31,7 +34,7 @@ class at
 
 			class arifle_MX_Black_F
 			{
-				unlockLevel = 13;
+				unlockLevel = 23;
 				cfgname = "arifle_MX_Black_F";
 				magazines[]= {"30Rnd_65x39_caseless_mag",9,"30Rnd_65x39_caseless_mag_Tracer",2};
 				attachments1[]= {{3,"optic_Aco"},{4,"optic_Holosight"},{6,"optic_MRCO"},{8,"optic_Hamr"},{10,"optic_Arco"}};
@@ -42,6 +45,42 @@ class at
 		};
 
 		class secondary
+		{
+			class launch_NLAW_F
+			{
+				unlockLevel = 0;
+				cfgname = "launch_NLAW_F";
+				magazines[]= {"NLAW_F",2};
+				attachments1[]= {};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class launch_B_Titan_F
+			{
+				unlockLevel = 15;
+				cfgname = "launch_B_Titan_F";
+				magazines[]= {"Titan_AA",2};
+				attachments1[]= {};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class launch_B_Titan_short_F
+			{
+				unlockLevel = 25;
+				cfgname = "launch_B_Titan_short_F";
+				magazines[]= {"Titan_AT",2};
+				attachments1[]= {};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+		};
+
+		class handgun
 		{
 
 		};
@@ -98,6 +137,42 @@ class at
 
 		class secondary
 		{
+			class launch_RPG32_F
+			{
+				unlockLevel = 0;
+				cfgname = "launch_RPG32_F";
+				magazines[]= {"RPG32_F",2};
+				attachments1[]= {};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class launch_B_Titan_F
+			{
+				unlockLevel = 15;
+				cfgname = "launch_B_Titan_F";
+				magazines[]= {"Titan_AA",2};
+				attachments1[]= {};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class launch_B_Titan_short_F
+			{
+				unlockLevel = 25;
+				cfgname = "launch_B_Titan_short_F";
+				magazines[]= {"Titan_AT",2};
+				attachments1[]= {};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+		};
+
+		class handgun
+		{
 
 		};
 
@@ -152,6 +227,42 @@ class at
 		};
 
 		class secondary
+		{
+			class launch_NLAW_F
+			{
+				unlockLevel = 0;
+				cfgname = "launch_NLAW_F";
+				magazines[]= {"NLAW_F",2};
+				attachments1[]= {};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class launch_B_Titan_F
+			{
+				unlockLevel = 15;
+				cfgname = "launch_B_Titan_F";
+				magazines[]= {"Titan_AA",2};
+				attachments1[]= {};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+
+			class launch_B_Titan_short_F
+			{
+				unlockLevel = 25;
+				cfgname = "launch_B_Titan_short_F";
+				magazines[]= {"Titan_AT",2};
+				attachments1[]= {};
+				attachments2[]= {};
+				attachments3[]= {};
+				attachments4[]= {};
+			};
+		};
+
+		class handgun
 		{
 
 		};
