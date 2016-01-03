@@ -219,24 +219,24 @@ MCC_fnc_RSItemSelected = {
 		CP_playerUniforms set [_outfits find _type,_data];
 	} else {
 		if (_type in _attachments) then {
-			_arrayName = format ["CP_%1weaponAttachments", (missionNamespace getVariable ["MCC_RSselectedWeapon",""])];
+			_arrayName = format["CP_player%1_%4_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player,(missionNamespace getVariable ["MCC_RSselectedWeapon",""])];
 			_array	= missionNamespace getVariable [_arrayName,["","","",""]];
 			_array set [_attachments find _type, _data];
-			 missionNamespace setVariable [_arrayName, _array];
+			 missionNamespace setVariable [format["CP_player%1_%4_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player,(missionNamespace getVariable ["MCC_RSselectedWeapon",""])], _array];
 		} else {
 
 				switch (_type) do {
 					case "primary":	{
 						_array = CP_currentWeaponArray;
-						CP_PrimaryWeaponAttachments = ["","","",""];
+						 missionNamespace setVariable [format["CP_player%1_primary_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player], ["","","",""]];
 					};
 					case "secondary":	{
 						_array = CP_currentWeaponSecArray;
-						CP_SecondaryWeaponAttachments = ["","","",""];
+						 missionNamespace setVariable [format["CP_player%1_secondary_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player], ["","","",""]];
 					};
 					case "handgun":	{
 						_array = CP_handguns;
-						CP_HandgunWeaponAttachments = ["","","",""];
+						 missionNamespace setVariable [format["CP_player%1_handgun_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player], ["","","",""]];
 					};
 					case "items1":	{_array = CP_currentItmes1};
 					case "items2":	{_array = CP_currentItmes2};
@@ -278,7 +278,7 @@ MCC_fnc_RSItemSelected = {
 	    	};
 	    };
 
-	    case (_type in _outfits): {
+	    case (_type in _outfits || _type in ["items1","items2","items3"]): {
 	     	player switchmove "AidlPercMstpSlowWrflDnon_G03";
 	    };
 	};

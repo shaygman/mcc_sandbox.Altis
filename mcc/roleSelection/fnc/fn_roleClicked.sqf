@@ -5,14 +5,12 @@ private ["_role","_level","_array"];
 disableSerialization;
 _role = param [1,"",[""]];
 _parentIdc = param [2,0,[0]];
-//Zero attachments
-CP_PrimaryWeaponAttachments = ["","","",""];
-CP_PrimaryWeaponAttachments = ["","","",""];
-CP_PrimaryWeaponAttachments = ["","","",""];
 
 _null = [_role,0] call MCC_fnc_setGear;
 _disp = ctrlParent (_this select 0);
 [_disp] call MCC_fnc_playerStats;
+
+player switchmove "AidlPercMstpSlowWrflDnon_G03";
 
 //Create buttons
 _array = [

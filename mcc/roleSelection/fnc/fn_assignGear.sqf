@@ -79,14 +79,14 @@ removeAllPrimaryWeaponItems player;
 	if (!isnil "_x") then {
 		if (_x != "") then {player addPrimaryWeaponItem _x};
 	};
-} foreach (missionNamespace getVariable ["CP_PrimaryWeaponAttachments",["","","",""]]);
+} foreach (missionNamespace getVariable [format["CP_player%1_Primary_attachments_%2_%3",_role, getplayerUID player, side player], ["","","",""]]);
 
 // Add Secondary attachments
 {
 	if (!isnil "_x") then {
 		if (_x != "") then {player addSecondaryWeaponItem _x};
 	};
-} foreach (missionNamespace getVariable ["CP_SecondaryWeaponAttachments",["","","",""]]);
+} foreach (missionNamespace getVariable [format["CP_player%1_Secondary_attachments_%2_%3",_role, getplayerUID player, side player], ["","","",""]]);
 
 // Add Primary attachments
 _wepItems = handgunItems player;
@@ -101,7 +101,7 @@ _wepItems = handgunItems player;
 	if (!isnil "_x") then {
 		if (_x != "") then {player addHandgunItem _x};
 	};
-} foreach (missionNamespace getVariable ["CP_HandgunWeaponAttachments",["","","",""]]);
+} foreach (missionNamespace getVariable [format["CP_player%1_Handgun_attachments_%2_%3",_role, getplayerUID player, side player], ["","","",""]]);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
