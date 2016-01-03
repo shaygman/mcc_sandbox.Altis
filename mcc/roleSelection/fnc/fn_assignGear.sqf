@@ -48,46 +48,60 @@ if ((Uniform player) != "") then {removeUniform player};
 if ((CP_playerUniforms select 5) != "") then {player forceAddUniform  (CP_playerUniforms select 5)};
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Primary Weapon
-_currentWeapon = missionNamespace getVariable format ["CP_player%1Weapon_%2_%3",_role, getplayerUID player, side player];
+_currentWeapon = missionNamespace getVariable format ["CP_player%1_primary_%2_%3",_role, getplayerUID player, side player];
 if (!isnil "_currentWeapon") then {[_currentWeapon] call MCC_fnc_addWeapon};
 
 //Secondary weapon
-_currentWeapon = missionNamespace getVariable format ["CP_player%1SecWeapon_%2_%3",_role, getplayerUID player, side player];
+_currentWeapon = missionNamespace getVariable format ["CP_player%1_secondary_%2_%3",_role, getplayerUID player, side player];
 if (!isnil "_currentWeapon") then {[_currentWeapon] call MCC_fnc_addWeapon};
 
 //Handguns
-_currentWeapon = missionNamespace getVariable format ["CP_player%1Handguns_%2_%3",_role, getplayerUID player, side player];
+_currentWeapon = missionNamespace getVariable format ["CP_player%1_handgun_%2_%3",_role, getplayerUID player, side player];
 if (!isnil "_currentWeapon") then {[_currentWeapon] call MCC_fnc_addWeapon};
 
 //Items1
-_currentWeapon = missionNamespace getVariable format ["CP_player%1Items1_%2_%3",_role, getplayerUID player, side player];
+_currentWeapon = missionNamespace getVariable format ["CP_player%1_items1_%2_%3",_role, getplayerUID player, side player];
 if (!isnil "_currentWeapon") then {[_currentWeapon] call MCC_fnc_addItem};
 
 //Items2
-_currentWeapon = missionNamespace getVariable format ["CP_player%1Items2_%2_%3",_role, getplayerUID player, side player];
+_currentWeapon = missionNamespace getVariable format ["CP_player%1_items2_%2_%3",_role, getplayerUID player, side player];
 if(!isnil "_currentWeapon")then {[_currentWeapon] call MCC_fnc_addItem};
 
 //Items3
-_currentWeapon = missionNamespace getVariable format ["CP_player%1Items3_%2_%3",_role, getplayerUID player, side player];
+_currentWeapon = missionNamespace getVariable format ["CP_player%1_items3_%2_%3",_role, getplayerUID player, side player];
 if (!isnil "_currentWeapon") then {[_currentWeapon] call MCC_fnc_addItem};
 
 
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Add attachments
-_wepItems = primaryWeaponItems player;
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Add Primary attachments
+removeAllPrimaryWeaponItems player;
+{
+	if (!isnil "_x") then {
+		if (_x != "") then {player addPrimaryWeaponItem _x};
+	};
+} foreach (missionNamespace getVariable ["CP_PrimaryWeaponAttachments",["","","",""]]);
+
+// Add Secondary attachments
+{
+	if (!isnil "_x") then {
+		if (_x != "") then {player addSecondaryWeaponItem _x};
+	};
+} foreach (missionNamespace getVariable ["CP_SecondaryWeaponAttachments",["","","",""]]);
+
+// Add Primary attachments
+_wepItems = handgunItems player;
 {
 	if (_x != "") then {
-		player removePrimaryWeaponItem _x;
+		player removeHandgunItem _x;
 		player removeItem _x;
-		};
+	};
 } foreach _wepItems;
 
 {
-	if (!isnil "_x") then
-	{
-		if (_x != "") then {player addPrimaryWeaponItem _x};
+	if (!isnil "_x") then {
+		if (_x != "") then {player addHandgunItem _x};
 	};
-} foreach CP_weaponAttachments;
+} foreach (missionNamespace getVariable ["CP_HandgunWeaponAttachments",["","","",""]]);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -100,6 +114,7 @@ if (!isnil "_currentWeapon") then
 	} foreach _currentWeapon;
 };
 
+/*
 //Select Primary weapon
 player selectweapon primaryweapon player;
 player switchmove "AidlPercMstpSlowWrflDnon_G03";

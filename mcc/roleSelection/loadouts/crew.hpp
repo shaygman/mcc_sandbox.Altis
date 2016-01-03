@@ -54,13 +54,13 @@ class crew
 
 		};
 
-		items1[]={{20,"Binocular", {}},{40,"Rangefinder", {}}};
+		items1[]={{0,""},{20,"Binocular", {}},{40,"Rangefinder", {}}};
 		items2[]={{0,"SmokeShell", 2},{3,"MiniGrenade", 2},{7,"HandGrenade", 2},{11,"SmokeShellRed", 2},{13,"SmokeShellGreen", 2},{21,"Chemlight_green", 2},{22,"Chemlight_red", 2},{23,"Chemlight_yellow", 2},{25,"B_IR_Grenade", 2}};
 		items3[]={{0,"MiniGrenade", 2},{3,"SmokeShell", 2},{7,"HandGrenade", 2},{11,"SmokeShellRed", 2},{13,"SmokeShellGreen", 2},{21,"Chemlight_green", 2},{22,"Chemlight_red", 2},{23,"Chemlight_yellow", 2},{25,"B_IR_Grenade", 2}};
 		generalItems[]= {{0,"ItemMap",1},{0,"ItemCompass",1},{0,"ItemWatch",1},{0,"ItemRadio",1},{0,"FirstAidKit",2}};
-		nightVision[]= {{0,"NVGoggles"}};
+		nightVision[]= {{0,""},{0,"NVGoggles"}};
 		headgear[]= {{0,"H_HelmetCrew_B"}};
-		googles[]= {{0,"G_Combat"},{6,"G_Tactical_Black"},{13,"G_Sport_Blackred"}};
+		googles[]= {{0,""},{0,"G_Combat"},{6,"G_Tactical_Black"},{13,"G_Sport_Blackred"}};
 		vests[]= {{0,"V_TacVest_khk"}};
 		backpacks[]= {};
 		uniforms[]= {{0,"U_B_CombatUniform_mcam"}};
@@ -114,13 +114,13 @@ class crew
 
 		};
 
-		items1[]={{20,"Binocular", {}},{40,"Rangefinder", {}}};
+		items1[]={{0,""},{20,"Binocular", {}},{40,"Rangefinder", {}}};
 		items2[]={{0,"SmokeShell", 2},{3,"MiniGrenade", 2},{7,"HandGrenade", 2},{11,"SmokeShellRed", 2},{13,"SmokeShellGreen", 2},{21,"Chemlight_green", 2},{22,"Chemlight_red", 2},{23,"Chemlight_yellow", 2},{25,"B_IR_Grenade", 2}};
 		items3[]={{0,"MiniGrenade", 2},{3,"SmokeShell", 2},{7,"HandGrenade", 2},{11,"SmokeShellRed", 2},{13,"SmokeShellGreen", 2},{21,"Chemlight_green", 2},{22,"Chemlight_red", 2},{23,"Chemlight_yellow", 2},{25,"B_IR_Grenade", 2}};
 		generalItems[]= {{0,"ItemMap",1},{0,"ItemCompass",1},{0,"ItemWatch",1},{0,"ItemRadio",1},{0,"FirstAidKit",2}};
-		nightVision[]= {{0,"NVGoggles"}};
+		nightVision[]= {{0,""},{0,"NVGoggles"}};
 		headgear[]= {{0,"H_HelmetCrew_O"}};
-		googles[]= {{0,"G_Combat"},{6,"G_Tactical_Black"},{13,"G_Sport_Blackred"}};
+		googles[]= {{0,""},{0,"G_Combat"},{6,"G_Tactical_Black"},{13,"G_Sport_Blackred"}};
 		vests[]= {{0,"V_BandollierB_khk"}};
 		backpacks[]= {};
 		uniforms[]= {{0,"U_O_CombatUniform_ocamo"}};
@@ -174,13 +174,13 @@ class crew
 
 		};
 
-		items1[]={{20,"Binocular", {}},{40,"Rangefinder", {}}};
+		items1[]={{0,""},{20,"Binocular", {}},{40,"Rangefinder", {}}};
 		items2[]={{0,"SmokeShell", 2},{3,"MiniGrenade", 2},{7,"HandGrenade", 2},{11,"SmokeShellRed", 2},{13,"SmokeShellGreen", 2},{21,"Chemlight_green", 2},{22,"Chemlight_red", 2},{23,"Chemlight_yellow", 2},{25,"B_IR_Grenade", 2}};
 		items3[]={{0,"MiniGrenade", 2},{3,"SmokeShell", 2},{7,"HandGrenade", 2},{11,"SmokeShellRed", 2},{13,"SmokeShellGreen", 2},{21,"Chemlight_green", 2},{22,"Chemlight_red", 2},{23,"Chemlight_yellow", 2},{25,"B_IR_Grenade", 2}};
 		generalItems[]= {{0,"ItemMap",1},{0,"ItemCompass",1},{0,"ItemWatch",1},{0,"ItemRadio",1},{0,"FirstAidKit",2}};
-		nightVision[]= {{0,"NVGoggles"}};
+		nightVision[]= {{0,""},{0,"NVGoggles"}};
 		headgear[]= {{0,"H_HelmetCrew_I"}};
-		googles[]= {{0,"G_Combat"},{6,"G_Tactical_Black"},{13,"G_Sport_Blackred"}};
+		googles[]= {{0,""},{0,"G_Combat"},{6,"G_Tactical_Black"},{13,"G_Sport_Blackred"}};
 		vests[]= {{0,"V_TacVest_khk"}};
 		backpacks[]= {};
 		uniforms[]= {{0,"U_I_CombatUniform"}};

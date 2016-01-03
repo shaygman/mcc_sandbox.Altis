@@ -114,53 +114,53 @@ CP_currentUniforms = [];
 
 
 //Set playr level
-CP_currentLevel = officerLevel select 0;
+CP_currentLevel = call compile format ["%1Level select 0",_role];
 
 //Set Primary weapon
-CP_currentWeapon = missionNamespace getVariable format ["CP_player%1Weapon_%2_%3",_role,getplayerUID player,side player];
+CP_currentWeapon = missionNamespace getVariable format ["CP_player%1_primary_%2_%3",_role,getplayerUID player,side player];
 if (isnil "CP_currentWeapon") then {
-	missionNamespace setVariable [format["CP_player%1Weapon_%2_%3",_role,getplayerUID player,side player], CP_currentWeaponArray select 0];
-	CP_currentWeapon = missionNamespace getVariable format ["CP_player%1Weapon_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_primary_%2_%3",_role,getplayerUID player,side player], CP_currentWeaponArray select 0];
+	CP_currentWeapon = missionNamespace getVariable format ["CP_player%1_primary_%2_%3",_role,getplayerUID player,side player];
 	CP_currentWeaponIndex = 0;
 };
 
 //Set Secondary weapon
-CP_currentSecWeapon = missionNamespace getVariable format ["CP_player%1SecWeapon_%2_%3",_role,getplayerUID player,side player];
+CP_currentSecWeapon = missionNamespace getVariable format ["CP_player%1_secondary_%2_%3",_role,getplayerUID player,side player];
 if (isnil "CP_currentSecWeapon") then {
-	missionNamespace setVariable [format["CP_player%1SecWeapon_%2_%3",_role,getplayerUID player,side player], CP_currentWeaponSecArray select 0];
-	CP_currentSecWeapon = missionNamespace getVariable format ["CP_player%1SecWeapon_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_secondary_%2_%3",_role,getplayerUID player,side player], CP_currentWeaponSecArray select 0];
+	CP_currentSecWeapon = missionNamespace getVariable format ["CP_player%1_secondary_%2_%3",_role,getplayerUID player,side player];
 	CP_currentSecWeaponIndex = 0;
 };
 
 //Set handgun
-CP_currentHandguns = missionNamespace getVariable format ["CP_player%1Handguns_%2_%3",_role,getplayerUID player,side player];
+CP_currentHandguns = missionNamespace getVariable format ["CP_player%1_handgun_%2_%3",_role,getplayerUID player,side player];
 if (isnil "CP_currentHandguns") then {
-	missionNamespace setVariable [format["CP_player%1Handguns_%2_%3",_role,getplayerUID player,side player], CP_handguns select 0];
-	CP_currentHandguns = missionNamespace getVariable format ["CP_player%1Handguns_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_handgun_%2_%3",_role,getplayerUID player,side player], CP_handguns select 0];
+	CP_currentHandguns = missionNamespace getVariable format ["CP_player%1_handgun_%2_%3",_role,getplayerUID player,side player];
 	CP_currentHandgunsIndex = 0;
 };
 
 //Set Items1
-CP_currentItems1 = missionNamespace getVariable format ["CP_player%1Items1_%2_%3",_role,getplayerUID player,side player];
+CP_currentItems1 = missionNamespace getVariable format ["CP_player%1_items1_%2_%3",_role,getplayerUID player,side player];
 if (isnil "CP_currentItems1") then {
-	missionNamespace setVariable [format["CP_player%1Items1_%2_%3",_role,getplayerUID player,side player], CP_currentItmes1 select 0];
-	CP_currentItems1 = missionNamespace getVariable format ["CP_player%1Items1_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_items1_%2_%3",_role,getplayerUID player,side player], CP_currentItmes1 select 0];
+	CP_currentItems1 = missionNamespace getVariable format ["CP_player%1_items1_%2_%3",_role,getplayerUID player,side player];
 	CP_currentItems1Index = 0;
 };
 
 //Set Items2
-CP_currentItems2 = missionNamespace getVariable format ["CP_player%1Items2_%2_%3",_role,getplayerUID player,side player];
+CP_currentItems2 = missionNamespace getVariable format ["CP_player%1_items2_%2_%3",_role,getplayerUID player,side player];
 if (isnil "CP_currentItems2") then {
-	missionNamespace setVariable [format["CP_player%1Items2_%2_%3",_role,getplayerUID player,side player], CP_currentItmes2 select 0];
-	CP_currentItems2 = missionNamespace getVariable format ["CP_player%1Items2_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_items2_%2_%3",_role,getplayerUID player,side player], CP_currentItmes2 select 0];
+	CP_currentItems2 = missionNamespace getVariable format ["CP_player%1_items2_%2_%3",_role,getplayerUID player,side player];
 	CP_currentItems2Index = 0;
 };
 
 //Set Items3
-CP_currentItems3 = missionNamespace getVariable format ["CP_player%1Items3_%2_%3",_role,getplayerUID player,side player];
+CP_currentItems3 = missionNamespace getVariable format ["CP_player%1_items3_%2_%3",_role,getplayerUID player,side player];
 if (isnil "CP_currentItems3") then {
-	missionNamespace setVariable [format["CP_player%1Items3_%2_%3",_role,getplayerUID player,side player], CP_currentItmes3 select 0];
-	CP_currentItems3 = missionNamespace getVariable format ["CP_player%1Items3_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_items3_%2_%3",_role,getplayerUID player,side player], CP_currentItmes3 select 0];
+	CP_currentItems3 = missionNamespace getVariable format ["CP_player%1_items3_%2_%3",_role,getplayerUID player,side player];
 	CP_currentItems3Index = 0;
 };
 
@@ -194,8 +194,4 @@ if (isnil "CP_playerUniforms") then {
 private ["_disp"];
 _disp = uiNamespace getVariable "CP_GEARPANEL_IDD";
 if (isnil "_disp") exitWith {};
-
-if ((str (_disp displayCtrl 200) != "no control")) then {
-	//Gear stats
-	[_disp] call MCC_fnc_playerStats;
-};
+[_disp] call MCC_fnc_playerStats;

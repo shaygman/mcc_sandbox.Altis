@@ -29,4 +29,6 @@ class roleSelection {
 	class RSunitSelected {description = "Selecting a unit from squadMenu";};
 	class RSunitSelectedClicked {description = "Executing selected unit";};
 	class RSTakeCommander {description = "Become a commander";};
+	class roleClicked {description = "Handle clicking on a role";};
+	class RSgearButtonClicked {};
 };

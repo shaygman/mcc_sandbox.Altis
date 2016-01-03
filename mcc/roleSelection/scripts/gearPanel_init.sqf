@@ -113,7 +113,7 @@ _createRoleButton = {
 	_ctrl ctrlSetPosition [0.001*safezoneW, 0, 0.136 * safezoneW, _hight];
 	_ctrl ctrlSetText _displayname;
 	_ctrl ctrlSetBackgroundColor [0.292,0.292,0.292,0.9];
-	_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["playSound 'click';['%1',0] call MCC_fnc_setGear;[ctrlParent (_this select 0)] call MCC_fnc_playerStats;", _cfgName]];
+	_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["[_this select 0,'%1',%2] execVM 'mcc\roleSelection\fnc\fn_roleClicked.sqf'", _cfgName,ctrlIDC _ctrlGroup]];
 	_ctrl ctrlCommit 0;
 
 	//Picture

@@ -665,11 +665,7 @@ CP_defaultLevel = [1,0];
 //Default squads names better to define in iniDBI file on the server
 CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"]; 
 
-//Max players per side	
-CP_maxPlayers = 30; 
 
-//Max squads per side									
-CP_maxSquads = 10; 									
 
 //--------------------Default Tickets -------------------------------------------------------
 MCC_ticketsWest = 200;

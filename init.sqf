@@ -60,12 +60,10 @@ if (isnil "CP_flagEast") then {CP_flagEast = "\a3\Data_f\Flags\flag_CSAT_co.paa"
 if (isnil "CP_flagGUER") then {CP_flagGUER = "\a3\Data_f\Flags\flag_AAF_co.paa"};
 
 //--------------------PvP stuff--------------------------------------------------------------------------------------
-if (isnil "CP_weaponAttachments") then {CP_weaponAttachments = ["","",""]};	//Default weapons attachments for current primary weapon
 if (isnil "CP_defaultLevel") then {CP_defaultLevel = [1,0]};				//Default starting level and exp [level, exp]
 if (isnil "CP_activated") then {CP_activated = false};						//Is PvP acticated
 if (isnil "CP_defaultGroups") then {CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"]}; 	//Default squads names
-if (isnil "CP_maxPlayers") then {CP_maxPlayers = 30}; 									//Max players per side
-if (isnil "CP_maxSquads") then {CP_maxSquads = 10}; 									//Max squads per side
+
 
 //--------------------Default Tickets (Role selection)-------------------------------------------------------
 if (isnil "MCC_ticketsWest") then {MCC_ticketsWest = 200};

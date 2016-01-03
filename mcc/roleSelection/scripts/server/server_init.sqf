@@ -5,17 +5,14 @@ if (CP_debug) then {diag_log "CP server init started"};
 //---------------------------------------------
 //		Define Global variables
 //---------------------------------------------
-if (isnil "CP_westGroups") then {CP_westGroups 		= []};
-if (isnil "CP_eastGroups") then {CP_eastGroups 		= []};
-if (isnil "CP_guarGroups") then {CP_guarGroups 		= []};
+if (isnil "CP_westGroups") then {CP_westGroups = []};
+if (isnil "CP_eastGroups") then {CP_eastGroups = []};
+if (isnil "CP_guarGroups") then {CP_guarGroups = []};
 
 
 publicVariable "CP_westGroups";
 publicVariable "CP_eastGroups";
 publicVariable "CP_guarGroups";
-publicVariable "CP_maxPlayers";
-publicVariable "CP_maxSquads";
-
 
 //Default Groups
 if (MCC_iniDBenabled) then {
@@ -34,8 +31,7 @@ if (MCC_iniDBenabled) then {
 //---------------------------------------------
 //		Create custom groups
 //---------------------------------------------
-if (count CP_westGroups == 0) then
-{
+if (count CP_westGroups == 0) then {
 	{												//West
 		_group = createGroup west;
 		waituntil {!isnil "_group"};
@@ -47,8 +43,7 @@ if (count CP_westGroups == 0) then
 	publicvariable "CP_westGroups";
 };
 
-if (count CP_eastGroups == 0) then
-{
+if (count CP_eastGroups == 0) then {
 	{												//East
 		_group = createGroup east;
 		waituntil {!isnil "_group"};
@@ -60,8 +55,7 @@ if (count CP_eastGroups == 0) then
 	publicvariable "CP_eastGroups";
 };
 
-if (count CP_guarGroups == 0) then
-{
+if (count CP_guarGroups == 0) then {
 	{												//East
 		_group = createGroup resistance;
 		waituntil {!isnil "_group"};
@@ -75,9 +69,9 @@ if (count CP_guarGroups == 0) then
 
 //Add event handler for tickets
 "CP_activated" addPublicVariableEventHandler {
-		{
-			_sideTickets = format ["MCC_tickets%1", _x];
-			_tickets = missionNameSpace getVariable [_sideTickets,200];
-			[_x, _tickets] call BIS_fnc_respawnTickets;
-		} foreach [west, east, resistance];
-	};
+	{
+		_sideTickets = format ["MCC_tickets%1", _x];
+		_tickets = missionNameSpace getVariable [_sideTickets,200];
+		[_x, _tickets] call BIS_fnc_respawnTickets;
+	} foreach [west, east, resistance];
+};

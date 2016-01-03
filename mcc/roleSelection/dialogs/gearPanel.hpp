@@ -305,9 +305,9 @@ class CP_GEARPANEL {
 			idc = 1005;
 			colorBackground[] = {0,0,0,0};
 
-			x = 0.1648 * safezoneW + safezoneX;
+			x = 0.5 * safezoneW + safezoneX;
 			y = 0.115 * safezoneH + safezoneY;
-			w = 0.835312 * safezoneW;
+			w = 0.5 * safezoneW;
 			h = 0.793 * safezoneH;
 			onMouseZChanged = __EVAL("['MouseZChanged',_this] execVM '"+CPPATH+"mcc\roleSelection\scripts\camMouseMoving.sqf'");
 			onMouseMoving = __EVAL("['mousemoving',_this] execVM '"+CPPATH+"mcc\roleSelection\scripts\camMouseMoving.sqf'");
