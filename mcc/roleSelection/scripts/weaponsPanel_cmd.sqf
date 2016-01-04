@@ -47,22 +47,22 @@ switch (_cmd) do {
 	//LBL change on Items1
 	case 3:	{
 		CP_currentItems1Index = lbCurSel CP_weaponsPanelItem1;
-		missionNamespace setVariable [format ["CP_player%1Items1_%2_%3",_role,getplayerUID player,side player], CP_currentItmes1 select CP_currentItems1Index];
-		_itemName = (CP_currentItmes1 select CP_currentItems1Index) select 1;
+		missionNamespace setVariable [format ["CP_player%1Items1_%2_%3",_role,getplayerUID player,side player], CP_items1 select CP_currentItems1Index];
+		_itemName = (CP_items1 select CP_currentItems1Index) select 1;
 	};
 
 	//LBL change on Items2
 	case 4:	{
 		CP_currentItems2Index = lbCurSel CP_weaponsPanelItem2;
-		missionNamespace setVariable [format ["CP_player%1Items2_%2_%3",_role,getplayerUID player,side player], CP_currentItmes2 select CP_currentItems2Index];
-		_itemName = (CP_currentItmes2 select CP_currentItems2Index) select 1;
+		missionNamespace setVariable [format ["CP_player%1Items2_%2_%3",_role,getplayerUID player,side player], CP_items2 select CP_currentItems2Index];
+		_itemName = (CP_items2 select CP_currentItems2Index) select 1;
 	};
 
 	//LBL change on Items3
 	case 5: {
 		CP_currentItems3Index = lbCurSel CP_weaponsPanelItem3;
-		missionNamespace setVariable [format ["CP_player%1Items3_%2_%3",_role,getplayerUID player,side player], CP_currentItmes3 select CP_currentItems3Index];
-		_itemName = (CP_currentItmes3 select CP_currentItems3Index) select 1;
+		missionNamespace setVariable [format ["CP_player%1Items3_%2_%3",_role,getplayerUID player,side player], CP_items3 select CP_currentItems3Index];
+		_itemName = (CP_items3 select CP_currentItems3Index) select 1;
 	};
 };
 

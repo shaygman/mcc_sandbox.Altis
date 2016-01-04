@@ -867,24 +867,6 @@ CP_dialogInitDone = true; 				//define if dialog is been initialize
 };
 
 //---------------------------------------------
-//		Index
-//---------------------------------------------
-CP_squadListIndex		= 0;
-CP_NVIndex 				= 0;
-CP_headgearIndex 		= 0;
-CP_gogglesIndex 		= 0;
-CP_vestIndex 			= 0;
-CP_backpackIndex 		= 0;
-CP_uniformsIndex 		= 0;
-CP_currentItems1Index 	= 0;
-CP_currentItems2Index 	= 0;
-CP_currentItems3Index 	= 0;
-CP_opticsIndex			= 0;
-CP_barrelIndex			= 0;
-CP_attachsIndex			= 0;
-CP_currentGeneralItems	= 0;
-
-//---------------------------------------------
 //		Server Init
 //---------------------------------------------
 MCC_isDedicated = false;

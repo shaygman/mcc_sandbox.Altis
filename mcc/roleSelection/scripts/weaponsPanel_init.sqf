@@ -91,27 +91,27 @@ _null = [CP_weaponsPanelHandgun,_array,CP_currentHandgunsIndex] call _fnc_setCom
 
 //Load Items1
 _array = [];
-for [{_i = 0},{_i < count CP_currentItmes1},{_i = _i+1}] do {
-	if (CP_currentLevel >= (CP_currentItmes1 select _i)select 0) then {
-		_array set [count _array, (CP_currentItmes1 select _i) select 1];
+for [{_i = 0},{_i < count CP_items1},{_i = _i+1}] do {
+	if (CP_currentLevel >= (CP_items1 select _i)select 0) then {
+		_array set [count _array, (CP_items1 select _i) select 1];
 	};
 };
 _null = [CP_weaponsPanelItem1,_array,CP_currentItems1Index] call _fnc_setComboBox;
 
 //Load Items2
 _array = [];
-for [{_i = 0},{_i < count CP_currentItmes2},{_i = _i+1}] do {
-	if (CP_currentLevel >= (CP_currentItmes2 select _i)select 0) then {
-		_array set [count _array, (CP_currentItmes2 select _i) select 1];
+for [{_i = 0},{_i < count CP_items2},{_i = _i+1}] do {
+	if (CP_currentLevel >= (CP_items2 select _i)select 0) then {
+		_array set [count _array, (CP_items2 select _i) select 1];
 	};
 };
 _null = [CP_weaponsPanelItem2,_array,CP_currentItems2Index] call _fnc_setComboBox;
 
 //Load Items3
 _array = [];
-for [{_i = 0},{_i < count CP_currentItmes3},{_i = _i+1}] do {
-	if (CP_currentLevel >= (CP_currentItmes3 select _i)select 0) then {
-		_array set [count _array, (CP_currentItmes3 select _i) select 1];
+for [{_i = 0},{_i < count CP_items3},{_i = _i+1}] do {
+	if (CP_currentLevel >= (CP_items3 select _i)select 0) then {
+		_array set [count _array, (CP_items3 select _i) select 1];
 	};
 };
 _null = [CP_weaponsPanelItem3,_array,CP_currentItems3Index] call _fnc_setComboBox;

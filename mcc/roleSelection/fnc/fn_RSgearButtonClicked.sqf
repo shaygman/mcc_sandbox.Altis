@@ -56,15 +56,15 @@ switch (_type) do {
     };
 
     case "items1": {
-    	_availableObjects = CP_currentItmes1;
+    	_availableObjects = CP_items1;
     };
 
     case "items2": {
-    	_availableObjects = CP_currentItmes2;
+    	_availableObjects = CP_items2;
     };
 
     case "items3": {
-    	_availableObjects = CP_currentItmes3;
+    	_availableObjects = CP_items3;
     };
 
     case "nightVision": {
@@ -203,12 +203,13 @@ MCC_fnc_RSItemSelected = {
 	private ["_array","_outfits"];
 	disableSerialization;
 	params ["_type","_ctrl","_index"];
-	_outfits = ["nightVision","headgear","googles","vests","backpacks","uniforms","_data","_attachments"];
+	_outfits = ["nightVision","headgear","googles","vests","backpacks","uniforms","_data","_attachments","_role"];
 	_attachments = ["scope","side","muzzle","bipod"];
 
 	if (_index < 0) exitWith {};
 
 	_data = _ctrl lbData _index;
+	_role = player getVariable ["CP_role",""];
 
 	if (!(isNull ((ctrlParent _ctrl) displayCtrl 14000)) && !(_type in _attachments)) then {
 		ctrlDelete ((ctrlParent _ctrl) displayCtrl 14000);
@@ -216,35 +217,37 @@ MCC_fnc_RSItemSelected = {
 	};
 
 	if (_type in _outfits) then {
-		CP_playerUniforms set [_outfits find _type,_data];
+		_uniforms = missionNamespace getVariable [format ["CP_player%1_Uniforms_%2_%3",_role,getplayerUID player,side player],[	((CP_currentUniforms select 0) select 0) select 1,((CP_currentUniforms select 1) select 0) select 1,((CP_currentUniforms select 2) select 0) select 1,((CP_currentUniforms select 3) select 0) select 1,((CP_currentUniforms select 4) select 0) select 1,((CP_currentUniforms select 5) select 0) select 1]];
+		_uniforms set [_outfits find _type,_data];
+		missionNamespace setVariable [format ["CP_player%1_Uniforms_%2_%3",_role,getplayerUID player,side player],_uniforms];
 	} else {
 		if (_type in _attachments) then {
-			_arrayName = format["CP_player%1_%4_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player,(missionNamespace getVariable ["MCC_RSselectedWeapon",""])];
+			_arrayName = format["CP_player%1_%4_attachments_%2_%3",_role, getplayerUID player, side player,(missionNamespace getVariable ["MCC_RSselectedWeapon",""])];
 			_array	= missionNamespace getVariable [_arrayName,["","","",""]];
 			_array set [_attachments find _type, _data];
-			 missionNamespace setVariable [format["CP_player%1_%4_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player,(missionNamespace getVariable ["MCC_RSselectedWeapon",""])], _array];
+			 missionNamespace setVariable [format["CP_player%1_%4_attachments_%2_%3",_role, getplayerUID player, side player,(missionNamespace getVariable ["MCC_RSselectedWeapon",""])], _array];
 		} else {
 
 				switch (_type) do {
 					case "primary":	{
 						_array = CP_currentWeaponArray;
-						 missionNamespace setVariable [format["CP_player%1_primary_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player], ["","","",""]];
+						 missionNamespace setVariable [format["CP_player%1_primary_attachments_%2_%3",_role, getplayerUID player, side player], ["","","",""]];
 					};
 					case "secondary":	{
 						_array = CP_currentWeaponSecArray;
-						 missionNamespace setVariable [format["CP_player%1_secondary_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player], ["","","",""]];
+						 missionNamespace setVariable [format["CP_player%1_secondary_attachments_%2_%3",_role, getplayerUID player, side player], ["","","",""]];
 					};
 					case "handgun":	{
 						_array = CP_handguns;
-						 missionNamespace setVariable [format["CP_player%1_handgun_attachments_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player, side player], ["","","",""]];
+						 missionNamespace setVariable [format["CP_player%1_handgun_attachments_%2_%3",_role, getplayerUID player, side player], ["","","",""]];
 					};
-					case "items1":	{_array = CP_currentItmes1};
-					case "items2":	{_array = CP_currentItmes2};
-					case "items3":	{_array = CP_currentItmes3};
+					case "items1":	{_array = CP_items1};
+					case "items2":	{_array = CP_items2};
+					case "items3":	{_array = CP_items3};
 					default {[]};
 				};
 
-			missionNamespace setVariable [format ["CP_player%1_%4_%2_%3",(player getVariable ["CP_role",""]), getplayerUID player,side player,_type], _array select _index];
+			missionNamespace setVariable [format ["CP_player%1_%4_%2_%3",_role, getplayerUID player,side player,_type], _array select _index];
 
 			//Add weapon's attachments
 			if (_type in ["primary","secondary","handgun"]) then {
@@ -253,7 +256,7 @@ MCC_fnc_RSItemSelected = {
 		};
 	};
 
-	_null = [(player getVariable ["CP_role",""]),0] call MCC_fnc_setGear;
+	_null = [_role,0] call MCC_fnc_setGear;
 
 	//select weapon again
 	switch (true) do {

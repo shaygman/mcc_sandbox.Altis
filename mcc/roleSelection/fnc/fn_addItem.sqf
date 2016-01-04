@@ -12,8 +12,8 @@ if (_mag == "") exitWith {};
 for [{_i = 0},{_i < (_currentWeapon select 2)},{_i = _i+1}] do {
 	switch (true) do {
 	    case (isClass (configFile >> "CfgMagazines" >> _mag)): {player addmagazine _mag};
-	    case (isClass (configFile >> "CfgWeapons" >> _mag) && (_mag in ["ItemMap","ItemCompass","ItemWatch","ItemRadio","B_UavTerminal","MCC_Console","ItemGPS","Binocular","Rangefinder","Laserdesignator"])): {player linkItem _mag};
-	    case (isClass (configFile >> "CfgWeapons" >> _mag)): {player additem _mag; if !(_mag in items player) then {player addWeapon _mag}};
+	    case (isClass (configFile >> "CfgWeapons" >> _mag) && (_mag in ["ItemMap","ItemCompass","ItemWatch","ItemRadio","B_UavTerminal","ItemGPS"])): {player linkItem _mag};
+	    case (isClass (configFile >> "CfgWeapons" >> _mag)): {player addWeapon _mag; if !(_mag in (weapons player + items player)) then {player additem _mag}};
 	    case (isClass (configFile >> "CfgGlasses" >> _mag)): {player additem _mag};
 	};
 };

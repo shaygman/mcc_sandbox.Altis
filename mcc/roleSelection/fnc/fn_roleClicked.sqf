@@ -79,7 +79,7 @@ MCC_fnc_RSbuildGearButtons = {
 		_ctrl ctrlSetPosition [0.005*safezoneW, _yPos, 0.02 * safezoneW, _hight];
 		_ctrl ctrlSetText _pic;
 		_ctrl ctrlSetTooltip _toolTip;
-		_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["[%1,_this select 0] execVM 'mcc\roleSelection\fnc\fn_RSgearButtonClicked.sqf'",if (typeName _data == typeName "") then {str _data} else {_data}]];
+		_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["[%1,_this select 0] spawn MCC_fnc_RSgearButtonClicked",if (typeName _data == typeName "") then {str _data} else {_data}]];
 		_ctrl ctrlCommit 0;
 
 		_yPos = _yPos + _hight + _space;
