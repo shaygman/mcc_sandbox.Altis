@@ -1,17 +1,17 @@
 //=========================================================MCC_fnc_interactSelfClicked==========================================================================================
 //==============================================================================================================================================================================
-private ["_ctrl","_index","_ctrlData","_suspect","_ctrlIDC","_disp","_posX","_posY","_child","_array","_pos","_path"];
+private ["_ctrl","_ctrlData","_suspect","_ctrlIDC","_disp","_posX","_posY","_child","_array","_pos","_path"];
 disableSerialization;
 
 _ctrl 		= _this select 0;
-_index 		= _this select 1;
-_ctrlData	= _ctrl lbdata _index;
+_ctrlData	= param [1,"",[""]];
 _ctrlIDC 	= ctrlIDC _ctrl;
 _disp		= ctrlParent _ctrl;
 _posX		= ((ctrlposition _ctrl) select 0)+ ((ctrlposition _ctrl) select 2);
 _posY		= (ctrlposition _ctrl) select 1;
 _suspect = (player getVariable ["interactWith",[]]) select 0;
 
+/*
 uiNamespace setVariable ["MCC_interactionMenu0", _disp displayCtrl 0];
 uiNamespace setVariable ["MCC_interactionMenu1", _disp displayCtrl 1];
 uiNamespace setVariable ["MCC_interactionMenu2", _disp displayCtrl 2];
@@ -26,15 +26,16 @@ switch (_ctrlIDC) do {
 	case 1:	{uinamespace setVariable ["MCC_interactionMenu1Data", _ctrlData]};
 	case 2:	{uinamespace setVariable ["MCC_interactionMenu2Data", _ctrlData]};
 };
+*/
 
 //Close dialog
-if !(_ctrlData in ["physical","medic","enemy","inf","mech_inf","motor_inf","armor","air","plane","naval","art","support","build","pulse","gear"]) then {closeDialog 0};
+//if !(_ctrlData in ["physical","medic","enemy","inf","mech_inf","motor_inf","armor","air","plane","naval","art","support","build","pulse","gear"]) then {closeDialog 0};
 _pos = screenToWorld [0.5,0.5];
 
 switch (true) do {
 	case (_ctrlData == "medic"): {
 		private ["_bandage","_medkit","_maxBleeding","_complex","_isMedic","_itemsPlayer","_itemsSuspect","_bandagePic","_medkitPic"];
-		_child =  MCC_interactionMenu1;
+		//_child =  MCC_interactionMenu1;
 		_complex = missionNamespace getVariable ["MCC_medicComplex",false];
 		if (_complex) then {
 			_bandage = "MCC_bandage";
@@ -51,25 +52,22 @@ switch (true) do {
 		_isMedic = if (((getNumber(configFile >> "CfgVehicles" >> typeOf vehicle player >> "attendant")) == 1) || ((player getvariable ["CP_role",""]) == "Corpsman")) then {true} else {false};
 
 		_array = [
-				   ["pulse","Pulse Check",format ["%1data\IconPulse.paa",MCC_path],[0,1,0,1]],
-				   ["physical","Physical Check",format ["%1data\IconPhysical.paa",MCC_path],[0,1,0,1]],
-				   ["bandage",format ["Bandage X %1", {_x == _bandage} count (_itemsPlayer)],_bandagePic],
+				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),0] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
+				   ["[(_this select 0),'pulse'] spawn MCC_fnc_interactSelfClicked","Pulse Check",format ["%1data\IconPulse.paa",MCC_path]],
+				   ["physical","Physical Check",format ["%1data\IconPhysical.paa",MCC_path]],
+				   ["bandage",format ["Bandages X %1", {_x == _bandage} count (_itemsPlayer)],_bandagePic],
 				   ["heal","First Aid",_medkitPic]
 				 ];
 
-		if ( !alive _suspect) then {_array set [1,-1]};
-		if (!(_bandage in (_itemsPlayer)) || !alive _suspect) then {_array set [2,-1]};
-		if (!(_medkit in _itemsPlayer) || !_isMedic || !alive _suspect || (_suspect getVariable ["MCC_medicUnconscious",false]) || ((_suspect getVariable ["MCC_medicBleeding",0])> 0.2)) then {_array set [3,-1]};
+		if ( !alive _suspect) then {_array set [2,-1]};
+		if (!(_bandage in (_itemsPlayer)) || !alive _suspect) then {_array set [3,-1]};
+		if (!(_medkit in _itemsPlayer) || !_isMedic || !alive _suspect || (_suspect getVariable ["MCC_medicUnconscious",false]) || ((_suspect getVariable ["MCC_medicBleeding",0])> 0.2)) then {_array set [4,-1]};
 		_array = _array - [-1];
-	};
-
-	case (_ctrlData in ["bandage","heal"]):	{
-		[_ctrlData, _suspect] call MCC_fnc_medicUseItem;
 	};
 
 	case (_ctrlData == "pulse"): {
 		private ["_string","_maxBleeding","_remaineBlood","_subArray","_fatigueEffect"];
-		_child =  MCC_interactionMenu2;
+		//_child =  MCC_interactionMenu2;
 		_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
 		_remaineBlood = _suspect getvariable ["MCC_medicRemainBlood",_maxBleeding];
 		_fatigueEffect = floor (30*(getFatigue _suspect));
@@ -88,6 +86,15 @@ switch (true) do {
 				   ["pulseReport",_string,"",_subArray]
 				 ];
 	};
+};
+
+[_array] call MCC_fnc_interactionsBuildInteractionUI;
+	/*
+	case (_ctrlData in ["bandage","heal"]):	{
+		[_ctrlData, _suspect] call MCC_fnc_medicUseItem;
+	};
+
+
 
 	case (_ctrlData == "physical"):	{
 		private ["_string","_damage","_hitPoints","_subArray","_partName","_bleeding"];
@@ -383,7 +390,7 @@ switch (true) do {
 		player addMagazine (player getVariable ["MCC_playerAttachedGearItemClass",""]);
 	};
 };
-
+/*
 //Reveal
 if (!isnil "_child") then {
 	_child ctrlShow true;

@@ -5,7 +5,7 @@
 //==============================================================================================================================================================================
 private ["_object","_cargo"];
 _object = param [0,objnull,[missionNamespace,objnull]];
-if (!(missionNamespace getVariable ["MCC_iniDBenabled",false]) || isNull _object) exitWith {};
+if (isNull _object) exitWith {};
 
 _cargo = _object getvariable ["MCC_virtual_cargo",[[],[],[],[]]];
 

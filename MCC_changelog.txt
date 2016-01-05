@@ -1,8 +1,9 @@
 Change log r19:
 - Added: UI Module: Handles 3d camera for vehicles, in game compass and teammates overlay, Name tags and more. New WIKI page - http://mccsandbox.wikia.com/wiki/UI_Module?venotify=created
 - Changed: Name tags, group markers moved to the inGame UI settings module
-- Changed: Moved to inidbi2 - support local db files for each mission - TODO WIKI
-- Changed: Total reworked the RS to be- TODO WIKI
+- Changed: Moved to inidbi2 - local db files for each mission - TODO WIKI
+- Changed: Removed inidbi2 dependency- persistant data will be saved to the server profile using BI profile name space - Still recommand using IniDB2 as it more robust.
+- Changed: Total reworked the Role Selection UI and functionality loadouts are not inherates from config files to be- TODO WIKI
 - Added: Start Location modules spawn options (none/teleport/halo/paradrop) for each individual spawn point. 
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
 - Added: Resupply option to FOB.
@@ -28,10 +29,7 @@ Change log r19:
 - Fixed: MCC_makr_arrya_group error on server. 
 
 TODO - mission templates, test dedicated
-TODO - unlock function
-TODO - cleaning up RS old files
-TODO - RS without inidb and more
-TODO - mount/dismount attachments
+TODO - mount/dismount attachments - action menu
 
 Change log r18:
 -= New IED Mini Game =-

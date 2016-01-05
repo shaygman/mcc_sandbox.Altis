@@ -15,16 +15,14 @@ publicVariable "CP_eastGroups";
 publicVariable "CP_guarGroups";
 
 //Default Groups
-if (MCC_iniDBenabled) then {
-	CP_defaultGroups = [format ["%1_SERVER",missionName], "RoleSelectionDefinse", "CP_defaultGroups", "read",[],"DEFAULT_SERVER"] call MCC_fnc_handleDB;
+CP_defaultGroups = [format ["%1_SERVER",missionName], "RoleSelectionDefinse", "CP_defaultGroups", "read",[],"DEFAULT_SERVER"] call MCC_fnc_handleDB;
 
-	if (count CP_defaultGroups == 0) then {
-		CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"];
-		_null = [format ["%1_SERVER",missionName], "RoleSelectionDefinse", "CP_defaultGroups", "write",CP_defaultGroups,"DEFAULT_SERVER"] call MCC_fnc_handleDB;
-	};
-
-	publicVariable "CP_defaultGroups";
+if (count CP_defaultGroups == 0) then {
+	CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"];
+	_null = [format ["%1_SERVER",missionName], "RoleSelectionDefinse", "CP_defaultGroups", "write",CP_defaultGroups,"DEFAULT_SERVER"] call MCC_fnc_handleDB;
 };
+
+publicVariable "CP_defaultGroups";
 
 
 

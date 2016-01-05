@@ -1,7 +1,5 @@
 private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight","_role","_exp","_level","_safePos","_rad"];
 
-if (!MCC_iniDBenabled) exitWIth {systemchat "iniDB isn't running. Can't access role selection"};
-
 // - TO DO  delete corpse and items from it.
 //******************************************************************************************************************************
 //											Get player levels

@@ -8,7 +8,7 @@
 //		Boolean
 //===========================================================================================================================================================================
 private ["_positionStart","_positionEnd","_pointIntersect","_selected","_resault","_objArray"];
-if (!(missionNamespace getVariable ["MCC_surviveMod",false])  && !(missionNamespace getVariable ["MCC_iniDBenabled",false])) exitWith {};
+if !(missionNamespace getVariable ["MCC_surviveMod",false]) exitWith {};
 
 //Not MCC object
 _positionStart 	= eyePos player;

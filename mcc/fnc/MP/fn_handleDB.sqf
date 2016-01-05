@@ -16,6 +16,19 @@ _read = param [3,"read",[""]];
 _value = param [4,"",["",true,[],0]];
 _newDB = param [5,false,["",true]];
 
+if !(missionNamespace getVariable ["MCC_iniDBenabled",false]) exitWith {
+
+	//No iniDB use BI profiles saves
+	if (toLower _read == "read") then {
+		_value = profileNamespace getVariable [format ["%1_%2_%3", _dbName, _section, _var],_value];
+	}  else {
+		profileNamespace setVariable [format ["%1_%2_%3", _dbName, _section, _var],_value];
+		saveProfileNamespace;
+	};
+
+	_value
+};
+
 //Is DB exist
 _testVar = ("getDbName" call (missionNamespace getVariable [_dbName,{}]));
 _dbExist = !(isNil "_testVar");

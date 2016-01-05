@@ -31,9 +31,6 @@
 //----Logistics-----------------
 #include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
 
-//----Interaction-----------------
-#include "mcc\Dialogs\mcc_interactionMenu.hpp"
-
 //----Key Settings-----------------
 #include "mcc\Dialogs\mcc_rscKeyBinds.hpp"
 
@@ -65,6 +62,7 @@
 #include "mcc\rts\cfg.hpp"
 #include "mcc\bombDefuse\cfg.hpp"
 #include "mcc\survive\cfg.hpp"
+#include "mcc\interaction\cfg.hpp"
 
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
@@ -85,6 +83,7 @@ class CfgFunctions
 		#include "mcc\survive\cfgFunctions.hpp"
 		#include "mcc\compassHUD\cfgFunctions.hpp"
 		#include "mcc\roleSelection\cfgFunctions.hpp"
+		#include "mcc\interaction\cfgFunctions.hpp"
 	};
 };
 
