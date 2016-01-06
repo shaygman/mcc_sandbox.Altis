@@ -10,7 +10,7 @@ disableSerialization;
 
 if (dialog) exitWith {};
 
-_array = [["",format ["%1",if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect}],""]];
+_array = [["closeDialog 0",format ["<t size='0.8' align='center' color='#ffffff'>%1</t>",if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect}],""]];
 
 //If MCC medic system off
 if (missionNamespace getVariable ["MCC_medicSystemEnabled",false]) then {
@@ -19,8 +19,8 @@ if (missionNamespace getVariable ["MCC_medicSystemEnabled",false]) then {
 
 //Needed at least two in squad to spot and build
 if (leader player == player && count units player >= 2) then {
-	_array pushBack ["enemy","Spot Enemy","\a3\Ui_F_Curator\Data\CfgMarkers\kia_ca.paa"];
-	_array pushBack ["support","Call Support",format ["%1data\IconAmmo.paa",MCC_path]];
+	_array pushBack ["[(_this select 0),'enemy'] spawn MCC_fnc_interactSelfClicked","Spot Enemy","\a3\Ui_F_Curator\Data\CfgMarkers\kia_ca.paa"];
+	_array pushBack ["[(_this select 0),'support'] execVM 'mcc\interaction\fnc\fn_interactSelfClicked.sqf'","Call Support",format ["%1data\IconAmmo.paa",MCC_path]];
 	_array pushBack ["build","Construct",format["%1data\IconRepair.paa",MCC_path]];
 	_array pushBack ["closeDialog 0; createDialog 'MCC_SQLPDA'","Squad Leader PDA","\A3\Ui_f\data\IGUI\Cfg\VehicleToggles\wheelbreakiconon_ca.paa"];
 
@@ -52,9 +52,7 @@ if (isNull(player getVariable ["MCC_playerAttachedGearItem",objNull])) then {
 	_array pushBack ["detach","Detach Item",format ["%1data\IconAmmo.paa",MCC_path]];
 };
 
-//Close dialog
-_array pushBack ["closeDialog 0","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"];
-if (count _array == 2) exitWith {};
+if (count _array == 1) exitWith {};
 
 MCC_fnc_interactionsBuildInteractionUI = {
 	disableSerialization;
@@ -62,7 +60,7 @@ MCC_fnc_interactionsBuildInteractionUI = {
 	private ["_disp","_angle","_angleDif","_ctrl","_radius","_xPos","_yPos","_buttonCtrlGroup"];
 
 	while {dialog} do {closeDialog 0; sleep 0.01};
-
+	playSound "click";
 	//Create dialog
 	_ok = createDialog "MCC_INTERACTION_MENU";
 	waituntil {dialog};
@@ -72,34 +70,36 @@ MCC_fnc_interactionsBuildInteractionUI = {
 	//Save actions for back option
 	missionNamespace setVariable [format ["MCC_interactionLayer_%1", _layer],_actions];
 
-	_angleDif = 360/(count _actions -1);
+	_angleDif = 360/((count _actions -1) max 1);
 	_angle = 270;
 	_radius = 0.04 * safezoneW * safezoneH;
 	_cPos = [0.5* safezoneW + safezoneX,0.5* safezoneH + safezoneY];
 	_width = 0.022 * safezoneW;
 	_hight = 0.022 * safezoneH;
 
-	_xPos = (_cPos select 0) + _radius * cos(245)*3.6;
+	_xPos = (_cPos select 0) + _radius * cos(245)*3.85;
 	_yPos = (_cPos select 1) + _radius * sin(245)*1.9;
 	_ctrl = _disp ctrlCreate ["RscPicture",-1];
 	_ctrl ctrlsetText format ["%1mcc\interaction\data\metalButton.paa", MCC_path];
 	_ctrl ctrlSetPosition [(_cPos select 0), (_cPos select 1), 0,  0];
 	_ctrl ctrlCommit 0;
-	_ctrl ctrlSetPosition [_xPos, _yPos, _radius*3.3,  _radius*3.6];
+	_ctrl ctrlSetPosition [_xPos, _yPos, _radius*3.6,  _radius*3.6];
 	_ctrl ctrlCommit 0.1;
 
 	{
 
 		if (_foreachindex == 0) then {
-			if ((_x select 0)=="") then {
+			if ((_x select 2)=="") then {
 				_ctrl = _disp ctrlCreate ["RscStructuredText",-1];
-				_ctrl ctrlSetStructuredText parseText  (format ["<t size='0.8' align = 'center'>%1</t>",(_x select 1)]);
+				_ctrl ctrlSetStructuredText parseText (_x select 1);
 				_ctrl ctrlSetPosition [(_cPos select 0)-_width, _cPos select 1, _width*3,  _hight*3];
+				_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["%1",(_x select 0)]];
+				_ctrl ctrlSetTooltip "Back";
 				_ctrl ctrlCommit 0.1;
 			} else {
 				_buttonCtrlGroup = _disp ctrlCreate ["RscControlsGroupNoScrollbars",111 + _foreachindex];
 				_buttonCtrlGroup ctrlSetPosition [(_cPos select 0), (_cPos select 1), 0,  0];
-				_buttonCtrlGroup ctrlAddEventHandler ["MouseButtonClick",{systemChat 'hello'}];
+				_buttonCtrlGroup ctrlAddEventHandler ["MouseButtonClick",format ["%1",(_x select 0)]];
 				_buttonCtrlGroup ctrlCommit 0;
 
 				_ctrl = _disp ctrlCreate ["RscPicture",-1, _buttonCtrlGroup];
@@ -124,7 +124,11 @@ MCC_fnc_interactionsBuildInteractionUI = {
 			_ctrl ctrlSetPosition [0, 0, _width,  _hight];
 			_ctrl ctrlsetText (_x select 2);
 			_ctrl ctrlSetTooltip (_x select 1);
-			//_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["['%1','%2',%3] spawn MCC_fnc_RSSquadJoin",netId _group, _groupName, _idc-500]];
+			if (count _x > 3) then {
+				_ctrl ctrlSetTooltipColorBox (_x select 3);
+				//_ctrl ctrlSetTooltipColorShade (_x select 3);
+				_ctrl ctrlSetTooltipColorText (_x select 3);
+			};
 			_ctrl ctrlCommit 0;
 
 			//Do a little animation

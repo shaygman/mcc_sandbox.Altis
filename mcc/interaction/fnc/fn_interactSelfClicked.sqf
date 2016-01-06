@@ -1,6 +1,6 @@
 //=========================================================MCC_fnc_interactSelfClicked==========================================================================================
 //==============================================================================================================================================================================
-private ["_ctrl","_ctrlData","_suspect","_ctrlIDC","_disp","_posX","_posY","_child","_array","_pos","_path"];
+private ["_ctrl","_ctrlData","_suspect","_ctrlIDC","_disp","_posX","_posY","_child","_array","_pos","_path","_layer"];
 disableSerialization;
 
 _ctrl 		= _this select 0;
@@ -11,30 +11,34 @@ _posX		= ((ctrlposition _ctrl) select 0)+ ((ctrlposition _ctrl) select 2);
 _posY		= (ctrlposition _ctrl) select 1;
 _suspect = (player getVariable ["interactWith",[]]) select 0;
 
-/*
-uiNamespace setVariable ["MCC_interactionMenu0", _disp displayCtrl 0];
-uiNamespace setVariable ["MCC_interactionMenu1", _disp displayCtrl 1];
-uiNamespace setVariable ["MCC_interactionMenu2", _disp displayCtrl 2];
-
-#define MCC_interactionMenu0 (uiNamespace getVariable "MCC_interactionMenu0")
-#define MCC_interactionMenu1 (uiNamespace getVariable "MCC_interactionMenu1")
-#define MCC_interactionMenu2 (uiNamespace getVariable "MCC_interactionMenu2")
-
-//saveData
-switch (_ctrlIDC) do {
-	case 0:	{uinamespace setVariable ["MCC_interactionMenu0Data", _ctrlData]};
-	case 1:	{uinamespace setVariable ["MCC_interactionMenu1Data", _ctrlData]};
-	case 2:	{uinamespace setVariable ["MCC_interactionMenu2Data", _ctrlData]};
-};
-*/
-
-//Close dialog
-//if !(_ctrlData in ["physical","medic","enemy","inf","mech_inf","motor_inf","armor","air","plane","naval","art","support","build","pulse","gear"]) then {closeDialog 0};
 _pos = screenToWorld [0.5,0.5];
+
+_markTarget = {
+	closeDialog 0;
+	params ["_text","_pos","_tittle"];
+	private ["_markerName","_path"];
+
+	//Create marker
+	_markerName = (getplayerUID player) + _text + str floor time;
+
+	if (_text == "MinefieldAP") then {
+		_path = "";
+		_text = "";
+	} else {
+		if (playerside == east) then {_path = "b_"} else {_path = "o_"};
+	};
+
+	if (_pos distance player < 1500) then {
+		player globalRadio "SentEnemyDetectedClose";
+		[[_markerName, _path, _pos, _text,_tittle, time, "default"] ,"MCC_fnc_PDAcreatemarker", playerside,false] call BIS_fnc_MP;
+	} else {
+		player globalRadio "SentNoTarget";
+	};
+};
 
 switch (true) do {
 	case (_ctrlData == "medic"): {
-		private ["_bandage","_medkit","_maxBleeding","_complex","_isMedic","_itemsPlayer","_itemsSuspect","_bandagePic","_medkitPic"];
+		private ["_bandage","_medkit","_maxBleeding","_complex","_isMedic","_itemsPlayer","_itemsSuspect","_bandagePic","_medkitPic","_string","_remaineBlood","_color","_fatigueEffect"];
 		//_child =  MCC_interactionMenu1;
 		_complex = missionNamespace getVariable ["MCC_medicComplex",false];
 		if (_complex) then {
@@ -49,56 +53,36 @@ switch (true) do {
 		_itemsPlayer = items player;
 
 		_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
+		_remaineBlood = _suspect getvariable ["MCC_medicRemainBlood",_maxBleeding];
+		_fatigueEffect = floor (30*(getFatigue _suspect));
 		_isMedic = if (((getNumber(configFile >> "CfgVehicles" >> typeOf vehicle player >> "attendant")) == 1) || ((player getvariable ["CP_role",""]) == "Corpsman")) then {true} else {false};
 
+		//Blood loss
+		switch (true) do {
+			case (!alive _suspect) : {_string = "No pulse, he is Dead";  _color = [1,0,0,1];};
+			case (_remaineBlood == _maxBleeding) : {_string = format ["Pulse %1: No Blood Loss",(floor (random 5))+80+_fatigueEffect];  _color = [1,1,1,1];};
+			case (_remaineBlood/_maxBleeding < 0.4) : {_string = format ["Pulse %1: Sever Blood Loss",(floor (random 5))+160+_fatigueEffect];  _color = [1,0,0,1];};
+			case (_remaineBlood/_maxBleeding < 0.7) : {_string = format ["Pulse %1: Mild Blood Loss",(floor (random 5))+120+_fatigueEffect];  _color = [1,1,0,1];};
+			case (_remaineBlood/_maxBleeding >= 0.7) : {_string = format ["Pulse %1: Minor Blood Loss",(floor (random 5))+95+_fatigueEffect];  _color = [0,1,0,1];};
+		};
+
 		_array = [
-				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),0] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
-				   ["[(_this select 0),'pulse'] spawn MCC_fnc_interactSelfClicked","Pulse Check",format ["%1data\IconPulse.paa",MCC_path]],
-				   ["physical","Physical Check",format ["%1data\IconPhysical.paa",MCC_path]],
-				   ["bandage",format ["Bandages X %1", {_x == _bandage} count (_itemsPlayer)],_bandagePic],
-				   ["heal","First Aid",_medkitPic]
+				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
+				   ["",_string,format ["%1data\IconPulse.paa",MCC_path],_color],
+				   ["[(_this select 0),'physical'] spawn MCC_fnc_interactSelfClicked","Physical Check",format ["%1data\IconPhysical.paa",MCC_path]],
+				   [format ["closeDialog 0;['bandage',%1] spawn MCC_fnc_medicUseItem",_suspect],format ["Bandages X %1", {_x == _bandage} count (_itemsPlayer)],_bandagePic],
+				   [format ["closeDialog 0;['heal',%1] spawn MCC_fnc_medicUseItem",_suspect],"Heal",_medkitPic]
 				 ];
 
 		if ( !alive _suspect) then {_array set [2,-1]};
 		if (!(_bandage in (_itemsPlayer)) || !alive _suspect) then {_array set [3,-1]};
 		if (!(_medkit in _itemsPlayer) || !_isMedic || !alive _suspect || (_suspect getVariable ["MCC_medicUnconscious",false]) || ((_suspect getVariable ["MCC_medicBleeding",0])> 0.2)) then {_array set [4,-1]};
 		_array = _array - [-1];
+		_layer = 1;
 	};
-
-	case (_ctrlData == "pulse"): {
-		private ["_string","_maxBleeding","_remaineBlood","_subArray","_fatigueEffect"];
-		//_child =  MCC_interactionMenu2;
-		_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
-		_remaineBlood = _suspect getvariable ["MCC_medicRemainBlood",_maxBleeding];
-		_fatigueEffect = floor (30*(getFatigue _suspect));
-
-		MCC_interactionMenu2 ctrlShow false;
-
-		//Blood loss
-		switch (true) do {
-			case (!alive _suspect) : {_string = "No pulse, he is Dead";  _subArray = [1,1,1,1];};
-			case (_remaineBlood == _maxBleeding) : {_string = format ["%1 - No blood loss",(floor (random 5))+80+_fatigueEffect]; _subArray = [1,1,1,1];};
-			case (_remaineBlood/_maxBleeding < 0.4) : {_string = format ["%1 - Severe blood Loss",(floor (random 5))+160+_fatigueEffect]; _subArray = [1,0,0,1];};
-			case (_remaineBlood/_maxBleeding < 0.7) : {_string = format ["%1 - Mild blood loss",(floor (random 5))+120+_fatigueEffect]; _subArray = [1,1,0,1];};
-			case (_remaineBlood/_maxBleeding >= 0.7) : {_string = format ["%1 - Minor blood loss",(floor (random 5))+95+_fatigueEffect]; _subArray = [0,1,0,1];};
-		};
-		_array = [
-				   ["pulseReport",_string,"",_subArray]
-				 ];
-	};
-};
-
-[_array] call MCC_fnc_interactionsBuildInteractionUI;
-	/*
-	case (_ctrlData in ["bandage","heal"]):	{
-		[_ctrlData, _suspect] call MCC_fnc_medicUseItem;
-	};
-
-
 
 	case (_ctrlData == "physical"):	{
-		private ["_string","_damage","_hitPoints","_subArray","_partName","_bleeding"];
-		_child =  MCC_interactionMenu2;
+		private ["_string","_damage","_hitPoints","_partName","_bleeding"];
 		_hitPoints = ["HitHead","HitBody","hitLegs","hitHands"];
 		_partName = ["Head: ","Body: ","Legs: ","Hands: "];
 		_partPic = [
@@ -107,23 +91,21 @@ switch (true) do {
 					MCC_path + "mcc\dialogs\medic\data\soldier_legs.paa",
 					MCC_path + "mcc\dialogs\medic\data\soldier_hands.paa"
 					];
-		_array = [];
+		_array = [["[(missionNamespace getVariable ['MCC_interactionLayer_1',[]]),2] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]]];
 		_bleeding = _suspect getVariable ["MCC_medicBleeding",0];
 
-		MCC_interactionMenu2 ctrlShow false;
 
 		//Trauma
 		{
-			_subArray = [];
+			_subArray = [""];
 			_damage = _suspect getHitPointDamage _x;
-			switch (true) do
-					{
-						case (_damage < 0.05) : {_string = "No trauma"; _subArray set [3,[1,1,1,1]];};
-						case (_damage < 0.3) : {_string = "Minor trauma"; _subArray set [3,[0,1,0,1]];};
-						case (_damage < 0.6) : {_string = "Mild trauma"; _subArray set [3,[1,1,0,1]];};
-						case (_damage >= 0.6) : {_string = "Severe trauma"; _subArray set [3,[1,0,0,1]];};
-					};
-			_subArray set [0,"physicalReport"];
+			switch (true) do {
+				case (_damage < 0.05) : {_string = "No trauma"; _subArray set [3,[1,1,1,1]];};
+				case (_damage < 0.3) : {_string = "Minor trauma"; _subArray set [3,[0,1,0,1]];};
+				case (_damage < 0.6) : {_string = "Mild trauma"; _subArray set [3,[1,1,0,1]];};
+				case (_damage >= 0.6) : {_string = "Severe trauma"; _subArray set [3,[1,0,0,1]];};
+			};
+
 			_subArray set [1,(_partName select _foreachIndex) + _string];
 			_subArray set [2,(_partPic select _foreachIndex)];
 			_array pushBack _subArray;
@@ -132,7 +114,7 @@ switch (true) do {
 
 		//Bleeding
 		_subArray = [];
-		_subArray set [0,"physicalReport"];
+		_subArray set [0,""];
 
 		switch (true) do
 						{
@@ -143,85 +125,53 @@ switch (true) do {
 						};
 
 		_subArray set [1,"Bleeding: " + _string];
-		_subArray set [2,""];
+		_subArray set [2,MCC_path + "mcc\interaction\data\IconBleeding.paa"];
 		_array pushBack _subArray;
-	};
 
-	case (_ctrlData in ["drag","carry"] ): {
-
-		[player,_suspect, _ctrlData == "carry"] call MCC_fnc_medicDragCarry;
+		_layer = 2;
 	};
 
 	case (_ctrlData == "enemy"): {
-		//enemy
-		_child =  MCC_interactionMenu1;
 		_path = if (playerside == east) then {"b_"} else {"o_"};
 		_array = [
-				   ["inf","Infantry",format["\A3\ui_f\data\map\markers\nato\%1inf.paa",_path]],
-				   ["mech_inf","Motorized",format["\A3\ui_f\data\map\markers\nato\%1motor_inf.paa",_path]],
-				   ["motor_inf","Mechanized",format["\A3\ui_f\data\map\markers\nato\%1mech_inf.paa",_path]],
-				   ["armor","Armor",format["\A3\ui_f\data\map\markers\nato\%1armor.paa",_path]],
-				   ["air","Helicopter",format["\A3\ui_f\data\map\markers\nato\%1air.paa",_path]],
-				   ["plane","Plane",format["\A3\ui_f\data\map\markers\nato\%1plane.paa",_path]],
-				   ["naval","Ship",format["\A3\ui_f\data\map\markers\nato\%1naval.paa",_path]],
-				   ["art","Artillery",format["\A3\ui_f\data\map\markers\nato\%1art.paa",_path]],
-				   ["installation","Installation",format["\A3\ui_f\data\map\markers\nato\%1Installation.paa",_path]],
-				   ["unknown","Unknown",format["\A3\ui_f\data\map\markers\nato\%1unknown.paa",_path]],
-				   ["MinefieldAP","Mine","\a3\Ui_F_Curator\Data\CfgMarkers\minefieldAP_ca.paa"]
+				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
+				   [format ["['inf',%1,'Infantry'] spawn %2",_pos, _markTarget],"Infantry",format["\A3\ui_f\data\map\markers\nato\%1inf.paa",_path]],
+				   [format ["['mech_inf',%1,'Motorized'] spawn %2",_pos, _markTarget],"Motorized",format["\A3\ui_f\data\map\markers\nato\%1motor_inf.paa",_path]],
+				   [format ["['motor_inf',%1,'Mechanized'] spawn %2",_pos, _markTarget],"Mechanized",format["\A3\ui_f\data\map\markers\nato\%1mech_inf.paa",_path]],
+				   [format ["['armor',%1,'Armor'] spawn %2",_pos, _markTarget],"Armor",format["\A3\ui_f\data\map\markers\nato\%1armor.paa",_path]],
+				   [format ["['air',%1,'Helicopter'] spawn %2",_pos, _markTarget],"Helicopter",format["\A3\ui_f\data\map\markers\nato\%1air.paa",_path]],
+				   [format ["['plane',%1,'Plane'] spawn %2",_pos, _markTarget],"Plane",format["\A3\ui_f\data\map\markers\nato\%1plane.paa",_path]],
+				   [format ["['naval',%1,'Naval'] spawn %2",_pos, _markTarget],"Naval",format["\A3\ui_f\data\map\markers\nato\%1naval.paa",_path]],
+				   [format ["['art',%1,'Artillery'] spawn %2",_pos, _markTarget],"Artillery",format["\A3\ui_f\data\map\markers\nato\%1art.paa",_path]],
+				   [format ["['installation',%1,'Installation'] spawn %2",_pos, _markTarget],"Installation",format["\A3\ui_f\data\map\markers\nato\%1Installation.paa",_path]],
+				   [format ["['unknown',%1,'Unknown'] spawn %2",_pos, _markTarget],"Unknown",format["\A3\ui_f\data\map\markers\nato\%1unknown.paa",_path]],
+				   [format ["['MinefieldAP',%1,'Mine'] spawn %2",_pos, _markTarget],"Mine","\a3\Ui_F_Curator\Data\CfgMarkers\minefieldAP_ca.paa"]
 				 ];
+
+		_layer = 1;
 	};
 
-	//Menu - enemy - markers - Size
-	case (_ctrlData in ["inf","mech_inf","motor_inf","armor","air","plane","naval","art"]):	{
-		_child =  MCC_interactionMenu2;
-		_path ="\A3\ui_f\data\map\markers\nato\group";
+	case (_ctrlData == "support"): {
+		_path = "\A3\ui_f\data\map\markers\military\";
 		_array = [
-				   ["Fire Team","Fire Team",format["%1_0.paa",_path]],
-				   ["Squad","Squad",format["%1_1.paa",_path]],
-				   ["Section","Section",format["%1_2.paa",_path]],
-				   ["Platoon","Platoon",format["%1_3.paa",_path]],
-				   ["Company","Company",format["%1_4.paa",_path]]
+				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
+				   ["attack","Attack",format["%1mcc\interaction\data\attack_ca.paa",MCC_path]],
+				   ["defend","Defend",format["%1mcc\interaction\data\defend_ca.paa",MCC_path]],
+				   ["mil_destroy","Close Air Support",format["%1mcc\interaction\data\cas_ca.paa",MCC_path]],
+				   ["mil_objective","Artillery",format["%1mcc\interaction\data\artillery_ca.paa",MCC_path]],
+				   ["mil_pickup","Transport",format["%1mcc\interaction\data\transport_ca.paa",MCC_path]],
+				   ["mil_warning","Medic",format["%1data\IconMed.paa",MCC_path]],
+				   ["mil_warning","Ammo",format["%1data\IconAmmo.paa",MCC_path]],
+				   ["mil_warning","Repairs",format["%1data\IconRepair.paa",MCC_path]],
+				   ["mil_warning","Fuel",format["%1data\IconFuel.paa",MCC_path]]
 				 ];
+
+		_layer = 1;
 	};
+};
 
-	//Menu - enemy - markers - Size (no size)
-	case (_ctrlData in ["installation","unknown","MinefieldAP"]): {
-		_child =  MCC_interactionMenu2;
-		_array = [];
-
-		//Create marker
-		_markerName = (getplayerUID player) + (uinamespace getVariable "MCC_interactionMenu1Data") + str floor time;
-		_text = uinamespace getVariable "MCC_interactionMenu1Data";
-		if (_ctrlData == "MinefieldAP") then {
-			_path = "";
-			_text = "";
-		} else {
-			if (playerside == east) then {_path = "b_"} else {_path = "o_"};
-		};
-
-		if (_pos distance player < 1500) then {
-			player globalRadio "SentEnemyDetectedClose";
-			[[_markerName, _path, _pos, uinamespace getVariable "MCC_interactionMenu1Data",_text, time, "default"] ,"MCC_fnc_PDAcreatemarker", playerside,false] call BIS_fnc_MP;
-		} else {
-			player globalRadio "SentNoTarget";
-		};
-	};
-
-	//Menu - enemy - markers - Size set
-	case (_ctrlData in ["Fire Team","Squad","Section","Platoon","Company"]): {
-		_array = [];
-
-		if (_pos distance player < 1500) then {
-			//Create marker
-			_markerName = (getplayerUID player) + (uinamespace getVariable "MCC_interactionMenu1Data") + str floor time;
-			_path = if (playerside == east) then {"b_"} else {"o_"};
-
-			player globalRadio "CuratorWaypointPlacedAttack";
-			[[_markerName, _path, _pos, uinamespace getVariable "MCC_interactionMenu1Data", uinamespace getVariable "MCC_interactionMenu2Data", time, "default"] ,"MCC_fnc_PDAcreatemarker", playerside,false] call BIS_fnc_MP;
-		} else {
-			player globalRadio "SentNoTarget";
-		};
-	};
+[_array,_layer] call MCC_fnc_interactionsBuildInteractionUI;
+	/*
 
 	case (_ctrlData == "support"): {
 		MCC_interactionMenu1 ctrlShow false;

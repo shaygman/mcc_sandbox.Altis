@@ -1,6 +1,6 @@
 class CP_GEARPANEL {
 	idd = -1;
-	movingEnable = false;
+	movingEnable = true;
 	onLoad =  __EVAL("_this execVM '"+CPPATH+"mcc\roleSelection\scripts\gearPanel_init.sqf'");
 	onUnLoad = "missionNameSpace setvariable ['CP_gearPanelOpen',false];";
 
