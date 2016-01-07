@@ -180,7 +180,7 @@ while {true} do {
 		if (!isnil "MCC_PDAMarkers") then {
 			_time = time;
 			{
-				if (time > (_x +300)) then
+				if (time > (_x +120)) then
 				{
 					deletemarkerlocal (MCC_PDAMarkers select _foreachindex);
 					MCC_PDAMarkers set [_foreachindex, -1];

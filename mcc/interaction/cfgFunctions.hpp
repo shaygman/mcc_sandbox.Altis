@@ -28,4 +28,8 @@ class interaction
 	class isSurvivalObject {description = "check if an object is a survival object";};
 	class searchSurvivalObject {description = "Search a survival object";};
 	class initConstract {description = "Init Construction";};
+	class interactionsBuildInteractionUI {description = "build interaction rose menu";};
+	class attachItemUniform {description = "attach item to uniform";};
+	class interactionMarkerCreate {description = "create a marker on the player cursor";};
+	class attachItemWeapons {description = "Attach items to weapon";};
 };

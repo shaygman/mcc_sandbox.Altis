@@ -13,29 +13,6 @@ _suspect = (player getVariable ["interactWith",[]]) select 0;
 
 _pos = screenToWorld [0.5,0.5];
 
-_markTarget = {
-	closeDialog 0;
-	params ["_text","_pos","_tittle"];
-	private ["_markerName","_path"];
-
-	//Create marker
-	_markerName = (getplayerUID player) + _text + str floor time;
-
-	if (_text == "MinefieldAP") then {
-		_path = "";
-		_text = "";
-	} else {
-		if (playerside == east) then {_path = "b_"} else {_path = "o_"};
-	};
-
-	if (_pos distance player < 1500) then {
-		player globalRadio "SentEnemyDetectedClose";
-		[[_markerName, _path, _pos, _text,_tittle, time, "default"] ,"MCC_fnc_PDAcreatemarker", playerside,false] call BIS_fnc_MP;
-	} else {
-		player globalRadio "SentNoTarget";
-	};
-};
-
 switch (true) do {
 	case (_ctrlData == "medic"): {
 		private ["_bandage","_medkit","_maxBleeding","_complex","_isMedic","_itemsPlayer","_itemsSuspect","_bandagePic","_medkitPic","_string","_remaineBlood","_color","_fatigueEffect"];
@@ -135,17 +112,17 @@ switch (true) do {
 		_path = if (playerside == east) then {"b_"} else {"o_"};
 		_array = [
 				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
-				   [format ["['inf',%1,'Infantry'] spawn %2",_pos, _markTarget],"Infantry",format["\A3\ui_f\data\map\markers\nato\%1inf.paa",_path]],
-				   [format ["['mech_inf',%1,'Motorized'] spawn %2",_pos, _markTarget],"Motorized",format["\A3\ui_f\data\map\markers\nato\%1motor_inf.paa",_path]],
-				   [format ["['motor_inf',%1,'Mechanized'] spawn %2",_pos, _markTarget],"Mechanized",format["\A3\ui_f\data\map\markers\nato\%1mech_inf.paa",_path]],
-				   [format ["['armor',%1,'Armor'] spawn %2",_pos, _markTarget],"Armor",format["\A3\ui_f\data\map\markers\nato\%1armor.paa",_path]],
-				   [format ["['air',%1,'Helicopter'] spawn %2",_pos, _markTarget],"Helicopter",format["\A3\ui_f\data\map\markers\nato\%1air.paa",_path]],
-				   [format ["['plane',%1,'Plane'] spawn %2",_pos, _markTarget],"Plane",format["\A3\ui_f\data\map\markers\nato\%1plane.paa",_path]],
-				   [format ["['naval',%1,'Naval'] spawn %2",_pos, _markTarget],"Naval",format["\A3\ui_f\data\map\markers\nato\%1naval.paa",_path]],
-				   [format ["['art',%1,'Artillery'] spawn %2",_pos, _markTarget],"Artillery",format["\A3\ui_f\data\map\markers\nato\%1art.paa",_path]],
-				   [format ["['installation',%1,'Installation'] spawn %2",_pos, _markTarget],"Installation",format["\A3\ui_f\data\map\markers\nato\%1Installation.paa",_path]],
-				   [format ["['unknown',%1,'Unknown'] spawn %2",_pos, _markTarget],"Unknown",format["\A3\ui_f\data\map\markers\nato\%1unknown.paa",_path]],
-				   [format ["['MinefieldAP',%1,'Mine'] spawn %2",_pos, _markTarget],"Mine","\a3\Ui_F_Curator\Data\CfgMarkers\minefieldAP_ca.paa"]
+				   [format ["['inf',%1,'Infantry'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Infantry",format["\A3\ui_f\data\map\markers\nato\%1inf.paa",_path]],
+				   [format ["['mech_inf',%1,'Motorized'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Motorized",format["\A3\ui_f\data\map\markers\nato\%1motor_inf.paa",_path]],
+				   [format ["['motor_inf',%1,'Mechanized'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Mechanized",format["\A3\ui_f\data\map\markers\nato\%1mech_inf.paa",_path]],
+				   [format ["['armor',%1,'Armor'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Armor",format["\A3\ui_f\data\map\markers\nato\%1armor.paa",_path]],
+				   [format ["['air',%1,'Helicopter'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Helicopter",format["\A3\ui_f\data\map\markers\nato\%1air.paa",_path]],
+				   [format ["['plane',%1,'Plane'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Plane",format["\A3\ui_f\data\map\markers\nato\%1plane.paa",_path]],
+				   [format ["['naval',%1,'Naval'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Naval",format["\A3\ui_f\data\map\markers\nato\%1naval.paa",_path]],
+				   [format ["['art',%1,'Artillery'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Artillery",format["\A3\ui_f\data\map\markers\nato\%1art.paa",_path]],
+				   [format ["['installation',%1,'Installation'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Installation",format["\A3\ui_f\data\map\markers\nato\%1Installation.paa",_path]],
+				   [format ["['unknown',%1,'Unknown'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Unknown",format["\A3\ui_f\data\map\markers\nato\%1unknown.paa",_path]],
+				   [format ["['MinefieldAP',%1,'Mine'] spawn MCC_fnc_interactionMarkerCreate",_pos],"Mine","\a3\Ui_F_Curator\Data\CfgMarkers\minefieldAP_ca.paa"]
 				 ];
 
 		_layer = 1;
@@ -155,210 +132,105 @@ switch (true) do {
 		_path = "\A3\ui_f\data\map\markers\military\";
 		_array = [
 				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
-				   ["attack","Attack",format["%1mcc\interaction\data\attack_ca.paa",MCC_path]],
-				   ["defend","Defend",format["%1mcc\interaction\data\defend_ca.paa",MCC_path]],
-				   ["mil_destroy","Close Air Support",format["%1mcc\interaction\data\cas_ca.paa",MCC_path]],
-				   ["mil_objective","Artillery",format["%1mcc\interaction\data\artillery_ca.paa",MCC_path]],
-				   ["mil_pickup","Transport",format["%1mcc\interaction\data\transport_ca.paa",MCC_path]],
-				   ["mil_warning","Medic",format["%1data\IconMed.paa",MCC_path]],
-				   ["mil_warning","Ammo",format["%1data\IconAmmo.paa",MCC_path]],
-				   ["mil_warning","Repairs",format["%1data\IconRepair.paa",MCC_path]],
-				   ["mil_warning","Fuel",format["%1data\IconFuel.paa",MCC_path]]
+				   [format ["['mil_objective',%1,'Attack',true] spawn MCC_fnc_interactionMarkerCreate",_pos],"Attack",format["%1mcc\interaction\data\attack_ca.paa",MCC_path]],
+				   [format ["['mil_objective',%1,'Defend',true] spawn MCC_fnc_interactionMarkerCreate",_pos],"Defend",format["%1mcc\interaction\data\defend_ca.paa",MCC_path]],
+				   [format ["['mil_destroy',%1,'Need CAS',true] spawn MCC_fnc_interactionMarkerCreate",_pos],"Close Air Support",format["%1mcc\interaction\data\cas_ca.paa",MCC_path]],
+				   [format ["['mil_destroy',%1,'Need Artillery',true] spawn MCC_fnc_interactionMarkerCreate",_pos],"Artillery",format["%1mcc\interaction\data\artillery_ca.paa",MCC_path]],
+				   [format ["['mil_pickup',%1,'Need Transport',true] spawn MCC_fnc_interactionMarkerCreate",_pos],"Transport",format["%1mcc\interaction\data\transport_ca.paa",MCC_path]],
+				   [format ["['mil_warning',%1,'Need Medic',true] spawn MCC_fnc_interactionMarkerCreate",_pos],"Medic",format["%1data\IconMed.paa",MCC_path]],
+				   [format ["['mil_warning',%1,'Need Ammo',true] spawn MCC_fnc_interactionMarkerCreate",_pos],"Ammo",format["%1data\IconAmmo.paa",MCC_path]],
+				   [format ["['mil_warning',%1,'Need Repairs',true] spawn MCC_fnc_interactionMarkerCreate",_pos],"Repairs",format["%1data\IconRepair.paa",MCC_path]],
+				   [format ["['mil_warning',%1,'Need Fuel',true] spawn MCC_fnc_interactionMarkerCreate",_pos],"Fuel",format["%1data\IconFuel.paa",MCC_path]]
 				 ];
 
 		_layer = 1;
 	};
+
+	case (_ctrlData == "build"): {
+		_path = "\A3\ui_f\data\map\markers\military\";
+		_array = [
+				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
+				   [format["['fob',%1] spawn MCC_fnc_initConstract",_pos],"Forward Outpost","\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"],
+				   [format["['bunker',%1] spawn MCC_fnc_initConstract",_pos],"Small Bunker","\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa"],
+				   [format["['wall',%1] spawn MCC_fnc_initConstract",_pos],"Bag Fence","\A3\ui_f\data\map\mapcontrol\Stack_CA.paa"],
+				   [format["['hmg',%1] spawn MCC_fnc_initConstract",_pos],"HMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa"],
+				   [format["['gmg',%1] spawn MCC_fnc_initConstract",_pos],"GMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_GMG_CA.paa"],
+				   [format["['at',%1] spawn MCC_fnc_initConstract",_pos],"AT Pit","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AT_CA.paa"],
+				   [format["['aa',%1] spawn MCC_fnc_initConstract",_pos],"AA Pit","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AA_CA.paa"],
+				   [format["['mortar',%1] spawn MCC_fnc_initConstract",_pos],"Mortar Pit","\A3\Static_f\Mortar_01\data\UI\Mortar_01_ca.paa"]
+				 ];
+
+		_layer = 1;
+	};
+
+	case (_ctrlData in ["gear"]): {
+		_array = [
+					 ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
+					 ["[(_this select 0),'uniform'] spawn MCC_fnc_interactSelfClicked","Uniform",format ["%1mcc\roleSelection\data\ui\uniform_ca.paa", MCC_path]],
+					 ["[(_this select 0),'weapon'] spawn MCC_fnc_interactSelfClicked","Weapon",format ["%1mcc\roleSelection\data\ui\primaryweapon_ca.paa", MCC_path]]
+				 ];
+
+		_layer = 1;
+	};
+
+	case (_ctrlData in ["uniform"]): {
+		_array = [
+					 ["[(missionNamespace getVariable ['MCC_interactionLayer_1',[]]),2] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]]
+				 ];
+
+		if (isNull(player getVariable ["MCC_playerAttachedGearItem",objNull])) then {
+			{
+				if (_x in magazines player) then {
+					_array pushBack [format ["['%1',true] spawn MCC_fnc_attachItemUniform",_x], format ["%1",getText(configFile >> "cfgMagazines" >> _x >> "displayname")], getText(configFile >> "cfgMagazines" >> _x >> "picture")];
+				};
+			} forEach ["Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue","B_IR_Grenade","O_IR_Grenade","I_IR_Grenade"];
+		} else {
+			_array pushBack ["['',false] spawn MCC_fnc_attachItemUniform","Detach", "\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"];
+		};
+
+		_layer = 2;
+	};
+
+	case (_ctrlData in ["weapon"]): {
+		_array = [
+					 ["[(missionNamespace getVariable ['MCC_interactionLayer_1',[]]),2] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
+					 ["[(_this select 0),'CowsSlot'] spawn MCC_fnc_interactSelfClicked","Optics",format ["%1mcc\roleSelection\data\ui\itemoptic_ca.paa", MCC_path]],
+					 ["[(_this select 0),'PointerSlot'] spawn MCC_fnc_interactSelfClicked","Rails",format ["%1mcc\roleSelection\data\ui\itemacc_ca.paa", MCC_path]],
+					 ["[(_this select 0),'MuzzleSlot'] spawn MCC_fnc_interactSelfClicked","Muzzle",format ["%1mcc\roleSelection\data\ui\itemmuzzle_ca.paa", MCC_path]],
+					 ["[(_this select 0),'UnderBarrelSlot'] spawn MCC_fnc_interactSelfClicked","Bipod",format ["%1mcc\roleSelection\data\ui\itembipod_ca.paa", MCC_path]]
+				 ];
+
+		_layer = 2;
+	};
+
+	case (_ctrlData in ["CowsSlot","PointerSlot","MuzzleSlot","UnderBarrelSlot"]): {
+		private ["_items","_assignedItems"];
+		_assignedItems = [];
+		_array = [
+					 ["[(missionNamespace getVariable ['MCC_interactionLayer_2',[]]),3] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]]
+				 ];
+
+		_items = getArray (configFile >> "CfgWeapons" >> primaryWeapon player >> "WeaponSlotsInfo" >> _ctrlData >> "compatibleItems");
+
+		if (((primaryWeaponItems player) select (["MuzzleSlot","PointerSlot","CowsSlot","UnderBarrelSlot"] find _ctrlData))=="") then {
+			{
+				//Only god knows why BI is on inconsistante with config files one weapon it is an array the the other it isn't even a config
+				if (tolower _x in _items || _x in _items) then {
+					_assignedItems pushBack _x;
+					_array pushBack [format ["['%1',true,'%2'] spawn MCC_fnc_attachItemWeapons",_x,_ctrlData], format ["%1",getText(configFile >> "CfgWeapons" >> _x >> "displayname")], getText(configFile >> "CfgWeapons" >> _x >> "picture")];
+				} else {
+					if (((getNumber(configFile >> "CfgWeapons" >> primaryWeapon player >> "WeaponSlotsInfo" >> _ctrlData >> "compatibleItems" >> _x))>0)  && !(_x in _assignedItems)) then {
+						_assignedItems pushBack _x;
+						_array pushBack [format ["['%1',true,'%2'] spawn MCC_fnc_attachItemWeapons",_x,_ctrlData], format ["%1",getText(configFile >> "CfgWeapons" >> _x >> "displayname")], getText(configFile >> "CfgWeapons" >> _x >> "picture")];
+					};
+				};
+			} forEach (items player);
+		} else {
+			_array pushBack [format ["['',false,'%1'] spawn MCC_fnc_attachItemWeapons",_ctrlData],"Detach", "\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"];
+		};
+
+		_layer = 3;
+	};
 };
 
 [_array,_layer] call MCC_fnc_interactionsBuildInteractionUI;
-	/*
-
-	case (_ctrlData == "support"): {
-		MCC_interactionMenu1 ctrlShow false;
-		MCC_interactionMenu2 ctrlShow false;
-
-		_child =  MCC_interactionMenu1;
-		_path = "\A3\ui_f\data\map\markers\military\";
-		_array = [
-				   ["mil_destroy","Need CAS",format["%1destroy_CA.paa",_path]],
-				   ["mil_pickup","Need Transport",format["%1pickup_CA.paa",_path]],
-				   ["mil_objective","Need Area Attack",format["%1objective_CA.paa",_path]],
-				   ["mil_marker","Need Support",format["%1marker_CA.paa",_path]],
-				   ["mil_warning","Need Medic",format["%1warning_CA.paa",_path]],
-				   ["mil_warning","Need Ammo",format["%1warning_CA.paa",_path]],
-				   ["mil_warning","Need Repairs",format["%1warning_CA.paa",_path]],
-				   ["mil_warning","Need Fuel",format["%1warning_CA.paa",_path]]
-				 ];
-	};
-
-	//Menu - support selected
-	case (_ctrlData in ["mil_destroy","mil_pickup","mil_objective","mil_marker","mil_warning"]): {
-		_array = [];
-		_text = ["Need CAS","Need Transport","Need Area attack","Need Support","Need Medic","Need Ammo","Need Repairs","Need Fuel"] select _index;
-
-		if (_ctrlData in ["mil_warning","mil_pickup"]) then {_pos = getpos player};
-
-		if (_pos distance player < 3000) then {
-			//Create marker
-			_markerName = (getplayerUID player) + (uinamespace getVariable "MCC_interactionMenu1Data") + str floor time;
-			_path = "";
-
-			private ["_radioSelf","_radioGlobal","_type"];
-
-			switch (_text) do {
-			    case "Need CAS": {
-			    	_radioSelf = "SentSupportRequestRGCASBombing";
-			    	_radioGlobal = if (side player == west) then {format["mp_groundsupport_01_casrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_casrequested_IHQ_%1",floor random 3]};
-			    };
-
-			    case "Need Transport": {
-			    	_radioSelf = "SentSupportRequestRGTransport";
-			    	_radioGlobal = if (side player == west) then {format["mp_groundsupport_01_transportrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_transportrequested_IHQ_%1",floor random 3]};
-			    };
-
-			    case "Need Area attack": {
-			    	_radioSelf = "SentSupportRequestRGArty";
-			    	_radioGlobal = if (side player == west) then {format["mp_groundsupport_01_casrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_casrequested_IHQ_%1",floor random 3]};
-			    };
-
-			    case "Need Medic": {
-			    	_radioSelf = "SentSupportAskHeal";
-			    	_radioGlobal = if (side player == west) then {format["mp_groundsupport_01_slingloadrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_slingloadrequested_IHQ_%1",floor random 3]};
-			    };
-
-			    case "Need Ammo": {
-			    	_radioSelf = "SentSupportAskRearm";
-			    	_radioGlobal = if (side player == west) then {format["mp_groundsupport_01_slingloadrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_slingloadrequested_IHQ_%1",floor random 3]};
-			    };
-
-			    case "Need Repairs": {
-			    	_radioSelf = "SentSupportAskRepair";
-			    	_radioGlobal = if (side player == west) then {format["mp_groundsupport_01_slingloadrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_slingloadrequested_IHQ_%1",floor random 3]};
-			    };
-
-			    case "Need Fuel": {
-			    	_radioSelf = "SentSupportAskRefuel";
-			    	_radioGlobal = if (side player == west) then {format["mp_groundsupport_01_slingloadrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_slingloadrequested_IHQ_%1",floor random 3]};
-			    };
-
-			    default {
-			     	_radioSelf = "SentSupportRequestRGSupplyDrop";
-			    	_radioGlobal = if (side player == west) then {format["mp_groundsupport_01_slingloadrequested_BHQ_%1",floor random 3]} else {format["mp_groundsupport_01_slingloadrequested_IHQ_%1",floor random 3]};
-			    };
-			};
-
-			player globalRadio _radioSelf;
-
-			//broadcast
-			[[player,_radioGlobal] ,"MCC_fnc_radioSupport", playerside,false] call BIS_fnc_MP;
-
-			[[_markerName, _path, _pos, uinamespace getVariable "MCC_interactionMenu1Data", _text, time, "default"] ,"MCC_fnc_PDAcreatemarker", playerside,false] call BIS_fnc_MP;
-		} else {
-			player globalRadio "SentCommandFailed";
-		};
-	};
-
-	case (_ctrlData == "build"): {
-		MCC_interactionMenu1 ctrlShow false;
-		MCC_interactionMenu2 ctrlShow false;
-
-		_child =  MCC_interactionMenu1;
-		_path = "\A3\ui_f\data\map\markers\military\";
-		_array = [
-				   ["fob","Forward Outpost","\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"],
-				   ["bunker","Small Bunker","\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa"],
-				   ["wall","Bag Fence","\A3\ui_f\data\map\mapcontrol\Stack_CA.paa"],
-				   ["hmg","HMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa"],
-				   ["gmg","GMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_GMG_CA.paa"],
-				   ["at","AT Pit","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AT_CA.paa"],
-				   ["aa","AA Pit","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AA_CA.paa"],
-				   ["mortar","Mortar Pit","\A3\Static_f\Mortar_01\data\UI\Mortar_01_ca.paa"]
-				 ];
-	};
-
-	case (_ctrlData in ["fob","bunker","hmg","gmg","at","aa","mortar","wall"]): {
-		_conType = uinamespace getVariable "MCC_interactionMenu1Data";
-		[_conType,_pos] spawn MCC_fnc_initConstract;
-	};
-
-	//Open SQL PDA
-	case (_ctrlData == "sqlpda"): {
-		MCC_interactionMenu1 ctrlShow false;
-		MCC_interactionMenu2 ctrlShow false;
-
-		_null = [nil,nil,nil,nil,3] execVM format["%1mcc\dialogs\mcc_PopupMenu.sqf",MCC_path];
-	};
-
-	//Rally Point
-	case (_ctrlData == "rallypoint"): {
-		MCC_interactionMenu1 ctrlShow false;
-		MCC_interactionMenu2 ctrlShow false;
-
-		[player,player,nil] execVM format ["%1mcc\general_scripts\respawnTents\DeployRespawnTents.sqf",MCC_path];
-	};
-
-	//Open Commander Console
-	case (_ctrlData == "commander"): {
-		MCC_interactionMenu1 ctrlShow false;
-		MCC_interactionMenu2 ctrlShow false;
-
-		_null = [nil,nil,nil,nil,1] execVM format["%1mcc\dialogs\mcc_PopupMenu.sqf",MCC_path];
-	};
-
-	//Menu - gear
-	case (_ctrlData in ["gear"]): {
-		MCC_interactionMenu1 ctrlShow false;
-		MCC_interactionMenu2 ctrlShow false;
-
-		_child =  MCC_interactionMenu1;
-		_array = [];
-		{
-			if (_x in magazines player) then {
-				_array pushBack [_x, format ["%1",getText(configFile >> "cfgMagazines" >> _x >> "displayname")], getText(configFile >> "cfgMagazines" >> _x >> "picture")];
-			};
-		} forEach ["Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue","B_IR_Grenade","O_IR_Grenade","I_IR_Grenade"];
-	};
-
-	case (_ctrlData in ["Chemlight_green","Chemlight_red","Chemlight_yellow","Chemlight_blue","B_IR_Grenade","O_IR_Grenade","I_IR_Grenade"]): {
-		MCC_interactionMenu1 ctrlShow false;
-		MCC_interactionMenu2 ctrlShow false;
-
-		player removeMagazine _ctrlData;
-		_ammo = getText(configFile >> "cfgMagazines" >> _ctrlData >> "ammo");
-		_item = _ammo createVehicle [0,0,0];
-    	_item attachTo [player, [-0.05, 0, .09], "rightshoulder"];
-    	player setVariable ["MCC_playerAttachedGearItem",_item];
-    	player setVariable ["MCC_playerAttachedGearItemClass",_ctrlData];
-	};
-
-	case (_ctrlData == "detach"): {
-		_item = (player getVariable ["MCC_playerAttachedGearItem",objNull]);
-		detach _item;
-		_item setPos [-999,-999,-999];
-		sleep 1;
-		deleteVehicle _item;
-		player addMagazine (player getVariable ["MCC_playerAttachedGearItemClass",""]);
-	};
-};
-/*
-//Reveal
-if (!isnil "_child") then {
-	_child ctrlShow true;
-	_child ctrlSetPosition [_posX,_posY,0.12 * safezoneW, ((count _array)) * (0.025* safezoneH)];
-	_child ctrlCommit 0;
-
-	_child ctrlRemoveAllEventHandlers "LBSelChanged";
-	_comboBox = _child;
-	lbClear _comboBox;
-	{
-		_class			= _x select 0;
-		_displayname 	= _x select 1;
-		_pic 			= _x select 2;
-		_index 			= _comboBox lbAdd _displayname;
-		if (!isnil "_pic") then {_comboBox lbSetPicture [_index, _pic]};
-		_comboBox lbSetData [_index, _class];
-		if (count _x > 3) then {_comboBox lbSetColor [_index, _x select 3]};
-	} foreach _array;
-
-	_child ctrlAddEventHandler ["LBSelChanged","_this spawn MCC_fnc_interactSelfClicked"];
-};

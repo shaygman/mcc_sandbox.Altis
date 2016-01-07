@@ -4,6 +4,8 @@ Change log r19:
 - Changed: Moved to inidbi2 - local db files for each mission - TODO WIKI
 - Changed: Removed inidbi2 dependency- persistant data will be saved to the server profile using BI profile name space - Still recommand using IniDB2 as it more robust.
 - Changed: Total reworked the Role Selection UI and functionality loadouts are not inherates from config files to be- TODO WIKI
+- Changed: Total reworked Interaction layour from list to a rose dial menu - TODO WIKI
+- Added: From MCC interaction mount/dismount weapons attachments with the proper animations doing so. 
 - Added: Start Location modules spawn options (none/teleport/halo/paradrop) for each individual spawn point. 
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
 - Added: Resupply option to FOB.
@@ -29,6 +31,7 @@ Change log r19:
 - Fixed: MCC_makr_arrya_group error on server. 
 
 TODO - mission templates, test dedicated
+TODO - Commander console UI
 TODO - mount/dismount attachments - action menu
 
 Change log r18:
