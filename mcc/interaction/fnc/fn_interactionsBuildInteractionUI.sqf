@@ -16,6 +16,7 @@ playSound "click";
 //Create dialog
 _ok = createDialog "MCC_INTERACTION_MENU";
 waituntil {dialog};
+
 _disp = uiNamespace getVariable ["MCC_INTERACTION_MENU",displayNull];
 if (isNull _disp || count _actions <= 0) exitWith {};
 
@@ -47,7 +48,7 @@ _ctrl ctrlCommit 0.1;
 			_ctrl ctrlSetPosition [(_cPos select 0)-_width, _cPos select 1, _width*3,  _hight*3];
 			_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["%1",(_x select 0)]];
 			_ctrl ctrlSetTooltip "Back";
-			_ctrl ctrlCommit 0.1;
+			_ctrl ctrlCommit 0;
 		} else {
 			_buttonCtrlGroup = _disp ctrlCreate ["RscControlsGroupNoScrollbars",111 + _foreachindex];
 			_buttonCtrlGroup ctrlSetPosition [(_cPos select 0), (_cPos select 1), 0,  0];

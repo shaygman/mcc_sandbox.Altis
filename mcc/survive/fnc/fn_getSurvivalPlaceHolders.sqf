@@ -28,4 +28,6 @@ for "_i" from 0 to (count _cfgClass -1) do {
 		_return pushBack _cfgName;
 	};
 };
+
+missionNamespace setVariable ["MCC_SurvivalPlaceHoldersObjects",_return];
 _return;

@@ -7,8 +7,9 @@ _suspect 	= _this select 0;
 //if ((MCC_isACE && MCC_isMode)) exitWith {};
 
 disableSerialization;
-
-if (dialog || vehicle player != player) exitWith {};
+if (missionNamespace getVariable ["MCC_interactionKey_down",false]) exitWith {MCC_interactionKey_holding = false};
+MCC_interactionKey_down = true;
+if (dialog || vehicle player != player || missionNamespace getvariable ["MCC_interactionKey_holding",false]) exitWith {};
 
 _array = [["closeDialog 0",format ["<t size='0.8' align='center' color='#ffffff'>%1</t>",if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect}],""]];
 

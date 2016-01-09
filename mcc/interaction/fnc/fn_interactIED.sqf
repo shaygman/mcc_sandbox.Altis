@@ -23,28 +23,22 @@ if ((_ied getVariable ["MCC_isIEDMiniGame",false]) && (_ied getvariable ["armed"
 	player setVariable ["MCC_interactionActive",false];
 };
 
-if (_men distance _ied <4) then
-{
+if (_men distance _ied <4) then {
 	disableSerialization;
 
 	player setVariable ["MCC_interactionActive",true];
 	_ied setVariable ["MCC_isInteracted",true,true];
 
 	//Open dialog
-	if !(MCC_interactionKey_holding) exitWith
-	{
-		MCC_fnc_IEDMenuClicked =
-		{
+	if !(MCC_interactionKey_holding) exitWith {
+		MCC_fnc_IEDMenuClicked = {
 			private ["_ctrl","_index","_ctrlData","_ied"];
 			disableSerialization;
 
-			_ctrl 		= _this select 0;
-			_index 		= _this select 1;
-			_ctrlData	= _ctrl lbdata _index;
+			_ctrlData	= _this select 0;
 			_ied = player getVariable ["ied",objnull];
 
-			if (_ctrlData == "charge" && (({_x == MCC_CHARGE} count magazines player)>0)) then
-			{
+			if (_ctrlData == "charge" && (({_x == MCC_CHARGE} count magazines player)>0)) then {
 				closedialog 0;
 				player removeMagazine MCC_CHARGE;
 				["Placing Charge",10] call MCC_fnc_interactProgress;
@@ -56,35 +50,25 @@ if (_men distance _ied <4) then
 												((_this select 3) select 1) setvariable ["iedTrigered",true,true];
 											}, [_c4,_ied]];
 			}
-			else
-			{
+			else {
 				closedialog 0;
 			};
 		};
 
-		_ok = createDialog "MCC_INTERACTION_MENU";
+		[[["['charge'] spawn MCC_fnc_IEDMenuClicked",format ["Place Charge (%1)",{_x == MCC_CHARGE} count magazines player],getText(configFile >> "CfgMagazines">> MCC_CHARGE >> "picture")]],0] call MCC_fnc_interactionsBuildInteractionUI;
+
 		waituntil {dialog};
-		_ctrl = ((uiNameSpace getVariable "MCC_INTERACTION_MENU") displayCtrl 0);
-		_ctrl ctrlSetPosition [0.4,0.4,0.15 * safezoneW, 0.05* safezoneH];
-		_ctrl ctrlCommit 0;
 
-		_ctrl ctrlRemoveAllEventHandlers "LBSelChanged";
-
-		lbClear _ctrl;
-		{
-			_class			= _x select 0;
-			_displayname 	= _x select 1;
-			_pic 			= _x select 2;
-			_index 			= _ctrl lbAdd _displayname;
-			_ctrl lbSetPicture [_index, _pic];
-			_ctrl lbSetData [_index, _class];
-		} foreach [["charge",format ["Place Charge (%1)",{_x == MCC_CHARGE} count magazines player],getText(configFile >> "CfgMagazines">> MCC_CHARGE >> "picture")],["close","Close Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"]];
-		_ctrl lbSetCurSel 0;
+		_ied spawn {
+			while {dialog} do {
+				if (_this distance player > 7) exitWith {};
+				sleep 0.1;
+			};
+			closedialog 0;
+		};
 
 		player setVariable ["ied",_ied];
-		_ctrl ctrlAddEventHandler ["LBSelChanged","_this spawn MCC_fnc_IEDMenuClicked"];
 		waituntil {!dialog};
-		sleep 1;
 		player setVariable ["MCC_interactionActive",false];
 	};
 
@@ -92,37 +76,12 @@ if (_men distance _ied <4) then
 	_break = false;
 
 	//Create progress bar
-	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutRsc ["MCC_interactionPB", "PLAIN"];
-	_ctrl = ((uiNameSpace getVariable "MCC_interactionPB") displayCtrl 2);
-	_ctrl ctrlSetText "Disarming";
-	_ctrl = ((uiNameSpace getVariable "MCC_interactionPB") displayCtrl 1);
-
-	for [{_x=1},{_x<_disarmTime},{_x=_x+0.1}]  do
-	{
-
-		_ctrl progressSetPosition (_x/_disarmTime);
-		if ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic") then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
-		if ((_ied distance _men) > 5 || !MCC_interactionKey_holding) then {_x = _disarmTime; _break = true; hintSilent ""}; //check if still close to the IED
-		sleep 0.1;
-	};
-
-	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
-	//player switchMove "AmovPknlMstpSlowWrflDnon";
-	player playMoveNow "AmovPknlMstpSlowWrflDnon";
-
-	//If moved to far from the IED
-	if (_break) exitwith
-	{
-		sleep 0.5;
-		player setVariable ["MCC_interactionActive",false];
-		_ied setVariable ["MCC_isInteracted",false,true];
-	};
+	_success = ["Disarming",_disarmTime,_ied] call MCC_fnc_interactProgress;
+	if !(_success) exitWith {};
 
 	//If it is a bomb expert ;)
-	if (_isEngineer) then
-	{
-		if (_rand > 0.20) then
-		{
+	if (_isEngineer) then {
+		if (_rand > 0.20) then {
 			hint "disarmed";
 			[[[netid _men,_men], format ["disarm%1", (floor random 7)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 
@@ -131,17 +90,12 @@ if (_men distance _ied <4) then
 			_ied setvariable ["armed",false,true];
 			player setVariable ["MCC_interactionActive",false];
 			_ied setVariable ["MCC_isInteracted",false,true];
-		}
-		else
-		{
-			if (_rand >0.05) then
-			{
+		} else {
+			if (_rand >0.05) then {
 				hint "Fail to disarm";
 
 				[[[netid _men,_men], format ["disarmfail%1", (floor random 3)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-			}
-			else
-			{
+			} else {
 				hint "Critical fail start runing";
 
 				[[[netid _men,_men], format ["disarmcrit%1", (floor random 2)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
@@ -153,27 +107,19 @@ if (_men distance _ied <4) then
 				_ied setvariable ["iedTrigered",true,true];
 			};
 		}
-	}
-	else
-	{
+	} else {
 		//If it isn't a bomb expert <*Kaboom*>
-		if (_rand > 0.70) then
-		{
+		if (_rand > 0.70) then {
 			hint "disarmed";
 			[[[netid _men,_men], format ["disarm%1", (floor random 7)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 
 			sleep 1;
 			_ied setvariable ["armed",false,true];
-		}
-		else
-		{
+		} else {
 			hint "Fail to disarm";
-			if (_rand >0.3) then
-			{
+			if (_rand >0.3) then {
 				[[[netid _men,_men], format ["disarmfail%1", (floor random 3)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-			}
-			else
-			{
+			} else {
 				hint "Critical fail start runing";
 
 				[[[netid _men,_men], format ["disarmcrit%1", (floor random 2)+1]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;

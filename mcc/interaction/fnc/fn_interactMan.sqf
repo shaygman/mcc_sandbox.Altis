@@ -14,8 +14,7 @@ player setVariable ["MCC_interactionActive",true];
 if !(isNull (player getVariable ["mcc_draggedObject", objNull])) then {[] call MCC_fnc_releaseObject};
 
 //draw interaction text
-if (!MCC_interactionKey_holding && ((_suspect getVariable ["MCC_disarmed",false]) || ((_suspect getVariable ["MCC_neutralize",false])) && !(_suspect in units group player))) then
-{
+if (!MCC_interactionKey_holding && ((_suspect getVariable ["MCC_disarmed",false]) || ((_suspect getVariable ["MCC_neutralize",false])) && !(_suspect in units group player))) then {
 	_pos = getpos _suspect;
 	_pos set [2, (_pos select 2) + 1.5];
 	missionNameSpace setVariable ["MCC_interactionObjects", [[_pos, format ["Hold %1 to interact",_keyName]]]];
@@ -25,22 +24,20 @@ if (!MCC_interactionKey_holding && ((_suspect getVariable ["MCC_disarmed",false]
 
 if (MCC_interactionKey_holding && (player distance  _suspect < 2) && !dialog) exitWith {
 	_suspectName = if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect};
-	_array = [["",format ["-= %1 =-",_suspectName],""],
-			  ["zip","Restrain",format ["%1data\iconHandcuffs.paa",MCC_path]],
-			  ["follow","Order Around",format ["%1data\iconOrder.paa",MCC_path]],
-			  ["pickKit","Pick Up Kit",format ["%1data\IconAmmo.paa",MCC_path]],
-			  ["medic","Examine",format ["%1data\IconMed.paa",MCC_path]],
-			  ["drag","Drag",format ["%1data\IconDrag.paa",MCC_path]]];
+	_array = [["closeDialog 0","<t size='1' align='center' color='#ffffff'>"+_suspectName+"</t>",""],
+			  ["['zip'] spawn MCC_fnc_interactManClicked","Restrain",format ["%1data\iconHandcuffs.paa",MCC_path]],
+			  ["['follow'] spawn MCC_fnc_interactManClicked","Order Around",format ["%1data\iconOrder.paa",MCC_path]],
+			  ["['pickKit'] spawn MCC_fnc_interactManClicked","Pick Up Kit",format ["%1data\IconAmmo.paa",MCC_path]],
+			  ["['medic'] spawn MCC_fnc_interactManClicked","Examine",format ["%1data\IconMed.paa",MCC_path]],
+			  ["['drag'] spawn MCC_fnc_interactManClicked","Drag",format ["%1data\IconDrag.paa",MCC_path]]];
 
 	//Load wounded
 	private ["_nearVehicles","_vehicle","_vehicleName"];
 	_nearVehicles = [];
-	if (_suspect getVariable ["MCC_medicUnconscious",false] && alive _suspect) then
-	{
+	if (_suspect getVariable ["MCC_medicUnconscious",false] && alive _suspect) then {
 		_nearVehicles = (_suspect nearObjects ["Helicopter",5]) + (_suspect nearObjects ["LandVehicle",5]);
 
-		for [{_x=0},{_x<count _nearVehicles},{_x=_x+1}] do
-		{
+		for [{_x=0},{_x<count _nearVehicles},{_x=_x+1}] do {
 			_vehicle = _nearVehicles select _x;
 			if ((_vehicle emptyPositions "cargo")==0 || ((vectorUp _vehicle) select 2) <=0 || locked _vehicle >1) then {_nearVehicles set [_x,-1]};
 		};
@@ -50,7 +47,7 @@ if (MCC_interactionKey_holding && (player distance  _suspect < 2) && !dialog) ex
 
 	{
 		_vehicleName = getText (configfile >> "CfgVehicles" >> typeof _x >> "displayName");
-		_array set [count _array, [format ["load_%1",_foreachIndex],format ["Load into %1",_vehicleName],"\A3\ui_f\data\igui\cfg\actions\getincargo_ca.paa"]];
+		_array pushBack [format ["['load_%1'] spawn MCC_fnc_interactManClicked",_foreachIndex],format ["Load into %1",_vehicleName],"\A3\ui_f\data\igui\cfg\actions\getincargo_ca.paa"];
 	} forEach _nearVehicles;
 
 	//Manage array
@@ -62,30 +59,20 @@ if (MCC_interactionKey_holding && (player distance  _suspect < 2) && !dialog) ex
 
 	_array = _array - [-1];
 
-	 _array pushBack ["close","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"];
-	if (count _array == 2) exitWith {};
-	_ok = createDialog "MCC_INTERACTION_MENU";
+	//Open dialog
+	if (count _array == 1) exitWith {player setVariable ["MCC_interactionActive",false]};
+	[_array,0] call MCC_fnc_interactionsBuildInteractionUI;
 	waituntil {dialog};
 
-	_ctrl = ((uiNameSpace getVariable "MCC_INTERACTION_MENU") displayCtrl 0);
-	_ctrl ctrlSetPosition [0.4,0.4,0.15 * safezoneW, 0.025* count _array* safezoneH];
-	_ctrl ctrlCommit 0;
-
-	_ctrl ctrlRemoveAllEventHandlers "LBSelChanged";
-
-	lbClear _ctrl;
-	{
-		_class			= _x select 0;
-		_displayname 	= _x select 1;
-		_pic 			= _x select 2;
-		_index 			= _ctrl lbAdd _displayname;
-		_ctrl lbSetPicture [_index, _pic];
-		_ctrl lbSetData [_index, _class];
-	} foreach _array;
-	_ctrl lbSetCurSel 0;
+	_suspect spawn {
+		while {dialog} do {
+			if (_this distance player > 7) exitWith {};
+			sleep 0.1;
+		};
+		closedialog 0;
+	};
 
 	player setVariable ["interactWith",[_suspect]];
-	_ctrl ctrlAddEventHandler ["LBSelChanged","_this spawn MCC_fnc_interactManClicked"];
 	waituntil {!dialog};
 	player setVariable ["MCC_interactionActive",false];
 };

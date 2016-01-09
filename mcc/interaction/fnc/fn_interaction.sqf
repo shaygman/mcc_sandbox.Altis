@@ -1,11 +1,13 @@
 //==================================================================MCC_fnc_interaction=========================================================================================
 // Interaction perent
 //==============================================================================================================================================================================
-private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePlayer","_airports","_counter","_searchArray","_sides",
-		 "_positionStart","_positionEnd","_pointIntersect","_break","_interactiveObjects","_objArray","_keyName","_key","_text"];
+private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePlayer","_airports","_counter","_searchArray","_sides","_positionStart","_positionEnd","_pointIntersect","_break","_interactiveObjects","_objArray","_keyName","_key","_text","_objects"];
 disableSerialization;
 _break = false;
 _text = "";
+
+MCC_interactionKey_holding = _this select 0;
+
 
 //Find out the key
 if (MCC_isCBA) then {
@@ -25,19 +27,16 @@ if (MCC_isCBA) then {
 	_keyName = format ["%1%2",_text,keyName (_key select 3)];
 };
 
-//Do not fire while inside a dialog
-if (dialog) exitWith {};
-sleep 0.3;
-MCC_interactionKey_holding =  if (MCC_interactionKey_down) then {true} else {false};
 //Fails safe if ui get stuck
 if (time > (player getVariable ["MCC_interactionActiveTime",time-5])+10) then {player setVariable ["MCC_interactionActive",false]};
 
-_objArray = [] call MCC_fnc_getSurvivalPlaceHolders;
-
 //If we are busy quit
-if ((player getVariable ["MCC_interactionActive",false]) || (time < (player getVariable ["MCC_interactionActiveTime",time-5])+1)) exitWith {};
-player setVariable ["MCC_interactionActive",true];
+if ((player getVariable ["MCC_interactionActive",false]) || (time < (player getVariable ["MCC_interactionActiveTime",time-5])+0.3) || dialog) exitWith {};
+
 player setVariable ["MCC_interactionActiveTime",time];
+
+//Get objects for survival
+_objArray = missionNamespace getVariable ["MCC_SurvivalPlaceHoldersObjects",[] call MCC_fnc_getSurvivalPlaceHolders];
 
 //Outside of vehicle
 if (vehicle player == player) then {
@@ -45,9 +44,18 @@ if (vehicle player == player) then {
 	player reveal _target;
 
 	if (_target isKindof "weaponHolderSimulated") then {
+		_objects = _target nearObjects ["man", 5];
 		{
-			if (_x distance _target < 2) exitWith {_target = _x};
-		} foreach allDeadMen;
+			if (alive _x) then {_objects set [_foreachIndex,-1]};
+		} foreach _objects;
+		_objects = _objects - [-1];
+
+		{
+			_objects set [_forEachIndex, [_x distance _target, _x]];
+		} forEach _objects;
+		_objects sort true;
+
+		_target = (_objects select 0) select 1;
 	};
 
 	//Handle supply crate
@@ -60,15 +68,12 @@ if (vehicle player == player) then {
 	//Handle house
 	if ((_target isKindof "house" || _target isKindof "wall" || _target isKindof "AllVehicles" || _target isKindof "ReammoBox_F") && !(_target isKindof "CAManBase")) exitWith
 	{
-		//[_target] execvm "mcc\fnc\interaction\fn_interactDoor.sqf";
 		_null= [_target] call MCC_fnc_interactDoor
 	};
 
 	//Handle man
-	if (_target isKindof "CAManBase" && (player distance _target < 30)) exitWith
-	{
+	if (_target isKindof "CAManBase" && (player distance _target < 30)) exitWith {
 		_null= [_target, player,_keyName] call MCC_fnc_interactMan;
-		//_null= [_target,player,_keyName] execvm "mcc\fnc\interaction\fn_interactMan.sqf";
 		player setVariable ["MCC_interactionActive",false];
 		_break = true;
 	};
@@ -85,7 +90,6 @@ if (vehicle player == player) then {
 			//IED
 			if (((_selected getVariable ["MCC_IEDtype",""]) == "ied") && !(_selected getVariable ["MCC_isInteracted",false])) then {
 				_null= [player,_selected] call MCC_fnc_interactIED;
-				//_null= [player,_selected] execvm "mcc\fnc\interaction\fn_interactIED.sqf";
 				_break = true;
 			};
 		};
@@ -104,41 +108,32 @@ if (vehicle player == player) then {
 			if ((({[_x , str _selected] call BIS_fnc_inString} count _objArray)>0) && (isNull attachedTo _selected)) then {
 				missionNameSpace setVariable ["MCC_interactionObjects", [[getpos _selected, format ["Hold %1 to search",_keyName]]]];
 
-				//_null= [_selected] execvm "mcc\fnc\interaction\fn_interactObject.sqf";
 				[_selected] call MCC_fnc_interactObject;
 				_break = true;
-				//player setVariable ["MCC_interactionActive",false];
 			};
 		};
 	};
 
 	if (_break) exitWith {};
-}
-else
-{
-	MCC_fnc_vehicleCargoMenuClicked =
-	{
+} else {
+	if (!MCC_interactionKey_holding) exitWith {};
+
+	MCC_fnc_vehicleCargoMenuClicked = {
 		private ["_ctrl","_index","_ctrlData","_object","_animation","_phase","_door","_locked"];
 		disableSerialization;
 
-		_ctrl 		= _this select 0;
-		_index 		= _this select 1;
-		_ctrlData	= _ctrl lbdata _index;
+		_ctrlData	= param [0,"",[""]];
 		_object		= vehicle player;
 
-		closeDialog 0;
-		switch (true) do
-		{
+		switch (true) do {
 			case (_ctrlData in ["commander","driver"]) : {player action [format ["moveTo%1",_ctrlData], _object]};
 			case (_ctrlData == "cargo") : {player action ["MoveToCargo", _object, (_object emptyPositions "cargo")-1]};
 			case (_ctrlData == "load") : {[player] call MCC_fnc_loadTruckUI};
 			case (_ctrlData == "dropOff") : {[] call MCC_fnc_requestDropOff};
-			case (["gunner",_ctrlData] call BIS_fnc_inString) :
-			{
+			case (["gunner",_ctrlData] call BIS_fnc_inString) : 	{
 				call compile format ["player action ['MoveToTurret',vehicle player,%1]",([_ctrlData,"[01234567890]"] call BIS_fnc_filterString)];
 			};
-			case (["ils" , _ctrlData] call BIS_fnc_inString) :
-			{
+			case (["ils" , _ctrlData] call BIS_fnc_inString) :	{
 				//find the right runway from the data we gave - we have to filter it
 				((player getVariable ["interactWith",[]]) select call compile ([_ctrlData,"1234567890"] call BIS_fnc_filterString)) call MCC_fnc_ilsChilds;
 			};
@@ -150,9 +145,11 @@ else
 	};
 
 	_vehiclePlayer = vehicle player;
-	_array 			= [];
+
 	_displayName 	= getText (configfile >> "CfgVehicles" >> typeof _vehiclePlayer >> "displayName");
 	_pic		 	= getText (configfile >> "CfgVehicles" >> typeof _vehiclePlayer >> "picture");
+
+	_array 			= [["closeDialog 0",_displayName,_pic]];
 
 	//Generic Vehicle action
 	_cargoUnits 	= assignedCargo _vehiclePlayer;
@@ -165,12 +162,11 @@ else
 		    ((vectorUp _vehiclePlayer) select 2) >0 &&
 			locked _vehiclePlayer <2) then
 			{
-				_locked = switch (_x) do
-							{
+				_locked = switch (_x) do {
 								case "driver": {if (lockedDriver _vehiclePlayer) then {true} else {false}};
 								default {false};
 							};
-				_array set [count _array, [_x,format ["Move to %1 sit",if (_vehiclePlayer isKindof "air" && _x == "driver") then {"pilot"} else {_x}],format ["\A3\ui_f\data\igui\cfg\actions\getin%1_ca.paa",_x]]];
+				_array pushBack [format ["['%1'] spawn MCC_fnc_vehicleCargoMenuClicked",_x],format ["Move to %1 sit",if (_vehiclePlayer isKindof "air" && _x == "driver") then {"pilot"} else {_x}],format ["\A3\ui_f\data\igui\cfg\actions\getin%1_ca.paa",_x]];
 			};
 	} foreach ["commander","driver","cargo"];
 
@@ -181,16 +177,14 @@ else
 	_path = [];
 	_i = 0;
 	_count 	= 0;
-	while {_i < (count _turrets)} do
-	{
+	while {_i < (count _turrets)} do {
 		private ["_turretIndex", "_thisTurret","_unit"];
 		_turretIndex 	= _turrets select _i;
 		_thisTurret 	= _path + [_turretIndex];
 		_unit 			= _vehiclePlayer turretUnit _thisTurret;
 
-		if ((isNull _unit || (!isNull _unit && !isPlayer _unit)) && !(_vehiclePlayer lockedTurret _thisTurret) && (locked _vehiclePlayer <2)) then
-		{
-			_array set [count _array, [format ["gunner%1",_thisTurret],format ["Move to %1",configName ((_entry >> "turrets") select _count)],"\A3\ui_f\data\igui\cfg\actions\getingunner_ca.paa"]];
+		if ((isNull _unit || (!isNull _unit && !isPlayer _unit)) && !(_vehiclePlayer lockedTurret _thisTurret) && (locked _vehiclePlayer <2)) then {
+			_array pushBack [format ["['gunner%1'] spawn MCC_fnc_vehicleCargoMenuClicked",_thisTurret],format ["Move to %1",configName ((_entry >> "turrets") select _count)],"\A3\ui_f\data\igui\cfg\actions\getingunner_ca.paa"];
 		};
 		_i = _i + 2;
 		_count = _count + 1;
@@ -199,24 +193,23 @@ else
 	//dropOff
 	if ((player in (assignedCargo  _vehiclePlayer)) && (player == leader player) && !isnull driver _vehiclePlayer  && locked _vehiclePlayer <2) then
 	{
-		_array set [count _array,["dropOff","Request Drop-off",_pic]];
+		_array pushBack ["['dropOff'] spawn MCC_fnc_vehicleCargoMenuClicked","Request Drop-off",_pic];
 	};
 
 	//Logistics
 	if ((typeof _vehiclePlayer in MCC_supplyTracks || (_vehiclePlayer isKindOf "helicopter" && ((getpos _vehiclePlayer) select 2) > 15)) && (player == driver _vehiclePlayer) && (speed _vehiclePlayer < 10) && (missionNamespace getVariable ["MCC_allowlogistics",true])) then
 	{
-		_array set [count _array,["load","Logistics",_pic]];
+		_array pushBack ["['load'] spawn MCC_fnc_vehicleCargoMenuClicked","Logistics",_pic];
 	};
 
 	//Artillery
 	if (getNumber (configfile >> "CfgVehicles" >> typeof _vehiclePlayer >> "artilleryScanner") == 1) then
 	{
-		_array set [count _array,["artillery","Artillery Computer",_pic]];
+		_array pushBack ["['artillery'] spawn MCC_fnc_vehicleCargoMenuClicked","Artillery Computer",_pic];
 	};
 
 	//MCC ILS
-	if ((_vehiclePlayer isKindOf "air") && (player == Driver _vehiclePlayer)) then
-	{
+	if ((_vehiclePlayer isKindOf "air") && (player == Driver _vehiclePlayer)) then {
 		_airports = [];
 		_counter = 0;
 		_searchArray = if (MCC_isMode) then {allMissionObjects "mcc_sandbox_moduleILS"} else {allMissionObjects "logic"};
@@ -235,12 +228,12 @@ else
 		if (player getVariable ["MCC_ILSAbort",true]) then
 		{
 			{
-				_array set [count _array,[format ["ils_%1",_foreachIndex],format ["Land %1",_x select 1],_pic]];
+				_array pushBack [format ["['ils_%1'] spawn MCC_fnc_vehicleCargoMenuClicked",_foreachIndex],format ["Land %1",_x select 1],_pic];
 			} foreach _airports;
 		}
 		else
 		{
-			_array set [count _array,["abort","Abort ILS",_pic]];
+			_array pushBack ["['abort'] spawn MCC_fnc_vehicleCargoMenuClicked","Abort ILS",_pic];
 		};
 
 		player setVariable ["interactWith",_airports];
@@ -260,37 +253,17 @@ else
 	};
 
 	//Taru pods
-	if ((_vehiclePlayer isKindOf "O_Heli_Transport_04_F") && (player == Driver _vehiclePlayer) && !isnull(_vehiclePlayer getVariable ["MCC_attachedPod",objnull])) then
-	{
-			_array set [count _array,["releasepod",format ["Drop %1",getText (configfile >> "CfgVehicles" >> typeof (_vehiclePlayer getVariable ["MCC_attachedPod",objnull]) >> "displayName")],_pic]];
+	if ((_vehiclePlayer isKindOf "O_Heli_Transport_04_F") && (player == Driver _vehiclePlayer) && !isnull(_vehiclePlayer getVariable ["MCC_attachedPod",objnull])) then {
+			_array pushBack ["['releasepod'] spawn MCC_fnc_vehicleCargoMenuClicked",format ["Drop %1",getText (configfile >> "CfgVehicles" >> typeof (_vehiclePlayer getVariable ["MCC_attachedPod",objnull]) >> "displayName")],_pic];
 	};
 
-	_array set [count _array,["close","Exit Menu","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"]];
-	_ok = createDialog "MCC_INTERACTION_MENU";
+	//Open dialog
+	if (count _array == 1) exitWith {player setVariable ["MCC_interactionActive",false]};
+	[_array,0] call MCC_fnc_interactionsBuildInteractionUI;
 	waituntil {dialog};
-
-	_ctrl = ((uiNameSpace getVariable "MCC_INTERACTION_MENU") displayCtrl 0);
-	_ctrl ctrlSetPosition [0.4,0.4,0.2 * safezoneW, 0.025* count _array* safezoneH];
-	_ctrl ctrlCommit 0;
-
-	_ctrl ctrlRemoveAllEventHandlers "LBSelChanged";
-
-	lbClear _ctrl;
-	{
-		_class			= _x select 0;
-		_displayname 	= _x select 1;
-		_pic 			= _x select 2;
-		_index 			= _ctrl lbAdd _displayname;
-		_ctrl lbSetPicture [_index, _pic];
-		_ctrl lbSetData [_index, _class];
-	} foreach _array;
-	_ctrl lbSetCurSel 0;
-
-	_ctrl ctrlAddEventHandler ["LBSelChanged","_this spawn MCC_fnc_vehicleCargoMenuClicked"];
 	waituntil {!dialog};
-
 };
-if !(_break) then
-{
+
+if !(_break) then {
 	player setVariable ["MCC_interactionActive",false];
 };

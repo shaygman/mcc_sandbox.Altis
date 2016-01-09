@@ -7,7 +7,8 @@ _up = _this select 0;
 if (_up) then {
 	MCC_interactionKey_down = false;
 	MCC_interactionKey_up = true;
-	MCC_interactionKey_holding = false
+	MCC_interactionKey_holding = false;
+	(uiNamespace getVariable ["MCC_INTERACTION_MENU",displayNull]) closeDisplay 1;
 } else {
 	MCC_interactionKey_down = true;
 	MCC_interactionKey_up = false;

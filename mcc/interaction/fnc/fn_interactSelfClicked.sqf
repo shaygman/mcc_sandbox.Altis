@@ -1,14 +1,10 @@
 //=========================================================MCC_fnc_interactSelfClicked==========================================================================================
 //==============================================================================================================================================================================
-private ["_ctrl","_ctrlData","_suspect","_ctrlIDC","_disp","_posX","_posY","_child","_array","_pos","_path","_layer"];
+private ["_ctrl","_ctrlData","_suspect","_child","_array","_pos","_path","_layer"];
 disableSerialization;
 
 _ctrl 		= _this select 0;
 _ctrlData	= param [1,"",[""]];
-_ctrlIDC 	= ctrlIDC _ctrl;
-_disp		= ctrlParent _ctrl;
-_posX		= ((ctrlposition _ctrl) select 0)+ ((ctrlposition _ctrl) select 2);
-_posY		= (ctrlposition _ctrl) select 1;
 _suspect = (player getVariable ["interactWith",[]]) select 0;
 
 _pos = screenToWorld [0.5,0.5];
@@ -47,8 +43,8 @@ switch (true) do {
 				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
 				   ["",_string,format ["%1data\IconPulse.paa",MCC_path],_color],
 				   ["[(_this select 0),'physical'] spawn MCC_fnc_interactSelfClicked","Physical Check",format ["%1data\IconPhysical.paa",MCC_path]],
-				   [format ["closeDialog 0;['bandage',%1] spawn MCC_fnc_medicUseItem",_suspect],format ["Bandages X %1", {_x == _bandage} count (_itemsPlayer)],_bandagePic],
-				   [format ["closeDialog 0;['heal',%1] spawn MCC_fnc_medicUseItem",_suspect],"Heal",_medkitPic]
+				   [format ["['bandage',%1] spawn MCC_fnc_medicUseItem",_suspect],format ["Bandages X %1", {_x == _bandage} count (_itemsPlayer)],_bandagePic],
+				   [format ["['heal',%1] spawn MCC_fnc_medicUseItem",_suspect],"Heal",_medkitPic]
 				 ];
 
 		if ( !alive _suspect) then {_array set [2,-1]};

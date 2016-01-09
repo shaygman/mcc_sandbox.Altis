@@ -31,8 +31,9 @@ Change log r19:
 - Fixed: MCC_makr_arrya_group error on server. 
 
 TODO - mission templates, test dedicated
+TODO - medic UI 
 TODO - Commander console UI
-TODO - mount/dismount attachments - action menu
+TODO - check whats up with take kit
 
 Change log r18:
 -= New IED Mini Game =-

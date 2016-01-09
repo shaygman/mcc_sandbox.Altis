@@ -20,9 +20,7 @@
 ["MCC", "interactionKey", ["Interaction", "Interact with objects/units in MCC"], {if (missionNameSpace getVariable ["MCC_interaction",false]) then {[false] call MCC_fnc_CBAInteractionKeybind}}, {[true] call MCC_fnc_CBAInteractionKeybind}, [219, [false,false,false]],false] call cba_fnc_addKeybind;
 
 //Self Interaction
-["MCC", "selfInteraction", ["Interaction Self", ""], {if ((missionNameSpace getVariable ["MCC_interaction",false]) && (player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false])) then {
-	/*[player] spawn MCC_fnc_interactSelf;true*/[player] execVM "mcc\interaction\fnc\fn_interactSelf.sqf";true
-	}}, {}, [219, [false,true,false]],false] call cba_fnc_addKeybind;
+["MCC", "selfInteraction", ["Interaction Self", ""], {if ((missionNameSpace getVariable ["MCC_interaction",false]) && (player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false])) then {[player] spawn MCC_fnc_interactSelf;true}}, {(uiNamespace getVariable ["MCC_INTERACTION_MENU",displayNull]) closeDisplay 1}, [219, [false,true,false]],false] call cba_fnc_addKeybind;
 
 //Vault
 ["MCC", "vaultOver", ["Climb Over", "Climb over obstacles"], {if ((player getVariable ["cpReady",true]) && !(player getvariable ["MCC_medicUnconscious",false]) && (missionNameSpace getVariable ["MCC_coverVault",true]) && !(player getVariable ["MCC_vaultOver",false]) && (player getVariable ["MCC_wallAhead",""]) != "") then {[] spawn MCC_fnc_vault;true}}, {}, [47, [false,false,true]],false] call cba_fnc_addKeybind;
