@@ -39,7 +39,7 @@ switch (true) do {
 
 		sleep 0.1;
 		//Open dialog
-		if (MCC_interactionKey_holding && _closed) exitWith {
+		if ((missionNamespace getVariable ["MCC_interactionKey_holding",false]) && _closed) exitWith {
 
 			_array = [["closeDialog 0","<t size='1' align='center' color='#ffffff'>Door</t>",""],
 			          ["['charge'] spawn MCC_fnc_DoorMenuClicked",format ["Place Breaching Charge (%1)",{_x == MCC_CHARGE} count magazines player],getText(configFile >> "CfgMagazines">> MCC_CHARGE >> "picture")],
@@ -149,7 +149,7 @@ switch (true) do {
 		};
 
 		//Open dialog
-		if (MCC_interactionKey_holding && ((side _object == civilian || (side _object getFriend side player)>0.6)) && !dialog && isNull (player getVariable ["mcc_draggedObject", objNull])) exitWith {
+		if ((missionNamespace getVariable ["MCC_interactionKey_holding",false]) && ((side _object == civilian || (side _object getFriend side player)>0.6)) && !dialog && isNull (player getVariable ["mcc_draggedObject", objNull])) exitWith {
 			//set options
 
 			_displayName = getText (configfile >> "CfgVehicles" >> typeof _object >> "displayName");

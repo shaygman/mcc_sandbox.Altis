@@ -99,7 +99,7 @@ if (tolower _ehType == "keydown") exitWith {
 					sleep 0.2;
 					MCC_interactionKey_holding = missionNamespace getVariable ["MCC_interactionOn",false];
 
-					[] spawn MCC_fnc_interaction
+					_null = [MCC_interactionKey_holding] spawn MCC_fnc_interaction
 				};
 			};
 		};

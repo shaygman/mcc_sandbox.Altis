@@ -62,6 +62,34 @@ _mccdialog = findDisplay mcc_playerConsole_IDD;
 MCC_Console1Open = true;
 _evacVehicles = missionNamespace getvariable [format ["MCC_evacVehicles_%1",playerSide],[]];
 
+{
+	(_mccdialog displayCtrl _x) ctrlAddEventHandler ["MouseButtonClick",{
+		_idc = (ctrlIDC (_this select 0)) +1000;
+		_pos = ctrlPosition ((ctrlParent (_this select 0)) displayCtrl _idc);
+		_pos set [2,0];
+
+
+		((ctrlParent (_this select 0)) displayCtrl _idc) ctrlSetPosition _pos;
+		((ctrlParent (_this select 0)) displayCtrl _idc) ctrlCommit 0.1;
+		((ctrlParent (_this select 0)) displayCtrl (ctrlIDC (_this select 0))+1) ctrlShow true;
+		playSound "click";
+	}];
+} forEach [1010,1020,1030];
+
+{
+	(_mccdialog displayCtrl _x) ctrlAddEventHandler ["MouseButtonClick",{
+		_idc = (ctrlIDC (_this select 0)) +999;
+		_pos = ctrlPosition ((ctrlParent (_this select 0)) displayCtrl _idc);
+		_pos set [2,(0.257813 * safezoneW)];
+
+		((ctrlParent (_this select 0)) displayCtrl _idc) ctrlSetPosition _pos;
+		((ctrlParent (_this select 0)) displayCtrl _idc) ctrlCommit 0.1;
+		(_this select 0) ctrlShow false;
+		playSound "click";
+	}];
+} forEach [1011,1021,1031];
+
+
 //--------------------------------------------------Evac-------------------------------------------------------------------------------
 if (count _evacVehicles > 0) then {
 	_comboBox = _mccdialog displayCtrl MCC_ConsoleEvacTypeText_IDD;		//fill combobox type

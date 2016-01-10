@@ -31,7 +31,6 @@ Change log r19:
 - Fixed: MCC_makr_arrya_group error on server. 
 
 TODO - mission templates, test dedicated
-TODO - medic UI 
 TODO - Commander console UI
 TODO - check whats up with take kit
 

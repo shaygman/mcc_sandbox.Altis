@@ -60,7 +60,7 @@ switch (_itemType) do {
 	};
 
 	case "heal": {
-		_fail = ["First Aid",20,_unit] call MCC_fnc_medicProgressBar;
+		_fail = ["Healing",20,_unit] call MCC_fnc_medicProgressBar;
 		if !(_fail) then {
 			_hitArray = [];
 			_hitSelections = ["HitHead","HitBody","hitHands","hitLegs"];

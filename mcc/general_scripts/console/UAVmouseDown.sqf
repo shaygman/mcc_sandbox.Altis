@@ -2,16 +2,19 @@
 //Returns the control, the pressed button, the x and y coordinates and the state of Shift, Ctrl and Alt.
 private ["_params","_ctrl","_pressed","_posX","_posY","_shift","_ctrlKey","_alt","_rocket","_objects"];
 disableSerialization;
- 
+
 _params = _this select 0;
 
 _ctrl = _params select 0;
 _pressed = _params select 1;
-_posX = _params select 2; 
+_posX = _params select 2;
 _posY = _params select 3;
 _shift = _params select 4;
 _ctrlKey = _params select 5;
 _alt = _params select 6;
+
+if (isNil "MCC_ConolseUAV") exitWith {};
+if (isNull MCC_ConolseUAV || !alive MCC_ConolseUAV) exitWith {};
 
 if (_pressed==1) then //Control camera
 	{
@@ -25,7 +28,7 @@ if (_pressed==0) then //Fire Missile
 		MCC_ConsoleUAVmissiles = ["",0];
 		if ("6Rnd_LG_scalpel" in (MCC_ConolseUAV magazinesTurret [0])) then {MCC_ConsoleUAVmissiles = ["AGM",(MCC_ConolseUAV) ammo "missiles_SCALPEL","missiles_SCALPEL","M_Scalpel_AT"]};
 		if ("2Rnd_GBU12_LGB" in (MCC_ConolseUAV magazinesTurret [0])) then {MCC_ConsoleUAVmissiles = ["GBU",(MCC_ConolseUAV) ammo "GBU12BombLauncher","GBU12BombLauncher","Bo_GBU12_LGB"]};
-		if ((MCC_ConsoleUAVmissiles select 0) != "" && (MCC_ConsoleUAVmissiles select 1) > 0 && (abs(getdir MCC_ConolseUAV - getdir MCC_fakeUAV) <=90)) then 
+		if ((MCC_ConsoleUAVmissiles select 0) != "" && (MCC_ConsoleUAVmissiles select 1) > 0 && (abs(getdir MCC_ConolseUAV - getdir MCC_fakeUAV) <=90)) then
 			{
 				playSound "missileLunch";
 				[1,""] execVM MCC_path+"mcc\general_scripts\console\uavControl.sqf";

@@ -14,7 +14,7 @@ player setVariable ["MCC_interactionActive",true];
 if !(isNull (player getVariable ["mcc_draggedObject", objNull])) then {[] call MCC_fnc_releaseObject};
 
 //draw interaction text
-if (!MCC_interactionKey_holding && ((_suspect getVariable ["MCC_disarmed",false]) || ((_suspect getVariable ["MCC_neutralize",false])) && !(_suspect in units group player))) then {
+if (!(missionNamespace getVariable ["MCC_interactionKey_holding",false]) && ((_suspect getVariable ["MCC_disarmed",false]) || ((_suspect getVariable ["MCC_neutralize",false])) && !(_suspect in units group player))) then {
 	_pos = getpos _suspect;
 	_pos set [2, (_pos select 2) + 1.5];
 	missionNameSpace setVariable ["MCC_interactionObjects", [[_pos, format ["Hold %1 to interact",_keyName]]]];
@@ -22,7 +22,7 @@ if (!MCC_interactionKey_holding && ((_suspect getVariable ["MCC_disarmed",false]
 	missionNameSpace setVariable ["MCC_interactionObjects", []];
 };
 
-if (MCC_interactionKey_holding && (player distance  _suspect < 2) && !dialog) exitWith {
+if ((missionNamespace getVariable ["MCC_interactionKey_holding",false]) && (player distance  _suspect < 2) && !dialog) exitWith {
 	_suspectName = if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect};
 	_array = [["closeDialog 0","<t size='1' align='center' color='#ffffff'>"+_suspectName+"</t>",""],
 			  ["['zip'] spawn MCC_fnc_interactManClicked","Restrain",format ["%1data\iconHandcuffs.paa",MCC_path]],

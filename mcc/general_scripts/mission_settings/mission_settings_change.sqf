@@ -122,7 +122,7 @@ if !mcc_isloading then
 	//NameTags
 	missionNamespace setVariable ["MCC_nameTagsIndex",lbCurSel MCC_IDCNAMETAGS];
 	publicvariable "MCC_nameTagsIndex";
-	MCC_nameTags = if ((lbCurSel MCC_IDCNAMETAGS) == 0) then {false} else {true};
+	MCC_nameTags = (lbCurSel MCC_IDCNAMETAGS) == 0;
 	publicvariable "MCC_nameTags";
 
 	//Save gear EH

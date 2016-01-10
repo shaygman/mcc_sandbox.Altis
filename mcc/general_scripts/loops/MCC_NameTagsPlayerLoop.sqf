@@ -1,5 +1,5 @@
 //====================== Name Tags Loop ==================================
-private ["_target","_distance","_string","_rank","_name","_picture","_driver","_gunner","_commander","_nameVehicle","_emptyPos","_health","_bars","_color"];
+private ["_target","_distance","_string","_rank","_name","_picture","_driver","_gunner","_commander","_nameVehicle","_emptyPos","_health","_bars","_color","_isMedic"];
 _distance = 300;
 
 while {true} do {
@@ -15,13 +15,18 @@ while {true} do {
 				_rank = [_target,"texture"] call BIS_fnc_rankParams;
 				_color = if (_target in units player) then {"#a8e748"} else {"#80ABCD"};
 
-				if (CP_activated) then {
-					_health = floor (30 - (damage _target * 30));
+				if (missionNamespace getvariable ["CP_activated",false]) then {
+					_isMedic = ((getNumber(configFile >> "CfgVehicles" >> typeOf vehicle player >> "attendant")) == 1) || ((player getvariable ["CP_role",""]) == "Corpsman");
 					_bars = "";
 
-					for "_i" from 1 to _health do {_bars = _bars +"|"};
+					_colorBar = _color;
+					if (_isMedic && damage _target > 0.05) then {
+						_health = floor (30 - (damage _target * 30));
+						for "_i" from 1 to _health do {_bars = _bars +"|"};
+						_colorBar = if (_health > 20) then {"#a8e748"} else {if (_health > 10) then {"#ffa500"} else {"#B71C1C"}};
+					};
 
-					_string = format ["<t font='puristaMedium' size='0.4' color='%5'><img size='0.45' image='%3'/><br/><img size='0.45' image='%1'/> %2 <br/>%4</t>",_rank, _name, _target getvariable ["CP_roleImage", ""], _bars, _color];
+					_string = format ["<t font='puristaMedium' size='0.4' color='%5'><img size='0.45' image='%3'/><br/><img size='0.45' image='%1'/> %2 <br/></t><t size='0.4' color='%6'>%4</t>",_rank, _name, _target getvariable ["CP_roleImage", ""], _bars, _color,_colorBar];
 				} else {
 					_string = format ["<t font='puristaMedium' size='0.4' color='%3'><img size='0.45' image='%1'/><br/>%2</t>",_rank, _name, _color];
 				};

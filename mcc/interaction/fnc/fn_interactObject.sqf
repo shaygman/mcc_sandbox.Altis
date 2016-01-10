@@ -8,7 +8,7 @@ disableSerialization;
 _object 	= _this select 0;
 if (isNil "MCC_interactionKey_holding") then {MCC_interactionKey_holding = false};
 
-if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE && MCC_isMode)) && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then {
+if ((player distance _object < 7) && ((missionNamespace getVariable ["MCC_interactionKey_holding",false]) || (MCC_isACE && MCC_isMode)) && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then {
 
 	//Get what we can have in the loot from the server
 	{
@@ -49,7 +49,7 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE &
 
 		_ctrl progressSetPosition (_x/_searchTime);
 		if ((MCC_isACE && MCC_isMode) && ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic")) then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
-		if ((_object distance player) > 6 || (!MCC_interactionKey_holding && !(MCC_isACE && MCC_isMode))) then {_x = _searchTime; _break = true;};
+		if ((_object distance player) > 6 || (!(missionNamespace getVariable ["MCC_interactionKey_holding",false]) && !(MCC_isACE && MCC_isMode))) then {_x = _searchTime; _break = true;};
 		sleep 0.1;
 	};
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];

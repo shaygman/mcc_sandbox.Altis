@@ -116,7 +116,7 @@ if (vehicle player == player) then {
 
 	if (_break) exitWith {};
 } else {
-	if (!MCC_interactionKey_holding) exitWith {};
+	if (!(missionNamespace getVariable ["MCC_interactionKey_holding",false])) exitWith {};
 
 	MCC_fnc_vehicleCargoMenuClicked = {
 		private ["_ctrl","_index","_ctrlData","_object","_animation","_phase","_door","_locked"];

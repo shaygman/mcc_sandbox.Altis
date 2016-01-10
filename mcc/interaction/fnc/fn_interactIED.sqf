@@ -30,7 +30,7 @@ if (_men distance _ied <4) then {
 	_ied setVariable ["MCC_isInteracted",true,true];
 
 	//Open dialog
-	if !(MCC_interactionKey_holding) exitWith {
+	if !((missionNamespace getVariable ["MCC_interactionKey_holding",false])) exitWith {
 		MCC_fnc_IEDMenuClicked = {
 			private ["_ctrl","_index","_ctrlData","_ied"];
 			disableSerialization;

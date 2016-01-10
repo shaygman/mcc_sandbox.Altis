@@ -7,7 +7,7 @@ disableSerialization;
 _object 	= _this select 0;
 if (vehicle player != player) exitWith {};
 
-if (MCC_interactionKey_holding && !(_object getVariable ["MCC_isInteracted",false]) && (player distance  _object < 5) && !dialog) exitWith {
+if ((missionNamespace getVariable ["MCC_interactionKey_holding",false]) && !(_object getVariable ["MCC_isInteracted",false]) && (player distance  _object < 5) && !dialog) exitWith {
 	_objectClass = typeof _object;
 	_cfg = configFile >> "cfgVehicles" >> _objectClass;
 	_array = [["closeDialog 0",format ["<t size='1' align='center' color='#ffffff'>%1</t>", getText(_cfg >> "displayName")],""]];
