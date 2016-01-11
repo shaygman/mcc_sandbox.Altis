@@ -15,7 +15,7 @@ _dir	 	=call compile (_this select 3);
 
 switch (_conType) do {
 	case "fob" : {
-		_reqCrates = 3;
+		_reqCrates = 1;
 		_vehicleType = "fob";
 		_text = "FOB"
 	};

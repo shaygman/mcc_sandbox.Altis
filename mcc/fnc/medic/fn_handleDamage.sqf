@@ -25,7 +25,7 @@ if (!local _unit || (damage _unit >=1)) then {
 	};
 
 
-	if (_selectionName in ["","head","body","spine2","spine3","face_hub"] && _damage >= 1) then {
+	if (_selectionName in ["","head","body","spine1","spine2","spine3","face_hub","pelvis","neck"] && _damage >= 1) then {
 		//AI will not always get unconscious and sometimes just die
 		if  (!(isPlayer _unit) && (random 1 > 0.3)) then {
 			//GetXP

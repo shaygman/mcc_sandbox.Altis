@@ -5,6 +5,7 @@ Change log r19:
 - Changed: Removed inidbi2 dependency- persistant data will be saved to the server profile using BI profile name space - Still recommand using IniDB2 as it more robust.
 - Changed: Total reworked the Role Selection UI and functionality loadouts are not inherates from config files to be- TODO WIKI
 - Changed: Total reworked Interaction layour from list to a rose dial menu - TODO WIKI
+- Changed: Commander Console UI. 
 - Added: From MCC interaction mount/dismount weapons attachments with the proper animations doing so. 
 - Added: Start Location modules spawn options (none/teleport/halo/paradrop) for each individual spawn point. 
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
@@ -13,6 +14,8 @@ Change log r19:
 - Added: Ability to build sand bags around FOB - Squad leader - doesn't need resources but there is a limit to 14 fences per FOB
 - Added: Units that are not in your squad will show in blue while name tags is on. 
 - Added: Units markers (mission settings module) Show units markers on the map for all players while playing in a squad from the Squad Dialog
+- Changed: Medic system reworked to work with the new protection system. 
+- Fixed: Mission Wizard save hostage mission can be ended on respawn_west/east/gurilla marker. 
 - Fixed: Self interaction kept working even when disabled when CBA is on.
 - Fixed: Can't login to MCC after the latest patch. 
 - Fixed: Medical system was broken (players died instantly instead of falling unconcious) and added a new WIKI page - http://mccsandbox.wikia.com/wiki/MeidcalSystem
@@ -31,8 +34,6 @@ Change log r19:
 - Fixed: MCC_makr_arrya_group error on server. 
 
 TODO - mission templates, test dedicated
-TODO - Commander console UI
-TODO - check whats up with take kit
 
 Change log r18:
 -= New IED Mini Game =-

@@ -71,7 +71,11 @@ _evacVehicles = missionNamespace getvariable [format ["MCC_evacVehicles_%1",play
 
 		((ctrlParent (_this select 0)) displayCtrl _idc) ctrlSetPosition _pos;
 		((ctrlParent (_this select 0)) displayCtrl _idc) ctrlCommit 0.1;
-		((ctrlParent (_this select 0)) displayCtrl (ctrlIDC (_this select 0))+1) ctrlShow true;
+
+		_pos = ctrlPosition ((ctrlParent (_this select 0)) displayCtrl (ctrlIDC (_this select 0))+1);
+		_pos set [2,0.02 * safezoneW];
+		((ctrlParent (_this select 0)) displayCtrl (ctrlIDC (_this select 0))+1) ctrlSetPosition _pos;
+		((ctrlParent (_this select 0)) displayCtrl (ctrlIDC (_this select 0))+1) ctrlCommit 0;
 		playSound "click";
 	}];
 } forEach [1010,1020,1030];
@@ -84,7 +88,10 @@ _evacVehicles = missionNamespace getvariable [format ["MCC_evacVehicles_%1",play
 
 		((ctrlParent (_this select 0)) displayCtrl _idc) ctrlSetPosition _pos;
 		((ctrlParent (_this select 0)) displayCtrl _idc) ctrlCommit 0.1;
-		(_this select 0) ctrlShow false;
+		_pos = ctrlPosition (_this select 0);
+		_pos set [2,0];
+		(_this select 0) ctrlSetPosition _pos;
+		(_this select 0) ctrlCommit 0;
 		playSound "click";
 	}];
 } forEach [1011,1021,1031];

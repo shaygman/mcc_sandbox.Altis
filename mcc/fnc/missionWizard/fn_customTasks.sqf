@@ -38,26 +38,17 @@ switch (true) do {
 
 			_missionDone = false;
 			while {! _missionDone} do {
-				if (!isnil "MCC_START_WEST") then {
-					if (MCC_START_WEST distance _attachedUnit < 100) then {
+				{
+					if (_x distance _attachedUnit < 100) then {
 						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
 						_missionDone = true;
 					};
-				};
-
-				if (!isnil "MCC_START_EAST") then {
-					if (MCC_START_EAST distance _attachedUnit < 100) then {
-						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
-						_missionDone = true;
-					};
-				};
-
-				if (!isnil "MCC_START_GUER") then {
-					if (MCC_START_GUER distance _attachedUnit < 100) then {
-						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
-						_missionDone = true;
-					};
-				};
+				} forEach [missionNamespace getvariable ["MCC_START_WEST",[0,0,0]],
+				           missionNamespace getvariable ["MCC_START_EAST",[0,0,0]],
+				           missionNamespace getvariable ["MCC_START_GUER",[0,0,0]],
+				           markerPos "respawn_west",
+				           markerPos "respawn_east",
+				           markerPos "respawn_guerrila"];
 
 				if (!alive _attachedUnit) then {
 					_logic setvariable ["RscAttributeTaskState","Failed", true];

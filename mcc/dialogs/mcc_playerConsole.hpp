@@ -81,11 +81,11 @@ class MCC_playerConsole {
   MCC_ConsoleInfoLiveFeedClose,
   MCC_ConsoleInfoUAVControl,
   RscControlsGroupCAS,
-  MCC_ConsoleCASFolderOut,
+  RscControlsCASFolderOut,
   RscControlsGroupAirdrop,
-  MCC_ConsoleADFolderOut,
+  RscControlsADFolderOut,
   RscControlsGroupEvac,
-  MCC_ConsoleEvacFolderOut,
+  RscControlsEvacFolderOut,
   MCC_ConsoleHelp
   };
 
@@ -245,7 +245,7 @@ class mcc_consoleF6: MCC_RscButton
 			{
 				idc = -1;
 				text = "";
-				colorBackground[] = {0,0,0,0.7};
+				colorBackground[] = {0,0,0,0.8};
 				x = 0 * safezoneW;
 				y = 0 * safezoneH;
 				w = 0.257813 * safezoneW;
@@ -307,13 +307,35 @@ class mcc_consoleF6: MCC_RscButton
 		};
 	};
 
-	class MCC_ConsoleCASFolderOut: MCC_RscButtonMenu
+	class RscControlsCASFolderOut: MCC_RscControlsGroupNoScrollbars
 	{
 		idc = 1011;
 		x = 0.205 * safezoneW + safezoneX;
 		y = 0.2 * safezoneH + safezoneY;
 		w = 0.02 * safezoneW;
 		h = 0.143 * safezoneH;
+		class controls
+		{
+			class MCC_ConsoleCASFolderOut: MCC_RscText
+			{
+				idc = -1;
+				colorBackground[] = {0.25,0.25,0.25,0.8};
+				x = 0 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.143 * safezoneH;
+			};
+
+			class MCC_ConsoleCASFolderOutPic: MCC_RscPicture
+			{
+				idc = -1;
+				text =  __EVAL(MCCPATH +"mcc\interaction\data\cas_ca.paa");
+				x = 0 * safezoneW;
+				y = 0.05 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.02 * safezoneH;
+			};
+		};
 	};
 
 	class RscControlsGroupAirdrop: MCC_RscControlsGroupNoScrollbars
@@ -329,7 +351,7 @@ class mcc_consoleF6: MCC_RscButton
 			{
 				idc = -1;
 				text = "";
-				colorBackground[] = {0,0,0,0.7};
+				colorBackground[] = {0,0,0,0.8};
 				x = 0 * safezoneW;
 				y = 0 * safezoneH;
 				w = 0.257813 * safezoneW;
@@ -391,13 +413,35 @@ class mcc_consoleF6: MCC_RscButton
 		};
 	};
 
-	class MCC_ConsoleADFolderOut: MCC_RscButtonMenu
+	class RscControlsADFolderOut: MCC_RscControlsGroupNoScrollbars
 	{
 		idc = 1021;
 		x = 0.205 * safezoneW + safezoneX;
-		y = 0.359 * safezoneH + safezoneY;
+		y = 0.35 * safezoneH + safezoneY;
 		w = 0.02 * safezoneW;
 		h = 0.143 * safezoneH;
+		class controls
+		{
+			class MCC_ConsoleADFolderOut: MCC_RscText
+			{
+				idc = -1;
+				colorBackground[] = {0.25,0.25,0.25,0.8};
+				x = 0 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.143 * safezoneH;
+			};
+
+			class MCC_ConsoleADSFolderOutPic: MCC_RscPicture
+			{
+				idc = -1;
+				text =  __EVAL(MCCPATH +"mcc\interaction\data\supplydrop_ca.paa");
+				x = 0 * safezoneW;
+				y = 0.05 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.02 * safezoneH;
+			};
+		};
 	};
 
 	class RscControlsGroupEvac: MCC_RscControlsGroupNoScrollbars
@@ -413,7 +457,7 @@ class mcc_consoleF6: MCC_RscButton
 			{
 				idc = -1;
 				text = "";
-				colorBackground[] = {0,0,0,0.7};
+				colorBackground[] = {0,0,0,0.8};
 				x = 0 * safezoneW;
 				y = 0 * safezoneH;
 				w = 0.257813 * safezoneW;
@@ -534,14 +578,37 @@ class mcc_consoleF6: MCC_RscButton
 		};
 	};
 
-	class MCC_ConsoleEvacFolderOut: MCC_RscButtonMenu
+	class RscControlsEvacFolderOut: MCC_RscControlsGroupNoScrollbars
 	{
 		idc = 1031;
 		x = 0.205 * safezoneW + safezoneX;
 		y = 0.52 * safezoneH + safezoneY;
 		w = 0.02 * safezoneW;
-		h = 0.143 * safezoneH;
+		h = 0.154 * safezoneH;
+		class controls
+		{
+			class MCC_ConsoleEvacFolderOut: MCC_RscText
+			{
+				idc = -1;
+				colorBackground[] = {0.25,0.25,0.25,0.8};
+				x = 0 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.154 * safezoneH;
+			};
+
+			class MCC_ConsoleEvacFolderOutPic: MCC_RscPicture
+			{
+				idc = -1;
+				text =  __EVAL(MCCPATH +"mcc\interaction\data\transport_ca.paa");
+				x = 0 * safezoneW;
+				y = 0.06 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.02 * safezoneH;
+			};
+		};
 	};
+
 	class MCC_ConsoleWPBckgr: MCC_RscStructuredText
 		{
 			idc = MCC_CONSOLEWPBCKGR;
