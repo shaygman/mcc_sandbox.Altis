@@ -109,6 +109,28 @@ class MCC_Module_inGameUI : Module_F
 			};
 		};
 
+		class suppression
+		{
+			displayName = "Suppression";
+			description = "Activate client side suppression effects";
+			typeName = "BOOL";
+			class values
+			{
+				class disable
+				{
+					name = "Disable";
+					value = false;
+					default = 1;
+				};
+
+				class enable
+				{
+					name = "Enable";
+					value = true;
+				};
+			};
+		};
+
 		class groupMarkers
 		{
 			displayName = "Squads Markers";

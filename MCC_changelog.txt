@@ -1,39 +1,48 @@
 Change log r19:
-- Added: UI Module: Handles 3d camera for vehicles, in game compass and teammates overlay, Name tags and more. New WIKI page - http://mccsandbox.wikia.com/wiki/UI_Module?venotify=created
+- Added: UI Module can enable/disable any of the below features: 
+	- Camera control: Force 1st person camera always or just outside of a vehicle New WIKI page - http://mccsandbox.wikia.com/wiki/UI_Module?venotify=created.
+	- Compass: In game compass and squad members overlay.
+	- Name tags: Show friendly units name/role/rank and vehicle information such as driver,commander, gunner and empty positions left.
+	- Squad Markers: Show friendly squad markers on the map. Only MCC squads from the role selection or Squad dialog.
+	- Squad Members Markers: Show squad members markers on the map. 
+	- Suppression: Client side only Supression effects, blur and camera shake depends on the angle of fire, the caliber and more. 
 - Changed: Name tags, group markers moved to the inGame UI settings module
 - Changed: Moved to inidbi2 - local db files for each mission - TODO WIKI
-- Changed: Removed inidbi2 dependency- persistant data will be saved to the server profile using BI profile name space - Still recommand using IniDB2 as it more robust.
-- Changed: Total reworked the Role Selection UI and functionality loadouts are not inherates from config files to be- TODO WIKI
+- Changed: Removed inidbi2 dependency- persistent data will be saved to the server profile using BI profile name space - I still recommend using IniDB2 as it more robust.
+- Changed: Total reworked the Role Selection UI and functionality load-outs are not inherent  from config files to be- TODO WIKI
 - Changed: Total reworked Interaction layour from list to a rose dial menu - TODO WIKI
 - Changed: Commander Console UI. 
 - Added: From MCC interaction mount/dismount weapons attachments with the proper animations doing so. 
-- Added: Start Location modules spawn options (none/teleport/halo/paradrop) for each individual spawn point. 
+- Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point. 
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
 - Added: Resupply option to FOB.
 - Added: Resupply will resupply EGLM. 
 - Added: Ability to build sand bags around FOB - Squad leader - doesn't need resources but there is a limit to 14 fences per FOB
 - Added: Units that are not in your squad will show in blue while name tags is on. 
 - Added: Units markers (mission settings module) Show units markers on the map for all players while playing in a squad from the Squad Dialog
-- Changed: Medic system reworked to work with the new protection system. 
+- Changed: Medic system reworked to work with the new protection system.
+_ Fixed: Error regarding BI fnc sortBy spamming the log file.
 - Fixed: Mission Wizard save hostage mission can be ended on respawn_west/east/gurilla marker. 
 - Fixed: Self interaction kept working even when disabled when CBA is on.
 - Fixed: Can't login to MCC after the latest patch. 
-- Fixed: Medical system was broken (players died instantly instead of falling unconcious) and added a new WIKI page - http://mccsandbox.wikia.com/wiki/MeidcalSystem
+- Fixed: Medical system was broken (players died instantly instead of falling unconscious) and added a new WIKI page - http://mccsandbox.wikia.com/wiki/MeidcalSystem
 - Fixed: Pressing the delete button while opening MCC delete the last selected group/unit. 
 - Fixed: Fast rope didn't worked well on MP. 
-- Fixed: Losing Zeus after respawn.
+- Fixed: Losing Zeus after re-spawn.
 - Fiexd: Zeus editing unit/object didn't work after update. 
 - Fixed: ILS module error when no rings selected
 - Fixed: Restricted ambient civilians module didn't work on dedicated
-- Fixed: Logistic dialogs for helicopters won't show crates that the helicopter can't slingload. 
+- Fixed: Logistic dialogs for helicopters won't show crates that the helicopter can't sling-load. 
 - Fixed: Convoy not working. 
 - Fixed: Convoy spawn too many cargo units.  
 - Fixed: Mini game IED can be disarmed again even after disarming
 - Fixed: RPT errors regarding ; at the end of file
 - Fixed: Stuck when enabling Survival mod from module. 
-- Fixed: MCC_makr_arrya_group error on server. 
+- Fixed: MCC_make_array_group error on server. 
 
 TODO - mission templates, test dedicated
+TODO - save campaign
+TODO - survival spawn crates in houses?!
 
 Change log r18:
 -= New IED Mini Game =-
@@ -81,13 +90,6 @@ Change log r18:
 - Fixed: Starting with default gear after respawn when Role Selection is on. 
 - Fixed: Teleporting boats on water teleported the vehicle to map corner.
 - Fixed: Lock/unlock door typo
-
-Add key binds 1-4
-TODO - PR mission type. 
-key binds, vehicle respawn script, logistics
-
-TODO - survival spawn crates in houses?!
-TODO - mission templates, test dedicated
 
 Change log r17:
 - Fixed: Convoy didn't worked on dedicated server.

@@ -112,6 +112,8 @@ CP_currentUniforms = [];
 	CP_currentUniforms pushBack (getArray(_cfgWeapon));
 } forEach ["nightVision","headgear","googles","vests","backpacks","uniforms"];
 
+//Insignas
+CP_currentInsignas =  getArray(_cfg >> _side >> "insigna");
 
 //Set playr level
 CP_currentLevel = call compile format ["%1Level select 0",_role];
@@ -164,6 +166,14 @@ if (isnil "CP_currentGeneralItems") then {
 	missionNamespace setVariable [format["CP_player%1GeneralItems_%2_%3",_role,getplayerUID player,side player], CP_GeneralItems];
 	CP_currentGeneralItems = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role,getplayerUID player,side player];
 };
+
+//Set Inigna
+CP_currentInsigna = missionNamespace getVariable format ["CP_player%1Insigna_%2_%3",_role,getplayerUID player,side player];
+if (isnil "CP_currentInsigna") then {
+	missionNamespace setVariable [format["CP_player%1Insigna_%2_%3",_role,getplayerUID player,side player], CP_currentInsignas select 0];
+	CP_currentInsigna = missionNamespace getVariable format ["CP_player%1Insigna_%2_%3",_role,getplayerUID player,side player];
+};
+
 
 player setvariable ["CP_role", _role, true];
 player setvariable ["CP_roleImage", _image, true];
