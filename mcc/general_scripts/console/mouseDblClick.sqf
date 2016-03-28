@@ -31,7 +31,7 @@ _ctrlKey = _params select 5;
 _alt = _params select 6;
 
 //is 3d commander online?
-_3dCommander = !(isnull (uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD"));
+_3dCommander = !(isnull (uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD",displayNull]));
 
 //Define which control
 if (MCC_Console1Open) then {_mccdialog = findDisplay mcc_playerConsole_IDD};

@@ -3,24 +3,8 @@
 //==============================================================================================================================================================================
 private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePlayer","_airports","_counter","_searchArray","_sides",
 		 "_positionStart","_positionEnd","_pointIntersect","_break","_interactiveObjects","_objArray","_keyName","_key","_text"];
-#define MCC_barrels ["garbagebarrel","garbagebin","toiletbox","garbagecontainer","fieldtoilet","tabledesk","cashdesk"]
-#define MCC_grave ["grave_forest","grave_dirt","grave_rocks"]
-#define MCC_containers ["barreltrash","metalbarrel_f","cratesplastic","cargo20","cargo40","crates"]
-#define MCC_food ["icebox","rack","shelves","sacks_goods","basket","sack_f"]
-//#define MCC_water ["water_source"]
-#define MCC_fuel ["watertank","waterbarrel","barrelwater","stallwater"]
-#define MCC_plantsFruit ["neriumo","ficusc"]
-#define MCC_misc ["fishinggear","crabcages","rowboat","calvary","pipes_small","woodpile","pallets_stack","wheelcart"]
-#define MCC_garbage ["garbagebags","junkpile","garbagepallet","tyres","garbagewashingmachine","scrapheap"]
-#define MCC_wreck ["wreck_car","wreck_truck","wreck_offroad","wreck_van"]
-#define MCC_wreckMil ["wreck_ural","wreck_uaz","wreck_hmmwv","wreck_heli","wreck_hunter","wreck_brdm","wreck_bmp","wreck_t72_hull","wreck_slammer"]
-#define MCC_wreckSub ["uwreck"]
-#define MCC_ammoBox ["woodenbox","luggageheap","pallet_milboxes_f"]
-
 disableSerialization;
 _break = false;
-if (MCC_isACE) exitWith {};
-
 _text = "";
 
 //Find out the key
@@ -48,19 +32,19 @@ MCC_interactionKey_holding =  if (MCC_interactionKey_down) then {true} else {fal
 //Fails safe if ui get stuck
 if (time > (player getVariable ["MCC_interactionActiveTime",time-5])+10) then {player setVariable ["MCC_interactionActive",false]};
 
+_objArray = [] call MCC_fnc_getSurvivalPlaceHolders;
+
 //If we are busy quit
 if ((player getVariable ["MCC_interactionActive",false]) || (time < (player getVariable ["MCC_interactionActiveTime",time-5])+1)) exitWith {};
 player setVariable ["MCC_interactionActive",true];
 player setVariable ["MCC_interactionActiveTime",time];
 
 //Outside of vehicle
-if (vehicle player == player) then
-{
+if (vehicle player == player) then {
 	_target = cursorTarget;
 	player reveal _target;
 
-	if (_target isKindof "weaponHolderSimulated") then
-	{
+	if (_target isKindof "weaponHolderSimulated") then {
 		{
 			if (_x distance _target < 2) exitWith {_target = _x};
 		} foreach allDeadMen;
@@ -94,15 +78,12 @@ if (vehicle player == player) then
 	_objects = player nearObjects [MCC_dummy,10];
 
 	//Handle IED
-	if (count _objects > 0) then
-	{
+	if (count _objects > 0) then {
 		_selected = ([_objects,[],{player distance _x},"ASCEND"] call BIS_fnc_sortBy) select 0;
 		_dir	  = [player, _selected] call BIS_fnc_relativeDirTo;
-		if (_dir>340 || _dir < 20) exitWith
-		{
+		if (_dir>340 || _dir < 20) exitWith {
 			//IED
-			if (((_selected getVariable ["MCC_IEDtype",""]) == "ied") && !(_selected getVariable ["MCC_isInteracted",false])) then
-			{
+			if (((_selected getVariable ["MCC_IEDtype",""]) == "ied") && !(_selected getVariable ["MCC_isInteracted",false])) then {
 				_null= [player,_selected] call MCC_fnc_interactIED;
 				//_null= [player,_selected] execvm "mcc\fnc\interaction\fn_interactIED.sqf";
 				_break = true;
@@ -116,16 +97,13 @@ if (vehicle player == player) then
 	_positionStart 	= eyePos player;
 	_positionEnd 	= ATLtoASL screenToWorld [0.5,0.5];
 	_pointIntersect = lineIntersectsWith [_positionStart, _positionEnd, player, objNull, true];
-	if (count _pointIntersect > 0 && MCC_surviveMod && MCC_iniDBenabled) then
-	{
+	if (count _pointIntersect > 0 && MCC_surviveMod) then {
 		_selected = _pointIntersect select ((count _pointIntersect)-1);
 
 		if (player distance _selected < 20) exitWith {
-			_objArray = MCC_barrels + MCC_grave + MCC_containers + MCC_food + MCC_fuel + MCC_misc + MCC_plantsFruit + MCC_garbage + MCC_wreck + MCC_wreckMil + MCC_wreckSub + MCC_ammoBox;
-			if ((({[_x , str _selected] call BIS_fnc_inString} count _objArray)>0) && (isNull attachedTo _selected)) then
-			{
+			if ((({[_x , str _selected] call BIS_fnc_inString} count _objArray)>0) && (isNull attachedTo _selected)) then {
 				missionNameSpace setVariable ["MCC_interactionObjects", [[getpos _selected, format ["Hold %1 to search",_keyName]]]];
-				//systemChat (["I think I can dig into it", "This look interesting", "Mmm... I wounder what can I find here"] call bis_fnc_selectRandom);
+
 				//_null= [_selected] execvm "mcc\fnc\interaction\fn_interactObject.sqf";
 				[_selected] call MCC_fnc_interactObject;
 				_break = true;
@@ -237,7 +215,7 @@ else
 	};
 
 	//MCC ILS
-	if ((_vehiclePlayer isKindOf "Plane") && (player == Driver _vehiclePlayer)) then
+	if ((_vehiclePlayer isKindOf "air") && (player == Driver _vehiclePlayer)) then
 	{
 		_airports = [];
 		_counter = 0;

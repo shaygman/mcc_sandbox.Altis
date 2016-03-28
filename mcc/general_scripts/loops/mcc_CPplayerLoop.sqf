@@ -5,17 +5,16 @@ MCC_fnc_mapDrawPlayersWPConsole =
 	if (MCC_ConsolePlayersCanSeeWPonMap && ("ItemGPS" in (assignedItems player) || "B_UavTerminal" in (assignedItems player) || "MCC_Console" in (assignedItems player))) then
 	{
 		_wpArray = waypoints (group player);
-		if (count _wpArray > 0)then
-		{
+		if (count _wpArray > 0)then {
 			private ["_wp","_wPos","_wType","_lastPos"];
 			_lastPos = nil;
 			_texture = gettext (configfile >> "CfgMarkers" >> "waypoint" >> "icon");
-			for [{_i= currentWaypoint (group player)},{_i < count _wpArray},{_i=_i+1}] do 	//Draw the current WP
-			{
+
+			//Draw the current WP
+			for [{_i= currentWaypoint (group player)},{_i < count _wpArray},{_i=_i+1}] do {
 				_wp = (_wpArray select _i);
 				_wPos  = waypointPosition _wp;
-				if ((_wPos  distance [0,0,0]) > 50) then
-				{
+				if ((_wPos  distance [0,0,0]) > 50) then {
 					_wType = waypointType _wp;
 
 					_map drawIcon [
@@ -47,8 +46,7 @@ MCC_fnc_mapDrawPlayersWPConsole =
 	};
 
 	//Custom Group Markers
-	if (MCC_groupMarkers) then
-	{
+	if (missionNamespace getVariable ["MCC_groupMarkers",true]) then {
 		private ["_groups","_texture"];
 		_groups	 = switch (side player) do
 				{
@@ -74,6 +72,31 @@ MCC_fnc_mapDrawPlayersWPConsole =
 						0.06,
 						"PuristaBold"
 					];
+
+			if (missionNamespace getVariable ["MCC_indevidualMarkers",false]) then {
+				_color = if (group player == (_x select 0)) then {[0,1,0,0.8]} else {[0,0,1,0.8]};
+				_unitText = toArray (_x select 1);
+				_unitText resize 2;
+
+				{
+					if (_x != leader _x) then {
+						_texture = gettext (configfile >> "CfgVehicles" >> typeof _x >> "icon");
+						_map drawIcon [
+							_texture,
+							_color,
+							position _x,
+							18,
+							18,
+							direction _x,
+							toString _unitText ,
+							1,
+							0.03,
+							"PuristaBold",
+							"Right"
+						];
+					};
+				} forEach units (_x select 0);
+			};
 		} foreach _groups;
 	};
 };
@@ -103,10 +126,8 @@ _fnc_supplyBox = {
 	true
 };
 
-while {true} do
-{
-	if (alive player) then
-	{
+while {true} do {
+	if (alive player) then {
 		missionNamespace setVariable ["MCC_save_Backpack",backPackItems player];
 		missionNamespace setVariable ["MCC_save_primaryWeaponItems",primaryWeaponItems player];
 		missionNamespace setVariable ["MCC_save_secondaryWeaponItems",secondaryWeaponItems player];
@@ -120,6 +141,9 @@ while {true} do
 		missionNamespace setVariable ["MCC_save_primaryWeaponMagazine",primaryWeaponMagazine player];
 		missionNamespace setVariable ["MCC_save_secondaryWeaponMagazine",secondaryWeaponMagazine player];
 		missionNamespace setVariable ["MCC_save_handgunMagazine",handgunMagazine player];
+
+		//Add XP/Fame
+		_null = [] spawn MCC_fnc_handleRating;
 
 		//Repair/refuel from boxed all this ifs are to reduce unnecessary nearObjects - efficiency
 		if (!MCC_isMode && vehicle player != player) then {
@@ -135,8 +159,7 @@ while {true} do
 			};
 		};
 
-		if (CP_activated) then
-		{
+		if (CP_activated) then {
 			//Check if in vehicle
 			[] call MCC_fnc_allowedDrivers;
 
@@ -157,7 +180,7 @@ while {true} do
 		if (!isnil "MCC_PDAMarkers") then {
 			_time = time;
 			{
-				if (time > (_x +300)) then
+				if (time > (_x +120)) then
 				{
 					deletemarkerlocal (MCC_PDAMarkers select _foreachindex);
 					MCC_PDAMarkers set [_foreachindex, -1];

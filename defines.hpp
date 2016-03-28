@@ -31,9 +31,6 @@
 //----Logistics-----------------
 #include "mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
 
-//----Interaction-----------------
-#include "mcc\Dialogs\mcc_interactionMenu.hpp"
-
 //----Key Settings-----------------
 #include "mcc\Dialogs\mcc_rscKeyBinds.hpp"
 
@@ -47,13 +44,7 @@
 #define CPPATH ""
 #define CPVersion "0.1"
 
-#include "configs\dialogs\cp_dialogs.hpp"
-#include "configs\dialogs\gearPanel\respawnPanel.hpp"
-#include "configs\dialogs\gearPanel\squadsPanel.hpp"
-#include "configs\dialogs\gearPanel\gearPanel.hpp"
-#include "configs\dialogs\gearPanel\weaponsPanel.hpp"
-#include "configs\dialogs\gearPanel\accessoriesPanel.hpp"
-#include "configs\dialogs\gearPanel\uniformPanel.hpp"
+#include "mcc\roleSelection\cfg.hpp"
 
 //--------------------------Campaign----------------------------------------------------
 #include "mcc\Dialogs\campaign\mcc_vehicleSpawner.hpp"
@@ -69,6 +60,9 @@
 //--------------------------features----------------------------------------------------
 #include "mcc\login\cfg.hpp"
 #include "mcc\rts\cfg.hpp"
+#include "mcc\bombDefuse\cfg.hpp"
+#include "mcc\survive\cfg.hpp"
+#include "mcc\interaction\cfg.hpp"
 
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
@@ -85,6 +79,12 @@ class CfgFunctions
 		#include "mcc\cfg\modules\cfgFunctions.hpp"
 		#include "mcc\cfg\curator\cfgFunctions.hpp"
 		#include "mcc\undercover\cfgFunctions.hpp"
+		#include "mcc\bombDefuse\cfgFunctions.hpp"
+		#include "mcc\survive\cfgFunctions.hpp"
+		#include "mcc\compassHUD\cfgFunctions.hpp"
+		#include "mcc\roleSelection\cfgFunctions.hpp"
+		#include "mcc\interaction\cfgFunctions.hpp"
+		#include "mcc\supression\cfgFunctions.hpp"
 	};
 };
 
@@ -108,6 +108,10 @@ class CfgNotifications
 	#include "mcc\cfg\CfgNotifications.hpp"
 };
 
+class CfgMarkers
+{
+	#include "mcc\cfg\CfgMarkers.hpp"
+};
 
 
 
@@ -137,8 +141,25 @@ class RscTitles
         };
 	};
 
+	#include "mcc\cfg\modules\dialogs\mcc_captureProgressRsc.hpp"
 	#include "mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "mcc\dialogs\compass.hpp"
 	#include "mcc\dialogs\mcc_3dObject.hpp"
 	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
+	#include "mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
+	#include "mcc\compassHUD\dialogs\compassDialog.hpp"
+};
+
+class CfgDebriefing
+{
+	class KickRadio
+	{
+		title = "You were kicked";
+		subtitle = "For abusing the radio";
+		description = "You were kicked";
+	};
+};
+
+class cfgRemoteExec {
+	#include "mcc\cfg\cfgRemoteExec.hpp"
 };

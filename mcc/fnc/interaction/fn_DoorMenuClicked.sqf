@@ -15,20 +15,15 @@ _object = (player getVariable ["interactWith",[]]) select 0;
 _door 	= (player getVariable ["interactWith",[]]) select 1;
 _phase 	= (player getVariable ["interactWith",[]]) select 2;
 
-if (tolower worldName in MCC_ARMA2MAPS) then
-{
+if (tolower worldName in MCC_ARMA2MAPS) then {
 	_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
 	_animation = "dvere"+_str;
-}
-else
-{
+} else {
 	_animation = _door + "_rot";
 };
 
-switch (_ctrlData) do
-{
-	case "charge":
-	{
+switch (_ctrlData) do {
+	case "charge": {
 		closedialog 0;
 		enableSentences false;
 		player removeMagazine MCC_CHARGE;
@@ -56,8 +51,7 @@ switch (_ctrlData) do
 		enableSentences true;
 	};
 
-	case "camera":
-	{
+	case "camera": {
 		private ["_camera","_ppgrain","_ppblair","_keyDown","_tablet"];
 		closedialog 0;
 		player setVariable ["MCC_mirrorCamOff",false];
@@ -95,8 +89,7 @@ switch (_ctrlData) do
 		_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "if !(isnil 'MCC_fnc_DOOR_CAM_Handler') then {MCC_temp = ['keydown',_this,commandingmenu] spawn MCC_fnc_DOOR_CAM_Handler; MCC_temp = nil;}"];
 
 		//CLose cam
-		while {!(player getVariable ["MCC_mirrorCamOff",false]) && (alive player)} do
-		{
+		while {!(player getVariable ["MCC_mirrorCamOff",false]) && (alive player)} do {
 			['<t font="puristaMedium" size="0.5" align="left" color="#a8e748">Use "W" "A" "S" "D" to rotate camera<br/><br/>Press "N" to activate nightvision<br/><br/>Press "Tab" to close video</t><br/>',-0.5,-0.2,0.1,0,0,1] spawn BIS_fnc_dynamicText;
 			sleep 0.1;
 		};
@@ -127,31 +120,23 @@ switch (_ctrlData) do
 		*/
 	};
 
-	case "unlock":
-	{
+	case "unlock": {
 		closedialog 0;
 		["Unlocking",15] call MCC_fnc_interactProgress;
 		_object setVariable [format ["bis_disabled_%1",_door],0,true];
-
 	};
 
-	case "lock":
-	{
+	case "lock": {
 		closedialog 0;
 		["Locking",15] call MCC_fnc_interactProgress;
 		_object setVariable [format ["bis_disabled_%1",_door],1,true];
-
 	};
 
-	case "check":
-	{
-		if (tolower worldName in MCC_ARMA2MAPS) then
-		{
+	case "check": {
+		if (tolower worldName in MCC_ARMA2MAPS) then {
 			_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
 			_animation = "dvere"+_str;
-		}
-		else
-		{
+		} else {
 			_animation = _door + "_rot";
 		};
 
@@ -216,8 +201,7 @@ switch (_ctrlData) do
 		player setVariable ["MCC_interactionActive",false];
 	};
 
-	case "close":
-	{
+	case "close": {
 		closedialog 0;
 	};
 };

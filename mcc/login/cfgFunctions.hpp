@@ -7,4 +7,5 @@ class login
 	#endif
 
 	class loginDialog {};
+	class assignCurator {};
 };

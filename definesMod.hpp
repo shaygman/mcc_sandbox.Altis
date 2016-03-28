@@ -32,9 +32,6 @@
 //----Logistics-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_logisticsLoadTruck.hpp"
 
-//----Interaction-----------------
-#include "\mcc_sandbox_mod\mcc\Dialogs\mcc_interactionMenu.hpp"
-
 //----Key Settings-----------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\mcc_rscKeyBinds.hpp"
 
@@ -45,13 +42,7 @@
 #define CPPATH "\mcc_sandbox_mod\"
 #define CPVersion "0.1"
 
-#include "\mcc_sandbox_mod\configs\dialogs\cp_dialogs.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\respawnPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\squadsPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\gearPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\weaponsPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\accessoriesPanel.hpp"
-#include "\mcc_sandbox_mod\configs\dialogs\gearPanel\uniformPanel.hpp"
+#include "\mcc_sandbox_mod\mcc\roleSelection\cfg.hpp"
 
 //--------------------------Campaign----------------------------------------------------
 #include "\mcc_sandbox_mod\mcc\Dialogs\campaign\mcc_vehicleSpawner.hpp"
@@ -69,6 +60,9 @@
 //--------------------------features----------------------------------------------------
 #include "\mcc_sandbox_mod\mcc\login\cfg.hpp"
 #include "\mcc_sandbox_mod\mcc\rts\cfg.hpp"
+#include "\mcc_sandbox_mod\mcc\bombDefuse\cfg.hpp"
+#include "\mcc_sandbox_mod\mcc\survive\cfg.hpp"
+#include "\mcc_sandbox_mod\mcc\interaction\cfg.hpp"
 
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
@@ -85,6 +79,12 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\cfg\modules\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\cfg\curator\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\undercover\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\bombDefuse\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\survive\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\compassHUD\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\roleSelection\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\interaction\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\supression\cfgFunctions.hpp"
 	};
 };
 
@@ -110,11 +110,24 @@ class CfgNotifications
 
 class RscTitles
 {
+	#include "\mcc_sandbox_mod\mcc\cfg\modules\dialogs\mcc_captureProgressRsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\compass.hpp"
 	#include "\mcc_sandbox_mod\hcam\hcam.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_3dObject.hpp"
-	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
+	#include "\mcc_sandbox_mod\mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
+	#include "\mcc_sandbox_mod\mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
+	#include "\mcc_sandbox_mod\mcc\compassHUD\dialogs\compassDialog.hpp"
+};
+
+class CfgDebriefing
+{
+	class KickRadio
+	{
+		title = "You were kicked";
+		subtitle = "For abusing the radio";
+		description = "You were kicked";
+	};
 };
 
 class cfgVehicles
@@ -143,7 +156,14 @@ class cfgWeapons
 	#include "\mcc_sandbox_mod\mcc\cfg\cfgWeapons.hpp"
 };
 
+class CfgMarkers
+{
+	#include "\mcc_sandbox_mod\mcc\cfg\CfgMarkers.hpp"
+};
 
+class cfgRemoteExec {
+	#include "\mcc_sandbox_mod\mcc\cfg\cfgRemoteExec.hpp"
+};
 
 class RscMapControl;
 class RscText;

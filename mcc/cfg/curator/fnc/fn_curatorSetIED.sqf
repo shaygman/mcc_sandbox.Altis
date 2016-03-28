@@ -28,7 +28,7 @@ if (typeName (_module getVariable ["side",true]) == typeName 0) exitWith {
 };
 
 //Not curator exit
-if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+if (!(local _module) || isnull curatorcamera) exitWith {};
 
 _object = missionNamespace getVariable ["MCC_curatorMouseOver",[]];
 
@@ -66,7 +66,7 @@ if (_object isKindOf "Man") then {
 	 						["Explosion Effect",["Deadly","Disabling","Fake","None"]],
 	 						["Disarm Time",300],
 	 						["Can be jammed using ECM vehicle",true],
-	 						["Activation Type",["Proximity","Radio/Spotter","Mission Maker Only"]],
+	 						["Activation Type",["Proximity","Radio/Spotter","Mission Maker Only","Mini-Game(Proximity)","Mini-Game(Manual)"]],
 	 						["Activation Distance",60],
 	 						["Activation Side",["East","West","Resistance"]]
 	 					  ]] call MCC_fnc_initDynamicDialog;

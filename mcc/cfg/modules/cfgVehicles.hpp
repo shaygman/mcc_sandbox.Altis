@@ -17,3 +17,7 @@
 #include "MCC_Module_campaignInit.hpp"
 #include "MCC_Module_setResources.hpp"
 #include "underCover.hpp"
+#include "MCC_Module_captureZone.hpp"
+#include "MCC_Module_ambientCiviliansDenied.hpp"
+#include "MCC_module_vehicleRespawn.hpp"
+#include "MCC_Module_inGameUI.hpp"

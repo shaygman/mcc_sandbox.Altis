@@ -84,9 +84,9 @@ class ReammoBox_F: thingX {
 	class ACE_Actions {
 	  class ACE_MainActions {
 	    class ACE_MCC_mainBox {
-                displayName = "Cargo<br/>Box";
+                displayName = "Open<br/>Vault";
                 distance = 5;
-                condition = "(_target isKindof 'Box_FIA_Support_F') && (!(_target getVariable ['mcc_mainBoxUsed', false])) && !(isNull attachedTo _target)";
+                condition = "(_target isKindof 'Box_FIA_Support_F') && (!(_target getVariable ['mcc_mainBoxUsed', false])) && !(isNull attachedTo _target) && (missionNamespace getVariable ['MCC_surviveMod',false])";
                 statement =  "[_target] spawn MCC_fnc_mainBoxOpen";
                 icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
                 showDisabled = 0;
@@ -102,6 +102,15 @@ class ReammoBox_F: thingX {
                 showDisabled = 0;
                 priority = 1.2;
             };
+
+        class ACE_MCC_supplyBoxFOB {
+                displayName = "Resupply";
+                distance = 5;
+               condition = "(_target isKindof 'Box_FIA_Support_F') && !(isNull attachedTo _target)";
+                statement =  "[_target,true] call MCC_fnc_resupply;";
+                icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
+                showDisabled = 0;
+        };
 
         class ACE_MCC_supplyBox {
                 displayName = "Resupply";
@@ -154,6 +163,14 @@ class CAManBase: Man {
 			showDisabled = 0;
 		};
 
+		class ACE_MCC_DropAmmobox {
+			condition = "('MCC_ammoBoxMag' in items _player)";
+			displayName = "Drop<br/>Ammobox";
+			icon = "\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa";
+			statement = "['MCC_ammoBoxMag','MCC_ammoBox'] spawn MCC_fnc_ACEdropAmmobox;";
+			showDisabled = 0;
+		};
+
 		class ACE_MCC_doorinteraction {
 			condition = "([cursorTarget] call MCC_fnc_isDoor) != ''";
 			displayName = "Door<br/>Interaction";
@@ -196,12 +213,20 @@ class CAManBase: Man {
 		};
 
 		class ACE_MCC_survivalInteraction {
-			condition = "[] call MCC_fnc_isSurvivalObject";
 			displayName = "Search";
+			condition = "[] call MCC_fnc_isSurvivalObject";
 			icon = "\A3\ui_f\data\map\markers\military\unknown_CA.paa";
 			showDisabled = 0;
 			statement = "[] spawn MCC_fnc_searchSurvivalObject;";
 		};
+
+		class ACE_MCC_miniGameDefuse {
+            displayName = "Bomb Defuse";
+            condition ="((cursorTarget getVariable ['realIed',objnull]) getVariable ['MCC_isIEDMiniGame',false]) && ((cursorTarget getVariable ['realIed',objnull]) getVariable ['armed',false]) && (_player distance cursorTarget < 8)";
+            statement = "[cursorTarget] spawn MCC_fnc_bdStart";
+            showDisabled = 0;
+            icon = "\A3\ui_f\data\map\markers\military\unknown_CA.paa";
+        };
 
 		class ACE_MCC_SQLMenu {
 			condition = "(leader _player == _player && count units _player > 1 && (missionNameSpace getvariable ['MCC_allowsqlPDA',true]))";
@@ -328,14 +353,21 @@ class CAManBase: Man {
 
 				class ACE_MCC_FOB {
 					displayName = "F.O.B";
-					icon = "\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa";
+					icon = "\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa";
 					statement = "['fob'] call MCC_fnc_callConstruct";
 				};
 				class ACE_MCC_Bunker {
 					displayName = "Bunker";
-					icon = "\A3\ui_f\data\map\mapcontrol\Stack_CA.paa";
+					icon = "\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa";
 					statement = "['bunker'] call MCC_fnc_callConstruct";
 				};
+
+				class ACE_MCC_wall {
+					displayName = "Beg Fence";
+					icon = "\A3\ui_f\data\map\mapcontrol\Stack_CA.paa";
+					statement = "['wall'] call MCC_fnc_callConstruct";
+				};
+
 				class ACE_MCC_HMG {
 					displayName = "HMG";
 					icon = "\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa";

@@ -1,5 +1,5 @@
 //=================================================================MCC_fnc_vehicleSpawnerInit==================================================================================
-//  [] call MCC_fnc_vehicleSpawnerInit
+//  [_this,"vehicle"] call MCC_fnc_vehicleSpawnerInit
 //  Init an object as a vehicle spawner and add an add action to it
 //  Parameter(s):
 //     0: OBJECT - objct to which items will be added

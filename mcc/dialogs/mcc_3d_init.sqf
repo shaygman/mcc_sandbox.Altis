@@ -2,8 +2,8 @@
 #define MCC_FACTION 8008
 #define MCC_UNIT_TYPE 8001
 #define MCC_UNIT_CLASS 8002
-#define MCC_NAMEBOX 8003 
-#define MCC_INITBOX 8004 
+#define MCC_NAMEBOX 8003
+#define MCC_INITBOX 8004
 #define MCC_PRESETS 8005
 #define MCC_SETTING_EMPTY 8006
 #define MCC_ZONE_LOC 8007
@@ -19,7 +19,8 @@ ctrlShow [MCC_3dTasksControlsIDC,false];
 disableSerialization;
 private ["_mccdialog","_comboBox","_displayname","_x"];
 
-MCC3DInitDone = false; 
+MCC3DInitDone = false;
+missionNamespace setVariable ["MCC_mcc_screen",1];
 
 _mccdialog = findDisplay MCC3D_IDD;
 uiNamespace setVariable ["MCC3D_Dialog", _this select 0];
@@ -43,7 +44,7 @@ lbClear _comboBox;
 {
 	_displayname =  _x;
 	_index = _comboBox lbAdd _displayname;
-} foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "D.O.C", "Ammo", "Objects (Fortifications)", "Objects (Dead Bodies)", "Objects (Furniture)", 
+} foreach ["Infantry", "Vehicles", "Tracked/Static", "Motorcycle", "Helicopter", "Fixed-wing", "Ship", "D.O.C", "Ammo", "Objects (Fortifications)", "Objects (Dead Bodies)", "Objects (Furniture)",
 			"Objects (Market)", "Objects (Construction)", "Objects (Signs)", "Objects (Flags)", "Objects (Military)","Objects (Small)", "Objects (Wrecks)", "Objects (Submerged)", "Objects (Tents)","Objects (Garbage)","Objects (Lamps)",
 			"Objects (Container)","Objects (Helpers)","Objects (Training)","Mines","Animals","Structures (Airport)","Structures (Military)","Structures (Cultural)","Structures (Walls)","Structures (Infrastructure)","Structures (commercial)",
 			"Structures (Industrial)","Structures (Town)","Structures (Village)","Structures (Fences)","Structures (General)","Backpacks","Intel","Items","Items (Headgear)","Items (Uniforms)","Items (Vests)","Weapons (Accessories)","Weapons (Handguns)",
@@ -64,7 +65,7 @@ lbClear _comboBox;
 	_displayname = _x select 0;
 	_comboBox lbAdd _displayname;
 } foreach MCC_ZoneLocation;
-_comboBox lbSetCurSel mcc_hc;	//MCC_ZoneLocation_index;	
+_comboBox lbSetCurSel mcc_hc;	//MCC_ZoneLocation_index;
 
-sleep 1; 
+sleep 1;
 MCC3DInitDone = true;

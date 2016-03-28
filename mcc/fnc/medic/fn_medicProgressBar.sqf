@@ -27,7 +27,7 @@ sleep 2;
 for [{_x=1},{_x<_time},{_x=_x+0.1}]  do
 {
 	_ctrl progressSetPosition (_x/_time);
-	if (player distance _unit > 2 || !(animationState player in _medicAnims) || !alive player || !alive _unit || (player getvariable ["MCC_medicUnconscious",false])) then {_fail = true; _x = _time};
+	if (player distance _unit > 2 || !(animationState player in _medicAnims) || !alive player || !alive _unit || (player getvariable ["MCC_medicUnconscious",false]) || isNull ((uiNamespace getVariable "MCC_interactionPB"))) then {_fail = true; _x = _time};
 	sleep 0.1;
 };
 

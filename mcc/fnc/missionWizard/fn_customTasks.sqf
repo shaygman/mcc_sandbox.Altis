@@ -22,14 +22,11 @@ _taskType				= _logic getvariable ["customTask",""];
 //Not a custom task? exit
 if (_taskType == "") exitWith {};
 
-switch (true) do
-{
-	case (_taskType in ["Secure_HVT"]):
-	{
+switch (true) do {
+	case (_taskType in ["Secure_HVT"]): {
 		waituntil {!alive _attachedUnit || isPlayer leader _attachedUnit || !(isNull attachedTo _attachedUnit)};
 
-		if (alive _attachedUnit) then
-		{
+		if (alive _attachedUnit) then {
 			_desc 	= format ["Get %1 back to base alive",name _attachedUnit];
 			_logic setvariable ["RscAttributeTaskState","Succeeded", true];
 			_logic setvariable ["updated",true];
@@ -40,64 +37,46 @@ switch (true) do
 			_logic setvariable ["updated",true];
 
 			_missionDone = false;
-			while {! _missionDone} do
-			{
-				if (!isnil "MCC_START_WEST") then
+			while {! _missionDone} do {
 				{
-					if (MCC_START_WEST distance _attachedUnit < 100) then
-					{
+					if (_x distance _attachedUnit < 100) then {
 						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
 						_missionDone = true;
 					};
-				};
+				} forEach [missionNamespace getvariable ["MCC_START_WEST",[0,0,0]],
+				           missionNamespace getvariable ["MCC_START_EAST",[0,0,0]],
+				           missionNamespace getvariable ["MCC_START_GUER",[0,0,0]],
+				           markerPos "respawn_west",
+				           markerPos "respawn_east",
+				           markerPos "respawn_guerrila"];
 
-				if (!isnil "MCC_START_EAST") then
-				{
-					if (MCC_START_EAST distance _attachedUnit < 100) then
-					{
-						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
-						_missionDone = true;
-					};
-				};
-
-				if (!isnil "MCC_START_GUER") then
-				{
-					if (MCC_START_GUER distance _attachedUnit < 100) then
-					{
-						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
-						_missionDone = true;
-					};
-				};
-
-				if (!alive _attachedUnit) then
-				{
+				if (!alive _attachedUnit) then {
 					_logic setvariable ["RscAttributeTaskState","Failed", true];
 					_missionDone = true;
 				};
 
 				sleep 5;
 			};
-		}
-		else
-		{
+		} else {
 			_logic setvariable ["RscAttributeTaskState","Failed", true];
 		};
 	};
 
-	case (_taskType in ["Kill_HVT"]):
-	{
+	case (_taskType in ["Kill_HVT"]): {
 		waituntil {!alive _attachedUnit || isPlayer leader _attachedUnit};
 		_logic setvariable ["RscAttributeTaskState","Succeeded", true];
 	};
 
-	case (_taskType in ["disableIED","pick_intel"]):
-	{
-		waituntil {isnull _attachedUnit};
-		_logic setvariable ["RscAttributeTaskState","Succeeded", true];
+	case (_taskType in ["disableIED","pick_intel"]): {
+		waituntil {isnull _attachedUnit || (_attachedUnit getvariable ["iedTrigered",false])};
+		if (isNull _attachedUnit) then {
+			_logic setvariable ["RscAttributeTaskState","Succeeded", true];
+		} else {
+			_logic setvariable ["RscAttributeTaskState","Failed", true];
+		};
 	};
 
-	case (_taskType in ["clear_area"]):
-	{
+	case (_taskType in ["clear_area"]): {
 		//Create Trigger
 		_pos = getpos _logic;
 		_trg = createTrigger["EmptyDetector", _pos];
@@ -119,8 +98,7 @@ switch (true) do
 		_logic setvariable ["RscAttributeTaskState","Succeeded", true];
 	};
 
-	case (_taskType in ["destroy_tanks","destroy_aa","destroy_artillery","destroy_cache","destroy_fuel","destroy_radio","destroy_radar"]):
-	{
+	case (_taskType in ["destroy_tanks","destroy_aa","destroy_artillery","destroy_cache","destroy_fuel","destroy_radio","destroy_radar"]): {
 		waituntil {!alive _attachedUnit};
 		_logic setvariable ["RscAttributeTaskState","Succeeded", true];
 	};

@@ -2,52 +2,54 @@
 // Interaction with containers object
 // Example:[player,_object]  call MCC_fnc_interactObject;
 //=============================================================================================================================================================================
-#define MCC_barrels ["garbagebarrel","garbagebin","toiletbox","garbagecontainer","fieldtoilet","tabledesk","cashdesk"]
-#define MCC_grave ["grave_forest","grave_dirt","grave_rocks"]
-#define MCC_containers ["woodenbox","barreltrash","metalbarrel_f","cratesplastic","cargo20","cargo40","crates"]
-#define MCC_food ["icebox","rack","shelves","sacks_goods","basket","sack_f"]
-//#define MCC_water ["water_source"]
-#define MCC_fuel ["watertank","waterbarrel","barrelwater","stallwater"]
-#define MCC_plantsFruit ["neriumo","ficusc"]
-#define MCC_misc ["fishinggear","crabcages","rowboat","calvary","pipes_small","woodpile","pallets_stack","wheelcart"]
-#define MCC_garbage ["garbagebags","junkpile","garbagepallet","tyres","garbagewashingmachine","scrapheap"]
-#define MCC_wreck ["wreck_car","wreck_truck","wreck_offroad","wreck_van"]
-#define MCC_wreckMil ["wreck_ural","wreck_uaz","wreck_hmmwv","wreck_heli","wreck_hunter","wreck_brdm","wreck_bmp","wreck_t72_hull","wreck_slammer"]
-#define MCC_wreckSub ["uwreck"]
-#define MCC_ammoBox ["woodenbox","luggageheap","pallet_milboxes_f"]
-
-#define MCC_medItems [["MCC_antibiotics"],["MCC_painkillers"],["MCC_bandage"],["MCC_vitamine"]]
-#define MCC_fuelItems [["MCC_fuelCan"],["MCC_fuelbot"]]
-#define MCC_repairItems [["MCC_ductTape"],["MCC_butanetorch"],["MCC_oilcan"],["MCC_metalwire"],["MCC_carBat"]]
-#define MCC_foodItem [["MCC_foodcontainer"],["MCC_cerealbox"],["MCC_bacon"],["MCC_rice"]]
-#define MCC_money [["MCC_waterpure"]]
-#define MCC_fruits ["MCC_fruit1","MCC_fruit2"]
-
 private ["_object","_typeOfobject","_ctrl","_break","_searchTime","_animation","_phase","_doorTypes","_isHouse","_loadName","_waitTime","_array","_displayname",
-         "_randomChance","_loot","_wepHolder","_class","_money","_rand","_wepArray"];
+         "_randomChance","_loot","_wepHolder","_class","_money","_rand","_wepArray","_randomAmmount"];
 disableSerialization;
 _object 	= _this select 0;
 if (isNil "MCC_interactionKey_holding") then {MCC_interactionKey_holding = false};
 
-if ((player distance _object < 7) && (MCC_interactionKey_holding || MCC_isACE) && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then {
+if ((player distance _object < 7) && (MCC_interactionKey_holding || (MCC_isACE && MCC_isMode)) && !(missionNameSpace getVariable [format ["MCC_isInteracted%1",getpos _object], false]) && (isNull attachedTo _object)) then {
+
+	//Get what we can have in the loot from the server
+	{
+		if (isNil _x) then {
+			if (isClass (missionconfigFile >> "CfgMCCspawnItems" >> _x)) then {
+				missionNamespace setVariable [_x,getArray (missionconfigFile >> "CfgMCCspawnItems" >> _x >> "itemClasses")];
+			} else {
+				missionNamespace setVariable [_x,getArray (configFile >> "CfgMCCspawnItems" >> _x >> "itemClasses")];
+			};
+		};
+	} forEach ["MCC_medItems","MCC_fuelItems","MCC_repairItems","MCC_foodItem","MCC_money","MCC_fruits","MCC_survivalWeapons","MCC_survivalMagazines","MCC_survivalAttachments"];
+
+	//No user defined weapons use MCC defaults
+	if (count (missionNamespace getVariable ["MCC_survivalWeapons",[]]) <= 0) then {
+		missionNamespace setVariable ["MCC_survivalWeapons",W_BINOS + W_LAUNCHERS +W_MG + W_PISTOLS + W_RIFLES + W_SNIPER];
+	};
+
+	if (count (missionNamespace getVariable ["MCC_survivalMagazines",[]]) <= 0) then {
+		missionNamespace setVariable ["MCC_survivalMagazines",U_MAGAZINES + U_UNDERBARREL +U_GRENADE + U_EXPLOSIVE];
+	};
+
+	if (count (missionNamespace getVariable ["MCC_survivalAttachments",[]]) <= 0) then {
+		missionNamespace setVariable ["MCC_survivalAttachments",W_ATTACHMENTS];
+	};
 
 	missionNameSpace setVariable [format ["MCC_isInteracted%1",getpos _object], true];
 	publicvariable format ["MCC_isInteracted%1",getpos _object];
 
 	//Create progress bar
-	_searchTime = if (MCC_isACE) then {3} else {10};
+	_searchTime = if ((MCC_isACE && MCC_isMode)) then {3} else {10};
 	_break		= false;
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutRsc ["MCC_interactionPB", "PLAIN"];
 	_ctrl = ((uiNameSpace getVariable "MCC_interactionPB") displayCtrl 2);
 	_ctrl ctrlSetText "Searching";
 	_ctrl = ((uiNameSpace getVariable "MCC_interactionPB") displayCtrl 1);
 
-	for [{_x=1},{_x<_searchTime},{_x=_x+0.1}]  do
-	{
+	for [{_x=1},{_x<_searchTime},{_x=_x+0.1}]  do {
 
 		_ctrl progressSetPosition (_x/_searchTime);
-		if (MCC_isACE && ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic")) then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
-		if ((_object distance player) > 5 || (!MCC_interactionKey_holding && !MCC_isACE)) then {_x = _searchTime; _break = true;};
+		if ((MCC_isACE && MCC_isMode) && ((animationState player)!="AinvPknlMstpSlayWrflDnon_medic")) then {player playMoveNow "AinvPknlMstpSlayWrflDnon_medic"};
+		if ((_object distance player) > 6 || (!MCC_interactionKey_holding && !(MCC_isACE && MCC_isMode))) then {_x = _searchTime; _break = true;};
 		sleep 0.1;
 	};
 	(["MCC_interactionPB"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
@@ -56,22 +58,31 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || MCC_isACE) &
 	//If moved to far from the IED
 	if (_break) exitwith {};
 
-	//Weapon/ammo/med/fuel/repair/food
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_barrels)>0) then {_typeOfobject = "barrel"; _randomChance =[0.025,0.05,0.05,0.1,0.1,0.1,0.2]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_grave)>0) then {_typeOfobject = "grave"; _randomChance =[0.1,0.2,0.05,0.05,0.15,0.05,0.2]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_containers)>0) then {_typeOfobject = "container"; _randomChance =[0.05,0.15,0.15,0.05,0.1,0.15,0.15]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_food)>0) then {_typeOfobject = "food"; _randomChance =[0.05,0.05,0.05,0.05,0.1,0.15,0.1]};
-	//if (({[_x , str _object] call BIS_fnc_inString} count MCC_water)>0) then {_typeOfobject = "water"; _randomChance =[0.05,0.1,0.1,0.2,0.2,0.4]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_fuel)>0) then {_typeOfobject = "fuel"; _randomChance =[0.05,0.05,0.05,0.15,0.1,0.05,0.15]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_plantsFruit)>0) then {_typeOfobject = "fruit"};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_misc)>0) then {_typeOfobject = "misc"; _randomChance =[0.05,0.1,0.05,0.05,0.15,0.1,0.15]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_garbage)>0) then {_typeOfobject = "garbage"; _randomChance =[0.05,0.1,0.05,0.05,0.15,0.05,0.05]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_wreck)>0) then {_typeOfobject = "wreck"; _randomChance =[0.05,0.2,0.15,0.15,0.1,0.05,0.1]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_wreckMil)>0) then {_typeOfobject = "mwreck"; _randomChance =[0.2,0.4,0.1,0.15,0.2,0.05,0.1]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_wreckSub)>0) then {_typeOfobject = "uwreck"; _randomChance =[0.3,0.5,0.05,0.2,0.2,0.05,0.1]};
-	if (({[_x , str _object] call BIS_fnc_inString} count MCC_ammoBox)>0) then {_typeOfobject = "ammobox"; _randomChance =[0.3,0.5,0.15,0.05,0.05,0.05,0.2]};
-	if (!isnil "_typeOfobject") then
+	//Find out what object category is it
+	//Weapon/ammo/med/fuel/repair/food/money
+	private ["_varName"];
+	_typeOfobject = "";
 	{
+		_varName = _x;
+		if (_typeOfobject != "") exitWith {};
+		{
+			if ([_x , str _object] call BIS_fnc_inString) exitWith {_typeOfobject = _varName};
+		} forEach (missionNamespace getVariable [_varName,[]]);
+	} forEach ([false] call MCC_fnc_getSurvivalPlaceHolders);
+
+	if (!isnil "_typeOfobject") then {
+		_randomChance = [];
+		_randomAmmount = [];
+		{
+			if (isClass (missionconfigFile >> "CfgMCCspawnObjects" >> _typeOfobject)) then {
+				_randomChance pushBack (getNumber (missionconfigFile >> "CfgMCCspawnObjects" >> _typeOfobject >> format ["chance%1",_x]));
+				_randomAmmount pushBack (getNumber (missionconfigFile >> "CfgMCCspawnObjects" >> _typeOfobject >> format ["max%1",_x]));
+			} else {
+				_randomChance pushBack (getNumber (configFile >> "CfgMCCspawnObjects" >> _typeOfobject >> format ["chance%1",_x]));
+				_randomAmmount pushBack (getNumber (configFile >> "CfgMCCspawnObjects" >> _typeOfobject >> format ["max%1",_x]));
+			};
+		} forEach ["Weapon","Ammo","Med","Fuel","Repair","Food","Money","fruit"];
+
 		//createvirtual wepholder
 		_wepHolder = "GroundWeaponHolder" createVehiclelocal getpos player;
 		_wepHolder setpos getpos player;
@@ -87,67 +98,48 @@ if ((player distance _object < 7) && (MCC_interactionKey_holding || MCC_isACE) &
 		while {isnil "_loot"} do {sleep 0.1;_loot = player getVariable ["MCC_readValue",nil]};
 
 		//If empty spawn check if it is time to respawn loot
-		if (count _loot == 1) then
-		{
-			if ((dateToNumber date - (_loot select 0))> (0.00273973*MCC_surviveModRefresh)) then
-			{
+		if (count _loot == 1) then {
+			if ((dateToNumber date - (_loot select 0))> (0.00273973*MCC_surviveModRefresh)) then {
 				_loot = [];
 			};
 		};
 
-		if (count _loot == 0) then
-		{
+		if (count _loot == 0) then {
 			//time stamp
 			_loot set [0, dateToNumber date];
-
+			private ["_max"];
 			//Fruit
-			if (_typeOfobject == "fruit") then
 			{
-				if (random 1 > 0.5) then
-				{
-					_array = [];
-					{
-						_array set [count _array,_x];
-					} foreach MCC_fruits;
+				_array = [MCC_survivalWeapons + MCC_survivalAttachments,
+				          MCC_survivalMagazines,
+				          MCC_medItems,
+				          MCC_fuelItems,
+				          MCC_repairItems,
+				          MCC_foodItem,
+				          MCC_money,
+				          MCC_fruits] select _foreachIndex;
 
-					_loot set [count _loot, _array call BIS_fnc_selectRandom];
-				};
-			}
-			else
-			{
-				{
-					_array = [W_BINOS + W_ATTACHMENTS + W_LAUNCHERS +W_MG + W_PISTOLS + W_RIFLES + W_SNIPER,
-					          U_MAGAZINES + U_UNDERBARREL +U_GRENADE + U_EXPLOSIVE,
-					          MCC_medItems,
-					          MCC_fuelItems,
-					          MCC_repairItems,
-					          MCC_foodItem,
-					          MCC_money] select _foreachIndex;
+				if (count _array > 0 && random 100 < _x) then {
+					_max = (floor random (_randomAmmount select _foreachIndex)) +1;
 
-					if (count _array > 0) then
-					{
-						for "_i" from 0 to (_x/0.1) do
-						{
-							if (random 1 < _x) then {_loot set [count _loot, (_array call BIS_fnc_selectRandom) select 0]};
-						};
+					for "_i" from 0 to _max do {
+						_loot pushBack ((_array call BIS_fnc_selectRandom) select 0);
 					};
-				} forEach _randomChance;
-			};
+				};
+			} forEach _randomChance;
 		};
 
-		for "_i" from 1 to (count _loot -1) do
-		{
+		for "_i" from 1 to (count _loot -1) do {
 			_class = _loot select _i;
-			if (_class in (MCC_foodItem + MCC_money + MCC_fruits + MCC_repairItems + MCC_fuelItems + MCC_medItems) || ({_x select 0 == _class} count W_ATTACHMENTS)>0) then
-			{
-				_wepHolder addMagazineCargoGlobal [_class,1]
-			}
-			else
-			{
-				switch (true) do
-				{
+			if (_class in (MCC_foodItem + MCC_money + MCC_fruits + MCC_repairItems + MCC_fuelItems + MCC_medItems) || ({_x select 0 == _class} count W_ATTACHMENTS)>0) then {
+				switch (true) do {
+					case (isClass (configFile >> "CfgMagazines" >> _class)) : {_wepHolder addMagazineCargoGlobal [_class,1]};
+					case (isClass (configFile >> "CfgWeapons" >> _class)) : {_wepHolder addWeaponCargoGlobal [_class,1]; if !(_class in weaponCargo _wepHolder) then {_wepHolder addItemCargoGlobal [_class,1]}};
+				};
+			} else {
+				switch (true) do {
 					case (isClass (configFile >> "CfgMagazines" >> _class)) : {_wepHolder addMagazineCargo [_class,1]};
-					case (isClass (configFile >> "CfgWeapons" >> _class)) : {_wepHolder addWeaponCargo [_class,1]};
+					case (isClass (configFile >> "CfgWeapons" >> _class)) : {_wepHolder addWeaponCargo [_class,1]; if !(_class in weaponCargo _wepHolder) then {_wepHolder addItemCargo [_class,1]}};
 				};
 			};
 		};

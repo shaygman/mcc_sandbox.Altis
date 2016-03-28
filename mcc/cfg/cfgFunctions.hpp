@@ -11,6 +11,7 @@ class general
 	file = "mcc\fnc\general";
 	#endif
 
+	class login {};
 	class activateAddons {preInit = 1; description = "Pre init addon";};
 	class gear	{preInit = 1; description = "Assign gear by roles";};
 
@@ -90,6 +91,7 @@ class ui
 	class getKeyFromCBA {description = "Get a pretty name from CBA key binds";};
 	class getGroupIconData {description = "get group icon depends on the group type and size";};
 	class 3Dcredits	{};
+	class musicTrigger {description = "Execute music or sound on all clients triggers";};
 };
 
 class ied
@@ -113,6 +115,7 @@ class ied
 	class SBSingle		{description = "Place suicide bomber.";};
 	class manageSB		{description = "Manage SB bomber behavior.";};
 	class mineSingle	{description = "Create a mine field.";};
+	class iedSync {};
 };
 
 class cas
@@ -146,6 +149,7 @@ class artillery
 	class calcSolution	{description = "calculate artillery solution high or low";};
 	class artyGetSolution	{description = "Broadcast artillery solution high or low";};
 	class consoleFireArtillery	{description = "Broadcast artillery to artillery units";};
+	class artillery {};
 };
 
 class groupGen
@@ -248,6 +252,7 @@ class mp
 	class radioSupport		{description = "Broadcast radio support to all elements not including the broadcaster group";};
 	class inidbGet	{};
 	class inidbSet 	{};
+	class handleDB {};
 };
 
 class actions
@@ -276,64 +281,7 @@ class actions
 	class callConstruct {description = "Call construct from ACE menu";};
 	class resupply {description = "Resupply ammo from an ammo box";};
 	class breakdown {description = "Breakdown MCC crate into supplies";};
-};
-
-class roleSelection
-{
-	#ifdef MCCMODE
-	file = "\mcc_sandbox_mod\mcc\fnc\roleSelection";
-	#else
-	file = "mcc\fnc\roleSelection";
-	#endif
-
-	class unlock	{description = "Check for gear unlocks and notify the player.";};
-	class gainXPfromRoles	{description = "gain XP from specific roles.";};
-	class createRespawnTent	{description = "Creates a respawn tent";};
-	class getVariable		{description = "Global execute a command on server only  - SERVER ONLY";};
-	class setValue			{description = "Sets variable with custom value on a specific player";};
-	class buildSpawnPoint	{description = "Create a spawn point to the given side - SERVER ONLY";};
-	class setGroupID		{description = "Set group ID - SERVER ONLY";};
-	class getGroupID		{description = "get group ID";};
-	class setGear			{description = "Sets gear to role";};
-	class assignGear		{description = " Sets gear to role";};
-	class addWeapon			{description = " Sets gear to role";};
-	class addItem {};
-	class setVariable{};
-	class allowedDrivers{};
-	class allowedWeapons{};
-	class handleRating 		{description = "Add xp for players when rating added";};
-	class createCameraOnPlayer {description = "Create a camera object on player";};
-};
-
-class interaction
-{
-	#ifdef MCCMODE
-	file = "\mcc_sandbox_mod\mcc\fnc\interaction";
-	#else
-	file = "mcc\fnc\interaction";
-	#endif
-
-	class interaction	{description = "Interaction perent";};
-	class interactMan	{description = "Interaction with man type";};
-	class interactManClicked	{};
-	class interactIED	{description = "Interaction with IED type";};
-	class interactDoor	{description = "Interaction with door type";};
-	class DOOR_CAM_Handler	{};
-	class DoorMenuClicked	{};
-	class interactObject	{description = "Interaction with containers object";};
-	class interactUtility	{description = "Interaction with utility object";};
-	class interactSelf	{description = "Interaction with self";};
-	class interactSelfClicked	{};
-	class requestDropOff	{description = "Request player or AI to drop off a cargo group in a specific place - shold run localy on the requestor";};
-	class isDoor	{description = "is the player facing a door";};
-	class isDoorLocked {description = "is the player facing a door";};
-	class checkDoor {description = "Give infor if the door is locked";};
-	class doorBreach {description = "Place a breaching charge on the door";};
-	class doorLock {description = "lock door";};
-	class doorUnlock {description = "unlock door";};
-	class doorCamera {description = "Mirror under the door";};
-	class isSurvivalObject {description = "check if an object is a survival object";};
-	class searchSurvivalObject {description = "Search a survival object";};
+	class ACEdropAmmobox {description = "Drop MCC ammbox in ACE";};
 };
 
 class radio
@@ -349,6 +297,7 @@ class radio
 	class VONRadioBroadcast {};
 	class VONRadiofindChannel {};
 	class VONRadioPressed {};
+	class assignChannelServer{};
 };
 
 class medic
@@ -382,35 +331,6 @@ class helpers
 	class deleteHelper		{description = "Delete ingame UI helper for interacted objects";};
 };
 
-class forts
-{
-	#ifdef MCCMODE
-	file = "\mcc_sandbox_mod\mcc\fnc\forts";
-	#else
-	file = "mcc\fnc\forts";
-	#endif
-
-	class buildFort {};
-	class fortSandbagLong {};
-	class fortSandbagRound {};
-	class fortRazorwire {};
-	class fortSandbagTower {};
-	class fortHBarrierSmall {};
-	class fortHBarrierLong {};
-	class forthBarrierCatwalk{};
-	class forthBarrierCorner {};
-	class forthBarrierCorridor {};
-	class forthBarrierTower {};
-	class fortAA {};
-	class fortAT {};
-	class fortGmg {};
-	class fortGMGHigh {};
-	class fortMG {};
-	class fortMGHigh {};
-	class fortMortar {};
-	class fortTower {};
-};
-
 class logistics
 {
 	#ifdef MCCMODE
@@ -437,6 +357,7 @@ class evac
 	class evacSpawn {description = "Spawn a vehicle with crew and gunners, mark it as an evac vehicle";};
 	class repairEvac {description = "Repair evac helicopter";};
 	class setEvac {description = "Sets an empty ot AI vehicle into an ecav for a specific side";};
+	class fastRopeLocal {description = "handles fast rope on clients";};
 };
 
 class ambient

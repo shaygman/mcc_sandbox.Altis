@@ -53,15 +53,11 @@ MCC_curator addCuratorEditableObjects [[_fakeIed],false];
 
 
 //Spawn AMBUSH
-if (_groupArray) then
-{
+if (_groupArray) then {
 	//Ambush Group
-	_groupArray = if (count MCC_MWGroupArrayMenRecon > 0) then
-	{
+	_groupArray = if (count MCC_MWGroupArrayMenRecon > 0) then {
 		if (random 1 > 0.5) then {MCC_MWGroupArrayMenRecon} else {MCC_MWGroupArrayMen};
-	}
-	else
-	{
+	} else {
 		MCC_MWGroupArrayMen
 	};
 
@@ -72,8 +68,7 @@ if (_groupArray) then
 	_time = time + 3;
 	_range = 200;
 	_ambushPos = [_pos, _range,100] call BIS_fnc_findOverwatch;
-	while {isOnRoad _ambushPos && (time < _time)} do
-	{
+	while {isOnRoad _ambushPos && (time < _time)} do {
 		_range = _range + 50;
 		_ambushPos = [_pos, _range,100] call BIS_fnc_findOverwatch;
 	};

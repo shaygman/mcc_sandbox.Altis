@@ -25,7 +25,7 @@ class MCC_VEHICLESPAWNER
 			x = 0.29375 * safezoneW + safezoneX;
 			y = 0.225 * safezoneH + safezoneY;
 			w = 0.417656 * safezoneW;
-			h = 0.385 * safezoneH;
+			h = 0.451 * safezoneH;
 		};
 
 		class vehicleClass: MCC_RscCombo
@@ -34,7 +34,7 @@ class MCC_VEHICLESPAWNER
 			onLBSelChanged = "[0] spawn MCC_fnc_vehicleSpawner";
 			x = 0.304062 * safezoneW + safezoneX;
 			y = 0.346 * safezoneH + safezoneY;
-			w = 0.216563 * safezoneW;
+			w = 0.278437 * safezoneW;
 			h = 0.055 * safezoneH;
 		};
 
@@ -43,7 +43,7 @@ class MCC_VEHICLESPAWNER
 			idc = 102;
 			text = "Purchase";
 			x = 0.319531 * safezoneW + safezoneX;
-			y = 0.544 * safezoneH + safezoneY;
+			y = 0.61 * safezoneH + safezoneY;
 			w = 0.139219 * safezoneW;
 			h = 0.055 * safezoneH;
 			onButtonClick = "[1] spawn MCC_fnc_vehicleSpawner";
@@ -54,7 +54,7 @@ class MCC_VEHICLESPAWNER
 			idc = -1;
 			text = "Close"; //--- ToDo: Localize;
 			x = 0.639219 * safezoneW + safezoneX;
-			y = 0.544 * safezoneH + safezoneY;
+			y = 0.61 * safezoneH + safezoneY;
 			w = 0.061875 * safezoneW;
 			h = 0.055 * safezoneH;
 			onButtonClick = "closeDialog 0;";
@@ -64,6 +64,7 @@ class MCC_VEHICLESPAWNER
 		{
 			idc = -1;
 			text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
+			tooltip = "Ammo";
 			x = 0.304062 * safezoneW + safezoneX;
 			y = 0.423 * safezoneH + safezoneY;
 			w = 0.0257812 * safezoneW;
@@ -73,7 +74,8 @@ class MCC_VEHICLESPAWNER
 		{
 			idc = -1;
 			text = __EVAL(MCCPATH +"data\IconRepair.paa");
-			x = 0.381406 * safezoneW + safezoneX;
+			tooltip = "Supplies";
+			x = 0.37625 * safezoneW + safezoneX;
 			y = 0.423 * safezoneH + safezoneY;
 			w = 0.0257812 * safezoneW;
 			h = 0.044 * safezoneH;
@@ -82,7 +84,8 @@ class MCC_VEHICLESPAWNER
 		{
 			idc = -1;
 			text = __EVAL(MCCPATH +"data\IconFuel.paa");
-			x = 0.45875 * safezoneW + safezoneX;
+			tooltip = "Fuel";
+			x = 0.448438 * safezoneW + safezoneX;
 			y = 0.423 * safezoneH + safezoneY;
 			w = 0.0257812 * safezoneW;
 			h = 0.044 * safezoneH;
@@ -98,7 +101,7 @@ class MCC_VEHICLESPAWNER
 		class repairText: MCC_RscText
 		{
 			idc = 1001;
-			x = 0.407187 * safezoneW + safezoneX;
+			x = 0.402031 * safezoneW + safezoneX;
 			y = 0.423 * safezoneH + safezoneY;
 			w = 0.04125 * safezoneW;
 			h = 0.044 * safezoneH;
@@ -106,7 +109,7 @@ class MCC_VEHICLESPAWNER
 		class fuelText: MCC_RscText
 		{
 			idc = 1002;
-			x = 0.484531 * safezoneW + safezoneX;
+			x = 0.474219 * safezoneW + safezoneX;
 			y = 0.423 * safezoneH + safezoneY;
 			w = 0.04125 * safezoneW;
 			h = 0.044 * safezoneH;
@@ -121,6 +124,28 @@ class MCC_VEHICLESPAWNER
 			h = 0.055 * safezoneH;
 			colorText[] = {0,1,1,1};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		};
+
+		class ValorPic: MCC_RscPicture
+		{
+			idc = -1;
+
+			text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
+			tooltip = "Fame";
+			x = 0.520625 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.0257812 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+
+		class ValorText: MCC_RscText
+		{
+			idc = 1003;
+
+			x = 0.546406 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.04125 * safezoneW;
+			h = 0.044 * safezoneH;
 		};
 
 		class availableResourcesTittle: MCC_RscText
@@ -138,10 +163,10 @@ class MCC_VEHICLESPAWNER
 		class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
 		{
 			idc = 80;
-			x = 0.592813 * safezoneW + safezoneX;
+			x = 0.592812 * safezoneW + safezoneX;
 			y = 0.313 * safezoneH + safezoneY;
 			w = 0.108281 * safezoneW;
-			h = 0.22 * safezoneH;
+			h = 0.286 * safezoneH;
 			class controls
 			{
 				class MCC_AmmoText: MCC_RscText
@@ -173,29 +198,13 @@ class MCC_VEHICLESPAWNER
 					w = 0.04125 * safezoneW;
 					h = 0.033 * safezoneH;
 				};
-				class MCC_FoodText: MCC_RscText
-				{
-					idc = 84;
 
-					x = 0.0257812 * safezoneW;
-					y = 0.143 * safezoneH;
-					w = 0.04125 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
-				class MCC_MedText: MCC_RscText
-				{
-					idc = 85;
-
-					x = 0.0257812 * safezoneW;
-					y = 0.187 * safezoneH;
-					w = 0.04125 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
 				class MCC_Ammo: MCC_RscPicture
 				{
 					idc = -1;
 
 					text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
+					tooltip = "Ammo";
 					x = 0.00515625 * safezoneW;
 					y = 0.011 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -206,6 +215,7 @@ class MCC_VEHICLESPAWNER
 					idc = -1;
 
 					text = __EVAL(MCCPATH +"data\IconRepair.paa");
+					tooltip = "Supplies";
 					x = 0.00515625 * safezoneW;
 					y = 0.055 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -216,29 +226,32 @@ class MCC_VEHICLESPAWNER
 					idc = -1;
 
 					text = __EVAL(MCCPATH +"data\IconFuel.paa");
+					tooltip = "Fuel";
 					x = 0.00515625 * safezoneW;
 					y = 0.099 * safezoneH;
 					w = 0.0154688 * safezoneW;
 					h = 0.033 * safezoneH;
 				};
-				class MCC_FoodPic: MCC_RscPicture
+
+				class MCC_ValorPic: MCC_RscPicture
 				{
 					idc = -1;
 
-					text = __EVAL(MCCPATH +"data\IconFood.paa");
+					text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
+					tooltip = "Fame";
 					x = 0.00515625 * safezoneW;
 					y = 0.143 * safezoneH;
 					w = 0.0154688 * safezoneW;
 					h = 0.033 * safezoneH;
 				};
-				class MCC_MedPic: MCC_RscPicture
-				{
-					idc = -1;
 
-					text = __EVAL(MCCPATH +"data\IconMed.paa");
-					x = 0.00515625 * safezoneW;
-					y = 0.187 * safezoneH;
-					w = 0.0154688 * safezoneW;
+				class MCC_ValorText: MCC_RscText
+				{
+					idc = 84;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.143 * safezoneH;
+					w = 0.04125 * safezoneW;
 					h = 0.033 * safezoneH;
 				};
 			};

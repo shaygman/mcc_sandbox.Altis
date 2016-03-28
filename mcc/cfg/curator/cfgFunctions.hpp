@@ -22,4 +22,6 @@ class curator
 	class curatorCampaignInit {description = "Starts MCC Campaign";};
 	class setResources {description = "Sets resources for each side";};
 	class curatorunderCover {description = "Sets player as undercover unit";};
+	class curatorModuleCapturePoint {};
+	class ambientDenied {};
 };

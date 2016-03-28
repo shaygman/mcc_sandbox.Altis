@@ -3,8 +3,8 @@
 
 #define mcc_playerConsole2_IDD 5000
 
-#define MCC_CONSOLE_UAVPIP 9106 
-#define MCC_CONSOLE_UAVMISSILELEFTTEXT 9107  
+#define MCC_CONSOLE_UAVPIP 9106
+#define MCC_CONSOLE_UAVMISSILELEFTTEXT 9107
 #define MCC_CONSOLE_UAVPIP_BCKG 9108
 #define MCC_CONSOLE_UAV_MISSILE_COUNT 9110
 #define MCC_CONSOLE_VISION_TEXT 9111
@@ -30,9 +30,9 @@
 class MCC_playerConsole2 {
   idd = mcc_playerConsole2_IDD;
   movingEnable = 1;
-  onLoad = __EVAL("[] execVM '"+MCCPATH+"mcc\dialogs\mcc_playerConsole2_init.sqf'"); 
-  
-  controlsBackground[] = 
+  onLoad = __EVAL("[] execVM '"+MCCPATH+"mcc\dialogs\mcc_playerConsole2_init.sqf'");
+
+  controlsBackground[] =
   {
   mcc_ConsolePic,
   mcc_ConsoleBackground,
@@ -40,14 +40,14 @@ class MCC_playerConsole2 {
   MCC_ConsoleUAVFeed,
   MCC_ConsoleUAVFeedBckg
   };
-  
+
 
   //---------------------------------------------
-  objects[] = 
-  { 
+  objects[] =
+  {
   };
-  
-  controls[] = 
+
+  controls[] =
   {
   mcc_consoleF1,
   mcc_consoleF2,
@@ -74,7 +74,7 @@ class MCC_playerConsole2 {
   MCC_mapConsole,
   MCC_ConsoleACMap
   };
-  
+
  //========================================= Background========================================
 	class mcc_ConsolePic: MCC_RscPicture	{idc = -1;text = __EVAL(MCCPATH +"data\console.paa");
 		x = -0.0446875 * safezoneW + safezoneX;
@@ -123,7 +123,7 @@ class mcc_consoleF2: MCC_RscButton
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
 	onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\console\conoleSwitchMenu.sqf'");
-	tooltip = "UAV Control"; 
+	tooltip = "UAV Control";
 };
 class mcc_consoleF3: MCC_RscButton
 {
@@ -140,7 +140,7 @@ class mcc_consoleF3: MCC_RscButton
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
 	onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\console\conoleSwitchMenu.sqf'");
-	tooltip = "AC-130 Control"; 
+	tooltip = "AC-130 Control";
 };
 class mcc_consoleF4: MCC_RscButton
 {
@@ -156,7 +156,7 @@ class mcc_consoleF4: MCC_RscButton
 	colorBackgroundActive[] = {0,0,0,0};
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
-	tooltip = "Forward observer artillery's interface"; 
+	tooltip = "Forward observer artillery's interface";
 	onButtonClick = __EVAL("[0,0,0,[1]] execVM '"+MCCPATH+"mcc\general_scripts\console\conoleOpenMenu.sqf'");
 };
 class mcc_consoleF5: MCC_RscButton
@@ -173,7 +173,7 @@ class mcc_consoleF5: MCC_RscButton
 	colorBackgroundActive[] = {0,0,0,0};
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
-	tooltip = "Construction interface"; 
+	tooltip = "Construction interface";
 	onButtonClick ="while {dialog} do {closeDialog 0}; createDialog 'MCC_LOGISTICS_BASE_BUILD'";
 };
 class mcc_consoleF6: MCC_RscButton
@@ -191,7 +191,7 @@ class mcc_consoleF6: MCC_RscButton
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
 };
-class MCC_ConsoleExitButton: MCC_RscButton 
+class MCC_ConsoleExitButton: MCC_RscButton
 {
 		idc = -1;
 		text = "";
@@ -206,7 +206,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		colorBackgroundActive[] = {0,0,0,0};
 		colorDisabled[] = {0,0,0,0};
 		colorBackgroundDisabled[] = {0,0,0,0};
-		tooltip = "Close the conosle"; 
+		tooltip = "Close the conosle";
 		onButtonClick = "closedialog 0;";
 };
 	//=============================UAV========================================================
@@ -228,7 +228,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.561458 * safezoneW;
 		h = 0.472816 * safezoneH;
-		
+
 	};
 	class MCC_ConsoleUAVFeedTargetPic: MCC_RscPicture
 	{
@@ -238,7 +238,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		y = 0.225107 * safezoneH + safezoneY;
 		w = 0.561458 * safezoneW;
 		h = 0.472816 * safezoneH;
-		
+
 	};
 	class MCC_ConsoleUAVFeedFrame: MCC_RscFrame
 	{
@@ -270,7 +270,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		y = 0.708919 * safezoneH + safezoneY;
 		w = 0.131771 * safezoneW;
 		h = 0.0329871 * safezoneH;
-		tooltip = "Change UAV camera mod"; 
+		tooltip = "Change UAV camera mod";
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 	class MCC_ConsoleUAVFlightHight: MCC_RscSlider
@@ -315,7 +315,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		h = 0.0329871 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	};
-	
+
 	class MCC_ConsoleUAVVisionText: MCC_RscText
 	{
 		idc = MCC_CONSOLE_VISION_TEXT;
@@ -345,7 +345,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	};
-	
+
 	class MCC_ConsoleUAVDirText: MCC_RscText
 	{
 		idc = MCC_CONSOLE_DIR_TEXT;
@@ -356,7 +356,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		h = 0.0439828 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	};
-	
+
 	class MCC_ConsoleCompassN: MCC_RscText
 	{
 		idc = MCC_CONSOLE_COMPASS_N;

@@ -43,8 +43,6 @@ class MCC_playerConsole {
   {
   mcc_ConsolePic,
   mcc_ConsoleBackground,
-  MCC_ConsoleCASFrame,
-  MCC_ConsoleEvacFrame,
   MCC_mapBackground,
   MCC_mapConsole,
   MCC_ConsoleInfoText
@@ -82,21 +80,12 @@ class MCC_playerConsole {
   MCC_ConsoleInfoLiveFeedTM,
   MCC_ConsoleInfoLiveFeedClose,
   MCC_ConsoleInfoUAVControl,
-  MCC_ConsoleCASAvailableText,
-  MCC_ConsoleCASAvailableTextBox,
-  MCC_ConsoleCallCASButton,
-  MCC_ConsoleAirdropAvailableText,
-  MCC_ConsoleAirdropAvailableTextBox,
-  MCC_ConsoleAirdropCallButton,
-  MCC_ConsoleEvacText,
-  MCC_ConsoleEvacTypeText,
-  MCC_ConsoleEvacType,
-  MCC_ConsoleEvacFlyHightText,
-  MCC_ConsoleEvacFlyHightComboBox,
-  MCC_ConsoleEvacApproachText,
-  MCC_ConsoleEvacApproachComboBox,
-  MCC_ConsoleCallEvacButton,
-  MCC_ConsoleCallEvac3WPButton,
+  RscControlsGroupCAS,
+  RscControlsCASFolderOut,
+  RscControlsGroupAirdrop,
+  RscControlsADFolderOut,
+  RscControlsGroupEvac,
+  RscControlsEvacFolderOut,
   MCC_ConsoleHelp
   };
 
@@ -107,20 +96,17 @@ class MCC_playerConsole {
 		w = 1.00406 * safezoneW;
 		h = 0.840187 * safezoneH;
 	};
-	class mcc_ConsoleBackground: MCC_RscText	{idc = -1;text = "";colorBackground[] = { 0, 0, 0, 1};x = 0.204688 * safezoneW + safezoneX;y = 0.2025 * safezoneH + safezoneY;w = 0.590625 * safezoneW;h = 0.595 * safezoneH;};
-	class MCC_ConsoleCASFrame: MCC_RscFrame {idc = -1;
-		x = 0.217419 * safezoneW + safezoneX;
-		y = 0.254945 * safezoneH + safezoneY;
-		w = 0.229687 * safezoneW;
-		h = 0.0840187 * safezoneH;
-	};
-	class MCC_ConsoleEvacFrame: MCC_RscFrame {
+	class mcc_ConsoleBackground: MCC_RscText
+	{
 		idc = -1;
-		x = 0.217813 * safezoneW + safezoneX;
-		y = 0.401978 * safezoneH + safezoneY;
-		w = 0.229687 * safezoneW;
-		h = 0.0700156 * safezoneH;
+		text = "";
+		colorBackground[] = { 0, 0, 0, 1};
+		x = 0.204688 * safezoneW + safezoneX;
+		y = 0.2025 * safezoneH + safezoneY;
+		w = 0.590625 * safezoneW;
+		h = 0.595 * safezoneH;
 	};
+
 //============================================Buttons==========================================
 class mcc_consoleF1: MCC_RscButton
 {
@@ -225,10 +211,10 @@ class mcc_consoleF6: MCC_RscButton
  //===========================================Map==============================================
 	class MCC_mapBackground : MCC_RscPicture {
 		idc = MCC_MAPBACKGROUND;
-		x = 0.462187 * safezoneW + safezoneX;
-		y = 0.213012 * safezoneH + safezoneY;
-		w = 0.326562 * safezoneW;
-		h = 0.494807 * safezoneH;
+		x = 0.204688 * safezoneW + safezoneX;
+		y = 0.2025 * safezoneH + safezoneY;
+		w = 0.590625 * safezoneW;
+		h = 0.56 * safezoneH;
 		text = "#(argb,512,512,1)r2t(rendertarget12,1.0);";
 	};
 	class MCC_mapConsole : MCC_RscMapControl {
@@ -236,158 +222,393 @@ class mcc_consoleF6: MCC_RscButton
 		moving = true;
 		colorBackground[] = { 1, 1, 1, 1};
 		colorText[] = { 1, 1, 1, 0};
-		x = 0.462187 * safezoneW + safezoneX;
-		y = 0.213012 * safezoneH + safezoneY;
-		w = 0.326562 * safezoneW;
-		h = 0.494807 * safezoneH;
+		x = 0.204688 * safezoneW + safezoneX;
+		y = 0.2025 * safezoneH + safezoneY;
+		w = 0.590625 * safezoneW;
+		h = 0.56 * safezoneH;
 		onMouseButtonDown = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\console\mouseDown.sqf'");
 		onMouseButtonUp = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\console\mouseUp.sqf'");
 		onMouseButtonDblClick = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\console\mouseDblClick.sqf'");
 		onMouseMoving = __EVAL("[_this] execVM '"+MCCPATH+"mcc\general_scripts\console\mouseMoving.sqf'");
 	};
  //========================================= Controls========================================
-	//CAS
-	class MCC_ConsoleCASAvailableText: MCC_RscText {
-		idc = -1;
-		text = "CAS Available:";
-		x = 0.215581 * safezoneW + safezoneX;
-		y = 0.202574 * safezoneH + safezoneY;
-		w = 0.11849 * safezoneW;
-		h = 0.035 * safezoneH;
-		colorText[] = {0,1,1,1};
-		colorBackground[] = {1,1,1,0};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	};
-	class MCC_ConsoleCASAvailableTextBox: MCC_RscListBox {
-		idc = MCC_ConsoleCASAvailableTextBox_IDD;
-		x = 0.217419 * safezoneW + safezoneX;
-		y = 0.254945 * safezoneH + safezoneY;
-		w = 0.229687 * safezoneW;
-		h = 0.0840187 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
-	class MCC_ConsoleCallCASButton: MCC_RscButton {
-		idc = -1;
-		text = "Call CAS";
-		x = 0.36875 * safezoneW + safezoneX;
-		y = 0.205934 * safezoneH + safezoneY;
-		w = 0.07875 * safezoneW;
-		h = 0.0280062 * safezoneH;
-		tooltip = "Call selected CAS - Click and drag on the mini-map to define CAS's approach";
-		onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\console\console_request.sqf'");
-	};
-	//Airdrop
-	class MCC_ConsoleAirdropAvailableText: MCC_RscText {
-		idc = -1;
-		text = "Airdrop Available:";
-		x = 0.215581 * safezoneW + safezoneX;
-		y = 0.359969 * safezoneH + safezoneY;
-		w = 0.105 * safezoneW;
-		h = 0.0280062 * safezoneH;
-		colorText[] = {0,1,1,1};
-		colorBackground[] = {1,1,1,0};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	};
-	class MCC_ConsoleAirdropAvailableTextBox: MCC_RscListBox {
-		idc = MCC_ConsoleAirdropAvailableTextBox_IDD;
-		x = 0.217813 * safezoneW + safezoneX;
-		y = 0.401978 * safezoneH + safezoneY;
-		w = 0.229687 * safezoneW;
-		h = 0.0700156 * safezoneH;
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-	};
-	class MCC_ConsoleAirdropCallButton: MCC_RscButton {
-		idc = -1;text = "Call Airdrop";
-		x = 0.362187 * safezoneW + safezoneX;
-		y = 0.359969 * safezoneH + safezoneY;
-		w = 0.07875 * safezoneW;
-		h = 0.0280062 * safezoneH;
-		tooltip = "Call selected airdrop - Click and drag on the mini-map to define airdrop's approach";
-		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\console_request.sqf'");
-	};
-	//==============================EVAC===========================================
-	class MCC_ConsoleEvacText: MCC_RscText {
-		idc = -1;
-		text = "Evac Management:"; //--- ToDo: Localize;
-		x = 0.215581 * safezoneW + safezoneX;
-		y = 0.485997 * safezoneH + safezoneY;
-		w = 0.142187 * safezoneW;
-		h = 0.035 * safezoneH;
-		colorText[] = {0,1,1,1};
-		colorBackground[] = {1,1,1,0};
-		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	};
-	class MCC_ConsoleEvacTypeText: MCC_RscText {
-		idc = -1;
-		text = "Evac:"; //--- ToDo: Localize;
-		x = 0.217813 * safezoneW + safezoneX;
-		y = 0.542009 * safezoneH + safezoneY;
-		w = 0.07875 * safezoneW;
-		h = 0.0280062 * safezoneH;
-		colorText[] = {1,1,1,1};
-		colorBackground[] = {1,1,1,0};
-	};
-	class MCC_ConsoleEvacType: MCC_RscCombo
+ 	class RscControlsGroupCAS: MCC_RscControlsGroupNoScrollbars
 	{
-		idc = MCC_ConsoleEvacTypeText_IDD;
-		onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\evac_focus.sqf'");
-		x = 0.322812 * safezoneW + safezoneX;
-		y = 0.542009 * safezoneH + safezoneY;
-		w = 0.105 * safezoneW;
-		h = 0.0280062 * safezoneH;
+		idc = 2010;
+		x = 0.205 * safezoneW + safezoneX;
+		y = 0.2 * safezoneH + safezoneY;
+		w = 0 * safezoneW;
+		h = 0.143 * safezoneH;
+		class controls
+		{
+			class MCC_ConsoleCASBkcg: MCC_RscText
+			{
+				idc = -1;
+				text = "";
+				colorBackground[] = {0,0,0,0.8};
+				x = 0 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.257813 * safezoneW;
+				h = 0.143 * safezoneH;
+			};
+
+			class MCC_ConsoleCASAvailableText: MCC_RscText
+			{
+				idc = -1;
+
+				text = "CAS Available:";
+				x = 0.00515602 * safezoneW;
+				y = 0.011 * safezoneH;
+				w = 0.113437 * safezoneW;
+				h = 0.033 * safezoneH;
+				colorText[] = {0,1,1,1};
+				colorBackground[] = {1,1,1,0};
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			};
+			class MCC_ConsoleCASAvailableTextBox: MCC_RscListbox
+			{
+				idc = MCC_ConsoleCASAvailableTextBox_IDD;
+
+				x = 0.00515602 * safezoneW;
+				y = 0.055 * safezoneH;
+				w = 0.226875 * safezoneW;
+				h = 0.077 * safezoneH;
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			};
+			class MCC_ConsoleCASFrame: MCC_RscFrame
+			{
+				idc = -1;
+				x = 0.00515602 * safezoneW;
+				y = 0.055 * safezoneH;
+				w = 0.226875 * safezoneW;
+				h = 0.077 * safezoneH;
+			};
+			class MCC_ConsoleCallCASButton: MCC_RscButton
+			{
+				idc = -1;
+				onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\console\console_request.sqf'");
+
+				text = "Call CAS";
+				x = 0.154688 * safezoneW;
+				y = 0.011 * safezoneH;
+				w = 0.0773437 * safezoneW;
+				h = 0.033 * safezoneH;
+				tooltip = "Call selected CAS - Click and drag on the mini-map to define CAS's approach";
+			};
+
+			class MCC_ConsoleCASFolderIn: MCC_RscButtonMenu
+			{
+				idc = 1010;
+				x = 0.237813 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.143 * safezoneH;
+			};
+		};
 	};
-	class MCC_ConsoleEvacFlyHightText: MCC_RscText {
-		idc = -1;
-		text = "Flight Hight:"; //--- ToDo: Localize;
-		x = 0.217813 * safezoneW + safezoneX;
-		y = 0.626028 * safezoneH + safezoneY;
-		w = 0.0853125 * safezoneW;
-		h = 0.0280062 * safezoneH;
-		colorText[] = {1,1,1,1};
-		colorBackground[] = {1,1,1,0};
+
+	class RscControlsCASFolderOut: MCC_RscControlsGroupNoScrollbars
+	{
+		idc = 1011;
+		x = 0.205 * safezoneW + safezoneX;
+		y = 0.2 * safezoneH + safezoneY;
+		w = 0.02 * safezoneW;
+		h = 0.143 * safezoneH;
+		class controls
+		{
+			class MCC_ConsoleCASFolderOut: MCC_RscText
+			{
+				idc = -1;
+				colorBackground[] = {0.25,0.25,0.25,0.8};
+				x = 0 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.143 * safezoneH;
+			};
+
+			class MCC_ConsoleCASFolderOutPic: MCC_RscPicture
+			{
+				idc = -1;
+				text =  __EVAL(MCCPATH +"mcc\interaction\data\cas_ca.paa");
+				x = 0 * safezoneW;
+				y = 0.05 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.02 * safezoneH;
+			};
+		};
 	};
-	class MCC_ConsoleEvacFlyHightComboBox: MCC_RscCombo {
-		idc = MCC_ConsoleEvacFlyHightComboBox_IDD;
-		x = 0.322812 * safezoneW + safezoneX;
-		y = 0.626028 * safezoneH + safezoneY;
-		w = 0.105 * safezoneW;
-		h = 0.0280062 * safezoneH;
+
+	class RscControlsGroupAirdrop: MCC_RscControlsGroupNoScrollbars
+	{
+		idc = 2020;
+		x = 0.205 * safezoneW + safezoneX;
+		y = 0.35 * safezoneH + safezoneY;
+		w = 0 * safezoneW;
+		h = 0.143 * safezoneH;
+		class controls
+		{
+			class MCC_ConsoleADBkcg: MCC_RscText
+			{
+				idc = -1;
+				text = "";
+				colorBackground[] = {0,0,0,0.8};
+				x = 0 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.257813 * safezoneW;
+				h = 0.143 * safezoneH;
+			};
+
+			class MCC_ConsoleAirdropAvailableText: MCC_RscText
+			{
+				idc = -1;
+
+				text = "Airdrop Available:";
+				x = 0.00515602 * safezoneW;
+				y = 0.011 * safezoneH;
+				w = 0.113437 * safezoneW;
+				h = 0.033 * safezoneH;
+				colorText[] = {0,1,1,1};
+				colorBackground[] = {1,1,1,0};
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			};
+			class MCC_ConsoleAirdropAvailableTextBox: MCC_RscListbox
+			{
+				idc = MCC_ConsoleAirdropAvailableTextBox_IDD;
+
+				x = 0.00515602 * safezoneW;
+				y = 0.055 * safezoneH;
+				w = 0.226875 * safezoneW;
+				h = 0.077 * safezoneH;
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			};
+			class MCC_ConsoleAirdropFrame: MCC_RscFrame
+			{
+				idc = -1;
+				x = 0.00515602 * safezoneW;
+				y = 0.055 * safezoneH;
+				w = 0.226875 * safezoneW;
+				h = 0.077 * safezoneH;
+			};
+			class MCC_ConsoleAirdropCallButton: MCC_RscButton
+			{
+				idc = -1;
+				onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\console_request.sqf'");
+
+				text = "Call Airdrop";
+				x = 0.154688 * safezoneW;
+				y = 0.011 * safezoneH;
+				w = 0.0773437 * safezoneW;
+				h = 0.033 * safezoneH;
+				tooltip = "Call selected airdrop - Click and drag on the mini-map to define airdrop's approach";
+			};
+
+			class MCC_ConsoleADFolderIn: MCC_RscButtonMenu
+			{
+				idc = 1020;
+				x = 0.237813 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.143 * safezoneH;
+			};
+		};
 	};
-	class MCC_ConsoleEvacApproachText: MCC_RscText {
-		idc = -1;
-		text = "Insertion:"; //--- ToDo: Localize;
-		x = 0.217813 * safezoneW + safezoneX;
-		y = 0.584019 * safezoneH + safezoneY;
-		w = 0.0853125 * safezoneW;
-		h = 0.0280062 * safezoneH;
-		colorBackground[] = {1,1,1,0};
+
+	class RscControlsADFolderOut: MCC_RscControlsGroupNoScrollbars
+	{
+		idc = 1021;
+		x = 0.205 * safezoneW + safezoneX;
+		y = 0.35 * safezoneH + safezoneY;
+		w = 0.02 * safezoneW;
+		h = 0.143 * safezoneH;
+		class controls
+		{
+			class MCC_ConsoleADFolderOut: MCC_RscText
+			{
+				idc = -1;
+				colorBackground[] = {0.25,0.25,0.25,0.8};
+				x = 0 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.143 * safezoneH;
+			};
+
+			class MCC_ConsoleADSFolderOutPic: MCC_RscPicture
+			{
+				idc = -1;
+				text =  __EVAL(MCCPATH +"mcc\interaction\data\supplydrop_ca.paa");
+				x = 0 * safezoneW;
+				y = 0.05 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.02 * safezoneH;
+			};
+		};
 	};
-	class MCC_ConsoleEvacApproachComboBox: MCC_RscCombo {
-		idc = MCC_ConsoleEvacApproachComboBox_IDD;
-		x = 0.322812 * safezoneW + safezoneX;
-		y = 0.584019 * safezoneH + safezoneY;
-		w = 0.105 * safezoneW;
-		h = 0.0280062 * safezoneH;
+
+	class RscControlsGroupEvac: MCC_RscControlsGroupNoScrollbars
+	{
+		idc = 2030;
+		x = 0.205 * safezoneW + safezoneX;
+		y = 0.52 * safezoneH + safezoneY;
+		w = 0 * safezoneW;
+		h = 0.154 * safezoneH;
+		class controls
+		{
+			class MCC_ConsoleEvacBkcg: MCC_RscText
+			{
+				idc = -1;
+				text = "";
+				colorBackground[] = {0,0,0,0.8};
+				x = 0 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.257813 * safezoneW;
+				h = 0.154 * safezoneH;
+			};
+
+			class MCC_ConsoleEvacText: MCC_RscText
+			{
+				idc = -1;
+
+				text = "Evac Management:";
+				x = 0.004635 * safezoneW;
+				y = 0.008222 * safezoneH;
+				w = 0.165 * safezoneW;
+				h = 0.033 * safezoneH;
+				colorText[] = {0,1,1,1};
+				colorBackground[] = {1,1,1,0};
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+			};
+			class MCC_ConsoleEvacTypeText: MCC_RscText
+			{
+				idc = -1;
+
+				text = "Evac:";
+				x = 0.004635 * safezoneW;
+				y = 0.052222 * safezoneH;
+				w = 0.0567187 * safezoneW;
+				h = 0.022 * safezoneH;
+				colorText[] = {1,1,1,1};
+				colorBackground[] = {1,1,1,0};
+			};
+			class MCC_ConsoleEvacType: MCC_RscCombo
+			{
+				idc = MCC_ConsoleEvacTypeText_IDD;
+				onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\evac_focus.sqf'");
+
+				x = 0.06651 * safezoneW;
+				y = 0.052222 * safezoneH;
+				w = 0.103125 * safezoneW;
+				h = 0.022 * safezoneH;
+			};
+			class MCC_ConsoleEvacFlyHightText: MCC_RscText
+			{
+				idc = -1;
+
+				text = "Flight Hight:";
+				x = 0.004635 * safezoneW;
+				y = 0.118222 * safezoneH;
+				w = 0.0567187 * safezoneW;
+				h = 0.022 * safezoneH;
+				colorText[] = {1,1,1,1};
+				colorBackground[] = {1,1,1,0};
+			};
+			class MCC_ConsoleEvacFlyHightComboBox: MCC_RscCombo
+			{
+				idc = MCC_ConsoleEvacFlyHightComboBox_IDD;
+
+				x = 0.06651 * safezoneW;
+				y = 0.118222 * safezoneH;
+				w = 0.103125 * safezoneW;
+				h = 0.022 * safezoneH;
+			};
+			class MCC_ConsoleEvacApproachText: MCC_RscText
+			{
+				idc = -1;
+
+				text = "Insertion:";
+				x = 0.004635 * safezoneW;
+				y = 0.085222 * safezoneH;
+				w = 0.0567187 * safezoneW;
+				h = 0.022 * safezoneH;
+				colorBackground[] = {1,1,1,0};
+			};
+			class MCC_ConsoleEvacApproachComboBox: MCC_RscCombo
+			{
+				idc = MCC_ConsoleEvacApproachComboBox_IDD;
+
+				x = 0.06651 * safezoneW;
+				y = 0.085222 * safezoneH;
+				w = 0.103125 * safezoneW;
+				h = 0.022 * safezoneH;
+			};
+			class MCC_ConsoleCallEvacButton: MCC_RscButton
+			{
+				idc = -1;
+				onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
+
+				text = "Call EVAC";
+				x = 0.174791 * safezoneW;
+				y = 0.041222 * safezoneH;
+				w = 0.06 * safezoneW;
+				h = 0.044 * safezoneH;
+				tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			};
+			class MCC_ConsoleCallEvac3WPButton: MCC_RscButton
+			{
+				idc = -1;
+				onButtonClick = __EVAL("nul=[1] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
+
+				text = "Call EVAC 3 WP";
+				x = 0.174791 * safezoneW;
+				y = 0.096222 * safezoneH;
+				w = 0.06 * safezoneW;
+				h = 0.044 * safezoneH;
+				tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			};
+
+			class MCC_ConsoleEvacFolderIn: MCC_RscButtonMenu
+			{
+				idc = 1030;
+				x = 0.237813 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.154 * safezoneH;
+			};
+		};
 	};
-	class MCC_ConsoleCallEvacButton: MCC_RscButton {
-		idc = -1;text = "Call EVAC";
-		x = 0.217813 * safezoneW + safezoneX;
-		y = 0.668037 * safezoneH + safezoneY;
-		w = 0.0853125 * safezoneW;
-		h = 0.0420094 * safezoneH;
-		tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
-		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
+
+	class RscControlsEvacFolderOut: MCC_RscControlsGroupNoScrollbars
+	{
+		idc = 1031;
+		x = 0.205 * safezoneW + safezoneX;
+		y = 0.52 * safezoneH + safezoneY;
+		w = 0.02 * safezoneW;
+		h = 0.154 * safezoneH;
+		class controls
+		{
+			class MCC_ConsoleEvacFolderOut: MCC_RscText
+			{
+				idc = -1;
+				colorBackground[] = {0.25,0.25,0.25,0.8};
+				x = 0 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.154 * safezoneH;
+			};
+
+			class MCC_ConsoleEvacFolderOutPic: MCC_RscPicture
+			{
+				idc = -1;
+				text =  __EVAL(MCCPATH +"mcc\interaction\data\transport_ca.paa");
+				x = 0 * safezoneW;
+				y = 0.06 * safezoneH;
+				w = 0.02 * safezoneW;
+				h = 0.02 * safezoneH;
+			};
+		};
 	};
-	class MCC_ConsoleCallEvac3WPButton: MCC_RscButton {
-		idc = -1;
-		text = "Call EVAC 3 WP";
-		x = 0.322812 * safezoneW + safezoneX;
-		y = 0.668037 * safezoneH + safezoneY;
-		w = 0.105 * safezoneW;
-		h = 0.0420094 * safezoneH;
-		tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
-		onButtonClick = __EVAL("nul=[1] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
-	};
+
 	class MCC_ConsoleWPBckgr: MCC_RscStructuredText
 		{
 			idc = MCC_CONSOLEWPBCKGR;
@@ -494,8 +715,8 @@ class mcc_consoleF6: MCC_RscButton
 		idc = MCC_ConsoleMapRulerButton;
 		text = "Ruler";
 		tooltip = "Activate the map ruler - left click on the map and drag from one point to another to measure distance and direction";
-		x = 0.462187 * safezoneW + safezoneX;
-		y = (0.213012 * safezoneH + safezoneY) + (0.494807 * safezoneH);
+		x = 0.4 * safezoneW + safezoneX;
+		y = 0.763 * safezoneH + safezoneY;
 		w = 0.06 * safezoneW;
 		h = 0.03 * safezoneH;
 		onButtonClick =  "MCC_ConsoleRuler = true";
@@ -504,23 +725,23 @@ class mcc_consoleF6: MCC_RscButton
 	class MCC_ConsoleMapRulerDir: MCC_RscText {
 		idc = MCC_ConsoleMapRulerDir;
 		text = "Direction:";
-		x = (0.462187 * safezoneW + safezoneX) + (0.065 * safezoneW);
-		y = (0.213012 * safezoneH + safezoneY) + (0.494807 * safezoneH);
+		x = (0.4 * safezoneW + safezoneX) + (0.065 * safezoneW);
+		y = 0.763 * safezoneH + safezoneY;
 		w = 0.08 * safezoneW;
 		h = 0.03 * safezoneH;
 	};
 	class MCC_ConsoleMapRulerDis: MCC_RscText {
 		idc = MCC_ConsoleMapRulerDis;
 		text = "Distance:";
-		x = (0.462187 * safezoneW + safezoneX) + (0.195 * safezoneW);
-		y = (0.213012 * safezoneH + safezoneY) + (0.494807 * safezoneH);
+		x = (0.4 * safezoneW + safezoneX) + (0.195 * safezoneW);
+		y = 0.763 * safezoneH + safezoneY;
 		w = 0.08 * safezoneW;
 		h = 0.03 * safezoneH;
 	};
 	class MCC_ConsoleInfoLiveFeedNormal: MCC_RscButton {
 		idc = MCC_CONSOLEINFOLIVEFEEDNORMAL;
 		text = "Video";
-		x = 0.462187 * safezoneW + safezoneX;
+		x = 0.37 * safezoneW + safezoneX;
 		y = (0.213012 * safezoneH + safezoneY) + (0.494807 * safezoneH);
 		w = 0.06 * safezoneW;
 		h = 0.03 * safezoneH;
@@ -530,7 +751,7 @@ class mcc_consoleF6: MCC_RscButton
 	class MCC_ConsoleInfoLiveFeedNV: MCC_RscButton {
 		idc = MCC_CONSOLEINFOLIVEFEEDNV;
 		text = "N/V";
-		x = (0.462187 * safezoneW + safezoneX) + (0.065 * safezoneW);
+		x = (0.37 * safezoneW + safezoneX) + (0.065 * safezoneW);
 		y = (0.213012 * safezoneH + safezoneY) + (0.494807 * safezoneH);
 		w = 0.06 * safezoneW;
 		h = 0.03 * safezoneH;
@@ -539,12 +760,23 @@ class mcc_consoleF6: MCC_RscButton
 	class MCC_ConsoleInfoLiveFeedTM: MCC_RscButton {
 		idc = MCC_CONSOLEINFOLIVEFEEDTM;
 		text = "T/I";
-		x = (0.462187 * safezoneW + safezoneX) + (0.13 * safezoneW);
+		x = (0.37 * safezoneW + safezoneX) + (0.13 * safezoneW);
 		y = (0.213012 * safezoneH + safezoneY) + (0.494807 * safezoneH);
 		w = 0.06 * safezoneW;
 		h = 0.03 * safezoneH;
 		onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\console\liveFeed.sqf'");
 	};
+
+	class MCC_ConsoleInfoLiveFeedClose: MCC_RscButton {
+		idc = MCC_CONSOLEINFOLIVEFEEDCLOSE;
+		text = "Close Feed";
+		x = (0.37 * safezoneW + safezoneX) + (0.195 * safezoneW);
+		y = (0.213012 * safezoneH + safezoneY) + (0.494807 * safezoneH);
+		w = 0.06 * safezoneW;
+		h = 0.03 * safezoneH;
+		onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\console\liveFeed.sqf'");
+	};
+
 	class MCC_ConsoleHelp: MCC_RscStructuredText
 	{
 		idc = -1;
@@ -552,20 +784,10 @@ class mcc_consoleF6: MCC_RscButton
 		colorBackground[] = { 0, 0, 0, 0.7};
 		onMouseEnter = "[_this, true,[12,12],'console'] spawn MCC_fnc_help";
 
-		x = 0.47 * safezoneW + safezoneX;
-		y = 0.225 * safezoneH + safezoneY;
+		x = 0.55 * safezoneW + safezoneX;
+		y = 0.21 * safezoneH + safezoneY;
 		w = 0.020625 * safezoneW;
 		h = 0.033 * safezoneH;
-	};
-
-	class MCC_ConsoleInfoLiveFeedClose: MCC_RscButton {
-		idc = MCC_CONSOLEINFOLIVEFEEDCLOSE;
-		text = "Close Feed";
-		x = (0.462187 * safezoneW + safezoneX) + (0.195 * safezoneW);
-		y = (0.213012 * safezoneH + safezoneY) + (0.494807 * safezoneH);
-		w = 0.06 * safezoneW;
-		h = 0.03 * safezoneH;
-		onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\console\liveFeed.sqf'");
 	};
 	//=================================Buttons=============================================
 	class MCC_ConsoleExitButton: MCC_RscButton {

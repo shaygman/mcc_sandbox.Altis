@@ -11,23 +11,18 @@ if !(_player) then {_box = _this select 2};
 
 _returnArray = [];
 
-_Cfg =if (_weaponType <= 7) then
-		{
+_Cfg =if (_weaponType in [0,1,2,3,4,5,6,7,12]) then {
 			 configFile >> "CfgWeapons";
-		}
-	else
-		{
+		} else {
 			 configFile >> "cfgMagazines";
 		};
 
-switch (_weaponType) do
-{
+switch (_weaponType) do {
     case 0:			//Binos
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (_type == 4096) then
-    		{
+    		if (_type == 4096) then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {weapons player} else {[_box] call MCC_fnc_getVirtualWeaponCargo});
@@ -37,8 +32,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (_type == 131072 && ((getText(_Cfg >> _x >>"descriptionShort")!="") || (getNumber(_Cfg >> _x >>"mFact")==1))) then
-    		{
+    		if (_type == 131072 && ((getText(_Cfg >> _x >>"descriptionShort")!="") || (getNumber(_Cfg >> _x >>"mFact")==1))) then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {items player} else {[_box] call MCC_fnc_getVirtualItemCargo});
@@ -48,8 +42,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (_type == 131072 && !((getText(_Cfg >> _x >>"descriptionShort")!="") || (getNumber(_Cfg >> _x >>"mFact")==1))) then
-    		{
+    		if (_type == 131072 && !((getText(_Cfg >> _x >>"descriptionShort")!="") || (getNumber(_Cfg >> _x >>"mFact")==1))) then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {items player} else {[_box] call MCC_fnc_getVirtualItemCargo});
@@ -59,8 +52,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (_type == 4) then
-    		{
+    		if (_type == 4) then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {weapons player} else {[_box] call MCC_fnc_getVirtualWeaponCargo});
@@ -70,8 +62,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (_type == 1 && (getText(_Cfg >>"cursor")=="mg")) then
-    		{
+    		if (_type == 1 && (getText(_Cfg >>"cursor")=="mg")) then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {weapons player} else {[_box] call MCC_fnc_getVirtualWeaponCargo});
@@ -81,8 +72,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (_type == 2) then
-    		{
+    		if (_type == 2) then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {weapons player} else {[_box] call MCC_fnc_getVirtualWeaponCargo});
@@ -92,8 +82,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (_type == 1 && !((getText(_Cfg >>"cursor")) in ["mg","srifle"])) then
-    		{
+    		if (_type == 1 && !((getText(_Cfg >>"cursor")) in ["mg","srifle"])) then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {weapons player} else {[_box] call MCC_fnc_getVirtualWeaponCargo});
@@ -103,8 +92,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (_type == 1 && (getText(_Cfg >>"cursor")=="srifle")) then
-    		{
+    		if (_type == 1 && (getText(_Cfg >>"cursor")=="srifle")) then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {weapons player} else {[_box] call MCC_fnc_getVirtualWeaponCargo});
@@ -114,8 +102,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (getNumber(_Cfg>> _x >> "count")>4)  then
-    		{
+    		if (getNumber(_Cfg>> _x >> "count")>4)  then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {magazines player} else {[_box] call MCC_fnc_getVirtualMagazineCargo});
@@ -125,8 +112,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (getNumber(_Cfg>> _x >> "count")<4 && (_type == 16))  then
-    		{
+    		if (getNumber(_Cfg>> _x >> "count")<4 && (_type == 16))  then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {magazines player} else {[_box] call MCC_fnc_getVirtualMagazineCargo});
@@ -136,8 +122,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (getNumber(_Cfg>> _x >> "count")<4 && (_type == 256))  then
-    		{
+    		if (getNumber(_Cfg>> _x >> "count")<4 && (_type == 256))  then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {magazines player} else {[_box] call MCC_fnc_getVirtualMagazineCargo});
@@ -147,8 +132,7 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (getNumber(_Cfg>> _x >> "count")<4 && !(_type in [16,256,1111]))  then
-    		{
+    		if (getNumber(_Cfg>> _x >> "count")<4 && !(_type in [16,256,1111]))  then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
     	} forEach (if (_player) then {magazines player} else {[_box] call MCC_fnc_getVirtualMagazineCargo});
@@ -158,11 +142,10 @@ switch (_weaponType) do
     {
     	{
     		_type = getNumber(_Cfg >> _x >> "type");
-    		if (getNumber(_Cfg>> _x >> "count")<4 && (_type == 1111))  then
-    		{
+    		if (getText(_Cfg>> _x >> "mcc_surviveType") != "")  then {
 	    		 _returnArray pushback [getText(_Cfg >> _x >> "displayname"), _x, getText(_Cfg >> _x >> "picture"), getNumber(_Cfg >> _x >> "value")];
 			};
-    	} forEach (if (_player) then {magazines player} else {[_box] call MCC_fnc_getVirtualMagazineCargo});
+    	} forEach (if (_player) then {items player} else {[_box] call MCC_fnc_getVirtualItemCargo});
     };
 };
 

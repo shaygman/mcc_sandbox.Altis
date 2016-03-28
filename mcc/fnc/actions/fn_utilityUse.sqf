@@ -1,4 +1,4 @@
-//==================================================================MCC_fnc_utilityUse===============================================================================================
+//==================================================================MCC_fnc_utilityUse==========================================================================================
 //use utility
 // Example: [] call MCC_fnc_utilityUse;
 //===========================================================================================================================================================================
@@ -22,7 +22,12 @@ if (!_primaryMod) exitWith {
 	};
 };
 
-player removeMagazine _mag;
+switch (true) do {
+	case (isClass (configFile >> "CfgMagazines" >> _mag)) : {player removeMagazine _mag;};
+	case (isClass (configFile >> "CfgWeapons" >> _mag)) : {player removeItem _mag;};
+	case (isClass (configFile >> "CfgGlasses" >> _mag)) : {player removeItem _mag;};
+};
+
 player playactionNow "putdown";
 sleep 0.3;
 _handPos = player selectionPosition "LeftHand";
@@ -58,13 +63,12 @@ if (_itemClass in _satchels && !(isNil "_vehicle")) then {
 	    case (_relDir >= 45 && _relDir <= 135): {_utility setVectorDirAndUp [[0,0,1],[1,0,0]]};
 	    case (_relDir > 225 && _relDir < 315): {_utility setVectorDirAndUp [[0,0,1],[-1,0,0]]};
 	};
-}
-else {
+} else {
 	_utility setpos (player modelToWorld [(_handPos select 0),(_handPos select 1)+1,0]);
 	_utility setdir getdir player;
 };
 
-if !(_mag in magazines player) then {
+if (!(_mag in magazines player) && !(_mag in items player)) then {
 	player setVariable ["MCC_utilityItem",["",""]];
 	[5] call MCC_fnc_weaponSelect;
 };
@@ -86,33 +90,3 @@ if (_itemClass in ["MCC_ammoBox"]) then {
 		if (alive _this) exitWith {deleteVehicle _this};
 	};
 };
-
-/*
-_vel = velocity player;
-_dir = direction player;
-
-_utility setVelocity [
-	(_vel select 0) + (sin _dir * _speed),
-	(_vel select 1) + (cos _dir * _speed),
-	_speed
-];
-
-private ["_cfg","_putCfg","_putCfgArray","_putCfgName","_magMuzzle"];
-_cfg = (configfile >> "CfgWeapons" >> "Put");
-
-for "_i" from 0 to ((count _cfg) - 1) do
-{
-	_putCfg = (_cfg select _i);
-	if (isClass _putCfg) then
-	{
-		_putCfgName = configName _putCfg;
-		_putCfgArray = getArray(_cfg >>_putCfgName >>"magazines");
-		if (_mag in _putCfgArray) then {_magMuzzle = configname(_putCfg)};
-	 };
-};
-
-player playActionNow "PutDown";
-player selectWeapon _magMuzzle;
-player fire [_magMuzzle, _magMuzzle, _mag];
-player setWeaponReloadingTime [player, _magMuzzle, 0];
-*/

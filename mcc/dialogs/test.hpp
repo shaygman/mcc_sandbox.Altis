@@ -16,299 +16,87 @@ class mcc_test
 
 	class controls
 	{
-		class status1Text: MCC_RscText
-		{
-			idc = 950;
-
-			text = "offline"; //--- ToDo: Localize;
-			x = 0.283594 * safezoneW;
-			y = 0.011 * safezoneH;
-			w = 0.05 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		/*
-		class status2Text: MCC_RscText
-		{
-			idc = 951;
-
-			text = "offline"; //--- ToDo: Localize;
-			x = 0.309375 * safezoneW;
-			y = 0.011 * safezoneH;
-			w = 0.020625 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-
-		class constructionTab: MCC_RscButton
-		{
-			idc = 952;
-
-			text = "Build"; //--- ToDo: Localize;
-			x = 0.190781 * safezoneW;
-			y = 0.011 * safezoneH;
-			w = 0.020625 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class unitsTab: MCC_RscButton
-		{
-			idc = 953;
-
-			text = "Units"; //--- ToDo: Localize;
-			x = 0.216563 * safezoneW;
-			y = 0.011 * safezoneH;
-			w = 0.020625 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		*/
-		class action1: MCC_RscActivePicture
-		{
-			idc = 9101;
-
-			x = 0.190781 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action2: MCC_RscActivePicture
-		{
-			idc = 9102;
-
-			x = 0.226875 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action3: MCC_RscActivePicture
-		{
-			idc = 9103;
-
-			x = 0.262969 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action4: MCC_RscActivePicture
-		{
-			idc = 9104;
-
-			x = 0.299063 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action5: MCC_RscActivePicture
-		{
-			idc = 9105;
-
-			x = 0.190782 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action6: MCC_RscActivePicture
-		{
-			idc = 9106;
-
-			x = 0.226875 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action7: MCC_RscActivePicture
-		{
-			idc = 9107;
-
-			x = 0.262969 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action8: MCC_RscActivePicture
-		{
-			idc = 9108;
-
-			x = 0.299063 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action9: MCC_RscActivePicture
-		{
-			idc = 9109;
-
-			x = 0.190781 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action10: MCC_RscActivePicture
-		{
-			idc = 9110;
-
-			x = 0.226875 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action11: MCC_RscActivePicture
-		{
-			idc = 9111;
-
-			x = 0.262969 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class action12: MCC_RscActivePicture
-		{
-			idc = 9112;
-
-			x = 0.299062 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-
-		class respic1: MCC_RscPicture
-		{
-			idc = 120;
-
-			x = 0.0464065 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class resText1: MCC_RscText
-		{
-			idc = 121;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.0618752 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class respic2: MCC_RscPicture
-		{
-			idc = 122;
-
-			x = 0.0825002 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class resText2: MCC_RscText
-		{
-			idc = 123;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.097969 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class respic3: MCC_RscPicture
-		{
-			idc = 124;
-
-			x = 0.118594 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class resText3: MCC_RscText
-		{
-			idc = 125;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.134063 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class respic4: MCC_RscPicture
-		{
-			idc = 126;
-
-			x = 0.154688 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class resText4: MCC_RscText
-		{
-			idc = 127;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.170156 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.0154688 * safezoneW;
-			h = 0.022 * safezoneH;
-		};
-		class desc: MCC_RscStructuredText
-		{
-			idc = 150;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
-
-			x = 0.0464067 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.139219 * safezoneW;
-			h = 0.154 * safezoneH;
-		};
-		class sep1: MCC_RscFrame
-		{
+		class MCC_ConsoleEvacText: MCC_RscText {
 			idc = -1;
-
-			x = 0.190781 * safezoneW;
-			y = 0.033 * safezoneH;
-			w = 0.139219 * safezoneW;
-			h = 0.0055 * safezoneH;
+			text = "Evac Management:"; //--- ToDo: Localize;
+			x = 0.215581 * safezoneW + safezoneX;
+			y = 0.485997 * safezoneH + safezoneY;
+			w = 0.142187 * safezoneW;
+			h = 0.035 * safezoneH;
+			colorText[] = {0,1,1,1};
+			colorBackground[] = {1,1,1,0};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
-		class sep2: MCC_RscFrame
-		{
+		class MCC_ConsoleEvacTypeText: MCC_RscText {
 			idc = -1;
-
-			x = 0.0464063 * safezoneW;
-			y = 1.02445e-008 * safezoneH;
-			w = 0.28875 * safezoneW;
-			h = 0.198 * safezoneH;
+			text = "Evac:"; //--- ToDo: Localize;
+			x = 0.217813 * safezoneW + safezoneX;
+			y = 0.542009 * safezoneH + safezoneY;
+			w = 0.07875 * safezoneW;
+			h = 0.0280062 * safezoneH;
+			colorText[] = {1,1,1,1};
+			colorBackground[] = {1,1,1,0};
 		};
-		class sep3: MCC_RscFrame
+		class MCC_ConsoleEvacType: MCC_RscCombo
 		{
+			idc = MCC_ConsoleEvacTypeText_IDD;
+			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\evac_focus.sqf'");
+			x = 0.322812 * safezoneW + safezoneX;
+			y = 0.542009 * safezoneH + safezoneY;
+			w = 0.105 * safezoneW;
+			h = 0.0280062 * safezoneH;
+		};
+		class MCC_ConsoleEvacFlyHightText: MCC_RscText {
 			idc = -1;
-
-			x = 0.00515625 * safezoneW;
-			y = 0.022 * safezoneH;
-			w = 0.04125 * safezoneW;
-			h = 0.176 * safezoneH;
+			text = "Flight Hight:"; //--- ToDo: Localize;
+			x = 0.217813 * safezoneW + safezoneX;
+			y = 0.626028 * safezoneH + safezoneY;
+			w = 0.0853125 * safezoneW;
+			h = 0.0280062 * safezoneH;
+			colorText[] = {1,1,1,1};
+			colorBackground[] = {1,1,1,0};
 		};
-
-
-		class upgrade1: MCC_RscActivePicture
-		{
-			idc = 9160;
-
-			x = 0.0103127 * safezoneW;
-			y = 0.044 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
+		class MCC_ConsoleEvacFlyHightComboBox: MCC_RscCombo {
+			idc = MCC_ConsoleEvacFlyHightComboBox_IDD;
+			x = 0.322812 * safezoneW + safezoneX;
+			y = 0.626028 * safezoneH + safezoneY;
+			w = 0.105 * safezoneW;
+			h = 0.0280062 * safezoneH;
 		};
-		class upgrade2: MCC_RscActivePicture
-		{
-			idc = 9161;
-
-			x = 0.0103125 * safezoneW;
-			y = 0.099 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
+		class MCC_ConsoleEvacApproachText: MCC_RscText {
+			idc = -1;
+			text = "Insertion:"; //--- ToDo: Localize;
+			x = 0.217813 * safezoneW + safezoneX;
+			y = 0.584019 * safezoneH + safezoneY;
+			w = 0.0853125 * safezoneW;
+			h = 0.0280062 * safezoneH;
+			colorBackground[] = {1,1,1,0};
 		};
-		class upgrade3: MCC_RscActivePicture
-		{
-			idc = 9162;
-
-			x = 0.0103122 * safezoneW;
-			y = 0.154 * safezoneH;
-			w = 0.0309375 * safezoneW;
-			h = 0.044 * safezoneH;
+		class MCC_ConsoleEvacApproachComboBox: MCC_RscCombo {
+			idc = MCC_ConsoleEvacApproachComboBox_IDD;
+			x = 0.322812 * safezoneW + safezoneX;
+			y = 0.584019 * safezoneH + safezoneY;
+			w = 0.105 * safezoneW;
+			h = 0.0280062 * safezoneH;
+		};
+		class MCC_ConsoleCallEvacButton: MCC_RscButton {
+			idc = -1;text = "Call EVAC";
+			x = 0.217813 * safezoneW + safezoneX;
+			y = 0.668037 * safezoneH + safezoneY;
+			w = 0.0853125 * safezoneW;
+			h = 0.0420094 * safezoneH;
+			tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
+			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
+		};
+		class MCC_ConsoleCallEvac3WPButton: MCC_RscButton {
+			idc = -1;
+			text = "Call EVAC 3 WP";
+			x = 0.322812 * safezoneW + safezoneX;
+			y = 0.668037 * safezoneH + safezoneY;
+			w = 0.105 * safezoneW;
+			h = 0.0420094 * safezoneH;
+			tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
+			onButtonClick = __EVAL("nul=[1] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
 		};
 	};
 };

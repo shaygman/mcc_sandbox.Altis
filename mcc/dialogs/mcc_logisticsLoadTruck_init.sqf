@@ -1,4 +1,4 @@
-private ["_disp","_comboBox","_index","_displayname","_array","_class","_pic","_sideID","_startLoad","_isHeli","_cargoBoxesType"];
+private ["_disp","_comboBox","_index","_displayname","_array","_class","_pic","_sideID","_startLoad","_isHeli","_cargoBoxesType","_maxCounter","_className","_maxLoad"];
 disableSerialization;
 
 waituntil {dialog};
@@ -30,46 +30,50 @@ uiNamespace setVariable ["MCC_loadTruckOutpot3", _disp displayCtrl 6];
 #define MCC_loadTruckOutpot2 (uiNamespace getVariable "MCC_loadTruckOutpot2")
 #define MCC_loadTruckOutpot3 (uiNamespace getVariable "MCC_loadTruckOutpot3")
 
-//If helo
-if (vehicle player isKindOf "helicopter") then {
-	{_x ctrlShow false} foreach [MCC_loadTruckOutpot,MCC_loadTruckOutpot3];
-	_isHeli = true;
-} else {
-	_isHeli = false;
-};
-
 _sideID = playerside call BIS_fnc_sideID;
 _startLoad = player getVariable ["mcc_logTruck_screenStart",false];
 
+_isHeli = (vehicle player isKindOf "helicopter");
+MCC_logisticsCrates_Types = MCC_logisticsCrates_TypesWest;
+
 //Are we next to the HQ?
 if (_startLoad) then {
-	if (typeof vehicle player == "O_Heli_Transport_04_F") then {
-		MCC_logisticsCrates_Types = MCC_logisticsCrates_TypesEast;
+
+	//If heli
+	if (vehicle player isKindOf "helicopter") then {
+		{_x ctrlShow false} foreach [MCC_loadTruckOutpot,MCC_loadTruckOutpot3];
+
+		//Are we using the Tarou
+		if (typeof vehicle player == "O_Heli_Transport_04_F") then {
+			MCC_logisticsCrates_Types = MCC_logisticsCrates_TypesEast;
+		};
+
+		_maxLoad = getNumber(configfile >> "CfgVehicles" >> typeof vehicle player >> "maximumLoad");
+
+		//Limit heavy boxes for small helicopters
+		_maxCounter = if (_maxLoad < 4500) then {2} else {(count MCC_logisticsCrates_Types)-1};
 	} else {
-		MCC_logisticsCrates_Types = MCC_logisticsCrates_TypesWest;
+		_maxCounter = 2;
+		_maxLoad = 9999;
 	};
 
+	//Start filling the list
 	_comboBox = MCC_loadTruckC1;
 	lbClear _comboBox;
-	{
-		if (!_isHeli && (_forEachIndex > 2)) exitWith {};
-		_class			= configName(configFile >> "CfgVehicles">> _x);
-		if ((_forEachIndex <3) && ! MCC_isMode) then
-		{
-			_displayname = ["Ammo Crate - 200 Res","Supply Crate - 200 Res","Fuel Crate - 200 Res"] select _forEachIndex;
-		}
-		else
-		{
-			_displayname 	= (getText(configFile >> "CfgVehicles">> _x >> "displayname")) + (if (_forEachIndex <3) then {" - 200 Res"} else {" - 800 Res"});
+
+	for "_i" from 0 to _maxCounter do {
+		_className = MCC_logisticsCrates_Types select _i;
+		_class = configName(configFile >> "CfgVehicles">> _className);
+
+		if ((_i <3) && ! MCC_isMode) then {
+			_displayname = ["Ammo Crate - 200 Res","Supply Crate - 200 Res","Fuel Crate - 200 Res"] select _i;
+		} else {
+			_displayname = (getText(configFile >> "CfgVehicles">> _className >> "displayname")) + (if (_i <3) then {" - 200 Res"} else {" - 800 Res"});
 		};
-		//_pic 			= getText(configFile >> "CfgVehicles">> _x >> "picture");
+
 		_comboBox lbAdd _displayname;
-
-		//_comboBox lbSetPicture [_foreachIndex, _pic];
-		_comboBox lbSetData [_foreachindex, _class];
-	} foreach MCC_logisticsCrates_Types;
-
-	//lbSort [_comboBox, "ASC"];
+		_comboBox lbSetData [_i, _class];
+	};
 	_comboBox lbSetCurSel 0;
 
 	//If + or - pressed

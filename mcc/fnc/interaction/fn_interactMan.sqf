@@ -19,14 +19,11 @@ if (!MCC_interactionKey_holding && ((_suspect getVariable ["MCC_disarmed",false]
 	_pos = getpos _suspect;
 	_pos set [2, (_pos select 2) + 1.5];
 	missionNameSpace setVariable ["MCC_interactionObjects", [[_pos, format ["Hold %1 to interact",_keyName]]]];
-}
-else
-{
+} else {
 	missionNameSpace setVariable ["MCC_interactionObjects", []];
 };
 
-if (MCC_interactionKey_holding && (player distance  _suspect < 2) && !dialog) exitWith
-{
+if (MCC_interactionKey_holding && (player distance  _suspect < 2) && !dialog) exitWith {
 	_suspectName = if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect};
 	_array = [["",format ["-= %1 =-",_suspectName],""],
 			  ["zip","Restrain",format ["%1data\iconHandcuffs.paa",MCC_path]],
@@ -60,6 +57,7 @@ if (MCC_interactionKey_holding && (player distance  _suspect < 2) && !dialog) ex
 	if !((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player) && alive _suspect) then {_array set [1,-1]};
 	if !((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && ((({_x getVariable ["MCC_neutralize",false]} count units group player)<2)) && alive _suspect) then {_array set [2,-1]};
 	if (alive _suspect) then {_array set [3,-1]};
+	if (MCC_isACE) then {_array set [4,-1]};
 	if (!(_suspect getVariable ["MCC_medicUnconscious",false]) || !(alive _suspect)) then {_array set [5,-1]};
 
 	_array = _array - [-1];

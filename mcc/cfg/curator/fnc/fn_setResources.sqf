@@ -21,7 +21,7 @@ if (typeName (_module getVariable ["side",true]) == typeName 1) exitWith {
 };
 
 //Not curator exit
-if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+if (!(local _module) || isnull curatorcamera) exitWith {};
 
 _pos = getpos _module;
 

@@ -1,6 +1,8 @@
+/*
 class MCC_magazine : CA_Magazine
 {
-	type = 1111;
+	type = 256;
+	weight = 0;
 };
 
 class MCC_ammoBoxMag : MCC_magazine
@@ -11,13 +13,13 @@ class MCC_ammoBoxMag : MCC_magazine
 	model = "\A3\Structures_F_EPB\Items\Military\Ammobox_rounds_F.p3d";
 	value = 50;
 	count = 1;
-	mass = 100;
+	mass = 50;
 };
 class MCC_antibiotics : MCC_magazine
 {
 	scope = 2;
 	displayName = "Antibiotics";
-	descriptionShort = "Destroy or slow down the growth of bacteria.";
+	descriptionShort = "Destroy or slow down the growth of bacteria, cures sickness.";
 	picture = "\mcc_sandbox_mod\data\items\antibiotics.paa";
 	model = "\A3\Structures_F_EPA\Items\Medical\Antibiotic_F.p3d";
 	mcc_surviveType = "med";
@@ -29,7 +31,7 @@ class MCC_antibiotics : MCC_magazine
 class MCC_painkillers : MCC_antibiotics
 {
 	displayName = "Painkillers";
-	descriptionShort = "Good for a headache or a gun wound.";
+	descriptionShort = "Good for a headache or a gun wound temporary cure sickness.";
 	picture = "\mcc_sandbox_mod\data\items\painkillers.paa";
 	model = "\A3\Structures_F_EPA\Items\Medical\PainKillers_F.p3d";
 	value = 30;
@@ -60,7 +62,7 @@ class MCC_salineBag : MCC_antibiotics
 	picture = "\mcc_sandbox_mod\data\items\saline.paa";
 	model = "\A3\Structures_F_EPA\Items\Medical\BloodBag_F.p3d";
 	value = 40;
-	mass = 30;
+	mass = 15;
 };
 
 class MCC_firstAidKit : MCC_antibiotics
@@ -69,7 +71,7 @@ class MCC_firstAidKit : MCC_antibiotics
 	picture = "\mcc_sandbox_mod\data\items\firstaidKit.paa";
 	model = "\A3\Weapons_F\Items\Medikit";
 	value = 50;
-	mass = 80;
+	mass = 40;
 };
 
 class MCC_waterpure : MCC_antibiotics
@@ -95,24 +97,39 @@ class MCC_fuelCan : MCC_magazine
 {
 	scope = 2;
 	displayName = "Fuel canister";
-	picture = "\mcc_sandbox_mod\data\items\fuelCan.paa";
+	descriptionShort = "Refuel vehicles.";
+	picture = "\mcc_sandbox_mod\data\items\CanisterFuel.paa";
 	model = "\A3\Structures_F\Items\Vessels\CanisterFuel_F.p3d";
 	mcc_surviveType = "fuel";
 	value = 50;
 	count = 1;
-	mass = 100;
+	mass = 50;
+};
+
+class MCC_fuelCan_empty : MCC_magazine
+{
+	scope = 2;
+	displayName = "Fuel canister - Empty";
+	descriptionShort = "Good for a stealing some fuel from your neighbor car.";
+	picture = "\mcc_sandbox_mod\data\items\CanisterFuelEmpty.paa";
+	model = "\A3\Structures_F\Items\Vessels\CanisterFuel_F.p3d";
+	mcc_surviveType = "fuel";
+	value = 10;
+	count = 1;
+	mass = 10;
 };
 
 class MCC_fuelbot : MCC_magazine
 {
 	scope = 2;
 	displayName = "Fuel bottle";
-	picture = "\mcc_sandbox_mod\data\items\fuelbot.paa";
+	descriptionShort = "Refuel vehicles.";
+	picture = "\mcc_sandbox_mod\data\items\bottle_fuel.paa";
 	model = "\A3\Structures_F\Items\Food\BottlePlastic_V1_F.p3d";
 	mcc_surviveType = "fuel";
 	value = 10;
 	count = 1;
-	mass = 30;
+	mass = 7;
 };
 
 class MCC_ductTape : MCC_magazine
@@ -124,7 +141,7 @@ class MCC_ductTape : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 10;
 	count = 1;
-	mass = 5;
+	mass = 3;
 };
 
 class MCC_butanetorch : MCC_magazine
@@ -136,7 +153,7 @@ class MCC_butanetorch : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 30;
 	count = 1;
-	mass = 30;
+	mass = 15;
 };
 
 class MCC_oilcan : MCC_magazine
@@ -148,7 +165,7 @@ class MCC_oilcan : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 40;
 	count = 1;
-	mass = 40;
+	mass = 20;
 };
 
 class MCC_metalwire : MCC_magazine
@@ -160,7 +177,7 @@ class MCC_metalwire : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 30;
 	count = 1;
-	mass = 15;
+	mass = 7;
 };
 
 class MCC_carBat : MCC_magazine
@@ -172,55 +189,259 @@ class MCC_carBat : MCC_magazine
 	mcc_surviveType = "repair";
 	value = 50;
 	count = 1;
-	mass = 80;
+	mass = 40;
+};
+
+class MCC_screwdriver : MCC_magazine
+{
+	scope = 2;
+	displayName = "Screwdriver";
+	descriptionShort = "Fix stuff or open a tuna.";
+	picture = "\mcc_sandbox_mod\data\items\screwdriver.paa";
+	model = "\A3\Structures_F\Items\Tools\Screwdriver_V1_F.p3d";
+	mcc_surviveType = "repair";
+	value = 15;
+	count = 1;
+	mass = 2;
+};
+
+class MCC_matches : MCC_magazine
+{
+	scope = 2;
+	displayName = "Matches";
+	descriptionShort = "Combined with dry wood can make awsome fire.";
+	picture = "\mcc_sandbox_mod\data\items\matches.paa";
+	model = "\A3\Structures_F_EPA\Items\Tools\Matches_F.p3d";
+	mcc_surviveType = "repair";
+	value = 2;
+	count = 1;
+	mass = 1;
 };
 
 class MCC_foodcontainer : MCC_magazine
 {
 	scope = 2;
 	displayName = "Food container";
+	descriptionShort = "Hope it still fresh.";
 	picture = "\mcc_sandbox_mod\data\items\foodcontainer.paa";
 	model = "\A3\Structures_F_Bootcamp\Items\Food\FoodContainer_01_F.p3d";
 	mcc_surviveType = "food";
 	value = 50;
 	count = 1;
-	mass = 100;
+	mass = 25;
 };
 
 class MCC_cerealbox : MCC_magazine
 {
 	scope = 2;
 	displayName = "Cereal box";
+	descriptionShort = "My kingdom for a glass of milk.";
 	picture = "\mcc_sandbox_mod\data\items\cerealbox.paa";
 	model = "\A3\Structures_F_EPA\Items\Food\CerealsBox_F.p3d";
 	mcc_surviveType = "food";
 	value = 20;
 	count = 1;
-	mass = 30;
+	mass = 8;
+};
+
+class MCC_bakedBeans : MCC_magazine
+{
+	scope = 2;
+	displayName = "Baked Beans";
+	descriptionShort = "Mmm wonder how can I open it";
+	picture = "\mcc_sandbox_mod\data\items\bakedBeans.paa";
+	model = "\A3\Structures_F_EPA\Items\Food\BakedBeans_F.p3d";
+	mcc_surviveType = "food";
+	value = 10;
+	count = 1;
+	mass = 8;
+};
+
+class MCC_bakedBeans_open : MCC_magazine
+{
+	scope = 2;
+	displayName = "Baked Beans - Open";
+	descriptionShort = "Clear backblast!!!";
+	picture = "\mcc_sandbox_mod\data\items\bakedBeans_open.paa";
+	model = "\A3\Structures_F_EPA\Items\Food\BakedBeans_F.p3d";
+	mcc_surviveType = "food";
+	value = 10;
+	count = 1;
+	mass = 8;
 };
 
 class MCC_bacon : MCC_magazine
 {
 	scope = 2;
-	displayName = "Canned Food";
+	displayName = "Tactical Bacon";
+	descriptionShort = "Mmm wonder how can I open it";
 	picture = "\mcc_sandbox_mod\data\items\bacon.paa";
 	model = "\A3\Structures_F\Items\Food\TacticalBacon_F.p3d";
 	mcc_surviveType = "food";
 	value = 10;
 	count = 1;
-	mass = 20;
+	mass = 8;
+};
+
+class MCC_bacon_open : MCC_magazine
+{
+	scope = 2;
+	displayName = "Tactical Bacon - Open";
+	descriptionShort = "Where is PETA when we need them ";
+	picture = "\mcc_sandbox_mod\data\items\bacon_open.paa";
+	model = "\A3\Structures_F\Items\Food\TacticalBacon_F.p3d";
+	mcc_surviveType = "food";
+	value = 10;
+	count = 1;
+	mass = 8;
 };
 
 class MCC_rice : MCC_magazine
 {
 	scope = 2;
 	displayName = "Rice";
+	descriptionShort = "I pretty sure you have to cook it first";
 	picture = "\mcc_sandbox_mod\data\items\rice.paa";
 	model = "\A3\Structures_F_EPA\Items\Food\RiceBox_F.p3d";
 	mcc_surviveType = "food";
 	value = 30;
 	count = 1;
-	mass = 50;
+	mass = 16;
+};
+
+class MCC_bottle_water : MCC_magazine
+{
+	scope = 2;
+	displayName = "Bottle - Clean Water";
+	picture = "\mcc_sandbox_mod\data\items\bottle_water.paa";
+	model = "\A3\Structures_F\Items\Food\BottlePlastic_V1_F.p3d";
+	mcc_surviveType = "food";
+	value = 10;
+	count = 1;
+	mass = 8;
+};
+
+class MCC_bottle_murky : MCC_magazine
+{
+	scope = 2;
+	displayName = "Bottle - Murky Water";
+	descriptionShort = "Looks like a little aquarium";
+	picture = "\mcc_sandbox_mod\data\items\bottle_murky.paa";
+	model = "\A3\Structures_F\Items\Food\BottlePlastic_V1_F.p3d";
+	mcc_surviveType = "food";
+	value = 2;
+	count = 1;
+	mass = 8;
+};
+
+class MCC_bottle_empty : MCC_magazine
+{
+	scope = 2;
+	displayName = "Bottle - Empty ";
+	descriptionShort = "Fill with water or fuel just dont drink the last one";
+	picture = "\mcc_sandbox_mod\data\items\bottle_empty.paa";
+	model = "\A3\Structures_F\Items\Food\BottlePlastic_V1_F.p3d";
+	mcc_surviveType = "food";
+	value = 0;
+	count = 1;
+	mass = 3;
+};
+
+class MCC_canteenWater : MCC_magazine
+{
+	scope = 2;
+	displayName = "Canteen - Clean Water";
+	picture = "\mcc_sandbox_mod\data\items\canteenWater.paa";
+	model = "\A3\Structures_F\Items\Food\BottlePlastic_V1_F.p3d";
+	mcc_surviveType = "food";
+	value = 10;
+	count = 1;
+	mass = 8;
+};
+
+class MCC_canteenMurky : MCC_magazine
+{
+	scope = 2;
+	displayName = "Canteen - Murky Water";
+	picture = "\mcc_sandbox_mod\data\items\canteenMurky.paa";
+	model = "\A3\Structures_F\Items\Food\BottlePlastic_V1_F.p3d";
+	mcc_surviveType = "food";
+	value = 2;
+	count = 1;
+	mass = 8;
+};
+
+class MCC_canteen : MCC_magazine
+{
+	scope = 2;
+	displayName = "Canteen - Empty";
+	descriptionShort = "Fill with water";
+	picture = "\mcc_sandbox_mod\data\items\canteen.paa";
+	model = "\A3\Structures_F\Items\Food\BottlePlastic_V1_F.p3d";
+	mcc_surviveType = "food";
+	value = 0;
+	count = 1;
+	mass = 3;
+};
+
+class MCC_powderedMilk : MCC_magazine
+{
+	scope = 2;
+	displayName = "Powdered Milk";
+	picture = "\mcc_sandbox_mod\data\items\powderedMilk.paa";
+	model = "\A3\Structures_F_EPA\Items\Food\PowderedMilk_F.p3d";
+	mcc_surviveType = "food";
+	value = 15;
+	count = 1;
+	mass = 4;
+};
+
+class MCC_franta : MCC_magazine
+{
+	scope = 2;
+	displayName = "Franta";
+	picture = "\mcc_sandbox_mod\data\items\franta.paa";
+	model = "\A3\Structures_F\Items\Food\Can_V2_F.p3d";
+	mcc_surviveType = "food";
+	value = 15;
+	count = 1;
+	mass = 3;
+};
+
+class MCC_RedGull : MCC_magazine
+{
+	scope = 2;
+	displayName = "RedGull";
+	picture = "\mcc_sandbox_mod\data\items\RedGull.paa";
+	model = "\A3\Structures_F\Items\Food\Can_V3_F.p3d";
+	mcc_surviveType = "food";
+	value = 15;
+	count = 1;
+	mass = 3;
+};
+
+class MCC_Spirit : MCC_magazine
+{
+	scope = 2;
+	displayName = "Spirit";
+	picture = "\mcc_sandbox_mod\data\items\Spirit.paa";
+	model = "\A3\Structures_F\Items\Food\Can_V1_F.p3d";
+	mcc_surviveType = "food";
+	value = 15;
+	count = 1;
+	mass = 3;
+};
+
+class MCC_can_dented : MCC_magazine
+{
+	scope = 2;
+	displayName = "Used Can";
+	picture = "\mcc_sandbox_mod\data\items\can_dented.paa";
+	model = "\A3\Structures_F\Items\Food\Can_Dented_F.p3d";
+	mcc_surviveType = "food";
+	value = 1;
+	count = 1;
+	mass = 1;
 };
 
 class MCC_fruit1 : MCC_rice
@@ -232,9 +453,44 @@ class MCC_fruit1 : MCC_rice
 	mass = 2;
 };
 
+
 class MCC_fruit2 : MCC_fruit1
 {
 	displayName = "Strange fruit";
 	picture = "\mcc_sandbox_mod\data\items\fruit2.paa";
 	model = "\A3\weapons_F\ammo\mag_univ.p3d";
+};
+
+class MCC_canOpener : MCC_magazine
+{
+	scope = 2;
+	displayName = "Can Opener";
+	picture = "\mcc_sandbox_mod\data\items\canOpener.paa";
+	model = "\A3\Structures_F_EPA\Items\Tools\CanOpener_F.p3d";
+	value = 5;
+	count = 1;
+	mass = 1;
+};
+
+class MCC_wood : MCC_magazine
+{
+	scope = 2;
+	displayName = "Dry Wood";
+	descriptionShort = "Find some matches to make fire";
+	picture = "\mcc_sandbox_mod\data\items\wood.paa";
+	model = "\A3\Structures_F\Civ\Accessories\WoodPile_F.p3d";
+	value = 5;
+	count = 1;
+	mass = 20;
+};
+
+class MCC_battery : MCC_magazine
+{
+	scope = 2;
+	displayName = "battery";
+	picture = "\mcc_sandbox_mod\data\items\battery.paa";
+	model = "\A3\Structures_F\Civ\Accessories\WoodPile_F.p3d";
+	value = 5;
+	count = 1;
+	mass = 1;
 };

@@ -9,7 +9,7 @@ _pos = getpos _module;
 _array = ["vehicle","tank","heli","jet","ship"];
 
 //Not curator exit
-if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+if (!(local _module) || isnull curatorcamera) exitWith {};
 
 _resualt = ["Vehicle Kiosk",[["Type",["Vehicles","Armored","Helicopters","Fixed Wing","Ships"]]]] call MCC_fnc_initDynamicDialog;
 

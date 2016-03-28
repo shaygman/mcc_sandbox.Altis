@@ -1,4 +1,4 @@
-//============================================================MCC_fnc_curatorNightEffects========================================================================================
+//============================================================MCC_fnc_curatorDoorLock========================================================================================
 // Manage doors status
 //===========================================================================================================================================================================
 private ["_pos","_module","_resualt"];
@@ -6,13 +6,13 @@ _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 if (isNull _module) exitWith {};
 
 //Not curator exit
-if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+if (!(local _module) || isnull curatorcamera) exitWith {};
 
 _pos = getpos _module;
 
 _resualt = ["Lock/Unlock Doors",[
  						["Radius",500],
- 						["Destroy Lights",["Lock All","Lock Random","Unlock All"]]
+ 						["Lock Doors",["Lock All","Lock Random","Unlock All"]]
  					  ]] call MCC_fnc_initDynamicDialog;
 
 if (count _resualt == 0) exitWith {deleteVehicle _module};

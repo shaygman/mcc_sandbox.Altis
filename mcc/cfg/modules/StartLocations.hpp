@@ -39,6 +39,7 @@ class mcc_sandbox_moduleStartLocations : Module_F
 		class size
 		{
 			displayName = "Type";
+			description = "Need at least one main Start Location";
 			typeName = "STRING";
 			class values
 			{
@@ -52,6 +53,36 @@ class mcc_sandbox_moduleStartLocations : Module_F
 				{
 					name = "Main";
 					value = "MAIN";
+				};
+			};
+		};
+
+		class teleportAtStart
+		{
+			displayName = "Insertion";
+			description = "Open Respawn menu at the beging of the mission and Insertion";
+			typeName = "NUMBER";
+			class values
+			{
+				class none
+				{
+					name = "Don't open/don't teleport";
+					value = 0;
+				};
+				class teleport
+				{
+					name = "Teleport";
+					value = 1;
+				};
+				class paraDrop
+				{
+					name = "Paradrop";
+					value = 2;
+				};
+				class halo
+				{
+					name = "H.A.L.O";
+					value = 3;
 				};
 			};
 		};
@@ -79,6 +110,7 @@ class mcc_sandbox_moduleStartLocations : Module_F
 		class construct
 		{
 			displayName = "Construct Buildings";
+			description = "Create an actual building or just a flag pole";
 			typeName = "NUMBER";
 			class values
 			{

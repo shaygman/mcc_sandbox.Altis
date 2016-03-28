@@ -16,4 +16,7 @@ class MCCmodules
 	class GAIASettings {description = "GAIA settings";};
 	class settingsCover {description = "Cover settings";};
 	class settingsMedical {description = "Medical system settings";};
+	class moduleCapturePoint {description = "Sets a capture point";};
+	class vehicleRespawn {description = "respawn empty vehicles";};
+	class inGameUI {description = "Manage inGameUI";};
 };

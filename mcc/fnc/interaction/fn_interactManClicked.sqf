@@ -30,13 +30,10 @@ switch (_ctrlIDC) do
 //Close dialog
 if (_ctrlData in ["zip","follow","pickKit","close","bandage","epipen","saline","heal","drag","carry"]) then {closeDialog 0};
 
-switch (true) do
-{
-	case (_ctrlData == "zip"):
-	{
+switch (true) do {
+	case (_ctrlData == "zip"): {
 		//Zipcuff
-		if ((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player)) exitWith
-		{
+		if ((_suspect getVariable ["MCC_disarmed",false]) && !(_suspect in units group player)) exitWith {
 			["Restraining suspect",5] call MCC_fnc_interactProgress;
 			playsound "MCC_zip";
 			if (MCC_isACE) then {
@@ -51,44 +48,34 @@ switch (true) do
 		};
 	};
 
-	case (_ctrlData == "follow"):
-	{
-		if ((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && ((({_x getVariable ["MCC_neutralize",false]} count units group player)<2))) exitWith
-		{
+	case (_ctrlData == "follow"): {
+		if ((_suspect getVariable ["MCC_neutralize",false]) && !(_suspect in units group player) && ((({_x getVariable ["MCC_neutralize",false]} count units group player)<2))) exitWith {
 				_null = [_suspect, player, 0,[0]] execVM format ["%1mcc\general_scripts\hostages\hostage.sqf",MCC_path];
 		};
 	};
 
-	case (_ctrlData == "pickKit"):
-	{
+	case (_ctrlData == "pickKit"): {
 		[_suspect] call MCC_fnc_pickKit;
 	};
 
-	case (_ctrlData == "medic"):
-	{
+	case (_ctrlData == "medic"): {
 		private ["_bandage","_epipen","_saline","_medkit","_maxBleeding","_complex","_isMedic","_itemsPlayer","_itemsSuspect","_bandagePic","_epipenPic","_salinePic","_medkitPic"];
 		_child =  MCC_interactionMenu1;
 		_complex = missionNamespace getVariable ["MCC_medicComplex",false];
 
-		if (_complex && MCC_isMode) then
-		{
+		if (_complex && MCC_isMode) then {
 			_bandage = "MCC_bandage";
-			_bandagePic = getText (configFile >> "CfgMagazines" >> _bandage >> "picture");
+			_bandagePic = getText (configFile >> "cfgWeapons" >> _bandage >> "picture");
 
 			_epipen = "MCC_epipen";
-			_epipenPic = getText (configFile >> "CfgMagazines" >> _epipen >> "picture");
+			_epipenPic = getText (configFile >> "cfgWeapons" >> _epipen >> "picture");
 
 			_saline = "MCC_salineBag";
-			_salinePic = getText (configFile >> "CfgMagazines" >> _saline >> "picture");
+			_salinePic = getText (configFile >> "cfgWeapons" >> _saline >> "picture");
 
 			_medkit = "MCC_firstAidKit";
-			_medkitPic = getText (configFile >> "CfgMagazines" >> _medkit >> "picture");
-
-			_itemsPlayer =  if (_complex) then {magazines player} else {items player};
-			_itemsSuspect = if (_suspect getvariable ["MCC_medicUnconscious",false]) then {magazines _suspect} else {[]};
-		}
-		else
-		{
+			_medkitPic = getText (configFile >> "cfgWeapons" >> _medkit >> "picture");
+		} else {
 			_bandage = "FirstAidKit";
 			_bandagePic = getText (configFile >> "CfgWeapons" >> _bandage >> "picture");
 
@@ -100,10 +87,10 @@ switch (true) do
 
 			_medkit = "Medikit";
 			_medkitPic = getText (configFile >> "CfgWeapons" >> _medkit >> "picture");
-
-			_itemsPlayer = items player;
-			_itemsSuspect = if (_suspect getvariable ["MCC_medicUnconscious",false]) then {items _suspect} else {[]};
 		};
+
+		_itemsPlayer =  items player;
+		_itemsSuspect = if (_suspect getvariable ["MCC_medicUnconscious",false]) then {items _suspect} else {[]};
 
 		_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
 		_isMedic = if (((getNumber(configFile >> "CfgVehicles" >> typeOf vehicle player >> "attendant")) == 1) || ((player getvariable ["CP_role",""]) == "Corpsman")) then {true} else {false};
@@ -125,13 +112,11 @@ switch (true) do
 		_array = _array - [-1];
 	};
 
-	case (_ctrlData in ["bandage","epipen","saline","heal"]):
-	{
+	case (_ctrlData in ["bandage","epipen","saline","heal"]): {
 		[_ctrlData, _suspect] call MCC_fnc_medicUseItem;
 	};
 
-	case (_ctrlData == "pulse"):
-	{
+	case (_ctrlData == "pulse"): {
 		private ["_string","_maxBleeding","_remaineBlood","_subArray","_fatigueEffect"];
 		_child =  MCC_interactionMenu2;
 		_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
@@ -154,8 +139,7 @@ switch (true) do
 				 ];
 	};
 
-	case (_ctrlData == "physical"):
-	{
+	case (_ctrlData == "physical"): {
 		private ["_string","_damage","_hitPoints","_subArray","_partName","_bleeding","_partPic"];
 		_child =  MCC_interactionMenu2;
 		_hitPoints = ["HitHead","HitBody","hitLegs","hitHands"];
@@ -194,34 +178,31 @@ switch (true) do
 		_subArray set [0,"physicalReport"];
 
 		switch (true) do
-						{
-							case (_bleeding == 0) : {_string =  "Not Bleeding"; _subArray set [3,[1,1,1,1]];};
-							case (_bleeding < 0.2) : {_string =  "Minor Bleeding"; _subArray set [3,[0,1,0,1]];};
-							case (_bleeding < 0.6) : {_string =  "Mild Bleeding"; _subArray set [3,[1,1,0,1]];};
-							case (_bleeding >= 0.6) : {_string =  "Severe Bleeding"; _subArray set [3,[1,0,0,1]];};
-						};
+		{
+			case (_bleeding == 0) : {_string =  "Not Bleeding"; _subArray set [3,[1,1,1,1]];};
+			case (_bleeding < 0.2) : {_string =  "Minor Bleeding"; _subArray set [3,[0,1,0,1]];};
+			case (_bleeding < 0.6) : {_string =  "Mild Bleeding"; _subArray set [3,[1,1,0,1]];};
+			case (_bleeding >= 0.6) : {_string =  "Severe Bleeding"; _subArray set [3,[1,0,0,1]];};
+		};
 
 		_subArray set [1,"Bleeding: " + _string];
 		_subArray set [2,""];
 		_array pushBack _subArray;
 	};
 
-	case (_ctrlData in ["drag","carry"] ):
-	{
+	case (_ctrlData in ["drag","carry"] ): {
 
 		[player,_suspect, _ctrlData == "carry"] call MCC_fnc_medicDragCarry;
 	};
 
-	case (["load",_ctrlData] call bis_fnc_inString):
-	{
+	case (["load",_ctrlData] call bis_fnc_inString): {
 		closeDialog 0;
 		[[_suspect,_ctrlData,true], "MCC_fnc_loadWounded", _suspect, false] spawn BIS_fnc_MP;
 	};
 };
 
 //Reveal
-if (!isnil "_child") then
-{
+if (!isnil "_child") then {
 	_child ctrlShow true;
 	_child ctrlSetPosition [_posX,_posY,0.12 * safezoneW, ((count _array)) * (0.025* safezoneH)];
 	_child ctrlCommit 0;

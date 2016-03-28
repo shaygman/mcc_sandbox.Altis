@@ -12,7 +12,7 @@ private ["_pos","_radius","_type","_nearObjects","_crew","_markers","_ignorePlay
 
 _pos = _this select 0;
 _radius = _this select 1;
-_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","doorsAll","doorsRandom","doorsAllunlock","Buildings","sandstorm","storm","heatwave","clear","N/V","Flashlights"] select (_this select 2);
+_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","doorsAll","doorsRandom","doorsAllunlock","Buildings","sandstorm","storm","snow","heatwave","clear","N/V","Flashlights"] select (_this select 2);
 _ignorePlayers = [_this, 3, false, [false]] call BIS_fnc_param;
 
 _nearObjects = [];
@@ -148,6 +148,11 @@ switch _type do
 				[["heatwave",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
 			};
 
+		case "snow":
+			{
+				[["snow",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
+			};
+
 		case "clear":
 			{
 				[["clear",false],"MCC_fnc_ppEffects",true,false] call BIS_fnc_MP;
@@ -207,15 +212,14 @@ switch _type do
 	};
 
 {
-	if ((count crew _x >0) &&  (_x getVariable ["mcc_delete",true])) then
-	{
-			_crew = crew _x;
-			deletevehicle _x;
-			{deletevehicle _x; sleep 0.1} foreach _crew;
-	}
-	else
-	{
-		if (_x getVariable ["mcc_delete",true]) then {deletevehicle _x};
+	if (_x getVariable ["mcc_delete",true] && !(isPlayer _x || isPlayer driver vehicle _x || isPlayer commander vehicle _x || isPlayer gunner vehicle _x)) then {
+		if (count crew _x >0) then {
+				_crew = crew _x;
+
+				{deletevehicle _x; sleep 0.1} foreach _crew;
+		};
+
+		deletevehicle _x;
 	};
 } foreach _nearObjects;
 

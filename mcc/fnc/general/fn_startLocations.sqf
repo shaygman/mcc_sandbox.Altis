@@ -4,17 +4,16 @@
 // <IN>	side : integer - side number to take effect
 //<OUT>	Nothing
 //==============================================================================================================================================================================
-private ["_playerClass","_playerSideNr","_safePos","_null","_side"];
+private ["_playerClass","_playerSideNr","_safePos","_null","_side","_startLocationName","_teleportAtStart","_helo","_cpActivated","_respawnDialog","_markerName","_pos","_respawnName","_starLoc","_openDialog"];
 _side = _this select 0;
 if (!local player || missionNameSpace getVariable ["MCC_startLocationsRuning", false]) exitWith {};
 
-waituntil {alive player};
+waituntil {alive player && !(IsNull (findDisplay 46))};
 
 _playerClass = typeOf player;
 _playerSideNr =  getNumber (configFile >> "CfgVehicles" >> _playerClass >> "side");
 
-if (isnil "_side") then
-{
+if (isnil "_side") then {
 	_side = _playerSideNr;
 };
 
@@ -22,87 +21,52 @@ if (_side !=  _playerSideNr) exitWith {};
 
 missionNameSpace setVariable ["MCC_startLocationsRuning", true];
 
-if (_playerSideNr == 1) then
-{
-	while {(isnil ("MCC_START_WEST"))} do {sleep 3};
-	missionNameSpace setVariable ["MCC_startLocationsRuning", false];
+//Is role selection on
+_cpActivated = missionNamespace getVariable ["CP_activated",false];
 
-	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",true]) then
-	{
-		//Black Screen on mission startup
-		cutText ["","BLACK",0.1];
-		sleep 1;
-		player setVariable ["cpReady",false,true];
-		playerDeploy = false;
-		sleep 0.1;
+//Respawn menu on
+_respawnDialog = missionNamespace getVariable ["MCC_openRespawnMenu",true];
 
-		_ok = createDialog "CP_RESPAWNPANEL";
-		if !(_ok) exitWith { hint "createDialog failed"; diag_log  "CP: create respawn Dialog failed";};
+//Player side
+switch (_playerSideNr) do {
+    case 0: {
+    	_startLocationName = "MCC_START_EAST";
+    	_markerName = "MCC_StartMarkerE";
+       	_respawnName = "RESPAWN_EAST";
+    };
 
-		waituntil {playerDeploy};
-		closedialog 0;
-		waituntil {!dialog};
-		//Respawning
+    case 1: {
+    	_startLocationName = "MCC_START_WEST";
+    	_markerName = "MCC_StartMarkerW";
+      	_respawnName = "RESPAWN_WEST";
+    };
 
-		player setVariable ["cpReady",true,true];
+   case 2: {
+    	_startLocationName = "MCC_START_GUER";
+    	_markerName = "MCC_StartMarkerG";
+    	_respawnName = "RESPAWN_GUERRILA";
+    };
 
-		cutText ["Deploying ....","BLACK IN",5];
-
-		if (MCC_teleportAtStartWest != 0) then
-		{
-			if (surfaceIsWater (playerDeployPos)) then
-			{
-				_safePos = [(playerDeployPos),10,50,1,2,900,0] call BIS_fnc_findSafePos;
-			}
-			else
-			{
-				_safePos = [(playerDeployPos),10,50,1,0,900,0] call BIS_fnc_findSafePos;
-			};
-
-			//Teleport
-			if (MCC_teleportAtStartWest == 1) then
-			{
-				player setPosATL [_safepos select 0, _safepos select 1, 0];
-			}
-			else
-			{
-				private "_helo";
-				_helo = if (MCC_teleportAtStartWest ==2) then {false} else {true};
-
-				[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;
-			};
-		};
-	};
-
-	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",true])) then
-	{
-		player setpos MCC_START_WEST;
-	};
-
-	if (!isnil "MCC_StartMarkerW") then {deleteMarkerLocal MCC_StartMarkerW};
-	MCC_StartMarkerW = createMarkerLocal ["STARTLOCATIONW", (MCC_START_WEST)];
-	MCC_StartMarkerW setMarkerShapeLocal "ICON";
-	MCC_StartMarkerW setMarkerTypeLocal  "mil_start";
-	MCC_StartMarkerW setMarkerColorLocal "ColorGreen";
-
-	//create the respawn locations
-	if (!isnil "MCC_RespawnMarkerW") then {deleteMarkerLocal MCC_RespawnMarkerW};
-	MCC_RespawnMarkerW = createMarkerLocal ["RESPAWN_WEST", (MCC_START_WEST)];
-	MCC_RespawnMarkerW setMarkerShapeLocal "ICON";
-	MCC_RespawnMarkerW setMarkerTypeLocal  "mil_objective";
-	MCC_RespawnMarkerW setMarkerColorLocal "ColorRed";
+    default {
+     	_startLocationName = "MCC_START_CIV";
+    	_markerName = "MCC_StartMarkerC";
+       	_respawnName = "RESPAWN_CIVILIANS";
+    };
 };
 
-if (_playerSideNr == 0) then
-  {
 
-	while { (isnil ("MCC_START_EAST"))  } do {sleep 3};
+while {str (missionNamespace getVariable [_startLocationName,[]]) == "[]"} do {sleep 3};
+missionNameSpace setVariable ["MCC_startLocationsRuning", false];
 
-	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",true]) then
-	{
-		//Black Screen on mission startup
-		cutText ["","BLACK",0.1];
-		sleep 1;
+//Black Screen on mission startup
+if (!_cpActivated && _respawnDialog) then {
+
+	cutText ["","BLACK",0.1];
+	sleep 3;
+	_startLocations = [player] call BIS_fnc_getRespawnPositions;
+	_openDialog = {(_x getVariable ["teleport",0]) != 0} count _startLocations > 0;
+
+	if (_openDialog) then {
 		player setVariable ["cpReady",false,true];
 		playerDeploy = false;
 		sleep 0.1;
@@ -116,171 +80,57 @@ if (_playerSideNr == 0) then
 		//Respawning
 
 		player setVariable ["cpReady",true,true];
-
-		cutText ["Deploying ....","BLACK IN",5];
-
-		if (MCC_teleportAtStartEast != 0) then
-		{
-			if (surfaceIsWater (playerDeployPos)) then
-			{
-				_safePos = [(playerDeployPos),10,50,1,2,900,0] call BIS_fnc_findSafePos;
-			}
-			else
-			{
-				_safePos = [(playerDeployPos),10,50,1,0,900,0] call BIS_fnc_findSafePos;
-			};
-
-			//Teleport
-			if (MCC_teleportAtStartEast == 1) then
-			{
-				player setPosATL [_safepos select 0, _safepos select 1, 0];
-			}
-			else
-			{
-				private "_helo";
-				_helo = if (MCC_teleportAtStartEast ==2) then {false} else {true};
-
-				[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;
-			};
-		};
 	};
 
-	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",true])) then
-	{
-		player setpos MCC_START_EAST;
+	cutText ["Deploying ....","BLACK IN",5];
+
+	_starLoc = missionNamespace getVariable ["CP_activeSpawn",objNull];
+
+	if (isNull _starLoc) then {
+		if (count _startLocations > 0) then {_starLoc = _startLocations select 0};
 	};
 
-	if (!isnil "MCC_StartMarkerE") then {deleteMarkerLocal MCC_StartMarkerE};
-	MCC_StartMarkerE = createMarkerLocal ["STARTLOCATIONE", ( MCC_START_EAST)];
-	MCC_StartMarkerE setMarkerShapeLocal "ICON";
-	MCC_StartMarkerE setMarkerTypeLocal  "mil_start";
-	MCC_StartMarkerE setMarkerColorLocal "ColorGreen";
+	_teleportAtStart = _starLoc getVariable ["teleport",0];
 
-	//create the respawn locations
-	if (!isnil "MCC_RespawnMarkerE") then {deleteMarkerLocal MCC_RespawnMarkerE};
-	MCC_RespawnMarkerE = createMarkerLocal ["RESPAWN_EAST", ( MCC_START_EAST)];
-	MCC_RespawnMarkerE setMarkerShapeLocal "ICON";
-	MCC_RespawnMarkerE setMarkerTypeLocal  "mil_objective";
-	MCC_RespawnMarkerE setMarkerColorLocal "ColorRed";
-  };
-if (_playerSideNr == 2) then
-  {
-
-	while { (isnil ("MCC_START_GUER")) } do {sleep 3};
-
-	if (!CP_activated && missionNamespace getVariable ["MCC_openRespawnMenu",true]) then
-	{
-		//Black Screen on mission startup
-		cutText ["","BLACK",0.1];
-		sleep 1;
-		player setVariable ["cpReady",false,true];
-		playerDeploy = false;
-		sleep 0.1;
-
-		_ok = createDialog "CP_RESPAWNPANEL";
-		if !(_ok) exitWith { hint "createDialog failed"; diag_log  "CP: create respawn Dialog failed";};
-
-		waituntil {playerDeploy};
-		closedialog 0;
-		waituntil {!dialog};
-		//Respawning
-
-		player setVariable ["cpReady",true,true];
-
-
-		cutText ["Deploying ....","BLACK IN",5];
-		if (MCC_teleportAtStartGuer != 0) then
-		{
-			if (surfaceIsWater (playerDeployPos)) then
-			{
-				_safePos = [(playerDeployPos),10,50,1,2,900,0] call BIS_fnc_findSafePos;
-			}
-			else
-			{
-				_safePos = [(playerDeployPos),10,50,1,0,900,0] call BIS_fnc_findSafePos;
-			};
-
-			//Teleport
-			if (MCC_teleportAtStartGuer == 1) then
-			{
-				player setPosATL [_safepos select 0, _safepos select 1, 0];
-			}
-			else
-			{
-				private "_helo";
-				_helo = if (MCC_teleportAtStartGuer ==2) then {false} else {true};
-
-				[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;
-			};
-		};
-	};
-
-	if (!CP_activated && !(missionNamespace getVariable ["MCC_openRespawnMenu",true])) then
-	{
-		player setpos MCC_START_GUER;
-	};
-
-	if (!isnil "MCC_StartMarkerG") then {deleteMarkerLocal MCC_StartMarkerG};
-	MCC_StartMarkerG = createMarkerLocal ["STARTLOCATIONG", (MCC_START_GUER)];
-	MCC_StartMarkerG setMarkerShapeLocal "ICON";
-	MCC_StartMarkerG setMarkerTypeLocal  "mil_start";
-	MCC_StartMarkerG setMarkerColorLocal "ColorGreen";
-
-	//create the respawn locations
-	if (!isnil "MCC_RespawnMarkerG") then {deleteMarkerLocal MCC_RespawnMarkerG};
-	MCC_RespawnMarkerG = createMarkerLocal ["RESPAWN_GUERRILA", (MCC_START_GUER)];
-	MCC_RespawnMarkerG setMarkerShapeLocal "ICON";
-	MCC_RespawnMarkerG setMarkerTypeLocal  "mil_objective";
-	MCC_RespawnMarkerG setMarkerColorLocal "ColorRed";
-  };
-
-if (_playerSideNr == 3) then
-  {
-
-	while { (isnil ("MCC_START_CIV")) } do {sleep 3};
-
-	if (MCC_teleportAtStartCiv != 0) then
-	{
-		if (surfaceIsWater (MCC_START_CIV)) then
-		{
-			_safePos = [(MCC_START_CIV),10,50,1,2,900,0] call BIS_fnc_findSafePos;
-		}
-		else
-		{
-			_safePos = [(MCC_START_CIV),10,50,1,0,900,0] call BIS_fnc_findSafePos;
+	if (_teleportAtStart != 0) then {
+		if (surfaceIsWater (playerDeployPos)) then {
+			_safePos = [(playerDeployPos),10,50,1,2,900,0] call BIS_fnc_findSafePos;
+		} else {
+			_safePos = [(playerDeployPos),10,50,1,0,900,0] call BIS_fnc_findSafePos;
 		};
 
 		//Teleport
-		if (MCC_teleportAtStartCiv == 1) then
-		{
+		if (_teleportAtStart == 1) then {
 			player setPosATL [_safepos select 0, _safepos select 1, 0];
-		}
-		else
-		{
-			private "_helo";
-			_helo = if (MCC_teleportAtStartCiv ==2) then {false} else {true};
-
+		} else {
+			_helo = if (_teleportAtStart ==2) then {false} else {true};
 			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;
 		};
 	};
+};
 
-	if (!isnil "MCC_StartMarkerC") then {deleteMarkerLocal MCC_StartMarkerC};
-	MCC_StartMarkerC = createMarkerLocal ["STARTLOCATIONG", (MCC_START_CIV)];
-	MCC_StartMarkerC setMarkerShapeLocal "ICON";
-	MCC_StartMarkerC setMarkerTypeLocal  "mil_start";
-	MCC_StartMarkerC setMarkerColorLocal "ColorGreen";
+_pos = missionNamespace getVariable [_startLocationName,position player];
+if (!_cpActivated && !_respawnDialog) then	{
+	player setpos _pos;
+};
 
-	//create the respawn locations
-	if (!isnil "MCC_RespawnMarkerC") then {deleteMarkerLocal MCC_RespawnMarkerC};
-	MCC_RespawnMarkerC = createMarkerLocal ["RESPAWN_CIVILIANS", (MCC_START_CIV)];
-	MCC_RespawnMarkerC setMarkerShapeLocal "ICON";
-	MCC_RespawnMarkerC setMarkerTypeLocal  "mil_objective";
-	MCC_RespawnMarkerC setMarkerColorLocal "ColorRed";
-  };
+if (!isnil _markerName) then {deleteMarkerLocal _markerName};
+missionNamespace setVariable [_markerName,createMarkerLocal [_markerName, _pos]];
+_markerName setMarkerShapeLocal "ICON";
+_markerName setMarkerTypeLocal  "mil_start";
+_markerName setMarkerColorLocal "ColorGreen";
+
+//create the respawn locations
+
+if (str getMarkerPos _respawnName != "[0,0,0]") then {deleteMarkerLocal _respawnName};
+//missionNamespace setVariable [_respawnName,createMarkerLocal [_respawnName, _pos]];
+createMarkerLocal [_respawnName, _pos];
+_respawnName setMarkerShapeLocal "ICON";
+_respawnName setMarkerTypeLocal  "mil_objective";
+_respawnName setMarkerColorLocal "ColorRed";
 
 //BTC - Revive
-if (!isnil "BTC_respawn_marker") then
-{
+if (!isnil "BTC_respawn_marker") then {
 	BTC_respawn_marker = format ["respawn_%1",playerSide];
 	if (BTC_respawn_marker == "respawn_guer") then {BTC_respawn_marker = "respawn_guerrila"};
 

@@ -260,50 +260,7 @@ else
 			{
 				_rope = _actualRopes select (_forEachIndex % 2);
 
-				[_x, _rope] spawn
-					{
-						private ["_unit", "_zc", "_zdelta", "_rope","_timeOut","_time"];
-						_unit = _this select 0;
-						_rope = _this select 1;
-						_zdelta = 7 / 10;
-						_zc = -4;
-
-						if (isMultiplayer) then
-						{
-							_unit action ["GETOUT", vehicle _unit];
-							unassignVehicle _unit;
-							[compile format ["objectFromNetID '%1' switchmove 'crew_tank01_out'", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
-						}
-						else
-						{
-							unassignVehicle _unit;
-							_unit action ["GETOUT", vehicle _unit];
-							_unit switchmove "crew_tank01_out";
-						};
-
-						_time = time + 5;
-						waituntil {(vehicle _unit == _unit) || _time < time};
-						if (_time < time) exitWith {};
-						//gunner_standup01
-
-						_unit setpos [(getpos _unit select 0), (getpos _unit select 1), 0 max ((getpos _unit select 2) - 3)];
-
-						while { (alive _unit) && ( (getpos _unit select 2) > 0.3 ) && ( _zc > -55 ) } do
-						{
-							_unit attachTo [_rope, [0,0,_zc]];
-							_zc = _zc - _zdelta;
-							sleep 0.1;
-						};
-						detach _unit;
-						if (isMultiplayer) then
-						{
-							 [compile format ["objectFromNetID '%1' switchmove '';", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
-						}
-						else
-						{
-							[compile format ["objectFromNetID '%1' switchmove ''", netID _unit], "BIS_fnc_spawn", true, false] call BIS_fnc_MP;
-						};
-					};
+				[[_x, _rope],"MCC_fnc_fastRopeLocal",_x,false] spawn BIS_fnc_MP;
 
 				sleep ( 1 + ((random 6)/10) );
 			} foreach _cargoUnits;

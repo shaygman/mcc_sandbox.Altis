@@ -39,6 +39,6 @@ MCC_ingameUI = if (_var == 0) then {false} else {true};
 _var 	= _logic getvariable ["survive",0];
 MCC_surviveMod = if (_var == 0) then {false} else {true};
 
-//Action meny
+//Action menu
 _var 	= _logic getvariable ["actionMenu",1];
 MCC_showActionKey = if (_var == 0) then {false} else {true};

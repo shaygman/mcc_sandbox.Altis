@@ -42,8 +42,14 @@ _pos 	= getposatl _fakeIed;
 _iedDir =  getdir _fakeIed;
 
 _dummy = createVehicle [MCC_dummy, _pos, [], 0, "NONE"];
-if (MCC_isACE) then {
-	_dummy setVariable ["ACE_Explosives_Explosive",_fakeIed,true];
+
+//If it is a mini-game
+if (_IEDTriggerType >=3) then {
+	_dummy setVariable ["MCC_isIEDMiniGame",true,true];
+} else {
+	if (MCC_isACE) then {
+		_dummy setVariable ["ACE_Explosives_Explosive",_fakeIed,true];
+	};
 };
 
 hideObjectGlobal _dummy;
@@ -72,12 +78,9 @@ _dummy setvariable ["MCC_IEDtype", "ied", true];
 [[_dummy,"Hold %1 to disarm"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
 
 //If it is radio IED
-if (_IEDTriggerType == 1) then
-{
+if (_IEDTriggerType == 1) then {
 	_dummy setvariable ["iedTrigereRadio", true, true];
-}
-else
-{
+} else {
 	_dummy setvariable ["iedTrigereRadio", false, true];
 };
 

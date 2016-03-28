@@ -55,9 +55,9 @@ _module setVariable ["mcc_constructionItemTypeLevel",_level,true];
 //Building anim
 if !(_instant) then
 {
-	_anchor = "Land_Rampart_F" createVehicle _pos;
+	_anchor = "Land_Bricks_V3_F" createVehicle _pos;
 	waituntil {!isnil "_anchor"};
-
+	_anchor enableSimulation false;
 	_builtArray = [_anchor];
 	_anchor setdir _anchorDir;
 

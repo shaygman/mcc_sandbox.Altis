@@ -15,10 +15,10 @@ if (typeName (_module getVariable ["atmosphere",true]) == typeName 0) exitWith {
 };
 
 //Not curator exit
-if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+if (!(local _module) || isnull curatorcamera) exitWith {};
 
 _resualt = ["Add Atmosphere",[
- 						["Atmosphere",["Sandstorm","Blizzard","Heat Wave","Clear All"]]
+ 						["Atmosphere",["Sandstorm","Blizzard","Snow","Heat Wave","Clear All"]]
  					  ]] call MCC_fnc_initDynamicDialog;
 
 if (count _resualt == 0) exitWith {deleteVehicle _module};

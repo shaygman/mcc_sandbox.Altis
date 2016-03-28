@@ -170,6 +170,16 @@ class MCC_Module_createIED : Module_F
 					name = "Mission Maker Only";
 					value = 2;
 				};
+				class miniGame
+				{
+					name = "Mini-Game(Proximity)";
+					value = 3;
+				};
+				class miniGameManual
+				{
+					name = "Mini-Game(Manual)";
+					value = 4;
+				};
 			};
 		};
 

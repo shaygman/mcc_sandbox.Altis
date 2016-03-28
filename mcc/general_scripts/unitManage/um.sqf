@@ -12,33 +12,29 @@ _comboBox = _mccdialog displayCtrl MCC_UM_LIST;
 _type = _this select 0;
 _indices = lbSelection _comboBox;
 
-switch (_type) do
-	{
-		case 0: //Teleport
-		{
-			mapClick = false;
-			hint "Click on the map";
-			onMapSingleClick " 	hint format ['%1 teleported', UMName];
-								teleportPos = _pos;
-								mapClick = true;
-								onMapSingleClick """";";
-			waituntil {mapClick};
-			if (MCC_UMUnit==0) then
+switch (_type) do {
+	//Teleport
+	case 0:{
+		mapClick = false;
+		hint "Click on the map";
+		onMapSingleClick " 	hint format ['%1 teleported', UMName];
+							teleportPos = _pos;
+							mapClick = true;
+							onMapSingleClick """";";
+		waituntil {mapClick};
+		if (MCC_UMUnit==0) then {
+			{
+				[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", _x, false] spawn BIS_fnc_MP;
+			} foreach MCC_selectedUnits;
+		} else {
 			{
 				{
 					[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", _x, false] spawn BIS_fnc_MP;
-				} foreach MCC_selectedUnits;
-			}
-			else
-			{
-				{
-					{
-						[[[netID _x,_x],teleportPos], "MCC_fnc_moveToPos", _x, false] spawn BIS_fnc_MP;
-						sleep 0.2;
-					} foreach (units _x);
-				} foreach MCC_selectedUnits;
-			};
+					sleep 0.2;
+				} foreach (units _x);
+			} foreach MCC_selectedUnits;
 		};
+	};
 
 		case 1:	//Teleport to LHD
 		{
@@ -59,6 +55,7 @@ switch (_type) do
 			{
 				_targetUnit = MCC_UMunitsNames select (lbCurSel MCC_UM_LIST);	//Hijacked unit
 				if (isplayer _targetUnit) exitwith {hint "Can't hijak other players"};
+				if (isNil "_targetUnit" || isNull _targetUnit) exitWith {};
 				MCC_PrevHijacked_Group = netID (group _targetUnit);
 				MCC_Prev_HijackedGroupIsLeader = if (leader group _targetUnit == _targetUnit) then {true} else {false};
 
@@ -108,13 +105,13 @@ switch (_type) do
 
 				_ppgrain ppEffectEnable false;
 				MCC_hijack_effect = ppEffectCreate ["radialBlur", 100];
-				MCC_hijack_effect ppEffectAdjust [1, 1, 0.4, 0.4];
+				MCC_hijack_effect ppEffectAdjust [0.05, 0.05, 0.5, 0.35];
 				MCC_hijack_effect ppEffectCommit 0;
 				MCC_hijack_effect ppEffectEnable true;
 
 				MCC_backToplayerIndex = _targetUnit addaction ["<t color=""#CC0000"">Back To Player</t>", MCC_path + "mcc\general_scripts\unitManage\backToPlayer.sqf",[], 0,false, false, "","vehicle _target == vehicle _this"];
 
-				_string = "(vehicle _target == vehicle _this) && (getplayerUID player in (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || 'all' in  (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || serverCommandAvailable '#logout' || isServer || (player getvariable ['MCC_allowed',false]))";
+				_string = "(vehicle _target == vehicle _this) && (getplayerUID player in (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || 'all' in  (missionNamespace getvariable ['MCC_allowedPlayers',[]]) || (serverCommandAvailable '#logout' && missionNamespace getvariable ['MCC_allowAdmin',true]) || (isServer && missionNamespace getvariable ['MCC_allowAdmin',true]) || (player getvariable ['MCC_allowed',false]))";
 				mcc_actionInedx = player addaction ["<t color=""#99FF00"">--= MCC =--</t>",MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,0], 0,false, false, "",_string];
 				player setVariable ["MCC_allowed",true,true];
 				_ok = _targetUnit addEventHandler ["Killed", format ["[_this select 0] execVM '%1mcc\general_scripts\unitManage\backToPlayer.sqf'",MCC_path]];

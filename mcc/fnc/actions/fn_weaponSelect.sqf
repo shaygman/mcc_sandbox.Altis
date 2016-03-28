@@ -1,4 +1,4 @@
-//==================================================================MCC_fnc_weaponSelect===============================================================================================
+//==================================================================MCC_fnc_weaponSelect===================================================================================
 //Change weapons and throw utility
 // Example: [] call MCC_fnc_weaponSelect;
 //===========================================================================================================================================================================
@@ -15,33 +15,28 @@ player setVariable ["MCC_dontAllowFire",false];
 if ((player getVariable ["MCC_actionHoldFireSecond",-1]) != -1) then {player removeAction (player getVariable ["MCC_actionHoldFireSecond",nil])};
 if ((player getVariable ["MCC_actionHoldFire",-1]) != -1) then	{player removeAction (player getVariable ["MCC_actionHoldFire",nil])};
 
-if (count (player getVariable ["MCC_utilityItem",[]]) > 0) then
-{
+if (count (player getVariable ["MCC_utilityItem",[]]) > 0) then {
 	(["mcc_3dObject"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
 	player setVariable ["MCC_utilityItem",[]];
 	enableSentences true;
 	_exit = true;
 };
 
-switch (true) do
-{
+switch (true) do {
 	//Primary/handgun
-	case (_key == 2):
-	{
+	case (_key == 2): {
 		if (_exit) exitWith {};
 		if (currentweapon player != primaryweapon player && primaryweapon player != "") exitWith {player selectWeapon (primaryweapon player)};
 		if (currentweapon player == primaryweapon player && handgunWeapon player != "") exitWith {player selectWeapon (handgunWeapon player)};
 	};
 
 	//Launcher
-	case (_key == 3):
-	{
+	case (_key == 3): {
 		if (secondaryWeapon player != "") then {player selectWeapon (secondaryWeapon  player)};
 	};
 
 	//Grenade
-	case (_key == 4):
-	{
+	case (_key == 4): {
 		private ["_mags","_allowedMags","_magsItems","_mag","_item","_speed","_index","_utility","_cameraInternal","_model","_ctrl"];
 		//_cameraInternal = if (cameraView == "INTERNAL") then {true} else {false};
 		showHUD false;
@@ -51,13 +46,10 @@ switch (true) do
 			if ((_x select 3)==0 && _x select 2) then {_mags pushback _x};
 		} foreach magazinesAmmoFull player;
 
-		if ((player getVariable ["MCC_utilityItemIndex",0]) > count _mags -1) then
-		{
+		if ((player getVariable ["MCC_utilityItemIndex",0]) > count _mags -1) then {
 			player setVariable ["MCC_utilityItemIndex",1];
 			_index = 0;
-		}
-		else
-		{
+		} else {
 			_index = player getVariable ["MCC_utilityItemIndex",0];
 			player setVariable ["MCC_utilityItemIndex",_index+1];
 		};
@@ -103,8 +95,7 @@ switch (true) do
 	};
 
 	//Explosive - utility
-	case (_key == 5):
-	{
+	case (_key == 5): {
 		private ["_mags","_allowedMags","_magsItems","_mag","_model","_speed","_index","_magVehicle","_cameraInternal","_ctrl"];
 		//_cameraInternal = if (cameraView == "INTERNAL") then {true} else {false};
 		showHUD false;
@@ -118,16 +109,13 @@ switch (true) do
 
 		{
 			if (_x in _allowedMags && !(_x in _mags)) then {_mags pushback _x};
-		} foreach magazines player;
+		} foreach (magazines player)+(items player);
 
 
-		if ((player getVariable ["MCC_utilityItemIndex",0]) > count _mags -1) then
-		{
+		if ((player getVariable ["MCC_utilityItemIndex",0]) > count _mags -1) then {
 			player setVariable ["MCC_utilityItemIndex",1];
 			_index = 0;
-		}
-		else
-		{
+		} else {
 			_index = player getVariable ["MCC_utilityItemIndex",0];
 			player setVariable ["MCC_utilityItemIndex",_index+1];
 		};
@@ -136,11 +124,14 @@ switch (true) do
 		(["mcc_3dObject"] call BIS_fnc_rscLayer) cutRsc ["mcc_3dObject", "PLAIN"];
 		((uiNamespace getVariable "mcc_3dObject") displayCtrl 0) ctrlShow false;
 
-		if (count _mags > 0) then
-		{
+		if (count _mags > 0) then {
 			_mag 	= _mags select _index;
 			_magVehicle = _magsItems select (_allowedMags find _mag);
-			_model = gettext (configfile >> "CfgMagazines" >> _mag >> "model");
+			_model = if (isclass(configfile >> "CfgMagazines" >> _mag)) then {
+							gettext (configfile >> "CfgMagazines" >> _mag >> "model")
+						} else {
+							gettext (configfile >> "CfgWeapons" >> _mag >> "model")
+					};
 
 			//Spawn Demo
 			_ctrl = ((uiNamespace getVariable "mcc_3dObject") displayCtrl 1);
@@ -149,9 +140,7 @@ switch (true) do
 
 
 			player setVariable ["MCC_utilityItem",[_mag,_magVehicle]];
-		}
-		else
-		{
+		} else {
 			player setVariable ["MCC_utilityItem",["",""]];
 			((uiNamespace getVariable "mcc_3dObject") displayCtrl 1) ctrlShow false;
 		};
@@ -177,8 +166,7 @@ switch (true) do
 		_null =  player addAction ["", {[true]  spawn MCC_fnc_utilityUse},"",0,false,true, "DefaultAction","_this getVariable ['MCC_dontAllowFire',false]"];
 		player setVariable ["MCC_actionHoldFire",_null];
 
-		0 = [] spawn
-		{
+		0 = [] spawn {
 			while {(count (player getVariable ["MCC_utilityItem",[]]) > 0) && alive player} do
 			{
 				//if (cameraView != "INTERNAL") then {player switchCamera "INTERNAL"};

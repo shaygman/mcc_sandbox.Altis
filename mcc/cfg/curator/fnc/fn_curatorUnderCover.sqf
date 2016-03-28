@@ -25,7 +25,7 @@ if (count _object <2) exitWith {systemchat "No vehicle selected"; deleteVehicle 
 _object = _object select 1;
 
 //Not curator exit
-if (player != getAssignedCuratorUnit (missionNamespace getVariable ["MCC_curator",objNull])) exitWith {};
+if (!(local _module) || isnull curatorcamera) exitWith {};
 
 _resualt = ["Undercover Agents",[
  						["Remove Weapons",true]

@@ -12,49 +12,9 @@ class MCC_compass
 
 	class Controls
 	{
-		/*
-		class Compass: MCC_RscControlsGroupNoScrollbars
-		{
-			x = "0.5 - 8 * 							(			((safezoneW / safezoneH) min 1.2) / 40)";
-			idc = 16810;
-			y = "1.5 * 							(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) + 		(safezoneY)";
-			w = "16 * 							(			((safezoneW / safezoneH) min 1.2) / 40)";
-			h = "0.7 * 							(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-			class controls
-			{
-				class CompassBackground: MCC_RscText
-				{
-					idc = 15518;
-					x = "0 * 							(			((safezoneW / safezoneH) min 1.2) / 40)";
-					y = "0 * 							(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-					w = "16 * 							(			((safezoneW / safezoneH) min 1.2) / 40)";
-					h = "0.7 * 							(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-					colorBackground[] = {0.1,0.1,0.1,0.5};
-				};
-				class CompassFrame: MCC_RscFrame
-				{
-					idc = 16312;
-					x = "0 * 							(			((safezoneW / safezoneH) min 1.2) / 40)";
-					y = "0 * 							(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-					w = "16 * 							(			((safezoneW / safezoneH) min 1.2) / 40)";
-					h = "0.7 * 							(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-					colorText[] = {0,0,0,1};
-				};
-				class CompassCaret: MCC_RscFrame
-				{
-					idc = 16314;
-					x = "8 * 							(			((safezoneW / safezoneH) min 1.2) / 40)";
-					y = "0 * 							(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-					w = "0 * 							(			((safezoneW / safezoneH) min 1.2) / 40)";
-					h = "0.7 * 							(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-					colorText[] = {0,0,0,1};
-				};
-			};
-		};
-		*/
 		class MCC_ConsoleCompassN: MCC_RscText
 		{
-			idc = 0;
+			idc = 10;
 			text = "N";
 
 			x = 0.5 * safezoneW + safezoneX;
@@ -63,22 +23,86 @@ class MCC_compass
 			h = 0.05 * safezoneH;
 			colorText[] = {1,0,0,0.7};
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			offSet[] = {0,1,0};
 		};
-		class MCC_ConsoleCompassE: MCC_ConsoleCompassN
+
+		class MCC_ConsoleCompassNa: MCC_ConsoleCompassN
 		{
-			idc = 1;
+			idc = 11;
+			text = ".";
+			colorText[] = {1,1,1,1};
+			offSet[] = {0,0.7,0};
+		};
+
+		class MCC_ConsoleCompassNaa: MCC_ConsoleCompassNa
+		{
+			idc = 12;
+			text = ".";
+			offSet[] = {0,0.4,0};
+		};
+
+		class MCC_ConsoleCompassE: MCC_ConsoleCompassNa
+		{
+			idc = 13;
 			colorText[] = {1,1,1,1};
 			text = "E";
+			offSet[] = {1,0,0};
 		};
+
+		class MCC_ConsoleCompassEa: MCC_ConsoleCompassNa
+		{
+			idc = 14;
+			text = ".";
+			offSet[] = {0.7,0,0};
+		};
+
+		class MCC_ConsoleCompassEaa: MCC_ConsoleCompassNa
+		{
+			idc = 15;
+			text = ".";
+			offSet[] = {0.4,0,0};
+		};
+
 		class MCC_ConsoleCompassS: MCC_ConsoleCompassE
 		{
-			idc = 2;
+			idc = 16;
 			text = "S";
+			offSet[] = {0,-1,0};
 		};
+
+		class MCC_ConsoleCompassSa: MCC_ConsoleCompassNa
+		{
+			idc = 17;
+			text = ".";
+			offSet[] = {0,-0.7,0};
+		};
+
+		class MCC_ConsoleCompassSaa: MCC_ConsoleCompassNa
+		{
+			idc = 18;
+			text = ".";
+			offSet[] = {0,-0.4,0};
+		};
+
 		class MCC_ConsoleCompassW: MCC_ConsoleCompassE
 		{
-			idc = 3;
+			idc = 19;
 			text = "W";
+			offSet[] = {-1,0,0};
+		};
+
+		class MCC_ConsoleCompassWa: MCC_ConsoleCompassNa
+		{
+			idc = 20;
+			text = ".";
+			offSet[] = {-0.7,0,0};
+		};
+
+		class MCC_ConsoleCompassWaa: MCC_ConsoleCompassNa
+		{
+			idc = 21;
+			text = ".";
+			offSet[] = {-0.4,0,0};
 		};
 
 		class MCC_ConsoleCompassNVMode: MCC_RscText

@@ -14,7 +14,7 @@ player globalRadio "SentEnemyDetectedClose";
 
 _markerName = (getplayerUID player) + str floor time;
 _path = "";
-_pos = MCC_ACEKeyPos;
+_pos = if (!isnil "MCC_ACEKeyPos") then {MCC_ACEKeyPos} else {screenToWorld [0.5,0.5]};
 
 
 switch (_type) do {

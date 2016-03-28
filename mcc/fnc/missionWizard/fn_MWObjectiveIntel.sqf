@@ -18,8 +18,7 @@ _sidePlayer =  [_this, 5, west] call BIS_fnc_param;
 
 _objType = MCC_MWIntelObjects call BIS_fnc_selectRandom;
 
-if (_isCQB) then
-{
+if (_isCQB) then {
 	_array = [_objPos, 50] call MCC_fnc_MWFindbuildingPos;
 	_building = _array select 0;
 	_buildingPos = _array select 1;
@@ -46,9 +45,8 @@ if (_isCQB) then
 			[[getpos _object,30,0,2,_faction, _side],"MCC_fnc_garrison",false,false] spawn BIS_fnc_MP;
 		};
 	};
-}
-else		//Not CQB
-{
+} else {
+	//Not CQB
 	//Find an empry spot
 	_range = 50;
 	_spawnPos = [_objPos,1,_range,10,0,100,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;

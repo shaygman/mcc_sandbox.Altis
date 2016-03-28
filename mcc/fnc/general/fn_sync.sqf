@@ -40,7 +40,11 @@ _logics = allMissionObjects "logic";
 		};
 	};
 } foreach _logics;
-[(missionNameSpace getVariable ["MCC_ppEffect","clear"]),true] spawn MCC_fnc_ppEffects;
+
+if ((missionNameSpace getVariable ["MCC_ppEffect",""])!= "") then {
+	[(missionNameSpace getVariable ["MCC_ppEffect","clear"]),true] spawn MCC_fnc_ppEffects;
+};
+
 publicvariable "MCC_sync";
 
 // finalyze sync

@@ -9,7 +9,7 @@ class mcc_sandbox_module : Module_F
 	function = "MCC_fnc_accessRights";
 	scope = 2;
 	isGlobal = 1;
-	
+
 	class Arguments
 	{
 		class names
@@ -18,13 +18,34 @@ class mcc_sandbox_module : Module_F
 			description = "Enter the player's UID of the players that will have access to MCC. Example ['123213',12312321','1322131231']";
 			defaultValue = "[]";
 		};
+
+		class allowAdmin
+		{
+			displayName = "Admin Access";
+			description = "Allow admin or host access to MCC";
+			typeName = "BOOL";
+			class values
+			{
+				class Enabled
+				{
+					name = "On";
+					value = true;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "Off";
+					value = false;
+				};
+			};
+		};
 	};
-	
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Who will have MCC access. Enter the players UID as an array  Example ['123213',12312321','1322131231'] or sync with roles"; // Short description, will be formatted as structured text
 		sync[] = {"BLUFORunit"};
- 
+
 		class BLUFORunit
 		{
 			description[] = { // Multi-line descriptions are supported

@@ -104,48 +104,6 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 			};
 		};
 
-		class nameTags
-		{
-			displayName = "Name Tags";
-			description = "Show in-game name tags, ranks (role and health stats while Role Selection is active)";
-			typeName = "NUMBER";
-			class values
-			{
-				class Enabled
-				{
-					name = "Yes";
-					value = 1;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "No";
-					value = 0;
-				};
-			};
-		};
-
-		class groupMarkers
-		{
-			displayName = "Squads Markers";
-			description = "Show Squads markers on the map for all players while playing in a squad from the Squad Dialog";
-			typeName = "NUMBER";
-			class values
-			{
-				class Enabled
-				{
-					name = "Yes";
-					value = 1;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "No";
-					value = 0;
-				};
-			};
-		};
-
 		class artilleryComputer
 		{
 			displayName = "Artilery Computer";
@@ -290,6 +248,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class commanderConsoleShowGPS
 		{
 			displayName = "Commander Console: Show groups with GPS only";
+			description = "Show groups with GPS only";
 			typeName = "NUMBER";
 			class values
 			{
@@ -310,6 +269,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class commanderConsoleWP
 		{
 			displayName = "Commander Console: Show friendly WP";
+			description = "Show friendly WP";
 			typeName = "NUMBER";
 			class values
 			{
@@ -330,6 +290,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 		class commanderConsoleAI
 		{
 			displayName = "Commander Console: Can command AI";
+			description = "Can command AI";
 			typeName = "NUMBER";
 			class values
 			{

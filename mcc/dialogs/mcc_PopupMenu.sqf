@@ -1,4 +1,4 @@
-#define CP_SQUADPANEL_IDD (uiNamespace getVariable "CP_SQUADPANEL_IDD")
+#define CP_RESPAWNPANEL_IDD (uiNamespace getVariable "CP_RESPAWNPANEL_IDD")
 
 private ["_ok","_key","_index","_commander","_screen"];
 disableSerialization;
@@ -16,12 +16,15 @@ if (count _key > 4) then {
 _screen = missionNamespace getvariable ["MCC_mcc_screen",0];
 
 if (_index == 0) exitWith {
-	if !((getplayerUID player in (missionNamespace getvariable ["MCC_allowedPlayers",[]]) || "all" in  (missionNamespace getvariable ["MCC_allowedPlayers",["all"]]) || serverCommandAvailable "#logout" || isServer || (player getvariable ["MCC_allowed",false]))) exitWith {};
+	if !((getplayerUID player in (missionNamespace getvariable ["MCC_allowedPlayers",[]]) || "all" in  (missionNamespace getvariable ["MCC_allowedPlayers",["all"]]) || (serverCommandAvailable "#logout" && missionNamespace getvariable ["MCC_allowAdmin",true]) || (isServer && missionNamespace getvariable ["MCC_allowAdmin",true]) || (player getvariable ["MCC_allowed",false]))) exitWith {};
 
 	if (str findDisplay 2994 != "No display") then {
 		while {dialog} do {closeDialog 0};
 	} else {
-		_screen = (if (name player != (missionNamespace getvariable ["mcc_missionMaker",""])) then {0} else {2});
+		//If not the mission maker move to default screen
+		if (name player != (missionNamespace getvariable ["mcc_missionMaker",""])) then {_screen =0} else {
+			if (_screen == 0) then {_screen =2};
+		};
 
 		switch (_screen) do
 		{
@@ -69,21 +72,10 @@ if ((_index == 1) && (_commander == getPlayerUID player) && (missionNamespace ge
 //Squad Dialog
 if (_index == 2 && (missionNamespace getVariable ["MCC_allowSquadDialog",true])) exitWith {
 	if (dialog) then {
-
-		if (str (CP_SQUADPANEL_IDD displayCtrl 0) != "No control") then {MCC_squadDialogOpen = false};
-		while {dialog} do {closeDialog 0};
-
-		if !(isnil "CP_gearCam") then {
-			detach CP_gearCam;
-			CP_gearCam cameraeffect ["Terminate","back"];
-			camDestroy CP_gearCam;
-			deleteVehicle CP_gearCam;
-			CP_gearCam = nil;
-		};
+		while {dialog} do {closeDialog 0; sleep 0.01};
 	} else {
 		while {dialog} do {closeDialog 0; sleep 0.01};
-		MCC_squadDialogOpen = true;
-		createDialog "CP_SQUADPANEL";
+		createDialog "CP_RESPAWNPANEL";
 	};
 };
 
