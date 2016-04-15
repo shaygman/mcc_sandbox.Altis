@@ -1,4 +1,4 @@
-//==================================================================MCC_fnc_isSurvivalObject=====================================================================================
+//=====================================================MCC_fnc_isSurvivalObject=====================================================================================
 // is an object is a survival object
 // Example:[]  call MCC_fnc_isSurvivalObject;
 // <IN>
@@ -6,9 +6,9 @@
 //
 // <OUT>
 //		Boolean
-//===========================================================================================================================================================================
+//==============================================================================================================================================================
 private ["_positionStart","_positionEnd","_pointIntersect","_selected","_resault","_objArray"];
-if !(missionNamespace getVariable ["MCC_surviveMod",false]) exitWith {false};
+if !(missionNamespace getVariable ["MCC_surviveModAllowSearch",false]) exitWith {false};
 
 //Not MCC object
 _positionStart 	= eyePos player;

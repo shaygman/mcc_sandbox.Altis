@@ -200,10 +200,11 @@ if !mcc_isloading then
 
 	for "_i" from 8427 to 8435 do {
 		_var = _tempArray select (_i-8427);
-		missionNameSpace setVariable [_var, if ((lbCurSel _i)==0) then {false} else {true}];
+		missionNameSpace setVariable [_var, (lbCurSel _i)>0];
 		publicVariable _var;
 	};
 
+	missionNameSpace setVariable ["MCC_surviveModAllowSearch", (lbCurSel 8428)==1];
 	//fire local EH
 	if (missionNamespace getVariable ["MCC_surviveMod",false]) then {
 		[] spawn MCC_fnc_surviveInit;

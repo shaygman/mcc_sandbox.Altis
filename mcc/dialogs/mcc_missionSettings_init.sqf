@@ -237,3 +237,11 @@ for "_i" from 8427 to 8435 do
 	} foreach ["Disabled","Enabled"];
 	_comboBox lbSetCurSel (if (_tempArray select (_i - 8427)) then {1} else {0});
 };
+
+//Survive - redo since we added 3 options
+_comboBox = _mccdialog displayCtrl 8428;
+lbClear _comboBox;
+{
+	_displayname = _x;
+	_comboBox lbAdd _displayname;
+} foreach ["Yes - Enable loot","Yes - Disable loot","Disabled"];

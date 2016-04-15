@@ -5,6 +5,11 @@ class rifleman
 	minPlayersForKit = 0;
 	maxKitsInGroup = 99;
 	maxKitsInSide = 999;
+	allowMg = 0;
+	allowAT = 0;
+	allowSniper = 0;
+	allowPilot = 0;
+	allowCrew = 0;
 
 	class west
 	{

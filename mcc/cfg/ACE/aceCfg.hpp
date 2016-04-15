@@ -172,7 +172,7 @@ class CAManBase: Man {
 		};
 
 		class ACE_MCC_doorinteraction {
-			condition = "([cursorTarget] call MCC_fnc_isDoor) != ''";
+			condition = "(([cursorTarget] call MCC_fnc_isDoor) select 0) != ''";
 			displayName = "Door<br/>Interaction";
 			icon = "\a3\ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa";
 			showDisabled = 0;

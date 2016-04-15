@@ -1,6 +1,6 @@
 //=========================================================MCC_fnc_interactSelfClicked==========================================================================================
 //==============================================================================================================================================================================
-private ["_ctrl","_ctrlData","_suspect","_child","_array","_pos","_path","_layer"];
+private ["_ctrl","_ctrlData","_suspect","_child","_array","_pos","_path","_layer","_cfg","_index"];
 disableSerialization;
 
 _ctrl 		= _this select 0;
@@ -206,24 +206,29 @@ switch (true) do {
 					 ["[(missionNamespace getVariable ['MCC_interactionLayer_2',[]]),3] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]]
 				 ];
 
-		if (((primaryWeaponItems player) select (["MuzzleSlot","PointerSlot","CowsSlot","UnderBarrelSlot"] find _ctrlData))=="") then {
+		_index = (["MuzzleSlot","PointerSlot","CowsSlot","UnderBarrelSlot"] find _ctrlData);
 
-			_items = getArray (configFile >> "CfgWeapons" >> primaryWeapon player >> "WeaponSlotsInfo" >> _ctrlData >> "compatibleItems");
+		if (((primaryWeaponItems player) select _index)=="") then {
 
+
+			_cfg = (configFile >> "CfgWeapons" >> primaryWeapon player >> "WeaponSlotsInfo" >> _ctrlData >> "compatibleItems");
+
+			if (isarray _cfg) then {
+				_items = getarray _cfg;
+			} else {
+				if (isclass _cfg) then {
+					_items = [];
+					{_items pushback tolower configname _x;} foreach configproperties [_cfg,"isnumber _x"];
+				};
+			};
+
+			pitems = _items;
 			{
 				//Only god knows why BI is on inconsistante with config files one weapon it is an array the the other it isn't even a config
-				if (tolower _x in _items || _x in _items) then {
+				if (tolower _x in _items) then {
 					_assignedItems pushBack _x;
 					_array pushBack [format ["['%1',true,'%2'] spawn MCC_fnc_attachItemWeapons",_x,_ctrlData], format ["%1",getText(configFile >> "CfgWeapons" >> _x >> "displayname")], getText(configFile >> "CfgWeapons" >> _x >> "picture")];
 				};
-				/*
-				 else {
-					if (((getNumber(configFile >> "CfgWeapons" >> primaryWeapon player >> "WeaponSlotsInfo" >> _ctrlData >> "compatibleItems" >> _x))>0)  && !(_x in _assignedItems)) then {
-						_assignedItems pushBack _x;
-						_array pushBack [format ["['%1',true,'%2'] spawn MCC_fnc_attachItemWeapons",_x,_ctrlData], format ["%1",getText(configFile >> "CfgWeapons" >> _x >> "displayname")], getText(configFile >> "CfgWeapons" >> _x >> "picture")];
-					};
-				};
-				*/
 			} forEach (items player);
 		} else {
 			_array pushBack [format ["['',false,'%1'] spawn MCC_fnc_attachItemWeapons",_ctrlData],"Detach", "\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"];

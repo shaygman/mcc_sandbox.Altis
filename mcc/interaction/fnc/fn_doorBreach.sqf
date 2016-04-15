@@ -1,4 +1,4 @@
-//==================================================================MCC_fnc_doorBreach=========================================================================================
+//==================================================================MCC_fnc_doorBreach================================================================================
 // Place a breaching charge on the door
 // Example:[_object] spawn MCC_fnc_doorBreach;
 // <IN>
@@ -6,22 +6,20 @@
 //
 // <OUT>
 //		<nothing>
-//===========================================================================================================================================================================
-private ["_object","_door","_str","_animation","_door","_typeOfSelected","_return","_n","_position","_c4","_phase"];
+//=====================================================================================================================================================================
+private ["_object","_str","_typeOfSelected","_return","_n","_position","_c4"];
 #define MCC_CHARGE "ClaymoreDirectionalMine_Remote_Mag"
-#define MCC_ARMA2MAPS ["takistan","zargabad","chernarus","utes"]
 
 _object = _this select 0;
 
-_door = [_object]  call MCC_fnc_isDoor;
-if (_door == "") exitWith {};
+private ["_door","_animation","_phase","_closed","_tempArray"];
+_tempArray = [_object]  call MCC_fnc_isDoor;
+_door = _tempArray select 0;
+_animation = _tempArray select 1;
+_phase = _tempArray select 2;
+_closed = _tempArray select 3;
 
-if (tolower worldName in MCC_ARMA2MAPS) then {
-	_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
-	_animation = "dvere"+_str;
-} else {
-	_animation = _door + "_rot";
-};
+if (_door == "") exitWith {};
 
 closeDialog 0;
 enableSentences false;
@@ -37,7 +35,6 @@ while {!lineIntersects [ATLtoASL(player modelToworld [0,0,1]), _position]} do
 };
 
 //Place the charge
-_phase = if ((_object animationPhase _animation) > 0) then {0} else {1};
 _position = ATLtoASL(player modelToworld [0,_n-0.15,1]);
 _c4 = "ClaymoreDirectionalMine_Remote_Ammo_Scripted" createVehicle ATLtoASL _position;
 _c4 setpos aslToAtl _position;

@@ -485,7 +485,7 @@ class CP_RESPAWNPANEL {
 			onButtonClick = "_this spawn MCC_fnc_RSSquadCreate";
 			x = 0.0410937 * safezoneW + safezoneX;
 			y = 0.951 * safezoneH + safezoneY;
-			w = 0.0721875 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.033 * safezoneH;
 		};
 	};

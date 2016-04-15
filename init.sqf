@@ -80,9 +80,10 @@ if (isnil "MCC_resGUER") then {MCC_resGUER = [1500,500,200,200,200]};
 //Teleport 2 Team
 if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- AfterRespawn, 3-Always
 
-//non-lethal ammo
-//Define non-lethal ammunition player using this ammunition on units closer then 30 meters will not kill them but stun them. Leave "" to none
-if (isnil "MCC_nonLeathal") then {MCC_nonLeathal = "prpl_6Rnd_12Gauge_Slug"};
+//non-lethal ammo & breaching ammo
+//Define non-lethal ammunition player using this ammunition on units closer then 30 meters will not kill them but stun them.
+MCC_nonLeathalAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
+MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
 
 //MCC Survive mod
 // Set to true to activate survival mode - scavange for loot to survive
@@ -984,14 +985,27 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	[]  spawn MCC_fnc_startLocations;
 
 	//Add beanbag ammo for shouguns
-	if (MCC_nonLeathal != "") then
-	{
+	if (count (missionNamespace getvariable ["MCC_nonLeathalAmmo",[]]) > 0 || count (missionNamespace getvariable ["MCC_breacingAmmo",[]]) > 0) then {
 		player addEventHandler ["fired", {
-											if ((_this select 5) == MCC_nonLeathal) then
-											{
+											//Breach door
+											if (_this select 5 in (missionNamespace getvariable ["MCC_breacingAmmo",[]])) then {
+												private ["_door","_animation","_phase","_closed","_tempArray","_object"];
+												_object = cursorTarget;
+												_tempArray = [_object]  call MCC_fnc_isDoor;
+												_door = _tempArray select 0;
+												_animation = _tempArray select 1;
+												_phase = _tempArray select 2;
+												_closed = _tempArray select 3;
+
+												if (_closed) then {
+													_object animate [_animation, _phase];
+												};
+											};
+
+											//Natrulize AI
+											if ((_this select 5) in (missionNamespace getvariable ["MCC_nonLeathalAmmo",[]])) then {
 												_unit 	= cursorTarget;
-												if (_unit isKindof "CAManBase" && ((_this select 0) distance _unit < 30)) then
-												{
+												if (_unit isKindof "CAManBase" && ((_this select 0) distance _unit < 30)) then {
 													deleteVehicle (_this select 6);
 													[_unit, 5] spawn MCC_fnc_stunBehav;
 												};

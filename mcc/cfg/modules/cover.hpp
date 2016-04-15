@@ -183,14 +183,20 @@ class mcc_sandbox_moduleCover : Module_F
 		class survive
 		{
 			displayName = "Survive mod";
-			description = "Players can search objects in the world to find resources and weapons";
+			description = "Players can search objects in the world to find resources and weapons and need to drink and eat";
 			typeName = "NUMBER";
 			class values
 			{
 				class Enabled
 				{
-					name = "Yes";
+					name = "Yes - Enable searching loot";
 					value = 1;
+				};
+
+				class Enabled2
+				{
+					name = "Yes - Disable searching loot";
+					value = 2;
 				};
 				class Disabled
 				{

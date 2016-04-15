@@ -7,13 +7,18 @@
 // <OUT>
 //		<nothing>
 //===========================================================================================================================================================================
-private ["_object","_door","_addIndex","_eh","_camera","_keyDown","_tablet"];
+private ["_object","_addIndex","_eh","_camera","_keyDown","_tablet"];
 #define MCC_MIROR ["MineDetector","MCC_videoProbe"]
-#define MCC_ARMA2MAPS ["takistan","zargabad","chernarus","utes"]
 
 _object = _this select 0;
 
-_door = [_object]  call MCC_fnc_isDoor;
+private ["_door","_animation","_phase","_closed","_tempArray"];
+_tempArray = [_object]  call MCC_fnc_isDoor;
+_door = _tempArray select 0;
+_animation = _tempArray select 1;
+_phase = _tempArray select 2;
+_closed = _tempArray select 3;
+
 if (_door == "") exitWith {};
 
 closedialog 0;

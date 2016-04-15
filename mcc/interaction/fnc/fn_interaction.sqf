@@ -101,7 +101,7 @@ if (vehicle player == player) then {
 	_positionStart 	= eyePos player;
 	_positionEnd 	= ATLtoASL screenToWorld [0.5,0.5];
 	_pointIntersect = lineIntersectsWith [_positionStart, _positionEnd, player, objNull, true];
-	if (count _pointIntersect > 0 && MCC_surviveMod) then {
+	if (count _pointIntersect > 0 && (missionNamespace getVariable ["MCC_surviveMod",false]) && (missionNamespace getVariable ["MCC_surviveModAllowSearch",false])) then {
 		_selected = _pointIntersect select ((count _pointIntersect)-1);
 
 		if (player distance _selected < 20) exitWith {

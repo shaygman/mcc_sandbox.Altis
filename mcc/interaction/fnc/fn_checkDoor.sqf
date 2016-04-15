@@ -7,23 +7,21 @@
 // <OUT>
 //		<Nothing>
 //===========================================================================================================================================================================
-private ["_object","_door","_str","_animation","_door","_typeOfSelected","_return"];
+private ["_object","_str","_typeOfSelected","_return"];
 #define MCC_CHARGE "ClaymoreDirectionalMine_Remote_Mag"
 #define MCC_MIROR ["MineDetector","MCC_videoProbe"]
 #define MCC_LOCKPICK ["ToolKit","AGM_DefusalKit","MCC_multiTool","ACE_DefusalKit","ACE_key_lockpick"]
-#define MCC_ARMA2MAPS ["takistan","zargabad","chernarus","utes"]
 
 _object = _this select 0;
 
-_door = [_object]  call MCC_fnc_isDoor;
-if (_door == "") exitWith {};
+private ["_door","_animation","_phase","_closed"];
+_tempArray = [_object]  call MCC_fnc_isDoor;
+_door = _tempArray select 0;
+_animation = _tempArray select 1;
+_phase = _tempArray select 2;
+_closed = _tempArray select 3;
 
-if (tolower worldName in MCC_ARMA2MAPS) then {
-	_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
-	_animation = "dvere"+_str;
-} else {
-	_animation = _door + "_rot";
-};
+if (_door == "") exitWith {};
 
 _object animate [_animation, 0.1];
 sleep 0.1;

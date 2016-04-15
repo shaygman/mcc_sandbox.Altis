@@ -2,40 +2,27 @@
 // Interaction with Door type
 // Example: [_object] spawn MCC_fnc_interactMan;
 //==============================================================================================================================================================================
-private ["_object","_door","_optionalDoors","_suspectCorage","_typeOfSelected","_animation","_phase","_doorTypes","_loadName","_waitTime","_array","_str","_closed"];
+private ["_object","_optionalDoors","_suspectCorage","_typeOfSelected","_doorTypes","_loadName","_waitTime","_array","_str"];
 #define MCC_CHARGE "ClaymoreDirectionalMine_Remote_Mag"
 #define MCC_MIROR ["MineDetector","MCC_videoProbe"]
 #define MCC_LOCKPICK ["ToolKit","AGM_DefusalKit","MCC_multiTool","ACE_DefusalKit","ACE_key_lockpick"]
-#define MCC_ARMA2MAPS ["takistan","zargabad","chernarus","utes"]
 
 disableSerialization;
 _object 	= _this select 0;
 
 _waitTime = 1;
 
-_door = [_object] call MCC_fnc_isDoor;
+private ["_door","_animation","_phase","_closed","_tempArray"];
+_tempArray = [_object]  call MCC_fnc_isDoor;
+_door = _tempArray select 0;
+_animation = _tempArray select 1;
+_phase = _tempArray select 2;
+_closed = _tempArray select 3;
 
 switch (true) do {
 	//House
 	case (_object isKindof "house" || _object isKindof "wall") : {
 		if (_door == "") exitWith {};
-
-		if (tolower worldName in MCC_ARMA2MAPS) then {
-			_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
-			_animation = "dvere"+_str;
-			//_animation = _door + "_rot";
-		} else {
-			_animation = _door + "_rot";
-		};
-
-		_phase = if ((_object animationPhase _animation) > 0) then {0} else {1};
-
-		//ArmA2 maps have it all viceversa way to go BI
-		_closed = if (tolower worldName in MCC_ARMA2MAPS) then {
-						if (_phase == 0) then {true} else {false};
-					} else {
-						if (_phase == 0) then {false} else {true};
-					};
 
 		sleep 0.1;
 		//Open dialog

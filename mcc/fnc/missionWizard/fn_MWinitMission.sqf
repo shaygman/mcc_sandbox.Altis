@@ -118,7 +118,7 @@ MCC_MWCleanup =
 	MCC_MWisGenerating = false;
 	publicVariable "MCC_MWisGenerating";
 
-	if (!isnil "hsim_worldArea") then {deleteVehicle hsim_worldArea;	hsim_worldArea = nil};
+	if (!isnil "MCC_worldArea") then {deleteVehicle MCC_worldArea;	MCC_worldArea = nil};
 	if (!isnil "MWMissionArea") then {deleteVehicle MWMissionArea;	MWMissionArea = nil};
 	breakout "#all";
 };
@@ -134,7 +134,7 @@ if (typeName _wholeMap == typeName true ) then {
 		//--------------------------------------------------------------Create a ceneter trigger --------------------------------------------------------------------------
 		private ["_worldPath","_mapSize","_mapCenter"];
 
-		if (isnil "hsim_worldArea") then {
+		if (isnil "MCC_worldArea") then {
 			_worldPath = configfile >> "cfgworlds" >> worldname;
 			_mapSize = getnumber (_worldPath >> "mapSize");
 			if (_mapSize == 0) exitWith {
@@ -150,10 +150,10 @@ if (typeName _wholeMap == typeName true ) then {
 				_mapSize
 			];
 
-			hsim_worldArea = createtrigger ["emptydetector",_mapCenter];
-			hsim_worldArea settriggerarea [_mapSize,_mapSize,0,true];
+			MCC_worldArea = createtrigger ["emptydetector",_mapCenter];
+			MCC_worldArea settriggerarea [_mapSize,_mapSize,0,true];
 		};
-		MWMissionArea = hsim_worldArea;
+		MWMissionArea = MCC_worldArea;
 
 		//First time? Let's map the island
 		if (isnil "MCC_MWcityLocations") then {
@@ -184,7 +184,7 @@ if (typeName _wholeMap == typeName true ) then {
 
 		MWMissionArea = createtrigger ["emptydetector",mcc_zone_markposition];
 		MWMissionArea settriggerarea [mcc_zone_marker_X,mcc_zone_marker_Y,0,true];
-		hsim_worldArea = MWMissionArea;
+		MCC_worldArea = MWMissionArea;
 
 		private "_radius";
 		_radius = (mcc_zone_marker_X + mcc_zone_marker_Y)/2;
@@ -681,5 +681,5 @@ if (_playMusic == 0 ) then {
 MCC_MWisGenerating = false;
 publicVariable "MCC_MWisGenerating";
 
-if (!isnil "hsim_worldArea") then {deleteVehicle hsim_worldArea;	hsim_worldArea = nil};
+if (!isnil "MCC_worldArea") then {deleteVehicle MCC_worldArea;	MCC_worldArea = nil};
 if (!isnil "MWMissionArea") then {deleteVehicle MWMissionArea;	MWMissionArea = nil};

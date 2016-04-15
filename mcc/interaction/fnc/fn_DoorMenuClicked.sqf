@@ -1,25 +1,22 @@
 //=========================================================MCC_fnc_DoorMenuClicked==========================================================================================
 //==============================================================================================================================================================================
-private ["_ctrlData","_object","_animation","_phase","_door"];
+private ["_ctrlData","_object"];
 disableSerialization;
 #define MCC_CHARGE "ClaymoreDirectionalMine_Remote_Mag"
 #define MCC_MIROR ["MineDetector","MCC_videoProbe"]
 #define MCC_LOCKPICK ["ToolKit","AGM_DefusalKit","MCC_multiTool","ACE_DefusalKit","ACE_key_lockpick"]
-#define MCC_ARMA2MAPS ["takistan","zargabad","chernarus","utes"]
 
 _ctrlData	= param [0,"",[""]];
 if (_ctrlData == "") exitWith {};
 
 _object = (player getVariable ["interactWith",[]]) select 0;
-_door 	= (player getVariable ["interactWith",[]]) select 1;
-_phase 	= (player getVariable ["interactWith",[]]) select 2;
 
-if (tolower worldName in MCC_ARMA2MAPS) then {
-	_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
-	_animation = "dvere"+_str;
-} else {
-	_animation = _door + "_rot";
-};
+private ["_door","_animation","_phase","_closed","_tempArray"];
+_tempArray = [_object]  call MCC_fnc_isDoor;
+_door = _tempArray select 0;
+_animation = _tempArray select 1;
+_phase = _tempArray select 2;
+_closed = _tempArray select 3;
 
 switch (_ctrlData) do {
 	case "charge": {
@@ -132,13 +129,6 @@ switch (_ctrlData) do {
 	};
 
 	case "check": {
-		if (tolower worldName in MCC_ARMA2MAPS) then {
-			_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
-			_animation = "dvere"+_str;
-		} else {
-			_animation = _door + "_rot";
-		};
-
 		_object animate [_animation, 0.1];
 		sleep 0.1;
 		_object animate [_animation, 0];

@@ -1,9 +1,9 @@
-//==================================================================MCC_fnc_assignGear======================================================================================
+//==================================================================MCC_fnc_assignGear===============================================================================
 // Sets gear to role
 // Example: [roleNumber, gear/uniform/select],_id], "MCC_fnc_assignGear", true, false] spawn BIS_fnc_MP;
 //roleNumber: 0-officer, 1-AR, 2-Rifleman, 3-AT, 4-medic, 5-marksman, 6- specialist, 7- crewman, 8-pilot
 // Gear: 0- select, 1-gear, 2-uniform
-//==============================================================================================================================================================================
+//======================================================================================================================================================================
 private ["_role","_muzzles","_wepItems","_currentWeapon"];
 _role = _this select 0;
 
@@ -109,8 +109,8 @@ _wepItems = handgunItems player;
 
 //Add generic items
 _currentWeapon = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role, getplayerUID player, side player];
-if (!isnil "_currentWeapon") then
-{
+
+if (!isnil "_currentWeapon") then {
 	{
 		[_x] call MCC_fnc_addItem;
 	} foreach _currentWeapon;

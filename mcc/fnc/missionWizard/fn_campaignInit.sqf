@@ -49,7 +49,7 @@ waituntil {_check};
 //Search the map for locations
 private ["_worldPath","_mapSize","_mapCenter"];
 
-if (isnil "hsim_worldArea") then
+if (isnil "MCC_worldArea") then
 {
 	_worldPath = configfile >> "cfgworlds" >> worldname;
 	_mapSize = getnumber (_worldPath >> "mapSize");
@@ -58,8 +58,8 @@ if (isnil "hsim_worldArea") then
 	_mapSize = _mapSize / 2;
 	_mapCenter = [_mapSize,_mapSize];
 
-	hsim_worldArea = createtrigger ["emptydetector",_mapCenter];
-	hsim_worldArea settriggerarea [_mapSize,_mapSize,0,true];
+	MCC_worldArea = createtrigger ["emptydetector",_mapCenter];
+	MCC_worldArea settriggerarea [_mapSize,_mapSize,0,true];
 };
 
 //Build Locations
@@ -74,7 +74,7 @@ _locations = [];
 
 //If no user defined locations lets find map locations.
 if (count _locations == 0) then {
-	_pos = getpos hsim_worldArea;
+	_pos = getpos MCC_worldArea;
 	{
 		_temploc = [_pos,15000,_x] call MCC_fnc_MWbuildLocations;
 		{
@@ -86,7 +86,7 @@ if (count _locations == 0) then {
 //Still no location go bruth force
 if (count _locations == 0) then {
 	for "_i" from 1 to 100  do {
-		_temploc = [[getpos hsim_worldArea, hsim_worldArea], "ground", ["water","out"],{}] call BIS_fnc_randomPos;
+		_temploc = [[getpos MCC_worldArea, MCC_worldArea], "ground", ["water","out"],{}] call BIS_fnc_randomPos;
 		_locations pushBack [_temploc, ""];
 	};
 };

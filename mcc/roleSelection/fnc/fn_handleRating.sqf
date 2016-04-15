@@ -17,6 +17,9 @@ player addrating (_rating*-1);
 //when player spawn he get xp no idea why
 if (missionNamespace getvariable ["CP_gainXPFirstTime",true]) exitWith {missionNamespace setvariable ["CP_gainXPFirstTime",false]};
 
+//we are gaining level disregard any XP for now
+if (missionNamespace getvariable ["MCC_isLevelingUp",false]) exitWith {};
+
 if (CP_debug) then {systemchat format ["rating add: %1", _rating]};
 player setVariable ["MCC_valorPoints",(player getVariable ["MCC_valorPoints",50])+(_rating/2),true];
 
@@ -39,8 +42,10 @@ _level =[floor(_exp/CP_XPperLevel)+1 ,_exp];
 _newLevel = _level select 0;
 
  if (_oldLevel < _newLevel) then {
+ 	missionNamespace setVariable ["MCC_isLevelingUp",true];
 	[_newLevel] call MCC_fnc_unlock;
 	_oldLevel = _newLevel;
+	missionNamespace setVariable ["MCC_isLevelingUp",false];
  };
 
 if (CP_debug) then {systemchat format ["level: %1",_level]};

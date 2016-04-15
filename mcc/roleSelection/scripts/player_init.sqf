@@ -45,6 +45,18 @@ player addRating (-1 * (rating player));
 waituntil {! isnil "MCCplayerRank"};
 if (CP_debug) then {systemchat format ["player Rank : %1",MCCplayerRank]};
 
+_availableRoles = [];
+_cfg = if (isClass (missionconfigFile >> "MCC_loadouts" )) then {(missionconfigFile >> "MCC_loadouts")} else {(configFile >> "MCC_loadouts")};
+
+//Let's build the control buttons
+for "_i" from 0 to (count _cfg -1) do {
+	_cfgName = format ["%1Level", configName (_cfg select _i)];
+	[[_cfgName, player, CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
+	waituntil {! isnil _cfgName};
+	if (CP_debug) then {systemchat format ["%2 : %1",missionNamespace getVariable [_cfgName,-1],_cfgName]};
+};
+
+/*
 {
 	[[_x, player, CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 	waituntil {! isnil _x};
@@ -59,7 +71,7 @@ if (CP_debug) then {systemchat format ["player Rank : %1",MCCplayerRank]};
            "crewLevel",
            "pilotLevel"
           ];
-
+*/
 //******************************************************************************************************************************
 //											Start camera
 //******************************************************************************************************************************

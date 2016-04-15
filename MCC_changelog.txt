@@ -1,3 +1,106 @@
+Change log r19:
+- Added: UI Module can enable/disable any of the below features: 
+	- Camera control: Force 1st person camera always or just outside of a vehicle New WIKI page - http://mccsandbox.wikia.com/wiki/UI_Module?venotify=created.
+	- Compass: In game compass and squad members overlay.
+	- Name tags: Show friendly units name/role/rank and vehicle information such as driver,commander, gunner and empty positions left.
+	- Squad Markers: Show friendly squad markers on the map. Only MCC squads from the role selection or Squad dialog.
+	- Squad Members Markers: Show squad members markers on the map. 
+	- Suppression: Client side only Supression effects, blur and camera shake depends on the angle of fire, the caliber and more. 
+- Changed: Name tags, group markers moved to the inGame UI settings module
+- Changed: Moved to inidbi2 - local db files for each mission - TODO WIKI
+- Changed: Removed inidbi2 dependency- persistent data will be saved to the server profile using BI profile name space - I still recommend using IniDB2 as it more robust.
+- Changed: Total reworked the Role Selection UI and functionality load-outs are not inherent  from config files to be- TODO WIKI
+- Changed: Total reworked Interaction layour from list to a rose dial menu - TODO WIKI
+- Changed: Commander Console UI. 
+- Added: From MCC interaction mount/dismount weapons attachments with the proper animations doing so. 
+- Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point. 
+- Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
+- Added: Resupply option to FOB.
+- Added: Resupply will resupply grenade launcer rounds. 
+- Added: Ability to build sand bags around FOB - Squad leader - doesn't need resources but there is a limit to 14 sandbags per FOB
+- Added: Units that are not in your squad will show in blue while name tags is on. 
+- Added: Units markers (mission settings module) Show units markers on the map for all players while playing in a squad from the Squad Dialog
+- Added: Breach locked door using custom ammo such as shoutgun slug (RHS or Prpl by defualt) as defined with MCC_breacingAmmo example: MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
+- Added: Can enable survival mod without allowing player to search for loot - if you want to add some thirst and hunger element for the realisim without turning it into a Dayz. Enable it from the mission setting module or missionNamesSpace variable ["MCC_surviveModAllowSearch",false]
+- Changed: Medic system reworked to work with the new protection system.
+_ Fixed: Error regarding BI fnc sortBy spamming the log file.
+- Fixed: Mission Wizard save hostage mission can be ended on respawn_west/east/gurilla marker. 
+- Fixed: Self interaction kept working even when disabled when CBA is on.
+- Fixed: Can't login to MCC after the latest patch. 
+- Fixed: Medical system was broken (players died instantly instead of falling unconscious) and added a new WIKI page - http://mccsandbox.wikia.com/wiki/MeidcalSystem
+- Fixed: Pressing the delete button while opening MCC delete the last selected group/unit. 
+- Fixed: Fast rope didn't worked well on MP. 
+- Fixed: Losing Zeus after re-spawn.
+- Fiexd: Zeus editing unit/object didn't work after update. 
+- Fixed: ILS module error when no rings selected
+- Fixed: Restricted ambient civilians module didn't work on dedicated
+- Fixed: Logistic dialogs for helicopters won't show crates that the helicopter can't sling-load. 
+- Fixed: Convoy not working. 
+- Fixed: Convoy spawn too many cargo units.  
+- Fixed: Mini game IED can be disarmed again even after disarming
+- Fixed: RPT errors regarding ; at the end of file
+- Fixed: Stuck when enabling Survival mod from module. 
+- Fixed: MCC_make_array_group error on server. 
+
+TODO - mission templates, test dedicated
+TODO - save campaign
+TODO - survival spawn crates in houses?!
+TODO - local markers are not local
+TODO - check ArmA 2 map doors
+
+Change log r18:
+-= New IED Mini Game =-
+- Added: Mini-game IED disarm, as shown in "keep talking and nobody explodes" game. Http://mccsandbox.wikia.com/wiki/Mini-game_IED
+
+-= New Sectors Modules =-
+- Added: Resources capture zones. http://mccsandbox.wikia.com/wiki/Capture_Zone
+
+-= New Survival system =- 
+- Added: Survival system. http://mccsandbox.wikia.com/wiki/Survive_mod
+
+-= Reworked Fame System =-
+- Added: Fame system for purchasing vehicles from kiosks (RTS). Players need to gain enough fame to be able to take global resources to buy vehicles. Commander can still spawn as many vehicle as he want to without the need to gain fame. 
+- Added: Vault items will be persistent from mission to mission (if iniDB is running on the server) .
+- Changed: Fame system, player gain fame by depositing materials, weapons and magazines in the vault when survival mod is and from killing enemies, leading, healing exc. 
+- Changed: The vault (shared box) will only be available when survival mod is on
+- Fixed: MCC survival option "Search" enabled on ACE even when survival mode disabled. 
+- Fixed: Popup error when opening the shared HQ box - vault. 
+
+-= VON Radio System =-
+- Reduce overlay sounds. 
+- Side channel is enabled for side commanders only.
+- Microphone abusing ends in kicking the player not killing him. 
+
+-= Misc =- 
+- Added: Can use MCC interaction while ACE is on - just don't forget to bind it to another key.
+- Added: New Module: vehicle respawn - apparently BI module doesn't really work. 
+- Added: No ambient spawn module - prevent ambient AI units spawn to spawn around the module in a specific radius.
+- Added: Snow weather effect to MCC atmospheres. 
+- Added: MCC ammo boxes, medic boxes, supply crates & pods (logistics) to Zeus.
+- Added: MCC items (medic survival exc) add to BI arsenal. 
+- Added: Can attach chemlights and IR strobes using MCC self interaction.
+- Added: MCC survival will work without iniDBI mod but items will not be persistent between missions or server restart.  
+- Added: Easy to configure survival loot place holders objects and items spawn chance and amount in them via missions config files.
+- Changed: MCC Mission Generator - disable IED mission will use the disarm minigame and changed the IED type to the military device.
+- Changed: ILS Available to all air vehicles.
+- Changed: When placing IEDs MCC will not close the 3d editor so you can place multiple IEDs. 
+- Changed: Mild hijacked unit's blur effect.
+- Fixed: Not enough AI spawns in buildings in CQB missions generated by the Mission Generator.
+- Fixed: GAIA doesn't recognize mod vehicles such as RHS helicopters
+- Fixed: Double click WP in the commander console didn't work
+- Fixed: Quick weapon (Shift +1 .... Shift + 4) select always on
+- Fixed: While playing with CBA you'll no longer see the change MCC keys - thanks to Sargken.
+- Fixed: After a campaign mission has been finished MCC will not delete manned players' vehicles or FOBs.
+- Fixed: Starting with default gear after respawn when Role Selection is on. 
+- Fixed: Teleporting boats on water teleported the vehicle to map corner.
+- Fixed: Lock/unlock door typo
+
+Change log r17:
+- Fixed: Convoy didn't worked on dedicated server.
+- Fixed - MCC ammobox items didn't show up on ACE. 
+- Fixed - Resource module's names vice versa. 
+- Fixed - Limiting the number of kits per squad didn't worked in Role Selection
+
 Change log r16 hotfix:
 - Added: In RTS mode the commander can take first person control over it's units. 
 - Added: Undercover Agents module (2D or Zeus) covert units into undercover agents , wiki will come soon. You can holster a handgun and get close to enemy units without raising suspicious. Getting to close to an enemy, crouching, proning, running around or drawing your handgun will blow your cover. 
@@ -573,11 +676,7 @@ CP_defaultLevel = [1,0];
 //Default squads names better to define in iniDBI file on the server
 CP_defaultGroups = ["Alpha","Bravo","Charlie","Delta"]; 
 
-//Max players per side	
-CP_maxPlayers = 30; 
 
-//Max squads per side									
-CP_maxSquads = 10; 									
 
 //--------------------Default Tickets -------------------------------------------------------
 MCC_ticketsWest = 200;
@@ -1510,8 +1609,3 @@ Change log r7:
 - Fixed space between mines in minefields doubled. 
 - Fixed Fog over created on MCC sync. 
 - Fixed 3D editor sometimes break when pressing apply
-
-To do:
-0 ctursc "RscSpectator"
-0 cutRsc ["RscSpectator","Plain",2];
-cutRsc ["binocular","PLAIN"]

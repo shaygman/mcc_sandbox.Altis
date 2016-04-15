@@ -200,7 +200,7 @@ _disp = uiNamespace getVariable "CP_GEARPANEL_IDD";
 if (isnil "_disp") exitWith {};
 [_disp] call MCC_fnc_playerStats;
 
-/* -- We had it for some reason now i'm not sure why
+/* -- We had it for some reason now i'm not sure why*/
 //Magazines and cargo UI
 if !(isNull (_disp displayCtrl 9874444)) then {
 	_ctrl = (_disp displayCtrl 9874444);
@@ -208,7 +208,7 @@ if !(isNull (_disp displayCtrl 9874444)) then {
 
 	{
 		if !(_x in _magTypes) then {_magTypes pushBack _x};
-	} forEach (items player + magazines player);
+	} forEach (weapons player + items player + magazines player);
 
 	lbClear _ctrl;
 	{
@@ -239,13 +239,13 @@ if !(isNull (_disp displayCtrl 9874444)) then {
 			};
 
 		_displayname = getText(_cfg >> "displayName");
-		_displayname = str({_x == _mag} count (items player + magazines player))  + " X " + _displayname;
+		_displayname = str({_x == _mag} count (weapons player + items player + magazines player))  + " X " + _displayname;
 
 		_pic = getText(_cfg >> "picture");
 
 		//For insignas
 		if (_pic == "") then {_pic =  getText(_cfg >> "texture")};
+		_index = _ctrl lbAdd _displayname;
 		_ctrl lbSetPicture [_index, _pic];
 	} forEach _magTypes;
 };
-*/

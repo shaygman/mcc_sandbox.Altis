@@ -1,4 +1,4 @@
-//==================================================================MCC_fnc_doorUnlock=========================================================================================
+//==================================================================MCC_fnc_doorUnlock==============================================================================
 // Unlock door
 // Example:[_object] spawn MCC_fnc_doorUnlock;
 // <IN>
@@ -6,21 +6,18 @@
 //
 // <OUT>
 //		<nothing>
-//===========================================================================================================================================================================
-private ["_object","_door","_str","_animation","_door","_typeOfSelected","_return","_n","_position","_c4"];
-#define MCC_ARMA2MAPS ["takistan","zargabad","chernarus","utes"]
-
+//====================================================================================================================================================================
+private ["_object","_str","_typeOfSelected","_return","_n","_position","_c4"];
 _object = _this select 0;
 
-_door = [_object]  call MCC_fnc_isDoor;
-if (_door == "") exitWith {};
+private ["_door","_animation","_phase","_closed","_tempArray"];
+_tempArray = [_object]  call MCC_fnc_isDoor;
+_door = _tempArray select 0;
+_animation = _tempArray select 1;
+_phase = _tempArray select 2;
+_closed = _tempArray select 3;
 
-if (tolower worldName in MCC_ARMA2MAPS) then {
-	_str = [_door,"[01234567890]"] call BIS_fnc_filterString;
-	_animation = "dvere"+_str;
-} else {
-	_animation = _door + "_rot";
-};
+if (_door == "") exitWith {};
 
 closedialog 0;
 ["Unlocking",10] call MCC_fnc_interactProgress;
