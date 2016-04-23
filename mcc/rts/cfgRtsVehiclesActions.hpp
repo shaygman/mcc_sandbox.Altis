@@ -8,12 +8,12 @@ class MCC_rts_mountGuns
 
 	displayName = "Mount HMG";
 	descriptionShort = "Upgrade the vehicle with HMG";
-	condition = "typeOf _target in ['B_G_Offroad_01_F','C_Offroad_01_F'] && alive _target";
+	condition = "typeOf _target in ['B_G_Offroad_01_F','C_Offroad_01_F','O_G_Offroad_01_F'] && alive _target";
 	dontShowDisabled = 1;
 	requiredBuildings[] = {{"workshop",1}};
 	needelectricity = 0;
 	actionFNC = "MCC_fnc_rtsMountGuns";
-	resources[] = {{"repair",200},{"time",10}};
+	resources[] = {{"ammo",200},{"time",10}};
 };
 
 class MCC_rts_LoadResources

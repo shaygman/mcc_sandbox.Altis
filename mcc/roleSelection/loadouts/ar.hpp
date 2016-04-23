@@ -2,7 +2,7 @@ class ar : rifleman
 {
 	name    = "Automatic Rifleman";
 	picture =  __EVAL(MCCPATH +"mcc\roleSelection\data\AR.paa");
-	minPlayersForKit = 3;
+	minPlayersForKit = 2;
 	maxKitsInGroup = 2;
 	maxKitsInSide = 999;
 	allowMg = 1;

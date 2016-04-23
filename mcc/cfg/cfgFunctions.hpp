@@ -284,22 +284,6 @@ class actions
 	class ACEdropAmmobox {description = "Drop MCC ammbox in ACE";};
 };
 
-class radio
-{
-	#ifdef MCCMODE
-	file = "\mcc_sandbox_mod\mcc\fnc\radio";
-	#else
-	file = "mcc\fnc\radio";
-	#endif
-
-	class vonRadio		{description = "simulate real radio comms on ArmA VON";};
-	class settingsRadio	{description = "Real radio comms settings";};
-	class VONRadioBroadcast {};
-	class VONRadiofindChannel {};
-	class VONRadioPressed {};
-	class assignChannelServer{};
-};
-
 class medic
 {
 	#ifdef MCCMODE

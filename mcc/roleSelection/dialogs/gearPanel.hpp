@@ -83,6 +83,8 @@ class CP_GEARPANEL {
 					text = "Take";
 					style = 2;
 					action =  "0 spawn MCC_fnc_RSTakeCommander";
+					sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.4)";
+
 					x = 0.144375 * safezoneW;
 					y = 0.011 * safezoneH;
 					w = 0.05 * safezoneW;
@@ -194,7 +196,7 @@ class CP_GEARPANEL {
 							style = 2;
 							sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 
-							x = 0 * safezoneW;
+							x = 0.04125 * safezoneW;
 							y = 0.033 * safezoneH;
 							w = 0.0360937 * safezoneW;
 							h = 0.033 * safezoneH;
@@ -206,7 +208,7 @@ class CP_GEARPANEL {
 							style = 2;
 							sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 
-							x = 0.04125 * safezoneW;
+							x = 0.0825002 * safezoneW;
 							y = 0.033 * safezoneH;
 							w = 0.0360937 * safezoneW;
 							h = 0.033 * safezoneH;
@@ -218,7 +220,7 @@ class CP_GEARPANEL {
 							style = 2;
 							sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 
-							x = 0.0825002 * safezoneW;
+							x = 0.12375 * safezoneW;
 							y = 0.033 * safezoneH;
 							w = 0.0360937 * safezoneW;
 							h = 0.033 * safezoneH;
@@ -229,7 +231,7 @@ class CP_GEARPANEL {
 							style = 2;
 							sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 
-							x = 0.12375 * safezoneW;
+							x = 0.165 * safezoneW;
 							y = 0.033 * safezoneH;
 							w = 0.0360937 * safezoneW;
 							h = 0.033 * safezoneH;
@@ -240,61 +242,88 @@ class CP_GEARPANEL {
 							style = 2;
 							sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 
-							x = 0.165 * safezoneW;
+							x = 0.20625 * safezoneW;
+							y = 0.033 * safezoneH;
+							w = 0.0360937 * safezoneW;
+							h = 0.033 * safezoneH;
+						};
+						class MCC_ValorText: MCC_RscText
+						{
+							idc = 86;
+							style = 2;
+							sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+							x = 0 * safezoneW;
 							y = 0.033 * safezoneH;
 							w = 0.0360937 * safezoneW;
 							h = 0.033 * safezoneH;
 						};
 						class MCC_Ammo: MCC_RscPicture
 						{
-							idc = -1;
-
+							idc = 91;
+							tooltip = "Ammo";
 							text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
-							x = 0.010313 * safezoneW;
+							
+							x = 0.0515627 * safezoneW;
 							y = 0 * safezoneH;
 							w = 0.0154689 * safezoneW;
 							h = 0.033 * safezoneH;
 						};
 						class MCC_Repair: MCC_RscPicture
 						{
-							idc = -1;
-
+							idc = 92;
+							tooltip = "Repair";
 							text = __EVAL(MCCPATH +"data\IconRepair.paa");
-							x = 0.0515627 * safezoneW;
+							
+							x = 0.0928127 * safezoneW;
 							y = -1.63913e-008 * safezoneH;
 							w = 0.0154689 * safezoneW;
 							h = 0.033 * safezoneH;
 						};
 						class MCC_Fuel: MCC_RscPicture
 						{
-							idc = -1;
-
+							idc = 93;
+							tooltip = "Fuel";
 							text = __EVAL(MCCPATH +"data\IconFuel.paa");
-							x = 0.0928127 * safezoneW;
+							
+							x = 0.134063 * safezoneW;
 							y = -1.63913e-008 * safezoneH;
 							w = 0.0154689 * safezoneW;
 							h = 0.033 * safezoneH;
 						};
 						class MCC_FoodPic: MCC_RscPicture
 						{
-							idc = -1;
-
+							idc = 94;
+							tooltip = "Food";
 							text = __EVAL(MCCPATH +"data\IconFood.paa");
-							x = 0.134063 * safezoneW;
+							
+							x = 0.175313 * safezoneW;
 							y = -1.63913e-008 * safezoneH;
 							w = 0.0154689 * safezoneW;
 							h = 0.033 * safezoneH;
 						};
 						class MCC_MedPic: MCC_RscPicture
 						{
-							idc = -1;
-
+							idc = 95;
+							tooltip = "Meds";
 							text = __EVAL(MCCPATH +"data\IconMed.paa");
-							x = 0.175313 * safezoneW;
+							
+							x = 0.216563 * safezoneW;
 							y = -1.63913e-008 * safezoneH;
 							w = 0.0154689 * safezoneW;
 							h = 0.033 * safezoneH;
 						};
+						class MCC_ValorPic: MCC_RscPicture
+						{
+							idc = 96;
+							tooltip = "Personal Valor";
+							text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
+
+							x = 0.010313 * safezoneW;
+							y = -1.63913e-008 * safezoneH;
+							w = 0.0154689 * safezoneW;
+							h = 0.033 * safezoneH;
+						};						
 					};
 				};
 			};

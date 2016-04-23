@@ -26,7 +26,7 @@ while {true} do {
 			_resources = missionNamespace getvariable [format ["MCC_res%1",_side],[500,500,200,200,100]];
 
 			_startPos = call compile format ["MCC_START_%1",_side];
-			_buildings = _startPos nearEntities [["logic"], 300];
+			_buildings = _startPos nearObjects ["UserTexture10m_F", 300];
 			_cargoSpace = 500;
 			_unitsSpace = 4;
 			_elecUnits= [];

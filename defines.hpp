@@ -69,7 +69,7 @@ class CfgFunctions
 {
 	#include "gaia\cfgFunctions.hpp"
 	#include "VAS\cfgFunctions.hpp"
-
+	
 	class MCC
 	{
 		tag = "MCC";
@@ -85,6 +85,18 @@ class CfgFunctions
 		#include "mcc\roleSelection\cfgFunctions.hpp"
 		#include "mcc\interaction\cfgFunctions.hpp"
 		#include "mcc\supression\cfgFunctions.hpp"
+		#include "mcc\radio\cfgFunctions.hpp"
+	};
+};
+
+class cfgRemoteExec {
+	class Functions {
+		// State of remoteExec: 0-turned off, 1-turned on, taking whitelist into account, 2-turned on, however, ignoring whitelists (default because of backward compatibility)
+		mode = 2;
+		// Ability to send jip messages: 0-disabled, 1-enabled (default)
+		jip = 1;
+		#include "mcc\cfg\cfgRemoteExec.hpp"
+		#include "mcc\radio\cfgRemoteExec.hpp"
 	};
 };
 
@@ -158,8 +170,4 @@ class CfgDebriefing
 		subtitle = "For abusing the radio";
 		description = "You were kicked";
 	};
-};
-
-class cfgRemoteExec {
-	#include "mcc\cfg\cfgRemoteExec.hpp"
 };

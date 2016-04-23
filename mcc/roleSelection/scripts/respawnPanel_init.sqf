@@ -64,6 +64,14 @@ if !(CP_activated) then {
 	};
 };
 
+//Hide resource if logistics is off
+if !(missionNamespace getVariable ["MCC_allowlogistics",true]) then {
+	for "_i" from 1 to 5 step 1 do {
+		ctrlshow [_i+80,false];
+		ctrlshow [_i+90,false];
+	};
+};
+
 MCC_CPMap_mouseMoving =
 {
 	missionNamespace setVariable ["MC_MWMap_mousePos",[_this select 1,_this select 2]];
@@ -187,6 +195,7 @@ if (missionNamespace getvariable ["CP_activated",false]) then {
 	_needXPPrevLevel 	= (CP_XPperLevel * (_oldLevel-1));
 
 	XPValue progressSetPosition (1-((_needXP-_exp)/(_needXP - _needXPPrevLevel)));
+	XPValue ctrlSetTooltip format ["%1/%2", _exp,_needXP];
 } else {
 	{
 		(_disp displayCtrl _x) ctrlShow false
@@ -258,6 +267,9 @@ if (missionNamespace getvariable ["CP_activated",false]) then {
 		//Load available resources
 		_array = call compile format ["MCC_res%1",playerside];
 		{_disp displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85];
+
+		//Load available valor
+		_disp displayCtrl 86 ctrlSetText str floor (player getVariable ["MCC_valorPoints",50]);
 
 		//Clear unavailable spawn points
 		{

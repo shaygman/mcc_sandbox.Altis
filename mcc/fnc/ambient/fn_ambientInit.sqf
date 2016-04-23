@@ -1,4 +1,4 @@
-//============================================================MCC_fnc_ambientInit===============================================================================================
+//============================================================MCC_fnc_ambientInit=====================================================================================
 // Spawn selected units around the player
 // _isCiv:				BOOLEAN - units running around?
 // _isCar:				BOOLEAN - Will have driving cars around
@@ -8,16 +8,16 @@
 // _civSpawnDistance	INTEGER - max units spawned around the player
 // _factionCiv			STRING - the units' faction
 // _factionCivCar		STRING - the units' cars faction
-//===========================================================================================================================================================================
+//==================================================================================================================================================================
 private ["_spawnCenters","_isCiv","_player","_civArray","_civCount","_civSpawnDistance","_maxCivSpawn","_factionCiv","_unitsArray","_vehiclesArray","_isCar","_carCount","_carArray","_isParkedCar","_isLocked"];
-_isCiv =  [_this, 0, true, [true]] call BIS_fnc_param;
-_isCar = [_this, 1, true, [true]] call BIS_fnc_param;
-_isParkedCar = [_this, 2, true, [true]] call BIS_fnc_param;
-_isLocked  = [_this, 3, false, [true]] call BIS_fnc_param;
-_civSpawnDistance = [_this, 4, 250, [250]] call BIS_fnc_param;
-_maxCivSpawn = [_this, 5, 4, [4]] call BIS_fnc_param;
-_factionCiv	= [_this, 6, "CIV_F", [""]] call BIS_fnc_param;
-_factionCivCar = [_this, 7, "CIV_F", [""]] call BIS_fnc_param;
+_isCiv =  param [0, true, [true]];
+_isCar = param [1, true, [true]];
+_isParkedCar = param [2, true, [true]];
+_isLocked  = param [3, false, [true]];
+_civSpawnDistance = param [4, 250, [250]];
+_maxCivSpawn = param [5, 4, [4]];
+_factionCiv	= param [6, "CIV_F", [""]];
+_factionCivCar = param [7, "CIV_F", [""]];
 
 //Let's build the faction unit's array
 _unitsArray 	= [_factionCiv,"soldier","men"] call MCC_fnc_makeUnitsArray;

@@ -62,10 +62,10 @@ while { true } Do {
 	if (_tickets ==0) exitWith {};
 
 	//No crew lets see if we abonadand the vehicle
-	_abandoned = if (count (crew _object) == 0 && _abondanDistance > 0) then {count ((position _object) nearEntities [["Man"], _abondanDistance])<=0} else {false};
+	_abandoned = if (count (crew _object) == 0 && _abondanDistance > 0) then {{isPlayer _x && _x distance _object < _abondanDistance} count allUnits == 0} else {false};
 
 	//see if we have been damaged or disabled
-	if (((_abandoned && _object distance _vehPos > 50) || !(alive _object) || (!(canMove _object) && _respawnDisabled))) then {
+	if (((_abandoned && _object distance _vehPos > 50) || (!(alive _object) && _abandoned) || (!(canMove _object) && _respawnDisabled && _abandoned))) then {
 
 		_tickets = _tickets -1;
 		if (_destroyEffect) then {[position _object,"medium"] spawn MCC_fnc_IedDeadlyExplosion};

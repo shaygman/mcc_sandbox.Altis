@@ -78,7 +78,13 @@ if (count _locations == 0) then {
 	{
 		_temploc = [_pos,15000,_x] call MCC_fnc_MWbuildLocations;
 		{
-			_locations pushBack [getpos (_x select 0), _x select 1];
+			if (((missionNamespace getVariable ["MCC_START_WEST",[0,0,0]]) distance (getpos (_x select 0)) >700) &&
+				((missionNamespace getVariable ["MCC_START_EAST",[0,0,0]]) distance (getpos (_x select 0)) >700) &&
+				((missionNamespace getVariable ["MCC_START_GUER",[0,0,0]]) distance (getpos (_x select 0)) >700)) then {
+
+				_locations pushBack [getpos (_x select 0), _x select 1];
+			};
+
 		} forEach _temploc;
 	} forEach ["city","mil","nature"]; //,"mil","hill","nature","marine"
 };
@@ -166,7 +172,7 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 	_isAS = random 1 > 0.6;
 	_isSB = random 1 > 0.8;
 	_reinforcement =if (random 100 < (_difficulty)*2) then {[1,1,1,1,2] call BIS_fnc_selectRandom} else {0};
-	_obj1 = if (random 1 > 0.5) then {["Clear Area","Secure HVT","Kill HVT","Destroy Vehicle","Destroy AA","Destroy Artillery","Destroy Weapon Cahce","Destroy Fuel Depot","Aquire Intel"] call BIS_fnc_selectRandom} else {"Clear Area"};
+	_obj1 = if (random 1 > 0.2) then {["Clear Area","Secure HVT","Kill HVT","Destroy Vehicle","Destroy AA","Destroy Artillery","Destroy Weapon Cahce","Destroy Fuel Depot","Aquire Intel"] call BIS_fnc_selectRandom} else {"Clear Area"};
 
 	_obj2 = if (random 100 < _difficulty) then {"Destroy Radar/Radio"} else {"None"};
 	_obj3 = if (random 100 < _difficulty) then {["Secure HVT","Kill HVT","Destroy Vehicle","Destroy AA","Destroy Artillery","Destroy Weapon Cahce","Destroy Fuel Depot","Aquire Intel","Disarm IED"] call BIS_fnc_selectRandom} else {"None"};
@@ -274,6 +280,8 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 		    default {"ColorGUER"};
 		};
 	[1, _markerColor,[_AOSize*2,_AOSize*2], "RECTANGLE", "Solid", "Empty", _markerName, _AOlocationPos] call MCC_fnc_makeMarker;
+
+	_missionDone = _missionDone + 1;
 };
 
 //Mission won outro

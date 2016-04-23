@@ -2,7 +2,7 @@ class at : rifleman
 {
 	name    = "Anti-Tank";
 	picture =  __EVAL(MCCPATH +"mcc\roleSelection\data\AT.paa");
-	minPlayersForKit = 3;
+	minPlayersForKit = 2;
 	maxKitsInGroup = 2;
 	maxKitsInSide = 999;
 	allowMg = 0;

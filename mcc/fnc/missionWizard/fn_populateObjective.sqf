@@ -20,7 +20,7 @@
 //	_enemySide				Side, what side are we fighting
 // Return - nothing
 //==============================================================================================================================================================================
-private ["_zoneNumber","_unitPlaced","_safepos","_factor","_missionCenter","_missionRadius","_script_handler","_factor","_isCQB","_totalEnemyUnits","_roadPositions","_enemyfaction","_civFaction","_isCiv","_animals","_vehicles","_armor","_artillery","_isRoadblocks","_missionCenterTrigger","_isAS","_isSB"];
+private ["_zoneNumber","_unitPlaced","_safepos","_factor","_missionCenter","_missionRadius","_script_handler","_factor","_isCQB","_totalEnemyUnits","_roadPositions","_enemyfaction","_civFaction","_isCiv","_animals","_vehicles","_armor","_artillery","_isRoadblocks","_missionCenterTrigger","_isAS","_isSB","_dir"];
 _missionCenterTrigger 	= [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _missionCenter	= getpos _missionCenterTrigger;
 
@@ -153,7 +153,7 @@ if (_isRoadblocks) then
 //IEDs
 if (_isIED) then
 {
-	private ["_name","_objectType","_iedpos","_iedX","_iedY","_groupArray"];
+	private ["_name","_objectType","_iedpos","_iedX","_iedY","_groupArray","_dir"];
 	_roadPositions = [_missionCenter,(_missionRadius*0.5)] call MCC_fnc_findRoadsLeadingZone;
 	if (count _roadPositions >0) then
 	{
@@ -183,9 +183,15 @@ if (_isIED) then
 
 				//Find road direction
 				_roadConnectedTo 	= roadsConnectedTo _x;
-				_connectedRoad 		= _roadConnectedTo select 0;
-				_dir			 	= [_x, _connectedRoad] call BIS_fnc_DirTo;
 
+				if (count _roadConnectedTo > 0) then {
+					_connectedRoad = _roadConnectedTo select 0;
+					if (isNil "_connectedRoad") then {_dir = 0} else {
+						_dir = [_x, _connectedRoad] call BIS_fnc_DirTo;
+					};
+				} else {
+					_dir = 0;
+				};
 
 				//Let's not place it on road but to the side of the road.
 				_iedX = 4;

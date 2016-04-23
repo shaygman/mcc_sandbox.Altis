@@ -30,4 +30,4 @@ _spawnType = switch (_constLevel) do {
 
 if (_spawnType == "") exitWith {};
 
-[player, [_spawnType,_spawnPad]] spawn MCC_fnc_vehicleSpawnerInitDialog;
+[player, [_spawnType,_spawnPad],true] spawn MCC_fnc_vehicleSpawnerInitDialog;

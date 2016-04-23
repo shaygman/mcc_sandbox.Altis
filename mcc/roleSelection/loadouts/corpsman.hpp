@@ -2,7 +2,7 @@ class corpsman : rifleman
 {
 	name    = "Corpsman";
 	picture =  __EVAL(MCCPATH +"mcc\roleSelection\data\Corpsman.paa");
-	minPlayersForKit = 3;
+	minPlayersForKit = 2;
 	maxKitsInGroup = 2;
 	maxKitsInSide = 999;
 	allowMg = 0;

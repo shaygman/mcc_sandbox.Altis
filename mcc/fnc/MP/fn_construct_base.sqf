@@ -1,8 +1,8 @@
-//==================================================================MCC_fnc_construct_base======================================================================================
+//==================================================================MCC_fnc_construct_base=============================================================================
 // Example:[_pos, _anchorDir , _anchorType, _BuildTime, _side]  call  MCC_fnc_construct_base;
-//==============================================================================================================================================================================
+//======================================================================================================================================================================
 private ["_cfgClass","_anchorType","_anchorDir","_pos","_objs","_constType","_anchor","_object","_BuildTime","_buildingObjs","_builtArray",
-         "_side","_level","_instant","_endTime","_boxName","_boxArray","_box","_text","_res"];
+         "_side","_level","_instant","_endTime","_boxName","_boxArray","_box","_text","_res","_displayName","_markerName"];
 _pos			= _this select 0;
 _anchorDir 		= _this select 1;
 _cfgClass		= _this select 2;
@@ -21,12 +21,14 @@ if (isClass (missionconfigFile >> "cfgRtsBuildings")) then {
 	_level = getNumber (missionconfigFile >> "cfgRtsBuildings" >> _cfgClass >> "level");
 	_res = getArray (missionconfigFile >> "cfgRtsBuildings" >> _cfgClass >> "resources");
 	_objs = getArray (missionconfigFile >> "cfgRtsBuildings" >> _cfgClass >> "objectsArray");
+	_displayName = getText (missionconfigFile >> "cfgRtsBuildings" >> _cfgClass >> "displayName");
 } else {
 	_anchorType = getText (configFile >> "cfgRtsBuildings" >> _cfgClass >> "anchorType");
 	_constType = getText (configFile >> "cfgRtsBuildings" >> _cfgClass >> "constType");
 	_level = getNumber (configFile >> "cfgRtsBuildings" >> _cfgClass >> "level");
 	_res = getArray (configFile >> "cfgRtsBuildings" >> _cfgClass >> "resources");
 	_objs = getArray (configFile >> "cfgRtsBuildings" >> _cfgClass >> "objectsArray");
+	_displayName = getText (configFile >> "cfgRtsBuildings" >> _cfgClass >> "displayName");
 };
 
 {
@@ -52,9 +54,14 @@ _module = "UserTexture10m_F" createVehicle _pos;
 _module setVariable ["mcc_constructionItemType",_constType,true];
 _module setVariable ["mcc_constructionItemTypeLevel",_level,true];
 
+//Create marker
+_markerName = format ["ConstCounter_%1",["MCC_ConstCounter_",1] call bis_fnc_counter];
+_module setVariable ["mcc_markerName",_markerName,true];
+
+[[[_markerName], _pos, "colorGreen", "loc_Bunker",_displayName,false],"BIS_fnc_markerCreate", _side,false] call BIS_fnc_MP;
+
 //Building anim
-if !(_instant) then
-{
+if !(_instant) then {
 	_anchor = "Land_Bricks_V3_F" createVehicle _pos;
 	waituntil {!isnil "_anchor"};
 	_anchor enableSimulation false;

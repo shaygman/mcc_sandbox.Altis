@@ -1,4 +1,4 @@
-//===================================================================MCC_fnc_makeBriefing======================================================================================
+//===================================================================MCC_fnc_makeBriefing=================================================================================
 //Server Only - create a Logic based briefing
 //Example:[[_string, _type ,_missionTittle],"MCC_fnc_makeBriefing",false,false] call BIS_fnc_MP;
 // Params:
@@ -6,7 +6,7 @@
 //	_type: interger or string, Integer - pre defined mission type or a string for custom one
 //	_missionTittle:  string,  the mission tittle can get complex string as it will turn it to array such as HTML
 //=========================================================================================
-private ["_type","_string","_tittle","_dummyGroup","_dummy","_missionTittle","_missionInfo","MCC_activeObjectives","_sidePlayer"];
+private ["_type","_string","_tittle","_dummyGroup","_dummy","_missionTittle","_missionInfo","_sidePlayer"];
 _string 		= _this select 0;
 _type 			= _this select 1;
 _missionTittle 	= if (count _this > 2) then {toArray (_this select 2)} else {[]};

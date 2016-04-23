@@ -43,8 +43,8 @@ switch (true) do {
 				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
 				   ["",_string,format ["%1data\IconPulse.paa",MCC_path],_color],
 				   ["[(_this select 0),'physical'] spawn MCC_fnc_interactSelfClicked","Physical Check",format ["%1data\IconPhysical.paa",MCC_path]],
-				   [format ["['bandage',%1] spawn MCC_fnc_medicUseItem",_suspect],format ["Bandages X %1", {_x == _bandage} count (_itemsPlayer)],_bandagePic],
-				   [format ["['heal',%1] spawn MCC_fnc_medicUseItem",_suspect],"Heal",_medkitPic]
+				   [format ["['bandage','%1'] spawn MCC_fnc_medicUseItem",netid _suspect],format ["Bandages X %1", {_x == _bandage} count (_itemsPlayer)],_bandagePic],
+				   [format ["['heal','%1'] spawn MCC_fnc_medicUseItem",netid _suspect],"Heal",_medkitPic]
 				 ];
 
 		if ( !alive _suspect) then {_array set [2,-1]};

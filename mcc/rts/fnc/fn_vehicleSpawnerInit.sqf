@@ -58,13 +58,11 @@ if (count _this <=3) then {
     _object setObjectTexture [2,'#(rgb,8,8,3)color(0.5,0.5,0.5,0.1)'];
     _null = _object addAction [format ["<t color=""#ff1111"">Purchase %1</t>",_arguments select 0], {call MCC_fnc_vehicleSpawnerInit}, _arguments,10,true,true];
 } else {
-    private ["_simTypesUnits","_faction","_CfgVehicles","_CfgVehicle","_vehicleDisplayName","_cfgclass","_cfgFaction","_simulation","_vehicleArray","_comboBox","_mccdialog","_displayname","_index","_array","_rtsAnchor","_caller","_vehicleType","_spawnPad"];
+    private ["_caller","_arguments"];
 
     //We got here from the addaction
     _caller = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
     _arguments = [_this, 3, [], [[]]] call BIS_fnc_param;
-    _vehicleType = _arguments select 0;
-    _spawnPad = _arguments select 1;
 
     if (isNull _caller) exitWith {};
 

@@ -2,7 +2,7 @@ class specialist : rifleman
 {
 	name    = "Specialist";
 	picture =  __EVAL(MCCPATH +"mcc\roleSelection\data\Specialist.paa");
-	minPlayersForKit = 4;
+	minPlayersForKit = 2;
 	maxKitsInGroup = 2;
 	maxKitsInSide = 999;
 	allowMg = 0;

@@ -10,7 +10,7 @@ Change log r19:
 - Changed: Moved to inidbi2 - local db files for each mission - TODO WIKI
 - Changed: Removed inidbi2 dependency- persistent data will be saved to the server profile using BI profile name space - I still recommend using IniDB2 as it more robust.
 - Changed: Total reworked the Role Selection UI and functionality load-outs are not inherent  from config files to be- TODO WIKI
-- Changed: Total reworked Interaction layour from list to a rose dial menu - TODO WIKI
+- Changed: Total reworked Interaction layout from list to a rose dial menu - TODO WIKI
 - Changed: Commander Console UI. 
 - Added: From MCC interaction mount/dismount weapons attachments with the proper animations doing so. 
 - Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point. 
@@ -23,6 +23,8 @@ Change log r19:
 - Added: Breach locked door using custom ammo such as shoutgun slug (RHS or Prpl by defualt) as defined with MCC_breacingAmmo example: MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
 - Added: Can enable survival mod without allowing player to search for loot - if you want to add some thirst and hunger element for the realisim without turning it into a Dayz. Enable it from the mission setting module or missionNamesSpace variable ["MCC_surviveModAllowSearch",false]
 - Changed: Medic system reworked to work with the new protection system.
+- Changed: Vehicle kiosk will load vehicles by side not by faction by default. - TODO WIKI
+- Changed: In RTS commander can purchase vehicles from kiosk using reources while players can purchase it using valor points. 
 _ Fixed: Error regarding BI fnc sortBy spamming the log file.
 - Fixed: Mission Wizard save hostage mission can be ended on respawn_west/east/gurilla marker. 
 - Fixed: Self interaction kept working even when disabled when CBA is on.
@@ -41,12 +43,15 @@ _ Fixed: Error regarding BI fnc sortBy spamming the log file.
 - Fixed: RPT errors regarding ; at the end of file
 - Fixed: Stuck when enabling Survival mod from module. 
 - Fixed: MCC_make_array_group error on server. 
+- Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
+
+TODO 
+	- fix artillery in campaign
 
 TODO - mission templates, test dedicated
 TODO - save campaign
 TODO - survival spawn crates in houses?!
-TODO - local markers are not local
-TODO - check ArmA 2 map doors
+
 
 Change log r18:
 -= New IED Mini Game =-

@@ -85,6 +85,19 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\roleSelection\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\interaction\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\supression\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\radio\cfgFunctions.hpp"
+	};
+};
+
+class cfgRemoteExec {
+	class Functions {
+		// State of remoteExec: 0-turned off, 1-turned on, taking whitelist into account, 2-turned on, however, ignoring whitelists (default because of backward compatibility)
+		mode = 2;
+		// Ability to send jip messages: 0-disabled, 1-enabled (default)
+		jip = 1;
+	
+		#include "\mcc_sandbox_mod\mcc\cfg\cfgRemoteExec.hpp"
+		#include "\mcc_sandbox_mod\mcc\radio\cfgRemoteExec.hpp"
 	};
 };
 
@@ -159,10 +172,6 @@ class cfgWeapons
 class CfgMarkers
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgMarkers.hpp"
-};
-
-class cfgRemoteExec {
-	#include "\mcc_sandbox_mod\mcc\cfg\cfgRemoteExec.hpp"
 };
 
 class RscMapControl;
