@@ -1,17 +1,17 @@
-//==================================================================MCC_fnc_manageSB===============================================================================================
+//==================================================================MCC_fnc_manageSB==============================================================================
 // Handle suicide bomber behavior
 // Example: [_sb, _iedside, _trapvolume, _IEDExplosionType] spawn MCC_fnc_manageSB;
 // <in>: 	_sb 			= position, center of the explosion.
 //		_iedside 			= side, which side trigger the armed civilian
 //		_trapvolume 		= String "small", "medium", "large"
-//		_IEDExplosionType	= Integer, 1- deadly 	2- Disabling	3- Fake
+//		_IEDExplosionType	= Integer, 0- deadly 	1- Disabling	2- Fake
 // <out>	NOTHING
-//=================================================================================================================================================================================
+//==================================================================================================================================================================
 private ["_sb","_iedside","_trapvolume","_IEDExplosionType","_check","_close","_dummy","_init","_closeunit","_enemy","_sound","_targ","_sbspeed","_IedExplosion"];
-_sb					= _this select 0;
-_iedside			= _this select 1;
-_trapvolume			= _this select 2;
-_IEDExplosionType	= _this select 3;
+_sb					= param [0,objNull];
+_iedside			= param [1,west];
+_trapvolume			= param [2,"medium"];
+_IEDExplosionType	= param [3,1];
 
 if (typeName _iedside == "STRING") then {
 	_iedside = switch (tolower _iedside) do

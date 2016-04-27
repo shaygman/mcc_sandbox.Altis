@@ -1,23 +1,26 @@
-//============================================================MCC_fnc_ambientSpawnCiv==========================================================================================
+//============================================================MCC_fnc_ambientSpawnCiv===================================================================================
 // Spawn civilians around the player
 // In:
 //	_pos:	ARRAY of players that can see the civilians
 //	_counter:  INTEGER max civilians to spawn
 //	_civSpawnDistance: INTEGER distance to delete
+//	_sidePlayer : SIDE
 //
 //<OUT>
 //	Nothing
-//===========================================================================================================================================================================
+//===================================================================================================================================================================
 #define MAX_TRESHOLD 15
 #define MAX_TRESHOLD_PER_AREA 5
 #define MAX_WP 4
 
-private ["_pos","_counter","_civSpawnDistance","_nearHouses","_civArray","_building","_civClass","_civGroup","_unit","_wp","_unitsArray","_side"];
-_pos = [_this, 0, [], [[]]] call BIS_fnc_param;
-_counter =[_this, 1, 1,[1]] call BIS_fnc_param;
-_factionCiv	= [_this, 2, "CIV_F", [""]] call BIS_fnc_param;
-_civSpawnDistance = [_this, 3, 250, [250]] call BIS_fnc_param;
-_unitsArray = [_this, 4, [], [[]]] call BIS_fnc_param;
+private ["_pos","_counter","_civSpawnDistance","_nearHouses","_civArray","_building","_civClass","_civGroup","_unit","_wp","_unitsArray","_side","_civRelations","_sidePlayer"];
+_pos = param [0, [], [[]]];
+_counter =param [1, 1,[1]];
+_factionCiv	= param [2, "CIV_F", [""]];
+_civSpawnDistance = param [3, 250, [250]];
+_unitsArray = param [4, [], [[]]];
+_sidePlayer = param [5, west];
+_civRelations = param [6,0.8,[0]];
 
 if (count _unitsArray <=0) exitWith {};
 
@@ -70,6 +73,21 @@ for "_i" from 1 to _counter do {
 												}}];
 		};
 		_civArray pushBack _unit;
+
+		//Lets check the civilians reaction to the player and spawn an armed civilian
+		if (random 1 > _civRelations) then {
+			//Rep is bad spawn suicide bomber
+			if (_civRelations < 0.4 && random 1 < 0.1) then {
+				[_unit,_sidePlayer,["small","medium","large"] call bis_fnc_selectRandom,[0,2] call bis_fnc_selectRandom] spawn MCC_fnc_manageSB;
+			} else {
+				if ( random 1 < 0.4) then {
+					//Spawn armed civilian
+					_unit setVariable ["static",true,true];
+					_unit setVariable ["MCC_IEDtype","ac",true];
+					[_unit,_sidePlayer,35] spawn MCC_fnc_manageAC;
+				};
+			};
+		};
 
 		_civGroup setspeedmode "LIMITED";
 		_civGroup setBehaviour "SAFE";

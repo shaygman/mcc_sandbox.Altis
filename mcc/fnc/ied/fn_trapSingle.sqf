@@ -1,4 +1,4 @@
-//===================================================================MCC_fnc_trapSingle======================================================================================
+//===================================================================MCC_fnc_trapSingle=============================================================================
 // Create an IED
 //Example:[[pos,IEDkind,IEDVolume,IEDExplosionType,IEDDisarmTime,IEDJammable,IEDTriggerType,IEDdistance,IEDside,IEDMarkerName,IEDDir,_groupArray,_ambushSide],'MCC_fnc_trapSingle',true,false] call BIS_fnc_MP;
 // Params:
@@ -15,7 +15,7 @@
 // 	IEDDir: number, direction of the IED
 // 	_groupArray: Boolean, spawn an ambush
 //	_ambushSide: side, ambush side
-//==============================================================================================================================================================================
+//========================================================================================================================================================================
 
 //Made by Shay_Gman (c) 09.10
 private ["_pos", "_trapkind", "_trapvolume", "_IEDExplosionType", "_IEDDisarmTime", "_IEDJammable", "_IEDTriggerType", "_IEDAmbushGroup",

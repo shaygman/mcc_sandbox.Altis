@@ -189,6 +189,23 @@ while {true} do {
 				} forEach _evacVehicles;
 			};
 
+			//Civ Relation
+			private ["_civRelations"];
+			_civRelations = missionNamespace getvariable [format ["MCC_civRelations_%1",_sidePlayer],0.5];
+			_relationText = if (_civRelations > 0.9) then {"excelent"} else {
+								if (_civRelations > 0.75) then {"very good"} else {
+									if (_civRelations > 0.6) then {"good"} else {
+										if (_civRelations > 0.5) then {"neutral "} else {
+											if (_civRelations > 0.3) then {"bad"} else {"awful"};
+										};
+									};
+								};
+							};
+
+			_CompleteText = _CompleteText 	+  "<t align='center' size='1.2' color='#FFCF11'> Hearts and Minds</t><br/>"
+											+ format ["The local population relation to you is %1 <br/>",_relationText]
+											+ "____________________<br/><br/>";
+
 			//War effort
 			if !(_x in [sideLogic,_sidePlayer2]) then {
 				_sideRep = (missionNamespace getvariable [format ["campaignRep_%1",_x],0])*0.9; //rep decrease by 10% every day
@@ -206,6 +223,7 @@ while {true} do {
 														+ "____________________<br/><br/>";
 
 				};
+
 				missionNamespace setvariable [format ["campaignRep_%1",_x],_sideRep];
 				publicVariable format ["campaignRep_%1",_x];
 				publicVariable "MCC_GAIA_AC";

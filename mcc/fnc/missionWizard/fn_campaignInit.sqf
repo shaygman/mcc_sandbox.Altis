@@ -1,26 +1,28 @@
-//======================================================MCC_fnc_campaignInit=================================================================================================
+//======================================================MCC_fnc_campaignInit===========================================================================================
 //Init campaign - SERVER ONLY
 // _sidePlayer		SIDE - player side
 // _sideEnemy		SIDE - enemy side
 // _factionCiv		STRING - faction civilians
 // _factionEnemy	STRING - faction enemy
 //_missionMax		INTEGER - max amount of missions before mission over
-//==============================================================================================================================================================================
-private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets"];
+//_missionRotation	INTEGER - max missions in the same area
+//=======================================================================================================================================================================
+private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets","_missionRotation"];
 
 //wait for MCC
 waitUntil {!isnil "MCC_initDone"};
 waitUntil {MCC_initDone};
 
-_sidePlayer	= [_this, 0, west] call BIS_fnc_param;
-_factionPlayer	= [_this, 1, "BLU_F"] call BIS_fnc_param;
-_sideEnemy	= [_this, 2, east] call BIS_fnc_param;
-_factionEnemy = [_this, 3, "OPF_F"] call BIS_fnc_param;
-_factionCiv	= [_this, 4, "CIV_F"] call BIS_fnc_param;
-_missionMax  = [_this, 5, 10] call BIS_fnc_param;
-_difficulty  = [_this, 6, 20] call BIS_fnc_param;
-_sidePlayer2= [_this, 7, sideLogic] call BIS_fnc_param;
-_tickets = [_this, 8, 100] call BIS_fnc_param;
+_sidePlayer	= param [0, west];
+_factionPlayer	= param [1, "BLU_F"];
+_sideEnemy	= param [2, east];
+_factionEnemy = param [3, "OPF_F"];
+_factionCiv	= param [4, "CIV_F"];
+_missionMax  = param [5, 10];
+_difficulty  = param [6, 20];
+_sidePlayer2=  param [7, sideLogic];
+_tickets = param [8, 100];
+_missionRotation = param [9, 4,[0]];
 
 _totalPlayers = ((playersNumber _sidePlayer)+1);
 _AOSize = (20*_totalPlayers) max 300;
@@ -143,12 +145,17 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 		if (_AOlocationPos distance (getMarkerPos "RESPAWN_GUERRILA")< 2000) then {_goodLocation = false};
 
 		if (!_goodLocation && (count _locations > 0)) then {
+
 			//get a new location
-			_AOlocation = _locations select 0;
+			_index = if (_missionDone mod _missionRotation == 0) then {floor random count _locations} else {0} ;
+			_AOlocation = _locations select _index;
 			_AOlocationPos = _AOlocation select 0;
 			_AOlocationName = _AOlocation select 1;
-			_locations set [0,-1];
+			_locations set [_index,-1];
 			_locations = _locations - [-1];
+
+			//Sort locations by distance from the first location
+			_locations = [_locations,[_AOlocationPos],{_input0 distance (_x select 0)},"ASCEND"] call BIS_fnc_sortBy;
 		};
 		sleep 0.5;
 	};
@@ -169,8 +176,8 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 	_artillery = if (random 100 < (_difficulty)*2) then {[1,1,1,1,2] call BIS_fnc_selectRandom} else {0};
 	_isRoadblocks = random 1 > 0.5;
 	_isIED = random 1 > 0.7;
-	_isAS = random 1 > 0.6;
-	_isSB = random 1 > 0.8;
+	_isAS = random 1 > (missionNamespace getvariable [format ["MCC_civRelations_%1",_sidePlayer],0.5]);
+	_isSB = random 1 > (missionNamespace getvariable [format ["MCC_civRelations_%1",_sidePlayer],0.5]);
 	_reinforcement =if (random 100 < (_difficulty)*2) then {[1,1,1,1,2] call BIS_fnc_selectRandom} else {0};
 	_obj1 = if (random 1 > 0.2) then {["Clear Area","Secure HVT","Kill HVT","Destroy Vehicle","Destroy AA","Destroy Artillery","Destroy Weapon Cahce","Destroy Fuel Depot","Aquire Intel"] call BIS_fnc_selectRandom} else {"Clear Area"};
 
@@ -257,11 +264,11 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 	_ticketsEnd = [_sidePlayer] call BIS_fnc_respawnTickets;
 	_sumTickets = _ticketsStart - _ticketsEnd;
 
-	["Main",_activeObjectives,_failedObjectives,_sidePlayer,_totalPlayers,_difficulty,60,[0.2,0.4,0.2,0.15,0.05]] call MCC_fnc_missionDone;
+	["Main",_activeObjectives,_failedObjectives,_sidePlayer,_totalPlayers,_difficulty,40,[0.2,0.4,0.2,0.15,0.05]] call MCC_fnc_missionDone;
 
 	//if we have another side give him some credit
 	if (_sidePlayer2 != sideLogic) then {
-		["side",_activeObjectives,_failedObjectives,_sidePlayer2,_totalPlayers,_difficulty,60,[0.2,0.4,0.2,0.15,0.05],_sumTickets] call MCC_fnc_missionDone;
+		["side",_activeObjectives,_failedObjectives,_sidePlayer2,_totalPlayers,_difficulty,40,[0.2,0.4,0.2,0.15,0.05],_sumTickets] call MCC_fnc_missionDone;
 	};
 
 	sleep 5;
@@ -282,6 +289,7 @@ while {count _locations > 0 && _missionDone <= _missionMax} do {
 	[1, _markerColor,[_AOSize*2,_AOSize*2], "RECTANGLE", "Solid", "Empty", _markerName, _AOlocationPos] call MCC_fnc_makeMarker;
 
 	_missionDone = _missionDone + 1;
+	_difficulty = (_difficulty * 1.1) min 60;
 };
 
 //Mission won outro

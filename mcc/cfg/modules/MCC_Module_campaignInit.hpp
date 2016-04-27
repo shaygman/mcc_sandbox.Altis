@@ -130,6 +130,13 @@ class MCC_Module_campaignInit : Module_F
 			typeName = "NUMBER";
 			defaultValue = 100;
 		};
+
+		class missionRotation
+		{
+			displayName = "Missions Rotation";
+			typeName = "NUMBER";
+			defaultValue = 3;
+		};
 	};
 
 	class ModuleDescription: ModuleDescription

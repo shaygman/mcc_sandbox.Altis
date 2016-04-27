@@ -9,7 +9,7 @@
 // _factionCiv			STRING - the units' faction
 // _factionCivCar		STRING - the units' cars faction
 //==================================================================================================================================================================
-private ["_spawnCenters","_isCiv","_player","_civArray","_civCount","_civSpawnDistance","_maxCivSpawn","_factionCiv","_unitsArray","_vehiclesArray","_isCar","_carCount","_carArray","_isParkedCar","_isLocked"];
+private ["_spawnCenters","_isCiv","_player","_civArray","_civCount","_civSpawnDistance","_maxCivSpawn","_factionCiv","_unitsArray","_vehiclesArray","_isCar","_carCount","_carArray","_isParkedCar","_isLocked","_civRelations"];
 _isCiv =  param [0, true, [true]];
 _isCar = param [1, true, [true]];
 _isParkedCar = param [2, true, [true]];
@@ -37,6 +37,10 @@ while {true} do {
 	//Do we have units going around?
 	{
 		_player = _x;
+
+		//Gets the civilian reaction
+		_civRelations = (missionNamespace getvariable [format ["MCC_civRelations_%1",side _player],param [8, 0.9, [0]]]);
+
 		if (isPlayer _player) then {
 			if (_isCiv) then {
 				[_spawnCenters,_civSpawnDistance] call MCC_fnc_ambientDeleteCiv;
@@ -49,7 +53,7 @@ while {true} do {
 				} forEach _civArray;
 
 				if (_civCount < _maxCivSpawn) then {
-					[getpos _player, (_maxCivSpawn -_civCount),_factionCiv,_civSpawnDistance,_unitsArray] call MCC_fnc_ambientSpawnCiv;
+					[getpos _player, (_maxCivSpawn -_civCount),_factionCiv,_civSpawnDistance,_unitsArray, side _player,_civRelations] call MCC_fnc_ambientSpawnCiv;
 				};
 			};
 
@@ -83,7 +87,7 @@ while {true} do {
 				} forEach _carArray;
 
 				if (_carCount < _maxCivSpawn) then {
-					[getpos _player, (_maxCivSpawn -_carCount),_civSpawnDistance,_vehiclesArray,_isLocked] call MCC_fnc_ambientSpawnCarParked;
+					[getpos _player, (_maxCivSpawn -_carCount),_civSpawnDistance,_vehiclesArray,_isLocked, side _player,_civRelations] call MCC_fnc_ambientSpawnCarParked;
 				};
 			};
 		};

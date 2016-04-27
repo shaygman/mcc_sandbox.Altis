@@ -1,4 +1,6 @@
 Change log r19:
+
+UI Module:
 - Added: UI Module can enable/disable any of the below features: 
 	- Camera control: Force 1st person camera always or just outside of a vehicle New WIKI page - http://mccsandbox.wikia.com/wiki/UI_Module?venotify=created.
 	- Compass: In game compass and squad members overlay.
@@ -7,25 +9,47 @@ Change log r19:
 	- Squad Members Markers: Show squad members markers on the map. 
 	- Suppression: Client side only Supression effects, blur and camera shake depends on the angle of fire, the caliber and more. 
 - Changed: Name tags, group markers moved to the inGame UI settings module
-- Changed: Moved to inidbi2 - local db files for each mission - TODO WIKI
-- Changed: Removed inidbi2 dependency- persistent data will be saved to the server profile using BI profile name space - I still recommend using IniDB2 as it more robust.
-- Changed: Total reworked the Role Selection UI and functionality load-outs are not inherent  from config files to be- TODO WIKI
-- Changed: Total reworked Interaction layout from list to a rose dial menu - TODO WIKI
-- Changed: Commander Console UI. 
-- Added: From MCC interaction mount/dismount weapons attachments with the proper animations doing so. 
-- Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point. 
-- Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
-- Added: Resupply option to FOB.
-- Added: Resupply will resupply grenade launcer rounds. 
-- Added: Ability to build sand bags around FOB - Squad leader - doesn't need resources but there is a limit to 14 sandbags per FOB
 - Added: Units that are not in your squad will show in blue while name tags is on. 
 - Added: Units markers (mission settings module) Show units markers on the map for all players while playing in a squad from the Squad Dialog
-- Added: Breach locked door using custom ammo such as shoutgun slug (RHS or Prpl by defualt) as defined with MCC_breacingAmmo example: MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
-- Added: Can enable survival mod without allowing player to search for loot - if you want to add some thirst and hunger element for the realisim without turning it into a Dayz. Enable it from the mission setting module or missionNamesSpace variable ["MCC_surviveModAllowSearch",false]
-- Changed: Medic system reworked to work with the new protection system.
+
+Role Selection:
+- Changed: Removed inidbi2 dependency- persistent data will be saved to the server profile using BI profile name space - I still recommend using IniDB2 as it more robust.
+- Changed: Moved to inidbi2 - local db files for each mission - http://mccsandbox.wikia.com/wiki/Configure_role_selection
+- Changed: Total reworked the Role Selection UI and functionality load-outs are not inherent from config files to be - http://mccsandbox.wikia.com/wiki/Configure_role_selection
+- Added: Resupply option from FOB.
+- Added: Resupply will resupply grenade launcer rounds. 
+- Added: Ability to build sand bags around FOB - Squad leader - doesn't need resources but there is a limit to 14 sandbags per FOB
+
+Interaction Menu:
+- Added: From MCC interaction mount/dismount weapons attachments with the proper animations doing so. 
+- Changed: Total reworked Interaction layout from list to a rose dial menu
+
+Ambient Civilians Module
+- Added: civilans reaction  to players - TODO WIKI
+
+Commander Console:
+- Changed: Commander Console UI. 
+
+RTS:
+- Added: RTS WIKIA for players and developers - http://mccsandbox.wikia.com/wiki/Rts
 - Changed: Vehicle kiosk will load vehicles by side not by faction by default. - TODO WIKI
 - Changed: In RTS commander can purchase vehicles from kiosk using reources while players can purchase it using valor points. 
-_ Fixed: Error regarding BI fnc sortBy spamming the log file.
+
+New Game Mods:
+- Added: Advance And Secure (AAS) module - turns sectors to be captured in a specific linar order like in Project Reality AAS. 
+- Added: 2 template PvP AAS missions from my days at Project Reality group for ArmA 3 and WIKI on how to create more: TODO WIKI
+
+MCC Campaign:
+- Added: Altis campaign template mission, mix between RTS and FPS on altis but you can create it where ever you want to: TODO WIKI
+- Added: mission rotation - define how many missions will be generated close to each other before MCC will select a completely different position. 
+
+Misc:
+- Added: Breach locked door by shooting on them use custom ammo such as shoutgun slug (RHS or Prpl by defualt) as defined with MCC_breacingAmmo example: MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
+- Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point. 
+- Added: MCC jukebox will read music and sounds from the mission cfg - description file. 
+- Added: Can enable survival mod without allowing player to search for loot - if you want to add some thirst and hunger element for the realisim without turning it into a Dayz. Enable it from the mission setting module or missionNamesSpace variable ["MCC_surviveModAllowSearch",false]
+- Changed: Medic system reworked to work with the new protection system.
+- Fixed: Error regarding BI fnc sortBy spamming the log file.
 - Fixed: Mission Wizard save hostage mission can be ended on respawn_west/east/gurilla marker. 
 - Fixed: Self interaction kept working even when disabled when CBA is on.
 - Fixed: Can't login to MCC after the latest patch. 
@@ -45,9 +69,9 @@ _ Fixed: Error regarding BI fnc sortBy spamming the log file.
 - Fixed: MCC_make_array_group error on server. 
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
-TODO 
-	- fix artillery in campaign
-
+TODO - RTS WIKI
+TODO - self interaction in vehicles for opening commander console
+TODO - ambient civilan module - add presentage of hostile to the module and add SB/IED
 TODO - mission templates, test dedicated
 TODO - save campaign
 TODO - survival spawn crates in houses?!

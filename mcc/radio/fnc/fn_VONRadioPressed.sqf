@@ -10,7 +10,7 @@ switch (_channelID select 1) do {
 	//Global
 	case 0 :{
 		_allowed	= if (serverCommandAvailable "#logout" || isServer) then {true} else {false};
-		_spectrum = true;
+		_spectrum = 0;
 	};
 
 	//Side

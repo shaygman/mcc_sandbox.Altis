@@ -22,7 +22,7 @@ _resources = missionNamespace getvariable [format ["MCC_res%1",_sidePlayer],[500
 
 if (_mission == "Main") then {
 	_penalty = floor (_baseResource*((missionNamespace getvariable [format ["MCC_civiliansKilled_%1",_sidePlayer],0])*3 min 10));
-	_resourceGain = floor (_baseResource*_difficulty*((_totalPlayers/5) max 1))*_succeedObjectives;
+	_resourceGain = floor (_baseResource*_difficulty*((_totalPlayers/10) max 1))*_succeedObjectives;
 	} else {
 		_penalty = 0;
 		_resourceGain = floor (_baseResource*_difficulty*((_totalPlayers/5) max 1))*_failedObjectives;
@@ -70,11 +70,27 @@ for "_i" from 0 to 4 do {
 missionNamespace setvariable [format ["MCC_res%1",_sidePlayer],_resources];
 publicVariable format ["MCC_res%1",_sidePlayer];
 
+//--------------------------------------Civilians behavior---------------------------------
+private ["_civRelations"];
+_civRelations = missionNamespace getvariable [format ["MCC_civRelations_%1",_sidePlayer],0.5];
+
+//penalty for killing civis
+_civRelations = (_civRelations - ((missionNamespace getvariable [format ["MCC_civiliansKilled_%1",_sidePlayer],0])*0.1));
+
+//penalty for failed objectives
+_civRelations = (_civRelations + (_succeedObjectives - _failedObjectives)*0.1);
+
+_civRelations = (_civRelations max 0) min 1;
+
+missionNamespace setvariable [format ["MCC_civRelations_%1",_sidePlayer],_civRelations];
+publicVariable format ["MCC_civRelations_%1",_sidePlayer];
+
 //Reset penalty
 missionNamespace setvariable [format ["MCC_civiliansKilled_%1",_sidePlayer],0];
 publicVariable format ["MCC_civiliansKilled_%1",_sidePlayer];
 
 private ["_counter","_totalShells","_startPos"];
+
 //Assets if succeed
 _totalShells = 0;
 

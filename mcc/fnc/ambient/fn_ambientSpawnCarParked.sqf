@@ -1,4 +1,4 @@
-//============================================================MCC_fnc_ambientSpawnCarParked======================================================================================
+//============================================================MCC_fnc_ambientSpawnCarParked===========================================================================
 // Spawn parked cars on street shulders
 // In:
 //	_pos:				ARRAY of players that can see the civilians
@@ -8,16 +8,18 @@
 //	_locked				BOOLEAN car spawned locked or random locked
 //<OUT>
 //	Nothing
-//===========================================================================================================================================================================
+//===============================================================================================================================================================
 #define MAX_PARKED_CARS 15
 #define MAX_PARKED_CARS_PER_AREA 5
 
-private ["_pos","_nearHouses","_houseConuter","_counter","_carSpawnDistance","_vehiclesArray","_locked","_carArray","_carInArea","_house","_road","_roadConnectedTo","_connectedRoad","_dir","_spawnPos","_vehicleClass","_vehicle"];
-_pos = [_this, 0, [], [[]]] call BIS_fnc_param;
-_counter =[_this, 1, 1,[1]] call BIS_fnc_param;
-_carSpawnDistance = [_this, 2, 250, [250]] call BIS_fnc_param;
-_vehiclesArray = [_this, 3, [], [[]]] call BIS_fnc_param;
-_locked = [_this, 4, true, [true]] call BIS_fnc_param;
+private ["_pos","_nearHouses","_houseConuter","_counter","_carSpawnDistance","_vehiclesArray","_locked","_carArray","_carInArea","_house","_road","_roadConnectedTo","_connectedRoad","_dir","_spawnPos","_vehicleClass","_vehicle","_civRelations","_sidePlayer"];
+_pos = param [0, [], [[]]];
+_counter = param [1, 1,[1]];
+_carSpawnDistance = param [2, 250, [250]];
+_vehiclesArray = param [ 3, [], [[]]];
+_locked = param [ 4, true, [true]];
+_sidePlayer = param [5,west];
+_civRelations = param [6,0.8,[0]];
 
 _carArray = missionNamespace getVariable ["MCC_ambientParkedCars",[]];
 
@@ -59,15 +61,33 @@ for "_i" from 1 to (_houseConuter min _counter) do
 			//Make sure the vehicle is not in a wall on the road side
 			_spawnPos = _spawnPos findEmptyPosition [0.1,10];
 
-			_vehicleClass = (_vehiclesArray call bis_fnc_selectRandom) select 0;
-			_vehicle= _vehicleClass createVehicle _spawnPos;
-			waituntil {alive _vehicle};
+			if (_civRelations < 0.4 && random 1 < 0.1) then {
+				_vehicleClass = if (random 1 < 0.2) then {
+									(_vehiclesArray call bis_fnc_selectRandom) select 0;
+								} else {
+									((MCC_ied_hidden) call bis_fnc_selectRandom) select 1;
+								};
+				_vehicle= _vehicleClass createVehicle _spawnPos;
+				waituntil {alive _vehicle};
 
-			_vehicle setpos _spawnPos;
-			_vehicle setDir _dir;
-			if (_locked || random 1 > 0.5) then {
-				_vehicle setVehicleLock "LOCKED";
+				//_vehicle setpos _spawnPos;
+				_vehicle setDir _dir;
+
+				_vehicle setVariable ["isIED",true,true];
+				[_vehicle,(["small","medium","large"] call bis_fnc_selectRandom),([0,2] call bis_fnc_selectRandom),15,true,0,25,_sidePlayer] spawn MCC_fnc_createIED;
+
+			} else {
+				_vehicleClass = (_vehiclesArray call bis_fnc_selectRandom) select 0;
+				_vehicle= _vehicleClass createVehicle _spawnPos;
+				waituntil {alive _vehicle};
+				_vehicle setpos _spawnPos;
+				_vehicle setDir _dir;
+				if (_locked || random 1 > 0.5) then {
+					_vehicle setVehicleLock "LOCKED";
+				};
 			};
+
+
 
 			_carArray pushBack _vehicle;
 			//Curator

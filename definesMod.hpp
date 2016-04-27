@@ -86,6 +86,7 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\interaction\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\supression\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\radio\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\AAS\cfgFunctions.hpp"
 	};
 };
 
@@ -98,6 +99,7 @@ class cfgRemoteExec {
 	
 		#include "\mcc_sandbox_mod\mcc\cfg\cfgRemoteExec.hpp"
 		#include "\mcc_sandbox_mod\mcc\radio\cfgRemoteExec.hpp"
+		#include "\mcc_sandbox_mod\mcc\AAS\cfgRemoteExec.hpp"
 	};
 };
 

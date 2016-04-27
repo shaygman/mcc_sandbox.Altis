@@ -1,7 +1,7 @@
 //============================================================MCC_fnc_curatorAmbientCivilians====================================================================================
 // handles the add ambient civilians module
 //===========================================================================================================================================================================
-private ["_pos","_module","_factionArray","_resualt"];
+private ["_pos","_module","_factionArray","_resualt","_civRelations"];
 _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 if (isNull _module) exitWith {deleteVehicle _module};
 
@@ -17,9 +17,10 @@ if (typeName (_module getVariable ["isCiv",true]) == typeName 0) exitWith {
 	_maxCivSpawn = 4;
 	_factionCiv	= _module getVariable ["factionCiv","CIV_F"];
 	_factionCivCar = _module getVariable ["factionCivCar","CIV_F"];
+	_civRelations = _module getVariable ["civRelations",0.5];
 
 	//Start ambient civilians
-	[[_isCiv,_isCar,_isParkedCar,_isLocked,_civSpawnDistance,_maxCivSpawn,_factionCiv,_factionCivCar],"MCC_fnc_ambientInit",false,false] spawn BIS_fnc_MP;
+	[[_isCiv,_isCar,_isParkedCar,_isLocked,_civSpawnDistance,_maxCivSpawn,_factionCiv,_factionCivCar,_civRelations],"MCC_fnc_ambientInit",false,false] spawn BIS_fnc_MP;
 };
 
 //Not curator exit
@@ -40,13 +41,15 @@ _factionArray = [];
  						["Spawn distance around the players",500],
  						["max units spawned around the player",8],
  						["Faction",_factionArray],
- 						["Car's Faction",_factionArray]
+ 						["Car's Faction",_factionArray],
+ 						["Civilians Reaction to players",["bad (IED & Suicide Bombers)","average","above average","good"]]
  					  ]] call MCC_fnc_initDynamicDialog;
 
 if (count _resualt == 0) exitWith {deleteVehicle _module};
 
 _resualt set [6,(U_FACTIONS select (_resualt select 6)) select 2];
 _resualt set [7,(U_FACTIONS select (_resualt select 7)) select 2];
+_resualt set [8,[0.2,0.5,0.7,0.95] select (_resualt select 8)];
 
 //Start ambient civilians
 [_resualt,"MCC_fnc_ambientInit",false,false] spawn BIS_fnc_MP;

@@ -95,7 +95,7 @@ class MCC_rts_storage2 : MCC_rts_storage1
 
 class MCC_rts_storage3 : MCC_rts_storage1
 {
-	displayName = "Advanced Storage Area";
+	displayName = "Greater Storage Area";
 	descriptionShort = "Increase storage capacity for all key resources by 1,500 and dramatically reduces food spoilage chance.";
 	anchorType = "CamoNet_BLUFOR_Curator_F";
 	requiredBuildings[] = {{"workshop",2}};
@@ -117,7 +117,7 @@ class MCC_rts_barracks1
 	#endif
 
 	displayName = "Sleeping Area";
-	descriptionShort = "Sleeping area have 4 beds and allows units to rest, remove tiredness and fatigue effects";
+	descriptionShort = "Sleeping area have 4 beds and allows units to rest, remove tiredness and fatigue effects.";
 	groups[] = {"MCC_rtsGroup_Transport","MCC_rtsGroup_FT","MCC_rtsGroup_MG"};
 	actions[] = {"MCC_rts_rtsUnitsUIContainer","","","","","","","","","","","MCC_rts_destroyLogic"};
 	anchorType = "CamoNet_BLUFOR_open_Curator_F";
@@ -160,8 +160,8 @@ class MCC_rts_barracks3 : MCC_rts_barracks1
 	picture = "mcc\rts\data\barracks3.paa";
 	#endif
 
-	displayName = "Barrack";
-	descriptionShort = "Barrack have 12 beds and allows units to rest, remove tiredness and fatigue effects.";
+	displayName = "Barracks";
+	descriptionShort = "Barracks have 12 beds and allows units to rest, remove tiredness and fatigue effects.";
 	groups[] = {"MCC_rtsGroup_Transport","MCC_rtsGroup_FT","MCC_rtsGroup_MG","MCC_rtsGroup_AT","MCC_rtsGroup_AA","MCC_rtsGroup_platoon","MCC_rtsGroup_sniper"};
 	anchorType = "Land_Cargo_House_V1_F";
 	requiredBuildings[] = {{"hq",3}};
@@ -208,7 +208,7 @@ class MCC_rts_workshop1
 	#endif
 
 	displayName = "Workshop";
-	descriptionShort = "Outfit machine guns on unarmed offroads and repairs some vehicles damage";
+	descriptionShort = "Outfit machine guns on unarmed offroads and repairs some vehicles damage.";
 	buildings[] = {"MCC_rts_storage1","MCC_rts_elecPower1"};
 	actions[] = {"MCC_rts_rtsBuildUIContainer","MCC_rts_rtsFortUIContainer","","","","","","","","","","MCC_rts_destroyLogic"};
 	fortifications[] = {"MCC_rts_fortSandbagLong","MCC_rts_fortSandbagRound","MCC_rts_fortRazorwire","MCC_rts_fortHBarrierSmall","MCC_rts_fortHBarrierLong","MCC_rts_fortSandbagTower"};
@@ -316,7 +316,7 @@ class MCC_rts_elecPower1
 	#endif
 
 	displayName = "Diesel Generator";
-	descriptionShort = "Generate small electric energy, requires fuel to run";
+	descriptionShort = "Generate small electric energy, requires fuel to run.";
 	buildings[] = {};
 	actions[] = {"MCC_rts_startElectricity","MCC_rts_stopElectricity","","","","","","","","","","MCC_rts_destroyLogic"};
 	anchorType = "Land_dp_transformer_F";
@@ -382,7 +382,7 @@ class MCC_rts_triage1
 	#endif
 
 	displayName = "Infirmary";
-	descriptionShort = "Increases the chance of recovery from injuries and illness";
+	descriptionShort = "Increases the chance of recovery from injuries and illness.";
 	actions[] = {"MCC_rts_buyTickets","","","","","","","","","","","MCC_rts_destroyLogic"};
 	anchorType = "Land_Research_house_V1_F";
 	requiredBuildings[] = {{"barracks",1}};
@@ -404,7 +404,7 @@ class MCC_rts_triage2
 	#endif
 
 	displayName = "Medical Lab";
-	descriptionShort = "Increases the chance of recovery from injuries and illness plus the ability to create medical supplies";
+	descriptionShort = "Increases the chance of recovery from injuries and illness plus the ability to create medical supplies.";
 	actions[] = {"MCC_rts_buyTickets","MCC_rts_createMeds","","","","","","","","","","MCC_rts_destroyLogic"};
 	anchorType = "Land_Research_HQ_F";
 	requiredBuildings[] = {{"hq",2}};

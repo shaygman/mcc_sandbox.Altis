@@ -86,6 +86,7 @@ class CfgFunctions
 		#include "mcc\interaction\cfgFunctions.hpp"
 		#include "mcc\supression\cfgFunctions.hpp"
 		#include "mcc\radio\cfgFunctions.hpp"
+		#include "mcc\AAS\cfgFunctions.hpp"
 	};
 };
 
@@ -97,6 +98,7 @@ class cfgRemoteExec {
 		jip = 1;
 		#include "mcc\cfg\cfgRemoteExec.hpp"
 		#include "mcc\radio\cfgRemoteExec.hpp"
+		#include "mcc\AAS\cfgRemoteExec.hpp"
 	};
 };
 
