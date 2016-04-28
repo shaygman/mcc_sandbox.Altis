@@ -3,20 +3,24 @@
 // Example: [] call MCC_fnc_cover;
 //===========================================================================================================================================================================
 private ["_center","_left","_right","_up","_cover","_centerFront","_leftFront","_rightFront","_upFront","_cover","_headPos","_currentAnim","_string",
-			 "_centerFrontFar","_stance","_isWall","_pos"];
+			 "_centerFrontFar","_stance","_isWall","_pos","_leftFrontClose","_rightFrontClose","_rightClose","_leftClose"];
 
 if(alive player && vehicle player == player) then
 {
 	//get relative positions
 	_headPos 		= player selectionPosition "head";
-	_left 			= player modelToWorld [(_headPos select 0)-0.8,(_headPos select 1),(_headPos select 2)];
-	_right 			= player modelToWorld [(_headPos select 0)+0.8,(_headPos select 1),(_headPos select 2)];
+	_left 			= player modelToWorld [(_headPos select 0)-0.6,(_headPos select 1),(_headPos select 2)];
+	_leftClose		= player modelToWorld [(_headPos select 0)-0.2,(_headPos select 1),(_headPos select 2)];
+	_right 			= player modelToWorld [(_headPos select 0)+0.6,(_headPos select 1),(_headPos select 2)];
+	_rightClose		= player modelToWorld [(_headPos select 0)+0.2,(_headPos select 1),(_headPos select 2)];
 	_up 			= player modelToWorld [(_headPos select 0),(_headPos select 1),(_headPos select 2)+0.3];
 	_center 		= player modelToWorld [(_headPos select 0),(_headPos select 1),(_headPos select 2)];
-	_leftFront 		= player modelToWorld [(_headPos select 0)-0.8,(_headPos select 1)+2,(_headPos select 2)];
-	_rightFront 	= player modelToWorld [(_headPos select 0)+0.8,(_headPos select 1)+2,(_headPos select 2)];
+	_leftFront 		= player modelToWorld [(_headPos select 0)-0.6,(_headPos select 1)+2,(_headPos select 2)];
+	_leftFrontClose	= player modelToWorld [(_headPos select 0)-0.2,(_headPos select 1)+2,(_headPos select 2)];
+	_rightFront 	= player modelToWorld [(_headPos select 0)+0.6,(_headPos select 1)+2,(_headPos select 2)];
+	_rightFrontClose= player modelToWorld [(_headPos select 0)+0.2,(_headPos select 1)+2,(_headPos select 2)];
 	_upFront 		= player modelToWorld [(_headPos select 0),(_headPos select 1)+2,(_headPos select 2)+0.3];
-	_centerFront	= player modelToWorld [(_headPos select 0),(_headPos select 1)+1.5,(_headPos select 2)];
+	_centerFront	= player modelToWorld [(_headPos select 0),(_headPos select 1)+1,(_headPos select 2)];
 	_centerFrontFar	= player modelToWorld [(_headPos select 0),(_headPos select 1)+3,(_headPos select 2)];
 	_stance 		= stance player;
 
@@ -49,14 +53,13 @@ if(alive player && vehicle player == player) then
 
 
 	//Are we behind cover
-	if(lineIntersects [ATLtoASL _center, ATLtoASL _centerFront]) then
-	{
+	if (lineIntersects [ATLtoASL _center, ATLtoASL _centerFront] ) then {
 		player setVariable ["MCC_behindCover", true];
 		_cover = switch (true) do
 				{
 					case (!(lineIntersects [ATLtoASL _up, ATLtoASL _upFront])): {"up"};
-					case (!(lineIntersects [ATLtoASL _right, ATLtoASL _rightFront])): {"right"};
-					case (!(lineIntersects [ATLtoASL _left, ATLtoASL _leftFront])): {"left"};
+					case (!(lineIntersects [ATLtoASL _right, ATLtoASL _rightFront]) && (lineIntersects [ATLtoASL _rightClose, ATLtoASL _rightFrontClose])): {"right"};
+					case (!(lineIntersects [ATLtoASL _left, ATLtoASL _leftFront]) && (lineIntersects [ATLtoASL _leftClose, ATLtoASL _leftFrontClose])): {"left"};
 					case (!(lineIntersects [ATLtoASL _center, ATLtoASL _centerFront])): {"center"};
 					default {"none"}
 				};
@@ -124,8 +127,7 @@ if(alive player && vehicle player == player) then
 			_currentAnim = animationState player;
 			_pos = getpos player;
 
-			 switch(_cover) do
-			{
+			switch(_cover) do {
 				case "up":
 				{
 					player playactionNow "AdjustF";
@@ -182,9 +184,7 @@ if(alive player && vehicle player == player) then
 				*/
 			};
 		};
-	}
-	else
-	{
+	} else {
 		player setVariable ["MCC_behindCover", false];
 	};
 };

@@ -43,7 +43,7 @@ while {true} do {
 
 		if (isPlayer _player) then {
 			if (_isCiv) then {
-				[_spawnCenters,_civSpawnDistance] call MCC_fnc_ambientDeleteCiv;
+				[_spawnCenters,_civSpawnDistance,"MCC_ambientCivilians"] call MCC_fnc_ambientDeleteCiv;
 				_civCount = 0;
 				_civArray = missionNamespace getVariable ["MCC_ambientCivilians",[]];
 				{

@@ -7,11 +7,12 @@
 //<OUT>
 //	Nothing
 //===========================================================================================================================================================================
-private ["_civArray", "_spawnCenters","_civ","_civSpawnDistance"];
-_spawnCenters =  [_this, 0, [], [[]]] call BIS_fnc_param;
-_civSpawnDistance = [_this, 1, 250, [250]] call BIS_fnc_param;
+private ["_civArray", "_spawnCenters","_civ","_civSpawnDistance","_arrayName"];
+_spawnCenters =  param [ 0, [], [[]]];
+_civSpawnDistance = param [ 1, 250, [250]];
+_arrayName = param [ 2, "", [""]];
 
-_civArray = missionNamespace getVariable ["MCC_ambientCivilians",[]];
+_civArray = missionNamespace getVariable [_arrayName,[]];
 {
 	_civ = _x;
 	if (isNull _civ) then {
@@ -25,5 +26,5 @@ _civArray = missionNamespace getVariable ["MCC_ambientCivilians",[]];
 } forEach _civArray;
 
 _civArray = _civArray - [-1];
-missionNamespace setVariable ["MCC_ambientCivilians",_civArray];
-publicVariable "MCC_ambientCivilians";
+missionNamespace setVariable [_arrayName,_civArray];
+publicVariable _arrayName;
