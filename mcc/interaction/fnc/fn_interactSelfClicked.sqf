@@ -206,24 +206,20 @@ switch (true) do {
 					 ["[(missionNamespace getVariable ['MCC_interactionLayer_2',[]]),3] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]]
 				 ];
 
+		_items = getArray (configFile >> "CfgWeapons" >> primaryWeapon player >> "WeaponSlotsInfo" >> _ctrlData >> "compatibleItems");
+
 		if (((primaryWeaponItems player) select (["MuzzleSlot","PointerSlot","CowsSlot","UnderBarrelSlot"] find _ctrlData))=="") then {
-
-			_items = getArray (configFile >> "CfgWeapons" >> primaryWeapon player >> "WeaponSlotsInfo" >> _ctrlData >> "compatibleItems");
-
 			{
 				//Only god knows why BI is on inconsistante with config files one weapon it is an array the the other it isn't even a config
 				if (tolower _x in _items || _x in _items) then {
 					_assignedItems pushBack _x;
 					_array pushBack [format ["['%1',true,'%2'] spawn MCC_fnc_attachItemWeapons",_x,_ctrlData], format ["%1",getText(configFile >> "CfgWeapons" >> _x >> "displayname")], getText(configFile >> "CfgWeapons" >> _x >> "picture")];
-				};
-				/*
-				 else {
+				} else {
 					if (((getNumber(configFile >> "CfgWeapons" >> primaryWeapon player >> "WeaponSlotsInfo" >> _ctrlData >> "compatibleItems" >> _x))>0)  && !(_x in _assignedItems)) then {
 						_assignedItems pushBack _x;
 						_array pushBack [format ["['%1',true,'%2'] spawn MCC_fnc_attachItemWeapons",_x,_ctrlData], format ["%1",getText(configFile >> "CfgWeapons" >> _x >> "displayname")], getText(configFile >> "CfgWeapons" >> _x >> "picture")];
 					};
 				};
-				*/
 			} forEach (items player);
 		} else {
 			_array pushBack [format ["['',false,'%1'] spawn MCC_fnc_attachItemWeapons",_ctrlData],"Detach", "\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"];

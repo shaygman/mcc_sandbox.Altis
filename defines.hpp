@@ -84,7 +84,6 @@ class CfgFunctions
 		#include "mcc\compassHUD\cfgFunctions.hpp"
 		#include "mcc\roleSelection\cfgFunctions.hpp"
 		#include "mcc\interaction\cfgFunctions.hpp"
-		#include "mcc\supression\cfgFunctions.hpp"
 	};
 };
 

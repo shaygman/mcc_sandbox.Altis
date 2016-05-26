@@ -128,7 +128,6 @@ class rifleman
 		vests[]= {{0,"V_PlateCarrier1_rgr"},{9,"V_PlateCarrierGL_rgr"},{13,"V_TacVest_oli"},{19,"V_PlateCarrier1_blk"}};
 		backpacks[]= {{0,"B_AssaultPack_mcamo"},{7,"B_Kitbag_mcamo"},{14,"B_Bergen_mcamo"},{18,"B_AssaultPack_blk"}};
 		uniforms[]= {{0,"U_B_CombatUniform_mcam"},{8,"U_B_CombatUniform_mcam_tshirt"},{15,"U_B_CombatUniform_mcam_vest"}};
-		insigna[]= {{0,""},{0,"111thID"},{0,"BI"},{0,"Curator"},{0,"MANW"}};
 	};
 
 	class east
@@ -253,7 +252,6 @@ class rifleman
 		vests[]= {{0,"V_BandollierB_khk"},{9,"V_HarnessOGL_gry"},{13,"V_HarnessOSpec_gry"},{19,"V_TacVestIR_blk"}};
 		backpacks[]= {{0,"B_AssaultPack_ocamo"},{7,"B_FieldPack_ocamo"},{14,"B_Carryall_ocamo"},{18,"B_FieldPack_blk"}};
 		uniforms[]= {{0,"U_O_CombatUniform_ocamo"},{8,"U_O_CombatUniform_oucamo"},{15,"U_O_OfficerUniform_ocamo"}};
-		insigna[]= {{0,""},{0,"GryffinRegiment"},{0,"BI"},{0,"Curator"},{0,"MANW"}};
 	};
 
 	class guer
@@ -378,6 +376,5 @@ class rifleman
 		vests[]= {{0,"V_PlateCarrier1_rgr"},{9,"V_PlateCarrierSpec_rgr"},{13,"V_TacVest_oli"},{19,"V_TacVestIR_blk"}};
 		backpacks[]= {{0,"B_AssaultPack_mcamo"},{7,"B_Kitbag_mcamo"},{14,"B_Bergen_mcamo"},{18,"B_AssaultPack_blk"}};
 		uniforms[]= {{0,"U_I_CombatUniform"},{8,"U_I_CombatUniform_tshirt"}};
-		insigna[]= {{0,""},{0,"TFAegis"},{0,"BI"},{0,"Curator"},{0,"MANW"}};
 	};
 };

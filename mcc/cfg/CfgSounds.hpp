@@ -2111,15 +2111,3 @@ class radioStaticBreak_1
 	sound[] = {"mcc\sounds\radio\radioStaticBreak_1.ogg",db+2, 1};
 	#endif
 };
-
-class MCC_pop
-{
-	name = "MCC_pop";
-	titles[] = {};
-
-	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\pop.ogg", db+2, 1};
-	#else
-	sound[] = {"mcc\sounds\pop.ogg",db+2, 1};
-	#endif
-};

@@ -1,4 +1,4 @@
-//==================================================================Conflict Area's===========================================================================
+//==================================================================Conflict Area's===============================================================================================
 //a=[WEST] call fnc_GAIA_ConflictAreas; PLAYER setPoS (A SELECT 1)
 //
 //
@@ -8,7 +8,7 @@ private ["_units","_class","_TargetInfo"];
 _HQ_side 		= _this select 0;
 _class			= "";
 _Targets		= [];
-_CA				= [];
+_CA					= [];
 _Spots			= [];
 
 
@@ -41,7 +41,7 @@ switch (_HQ_side) do
 
 {
 	_SelectedCA = _x;
-	_delete = true;
+	_delete 		= true;
 	{
 		_TargetInfo = (_x getVariable ["GAIA_TargetInfo",[]]);
 		if (count(_TargetInfo)>0) then
