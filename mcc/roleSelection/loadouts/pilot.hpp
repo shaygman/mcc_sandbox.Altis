@@ -1,4 +1,4 @@
-class pilot
+class pilot : rifleman
 {
 	name    = "Pilot";
 	picture =  __EVAL(MCCPATH +"mcc\roleSelection\data\Pilot.paa");
@@ -86,6 +86,7 @@ class pilot
 		vests[]= {};
 		backpacks[]= {};
 		uniforms[]= {{0,"U_B_PilotCoveralls"}};
+		insigna[]= {{0,""},{0,"111thID"},{0,"BI"},{0,"Curator"},{0,"MANW"}};
 	};
 
 	class east
@@ -168,6 +169,7 @@ class pilot
 		vests[]= {};
 		backpacks[]= {};
 		uniforms[]= {{0,"U_O_PilotCoveralls"}};
+		insigna[]= {{0,""},{0,"GryffinRegiment"},{0,"BI"},{0,"Curator"},{0,"MANW"}};
 	};
 
 	class guer
@@ -249,5 +251,6 @@ class pilot
 		vests[]= {};
 		backpacks[]= {};
 		uniforms[]= {{0,"U_I_pilotCoveralls"}};
+		insigna[]= {{0,""},{0,"TFAegis"},{0,"BI"},{0,"Curator"},{0,"MANW"}};
 	};
 };

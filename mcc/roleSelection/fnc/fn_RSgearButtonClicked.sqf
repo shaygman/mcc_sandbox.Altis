@@ -106,6 +106,10 @@ switch (_type) do {
     case "bipod": {
     	_availableObjects = getArray (_cfg >> _weapon >> "attachments4");
     };
+
+    case "insigna": {
+		_availableObjects = CP_currentInsignas;
+    };
 };
 
 _alloweObjects = [];
@@ -147,27 +151,40 @@ lbClear _ctrl;
 {
 	_cfg = switch true do {
 			    case (isclass(configfile >> "CfgMagazines" >> _x)): {
-			    	(configfile >> "CfgMagazines" >> _x)
+			    	(configfile >> "CfgMagazines" >> _x);
 			    };
 
 			    case (isclass(configfile >> "CfgWeapons" >> _x)): {
-			    	(configfile >> "CfgWeapons" >> _x)
+			    	(configfile >> "CfgWeapons" >> _x);
 			    };
 
 			    case (isclass(configfile >> "CfgGlasses" >> _x)): {
-			    	(configfile >> "CfgGlasses" >> _x)
+			    	(configfile >> "CfgGlasses" >> _x);
 			    };
 
 			    case (isclass(configfile >> "CfgVehicles" >> _x)): {
-			    	(configfile >> "CfgVehicles" >> _x)
+			    	(configfile >> "CfgVehicles" >> _x);
+			    };
+
+			    case (isclass(missionconfigfile >> "CfgUnitInsignia" >> _x)): {
+			    	(missionconfigfile >> "CfgUnitInsignia" >> _x);
+			    };
+
+			    case (isclass(configfile >> "CfgUnitInsignia" >> _x)): {
+			    	(configfile >> "CfgUnitInsignia" >> _x);
 			    };
 
 			    default {(configfile >> "CfgWeapons">> "")};
 			};
+
 	_displayname = getText(_cfg >> "displayName");
 	if (_displayname == "") then {_displayname = "- None"};
 
 	_pic = getText(_cfg >> "picture");
+
+	//For insignas
+	if (_pic == "") then {_pic =  getText(_cfg >> "texture")};
+
 	_toolTip = (getText(_cfg >> "descriptionShort"));
 	_toolTip = _toolTip splitstring "<>";
 
@@ -214,6 +231,12 @@ MCC_fnc_RSItemSelected = {
 	if (!(isNull ((ctrlParent _ctrl) displayCtrl 14000)) && !(_type in _attachments)) then {
 		ctrlDelete ((ctrlParent _ctrl) displayCtrl 14000);
 		missionNamespace setVariable [format ["CP_%1weaponAttachments", (missionNamespace getVariable ["MCC_RSselectedWeapon",""])],["","","",""]];
+	};
+
+	//New insignia selected
+	if (_type == "insigna") exitWith {
+		 missionNamespace setVariable [format["CP_player%1Insigna_%2_%3",_role, getplayerUID player, side player],_data];
+		[player,_data] call BIS_fnc_setUnitInsignia;
 	};
 
 	if (_type in _outfits) then {

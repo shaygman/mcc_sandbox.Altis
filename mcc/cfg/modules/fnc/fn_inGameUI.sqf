@@ -1,6 +1,6 @@
 /*==================================================================MCC_fnc_inGameUI=====================================================================================
 	manage inGameUI
-	[0,true,true,trur,true,false] call MCC_fnc_inGameUI
+	[0,true,true,trur,true,false,true] call MCC_fnc_inGameUI
 	<IN>
 	_this select 0 		INTEGER -
 							-1 Disabled
@@ -28,6 +28,10 @@
 							true - enable Name Tags
 							false - disable Name Tags
 
+	_this select 6		BOOLEAN
+							true - enable suppression
+							false - disable suppression
+
 	<<<<<<<<<<<         LOCAL Function     >>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 ==============================================================================================================================================================*/
@@ -49,6 +53,9 @@ if (typeName _mode == typeName objNull) then {
 
 	//NameTags
 	missionNamespace setVariable ["MCC_nameTags",_module getvariable ["nameTags",false]];
+
+	//Supression
+	missionNamespace setVariable ["MCC_suppressionOn",_module getvariable ["suppression",false]];
 } else {
 	_compass = param [1,false,[false]];
 	_compassTeamMates = param [2,false,[false]];
@@ -61,10 +68,16 @@ if (typeName _mode == typeName objNull) then {
 
 	//NameTags
 	missionNamespace setVariable ["MCC_nameTags",param [5,false,[false]]];
+
+	//Supression
+	missionNamespace setVariable ["MCC_suppressionOn",param [6,false,[false]]];
 };
 
 //Compass HUD
 if (_compass) then {_compassTeamMates spawn MCC_fnc_initCompassHUD};
+
+//Supression
+if (missionNamespace getVariable ["MCC_suppressionOn",false]) then {[] spawn MCC_fnc_supressionInit};
 
 //Force Camera
 if (_mode > -1) then {

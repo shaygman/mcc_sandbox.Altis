@@ -153,7 +153,7 @@ switch (true) do {
 			//set options
 
 			_displayName = getText (configfile >> "CfgVehicles" >> typeof _object >> "displayName");
-			_pic		 = getText (configfile >> "CfgVehicles" >> typeof _object >> "picture");
+			_pic		 = if (_object isKindof "ReammoBox_F") then {""} else {getText (configfile >> "CfgVehicles" >> typeof _object >> "picture")};
 			_array = [["closeDialog 0",_displayName,_pic]];
 
 			{

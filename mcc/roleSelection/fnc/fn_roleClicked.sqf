@@ -25,7 +25,8 @@ _array = [
 			["googles","Googles",format ["%1mcc\roleSelection\data\ui\goggles_ca.paa",MCC_path]],
 			["vests","Vest",format ["%1mcc\roleSelection\data\ui\vest_ca.paa",MCC_path]],
 			["uniforms","Uniforms",format ["%1mcc\roleSelection\data\ui\uniform_ca.paa",MCC_path]],
-			["backpacks","Backpack",format ["%1mcc\roleSelection\data\ui\backpack_ca.paa",MCC_path]]
+			["backpacks","Backpack",format ["%1mcc\roleSelection\data\ui\backpack_ca.paa",MCC_path]],
+			["insigna","Insigna",format ["%1mcc\roleSelection\data\ui\insignia_ca.paa",MCC_path]]
 		 ];
 
 for "_i" from 10000 to 20000 step +1000 do {
