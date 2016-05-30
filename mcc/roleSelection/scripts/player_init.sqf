@@ -153,6 +153,7 @@ if ( (tolower _role == "officer" ) && (player != leader player)) then {group pla
 
 //Set Rank
 _level 	 = call compile format  ["%1Level select 0",_role];
+
 if (MCCplayerRank == "N/A") then {
 	MCCplayerRank = [(floor (_level/10)) min 6,"classname"] call BIS_fnc_rankParams;
 };

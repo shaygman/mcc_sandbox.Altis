@@ -204,7 +204,7 @@ class MCC_rts_orderStealth
 	#endif
 
 	displayName = "Stealth";
-	descriptionShort = "Order group units to switch to stealth behaviour";
+	descriptionShort = "Order group units to switch to stealth behavior";
 	condition =  "alive _target && behaviour _target != 'STEALTH';";
 	dontShowDisabled = 0;
 	requiredBuildings[] = {};
@@ -222,7 +222,7 @@ class MCC_rts_orderAware
 	#endif
 
 	displayName = "Aware";
-	descriptionShort = "Order group units to switch to aware behaviour";
+	descriptionShort = "Order group units to switch to aware behavior";
 	condition = "alive _target && behaviour _target == 'STEALTH';";
 	dontShowDisabled = 0;
 	requiredBuildings[] = {};

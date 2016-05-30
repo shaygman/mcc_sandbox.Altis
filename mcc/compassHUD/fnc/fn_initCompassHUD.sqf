@@ -66,8 +66,8 @@ MCC_fnc_compHudEVH = {
                     (uiNamespace getVariable "MCC_hud_compass") ctrlCreate ["RscPicture", _indexCounter,((uiNamespace getVariable "MCC_hud_compass") displayCtrl 1)];
                     _x setVariable ["MCC_hud_compass_unitMarker",_indexCounter];
                     _units pushBack [_indexCounter,_x];
-                    missionNamespace setVariable ["MCC_HuD_indexCounter",_indexCounter];
-                    missionNamespace setVariable ["MCC_HuD_units",_units];
+                    uiNamespace setVariable ["MCC_HuD_indexCounter",_indexCounter];
+                    uiNamespace setVariable ["MCC_HuD_units",_units];
                 };
 
                 _index = _x getVariable ["MCC_hud_compass_unitMarker",-1];

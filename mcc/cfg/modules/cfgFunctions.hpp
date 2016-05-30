@@ -19,4 +19,5 @@ class MCCmodules
 	class moduleCapturePoint {description = "Sets a capture point";};
 	class vehicleRespawn {description = "respawn empty vehicles";};
 	class inGameUI {description = "Manage inGameUI";};
+	class createZonesInit {description = "MCC Zones";};
 };

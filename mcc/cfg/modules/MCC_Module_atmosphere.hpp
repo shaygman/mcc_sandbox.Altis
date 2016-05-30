@@ -24,10 +24,15 @@ class MCC_Module_atmosphere : Module_F
 					name = "Blizzard";
 					value = 15;
 				};
-				class Independent
+				class snow
+				{
+					name = "Snow";
+					value = 16;
+				}
+				class HeatWave
 				{
 					name = "Heat Wave";
-					value = 16;
+					value = 17;
 				};
 			};
 		};

@@ -8,7 +8,17 @@ if (missionNamespace getVariable ["CP_activated",true]) then {
 	//GetXP
 	if (missionNamespace getVariable ["MCC_medicXPmesseges",true]) then {
 		_distance =floor (_killer distance _unit);
-		_string = format ["Incapacitating %1 (Distance %2m)",name _unit, _distance];
+
+		_string = if (missionNamespace getVariable ["CP_activated",false]) then {
+					if  (isPlayer _unit) then {
+						format ["Incapacitating (lvl %1) %2 (Distance %3m)", (_unit getvariable ["CP_roleLevel",1]), name _unit, _distance];
+					} else {
+						format ["Incapacitating %1 (Distance %2m)", name _unit, _distance];
+					}
+				} else {
+				format ["Incapacitating %1 (Distance %2m)", name _unit, _distance];
+			};
+
 		_xpFactor = if (vehicle player != player) then {0.5} else {(ceil(_distance/200) min 3)};
 
 	} else {

@@ -3,11 +3,13 @@
 // Example: [roleNumber, gear/uniform/select] call MCC_fnc_setGear;
 //roleNumber: 0-officer, 1-AR, 2-Rifleman, 3-AT, 4-medic, 5-marksman, 6- specialist, 7- crewman, 8-pilot
 // Gear: 0- select, 1-gear, 2-uniform
-//==============================================================================================================================================================================
-private ["_role","_select","_mag","_magazines","_muzzles","_ok","_wepItems","_image","_cfg","_side","_array","_cfgWeapon","_cfgName"];
+// _unit: OBJECT the unit on which it will be effected - must be local
+//================================================================================================================================================================
+private ["_role","_select","_mag","_magazines","_muzzles","_ok","_wepItems","_image","_cfg","_side","_array","_cfgWeapon","_cfgName","_unit"];
 disableSerialization;
 _role 	= param [0,2,[0,""]];
 _select	= param [1,0,[0]];
+_unit = param [2,player];
 
 if (typeName _role == typeName 0) then {
 	//Set player role
@@ -38,9 +40,9 @@ if (typeName _role == typeName 0) then {
 	_image = if (isClass (missionconfigFile >> "MCC_loadouts" >> _role)) then {getText(missionconfigFile >> "MCC_loadouts" >> _role >> "picture")} else {getText(configFile >> "MCC_loadouts" >> _role >> "picture")};
 };
 
-if (toLower (player getvariable ["CP_role","n/a"]) != toLower _role) then {CP_playerUniforms =  nil; CP_weaponAttachments = []};
+if (toLower (_unit getvariable ["CP_role","n/a"]) != toLower _role) then {CP_playerUniforms =  nil; CP_weaponAttachments = []};
 
-_side = tolower str side player;
+_side = tolower str side _unit;
 
 if !(_side in ["east","west","guer"]) exitWith {systemChat "Player is not in any side"};
 
@@ -119,71 +121,71 @@ CP_currentInsignas =  getArray(_cfg >> _side >> "insigna");
 CP_currentLevel = call compile format ["%1Level select 0",_role];
 
 //Set Primary weapon
-CP_currentWeapon = missionNamespace getVariable format ["CP_player%1_primary_%2_%3",_role,getplayerUID player,side player];
+CP_currentWeapon = missionNamespace getVariable format ["CP_player%1_primary_%2_%3",_role,getplayerUID _unit,side _unit];
 if (isnil "CP_currentWeapon") then {
-	missionNamespace setVariable [format["CP_player%1_primary_%2_%3",_role,getplayerUID player,side player], CP_currentWeaponArray select 0];
-	CP_currentWeapon = missionNamespace getVariable format ["CP_player%1_primary_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_primary_%2_%3",_role,getplayerUID _unit,side _unit], CP_currentWeaponArray select 0];
+	CP_currentWeapon = missionNamespace getVariable format ["CP_player%1_primary_%2_%3",_role,getplayerUID _unit,side _unit];
 };
 
 //Set Secondary weapon
-CP_currentSecWeapon = missionNamespace getVariable format ["CP_player%1_secondary_%2_%3",_role,getplayerUID player,side player];
+CP_currentSecWeapon = missionNamespace getVariable format ["CP_player%1_secondary_%2_%3",_role,getplayerUID _unit,side _unit];
 if (isnil "CP_currentSecWeapon") then {
-	missionNamespace setVariable [format["CP_player%1_secondary_%2_%3",_role,getplayerUID player,side player], CP_currentWeaponSecArray select 0];
-	CP_currentSecWeapon = missionNamespace getVariable format ["CP_player%1_secondary_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_secondary_%2_%3",_role,getplayerUID _unit,side _unit], CP_currentWeaponSecArray select 0];
+	CP_currentSecWeapon = missionNamespace getVariable format ["CP_player%1_secondary_%2_%3",_role,getplayerUID _unit,side _unit];
 };
 
 //Set handgun
-CP_currentHandguns = missionNamespace getVariable format ["CP_player%1_handgun_%2_%3",_role,getplayerUID player,side player];
+CP_currentHandguns = missionNamespace getVariable format ["CP_player%1_handgun_%2_%3",_role,getplayerUID _unit,side _unit];
 if (isnil "CP_currentHandguns") then {
-	missionNamespace setVariable [format["CP_player%1_handgun_%2_%3",_role,getplayerUID player,side player], CP_handguns select 0];
-	CP_currentHandguns = missionNamespace getVariable format ["CP_player%1_handgun_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_handgun_%2_%3",_role,getplayerUID _unit,side _unit], CP_handguns select 0];
+	CP_currentHandguns = missionNamespace getVariable format ["CP_player%1_handgun_%2_%3",_role,getplayerUID _unit,side _unit];
 };
 
 //Set Items1
-CP_currentItems1 = missionNamespace getVariable format ["CP_player%1_items1_%2_%3",_role,getplayerUID player,side player];
+CP_currentItems1 = missionNamespace getVariable format ["CP_player%1_items1_%2_%3",_role,getplayerUID _unit,side _unit];
 if (isnil "CP_currentItems1") then {
-	missionNamespace setVariable [format["CP_player%1_items1_%2_%3",_role,getplayerUID player,side player], CP_items1 select 0];
-	CP_currentItems1 = missionNamespace getVariable format ["CP_player%1_items1_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_items1_%2_%3",_role,getplayerUID _unit,side _unit], CP_items1 select 0];
+	CP_currentItems1 = missionNamespace getVariable format ["CP_player%1_items1_%2_%3",_role,getplayerUID _unit,side _unit];
 };
 
 //Set Items2
-CP_currentItems2 = missionNamespace getVariable format ["CP_player%1_items2_%2_%3",_role,getplayerUID player,side player];
+CP_currentItems2 = missionNamespace getVariable format ["CP_player%1_items2_%2_%3",_role,getplayerUID _unit,side _unit];
 if (isnil "CP_currentItems2") then {
-	missionNamespace setVariable [format["CP_player%1_items2_%2_%3",_role,getplayerUID player,side player], CP_items2 select 0];
-	CP_currentItems2 = missionNamespace getVariable format ["CP_player%1_items2_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_items2_%2_%3",_role,getplayerUID _unit,side _unit], CP_items2 select 0];
+	CP_currentItems2 = missionNamespace getVariable format ["CP_player%1_items2_%2_%3",_role,getplayerUID _unit,side _unit];
 };
 
 //Set Items3
-CP_currentItems3 = missionNamespace getVariable format ["CP_player%1_items3_%2_%3",_role,getplayerUID player,side player];
+CP_currentItems3 = missionNamespace getVariable format ["CP_player%1_items3_%2_%3",_role,getplayerUID _unit,side _unit];
 if (isnil "CP_currentItems3") then {
-	missionNamespace setVariable [format["CP_player%1_items3_%2_%3",_role,getplayerUID player,side player], CP_items3 select 0];
-	CP_currentItems3 = missionNamespace getVariable format ["CP_player%1_items3_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1_items3_%2_%3",_role,getplayerUID _unit,side _unit], CP_items3 select 0];
+	CP_currentItems3 = missionNamespace getVariable format ["CP_player%1_items3_%2_%3",_role,getplayerUID _unit,side _unit];
 };
 
 //Set General Items
-CP_currentGeneralItems = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role,getplayerUID player,side player];
+CP_currentGeneralItems = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role,getplayerUID _unit,side _unit];
 if (isnil "CP_currentGeneralItems") then {
-	missionNamespace setVariable [format["CP_player%1GeneralItems_%2_%3",_role,getplayerUID player,side player], CP_GeneralItems];
-	CP_currentGeneralItems = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1GeneralItems_%2_%3",_role,getplayerUID _unit,side _unit], CP_GeneralItems];
+	CP_currentGeneralItems = missionNamespace getVariable format ["CP_player%1GeneralItems_%2_%3",_role,getplayerUID _unit,side _unit];
 };
 
 //Set Inigna
-CP_currentInsigna = missionNamespace getVariable format ["CP_player%1Insigna_%2_%3",_role,getplayerUID player,side player];
+CP_currentInsigna = missionNamespace getVariable format ["CP_player%1Insigna_%2_%3",_role,getplayerUID _unit,side _unit];
 if (isnil "CP_currentInsigna") then {
-	missionNamespace setVariable [format["CP_player%1Insigna_%2_%3",_role,getplayerUID player,side player], (CP_currentInsignas select 0) select 1];
-	CP_currentInsigna = missionNamespace getVariable format ["CP_player%1Insigna_%2_%3",_role,getplayerUID player,side player];
+	missionNamespace setVariable [format["CP_player%1Insigna_%2_%3",_role,getplayerUID _unit,side _unit], (CP_currentInsignas select 0) select 1];
+	CP_currentInsigna = missionNamespace getVariable format ["CP_player%1Insigna_%2_%3",_role,getplayerUID _unit,side _unit];
 };
 
 
-player setvariable ["CP_role", _role, true];
-player setvariable ["CP_roleImage", _image, true];
-player setvariable ["CP_roleLevel", call compile format ["%1Level select 0",_role], true];
+_unit setvariable ["CP_role", _role, true];
+_unit setvariable ["CP_roleImage", _image, true];
+_unit setvariable ["CP_roleLevel", call compile format ["%1Level select 0",_role], true];
 
 //Open subMenu if needed
 if (_select == 1) then {[4] execVM MCC_path+"mcc\roleSelection\scripts\switchDialog.sqf"};			//open weapon menu
 if (_select == 2) then {[5] execVM MCC_path+"mcc\roleSelection\scripts\switchDialog.sqf"};			//open uniform menu
 
-CP_playerUniforms = missionNamespace getVariable format ["CP_player%1_Uniforms_%2_%3",_role,getplayerUID player,side player];
+CP_playerUniforms = missionNamespace getVariable format ["CP_player%1_Uniforms_%2_%3",_role,getplayerUID _unit,side _unit];
 if (isnil "CP_playerUniforms") then {
 	CP_playerUniforms = [	((CP_currentUniforms select 0) select 0) select 1,
 							((CP_currentUniforms select 1) select 0) select 1,
@@ -208,7 +210,7 @@ if !(isNull (_disp displayCtrl 9874444)) then {
 
 	{
 		if !(_x in _magTypes) then {_magTypes pushBack _x};
-	} forEach (weapons player + items player + magazines player);
+	} forEach (weapons _unit + items _unit + magazines _unit);
 
 	lbClear _ctrl;
 	{
@@ -239,7 +241,7 @@ if !(isNull (_disp displayCtrl 9874444)) then {
 			};
 
 		_displayname = getText(_cfg >> "displayName");
-		_displayname = str({_x == _mag} count (weapons player + items player + magazines player))  + " X " + _displayname;
+		_displayname = str({_x == _mag} count (weapons _unit + items _unit + magazines _unit))  + " X " + _displayname;
 
 		_pic = getText(_cfg >> "picture");
 

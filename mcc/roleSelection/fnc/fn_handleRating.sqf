@@ -1,7 +1,7 @@
-//==================================================================MCC_fnc_handleRating======================================================================================
+//==================================================================MCC_fnc_handleRating==================================================================================
 // Handle xp for players when rating added
 // Example: [player, rating] call MCC_fnc_handleRating
-//==============================================================================================================================================================================
+//========================================================================================================================================================================
 private ["_rating","_role","_exp","_oldLevel","_level","_newLevel"];
 /*
 //No more then 500 exp per sec
@@ -46,6 +46,7 @@ _newLevel = _level select 0;
 	[_newLevel] call MCC_fnc_unlock;
 	_oldLevel = _newLevel;
 	missionNamespace setVariable ["MCC_isLevelingUp",false];
+	player setVariable ["CP_roleLevel",_newLevel,true];
  };
 
 if (CP_debug) then {systemchat format ["level: %1",_level]};

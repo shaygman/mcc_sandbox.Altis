@@ -82,7 +82,7 @@ switch (_type) do {
 
 	//Link to zone
    	case 5:	{
-		_zone = MCC_zones_numbers select (lbCurSel MCC_JUKEBOX_ZONE);
+		_zone = (missionNamespace getVariable ["MCC_zones_numbers",[]]) select (lbCurSel MCC_JUKEBOX_ZONE);
 		if (count mcc_zone_pos < _zone) exitWith {hint "Invalid zone slected"};
 		_zonePos = mcc_zone_pos select _zone;
 		_zoneX = mcc_zone_size select (_zone) select 0;

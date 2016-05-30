@@ -56,7 +56,7 @@ lbClear _comboBox;
 {
 	_displayname = format ["%1",_x];
 	_comboBox lbAdd _displayname;
-} foreach MCC_zones_numbers;
+} foreach (missionNamespace getVariable ["MCC_zones_numbers",[]]);
 _comboBox lbSetCurSel MCC_zone_index;
 
 //==========================       Mission Wizard ===============================================

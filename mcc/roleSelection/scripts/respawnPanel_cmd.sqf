@@ -59,6 +59,7 @@ switch (_cmd) do {
 
 			_spawnAvailable = true;
 
+			/*
 			if ((_activeSpawn getvariable ["type","FOB"]) != "HQ") then {
 				_targets = ["Car","Tank","Man"];
 				_nearObjects = (getpos _activeSpawn) nearObjects 50;
@@ -75,6 +76,7 @@ switch (_cmd) do {
 					} foreach _nearObjects;
 				};
 			};
+			*/
 
 			if (!_spawnAvailable) exitWith {
 				[9999,"Spawn Point overrun, select another",3,true] spawn MCC_fnc_setIDCText

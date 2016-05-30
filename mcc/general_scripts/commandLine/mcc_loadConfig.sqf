@@ -70,7 +70,7 @@ switch (_type) do
 	{
 		private ["_temp"];
 		_temp = [] call MCC_fnc_saveToMCC;
-		MCC_savedZones = str [MCC_zones_numbers, mcc_zone_pos, mcc_zone_size, mcc_zone_dir, mcc_zone_locations];
+		MCC_savedZones = str [(missionNamespace getVariable ["MCC_zones_numbers",[]]), mcc_zone_pos, mcc_zone_size, mcc_zone_dir, mcc_zone_locations];
 		MCC_savedZones = [MCC_savedZones, "<null>", "nil"] call MCC_fnc_replaceString;
 
 		MCC_output = 'MCC_savedObjectives = ' + (str((call compile _temp) select 0)) + ';' + _br
@@ -106,7 +106,7 @@ switch (_type) do
 		private ["_temp"];
 		_temp = call compile ([] call MCC_fnc_saveToMCC);
 
-		MCC_savedZones = str [MCC_zones_numbers, mcc_zone_pos, mcc_zone_size, mcc_zone_dir, mcc_zone_locations];
+		MCC_savedZones = str [(missionNamespace getVariable ["MCC_zones_numbers",[]]), mcc_zone_pos, mcc_zone_size, mcc_zone_dir, mcc_zone_locations];
 		MCC_savedZones = [MCC_savedZones, "<null>", "nil"] call MCC_fnc_replaceString;
 
 		MCC_output = [_temp select 0, _temp select 1, _temp select 2, _temp select 3, _temp select 4, _temp select 5, call compile MCC_savedZones, mcc_safe];

@@ -32,4 +32,5 @@ class roleSelection {
 	class roleClicked {description = "Handle clicking on a role";};
 	class RSgearButtonClicked {};
 	class handleKilled {description = "Kill messeges";};
+	class gearAI {description = "Gear AI with gear acording to its role";};
 };

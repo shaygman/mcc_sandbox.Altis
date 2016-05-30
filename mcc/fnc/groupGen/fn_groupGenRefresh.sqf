@@ -37,11 +37,15 @@ MCC_fnc_mapDrawWP =
 
 	//Draw WP
 	{
-		_map drawIcon _x;
+		if !(isNil "_x") then {
+			_map drawIcon _x;
+		};
 	} foreach MCC_GGIcons;
 
 	{
-		_map drawLine _x;
+		if !(isNil "_x") then {
+			_map drawLine _x;
+		};
 	} foreach MCC_GGLines;
 
 	//Show towns name up to1.5Km

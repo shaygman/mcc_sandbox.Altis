@@ -22,3 +22,4 @@
 #include "MCC_module_vehicleRespawn.hpp"
 #include "MCC_Module_inGameUI.hpp"
 #include "MCC_Module_AAS.hpp"
+#include "mcc_Module_createZones"

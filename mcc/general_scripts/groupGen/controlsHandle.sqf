@@ -615,7 +615,7 @@ if (_action == 13) exitWith {
 	{
 		_displayname = format ["%1",_x];
 		_comboBox lbAdd _displayname;
-	} foreach MCC_zones_numbers;
+	} foreach (missionNamespace getVariable ["MCC_zones_numbers",[]]);
 	_comboBox lbSetCurSel MCC_zone_index;
 
 	sliderSetRange [MCC_JUKEBOX_VOLUME, 0, 1];

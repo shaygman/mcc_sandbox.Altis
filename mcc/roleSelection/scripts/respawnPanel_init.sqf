@@ -401,7 +401,9 @@ if (missionNamespace getvariable ["CP_activated",false]) then {
 						_class			= netId _x;
 						_displayname 	= name _x;
 						_pic 			= _x getvariable ["CP_roleImage",""];
-						_index 			= (_disp displayCtrl _idc) lbAdd _displayname;
+						_index 			= (_disp displayCtrl _idc) lbAdd (if (missionNamespace getVariable ["CP_activated",false]) then {
+						                                            	format ["(%1) %2", (_x getvariable ["CP_roleLevel",1]), _displayname];
+																	} else {_displayname});
 						(_disp displayCtrl _idc) lbSetPicture [_index, _pic];
 						(_disp displayCtrl _idc) lbSetData [_index, _class];
 						if (_x == leader _group) then {(_disp displayCtrl _idc) lbSetPictureRight [_index, "\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"]};

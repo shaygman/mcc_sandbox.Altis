@@ -43,7 +43,7 @@ _enemySide		= [_this, 16, east] call BIS_fnc_param;
 
 _missionRadius 	= (((triggerArea _missionCenterTrigger) select 0)+ ((triggerArea _missionCenterTrigger) select 1))/2;
 //Let'screate the main zone and placing units
-_zoneNumber = (count MCC_zones_numbers) + 1;
+_zoneNumber = (count (missionNamespace getVariable ["MCC_zones_numbers",[]])) + 1;
 
 //Create Zone
 [_zoneNumber,_missionCenter,(triggerArea _missionCenterTrigger)] call MCC_fnc_MWUpdateZone;
@@ -158,70 +158,72 @@ if (_isIED) then
 	if (count _roadPositions >0) then
 	{
 		_unitsArray 	= [_civFaction,"carx"] call MCC_fnc_makeUnitsArray;
-		{
-			if (random 1 > 0.3) then
+		if (count _unitsArray > 0) then {
 			{
-
-				//Name the ied.
-				_name = format ["IEDObject_%1", ["IEDObject_",1] call bis_fnc_counter];
-
-				//Care or hidden?
-				if (random 1 < 0.3) then
+				if (random 1 > 0.3) then
 				{
-					//Why the hell we have karts in a milsim?!
-					_objectType = "";
-					while {_objectType in ["","C_Kart_01_Blu_F","C_Kart_01_F","C_Kart_01_F_Base","C_Kart_01_Fuel_F","C_Kart_01_Red_F","C_Kart_01_Vrana_F"]} do
+
+					//Name the ied.
+					_name = format ["IEDObject_%1", ["IEDObject_",1] call bis_fnc_counter];
+
+					//Care or hidden?
+					if (random 1 < 0.3) then
 					{
-						_objectType = (_unitsArray call BIS_fnc_selectRandom) select 0;
-						sleep 0.1;
+						//Why the hell we have karts in a milsim?!
+						_objectType = "";
+						while {_objectType in ["","C_Kart_01_Blu_F","C_Kart_01_F","C_Kart_01_F_Base","C_Kart_01_Fuel_F","C_Kart_01_Red_F","C_Kart_01_Vrana_F"]} do
+						{
+							_objectType = (_unitsArray call BIS_fnc_selectRandom) select 0;
+							sleep 0.1;
+						};
+					}
+					else
+					{
+						_objectType = MCC_MWIED call BIS_fnc_selectRandom;
 					};
-				}
-				else
-				{
-					_objectType = MCC_MWIED call BIS_fnc_selectRandom;
-				};
 
-				//Find road direction
-				_roadConnectedTo 	= roadsConnectedTo _x;
+					//Find road direction
+					_roadConnectedTo 	= roadsConnectedTo _x;
 
-				if (count _roadConnectedTo > 0) then {
-					_connectedRoad = _roadConnectedTo select 0;
-					if (isNil "_connectedRoad") then {_dir = 0} else {
-						_dir = [_x, _connectedRoad] call BIS_fnc_DirTo;
+					if (count _roadConnectedTo > 0) then {
+						_connectedRoad = _roadConnectedTo select 0;
+						if (isNil "_connectedRoad") then {_dir = 0} else {
+							_dir = [_x, _connectedRoad] call BIS_fnc_DirTo;
+						};
+					} else {
+						_dir = 0;
 					};
-				} else {
-					_dir = 0;
-				};
 
-				//Let's not place it on road but to the side of the road.
-				_iedX = 4;
-				_iedY = 0;
-				_iedpos = _x modeltoworld [_iedX,_iedY,0];
-
-				while {isOnRoad _iedpos} do
-				{
-					_iedX = _iedX + 1;
-					_iedY = _iedY + 1;
+					//Let's not place it on road but to the side of the road.
+					_iedX = 4;
+					_iedY = 0;
 					_iedpos = _x modeltoworld [_iedX,_iedY,0];
-				};
 
-				//Spawn the IED
-				[[_iedpos,_objectType,"large",floor (random 2),2,false,0,((random 25) + 15),_sidePlayer,_name,_dir,true,_enemySide],"MCC_fnc_trapSingle",false,false] spawn BIS_fnc_MP;
-
-				//Debug
-				if (MW_debug) then
+					while {isOnRoad _iedpos} do
 					{
-						private ["_marker","_name"];
-						_name = FORMAT ["iedMarker_%1", ["iedMarker_",1] call bis_fnc_counter];
-						_marker = createMarkerLocal[_name, _iedpos];
-						_marker setMarkerTypeLocal "mil_dot";
-						_marker setMarkerColorLocal "ColorOrange";
-						_marker setMarkerSizeLocal[0.4, 0.4];
-						_marker setMarkerTextLocal "IED";
+						_iedX = _iedX + 1;
+						_iedY = _iedY + 1;
+						_iedpos = _x modeltoworld [_iedX,_iedY,0];
 					};
 
-			};
-		} foreach _roadPositions;
+					//Spawn the IED
+					[[_iedpos,_objectType,"large",floor (random 2),2,false,0,((random 25) + 15),_sidePlayer,_name,_dir,true,_enemySide],"MCC_fnc_trapSingle",false,false] spawn BIS_fnc_MP;
+
+					//Debug
+					if (MW_debug) then
+						{
+							private ["_marker","_name"];
+							_name = FORMAT ["iedMarker_%1", ["iedMarker_",1] call bis_fnc_counter];
+							_marker = createMarkerLocal[_name, _iedpos];
+							_marker setMarkerTypeLocal "mil_dot";
+							_marker setMarkerColorLocal "ColorOrange";
+							_marker setMarkerSizeLocal[0.4, 0.4];
+							_marker setMarkerTextLocal "IED";
+						};
+
+				};
+			} foreach _roadPositions;
+		};
 	};
 };
 

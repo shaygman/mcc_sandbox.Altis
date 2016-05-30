@@ -1,18 +1,26 @@
-//==================================================MCC_fnc_MWUpdateZone=========================================================================================================
-// Create a pick intel objective
+//==================================================MCC_fnc_MWUpdateZone=================================================================================================
+// Create a zone
 // Example:[_zoneNumber,_pos,_radius] call MCC_fnc_MWUpdateZone;
 // Return - handler
-//===============================================================================================================================================================================
-private ["_zoneNumber","_script_handler","_pos","_radius","_zone_marker_X","_zone_marker_Y","_ar"];
+//======================================================================================================================================================================
+private ["_zoneNumber","_script_handler","_pos","_radius","_zone_marker_X","_zone_marker_Y","_ar","_zones","_dir"];
 _zoneNumber = _this select 0;
 _pos		= _this select 1;
 _radius		= _this select 2;
 
 _zone_marker_X		= if (typeName _radius == typeName []) then {_radius select 0} else {_radius};
 _zone_marker_Y		= if (typeName _radius == typeName []) then {_radius select 1} else {_radius};
+_dir = if (typeName _radius == typeName []) then {
+			if (count _radius > 2) then {
+				_radius select 2
+			} else {0};
+		} else {0};
 
 //safe the zone size in the array for later use
-MCC_zones_numbers set [(_zoneNumber-1), _zoneNumber];
+_zones = (missionNamespace getVariable ["MCC_zones_numbers",[]]);
+_zones set [(_zoneNumber-1), _zoneNumber];
+missionNamespace setVariable ["MCC_zones_numbers",_zones];
+
 mcc_zone_pos  set [_zoneNumber, _pos];
 mcc_zone_size set [_zoneNumber,[_zone_marker_X,_zone_marker_Y]];
 mcc_zone_dir set [_zoneNumber,0];
@@ -52,7 +60,7 @@ _ar =	[ 		  ''
 				, [0,0,0]
 				, 0 //(mcc_zonetype select 0 ) select 1
 				, 0 //(mcc_zonetypenr select 0 ) select 1
-				, 0
+				, _dir
 				, [-500,-500,0]
 				, false
 				, false

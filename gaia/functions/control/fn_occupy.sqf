@@ -34,7 +34,7 @@ if (str _safepos != "[-500,-500,0]") then
 //Build city locations
 {
 	//Let'screate the main zone and placing units
-	_zoneNumber = (count MCC_zones_numbers) + 1;
+	_zoneNumber = (count (missionNamespace getVariable ["MCC_zones_numbers",[]])) + 1;
 	_oc_size    = (((size _x)select 0) max ((size _x) select 1));
 
 	//Inside a marker

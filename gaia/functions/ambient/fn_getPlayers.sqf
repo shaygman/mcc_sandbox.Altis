@@ -15,7 +15,7 @@ while{(count _players) == 0}do
   {_all = playableUnits;};
   //Loop them
   {
-    
+
 		if ((_time +30) > time ) then
 		{
 			_dummy = [(position (_all select 0))] call GAIA_fnc_ShowLocationOwner;
@@ -25,15 +25,15 @@ while{(count _players) == 0}do
     if(isPlayer _x)then{
       if((alive _x)&&(!captive _x))then
       {
-        
+
         _player   = _x;
         _spotValid = true;
         //check if the player is in a mcc zone
-        {					
+        {
 					if([position _player,str _x] call GAIA_fnc_IsInMarker)exitWith
 					{_spotValid = false;};
-				}forEach ([MCC_zones_numbers, { _x <1000}] call BIS_fnc_conditionalSelect);
-				
+				}forEach ([(missionNamespace getVariable ["MCC_zones_numbers",[]]), { _x <1000}] call BIS_fnc_conditionalSelect);
+
 				//we are on an allowed spot
 				if _spotValid then
 				{
@@ -42,7 +42,7 @@ while{(count _players) == 0}do
 	        							{
 	        								(leader _x distance _player)<(MCC_GAIA_AC_MAXRANGE+100)
 	        								&&
-	        								(_x getVariable ["GAIA_AMBIENT",false]) 
+	        								(_x getVariable ["GAIA_AMBIENT",false])
 	        								&&
 	        								isTouchingGround _player
 	        							} count allgroups
@@ -54,16 +54,16 @@ while{(count _players) == 0}do
     };
   }forEach _all;
 
-//Delete old shit  
+//Delete old shit
 	{
 		_delete = true;
 		_grp    = _x;
 		if (_grp getVariable ["GAIA_AMBIENT",false]) then
 		{
 			{
-				if ([position _x,_dissapearDistance] call GAIA_fnc_isNearPlayer) exitWith {_delete = false;};					
+				if ([position _x,_dissapearDistance] call GAIA_fnc_isNearPlayer) exitWith {_delete = false;};
 			} forEach (units _grp);
-			if _delete then 
+			if _delete then
 			{
 				//Delete all shit
 				{deleteVehicle _x; sleep 0.3} foreach ([_grp] call  BIS_fnc_groupVehicles);
@@ -71,8 +71,8 @@ while{(count _players) == 0}do
 				deletegroup _grp;
 			};
 		};
-	}forEach allgroups;  
-  
+	}forEach allgroups;
+
 sleep 3;
 };
 _players

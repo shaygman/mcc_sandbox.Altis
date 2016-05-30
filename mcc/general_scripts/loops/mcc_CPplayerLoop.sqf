@@ -52,8 +52,6 @@ MCC_fnc_mapDrawPlayersWPConsole =
 				{
 					case west:			{CP_westGroups};
 					case east:			{CP_eastGroups};
-					case resistance:	{CP_guarGroups};
-					case civilian:		{CP_guarGroups};
 					default				{CP_guarGroups};
 				};
 

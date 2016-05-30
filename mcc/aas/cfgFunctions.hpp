@@ -8,4 +8,6 @@ class AAS {
 	class aasInit {};
 	class AAS_drawLine {};
 	class AASmarkers {};
+	class aas_AIControl {};
+	class aas_AIspawn {};
 };

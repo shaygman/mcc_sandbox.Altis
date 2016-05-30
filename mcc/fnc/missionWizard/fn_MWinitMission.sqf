@@ -325,7 +325,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do {
 		_objPos = MCC_MWObjectivesNames select 0;
 
 		//Lets create a zone
-		_zoneNumber = (count MCC_zones_numbers) + 1;
+		_zoneNumber = (count (missionNamespace getVariable ["MCC_zones_numbers",[]])) + 1;
 		_script_handler = [_zoneNumber,_objPos,_maxObjectivesDistance*(if (_campaignMission) then {1} else {2})] call MCC_fnc_MWUpdateZone;
 		waituntil {_script_handler};
 

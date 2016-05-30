@@ -43,7 +43,7 @@ ctrlShow [510,false];
 ctrlShow [MCC_GroupGenInfo_IDC,false];
 
 //Show zones
-{str _x setMarkerAlphaLocal 0.4;(format["LABEL_%1",_x]) setMarkerAlphaLocal 1;} foreach MCC_zones_numbers;
+{str _x setMarkerAlphaLocal 0.4;(format["LABEL_%1",_x]) setMarkerAlphaLocal 1;} foreach (missionNamespace getVariable ["MCC_zones_numbers",[]]);
 
 //Hide admin buttons for no-admins
 if !(serverCommandAvailable "#logout") then
@@ -109,7 +109,7 @@ lbClear _comboBox;
 {
 	_displayname = format ["%1",_x];
 	_comboBox lbAdd _displayname;
-} foreach MCC_zones_numbers;
+} foreach (missionNamespace getVariable ["MCC_zones_numbers",[]]);
 _comboBox lbSetCurSel MCC_zone_index;
 
 //------------------------------------------- Tooltip --------------------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ if (isnil "MCCFirstOpenUI") then
 
 	sleep 1;
 	//Loose mission maker when DC move to after login
-	if (!isnil "MCC_zones_numbers") then {[] call MCC_fnc_createMCCZones};
+	[] call MCC_fnc_createMCCZones;
 };
 
 //----------------------------------------------------------- GROUPs ----------------------------------------------------------------------------
@@ -174,6 +174,6 @@ while {(str (finddisplay groupGen_IDD) != "no display")} do
 };
 
 //Hide zones
-{str _x setMarkerAlphaLocal 0;(format["LABEL_%1",_x]) setMarkerAlphaLocal 0;} foreach MCC_zones_numbers;
+{str _x setMarkerAlphaLocal 0;(format["LABEL_%1",_x]) setMarkerAlphaLocal 0;} foreach (missionNamespace getVariable ["MCC_zones_numbers",[]]);
 
 //------------------------------------------------------------------------------------------
