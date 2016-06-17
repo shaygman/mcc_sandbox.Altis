@@ -820,9 +820,12 @@ if ( isServer ) then {
 		_names = [format ["%1_SERVER",missionName], "allowedPlayers", "MCC_allowedPlayers", "read",[],"DEFAULT_SERVER"] call MCC_fnc_handleDB;
 		if (count _names == 0) then 	{
 			_null = [format ["%1_SERVER",missionName], "allowedPlayers", "MCC_allowedPlayers", "write",missionNameSpace getVariable ["MCC_allowedPlayers",[]],"DEFAULT_SERVER"] call MCC_fnc_handleDB;
+			MCC_allowedPlayers = [];
 		} else {
 			MCC_allowedPlayers = _names;
 		};
+
+		publicVariable "MCC_allowedPlayers";;
 	} else {
 		MCC_iniDBenabled = false;
 	};

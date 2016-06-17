@@ -236,6 +236,36 @@ switch (true) do {
 
 		_layer = 3;
 	};
+
+	case (_ctrlData == "radio"): {
+		_array = [
+				   ["[(missionNamespace getVariable ['MCC_interactionLayer_0',[]]),1] spawn MCC_fnc_interactionsBuildInteractionUI","Back",format ["%1mcc\interaction\data\iconBack.paa",MCC_path]],
+				   ["setCurrentChannel 3","Group","\a3\Ui_F_Curator\Data\Displays\RscDisplayCurator\modeGroups_ca.paa"],
+				   ["setCurrentChannel 5","Direct",format ["%1data\iconOrder.paa",MCC_path]]
+				 ];
+
+		//Vehicle
+		if (vehicle player != player && ((channelEnabled 4) select 0 || (channelEnabled 4) select 1)) then {
+			_array pushback (["setCurrentChannel 4","Vehicle",getText (configfile >> "CfgVehicles" >> typeOf vehicle player >> "Icon")]);
+		};
+
+		//Command
+		if (player == leader player && ((channelEnabled 2) select 0 || (channelEnabled 2) select 1)) then {
+			_array pushback (["setCurrentChannel 2","Command","\A3\Ui_f\data\GUI\Cfg\Ranks\sergeant_gs.paa"]);
+		};
+
+		//Side
+		if (getPlayerUID  player == (MCC_server getVariable [format ["CP_commander%1",(player getVariable ["CP_side",  playerside])],""]) && ((channelEnabled 1) select 0 || (channelEnabled 1) select 1)) then {
+			_array pushback (["setCurrentChannel 1","Side","\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"]);
+		};
+
+		//Global
+		if (serverCommandAvailable "#logout" || isServer) then {
+			_array pushback (["setCurrentChannel 0","Global","\A3\Ui_f\data\GUI\Cfg\Ranks\general_gs.paa"]);
+		};
+
+		_layer = 1;
+	};
 };
 
 [_array,_layer] call MCC_fnc_interactionsBuildInteractionUI;

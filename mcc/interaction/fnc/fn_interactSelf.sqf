@@ -42,8 +42,11 @@ if (leader player == player && count units player >= 2) then {
 //Commander Console
 _server = missionNamespace getVariable ["MCC_server",objNull];
 if (((_server getVariable [format ["CP_commander%1",playerside],""]) == getPlayerUID player) && (missionNamespace getVariable ["MCC_allowConsole",true])) then {
-	_array pushBack [format["_null = [nil,nil,nil,nil,1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'",MCC_path],"Commander Console",format ["%1mcc\interaction\data\call_ca.paa", MCC_path]];
+	_array pushBack [format["_null = [nil,nil,nil,nil,1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'",MCC_path],"Commander Console","\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"];
 };
+
+//Radio Channels
+_array pushBack ["[(_this select 0),'radio'] spawn MCC_fnc_interactSelfClicked","Radio",format ["%1mcc\interaction\data\call_ca.paa", MCC_path]];
 
 //Attached gear
 _array pushBack  ["[(_this select 0),'gear'] spawn MCC_fnc_interactSelfClicked","Attach",format ["%1mcc\roleSelection\data\ui\uniform_ca.paa", MCC_path]];

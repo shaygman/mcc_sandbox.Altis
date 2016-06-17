@@ -26,7 +26,7 @@ wreckRemovalMaxTime = 1200
 
 class Header
 {
-	gameType =sandbox;
+	gameType =sc;
 	minPlayers = 1;
 	maxPlayers = 149;
 };
