@@ -10,4 +10,5 @@ class AAS {
 	class AASmarkers {};
 	class aas_AIControl {};
 	class aas_AIspawn {};
+	class deleteBodies {};
 };

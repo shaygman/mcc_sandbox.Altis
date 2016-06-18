@@ -17,7 +17,10 @@ private ["_maxBleeding","_bleeding","_remaineBlood","_unit"];
 					_unit addEventHandler ["HandleDamage", {_this call MCC_fnc_handleDamage}];
 					_unit addEventHandler ["killed", {_this call MCC_fnc_handleKilled}];
 					if !(isPlayer _unit) then {
-						_unit addEventHandler ["HandleHeal",{(_this select 0) setVariable ["MCC_medicBleeding",0,true];false}];
+						_unit addEventHandler ["HandleHeal",{
+							(_this select 0) setVariable ["MCC_medicBleeding",0,true];
+							if (!isplayer (_this select 1)) then {(_this select 0) setVariable ["MCC_medicUnconscious",false,true]};
+							false}];
 					};
 
 					_unit spawn	{

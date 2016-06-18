@@ -167,6 +167,7 @@ _dummy setVariable ["mcc_delete",false,true];
 _dummy setVariable ["teleport",_teleport,true];
 missionNamespace setVariable [format ["MCC_%1_BUILDING",_side],_dummy];
 publicVariable format ["MCC_%1_BUILDING",_side];
+
 //If is FOB
 if (_size == "FOB") then {
 	//Attach flag

@@ -2,33 +2,26 @@
 /************************************************************
 Author:	Shay_gman
 
-Parameters: [_squad <group>,  _pos<Array>,_dir <Integer>,_type <str>]
+Parameters: [_player <Unit>,  _rally<Object>]
 
-_squad:			Group that will have access to the respawn tent
-_pos: 			Position to spawn
-_dir:			Direction of spawn
-_type:			Type of respawn tent (done or A-shape)
+_player:			unit and the Group that will have access to the respawn tent
+_rally: 			object serve as the rally point
 ************************************************************/
-private ["_squad","_pos","_dir","_type","_rally","_trg","_time","_air","_delete","_pos"];
+private ["_squad","_rally","_player"];
 
 if (isServer) then {
 	_player = param [0,objNull,[objNull,missionNamespace]];
-	if (isNull _player) exitWith {};
+	_rally = param [1,objNull,[objNull,missionNamespace]];
+
+	if (isNull _player || isNull _rally) exitWith {};
 
 	_squad 	= group _player;
-	_dir    = direction _player;
-	_pos    = param [1,[0,0,0],[[]]];
-	_type   = if ((_this select 2) == "MCC_TentDome") then {"Land_TentDome_F"} else {"Land_TentA_F"};
-
-	_rally = _type createVehicle _pos;
-	_rally setDir _dir;
-	_rally setPosATL _pos;
-
 	_player setVariable ["MCC_rallyPoint",_rally,true];
 
 	_rally setVariable ["type","Rally_Point",true];
 	_rally setVariable ["MCC_rally_deployTime", time, true];
-	_rally setVariable ["MCC_rally_squad", _squad, true];
+	_rally setVariable ["MCC_rally_squad",_squad, true];
+	_rally setVariable ["teleportAtStart",2, true];
 
 	_rally addEventHandler [
 		"killed",
@@ -46,8 +39,4 @@ if (isServer) then {
 	];
 
 	[_squad, _rally] call BIS_fnc_addRespawnPosition;
-	/*
-	//Delete after 10 minutes
-	_rally spawn {sleep 30; if (alive _this) then {deleteVehicle _this}};
-	*/
 };

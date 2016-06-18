@@ -3,6 +3,9 @@ class mcc_uncMain
 	idd = -1;
 	movingEnable = 0;
 	onLoad = __EVAL("_this execVM '"+MCCPATH+"mcc\dialogs\medic\mcc_uncMain_init.sqf'");
+	duration = 1e+100;
+	fadeIn = 0;
+	fadeOut = 0;
 
 	controlsBackground[] =
 	{
@@ -16,6 +19,7 @@ class mcc_uncMain
 
 	class controls
 	{
+		/*
 		class respawn: MCC_RscButtonMenu
 		{
 			idc = 0;
@@ -34,6 +38,7 @@ class mcc_uncMain
 			w = 0.12375 * safezoneW;
 			h = 0.055 * safezoneH;
 		};
+		*/
 		class info: MCC_RscText
 		{
 			idc = 2;

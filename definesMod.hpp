@@ -96,7 +96,7 @@ class cfgRemoteExec {
 		mode = 2;
 		// Ability to send jip messages: 0-disabled, 1-enabled (default)
 		jip = 1;
-	
+
 		#include "\mcc_sandbox_mod\mcc\cfg\cfgRemoteExec.hpp"
 		#include "\mcc_sandbox_mod\mcc\radio\cfgRemoteExec.hpp"
 		#include "\mcc_sandbox_mod\mcc\AAS\cfgRemoteExec.hpp"
@@ -133,6 +133,9 @@ class RscTitles
 	#include "\mcc_sandbox_mod\mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
 	#include "\mcc_sandbox_mod\mcc\compassHUD\dialogs\compassDialog.hpp"
+
+	//----medic-----------------
+	#include "mcc\Dialogs\medic\mcc_uncMain.hpp"
 };
 
 class CfgDebriefing

@@ -1,8 +1,12 @@
 //=================================================================MCC_fnc_unconscious=========================================================================================
 //Handle unconscious behavior
+/*
+player setVariable ["MCC_medicUnconscious",false]
+[player,player] spawn MCC_fnc_unconscious;
+*/
 //=============================================================================================================================================================================
-
-private ["_unit","_source","_string","_ypos","_distance","_xpFactor"];
+#define ANIM_WOUNDED "acts_injuredlyingrifle02_180"
+private ["_unit","_source","_string","_distance","_xpFactor"];
 _unit 	= _this select 0;
 _source	= _this select 1;
 
@@ -49,17 +53,52 @@ if (isplayer _source && _source != _unit) then {
 	};
 };
 
-_ypos = (getpos _unit) select 2;
-waitUntil {isTouchingGround _unit};
-_unit allowDamage true;
 
-//If we are falling from too high
-if (_ypos > 10) exitWith {
-	_unit setDamage 1;
+//waitUntil {isTouchingGround _unit};
+
+
+//Make it captive
+_unit setCaptive true;
+//_unit playmoveNow "Unconscious";
+
+//Lets try ragdolls
+if (vehicle _unit != _unit) then {
+	unassignVehicle _unit;
+  	_unit action ["eject", vehicle _unit];
 };
 
-_unit setCaptive true;
-_unit playmoveNow "Unconscious";
+private "_rag";
+_rag = "Land_Can_V3_F" createVehicleLocal [0,0,0];
+_rag setMass 1e10;
+_rag attachTo [_unit, [0,0,0], "Spine3"];
+_rag setVelocity [0,0,6];
+_unit allowDamage false;
+detach _rag;
+0 = _rag spawn {
+    deleteVehicle _this;
+};
+
+waitUntil{sleep 0.05; (velocity _unit) distance [0,0,0] < 0.1};
+
+//play wounded animation
+_unit switchMove ANIM_WOUNDED;
+
+//add 'anim changed' event handler to ensure unit stays in the incap animation
+private _ehAnimChanged = _unit addEventHandler
+[
+	"AnimChanged",
+	{
+		params["_unit","_anim"];
+
+		if (_anim != ANIM_WOUNDED && alive _unit && (_unit getVariable ["MCC_medicUnconscious",false])) then
+		{
+			_unit switchMove ANIM_WOUNDED;
+		};
+	}
+];
+
+_unit setVariable ["bis_ehAnimChanged", _ehAnimChanged];
+_unit allowDamage true;
 
 //Add helper
 [[_unit, "Hold %1 to heal"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
@@ -77,7 +116,8 @@ if (isPlayer _unit) exitWith {
 	_unit setVariable ["tf_unable_to_use_radio", True, True];
 
 	while {dialog} do {closeDialog 0; sleep 0.01};
-	createDialog "mcc_uncMain";
+	(["mcc_uncMain"] call BIS_fnc_rscLayer) cutRsc ["mcc_uncMain", "PLAIN"];
+	//createDialog "mcc_uncMain";
 };
 
 _unit spawn {
@@ -115,5 +155,10 @@ _unit spawn {
 
 	//Remove helper
 	[_this] spawn MCC_fnc_deleteHelper;
+
+	//remove 'anim changed' event handler
+	private _ehAnimChanged = _this getVariable ["bis_ehAnimChanged", -1];
+	if (_ehAnimChanged != -1) then {_this removeEventHandler ["AnimChanged", _ehAnimChanged]};
+
 };
 

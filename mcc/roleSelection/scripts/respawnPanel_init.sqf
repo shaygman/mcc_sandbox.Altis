@@ -105,46 +105,48 @@ MCC_fnc_CPMapOpen_draw =
 	_alpha = 0.95;
 
 	{
-		_size = 22;
-		_dir = 0;
+		if ((alive _x) && !(isnull _x) && !(_x getVariable ["dead",false])) then {
+			_size = 22;
+			_dir = 0;
 
-		//Animate if selected
-		if (str (missionNamespace getVariable ["CP_activeSpawn",objNull])== str _x) then {
-			_textureAnimPhase = abs(6 - floor (_time * 16) % 12);
-			_color = [0,1,1,_alpha];
-		} else {
-			_textureAnimPhase = 0;
-			_color = [1,1,1,_alpha];
+			//Animate if selected
+			if (str (missionNamespace getVariable ["CP_activeSpawn",objNull])== str _x) then {
+				_textureAnimPhase = abs(6 - floor (_time * 16) % 12);
+				_color = [0,1,1,_alpha];
+			} else {
+				_textureAnimPhase = 0;
+				_color = [1,1,1,_alpha];
+			};
+
+			_pos = if (typeName _x == "GROUP") then {getpos leader _x} else {getpos _x};
+			_title = if (typeName _x == "GROUP") then {
+						format ["%1 - %2",(_foreachIndex +1), "Leader"];
+					} else {
+						format ["%1- %2",(_foreachIndex +1), _x getvariable ["type","FOB"]];
+					};
+
+			_texture = format ["\A3\Ui_f\data\Map\GroupIcons\badge_rotate_%1_gs.paa",_textureAnimPhase];
+
+			//--- Icon is under cursor
+			if ((_pos distance _mousePos) < (_mouseLimit * _size * (ctrlMapScale (uiNamespace getVariable "CP_deployPanelMiniMap") *7))) then {
+				_size = _size * 1.6;
+				_alpha = 1;
+				missionNamespace setVariable ["MCCSpawnPosSelected",_x];
+			};
+
+			_map drawIcon [
+				_texture,
+				_color,
+				_pos,
+				_size,
+				_size,
+				_dir,
+				" " + _title,
+				2,
+				0.08,
+				"PuristaBold"
+			];
 		};
-
-		_pos = if (typeName _x == "GROUP") then {getpos leader _x} else {getpos _x};
-		_title = if (typeName _x == "GROUP") then {
-					format ["%1 - %2",(_foreachIndex +1), "Leader"];
-				} else {
-					format ["%1- %2",(_foreachIndex +1), _x getvariable ["type","FOB"]];
-				};
-
-		_texture = format ["\A3\Ui_f\data\Map\GroupIcons\badge_rotate_%1_gs.paa",_textureAnimPhase];
-
-		//--- Icon is under cursor
-		if ((_pos distance _mousePos) < (_mouseLimit * _size * (ctrlMapScale (uiNamespace getVariable "CP_deployPanelMiniMap") *7))) then {
-			_size = _size * 1.6;
-			_alpha = 1;
-			missionNamespace setVariable ["MCCSpawnPosSelected",_x];
-		};
-
-		_map drawIcon [
-			_texture,
-			_color,
-			_pos,
-			_size,
-			_size,
-			_dir,
-			" " + _title,
-			2,
-			0.08,
-			"PuristaBold"
-		];
 	} foreach _spawnArray;
 };
 
@@ -204,7 +206,7 @@ if (missionNamespace getvariable ["CP_activated",false]) then {
 
 //Refresh
 [] spawn {
-	private ["_comboBox","_idc","_activeSides","_array","_disp","_ctrlGroup","_createGroupButton","_groupCtrls","_groupNames","_oldCommander","_commander"];
+	private ["_comboBox","_idc","_activeSides","_array","_disp","_ctrlGroup","_createGroupButton","_groupCtrls","_groupNames","_oldCommander","_commander","_pos"];
 	disableSerialization;
 
 	_createGroupButton = {
@@ -251,10 +253,19 @@ if (missionNamespace getvariable ["CP_activated",false]) then {
 	};
 
 	_disp = CP_RESPAWNPANEL_IDD;
-	if (count ([player] call BIS_fnc_getRespawnPositions)>0) then {
-		CP_deployPanelMiniMap ctrlmapAnimAdd [0, 0.2, (position (([player] call BIS_fnc_getRespawnPositions) select 0))];
-		ctrlmapAnimCommit CP_deployPanelMiniMap;
+
+	//Map focus
+	_pos = position player;
+	if (!isNull ( missionNamespace getVariable ["CP_activeSpawn",objNull])) then {
+		_pos = position (missionNamespace getVariable ["CP_activeSpawn",objNull]);
+	} else {
+		if (count ([player] call BIS_fnc_getRespawnPositions)>0) then {
+			_pos = (position (([player] call BIS_fnc_getRespawnPositions) select (count ([player] call BIS_fnc_getRespawnPositions)-1)));
+		};
 	};
+	CP_deployPanelMiniMap ctrlmapAnimAdd [0, 0.1, _pos];
+	ctrlmapAnimCommit CP_deployPanelMiniMap;
+
 
 	_ctrlGroup =_disp displayCtrl 2302;
 	_groupNames = [];
@@ -272,11 +283,23 @@ if (missionNamespace getvariable ["CP_activated",false]) then {
 		_disp displayCtrl 86 ctrlSetText str floor (player getVariable ["MCC_valorPoints",50]);
 
 		//Clear unavailable spawn points
+		/*
+		_array = missionNamespace getVariable ["MCCActiveSpawnPosArray",[]];
+
+		{
+			if (! (alive _x) || isnull _x || _x getVariable ["dead",false]) then {_array set [_forEachIndex,-1]};
+		} forEach _array;
+
+		_array = _array - [-1];
+		missionNamespace setVariable ["MCCActiveSpawnPosArray",_array];
+
+
 		{
 			if (typeName _x != "GROUP") then {
-				if (! (alive _x) || _x getVariable ["dead",false]) then {[player, _x] call BIS_fnc_removeRespawnPosition};
+				if (! (alive _x) || isnull _x || _x getVariable ["dead",false]) then {[player, _forEachIndex] call BIS_fnc_removeRespawnPosition};
 			}
 		} foreach (missionNamespace getVariable "MCCActiveSpawnPosArray");
+		*/
 
 		//Time
 		_t = if ((estimatedEndServerTime - serverTime)>0) then {[estimatedEndServerTime - serverTime] call MCC_fnc_time} else {"00:00:00"};
@@ -414,6 +437,6 @@ if (missionNamespace getvariable ["CP_activated",false]) then {
 			};
 
 		} forEach _groups;
-		sleep 0.01;
+		sleep 1;
 	};
 };

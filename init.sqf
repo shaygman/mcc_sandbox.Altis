@@ -963,7 +963,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	if(local player) then {player addEventHandler ["killed",{[player] execVM MCC_path + "mcc\general_scripts\save_gear.sqf";}];};
 
 	//Handle Heal
-	if(local player) then {player addEventHandler ["HandleHeal",{if ((_this select 1 != _this select 0) && (tolower ((_this select 1) getvariable ["CP_role","n/a"]) == "corpsman") ) then {[[getPlayerUID (_this select 1),200,"For Healing"], "MCC_fnc_addRating", _this select 1, false] spawn BIS_fnc_MP};(_this select 0) setVariable ["MCC_medicBleeding",0,true]; false}]};
+	if(local player) then {player addEventHandler ["HandleHeal",{if ((_this select 1 != _this select 0) && (tolower ((_this select 1) getvariable ["CP_role","n/a"]) == "corpsman") ) then {[[getPlayerUID (_this select 1),200,"For Healing"], "MCC_fnc_addRating", _this select 1, false] spawn BIS_fnc_MP};(_this select 0) setVariable ["MCC_medicBleeding",0,true]; if (!isplayer (_this select 1)) then {(_this select 0) setVariable ["MCC_medicUnconscious",false,true]};false}]};
 
 	//Handle rating for role selection
 	if (local player) then {player addEventHandler ["HandleRating",{_this spawn MCC_fnc_handleRating}]};

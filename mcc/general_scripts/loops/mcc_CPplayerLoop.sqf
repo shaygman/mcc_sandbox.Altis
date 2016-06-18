@@ -47,7 +47,7 @@ MCC_fnc_mapDrawPlayersWPConsole =
 
 	//Custom Group Markers
 	if (missionNamespace getVariable ["MCC_groupMarkers",true]) then {
-		private ["_groups","_texture"];
+		private ["_groups","_texture","_blackList","_units","_iconSize","_iconText","_group","_textSize"];
 		_groups	 = switch (side player) do
 				{
 					case west:			{CP_westGroups};
@@ -55,46 +55,48 @@ MCC_fnc_mapDrawPlayersWPConsole =
 					default				{CP_guarGroups};
 				};
 
-		_texture = gettext (configfile >> "CfgMarkers" >> "b_hq" >> "icon");
 
+		_blackList = [];
 		{
-			_map drawIcon [
-						_texture,
-						[0,0,1,1],
-						getPos leader (_x select 0),
-						28,
-						28,
-						0,
-						(_x select 1),
-						0,
-						0.06,
-						"PuristaBold"
-					];
+			_group = _x;
+			_units =if ((missionNamespace getVariable ["MCC_indevidualMarkers",false]) && (_group select 0) == group player) then {units (_group select 0)} else {[leader (_group select 0)]};
+			_color = if (group player == (_group select 0)) then {[0,1,0,0.8]} else {[0,0,1,0.8]};
 
-			if (missionNamespace getVariable ["MCC_indevidualMarkers",false]) then {
-				_color = if (group player == (_x select 0)) then {[0,1,0,0.8]} else {[0,0,1,0.8]};
-				_unitText = toArray (_x select 1);
-				_unitText resize 2;
+			{
+				if !(vehicle _x in _blackList) then {
 
-				{
-					if (_x != leader _x) then {
-						_texture = gettext (configfile >> "CfgVehicles" >> typeof _x >> "icon");
-						_map drawIcon [
-							_texture,
-							_color,
-							position _x,
-							18,
-							18,
-							direction _x,
-							toString _unitText ,
-							1,
-							0.03,
-							"PuristaBold",
-							"Right"
-						];
+					if (_x == leader _x) then {
+						_iconSize = 30;
+						_iconText = _group select 1;
+						_textSize = 0.06;
+						_texture = if (vehicle _x == _x) then {gettext (configfile >> "CfgMarkers" >> "b_hq" >> "icon")} else {gettext (configfile >> "CfgVehicles" >> typeof vehicle _x >> "icon")};
+					} else {
+						_iconSize =18;
+						_iconText = [name _x,0,8] call BIS_fnc_trimString;
+						_textSize = 0.03;
+						_texture = gettext (configfile >> "CfgVehicles" >> typeof vehicle _x >> "icon");
 					};
-				} forEach units (_x select 0);
-			};
+
+					//In vehicle
+					if (vehicle _x != _x) then {
+						_blackList pushBack vehicle _x;
+					};
+
+					_map drawIcon [
+						_texture,
+						_color,
+						position _x,
+						_iconSize,
+						_iconSize,
+						direction _x,
+						_iconText,
+						0,
+						_textSize,
+						"PuristaBold",
+						"Right"
+					];
+				};
+			} forEach _units;
 		} foreach _groups;
 	};
 };

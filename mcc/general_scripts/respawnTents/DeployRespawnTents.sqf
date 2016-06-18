@@ -2,7 +2,7 @@
 Deploy respawn tents
 
 */
-#define REQUIRE_MEMBERS 3
+#define REQUIRE_MEMBERS 2
 #define REQUIRE_DISTANCE 15
 
 private ["_object","_caller","_index","_nearby","_pos","_safePos","_tentType","_obj"];
@@ -47,4 +47,15 @@ if !(isnil "_index") then {
 } else {
 	_tentType = if (playerSide == west) then {"MCC_TentDome"} else {"Land_TentA_F"};
 };
-[[player, _safePos, _tentType], "MCC_fnc_createRespawnTent", false] call BIS_fnc_mp;
+
+//Spawn the rally
+private ["_dir","_type","_rally"];
+_dir    = direction player;
+_type   = if (_tentType == "MCC_TentDome") then {"Land_TentDome_F"} else {"Land_TentA_F"};
+
+_rally = _type createVehicle _safePos;
+_rally setDir _dir;
+_rally setPosATL _safePos;
+
+//Let the server handle the rally point
+[[player, _rally], "MCC_fnc_createRespawnTent", false] call BIS_fnc_mp;

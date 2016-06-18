@@ -13,7 +13,7 @@
 			_this select 8 -  _startPos			- ARRAY - position of the defualt start location
 */
 
-private ["_sectors","_autoBalance","_minPerSide","_spawnInDefensive","_AIUnits","_enemyNumber","_startPos","_sideNumber","_counter","_unitsArray","_spawnPos","_numberOfGroups","_groupArray","_group","_enemySide","_side","_maxUnits","_defendZonesPos","_areas","_faction","_nearVehicles","_searchRadius","_vehicleClass","_simType","_wepArray","_useDefaultGear","_unitNumber","_groupSize","_tempGroup","_vehicleGear"];
+private ["_sectors","_autoBalance","_minPerSide","_spawnInDefensive","_AIUnits","_enemyNumber","_startPos","_sideNumber","_counter","_unitsArray","_spawnPos","_numberOfGroups","_groupArray","_group","_enemySide","_side","_maxUnits","_defendZonesPos","_areas","_faction","_nearVehicles","_searchRadius","_vehicleClass","_simType","_wepArray","_useDefaultGear","_unitNumber","_groupSize","_tempGroup","_vehicleGear","_i"];
 
 _side = param [0, west];
 _enemySide = param [1, east];
@@ -27,44 +27,53 @@ _startPos = param [8, [0,0,0]];
 _groupSize = 5;
 
 //group spawn
-_fnc_groupSpawn  = {
-	private ["_unitNumber","_groupSize","_useDefaultGear","_groupArray","_defaultGroups","_group","_tempGroup","_unit"];
+MCC_fnc_AASgroupSpawn  = {
+	private ["_unitNumber","_groupSize","_useDefaultGear","_groupArray","_defaultGroups","_group","_tempGroup","_unit","_selectedRole","_side","_unitsArray","_spawnPos","_i","_p","_t"];
 	_unitNumber = param [0,4];
 	_groupSize = param [1,6];
 	_useDefaultGear = param [2,[]];
 	_vehicle = param [3,objNull];
+	_side = param [4,sideUnknown];
+	_unitsArray = param [5,[]];
+	_spawnPos = param [6,[]];
 
 	_groupArray = [];
-	for "_i" from 1 to _unitNumber step 1 do {
+	for "_p" from 1 to _unitNumber step 1 do {
 		_groupArray pushBack ((_unitsArray call bis_fnc_selectRandom) select 0);
 	};
 
 	//find group
-	if (!isNull _vehicle) then {
-		_group = createGroup _side;
-	} else {
-		_defaultGroups = missionNamespace getVariable [format ["CP_%1Groups",_side],[]];
-		_group = grpNull;
+	_defaultGroups = missionNamespace getVariable [format ["CP_%1Groups",_side],[]];
+	_group = grpNull;
 
-		for "_i" from 0 to (count _defaultGroups -1) step 1 do {
-			_tempGroup = (_defaultGroups select _i) select 0;
+	for "_p" from 0 to (count _defaultGroups -1) step 1 do {
+		_tempGroup = (_defaultGroups select _p) select 0;
 
-	    	if (!(_tempGroup getVariable ["locked",false]) && count units _tempGroup < _groupSize) exitWith {
-	    		_group = _tempGroup;
-	    	};
+		//vehicles put in a seperated group
+		if (isNull _vehicle) then {
+			if (!(_tempGroup getVariable ["locked",false]) && ((count units _tempGroup)+_unitNumber) <= _groupSize  && ({vehicle _x != _x} count units _tempGroup == 0)) then {
+    			_group = _tempGroup;
+    		};
+		} else {
+    		if (!(_tempGroup getVariable ["locked",false]) && count units _tempGroup == 0) then {
+    			_group = _tempGroup;
+    		};
 		};
 
-		if (isNull _group) then {
-			_group = createGroup _side;
-			waituntil {!isnil "_group"};
-			_name = ["Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliett","Kilo","Lima","Mike","November","Oscar","Papa"] select (count _defaultGroups min 15);
-			_group setVariable ["MCC_CPGroup",true,true];
-			_group setVariable ["name",_name,true];
-			_defaultGroups pushBack [_group,_name];
-			missionNamespace setVariable [format ["CP_%1Groups",_side],_defaultGroups];
-			publicVariable format ["CP_%1Groups",_side];
-		};
+		if (!isNull _group) exitWith {};
 	};
+
+	if (isNull _group) then {
+		_group = createGroup _side;
+		waituntil {!isnil "_group"};
+		_name = ["Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliett","Kilo","Lima","Mike","November","Oscar","Papa"] select (count _defaultGroups min 15);
+		_group setVariable ["MCC_CPGroup",true,true];
+		_group setVariable ["name",_name,true];
+		_defaultGroups pushBack [_group,_name];
+		missionNamespace setVariable [format ["CP_%1Groups",_side],_defaultGroups];
+		publicVariable format ["CP_%1Groups",_side];
+	};
+
 
 	_group setVariable ["MCC_canbecontrolled",true,true];
 
@@ -78,17 +87,21 @@ _fnc_groupSpawn  = {
 
 			//set gear
 			if (count _useDefaultGear > 0) then {
-				[(_useDefaultGear) call bis_fnc_selectRandomWeighted,_unit] spawn MCC_fnc_gearAI;
+				{
+					_selectedRole = _x;
+					if ({(_x getVariable ["CP_role",""]) == _selectedRole} count (units _group) == 0) exitWith {};
+				} forEach _useDefaultGear;
+				[_selectedRole,_unit] call MCC_fnc_gearAI;
 			};
 
 			MCC_curator addCuratorEditableObjects [[_unit],false];
 		} forEach _groupArray;
 	} else {
-		private ["_cfg","_turrets","_path","_index","_isCargo"];
+		private ["_cfg","_turrets","_path","_index","_isCargo","_t"];
 		_cfg = configFile >> "CfgVehicles" >> typeOf _vehicle;
 		_turrets = [_cfg >> "turrets"] call BIS_fnc_returnVehicleTurrets;			//All turrets were found, now spawn crew for them
 		_path = [];
-		_i = 0;
+		_t = 0;
 		_index = 0;
 
 		//driver
@@ -102,9 +115,9 @@ _fnc_groupSpawn  = {
 		};
 		MCC_curator addCuratorEditableObjects [[_unit],false];
 
-		while {_i < (count _turrets)} do {
+		while {_t < (count _turrets)} do {
 			private ["_turretIndex", "_thisTurret"];
-			_turretIndex = _turrets select _i;
+			_turretIndex = _turrets select _t;
 			_thisTurret = _path + [_turretIndex];
 			_turretPath = configName ((configFile >> "CfgVehicles" >> typeOf _vehicle >> "turrets") Select _index);
 
@@ -120,7 +133,7 @@ _fnc_groupSpawn  = {
 				MCC_curator addCuratorEditableObjects [[_unit],false];
 			};
 
-			_i = _i + 2;
+			_t = _t + 2;
 			_index = _index + 1;
 		};
 	};
@@ -149,17 +162,11 @@ while {true} do {
 	_enemyNumber =  0;
 	_sideNumber =  0;
 
-	{
-		if (alive _x) then {
-			switch (side _x) do {
-			    case _enemySide: {_enemyNumber = _enemyNumber +1};
-			    case _side: {_sideNumber = _sideNumber +1};
-			};
-		};
-	} foreach allUnits;
+	_enemyNumber = _enemySide countSide allUnits;
+	_sideNumber = _side countSide allUnits;
 
 	_maxUnits = _enemyNumber max _minPerSide;
-	_counter = _maxUnits - _sideNumber;
+	_counter = (_maxUnits - _sideNumber) max 0;
 
 	//Find spawn pos
 	_defendZonesPos = [];
@@ -184,7 +191,7 @@ while {true} do {
 	};
 
 	//Find nearest vehicles
-	_nearVehicles = nearestObjects [_startPos, ["Motorcycle","Car","Tank","Helicopter"], _searchRadius];
+	_nearVehicles = nearestObjects [_startPos, ["Motorcycle","Car","Tank"], _searchRadius];  //"Helicopter"
 
 
 	{
@@ -197,7 +204,7 @@ while {true} do {
 			(count ((typeof _x) call GAIA_fnc_getTurretWeapons)>0 || count _wepArray > 1)
 			) then {
 				_vehicleGear = if (_x isKindOf "air") then {[["pilot"],[1]]} else {[["crew"],[1]]};
-				_group = [_groupSize,_groupSize,_vehicleGear,_x] call _fnc_groupSpawn;
+				_group = [_groupSize,_groupSize,_vehicleGear,_x,_side,_unitsArray,_spawnPos] call MCC_fnc_AASgroupSpawn;
 				_counter = _counter - count crew _x;
 				_counter = _counter max 0;
 		};
@@ -205,16 +212,20 @@ while {true} do {
 	} forEach _nearVehicles;
 
 	//Spawn AI
-	_numberOfGroups = floor _counter / _groupSize;
+	_numberOfGroups = (_counter / _groupSize);
 
-	for "_i" from 1 to _numberOfGroups step 1 do {
-		[_groupSize,_groupSize,_useDefaultGear] call _fnc_groupSpawn;
-    };
+	if (_numberOfGroups > 0) then {
+		for [{_i=1},{_i<=_numberOfGroups},{_i=_i+1}] do {
 
-	//spawn the rest as a group
-	if (_counter mod _groupSize > 0) then {
-		[_counter mod _groupSize,_groupSize,_useDefaultGear] call _fnc_groupSpawn;
+			_group = [_groupSize,_groupSize,_useDefaultGear,objNull,_side,_unitsArray,_spawnPos] call MCC_fnc_AASgroupSpawn;
+			sleep 1;
+		};
+
+		//spawn the rest as a group
+		if (_counter mod _groupSize > 0) then {
+			[_counter mod _groupSize,_groupSize,_useDefaultGear,objNull,_side,_unitsArray,_spawnPos] call MCC_fnc_AASgroupSpawn;
+		};
 	};
 
-	sleep 300;
+	sleep 120;
 };

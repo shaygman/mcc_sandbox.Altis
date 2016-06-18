@@ -15,7 +15,7 @@
 #define MAX_WALLS 14
 #define ANCHOR_ITEM "Land_Bricks_V3_F"
 
-private ["_conType","_available","_errorMessegeIndex","_errorMesseges","_check","_respawPositions","_error","_dir","_pos"];
+private ["_conType","_available","_errorMessegeIndex","_errorMesseges","_check","_respawPositions","_error","_dir","_pos","_vehicleType","_const"];
 
 _conType = param [0,"",[""]];
 _pos = param [1,[0,0,0],[[]]];
@@ -90,7 +90,23 @@ if (_available) then {
 	_success = ["Deploying",5] call MCC_fnc_interactProgress;
 	if !(_success) exitWith {};
 
-	[[_conType, _pos, playerside, str _dir] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
+	//If fortification do it locally otherwise send to server
+	if (_conType in ["bunker","wall"]) then {
+		switch (_conType) do {
+			case "bunker" : {
+				_vehicleType = "Land_BagBunker_Small_F";
+			};
+
+			case "wall" :	{
+				_vehicleType = if (playerSide == west) then {"Land_HBarrier_3_F"} else {"Land_BagFence_Long_F"};
+			};
+		};
+
+		_const = [_pos, _dir, [[_vehicleType,[0,0,0.0237527],0.216771,1,0,{},true]]] call MCC_fnc_objectMapper;
+		_const setVariable ["MCC_CONST_FORT",true, true];
+	} else {
+		[[_conType, _pos, playerside, str _dir] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
+	};
 
 	//broadcast
 	player globalRadio "SentAssemble";

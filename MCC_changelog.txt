@@ -29,6 +29,9 @@ Ambient Civilians Module
 - Added: civilians relations variable added to the module. The civilians relation variable will determine how the ambient civilians will act near players starting form positive behavior to bad behavior where some of the civilians will be spawned as armaed civilians, suicide bombers and place IEDs.
 In the campaign killing civilians and failing objectives will decrease the player relation with them while while completing objectives will increase.  WIKI - http://mccsandbox.wikia.com/wiki/Modules
 
+Medical System:
+- Reworked uncconcious state, new animation and effects and you now have access to the esc menu and can still order AI.
+- AI will revive downed AI or players.
 
 Commander Console:
 - Changed: Commander Console UI.
@@ -78,7 +81,6 @@ Misc:
 - Fixed: MCC_make_array_group error on server.
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
-TODO - medic revive himself
 TODO - Change kit and pick up kit
 TODO - spawn units only if squad wipe
 TODO - unconceus don't capture

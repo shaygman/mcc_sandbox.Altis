@@ -198,13 +198,6 @@ for "_i" from 0 to (count _cfg -1) do {
 		//Load available valor
 		_disp displayCtrl 86 ctrlSetText str floor (player getVariable ["MCC_valorPoints",50]);
 
-		//Clear unavailable spawn points
-		{
-			if (typeName _x != "GROUP") then {
-				if (! (alive _x) || _x getVariable ["dead",false]) then {[player, _x] call BIS_fnc_removeRespawnPosition};
-			}
-		} foreach (missionNamespace getVariable "MCCActiveSpawnPosArray");
-
 		//Time
 		_t = if ((estimatedEndServerTime - serverTime)>0) then {[estimatedEndServerTime - serverTime] call MCC_fnc_time} else {"00:00:00"};
 		ctrlSetText [1919,_t];

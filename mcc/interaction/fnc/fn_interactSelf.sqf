@@ -34,7 +34,7 @@ if (leader player == player && count units player >= 2) then {
 		isNull(player getVariable ["MCC_rallyPoint",objNull]) &&
 		isNull(player getVariable ["MCC_rallyPoint",objNull]) &&
 		((tolower (player getvariable ["CP_role","n/a"])) == "officer" ) &&
-		{_x distance player < 15} count units player > 2) then {
+		{_x distance player < 15} count units player > 1) then {
 		_array pushBack [format ["[player,player,nil] execVM '%1mcc\general_scripts\respawnTents\DeployRespawnTents.sqf';",MCC_path],"Deploy Rally Point","\a3\ui_f\data\gui\cfg\CommunicationMenu\supplydrop_ca.paa"];
 	};
 };

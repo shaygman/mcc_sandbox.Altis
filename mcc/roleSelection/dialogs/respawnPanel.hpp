@@ -263,7 +263,7 @@ class CP_RESPAWNPANEL {
 							idc = 91;
 							tooltip = "Ammo";
 							text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
-							
+
 							x = 0.0515627 * safezoneW;
 							y = 0 * safezoneH;
 							w = 0.0154689 * safezoneW;
@@ -274,7 +274,7 @@ class CP_RESPAWNPANEL {
 							idc = 92;
 							tooltip = "Repair";
 							text = __EVAL(MCCPATH +"data\IconRepair.paa");
-							
+
 							x = 0.0928127 * safezoneW;
 							y = -1.63913e-008 * safezoneH;
 							w = 0.0154689 * safezoneW;
@@ -285,7 +285,7 @@ class CP_RESPAWNPANEL {
 							idc = 93;
 							tooltip = "Fuel";
 							text = __EVAL(MCCPATH +"data\IconFuel.paa");
-							
+
 							x = 0.134063 * safezoneW;
 							y = -1.63913e-008 * safezoneH;
 							w = 0.0154689 * safezoneW;
@@ -296,7 +296,7 @@ class CP_RESPAWNPANEL {
 							idc = 94;
 							tooltip = "Food";
 							text = __EVAL(MCCPATH +"data\IconFood.paa");
-							
+
 							x = 0.175313 * safezoneW;
 							y = -1.63913e-008 * safezoneH;
 							w = 0.0154689 * safezoneW;
@@ -307,7 +307,7 @@ class CP_RESPAWNPANEL {
 							idc = 95;
 							tooltip = "Meds";
 							text = __EVAL(MCCPATH +"data\IconMed.paa");
-							
+
 							x = 0.216563 * safezoneW;
 							y = -1.63913e-008 * safezoneH;
 							w = 0.0154689 * safezoneW;
@@ -318,12 +318,12 @@ class CP_RESPAWNPANEL {
 							idc = 96;
 							tooltip = "Personal Valor";
 							text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
-							
+
 							x = 0.010313 * safezoneW;
 							y = -1.63913e-008 * safezoneH;
 							w = 0.0154689 * safezoneW;
 							h = 0.033 * safezoneH;
-						};						
+						};
 					};
 				};
 			};
@@ -489,7 +489,7 @@ class CP_RESPAWNPANEL {
 			x = 0.0101562 * safezoneW + safezoneX;
 			y = 0.17 * safezoneH + safezoneY;
 			w = 0.14 * safezoneW;
-			h = 0.737 * safezoneH;
+			h = 1 * safezoneH;
 			class controls
 			{
 				class CP_squadListBckg: CP_RscText
@@ -499,7 +499,7 @@ class CP_RESPAWNPANEL {
 					x = 0 * safezoneW;
 					y = 0 * safezoneH;
 					w = 0.14 * safezoneW;
-					h = 0.737 * safezoneH;
+					h = 1 * safezoneH;
 					colorBackground[] = {0,0,0,0.7};
 				};
 			};

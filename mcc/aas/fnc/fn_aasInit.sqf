@@ -17,7 +17,7 @@ Example:
 private ["_sectors","_zoneTriggers","_triggersAreas","_trigger","_fnc_drawLine","_sides"];
 
 MCC_fnc_AASHandleSector = {
-    private ["_owner","_owners","_index","_sides","_factor","_nextTriggerIndex","_lastTriggerIndex","_triggers","_nextTriggerOwner"];
+    private ["_owner","_owners","_index","_sides","_factor","_nextTriggerIndex","_lastTriggerIndex","_triggers","_nextTriggerOwner","_tlist"];
     params ["_sector"];
 
     _owner = _sector getvariable ["owner",sideunknown];
@@ -25,6 +25,16 @@ MCC_fnc_AASHandleSector = {
 
     waitUntil {_owner != (_sector getvariable ["owner",sideunknown]);};
     _owner = _sector getvariable ["owner",sideunknown];
+
+    //handle XP
+    {
+       _tlist = list _x;
+       {
+            if (isPlayer _x && side _x == _owner) then {
+                [getplayeruid _x, 500,"For Capturing A Sector"] remoteExec ["MCC_fnc_addRating", _x];
+            };
+       } forEach _tlist;
+    } forEach (_sector getvariable ["areas",[]]);
 
     _owners = missionNamespace getVariable ["MCC_fnc_AAS_owners",[]];
     _owners set [_index,_owner];

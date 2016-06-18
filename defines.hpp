@@ -34,9 +34,6 @@
 //----Key Settings-----------------
 #include "mcc\Dialogs\mcc_rscKeyBinds.hpp"
 
-//----medic-----------------
-#include "mcc\Dialogs\medic\mcc_uncMain.hpp"
-
 //---- test I should delete it at the end
 #include "mcc\dialogs\test.hpp"
 //--------------------------------CP------------------------------------------------
@@ -69,7 +66,7 @@ class CfgFunctions
 {
 	#include "gaia\cfgFunctions.hpp"
 	#include "VAS\cfgFunctions.hpp"
-	
+
 	class MCC
 	{
 		tag = "MCC";
@@ -162,6 +159,9 @@ class RscTitles
 	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
 	#include "mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
 	#include "mcc\compassHUD\dialogs\compassDialog.hpp"
+
+	//----medic-----------------
+	#include "mcc\Dialogs\medic\mcc_uncMain.hpp"
 };
 
 class CfgDebriefing

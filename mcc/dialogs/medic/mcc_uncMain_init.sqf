@@ -1,7 +1,7 @@
 private ["_disp","_rPPEffect","_cPPEffect","_escEH","_infoCtrl","_nextTime","_deathTime","_blink","_remaineBlood","_maxBleeding"];
 disableSerialization;
 
-waituntil {dialog};
+//waituntil {dialog};
 
 _disp = _this select 0;
 uiNamespace setVariable ["mcc_uncMain", _disp];
@@ -9,18 +9,19 @@ uiNamespace setVariable ["mcc_uncMain", _disp];
 
 //PP effects
 _rPPEffect = ppEffectCreate ["RadialBlur", 100];
-_rPPEffect ppEffectAdjust [0.3, 0.3, 0.15, 0.15];
+_rPPEffect ppEffectAdjust [0.5, 0.5, 0.3, 0.3];
 _rPPEffect ppEffectForceInNVG True;
 _rPPEffect ppEffectEnable True;
 _rPPEffect ppEffectCommit 0.5;
 
 
 _cPPEffect = ppEffectCreate ["ColorCorrections", 1555];
-_cPPEffect ppEffectAdjust [0,0,0, [0,0,0,0], [0,0,0,1], [1,1,1,1], [0.3,0.3,0,0,0,0.3,0.3]];
+_cPPEffect ppEffectAdjust[0,0,0, [0,0,0,0], [0,0,0,1], [1,1,1,1], [0.5,0.5,0,0,0,0.5,0.5]];
 _cPPEffect ppEffectForceInNVG True;
 _cPPEffect ppEffectEnable True;
 _cPPEffect ppEffectCommit 0.1;
 
+/*
 //Disable Esc while respawn is on
 _escEH = _disp displayAddEventHandler ["KeyDown", "if ((_this select 1) == 1) then { true }"];
 
@@ -32,6 +33,10 @@ if !("secondWind" in (player getVariable ["MCC_playersPerks",[]])) then
 {
 	(_disp displayCtrl 1) ctrlShow false;
 };
+*/
+
+//Disable action menu
+{inGameUISetEventHandler [_x, "true"]} forEach ["PrevAction", "Action", "NextAction"];
 
 //Add effects
 player setFatigue 1;
@@ -50,7 +55,7 @@ player allowDamage true;
 _maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
 
 
-while {dialog && alive player && (player getvariable ["MCC_medicUnconscious",false])} do
+while { alive player && (player getvariable ["MCC_medicUnconscious",false])} do
 {
 	_infoCtrl = (_disp displayCtrl 3);
 	_remaineBlood = player getvariable ["MCC_medicRemainBlood",_maxBleeding];
@@ -66,15 +71,19 @@ while {dialog && alive player && (player getvariable ["MCC_medicUnconscious",fal
 
 	if (_blink && random 1 < 0.2) then
 	{
-		_cPPEffect ppEffectAdjust [0,0,0, [0,0,0,0], [0,0,0,1], [1,1,1,1], [0.3,0.3,0,0,0,0.3,0.3]];
+		_cPPEffect ppEffectAdjust [0,0,0, [0,0,0,0], [0,0,0,1], [1,1,1,1], [0.5,0.5,0,0,0,0.5,0.5]];
 		_cPPEffect ppEffectCommit 1;
+		_rPPEffect ppEffectAdjust [0.5, 0.5, 0.3, 0.3];
+		_rPPEffect ppEffectCommit 1;
 		_blink = false;
 	};
 
 	if (floor time mod 8 == 0 && random 1 < 0.4 && !_blink) then
 	{
-		_cPPEffect ppEffectAdjust [0,0,0, [0,0,0,0], [0,0,0,1], [1,1,1,1], [0.5,0.5,0,0,0,0.5,0.5]];
+		_cPPEffect ppEffectAdjust [0,0,0, [0,0,0,0], [0,0,0,1], [1,1,1,1], [0.8,0.8,0,0,0,0.8,0.8]];
 		_cPPEffect ppEffectCommit 1;
+		_rPPEffect ppEffectAdjust [0.8, 0.8, 0.3, 0.3];
+		_rPPEffect ppEffectCommit 1;
 		_blink = true;
 	};
 
@@ -84,7 +93,7 @@ while {dialog && alive player && (player getvariable ["MCC_medicUnconscious",fal
 };
 
 //Cleanup
-_disp displayRemoveEventHandler ["KeyDown", _escEH];
+//_disp displayRemoveEventHandler ["KeyDown", _escEH];
 ppEffectDestroy  _rPPEffect;
 ppEffectDestroy  _cPPEffect;
 player setFatigue 0;
@@ -94,7 +103,17 @@ player playmoveNow "amovppnemstpsraswrfldnon";
 //Remove helper
 [player] spawn MCC_fnc_deleteHelper;
 
-closeDialog 0;
+//closeDialog 0;
+//close rsc
+(["mcc_uncMain"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
+
+//remove 'anim changed' event handler
+private _ehAnimChanged = player getVariable ["bis_ehAnimChanged", -1];
+if (_ehAnimChanged != -1) then {player removeEventHandler ["AnimChanged", _ehAnimChanged]};
+
+
+//Enable action menu
+{inGameUISetEventHandler [_x, "false"]} forEach ["PrevAction", "Action", "NextAction"];
 
 waitUntil {alive player};
 //Enable ACRE

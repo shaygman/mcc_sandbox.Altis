@@ -1,5 +1,5 @@
 private ["_cmd","_comboBox","_spawnArray","_pos","_spawn","_nearObjects","_spawnAvailable","_safepos","_targets","_target","_groups","_deployAvailable"
-		,"_countRole","_roleLimit","_role"];
+		,"_countRole","_roleLimit","_role","_spawnPos"];
 disableSerialization;
 
 #define CP_RESPAWNPANEL_IDD (uiNamespace getVariable "CP_RESPAWNPANEL_IDD")
@@ -20,6 +20,15 @@ switch (_cmd) do {
 	//==================================================Deploy pressed============================================================
 	case 1:	{
 		private ["_activeSpawn"];
+
+		//Find spawn pos or use the default one
+		if (isNull (missionNamespace getVariable ["CP_activeSpawn",objNull])) then {
+			_spawnPos = [player] call BIS_fnc_getRespawnPositions;
+			if (count _spawnPos > 0) then {
+				missionNamespace setVariable ["CP_activeSpawn",(_spawnPos select 0)];
+			};
+		};
+
 		_activeSpawn = missionNamespace getVariable ["CP_activeSpawn",objNull];
 
 		//Check if alive
@@ -100,9 +109,8 @@ switch (_cmd) do {
 			playerDeploy = true;
 
 			//Is it a spawn tent and we spawned as the squad leader - delete the tent
-			if (((_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && ((player == leader player) || ((player getvariable ["CP_role","n/a"]) == "Officer"))) then
-			{
-				_activeSpawn setDamage 1;
+			if (((_activeSpawn getVariable ["type","FOB"]) == "Rally_Point") && ((player == leader player) || ((player getvariable ["CP_role","n/a"]) == "Officer"))) then {
+				_activeSpawn spawn {sleep 5; _this setDamage 1};
 			};
 
 			//Remove escape event handlers and reseting menu

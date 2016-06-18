@@ -55,8 +55,7 @@ _multiplyMatrixFunc =
 	];
 	_result
 };
-for "_i" from 0 to ((count _objs) - 1) do
-{
+for "_i" from 0 to ((count _objs) - 1) do {
 		private ["_obj", "_type", "_relPos", "_azimuth", "_fuel", "_damage", "_newObj", "_vehicleinit","_vehicleTarget"];
 		_obj = _objs select _i;
 		_type = _obj select 0;
@@ -76,7 +75,7 @@ for "_i" from 0 to ((count _objs) - 1) do
 		_newObj = _type createVehicle _newPos;
 		_newObj setDir (_azi + _azimuth);
 		_newObj setPos _newPos;
-		sleep 0.1;
+		sleep 0.01;
 		_newObj setPos _newPos;
 
 
@@ -85,7 +84,7 @@ for "_i" from 0 to ((count _objs) - 1) do
 		if (!isNil "_damage") then {_newObj setDamage _damage};
 		if (!isNil "_vehicleinit") then {[[[netID _newObj,_newObj], _vehicleinit], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP};
 		if (!isNil "_vehicleTarget") then {_target = _newObj};
-		MCC_lastSpawn set [count MCC_lastSpawn,_newObj];
+		MCC_lastSpawn pushBack _newObj;
 
 		//Curator
 		MCC_curator addCuratorEditableObjects [[_newObj],false];

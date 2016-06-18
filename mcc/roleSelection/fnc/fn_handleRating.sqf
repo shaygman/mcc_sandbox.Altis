@@ -15,7 +15,7 @@ if (_rating <= 0) exitWith {};
 player addrating (_rating*-1);
 
 //when player spawn he get xp no idea why
-if (missionNamespace getvariable ["CP_gainXPFirstTime",true]) exitWith {missionNamespace setvariable ["CP_gainXPFirstTime",false]};
+//if (missionNamespace getvariable ["CP_gainXPFirstTime",true]) exitWith {missionNamespace setvariable ["CP_gainXPFirstTime",false]};
 
 //we are gaining level disregard any XP for now
 if (missionNamespace getvariable ["MCC_isLevelingUp",false]) exitWith {};
