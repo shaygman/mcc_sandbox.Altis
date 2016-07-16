@@ -1,7 +1,7 @@
 //==================================================================MCC_fnc_interaction=========================================================================================
 // Interaction perent
 //==============================================================================================================================================================================
-private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePlayer","_airports","_counter","_searchArray","_sides","_positionStart","_positionEnd","_pointIntersect","_break","_interactiveObjects","_objArray","_keyName","_key","_text","_objects"];
+private ["_targets","_null","_selected","_objects","_dir","_target","_vehiclePlayer","_airports","_counter","_searchArray","_sides","_positionStart","_positionEnd","_pointIntersect","_break","_interactiveObjects","_objArray","_keyName","_key","_text","_objects","_headPos","_upFront","_closeObject"];
 disableSerialization;
 _break = false;
 _text = "";
@@ -42,6 +42,16 @@ _objArray = missionNamespace getVariable ["MCC_SurvivalPlaceHoldersObjects",[] c
 if (vehicle player == player) then {
 	_target = cursorTarget;
 	player reveal _target;
+
+	if (isNull _target) then {
+		_headPos = player selectionPosition "head";
+		_upFront = player modelToWorld [(_headPos select 0),(_headPos select 1)+3,(_headPos select 2)];
+		_objects = (lineintersectsWith [ATLToASL (player modelToWorld _headPos), ATLToASL _upFront, objNull, objNull, true]);
+
+		if (count _objects > 0) then {
+			_target = _objects select 0;
+		};
+	};
 
 	if (_target isKindof "weaponHolderSimulated") then {
 		_objects = _target nearObjects ["man", 5];

@@ -1,7 +1,7 @@
 //==================================================================MCC_fnc_releasePod===============================================================================================
 //Release a pod from Taru helicopter
 // Example: [_object] call MCC_fnc_releasePod;
-//===========================================================================================================================================================================	
+//===========================================================================================================================================================================
 private ["_vehicle","_pod","_attachPos"];
 _vehicle 	= _this;
 _pod 		= _vehicle getVariable ["MCC_attachedPod",objnull];
@@ -18,29 +18,29 @@ _attachPos = switch (typeof _pod) do
 		default {[0,-1,-1.2]};
 	};
 
-while {(alive _pod) && ((_pod distance _vehicle) < 3 )} do 
-{
+while {(alive _pod) && ((_pod distance _vehicle) < 3 )} do  {
 	_attachPos set [2,(_attachPos select 2) - 0.7];
 	_pod attachTo [_vehicle, _attachPos];
 	sleep 0.01;
 };
 
 detach _pod;
+
 [[[netid _pod,_pod], "missileLunch"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
 _pod setVelocity [0, 0, -10];
 
 _vehicle setVariable ["MCC_attachedPod",objnull,true];
 _vehicle setMass [(getMass _vehicle)- (_vehicle getVariable ["MCC_attachedPodMass",0]),0.5];
-sleep 2; 
+sleep 2;
 _vehicle enableRopeAttach true;
-[_pod, driver _vehicle, velocity _vehicle] spawn 
-{
+
+[_pod, driver _vehicle, velocity _vehicle] spawn {
 	private ["_pod","_class","_pilot","_para","_velocity","_vel"];
 	_pod 		= _this select 0;
 	_pilot		= _this select 1;
 	_velocity	= _this select 2;
-	
-	waituntil {(!alive _pod || ((getpos _pod) select 2) < 300)};
+
+	waituntil {(!alive _pod || ((getpos _pod) select 2) < 150)};
 	if (!alive _pod) exitWith {};
 	sleep 0.2;
 	_class = format ["%1_parachute_02_F",  toString [(toArray faction _pilot) select 0]];
@@ -49,7 +49,7 @@ _vehicle enableRopeAttach true;
 	detach _para;
 	_para setVelocity _velocity;
 	_pod attachto [_para,[0,0,1.5]];
-	
+
 	waitUntil {getPos _pod select 2 < 4};
 	_vel = velocity _pod;
 	detach _pod;

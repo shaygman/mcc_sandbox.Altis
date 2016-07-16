@@ -41,7 +41,7 @@ class MCC_Module_AAS : Module_F
 				class BLUFOR
 				{
 					name = "$STR_WEST";
-					value = 1;					
+					value = 1;
 				};
 				class OPFOR
 				{
@@ -55,7 +55,15 @@ class MCC_Module_AAS : Module_F
 					value = 2;
 				};
 			};
-		};		
+		};
+
+		class bleedTickets
+		{
+			displayName = "Tickets Bleed";
+			description = "How many tickets lost every 5 seconds to the loosing side";
+			typeName = "NUMBER";
+			defaultValue = 2;
+		};
 	};
 
 	class ModuleDescription: ModuleDescription

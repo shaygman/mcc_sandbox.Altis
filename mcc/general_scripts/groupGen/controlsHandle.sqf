@@ -737,7 +737,7 @@ if (_action == 16) exitWith
 	//set to parachute
 	_comboBox = _mccdialog displayCtrl 1037;
 	_comboBox lbSetCurSel 0;
-	missionNamespace setVariable ["MCC_airdropIsParachute",true];
+	missionNamespace setVariable ["MCC_airdropIsParachute",0];
 };
 
 //-------------------------------------------------------------------------------------DELETE----------------------------------------------------------------------------------------------

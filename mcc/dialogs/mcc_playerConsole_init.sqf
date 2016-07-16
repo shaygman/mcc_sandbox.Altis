@@ -1,4 +1,4 @@
-private ["_mccdialog","_comboBox","_displayname","_pic", "_index","_planeName","_counter","_type","_group","_groupControl",
+private ["_mccdialog","_comboBox","_displayname","_pic", "_index","_planeName","_counter","_type","_group","_groupControl","_cost",
 		 "_insetionArray","_control","_unitsCount","_markerType","_markerColor","_leader","_markerInf","_markerMech","_markerArmor","_markerAir",
 		"_markerName","_icon","_wpArray","_haveGPS","_behaviour","_unitsSize","_unitsSizeMarker","_arrayName","_evacVehicles"];
 // By: Shay_gman
@@ -32,6 +32,8 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index","_planeName","
 #define MCC_ConsoleMapRulerDir 9164
 #define MCC_ConsoleMapRulerDis 9165
 
+#define MCC_ResourcesControlsGroup 80
+
 disableSerialization;
 MCC_Console1Open = true;
 MCC_Console2Open = false;
@@ -53,6 +55,7 @@ ctrlShow [MCC_CONSOLEWPADD,false];
 ctrlShow [MCC_CONSOLEWPREPLACE,false];
 ctrlShow [MCC_CONSOLEWPCLEAR,false];
 ctrlShow [MCC_CONSOLEINFOUAVCONTROL,false];
+ctrlShow [MCC_ResourcesControlsGroup,false];
 
 //set ruler data
 ctrlSetText [MCC_ConsoleMapRulerDir,format ["Dir: %1",MCC_ConsoleRulerData select 0]];
@@ -145,8 +148,35 @@ _comboBox = _mccdialog displayCtrl MCC_ConsoleCASAvailableTextBox_IDD;		//fill l
 lbClear _comboBox;
 {
 	_planeName = getText (configFile >> "CfgVehicles" >> (_x  select 1) select 0>> "displayname");
-	_displayname = format ["CAS:%1, Plane:%2",(_x  select 0) select 0,_planeName];
+	_pic = getText (configFile >> "CfgVehicles" >> (_x  select 1) select 0>> "picture");
+	_displayname = format ["%1",(_x  select 0) select 0];
 	_index = _comboBox lbAdd _displayname;
+	_comboBox lbSetPictureRight [_index, _pic];
+
+	//if we have a cost show the cost otherwise shoe the plane
+	_cost = missionNamespace getVariable [str _x,[]];
+	if (count _cost > 0) then {
+
+		//Show resources
+		ctrlShow [MCC_ResourcesControlsGroup,true];
+
+		private _str = "";
+
+		{
+			_str = _str + (_x select 0) + " x " + str (_x select 1) + " ";
+		} forEach _cost;
+
+		_comboBox lbSetTooltip [_index, _str];
+
+		private _available = false;
+		{
+			_available = [playerSide, _x] call MCC_fnc_checkRes;
+			if (!_available) exitWith {_comboBox lbSetColor [_index, [0.311,0.311, 0.311, 0.8]]};
+		} foreach _cost;
+	} else {
+		_comboBox lbSetTooltip [_index, _planeName];
+	};
+
 } foreach (missionNameSpace getVariable [_arrayName,[]]);
 _comboBox lbSetCurSel 0;
 
@@ -162,8 +192,32 @@ _counter = 0;
 	{
 		_displayname = format ["%1 %2, ",_displayname, getText(configFile >> "CfgVehicles" >> _x >> "displayname")];
 	} foreach ((_x select 0) select 0);
-	_displayname = _displayname + (if (_x select 2) then {"-= Airdrop =-"} else {"-= Slingload =-"});
+	_displayname = _displayname;
+	_pic = if (_x select 2 != 1) then {"\a3\ui_f\data\gui\cfg\CommunicationMenu\supplydrop_ca.paa"} else {"\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"};
 	_index = _comboBox lbAdd _displayname;
+	_comboBox lbSetPictureRight [_index, _pic];
+
+	//if we have a cost show the cost
+	_cost = missionNamespace getVariable [str _x,[]];
+	if (count _cost > 0) then {
+		private _str = "";
+
+		//Show resources
+		ctrlShow [MCC_ResourcesControlsGroup,true];
+
+		{
+			_str = _str + (_x select 0) + " x " + str (_x select 1) + " ";
+		} forEach _cost;
+
+		_comboBox lbSetTooltip [_index, _str];
+
+		private _available = false;
+		{
+			_available = [playerSide, _x] call MCC_fnc_checkRes;
+			if (!_available) exitWith {_comboBox lbSetColor [_index, [0.311,0.311, 0.311, 0.8]]};
+		} foreach _cost;
+	};
+
 } foreach (missionNameSpace getVariable [_arrayName,[]]);
 _comboBox lbSetCurSel 0;
 
@@ -247,6 +301,27 @@ MCC_fnc_mapDrawWPConsole =
 			};
 		};
 	} foreach allgroups;
+
+	//Draw icons for UAV
+	{
+		if (vehicle _x == _x || _x == driver vehicle _x) then {
+			_texture = gettext (configfile >> "CfgVehicles" >> typeof vehicle _x >> "icon");
+			_color = (getNumber (configfile >> "CfgVehicles" >> typeof vehicle _x >> "side")) call BIS_fnc_sideColor;
+			_map drawIcon [
+							_texture,
+							_color,
+							position _x,
+							18,
+							18,
+							direction _x,
+							"",
+							0,
+							0.03,
+							"PuristaBold",
+							"Right"
+						];
+		};
+	} forEach (missionNamespace getVariable [(format ["MCC_uavSpotted_%1", playerSide]),[]]);
 };
 
 [] call {
@@ -313,6 +388,11 @@ MCC_fnc_mapDrawWPConsole =
 					};
 			};
 		} foreach allgroups;
+
+		//Load available resources
+		_array = call compile format ["MCC_res%1",playerside];
+		{_mccdialog displayCtrl _x ctrlSetText str floor (_array select _forEachIndex)} foreach [81,82,83,84,85];
+
 		sleep 0.5;
 	};
 

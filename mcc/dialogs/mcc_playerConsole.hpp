@@ -86,6 +86,7 @@ class MCC_playerConsole {
   RscControlsADFolderOut,
   RscControlsGroupEvac,
   RscControlsEvacFolderOut,
+  MCC_ResourcesControlsGroup,
   MCC_ConsoleHelp
   };
 
@@ -272,7 +273,7 @@ class mcc_consoleF6: MCC_RscButton
 				x = 0.00515602 * safezoneW;
 				y = 0.055 * safezoneH;
 				w = 0.226875 * safezoneW;
-				h = 0.077 * safezoneH;
+				h = 0.075 * safezoneH;
 				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			};
 			class MCC_ConsoleCASFrame: MCC_RscFrame
@@ -378,7 +379,7 @@ class mcc_consoleF6: MCC_RscButton
 				x = 0.00515602 * safezoneW;
 				y = 0.055 * safezoneH;
 				w = 0.226875 * safezoneW;
-				h = 0.077 * safezoneH;
+				h = 0.075 * safezoneH;
 				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 			};
 			class MCC_ConsoleAirdropFrame: MCC_RscFrame
@@ -609,6 +610,142 @@ class mcc_consoleF6: MCC_RscButton
 		};
 	};
 
+	class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
+	{
+		idc = 80;
+
+		x = 0.555 * safezoneW + safezoneX;
+		y = 0.2 * safezoneH + safezoneY;
+		w = 0.268125 * safezoneW;
+		h = 0.088 * safezoneH;
+		class controls
+		{
+			class background: MCC_RscText
+			{
+				idc = -1;
+				text = "";
+				colorBackground[] = { 0, 0, 0, 0.6};
+				x = 0.04 * safezoneW;
+				y = 0 * safezoneH;
+				w = 0.2 * safezoneW;
+				h = 0.07 * safezoneH;
+			};
+
+			class MCC_AmmoText: MCC_RscText
+			{
+				idc = 81;
+				style = 2;
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+				x = 0.04125 * safezoneW;
+				y = 0.036 * safezoneH;
+				w = 0.0360937 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+
+			class MCC_RepairText: MCC_RscText
+			{
+				idc = 82;
+				style = 2;
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+				x = 0.0825002 * safezoneW;
+				y = 0.036 * safezoneH;
+				w = 0.0360937 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+
+			class MCC_FuelText: MCC_RscText
+			{
+				idc = 83;
+				style = 2;
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+				x = 0.12375 * safezoneW;
+				y = 0.036 * safezoneH;
+				w = 0.0360937 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_FoodText: MCC_RscText
+			{
+				idc = 84;
+				style = 2;
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+				x = 0.165 * safezoneW;
+				y = 0.036 * safezoneH;
+				w = 0.0360937 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_MedText: MCC_RscText
+			{
+				idc = 85;
+				style = 2;
+				sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+
+				x = 0.20625 * safezoneW;
+				y = 0.036 * safezoneH;
+				w = 0.0360937 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_Ammo: MCC_RscPicture
+			{
+				idc = 91;
+				tooltip = "Ammo";
+				text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
+
+				x = 0.0515627 * safezoneW;
+				y = 0.005 * safezoneH;
+				w = 0.0154689 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_Repair: MCC_RscPicture
+			{
+				idc = 92;
+				tooltip = "Repair";
+				text = __EVAL(MCCPATH +"data\IconRepair.paa");
+
+				x = 0.0928127 * safezoneW;
+				y = 0.005 * safezoneH;
+				w = 0.0154689 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_Fuel: MCC_RscPicture
+			{
+				idc = 93;
+				tooltip = "Fuel";
+				text = __EVAL(MCCPATH +"data\IconFuel.paa");
+
+				x = 0.134063 * safezoneW;
+				y = 0.005 * safezoneH;
+				w = 0.0154689 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_FoodPic: MCC_RscPicture
+			{
+				idc = 94;
+				tooltip = "Food";
+				text = __EVAL(MCCPATH +"data\IconFood.paa");
+
+				x = 0.175313 * safezoneW;
+				y = 0.005 * safezoneH;
+				w = 0.0154689 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+			class MCC_MedPic: MCC_RscPicture
+			{
+				idc = 95;
+				tooltip = "Meds";
+				text = __EVAL(MCCPATH +"data\IconMed.paa");
+
+				x = 0.216563 * safezoneW;
+				y = 0.005 * safezoneH;
+				w = 0.0154689 * safezoneW;
+				h = 0.033 * safezoneH;
+			};
+		};
+	};
+
 	class MCC_ConsoleWPBckgr: MCC_RscStructuredText
 		{
 			idc = MCC_CONSOLEWPBCKGR;
@@ -708,7 +845,7 @@ class mcc_consoleF6: MCC_RscButton
 		y = 0.1 * safezoneH + safezoneY;
 		w = 0.1 * safezoneW;
 		h = 0.1 * safezoneH;
-		onButtonClick =  __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\console\conoleSwitchMenu.sqf'");
+		onButtonClick =  __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\console\consoleTakeControl.sqf'");
 	};
 
 	class MCC_ConsoleMapRulerButton: MCC_RscButton {

@@ -2,7 +2,8 @@
 //Returns the control, the pressed button, the x and y coordinates and the state of Shift, Ctrl and Alt.
 private ["_params", "_ctrl", "_pressed", "_posX", "_posY", "_shift", "_ctrlKey", "_alt", "_eib_marker","_pointB","_nearObjectsA","_nearObjectsB"];
 disableSerialization;
- 
+ if (isNil "MCC_ConolseUAV" || isNil "MCC_fakeUAV" || isNil "MCC_fakeUAVFOV") exitWith {};
+
 _params = _this select 0;
 
 _ctrl = _params select 0;

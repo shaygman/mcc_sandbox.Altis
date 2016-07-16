@@ -5,14 +5,16 @@
 // _spawnkind = string, vehiclecClass to drop
 // _pilot = plane's pilot
 //==================================================================================================================================================================================
-private ["_pos","_spawnkind","_pilot","_para", "_drop","_dir","_time","_smoke","_class","_paras","_objectData","_velocity"];
+private ["_pos","_spawnkind","_pilot","_para", "_drop","_dir","_time","_smoke","_class","_paras","_objectData","_velocity","_spawnCrew"];
 _pos = _this select 0;
 _spawnkind = _this select 1;
-_pilot = _this select 2;
-_class = format ["%1_parachute_02_F",  toString [(toArray faction _pilot) select 0]];
+_pilot = param [2,objNull,[missionNamespace,objNull]];
+_spawnCrew = param [3,false,[false]];
+
+_class = if (!isnull _pilot) then {format ["%1_parachute_02_F",  toString [(toArray faction _pilot) select 0]]} else {"I_parachute_02_F"};
 _paras = [];
 
- while {(_pos distance vehicle _pilot) < 20} do {sleep 0.2};
+if (!isnull _pilot) then {while {(_pos distance vehicle _pilot) < 20} do {sleep 0.2}};
 
  _drop = createVehicle [_spawnkind, _pos, [], 0, "CAN_COLLIDE"];
 MCC_curator addCuratorEditableObjects [[_drop],false];
@@ -20,13 +22,12 @@ _objectData = (_drop call bis_fnc_objectType) select 1;
 
 _para = createVehicle [_class, getpos _drop,[],0,"CAN_COLLIDE"];
 _para attachTo [_drop, [0,0,0]];
-_velocity = velocity (vehicle _pilot);
+_velocity = if (!isnull _pilot) then {velocity (vehicle _pilot)} else {[0, 0, 0]};
 detach _para;
 
 _para setVelocity _velocity;
 
-if (_objectData in ["Ship","Submarine","TrackedAPC","Tank","WheeledAPC","Car"]) then
-{
+if (_objectData in ["Ship","Submarine","TrackedAPC","Tank","WheeledAPC","Car"]) then {
 	_drop attachto [_para,[0,0,-(abs ((boundingbox _drop select 0) select 2))]];
 
 	{
@@ -35,14 +36,17 @@ if (_objectData in ["Ship","Submarine","TrackedAPC","Tank","WheeledAPC","Car"]) 
 		_p attachTo [_para, [0,0,0]];
 		_p setVectorUp _x;
 	} count [[0.5,0.4,0.6],[-0.5,0.4,0.6],[0.5,-0.4,0.6],[-0.5,-0.4,0.6]];
-}
-else
-{
+} else {
 	_drop attachto [_para,[0,0,1]];
 	_paras =  [_para];
 };
 
 _para setvelocity [0,0,-1];
+
+//spaw crew
+if (_spawnCrew || isAutonomous _drop) then {
+	createVehicleCrew _drop;
+};
 
 0 = [_drop, _paras] spawn
 {

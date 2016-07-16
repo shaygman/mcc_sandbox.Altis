@@ -3,21 +3,22 @@
 //Example:[[pos,[_unit, unitID],halo,hight,jumperNumber],"MCC_fnc_paradrop",true,false] call BIS_fnc_MP;
 // Params:
 // 	pos: array, position.
-//	,[_unit, unitID]: object and number, unit ID for the jump
+//	,[unitID,_unit]: object and number, unit ID for the jump
 //	halo:  boolean ,true - halo, false - parajump
 //	hight:  number,jump hight
-//    jumperNumber: number, jumper number if more then one is jumping inorder to spread them around
+//  jumperNumber: number, jumper number if more then one is jumping inorder to spread them around
 //==============================================================================================================================================================================
-private ["_pos", "_unit", "_halo","_height", "_gwh", "_gwhpos", "_headgear", "_uniform", "_backpack", "_backPackItems",
-	"_uniformItems", "_parachute", "_jumperNumber", "_chute", "_packHolder","_parachuteBag"];
+private ["_pos", "_unit", "_halo","_height", "_gwh", "_gwhpos", "_headgear", "_uniform", "_backpack", "_backPackItems","_useUnitPos","_uniformItems", "_parachute", "_jumperNumber", "_chute", "_packHolder","_parachuteBag","_transition"];
 
 _pos 			= _this select 0;
 _unit			= if (((_this select 1) select 0) == "") then {(_this select 1) select 1} else {objectFromNetId ((_this select 1) select 0)};
 if (isNil "_unit") exitWIth {};
 _halo			= _this select 2;
-_height			= _this select 3;
+_height			= param [3,500,[0]];
 _jumperNumber	= _this select 4;
 _parachuteBag = param [5,true,[true]];
+_useUnitPos 	= param [6,false,[false]]; //if true will ignor pos and height and will use the unit pos once outside a vehicle
+_transition		= param [7,true,[false]]; //if true show transition
 
 _packHolder 	= objNull;
 
@@ -31,9 +32,9 @@ if (!local _unit || _unit getVariable ["mcc_isparajuming", false]) exitWith {};
 _unit setVariable ["mcc_isparajuming", true];
 
 //If is player make some effects
-if (isPlayer _unit) then {
-	cutText ["Get ready to jump","BLACK OUT",1];
-	sleep 3;
+if (isPlayer _unit && _transition) then {
+	cutText ["Get Ready to jump","BLACK OUT",1];
+	sleep 2;
 	playmusic "ac130";
 };
 
@@ -66,12 +67,20 @@ if (_halo) then {
 			_unit addBackpack "B_Parachute";
 		};
 
+		//wait until outside
+		waitUntil {vehicle _unit == _unit};
+
+		//if use unit pos
+		if (_useUnitPos) then {
+			_pos =position _unit;
+			_height = _pos select 2;
+		};
+
 		_unit setpos [(_pos select 0) + (_jumperNumber*20), _pos select 1,_height];
 
 		sleep 2;
 
-		if ( isPlayer _unit ) then
-		{
+		if ( isPlayer _unit ) then {
 			cutText ["","BLACK IN",1];
 			playmusic "";
 
@@ -84,11 +93,10 @@ if (_halo) then {
 				_packHolder attachTo [vehicle _unit,[0.1,0.72,0.52],"pelvis"]; //attach the empty holder to the new position
 				_packHolder setVectorDirAndUp [[0,0.1,1],[0,1,0.1]]; //set the new vector direction
 			};
-		}
-		else
-		{
+		} else {
 			_unit allowDamage false;
 			_dir = direction (leader _unit);
+			_unit playmoveNow "HaloFreeFall_non";
 			waitUntil { (((getPosATL _unit) select 2) < 180) || !(alive _unit) };
 			_parachute = createVehicle ["NonSteerable_Parachute_F", position _unit, [], ((_dir)-3+(random 6)), 'NONE'];
 			_parachute setPos (getPos _unit);
@@ -180,7 +188,15 @@ if (_halo) then {
 } else {
 
 	//Parachute
-	_height = 500;
+	//wait until outside
+	waitUntil {vehicle _unit == _unit};
+
+	//if use unit pos
+	if (_useUnitPos) then {
+		_pos =position _unit;
+		_height = _pos select 2;
+	};
+
 	_unit setpos [(_pos select 0) + (_jumperNumber*20), _pos select 1,_height];
 
 	sleep 2;

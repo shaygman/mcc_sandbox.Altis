@@ -126,7 +126,7 @@ if (_weapon != "") then {
 	};
 
 	_idc = 14000;
-	_xPos = 0.34 * safezoneW + safezoneX;
+	_xPos = 0.355 * safezoneW + safezoneX;
 } else {
 	//Delete old ctrl
 	{
@@ -136,7 +136,7 @@ if (_weapon != "") then {
 	} forEach [12000,13000,14000];
 
 	_idc = 12000;
-	_xPos = 0.18 * safezoneW + safezoneX;
+	_xPos = 0.187 * safezoneW + safezoneX;
 };
 
 _ctrl = _disp ctrlCreate ["RscListbox",_idc];

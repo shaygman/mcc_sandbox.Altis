@@ -1,5 +1,4 @@
-private ["_mccdialog","_comboBox","_displayname","_time", "_index","_message","_messageFinal","_type",
-		 "_insetionArray","_control","_data","_rad","_alt","_coords","_effectParams"];
+private ["_mccdialog","_comboBox","_displayname","_time", "_index","_message","_messageFinal","_type","_insetionArray","_control","_data","_rad","_alt","_coords","_effectParams"];
 // By: Shay_gman
 // Version: 1.1 (April 2013)
 #define mcc_playerConsole3_IDD 5010
@@ -39,23 +38,23 @@ ctrlShow [MCC_CONSOLE_AC_MAP,false];
 
 ctrlSetText [MCC_CONSOLE_ACPIP, ""];
 _time = time + (2 + random 5);
-	while {_time > time && dialog && (isNil "MCC_fakeAC")} do {
-		_message = "";
-		_messageFinal = ["C","o","n","n","e","c","t","i","n","g"," ","A","C","-","1","3","0"," ","S","p","o","o","k","y",".",".","."];
-		for "_i" from 0 to (count _messageFinal - 1) do {
-			_message = _message + (_messageFinal select _i);
-			ctrlSetText [MCC_CONSOLE_AC_BCKG, _message];
-			sleep 0.05;
-		};
+
+while {_time > time && dialog && (isNil "MCC_fakeAC")} do {
+	_message = "";
+	_messageFinal = ["C","o","n","n","e","c","t","i","n","g"," ","A","C","-","1","3","0"," ","S","p","o","o","k","y",".",".","."];
+	for "_i" from 0 to (count _messageFinal - 1) do {
+		_message = _message + (_messageFinal select _i);
+		ctrlSetText [MCC_CONSOLE_AC_BCKG, _message];
+		sleep 0.05;
 	};
+};
 
 if (dialog && !MCC_ACConsoleUp) then {
-		ctrlSetText [MCC_CONSOLE_AC_BCKG, "Error connecting to AC-130, connection failed"];
-		};
+	ctrlSetText [MCC_CONSOLE_AC_BCKG, "Error connecting to AC-130, connection failed"];
+};
 
 //Create the AC
-if (dialog && MCC_ACConsoleUp) then
-{
+if (dialog && MCC_ACConsoleUp) then {
 		//Get rid of the connecting text
 		ctrlSetText [MCC_CONSOLE_AC_BCKG, ""];
 		_control = _mccdialog displayCtrl MCC_CONSOLE_ACPIP;
@@ -63,8 +62,7 @@ if (dialog && MCC_ACConsoleUp) then
 		ctrlSetText [MCC_CONSOLE_ACPIP, "#(argb,512,512,1)r2t(rendertarget8,1.0);"];
 
 		// Create fake AC
-		if (isNil "MCC_fakeAC") then
-		{
+		if (isNil "MCC_fakeAC") then {
 			MCC_fakeAC 		= "Camera" camCreate [10,10,10];
 			if (!isnil "MCC_fakeACCenter") then {deletevehicle MCC_fakeACCenter};
 			MCC_fakeACCenter	= "Sign_Sphere10cm_F" createvehicle [MCC_consoleACpos select 0,MCC_consoleACpos select 1, 0];
@@ -134,8 +132,7 @@ if (dialog && MCC_ACConsoleUp) then
 		ctrlShow [MCC_CONSOLE_AC_MAP,true];
 
 		//Handle on screen data
-		[] spawn
-		{
+		[] spawn {
 			private ["_structured","_data","_mccdialog"];
 			disableSerialization;
 
@@ -164,11 +161,19 @@ if (dialog && MCC_ACConsoleUp) then
 
 				};
 
-				if !(MCC_ACConsoleUp) exitWith
-				{
+				//No time remain close the AC-130
+				if (MCC_ConsoleACTime -(time - (missionNameSpace getVariable ["MCC_ConsoleACTimeStart",0])) <=0) exitWith {
+					missionNamespace setVariable ["MCC_ACConsoleUp",false];
+				};
+
+				if !(MCC_ACConsoleUp) exitWith {
 					MCC_ConsoleACMouseButtonDown = false;
 					while {dialog} do {closeDialog 0};
 					MCC_ConsoleACMouseButtonDown = false;
+					[(_mccdialog displayctrl MCC_CONSOLE_ACPIP)] call MCC_fnc_pipOpen;
+					_null = [1] execVM format ["%1mcc\general_scripts\console\conoleSwitchMenu.sqf",MCC_path];
+
+					[[2,{["MCCNotifications",["AC-130 Left the scene",format ["%1data\AC130_icon.paa",MCC_path],""]] call bis_fnc_showNotification;}], "MCC_fnc_globalExecute", side player, false] spawn BIS_fnc_MP;
 				};
 
 				sleep 0.1;
@@ -190,8 +195,7 @@ if (dialog && MCC_ACConsoleUp) then
 			_alt = _this select 1;
 			_rad = _this select 2;
 
-			while {!isnil "MCC_fakeAC"} do
-			{
+			while {!isnil "MCC_fakeAC"} do {
 				MCC_ACAng = MCC_ACAng - 0.5;
 				_coords = [_pos, _rad, MCC_ACAng] call BIS_fnc_relPos;
 				_coords set [2, _alt];

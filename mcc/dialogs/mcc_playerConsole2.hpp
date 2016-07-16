@@ -59,7 +59,6 @@ class MCC_playerConsole2 {
   MCC_ConsoleUAVCamera,
   MCC_ConsoleUAVFlightHight,
   MCC_ConsoleUAVFlightHightText,
-  MCC_ConsoleUAVTakeControl,
   MCC_ConsoleUAVFeedTargetPic,
   MCC_ConsoleUAVFeedFake,
   MCC_ConsoleUAVMissileCount,
@@ -294,6 +293,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 
+	/*
 	class MCC_ConsoleUAVTakeControl: MCC_RscButton
 	{
 		idc = MCC_CONSOLEUAVTAKECONTROL;
@@ -306,6 +306,8 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		h = 0.0329871 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
+	*/
+
 	class MCC_ConsoleUAVMissileCount: MCC_RscText
 	{
 		idc = MCC_CONSOLE_UAV_MISSILE_COUNT;

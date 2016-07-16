@@ -51,7 +51,7 @@ MCC_fnc_AASgroupSpawn  = {
 
 		//vehicles put in a seperated group
 		if (isNull _vehicle) then {
-			if (!(_tempGroup getVariable ["locked",false]) && ((count units _tempGroup)+_unitNumber) <= _groupSize  && ({vehicle _x != _x} count units _tempGroup == 0)) then {
+			if (!(_tempGroup getVariable ["locked",false]) && (!isPlayer leader _tempGroup) && ((count units _tempGroup)+_unitNumber) <= _groupSize  && ({vehicle _x != _x} count units _tempGroup == 0)) then {
     			_group = _tempGroup;
     		};
 		} else {
@@ -108,6 +108,7 @@ MCC_fnc_AASgroupSpawn  = {
 		_unit = _group createUnit [getText(_cfg >> "crew"), position _vehicle, [], 0, "NONE"];
 		_unit assignAsDriver _vehicle;
 		_unit moveindriver _vehicle;
+		_unit addEventHandler ["killed",format ["[%1, -1] call BIS_fnc_respawnTickets", _side]];
 
 		//set gear
 		if (count _useDefaultGear > 0) then {
@@ -130,6 +131,8 @@ MCC_fnc_AASgroupSpawn  = {
 				if (count _useDefaultGear > 0) then {
 					[(_useDefaultGear) call bis_fnc_selectRandomWeighted,_unit] spawn MCC_fnc_gearAI;
 				};
+
+				_unit addEventHandler ["killed",format ["[%1, -1] call BIS_fnc_respawnTickets", _side]];
 				MCC_curator addCuratorEditableObjects [[_unit],false];
 			};
 
@@ -156,6 +159,9 @@ _sectors = [];
 //Get all sectors
 {_sectors pushBack _x} foreach (allMissionObjects "moduleSector_f");
 {_sectors pushBack _x} foreach (allMissionObjects "moduleSectorDummy_f");
+{
+	if ((_x getvariable ["ScoreReward",-1])>0) then {_sectors pushBack _x}
+} foreach (allMissionObjects "logic");
 
 while {true} do {
 
@@ -221,7 +227,8 @@ while {true} do {
 			sleep 1;
 		};
 
-		//spawn the rest as a group
+
+		//spawn the rest as a group - DISABLED WE WANT A FULL SQUAD SPAWN
 		if (_counter mod _groupSize > 0) then {
 			[_counter mod _groupSize,_groupSize,_useDefaultGear,objNull,_side,_unitsArray,_spawnPos] call MCC_fnc_AASgroupSpawn;
 		};

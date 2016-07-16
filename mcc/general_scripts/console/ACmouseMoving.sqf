@@ -12,6 +12,7 @@ if (isNil "MCC_fakeAC") exitWith {};
 if (isNull MCC_fakeAC) exitWith {};
 
 if (MCC_ConsoleACMouseButtonDown) then {
+	if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.11]};
 	_posNew = [((MCC_ACPos select 0) - _posX)*(MCC_fakeACFOV*150), ((MCC_ACPos select 1) - _posY)*(MCC_fakeACFOV*150),0];
 	setMousePosition [0.5,0.44];
 	_relDir = [MCC_fakeAC, MCC_ACcenter] call BIS_fnc_relativeDirto;

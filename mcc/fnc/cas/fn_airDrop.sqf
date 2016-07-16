@@ -6,13 +6,12 @@
 //		3: _planeType:	STRING plane vehicle class for CAS or "west","east","guer","civ","logic" for airdrop
 //		4: _spawn		POSITION: plane spawn pos
 //		5: _away		POSITION: plane despawn pos
-//		6: _isParachute	BOOLEAN: <optional> true - if it is air supply or false if it is slingload
+//		6: _isParachute	INTEGER: <optional> 0 - parachute from helicopter. 1 - if it is slingload.  2 - parachute from thin air 3 - spawn crew
 //		CAS Script by Shay_gman 08.01.12
 //==============================================================================================================================================================================
 
-private ["_ammount", "_spawnkind", "_pos", "_spawn", "_away", "_pilot1", "_pilotGroup1", "_wp", "_wp2", "_plane1", "_planepos",
-		"_planeType", "_planeAltitude", "_target", "_fakeTarget", "_lasertargets", "_nukeType", "_bomb2", "_cas_name", "_poswp", "_distA","_distB", "_nul",
-		"_loop","_x","_wp","_plane2","_pilot2","_pilotGroup2","_typeOfAircraft", "_distStart", "_distEngage", "_targetList", "_startTime", "_casMarker", "_casApproach","_isParachute","_planeClasss","_isHeliDLC","_object","_sling"];
+private ["_ammount", "_spawnkind", "_pos", "_spawn", "_away", "_pilot1", "_pilotGroup1", "_wp", "_wp2", "_plane1", "_planepos","_missile", "_planeType", "_planeAltitude", "_target", "_fakeTarget", "_lasertargets", "_nukeType", "_bomb2", "_cas_name", "_poswp", "_distA","_distB", "_nul", "_loop","_x","_wp","_plane2","_pilot2","_pilotGroup2","_typeOfAircraft", "_distStart", "_distEngage", "_targetList", "_startTime", "_casMarker", "_casApproach","_isParachute","_planeClasss","_isHeliDLC","_object","_sling"];
+#define mcc_playerConsole_IDD 2993
 
 _ammount				= _this select 0;
 _spawnkind				= _this select 1 select 0;
@@ -20,13 +19,24 @@ _pos					= _this select 2;
 _planeType				= _this select 3 select 0;
 _spawn					= _this select 4;
 _away					= _this select 5;
-_isParachute			= if (count _this > 6) then {_this select 6} else {false};
+_isParachute			= param [6,0,[0]];
 
 //=====================================================
 
 //start the drop
-if (tolower _planeType in ["west","east","guer","civ","logic"]) then 		//If it's an airdrop
-{
+//If it's an airdrop
+if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
+
+	//If parachute from thin air exit here:
+	if (_isParachute >= 2) exitWith {
+		_pos = [_pos select 0,_pos select 1, (_pos select 2) + 300];
+		for [{_x=0},{_x < count _spawnkind},{_x=_x+1}] do {
+			_pos = [_pos, [_pos,_away] call BIS_fnc_dirTo,20] call BIS_fnc_relPos;
+			[_pos, _spawnkind select _x, objNull,_isParachute == 3] spawn MCC_fnc_CreateAmmoDrop;
+			sleep 3 + random 3;
+		};
+	};
+
 	//Lets Spawn a plane
 	_isHeliDLC = isClass (configFile >> "CfgPatches" >> "A3_Air_F_Heli_Heli_Transport_03");
  	_planeClasss = if (_isHeliDLC) then {
@@ -56,7 +66,7 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then 		//If it's
 	};
 
 	//Attach slingload
-	if !(_isParachute) then {
+	if (_isParachute == 1) then {
 		_object = (_spawnkind select 0) createvehicle [10,10,500];
 		_object setpos (_plane1 modeltoworld [0,0,-15]);
 		_sling = _plane1 setSlingload _object;
@@ -124,8 +134,7 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then 		//If it's
 		//Delete the plane when finished
 		[_pilotGroup1, _pilot1, _plane1, _away] spawn MCC_fnc_deletePlane;
 
-		for [{_x=0},{_x < count _spawnkind},{_x=_x+1}] do
-		{
+		for [{_x=0},{_x < count _spawnkind},{_x=_x+1}] do {
 			_planepos = getpos _plane1;
 			[_planepos, _spawnkind select _x, _pilot1] spawn MCC_fnc_CreateAmmoDrop;
 			sleep 3 + random 3;
@@ -133,14 +142,83 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then 		//If it's
 
 		{_plane1 animateDoor [_x, 0]} foreach ["CargoRamp_Open"];
 	}
-}
-else
-{
+} else {
 	//Case CAS
-	if (_spawnkind in ["Gun-run short","Gun-run long","Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)"]) then
-	{
-		if (_spawnkind in ["Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)"]) then
-		{
+
+	//cruise missile
+	if (tolower _spawnkind == "cruise missile") exitWith {
+		while {dialog} do {closeDialog 0};
+		//disable mouse control at start
+		MCC_ConsoleUAVMouseButtonDown = false;
+
+		_missile = "Bo_GBU12_LGB" createVehicle [_pos select 0, _pos select 1, 600];
+		waituntil {alive _missile};
+		missionNamespace setVariable ["MCC_ConolseUAV",_missile];
+
+		//Switch to thermal
+		missionNamespace setVariable ["MCC_ConsoleUAVCameraMod",2];
+
+		createDialog "MCC_playerConsole2";
+		waitUntil {!isNull (missionNamespace getVariable ["MCC_fakeUAV",objNull]) && !isNull (missionNamespace getVariable ["MCC_fakeUAVCenter",objNull])};
+
+		playSound "missileLunch";
+		[[[netid _missile,_missile], "missileLunch"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
+		[(missionNamespace getVariable ["MCC_fakeUAVCenter",objNull]), [ getpos _missile, 100, random 360] call BIS_fnc_relPos, _missile,80,true,""] execVM MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
+	};
+
+	//ac-130
+	if (tolower _spawnkind == "ac-130") exitWith {
+		//AC-130
+
+		[[2,compile format ['["MCCNotifications",["AC-130 Entered the scene","%1data\AC130_icon.paa",""]] call bis_fnc_showNotification;',MCC_path]], "MCC_fnc_globalExecute", playerSide, false] spawn BIS_fnc_MP;
+
+		_pos set [2,(_pos select 2)+500];
+		//register AC-130
+		missionNamespace setVariable ["MCC_ACConsoleUp",true];
+		missionNamespace setVariable ["MCC_consoleACpos",_pos];
+		missionNameSpace setVariable ["MCC_ConsoleACTimeStart",time];
+		missionNameSpace setVariable ["MCC_ConsoleACTime",120];
+		publicVariable "MCC_ConsoleACTimeStart";
+		publicVariable "MCC_ConsoleACTime";
+
+		while {dialog} do {closeDialog 0};
+
+		//disable mouse control at start
+		MCC_ConsoleUAVMouseButtonDown = false;
+
+		createDialog "MCC_playerConsole3";
+	};
+
+	//UAV
+	if (tolower _spawnkind in ["uav","uav armed"]) exitWith {
+		//UAV
+		_pos = [_pos select 0, _pos select 1, (_pos select 2) + (if (tolower _spawnkind == "uav") then {200} else {1000})];
+		[_pos,_planeType,360] spawn {
+			private ["_uav","_time"];
+			params ["_center","_planeType","_time"];
+
+			_uav = _planeType createVehicle _center;
+			_uav setPos _center;
+			createVehicleCrew _uav;
+			_uav flyInHeight (_center select 2);
+			group driver _uav setCombatMode "BLUE";
+
+			for "_i" from 0 to 360 step 90 do
+			{
+				[0,([_center,300,_i] call BIS_fnc_relPos),[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","","",0],[group driver _uav]] spawn MCC_fnc_manageWp;
+				sleep 0.1;
+			};
+
+			//Cycle WP
+			[0,([_center,200,0] call BIS_fnc_relPos),[7,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","","",0],[group driver _uav]] spawn MCC_fnc_manageWp;
+
+			//Spawn detection
+			[_uav,_time] spawn MCC_fnc_uavDetect;
+		};
+	};
+
+	if (_spawnkind in ["Gun-run short","Gun-run long","Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)"]) then {
+		if (_spawnkind in ["Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)"]) then {
 			private ["_group","_dir","_cas","_casType"];
 			_side =  getNumber (configFile >> "CfgVehicles" >> _planeType >> "side");
 
@@ -191,9 +269,7 @@ else
 			_cas setDir _dir;
 			_cas setVariable ["vehicle",_planeType];
 			_cas setVariable ["type", _casType];
-		}
-		else
-		{
+		} else {
 			diag_log format ["gun-run: [%1]", _this];
 
 			if (_planeType isKindOf "Plane") then
@@ -470,9 +546,7 @@ else
 			// clear invisible targets
 			if (!IsNil "_fakeTarget") then {deleteVehicle _fakeTarget};
 		};
-	}
-	else
-	{
+	} else {
 		//Lets Spawn a plane
 		_plane1 			= [_planeType, _spawn, _pos, 150, false] call MCC_fnc_createPlane;		//Spawn plane 1
 		_pilotGroup1		= group _plane1;

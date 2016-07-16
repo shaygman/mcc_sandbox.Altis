@@ -1,5 +1,6 @@
 #define MCC_CONSOLE_AC_VISION_TEXT 5013
 private ["_effectParams"];
+playSound "nvSound";
 MCC_ConsoleACCameraMod = _this select 1;
 switch (MCC_ConsoleACCameraMod) do {
 	// Normal
@@ -7,13 +8,13 @@ switch (MCC_ConsoleACCameraMod) do {
 		_effectParams = [3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]];
 		MCC_ConsoleACvision = "VIDEO";
 	};
-	
+
 	// Night vision
 	case 1: {
 		_effectParams = [1];
 		MCC_ConsoleACvision = "N/V";
 	};
-	
+
 	// Thermal imaging
 	case 2: {
 		_effectParams = [2];

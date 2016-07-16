@@ -66,9 +66,10 @@ if (_vestPlayer != "") then {
 //weapons
 private ["_nearHolders","_holder"];
 
-_nearHolders = (getpos _suspect nearObjects ["weaponHolderSimulated",3]);
+_nearHolders = (getpos _suspect nearObjects ["weaponHolderSimulated",5]);
 
 if (count _wepPlayer > 0) then {
+	/*
 	if (count _nearHolders > 0) then {
 		_nearHolders = [_nearHolders,[],{(_suspect distance _x)},"ASCEND"] call BIS_fnc_sortBy;
 		_wepHolder = _nearHolders select 0;
@@ -77,6 +78,10 @@ if (count _wepPlayer > 0) then {
 		waituntil {!isnil "_wepHolder"};
 		_wepHolder setpos getpos _suspect;
 	};
+	*/
+	_wepHolder = "weaponHolderSimulated" createVehicle getpos _suspect;
+	waituntil {!isnil "_wepHolder"};
+	_wepHolder setpos getpos _suspect;
 
 	{
 		_weapon = if (typeName _x == "STRING") then {_x} else {_x select 0};
@@ -84,11 +89,18 @@ if (count _wepPlayer > 0) then {
 	} foreach _wepPlayer;
 };
 
+if (count _nearHolders > 0) then {
+	_nearHolders = [_nearHolders,[],{(_suspect distance _x)},"ASCEND"] call BIS_fnc_sortBy;
+	_wepHolder = _nearHolders select 0;
+	{player action ["TakeWeapon", _wepHolder, _x]} foreach (weaponCargo _wepHolder);
+};
+
+/*
 {
 	_holder = _x;
 	{player action ["TakeWeapon", _holder, _x]} foreach (weaponCargo _x);
 } foreach _nearHolders;
-
+*/
 {
 	player action ["TakeWeapon", _suspect, _x];
 } foreach _wepSuspect;

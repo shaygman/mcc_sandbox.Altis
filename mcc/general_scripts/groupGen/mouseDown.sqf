@@ -326,8 +326,7 @@ if (mcc_missionmaker == (name player)) then {
 		_away 		= [_markerPos,3500,_markerDir] call BIS_fnc_relpos;
 		_ammount	=  floor (((getMarkerSize _marker) select 1)/50) + 1; 		//Ammount of drop min 0 max 6
 
-		if (MCC_capture_state) then
-		{
+		if (MCC_capture_state) then {
 			hint "Air support captured.";
 			MCC_capture_var=MCC_capture_var + FORMAT ['
 				[[%1, %2 , %3, %4, %5, %6],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
@@ -338,11 +337,9 @@ if (mcc_missionmaker == (name player)) then {
 				,MCC_planeType
 				,_spawn
 				,_away];
-		}
-		else
-		{
+		} else {
 			hint "Air support incomming.";
-			[[_ammount, MCC_spawnkind , getmarkerpos _marker, MCC_planeType, _spawn,_away,(missionNamespace getVariable ["MCC_airdropIsParachute",true])],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
+			[[_ammount, MCC_spawnkind , getmarkerpos _marker, MCC_planeType, _spawn,_away,(missionNamespace getVariable ["MCC_airdropIsParachute",0])],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
 		};
 
 		MCC_CASrequestMarker = false;			//Wait and delete the marker
@@ -371,7 +368,9 @@ if (mcc_missionmaker == (name player)) then {
 		_spawn 		= [_markerPos,4500,(_markerDir -180)] call BIS_fnc_relpos;
 		_away 		= [_markerPos,4500,_markerDir] call BIS_fnc_relpos;
 
-		[[getmarkerpos _marker, MCC_selectedUnits, MCC_UMUnit, MCC_UMparadropIsHalo,_spawn,_away, MCC_path], "MCC_fnc_realParadrop", false] spawn BIS_fnc_MP;
+		//[getmarkerpos _marker, MCC_selectedUnits, MCC_UMUnit, MCC_UMparadropIsHalo,_spawn,_away] execVM "mcc\fnc\general\fn_realParadrop.sqf";
+
+		[[getmarkerpos _marker, MCC_selectedUnits, MCC_UMUnit, MCC_UMparadropIsHalo,_spawn,_away], "MCC_fnc_realParadrop", false] spawn BIS_fnc_MP;
 
 		MCC_UMParadropRequestMarker = false;			//Wait and delete the marker
 		sleep 40;

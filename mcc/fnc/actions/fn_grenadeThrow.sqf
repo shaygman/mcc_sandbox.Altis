@@ -30,8 +30,6 @@ if (!_primaryMod) exitWith
 	player setVariable ["MCC_busy",false];
 };
 
-player removeMagazineGlobal _magClass;
-
 switch (_precise) do
 {
 	case 0:	//Defensive
@@ -65,6 +63,7 @@ switch (_precise) do
 
 player forceWeaponFire [_magMuzzle,_magMuzzle];
 sleep 1;
+//player removeMagazineGlobal _magClass;
 if !(_magClass in (magazines player)) then
 {
 	player setVariable ["MCC_utilityItem",[]];

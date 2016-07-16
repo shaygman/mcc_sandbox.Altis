@@ -36,6 +36,11 @@ Medical System:
 Commander Console:
 - Changed: Commander Console UI.
 
+APEX:
+- added: Apex VTOL planes will now replace the default helicopters in Parachute, HALo or Drop Pods insertions.
+- added: Tanoa templats: Campign, pvp, empty = TODO
+
+
 RTS:
 - Added: RTS WIKIA for players - http://mccsandbox.wikia.com/wiki/Rts
 - Added: RTS WIKIA for developers - http://mccsandbox.wikia.com/wiki/RTS_editing
@@ -48,18 +53,26 @@ New Game Mods:
 
 MCC Campaign:
 - Added: Altis campaign template mission, mix between RTS and FPS on altis but you can create it where ever you want to: http://mccsandbox.wikia.com/wiki/Campaign
-- Added: mission rotation - define how many missions will be generated close to each other before MCC will select a completely different position.
+- Added: mission rotation - The random chance to get a recon mission - which isn't near the starting base and behind enemy lines.
 
 VON Radio System
 - Added: Using the new BI VON commands players will be restricted from not-allowed channels rather then killed when using them.
 
+MCC CAS/Airdrops
+- Added: Cruise missile manually control the missile while guiding it to his target - can be given to the side commander for him to use it as an asset the commander tab.
+- Added: UAV run - allow commanders to call UAV that will mark enemy units around him in a radius defined with MCC_uavdetectRange = 500 put MCC_uavdetectRange = 0; for no detection - can be given to the side commander for him to use it as an asset the commander tab.
+- Added: AC-130 - can be given to the side commander for him to use it as an asset the commander tab.
+
 Misc:
+- Added: Spawn on Squad Leader if enabled with "MCC_respawnOnGroupLeader" or in the MCC settings module
 - Added: Module to create zones from the editor - just sync triggers to the module and they will be zones.
 - Added: Breach locked door by shooting on them use custom ammo such as shoutgun slug (RHS or Prpl by defualt) as defined with MCC_breacingAmmo example: MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
 - Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point.
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file.
 - Added: Can enable survival mod without allowing player to search for loot - if you want to add some thirst and hunger element for the realisim without turning it into a Dayz. Enable it from the mission setting module or missionNamesSpace variable ["MCC_surviveModAllowSearch",false]
+- Changed: Players spawns on Squad Leaders Rally Point will be paradrop and not simply teleported.
 - Changed: Medic system reworked to work with the new protection system.
+- Changed: Supply dropping an autunoms vehicle will drop it with crew
 - Fixed: Atmoshphere module.
 - Fixed: Error regarding BI fnc sortBy spamming the log file.
 - Fixed: Mission Wizard save hostage mission can be ended on respawn_west/east/gurilla marker.
@@ -81,9 +94,8 @@ Misc:
 - Fixed: MCC_make_array_group error on server.
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
-TODO - Change kit and pick up kit
-TODO - spawn units only if squad wipe
-TODO - unconceus don't capture
+TODO - campaign borders
+TODO - Test dedicated
 TODO - Join MCC Squad
 TODO - AI place FOB and spawn on them?
 TODO - self interaction in vehicles for opening commander console

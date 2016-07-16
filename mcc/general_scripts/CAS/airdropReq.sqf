@@ -48,7 +48,7 @@ _fn_refresh = {
 	};
 	_newGroupArray = [];
 	//if slingload show only sligloadable vehicles
-	if !(missionNamespace getVariable ["MCC_airdropIsParachute",true]) then {
+	if ((missionNamespace getVariable ["MCC_airdropIsParachute",0]) == 1) then {
 		private ["_maxMass","_vehicleClass","_dummyObject"];
 		_maxMass = if (isClass (configFile >> "CfgPatches" >> "A3_Air_F_Heli_Heli_Transport_03")) then {
 			switch (toLower mcc_sidename) do {
@@ -130,12 +130,12 @@ if (_action==3) exitWith 				//Changed insertion
 	if (_insertionType == 0) then {
 
 		//parachute
-		missionNamespace setVariable ["MCC_airdropIsParachute",true];
+		missionNamespace setVariable ["MCC_airdropIsParachute",0];
 		for "_i" from 1033 to 1036 do {ctrlshow [_i, true]};
 	} else {
 
 		//Slingload
-		missionNamespace setVariable ["MCC_airdropIsParachute",false];
+		missionNamespace setVariable ["MCC_airdropIsParachute",1];
 		for "_i" from 1033 to 1036 do {ctrlshow [_i, false]};
 	};
 

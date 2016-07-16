@@ -1,5 +1,5 @@
 //Returns the control, the pressed button, the x and y coordinates and the state of Shift, Ctrl and Alt.
-private ["_params","_ctrl","_pressed","_posX","_posY","_shift","_ctrlKey","_alt","_marker","_markerPos","_markerDir","_spawn","_away","_ammount","_dir"];
+private ["_params","_ctrl","_pressed","_posX","_posY","_shift","_ctrlKey","_alt","_marker","_markerPos","_markerDir","_spawn","_away","_ammount","_dir","_trg","_ok"];
 #define MCC_CONSOLEINFOTEXT 9150
 #define MCC_CONSOLEINFOLIVEFEED 9151
 #define MCC_CONSOLEINFOUAVCONTROL 9162
@@ -52,9 +52,9 @@ if ((_pressed == 0 || _pressed == 1)&& !MCC_doubleClicked) then
 };
 
 //CAS Request
-if (MCC_CASrequestMarker && _pressed==0) then
-{
-	MCC_pointA = _ctrl ctrlmapscreentoworld [_posX,_posY];									//Base of the arrow
+if (MCC_CASrequestMarker && _pressed==0) exitWith {
+	//Base of the arrow
+	MCC_pointA = _ctrl ctrlmapscreentoworld [_posX,_posY];
 	_marker = [MCC_pointA,MCC_pointA,1,"mil_arrow",20,"ColorRed",300] call MCC_fnc_drawArrow;	//Drow it first
 	sleep 0.25;
 
@@ -71,16 +71,32 @@ if (MCC_CASrequestMarker && _pressed==0) then
 	_away 		= [_markerPos,4500,_markerDir] call BIS_fnc_relpos;
 	_ammount	=  floor (((getMarkerSize _marker) select 1)/50) + 1; 		//Ammount of drop min 0 max 6
 
-	hint "Air support incomming.";
-	[[_ammount, MCC_spawnkind , getmarkerpos _marker, MCC_planeType, _spawn,_away,(missionNamespace getVariable ["MCC_airdropIsParachute",true])],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
+	//Check if not on trigger
+	_ok = true;
+	{
+		_trg = _x getVariable ["triggers", []];
+		{
+			if ([_x, _markerPos] call BIS_fnc_inTrigger || [_x, MCC_pointA] call BIS_fnc_inTrigger) exitWith {_ok = false};
+		} forEach _trg;
+	} forEach allMissionObjects "logic";
 
-	MCC_CASrequestMarker = false;			//Wait and delete the marker
+	if !(_ok) exitWith {hint "Can't call support to this location try again"};
+
+	hint "Air support incomming.";
+	/*
+	[[_ammount, MCC_spawnkind , getmarkerpos _marker, MCC_planeType, _spawn,_away,(missionNamespace getVariable ["MCC_airdropIsParachute",0])],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
+	*/
+
+	[_ammount, MCC_spawnkind , getmarkerpos _marker, MCC_planeType, _spawn,_away,(missionNamespace getVariable ["MCC_airdropIsParachute",0])] spawn MCC_fnc_airDrop;
+
+	//Wait and delete the marker
+	MCC_CASrequestMarker = false;
 	sleep 40;
 	deletemarkerlocal _marker;
 };
 
 //Ruler drawing select
-if (_pressed==0 && MCC_ConsoleRuler) then
+if (_pressed==0 && MCC_ConsoleRuler) exitWith
 {
 	MCC_pointA = _ctrl ctrlmapscreentoworld [_posX,_posY];									//Base of the arrow
 	_marker = [MCC_pointA,MCC_pointA,1,"mil_arrow",20,"ColorBlue",1000000] call MCC_fnc_drawArrow;	//Drow it first
@@ -112,7 +128,7 @@ if (_pressed==0 && MCC_ConsoleRuler) then
 };
 
 //Box drawing select
-if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked) then
+if (_pressed==0 && !MCC_ConsoleRuler && !MCC_doubleClicked) exitWith
 {
 	private ["_marker","_markersize","_markerpos","_null","_markerposX","_markerposY","_markersize","_markersizeX","_markersizeY",
 				 "_borderXleft","_borderXright","_borderYdown","_borderYtop","_group","_groupX","_groupY","_leader","_icon","_groupControl"];

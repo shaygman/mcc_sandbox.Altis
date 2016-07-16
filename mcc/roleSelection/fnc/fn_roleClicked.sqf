@@ -81,14 +81,14 @@ MCC_fnc_RSbuildGearButtons = {
 
 		//Bckg
 		_ctrl = _disp ctrlCreate ["RscPicture",-1,_buttonCtrlGroup];
-		_ctrl ctrlSetPosition [0.005*safezoneW, _yPos, 0.02 * safezoneW, _hight];
+		_ctrl ctrlSetPosition [0.005*safezoneW, _yPos, 0.03 * safezoneW, _hight];
 		_ctrl ctrlSetText format ["%1mcc\roleSelection\data\ui\icon_ca.paa",MCC_path];
 		//_ctrl ctrlSetBackgroundColor [1,1,1,0.9];
 		_ctrl ctrlCommit 0;
 
 		//Button
 		_ctrl = _disp ctrlCreate ["RscActivePicture",-1,_buttonCtrlGroup];
-		_ctrl ctrlSetPosition [0.005*safezoneW, _yPos, 0.02 * safezoneW, _hight];
+		_ctrl ctrlSetPosition [0.005*safezoneW, _yPos, 0.03 * safezoneW, _hight];
 		_ctrl ctrlSetText _pic;
 		_ctrl ctrlSetTooltip _toolTip;
 		_ctrl ctrlAddEventHandler ["MouseButtonClick",format ["[%1,_this select 0] spawn MCC_fnc_RSgearButtonClicked",if (typeName _data == typeName "") then {str _data} else {_data}]];

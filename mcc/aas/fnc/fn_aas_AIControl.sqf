@@ -16,6 +16,9 @@ _sectors = [];
 //Get all sectors
 {_sectors pushBack _x} foreach (allMissionObjects "moduleSector_f");
 {_sectors pushBack _x} foreach (allMissionObjects "moduleSectorDummy_f");
+{
+	if ((_x getvariable ["ScoreReward",-1])>0) then {_sectors pushBack _x}
+} foreach (allMissionObjects "logic");
 
 _AIUnits = [];
 while {true} do {
@@ -49,7 +52,11 @@ while {true} do {
 
 	//issue commands to active AI groups
 	{
-		if (side _x == _side && !isPlayer leader _x) then {
+		if (side _x == _side
+		    && !isPlayer leader _x
+		    && (_x getVariable ["MCC_canbecontrolled",false])
+		    && (currentWaypoint _x >= count waypoints _x)
+		    ) then {
 			_group = _x;
 			_leader = leader _group;
 

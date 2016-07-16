@@ -99,6 +99,27 @@ MCC_fnc_mapDrawPlayersWPConsole =
 			} forEach _units;
 		} foreach _groups;
 	};
+
+	//Draw icons for UAV
+	{
+		if (vehicle _x == _x || _x == driver vehicle _x) then {
+			_texture = gettext (configfile >> "CfgVehicles" >> typeof vehicle _x >> "icon");
+			_color = (getNumber (configfile >> "CfgVehicles" >> typeof vehicle _x >> "side")) call BIS_fnc_sideColor;
+			_map drawIcon [
+							_texture,
+							_color,
+							position _x,
+							18,
+							18,
+							direction _x,
+							"",
+							0,
+							0.03,
+							"PuristaBold",
+							"Right"
+						];
+		};
+	} forEach (missionNamespace getVariable [(format ["MCC_uavSpotted_%1", playerSide]),[]]) + allUnitsUAV;
 };
 
 findDisplay 12 displayCtrl 51 ctrlAddEventHandler ["Draw","_this call MCC_fnc_mapDrawPlayersWPConsole"];

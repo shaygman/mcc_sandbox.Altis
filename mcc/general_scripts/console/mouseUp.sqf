@@ -22,7 +22,7 @@ if (_pressed == 1  && (count _groupSelected > 0) && abs (_posX - ((missionNamesp
 	_groups = [];
 	_pos = _ctrl ctrlmapscreentoworld [_posX,_posY];
 	{
-		if ((MCC_ConsoleCanCommandAI || (!MCC_ConsoleCanCommandAI && isplayer leader _x))&& (leader _x distance _pos > 10)) then {
+		if ((MCC_ConsoleCanCommandAI || (!MCC_ConsoleCanCommandAI && isplayer leader _x))&& (leader _x distance2D _pos > (1000*ctrlMapScale _ctrl))) then {
 			_groups pushBack _x;
 		};
 	} foreach _groupSelected;

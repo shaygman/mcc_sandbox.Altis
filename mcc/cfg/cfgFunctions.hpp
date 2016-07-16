@@ -130,6 +130,7 @@ class cas
 	class createPlane		{description = "create a flying plane from the given type and return the plane , pilot and group.";};
 	class deletePlane		{description = "set a plane to move to a location and delete it once it come closer then 800 meters.";};
 	class airDrop		{description = "Handles CAS and airdrop requests on the server";};
+	class uavDetect {};
 };
 
 class artillery

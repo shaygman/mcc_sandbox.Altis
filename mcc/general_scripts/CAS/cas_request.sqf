@@ -15,7 +15,7 @@ _side = switch (toLower mcc_sidename) do
 		};
 
 //If slingload ignore array and call what we have or we didn't fill the array
-_isParachute = missionNamespace getVariable ["MCC_airdropIsParachute",true];
+_isParachute = (missionNamespace getVariable ["MCC_airdropIsParachute",0])==0;
 if ((_type in [0,1] && !_isParachute) || (count MCC_airDropArray == 0)) then {
 	_index = lbCurSel MCC_AIRDROPCLASSCONTROL;
 	if (_index == -1) exitWith {};

@@ -14,7 +14,7 @@ Example:
 
 */
 
-private ["_sectors","_zoneTriggers","_triggersAreas","_trigger","_fnc_drawLine","_sides"];
+private ["_sectors","_zoneTriggers","_triggersAreas","_trigger","_fnc_drawLine","_sides","_bleedTickets"];
 
 MCC_fnc_AASHandleSector = {
     private ["_owner","_owners","_index","_sides","_factor","_nextTriggerIndex","_lastTriggerIndex","_triggers","_nextTriggerOwner","_tlist"];
@@ -78,12 +78,40 @@ MCC_fnc_AASHandleSector = {
 if (typeName (_this select 0) == typeName []) then {
     _sectors =  _this select 0;
     _sides = _this select 1;
+    _bleedTickets = param [2,5,[5]];
 } else {
     _sectors = synchronizedObjects (_this select 0);
     _sides = [];
     {
         _sides pushBack ([((_this select 0) getVariable [_x,1])] call BIS_fnc_sideType);
     } forEach ["side1","side2"];
+    _bleedTickets = (_this select 0) getVariable ["bleedTickets",5];
+};
+
+//Win/Loose conditions
+{
+    _x spawn {
+        while {([_this] call BIS_fnc_respawnTickets)>0} do {sleep 1};
+        ["sidetickets"] call  BIS_fnc_endMissionServer;
+    };
+} forEach _sides;
+
+//Bleed tickets
+[_sides,_bleedTickets] spawn {
+    private ["_count1","_count2","_side1","_side2","_bleedTickets"];
+    _side1 = (_this select 0) select 0;
+    _side2 = (_this select 0) select 1;
+    _bleedTickets = (abs(_this select 1))*-1;
+
+    while {true} do
+    {
+        _count1 = count ([_side1] call MCC_fnc_moduleCapturePoint);
+        _count2 = count ([_side2] call MCC_fnc_moduleCapturePoint);
+        if (_count1 > _count2) then {[_side2,_bleedTickets] call BIS_fnc_respawnTickets};
+        if (_count2 > _count1) then {[_side1,_bleedTickets] call BIS_fnc_respawnTickets};
+
+        sleep 10;
+    };
 };
 
 //Init

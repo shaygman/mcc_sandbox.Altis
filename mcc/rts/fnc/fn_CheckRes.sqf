@@ -1,4 +1,4 @@
-//=================================================================MCC_fnc_resCheck==============================================================================
+//=================================================================MCC_fnc_checkRes==============================================================================
 //	Check if side have enough resources
 //  Parameter(s):
 //     _side: SIDE side
@@ -8,8 +8,8 @@
 //==============================================================================================================================================================================
 private ["_side","_res","_resToCheck","_var","_level","_available"];
 
-_side = [_this,0,missionnamespace,[missionnamespace,sideLogic]] call bis_fnc_param;
-_res = [_this,1,missionnamespace,[[]]] call bis_fnc_param;
+_side = param [0,missionnamespace,[missionnamespace,sideLogic]];
+_res = param [1,missionnamespace,[[]]];
 
 _available = false;
 
@@ -20,11 +20,11 @@ _var   = _res select 0;
 _level = _res select 1;
 _available = switch (tolower _var) do
 			{
-				case "ammo": {if ((_resToCheck select 0)>=_level) then {true} else {false}};
-				case "repair": {if ((_resToCheck select 1)>=_level) then {true} else {false}};
-				case "fuel": {if ((_resToCheck select 2)>=_level) then {true} else {false}};
-				case "food": {if ((_resToCheck select 3)>=_level) then {true} else {false}};
-				case "med": {if ((_resToCheck select 4)>=_level) then {true} else {false}};
+				case "ammo": {(_resToCheck select 0)>=_level};
+				case "repair": {(_resToCheck select 1)>=_level};
+				case "fuel": {(_resToCheck select 2)>=_level};
+				case "food": {(_resToCheck select 3)>=_level};
+				case "med": {(_resToCheck select 4)>=_level};
 				case "time": {true};
 				default {
 					false
