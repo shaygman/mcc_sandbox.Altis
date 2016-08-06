@@ -9,7 +9,7 @@ private ["_zone","_markerlabel"];
 	_zone setMarkerShapeLocal "RECTANGLE";
 	_zone setMarkerColorLocal "colorBlack";
 	_zone setMarkerBrushLocal "Solid";
-	_zone setMarkerAlphalocal 0.4;
+	_zone setMarkerAlphalocal 0.2;
 	_zone setMarkerDirLocal (mcc_zone_dir select _x);
 	_zone setMarkerSizeLocal (mcc_zone_size select _x);
 

@@ -43,19 +43,39 @@ class mcc_uncMain
 		{
 			idc = 2;
 			text = "Blood Pressure:";
-			x = 0.25 * safezoneW + safezoneX;
-			y = 0.115 * safezoneH + safezoneY;
-			w = 0.065 * safezoneW;
+			x = 0.48 * safezoneW + safezoneX;
+			y = 0.11 * safezoneH + safezoneY;
+			w = 0.07 * safezoneW;
 			h = 0.033 * safezoneH;
 		};
 		class progressBar: MCC_RscProgress
 		{
 			idc = 3;
-			x = 0.355625 * safezoneW + safezoneX;
+			x = 0.35 * safezoneW + safezoneX;
 			y = 0.115 * safezoneH + safezoneY;
-			w = 0.345469 * safezoneW;
+			w = 0.35 * safezoneW;
 			h = 0.033 * safezoneH;
 			colorBar[] = {0.8,0,0,0.6};
+			colorFrame[] = {1,1,1,0.8};
+			colorBackground[] = {0,0,0,0.3};
+		};
+		class RespawnText: MCC_RscText
+		{
+			idc = -1;
+			text = "Hold Space To Revive";
+			x = 0.46 * safezoneW + safezoneX;
+			y = 0.76* safezoneH + safezoneY;
+			w = 0.15 * safezoneW;
+			h = 0.055 * safezoneH;
+		};
+		class RespawnProgressBar: MCC_RscProgress
+		{
+			idc = 4;
+			x = 0.35 * safezoneW + safezoneX;
+			y = 0.775 * safezoneH + safezoneY;
+			w = 0.35 * safezoneW;
+			h = 0.033 * safezoneH;
+			colorBar[] = {0,0,0.8,0.6};
 			colorFrame[] = {1,1,1,0.8};
 			colorBackground[] = {0,0,0,0.3};
 		};

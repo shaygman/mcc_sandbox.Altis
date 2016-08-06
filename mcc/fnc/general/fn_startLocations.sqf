@@ -21,12 +21,6 @@ if (_side !=  _playerSideNr) exitWith {};
 
 missionNameSpace setVariable ["MCC_startLocationsRuning", true];
 
-//Is role selection on
-_cpActivated = missionNamespace getVariable ["CP_activated",false];
-
-//Respawn menu on
-_respawnDialog = missionNamespace getVariable ["MCC_openRespawnMenu",true];
-
 //Player side
 switch (_playerSideNr) do {
     case 0: {
@@ -58,6 +52,12 @@ switch (_playerSideNr) do {
 while {str (missionNamespace getVariable [_startLocationName,[]]) == "[]"} do {sleep 3};
 missionNameSpace setVariable ["MCC_startLocationsRuning", false];
 
+//Is role selection on
+_cpActivated = missionNamespace getVariable ["CP_activated",false];
+
+//Respawn menu on
+_respawnDialog = missionNamespace getVariable ["MCC_openRespawnMenu",(missionNamespace getVariable ["MCC_teleportAtStart",0])>0];
+
 //Black Screen on mission startup
 if (!_cpActivated && _respawnDialog) then {
 
@@ -81,38 +81,15 @@ if (!_cpActivated && _respawnDialog) then {
 
 		player setVariable ["cpReady",true,true];
 	};
-
-	cutText ["Deploying ....","BLACK IN",5];
-
-	_starLoc = missionNamespace getVariable ["CP_activeSpawn",objNull];
-
-	if (isNull _starLoc) then {
-		if (count _startLocations > 0) then {_starLoc = _startLocations select 0};
-	};
-
-	_teleportAtStart = _starLoc getVariable ["teleport",0];
-
-	if (_teleportAtStart != 0) then {
-		if (surfaceIsWater (playerDeployPos)) then {
-			_safePos = [(playerDeployPos),10,50,1,2,900,0] call BIS_fnc_findSafePos;
-		} else {
-			_safePos = [(playerDeployPos),10,50,1,0,900,0] call BIS_fnc_findSafePos;
-		};
-
-		//Teleport
-		if (_teleportAtStart == 1) then {
-			player setPosATL [_safepos select 0, _safepos select 1, 0];
-		} else {
-			_helo = if (_teleportAtStart ==2) then {false} else {true};
-			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;
-		};
-	};
 };
 
 _pos = missionNamespace getVariable [_startLocationName,position player];
+
+/*
 if (!_cpActivated && !_respawnDialog) then	{
 	player setpos _pos;
 };
+*/
 
 if (!isnil _markerName) then {deleteMarkerLocal _markerName};
 missionNamespace setVariable [_markerName,createMarkerLocal [_markerName, _pos]];

@@ -53,7 +53,7 @@ if (mcc_active_zone != mcc_zone_number) then
 	_previusZone = format ["%1", mcc_active_zone];
 	_previusZone setMarkerColorLocal "colorBlack";
 	_previusZone setMarkerBrushLocal "Solid";
-	_previusZone setMarkerAlphalocal 0.4;
+	_previusZone setMarkerAlphalocal 0.2;
 	MCC_zone_index = (lbCurSel MCCZONENUMBER);
 };
 
@@ -63,7 +63,7 @@ if (_type == 0) then
 {
 	mcc_zone_markername	setMarkerColorLocal "colorYellow";
 	mcc_zone_markername setMarkerBrushLocal "Solid";
-	mcc_zone_markername setMarkerAlphalocal 0.4;
+	mcc_zone_markername setMarkerAlphalocal 0.2;
 	mcc_active_zone = mcc_zone_number;
 };
 

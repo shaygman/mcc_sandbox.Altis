@@ -1,7 +1,7 @@
 //=================================================================MCC_fnc_vehicleSpawnerInitDialog====================================================================
 //  Open vehicle spawner Dialog
 //=======================================================================================================================================================================
- private ["_simTypesUnits","_side","_CfgVehicles","_CfgVehicle","_vehicleDisplayName","_cfgclass","_cfgSide","_simulation","_vehicleArray","_comboBox","_mccdialog","_displayname","_index","_array","_rtsAnchor","_caller","_vehicleType","_spawnPad","_arguments","_commadner"];
+ private ["_simTypesUnits","_side","_CfgVehicles","_CfgVehicle","_vehicleDisplayName","_cfgclass","_cfgSide","_simulation","_vehicleArray","_comboBox","_mccdialog","_displayname","_index","_array","_rtsAnchor","_caller","_vehicleType","_spawnPad","_arguments","_commadner","_pic"];
 
 //We got here from the addaction
 _caller = param [0, objNull, [objNull]];
@@ -31,13 +31,6 @@ if (_commadner) then {
     ctrlshow [1103,false];
     ctrlshow [84,false];
     ctrlshow [94,false];
-} else {
-    for "_i" from 0 to 2 step 1 do {
-        ctrlshow [_i+1000,false];
-        ctrlshow [_i+1100,false];
-        ctrlshow [_i+81,false];
-        ctrlshow [_i+91,false];
-    };
 };
 
 _simTypesUnits = switch (tolower _vehicleType) do {
@@ -46,6 +39,7 @@ _simTypesUnits = switch (tolower _vehicleType) do {
                             case "heli":  {["helicopter","helicopterX", "helicopterrtd"]};
                             case "jet":  {["airplane","airplanex"]};
                             case "ship":  {["ship","shipx", "shipX","submarinex"]};
+                            case "units":  {["men","menx","soldier"]};
                             default  {["car","carx", "motorcycle"]};
                         };
 
@@ -68,8 +62,10 @@ if (count _vehicleArray == 0) then {
             _cfgclass           = (configName (_CfgVehicle));
             _cfgSide            = (getNumber(_CfgVehicle >> "side")) call BIS_fnc_sideType;
             _simulation         = getText(_CfgVehicle >> "simulation");
-            _cost               = floor (getNumber(_CfgVehicle >> "cost")/700);
-            _vehicleDisplayName = [_vehicleDisplayName, gettext(_CfgVehicle >> "picture")];
+            _cost               = floor (getNumber(_CfgVehicle >> "cost")/400);
+            _pic                =  if ((gettext(_CfgVehicle >> "editorPreview")) == "") then {gettext(_CfgVehicle >> "picture")} else {gettext(_CfgVehicle >> "editorPreview")};
+            if (!(["paa", _pic] call BIS_fnc_inString) && !(["jpg", _pic] call BIS_fnc_inString)) then {_pic = ""};
+            _vehicleDisplayName = [_vehicleDisplayName, _pic];
 
             if (_simulation in _simTypesUnits) then  {
                 if ((_cfgSide == _side) && !(tolower(getText(_CfgVehicle >> "vehicleClass")) in ["static","support","autonomous"])) then {

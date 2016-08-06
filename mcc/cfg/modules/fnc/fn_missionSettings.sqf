@@ -44,6 +44,9 @@ MCC_deletePlayersBody = if (_var == 0) then {false} else {true};
 _var 	= _logic getvariable ["respawnMenu",1];
 MCC_openRespawnMenu = if (_var == 0) then {false} else {true};
 
+//Respawn on Leader
+missionNameSpace setVariable ["MCC_respawnOnGroupLeader",(_logic getvariable ["respawnOnGroupLeader",1]) ==1];
+
 //SQL PDA
 _var 	= _logic getvariable ["sqlPDA",1];
 MCC_allowsqlPDA = if (_var == 0) then {false} else {true};

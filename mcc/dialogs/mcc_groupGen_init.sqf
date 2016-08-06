@@ -43,7 +43,7 @@ ctrlShow [510,false];
 ctrlShow [MCC_GroupGenInfo_IDC,false];
 
 //Show zones
-{str _x setMarkerAlphaLocal 0.4;(format["LABEL_%1",_x]) setMarkerAlphaLocal 1;} foreach (missionNamespace getVariable ["MCC_zones_numbers",[]]);
+{str _x setMarkerAlphaLocal 0.4;(format["LABEL_%1",_x]) setMarkerAlphaLocal 0.3;} foreach (missionNamespace getVariable ["MCC_zones_numbers",[]]);
 
 //Hide admin buttons for no-admins
 if !(serverCommandAvailable "#logout") then
@@ -150,24 +150,19 @@ if (isnil "MCCFirstOpenUI") then
 [] spawn MCC_fnc_groupGenRefresh;
 
 //-------------------------------------------------FPS Loop  -----------------------------
-while {(str (finddisplay groupGen_IDD) != "no display")} do
-{
+while {(str (finddisplay groupGen_IDD) != "no display")} do {
 	MCC_clientFPS  = round(diag_fps);
 	ctrlSetText [MCCCLIENTFPS, format["%1",MCC_clientFPS]];
 
 	if (isnil "mcc_fps_running") then {mcc_fps_running = false};
-	if !(mcc_fps_running) then
-	{
+	if !(mcc_fps_running) then {
 		[[1],"MCC_fnc_FPS",true,false] spawn BIS_fnc_MP;
 		sleep 0.5;
 	};
 
-	if !( MCC_isHC ) then
-	{
+	if !( MCC_isHC ) then {
 		ctrlSetText [MCCSERVERFPS, format["%1",MCC_serverFPS]];
-	}
-	else
-	{
+	} else {
 		ctrlSetText [MCCSERVERFPS, format[" %1 - HC FPS: %2", MCC_serverFPS, MCC_hcFPS]];
 	};
 	sleep 1;

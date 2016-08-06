@@ -146,7 +146,7 @@ private ["_obj","_constType","_cfgtext","_text","_disp","_availableActions","_av
 
 	//Add text
 	if !(isnil "_cfgtext") then {
-		_text = format ["<t color='#ff0000' underline='true'>%1</t><br />%2",(_cfgtext select 0),(_cfgtext select 1)];
+		_text = format ["<t color='#FFD700' underline='true'>%1</t><br />%2",(_cfgtext select 0),(_cfgtext select 1)];
 		(_disp displayCtrl 9999) ctrlSetStructuredText parseText _text;
 	} else {
 		(_disp displayCtrl 9999) ctrlSetStructuredText parseText "";

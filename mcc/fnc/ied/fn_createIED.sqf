@@ -30,13 +30,15 @@ _iedside 			= [_this, 7, west] call BIS_fnc_param;
 if (typeName _iedside == "STRING") then {
 	_iedside = switch (tolower _iedside) do
 				{
-				   case "west":	{west};
-				   case "east":	{east};
-				   case "guer":	{resistance};
-				   case "civ":	{civilian};
-				   default {west};
+				   case "west":	{[west]};
+				   case "east":	{[east]};
+				   case "guer":	{[resistance]};
+				   case "civ":	{[civilian]};
+				   default {[west]};
 				};
 };
+
+if (typeName _iedside == typeName sideLogic) then {_iedside = [_iedside]};
 
 _pos 	= getposatl _fakeIed;
 _iedDir =  getdir _fakeIed;

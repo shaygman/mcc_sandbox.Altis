@@ -63,109 +63,25 @@ if (missionNameSpace getVariable ["MCC_deletePlayersBody",false]) then {deleteVe
 _null = [(compile format ["MCC_curator addCuratorEditableObjects [[objectFromNetId '%1'],false];",netid player]), "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 
 if (missionNamespace getvariable ["MCC_saveGear",false]) then {
-	removeGoggles player;
-	removeHeadgear player;
-	removeUniform player;
-	removeVest player;
-	removeBackpack player;
-
-	removeAllWeapons player;
-	removeAllItems player;
-	removeAllAssignedItems player;
-
-	if (_goggles != "") then {player addGoggles _goggles};
-	if (_headgear != "") then {player addHeadgear _headgear};
-	if (_uniform != "") then {player forceAddUniform  _uniform};
-	if (_vest != "") then {player addVest _vest};
-	if (_backpack != "") then {player addBackpack _backpack};
-
-	waituntil {backpack player == _backpack};
-
-	if (!isnil "_uniformItems") then
-	{
-		{
-			switch (true) do
-				{
-					case (isClass (configFile >> "CfgMagazines" >> _x)) : {player addmagazine _x};
-					case (isClass (configFile >> "CfgWeapons" >> _x)) : {player additem _x};
-					case (isClass (configFile >> "CfgGlasses" >> _x)) : {player additem _x};
-				};
-		} foreach _uniformItems;
-	};
-
-	if (!isnil "_assigneditems") then
-	{
-		{
-			switch (true) do
-				{
-					case (isClass (configFile >> "CfgMagazines" >> _x)) : {player addmagazine _x};
-					case (isClass (configFile >> "CfgWeapons" >> _x)) : {player addWeaponGlobal _x;player linkItem  _x};
-					case (isClass (configFile >> "CfgGlasses" >> _x)) : {player additem _x;player assignItem _x};
-				};
-		} foreach _assigneditems;
-	};
-
-
-	if (!isnil "_vestItems") then
-	{
-		{
-			switch (true) do
-				{
-					case (isClass (configFile >> "CfgMagazines" >> _x)) : {player addmagazine _x};
-					case (isClass (configFile >> "CfgWeapons" >> _x)) : {player additem _x};
-					case (isClass (configFile >> "CfgGlasses" >> _x)) : {player additem _x};
-				};
-		} foreach _vestItems;
-	};
-
-	if (!isnil "MCC_save_Backpack") then
-	{
-		{
-			switch (true) do
-			{
-				case (isClass (configFile >> "CfgMagazines" >> _x)) : {(unitBackpack player) addMagazineCargo [_x,1]};
-				case (isClass (configFile >> "CfgWeapons" >> _x)) : {(unitBackpack player) addItemCargo [_x,1]};
-				case (isClass (configFile >> "CfgGlasses" >> _x)) : {(unitBackpack player) addItemCargo [_x,1]};
-			};
-		} foreach MCC_save_Backpack;
-	};
-
-	if (!isnil "_primaryWeapon") then
-	{
-		player addWeaponGlobal  _primaryWeapon;
-		{player addPrimaryWeaponItem _x} foreach MCC_save_primaryWeaponItems;
-
-		{
-			if (_x != "") then {player addmagazine _x};
-		} foreach _primMag;
-	};
-
-	if (!isnil "_secondaryWeapon") then
-	{
-		player addWeaponGlobal  _secondaryWeapon;
-		{player addSecondaryWeaponItem _x} foreach MCC_save_secondaryWeaponItems;
-
-		{
-			if (_x != "") then {player addmagazine _x};
-		} foreach _secmMag;
-	};
-
-	if (!isnil "_handgunWeapon") then
-	{
-		player addWeaponGlobal  _handgunWeapon;
-		{player addHandgunItem _x} foreach MCC_save_handgunitems;
-
-			{
-				if (_x != "") then {player addmagazine _x};
-			} foreach _handMag;
-	};
-
-	if (!isnil "_primaryWeapon") then
-	{
-		player selectWeapon _primaryWeapon;
-		_muzzles = getArray(configFile>>"cfgWeapons" >> _primaryWeapon >> "muzzles");
-		player selectWeapon (_muzzles select 0);
-	};
+	[	_goggles,
+		_headgear,
+		_uniform,
+		_vest,
+		_backpack,
+		missionNamespace getVariable ["MCC_save_Backpack",[]],
+		_primMag,
+		_secmMag,
+		_handMag,
+		_assigneditems,
+		_uniformItems,
+		_vestItems,
+		_primaryWeapon,
+		_secondaryWeapon,
+		_handgunWeapon,
+		missionNamespace getVariable ["MCC_save_primaryWeaponItems",[]],
+		missionNamespace getVariable ["MCC_save_secondaryWeaponItems",[]],
+		missionNamespace getVariable ["MCC_save_handgunitems",[]]
+	] call MCC_fnc_loadGear;
 };
 
 //Handle add - action

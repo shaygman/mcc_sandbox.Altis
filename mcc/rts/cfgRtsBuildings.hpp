@@ -372,7 +372,7 @@ class MCC_rts_elecPower3 : MCC_rts_elecPower1
 	objectsArray[] =  {{"Land_Camping_Light_F",{0,4,0.75},{{0,1,0},{0,0,1}}},{"Land_JetEngineStarter_01_F",{0,4,-0.4},{{0,-1,0},{0,0,1}}},{"Land_SolarPanel_2_F",{-2,4,0},{{-1,0,0},{0,0,1}}},{"Land_SolarPanel_2_F",{2,4,0},{{1,0,0},{0,0,1}}},{"Land_spp_Mirror_F",{5,9,0},{{0,1,0},{0,0,1}}},{"Land_spp_Mirror_F",{2,9,0},{{0,1,0},{0,0,1}}},{"Land_spp_Mirror_F",{-1,9,0},{{0,1,0},{0,0,1}}},{"Land_spp_Mirror_F",{-4,9,0},{{0,1,0},{0,0,1}}}};
 };
 
-//--------------- Barracks --------------------
+//--------------- Medical --------------------
 class MCC_rts_triage1
 {
 	#ifdef MCCMODE

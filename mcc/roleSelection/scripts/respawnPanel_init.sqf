@@ -119,11 +119,12 @@ MCC_fnc_CPMapOpen_draw =
 			};
 
 			_pos = if (typeName _x == "GROUP") then {getpos leader _x} else {getpos _x};
-			_title = if (typeName _x == "GROUP") then {
-						format ["%1 - %2",(_foreachIndex +1), "Leader"];
-					} else {
-						format ["%1- %2",(_foreachIndex +1), _x getvariable ["type","FOB"]];
-					};
+			//Squad leader
+			_title = 	if (_x == leader player) then {
+							format ["%1- %2",(_foreachIndex +1), "Leader"];
+						} else {
+							format ["%1- %2",(_foreachIndex +1), _x getvariable ["type","FOB"]];
+						};
 
 			_texture = format ["\A3\Ui_f\data\Map\GroupIcons\badge_rotate_%1_gs.paa",_textureAnimPhase];
 

@@ -203,6 +203,27 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 			};
 		};
 
+		class respawnOnGroupLeader
+		{
+			displayName = "Respawn On Leader";
+			description = "Allow Respawn On Group Leader If Respawn Menu Is Enabled";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
 		class sqlPDA
 		{
 			displayName = "Squad Leader PDA";

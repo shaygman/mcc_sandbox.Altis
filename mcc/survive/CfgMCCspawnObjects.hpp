@@ -220,7 +220,7 @@ class CfgMCCspawnObjects {
 	};
 
 	class MCC_ammoBox {
-		itemClasses[] = {"woodenbox","luggageheap","pallet_milboxes_f"};
+		itemClasses[] = {"woodenbox","luggageheap","pallet_milboxes_f","case"};
 		chanceWeapon = 30;
 		maxWeapon = 3;
 		chanceAmmo = 50;

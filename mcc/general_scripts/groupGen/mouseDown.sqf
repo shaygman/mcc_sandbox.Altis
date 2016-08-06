@@ -102,7 +102,7 @@ if (mcc_missionmaker == (name player)) then {
 				_isIcon = if (MarkerShape _markerName == "ICON") then {0} else {1};
 
 				if (!MCC_GroupGenMouseButtonDown) exitWith {};
-				_markerName setMarkerAlphalocal 1;
+				_markerName setMarkerAlphalocal 0.6;
 
 				//While mouse pressed
 				while {MCC_GroupGenMouseButtonDown} do

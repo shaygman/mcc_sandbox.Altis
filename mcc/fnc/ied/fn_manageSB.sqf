@@ -16,13 +16,16 @@ _IEDExplosionType	= param [3,1];
 if (typeName _iedside == "STRING") then {
 	_iedside = switch (tolower _iedside) do
 				{
-				   case "west":	{west};
-				   case "east":	{east};
-				   case "guer":	{resistance};
-				   case "civ":	{civilian};
-				   default {west};
+				   case "west":	{[west]};
+				   case "east":	{[east]};
+				   case "guer":	{[resistance]};
+				   case "civ":	{[civilian]};
+				   default {[west]};
 				};
 };
+
+if (typeName _iedside == typeName sideLogic) then {_iedside = [_iedside]};
+
 
 _sound		=1; //choose 0 for no sounds
 _targ 		= ["Car","Tank","Man"];
@@ -44,21 +47,19 @@ if !(_sb getVariable ["static",false]) then {[group _sb, getPos _sb, 350] call b
 
 _check = true;
 
-while {alive _sb && _check} do
-{
+while {alive _sb && _check} do {
 	sleep 1;
 	_close = (getPos _sb) nearObjects 100;
 
-	if(_iedside countSide _close > 0) then
-	{
-		while {(alive _sb) && (_check)} do
-		{
+	if({side _x in _iedside} count _close > 0) then {
+
+		while {(alive _sb) && (_check)} do {
 			sleep 1;
 			_closeunit = [];
-			{if(side _x == _iedside) then {_closeunit = _closeunit + [_x]}} forEach _close;
+			{if(side _x in _iedside) then {_closeunit = _closeunit + [_x]}} forEach _close;
 			_count=count _closeunit;
-			for [{_x=0},{_x<_count},{_x=_x+1}] do
-			{
+
+			for [{_x=0},{_x<_count},{_x=_x+1}] do {
 				_enemy = _closeunit select _x;
 
 				{

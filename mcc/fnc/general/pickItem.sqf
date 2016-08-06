@@ -11,7 +11,7 @@ _displayName = getText(configFile >> "CfgVehicles" >> typeof _object >> "display
 _object removeaction _index;
 _caller playMove "AinvPknlMstpSrasWrflDnon_Putdown_AmovPknlMstpSrasWrflDnon";
  [[format ["%1 has acquired %2",name _caller,_displayName]],'MCC_fnc_globalHint',true,true] spawn BIS_fnc_MP;
- call compile "MCC_pickItem= true";
+missionNamespace setVariable ["MCC_pickItem",playerSide];
 publicvariable "MCC_pickItem";
 
 sleep 1;

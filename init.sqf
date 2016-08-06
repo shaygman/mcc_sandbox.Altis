@@ -43,7 +43,7 @@ if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5};
 //MCC_nameTags = false;
 
 //-------------------- Save Gear --------------------------------------------------
-//MCC_saveGear = false;
+if (isnil "MCC_saveGear") then {MCC_saveGear = true};
 
 //--------------------Gain XP (in role selection)--------------------------------
 //CP_gainXP = true;						//Gain XP from killing, leading, healing, driving, flying or completing objectives?
@@ -87,13 +87,14 @@ MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8R
 
 //MCC Survive mod
 // Set to true to activate survival mode - scavange for loot to survive
+[] spawn MCC_fnc_surviveInit;
 if (isnil "MCC_surviveMod") then {missionNamespace setVariable ["MCC_surviveMod",false]};
-"MCC_surviveMod" addPublicVariableEventHandler {
-	[] spawn MCC_fnc_surviveInit;
-};
 
 //How long in days(24H-game time) will it take for spawn position to refresh
 if (isnil "MCC_surviveModRefresh") then {MCC_surviveModRefresh = 1};
+
+//RTS
+if (isnil "MCC_allowRTS") then {MCC_allowRTS = true};
 
 //============== Medic System ====================================
 if (!MCC_isMode && !MCC_isACE)  then {
@@ -608,7 +609,6 @@ mcc_isloading			= false;
 mcc_resetmissionmaker	= false;
 if (isnil "mcc_missionmaker") then {mcc_missionmaker = ""};
 mcc_firstTime			= true; //First time runing?
-mcc_pickitem 			= false;
 
 // Objects
 U_AMMO					= [];

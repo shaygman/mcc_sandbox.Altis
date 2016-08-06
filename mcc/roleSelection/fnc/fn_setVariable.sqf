@@ -3,7 +3,7 @@
 // Example: [[varName,playerID,VarValue], "MCC_fnc_setVariable", false, false] spawn BIS_fnc_MP;
 //==============================================================================================================================================================================
 
-private ["_varName","_id","_value","_player","_varType"];
+private ["_varName","_id","_value","_player","_varType","_name"];
 _varName 	= _this select 0;
 _player 	= _this select 1;
 _value		= _this select 2;
@@ -12,6 +12,13 @@ _varType	= toUpper (_this select 3);
 if(!isServer) exitWith {};
 if (isnil "_player") exitWith {};
 
-_id = getPlayerUID _player;
+if (typeName _player == typeName []) then {
+	_id = _player select 0;
+	_name = _player select 1;
+} else {
+	_id = getPlayerUID _player;
+	_name = name _player;
+};
 
-[name _player, _id, _varName, "write",_value,true] call MCC_fnc_handleDB;
+
+[_name, _id, _varName, "write",_value,true] call MCC_fnc_handleDB;

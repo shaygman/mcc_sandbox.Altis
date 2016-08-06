@@ -60,6 +60,12 @@ if (missionNamespace getVariable ["CP_activated",false]) then {
 if (_succeed) then {
 	if !(_group getVariable ["locked",false]) then {
 		[player] join _group;
+
+		//group leader spawn
+		if ((missionNamespace getVariable ["MCC_respawnOnGroupLeader",false]) && !(leader player in ([player] call BIS_fnc_getRespawnPositions))) then {
+			[player, grpNull] call BIS_fnc_addRespawnPosition;
+		};
+
 	} else {
 		_succeed = false;
 	};

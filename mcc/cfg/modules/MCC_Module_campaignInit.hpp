@@ -134,6 +134,15 @@ class MCC_Module_campaignInit : Module_F
 		class missionRotation
 		{
 			displayName = "Missions Rotation";
+			description = "After each set of mission passed MCC will pick a new location for the next mission";
+			typeName = "NUMBER";
+			defaultValue = 3;
+		};
+
+		class tileSize
+		{
+			displayName = "Tile Size";
+			description = "MCC will categorize the map to tiles - the default size of a tile"
 			typeName = "NUMBER";
 			defaultValue = 3;
 		};

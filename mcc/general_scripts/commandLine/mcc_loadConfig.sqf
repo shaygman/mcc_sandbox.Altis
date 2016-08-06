@@ -35,7 +35,7 @@ MCC_fn_loadZones =
 
 		sleep 1;
 		mcc_zone_markername setMarkerColorLocal "colorBlack";
-		mcc_zone_markername setMarkerAlphalocal 0.4;
+		mcc_zone_markername setMarkerAlphalocal 0.2;
 
 	} foreach _zonesNumber;
 };

@@ -40,21 +40,19 @@ if (_IEDTriggerType in [2,4]) then	{
 		_armed 		= _dummy getvariable ["armed",true];
 
 		_nearObjects = (getPos _dummy) nearObjects 150;
-		if(_iedside countSide _nearObjects > 0) then
-		{
-			while {(alive _fakeIed) && (_loop) && _armed && !_triggered} do
-			{
+
+		if({side _x in _iedside} count _nearObjects > 0) then {
+			while {(alive _fakeIed) && (_loop) && _armed && !_triggered} do {
 				sleep 1;
 				_triggered 	= _dummy getvariable ["iedTrigered",false];
 				_armed 		= _dummy getvariable ["armed",true];
 
 				_nearTargets = (getPos _dummy) nearObjects (_trapdistance);
 				_nrsd = [];
-				{if(side _x == _iedside) then {_nrsd = _nrsd + [_x]}} forEach _nearTargets;
-				_count=count _nrsd;
+				{if(side _x in _iedside) then {_nrsd = _nrsd + [_x]}} forEach _nearTargets;
+				_count = count _nrsd;
 
-				for [{_x=0},{_x<_count},{_x=_x+1}] do
-				{
+				for [{_x=0},{_x<_count},{_x=_x+1}] do {
 					//check if it's a CREW vehicle
 					_target = _nrsd select _x;
 					_isJammable = _target getvariable ["MCC_ECM",false];

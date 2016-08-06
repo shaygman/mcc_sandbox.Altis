@@ -5,6 +5,8 @@ private ["_object","_text"];
 _object = _this select 0;
 _text	= _this select 1;
 
+if (!isServer) exitWith {};
+
 if (isnil "_object") exitWith {};
 if (isnull _object || !isServer) exitWith {};
 

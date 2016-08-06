@@ -1,5 +1,5 @@
 //=================================================================MCC_fnc_vehicleSpawnerInit==================================================================================
-//  [_this,"vehicle"] call MCC_fnc_vehicleSpawnerInit
+//  [_this,"vehicle"] spawn MCC_fnc_vehicleSpawnerInit
 //  Init an object as a vehicle spawner and add an add action to it
 //  Parameter(s):
 //     0: OBJECT - objct to which items will be added
@@ -9,7 +9,7 @@
 private ["_object","_arguments","_null","_syncItems","_syncedObjects","_billboard","_helipad","_type"];
 
 _object = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-
+waitUntil {time > 1};
 //We came here from a moudle
 if (_object isKindOf "mcc_sandbox_modulevehicleSpawner" || _object isKindOf "MCC_Module_vehicleSpawnerCurator") exitWith {
     _syncedObjects = synchronizedObjects _object;
@@ -52,6 +52,7 @@ if (count _this <=3) then {
                                 case "heli": {[0,"\A3\Air_F_Beta\Heli_Attack_01\Data\UI\Heli_Attack_01_CA.paa"]};
                                 case "jet": {[0,"\A3\Air_F_EPC\Plane_CAS_01\Data\UI\Plane_CAS_01_CA.paa"]};
                                 case "ship": {[0,"\A3\boat_f\Boat_Armed_01\data\ui\Boat_Armed_01_minigun.paa"]};
+                                case "units": {[0,format ["%1data\IconMen.paa",MCC_path]]};
                                 default {[0,"\A3\Soft_F\MRAP_01\Data\UI\MRAP_01_Base_ca.paa"]};
                             });
     _object setObjectTexture [1,'#(rgb,8,8,3)color(0.5,0.5,0.5,0.1)'];

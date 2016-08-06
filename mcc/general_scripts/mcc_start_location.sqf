@@ -5,6 +5,7 @@ disableSerialization;
 _side = _this select 0;
 if (lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 21)==1) then {_side = _side + 7};
 MCC_teleportAtStart = lbCurSel ((uiNamespace getVariable "MCC_groupGen_Dialog") displayCtrl 20);
+
 if !mcc_isloading then {
 	switch (_side) do
 	{

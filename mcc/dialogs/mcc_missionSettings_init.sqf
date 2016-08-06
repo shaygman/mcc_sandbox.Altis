@@ -244,4 +244,4 @@ lbClear _comboBox;
 {
 	_displayname = _x;
 	_comboBox lbAdd _displayname;
-} foreach ["Yes - Enable loot","Yes - Disable loot","Disabled"];
+} foreach ["Disabled","Yes - Enable loot","Yes - Disable loot"];

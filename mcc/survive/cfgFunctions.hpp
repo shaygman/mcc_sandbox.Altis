@@ -15,4 +15,5 @@ class survive {
 	class surviveUseItemHeadTorch {};
 	class surviveBuild {};
 	class getSurvivalPlaceHolders {};
+	class loadGear {};
 };

@@ -6,12 +6,13 @@
 //	_type: interger or string, Integer - pre defined mission type or a string for custom one
 //	_missionTittle:  string,  the mission tittle can get complex string as it will turn it to array such as HTML
 //=========================================================================================
-private ["_type","_string","_tittle","_dummyGroup","_dummy","_missionTittle","_missionInfo","_sidePlayer"];
+private ["_type","_string","_tittle","_dummyGroup","_dummy","_missionTittle","_missionInfo","_sidePlayer","_playMusic"];
 _string 		= _this select 0;
 _type 			= _this select 1;
-_missionTittle 	= if (count _this > 2) then {toArray (_this select 2)} else {[]};
-_missionInfo	= if (count _this > 3) then {_this select 3} else {[]};
-_sidePlayer =  [_this, 4, sideLogic] call BIS_fnc_param;
+_missionTittle 	= param [2, [], [[]]];;
+_missionInfo	= param [3, [], [[]]];;
+_sidePlayer =  _missionInfo param [7, sideLogic,[sideLogic]];
+_playMusic = _missionInfo param [8, 0,[0]];
 
 if !(isServer) exitWith {};
 
@@ -29,9 +30,7 @@ if (count _missionInfo > 0) then
 if (typeName _type == "STRING") then
 {
 	_tittle = _type;
-}
-else
-{
+} else {
 	_tittle = switch (_type) do
 				{
 				   case 0: {"Situation"};
@@ -46,7 +45,7 @@ else
 
 waituntil {!isnil "MCC_server"};
 _briefings = MCC_server getVariable ["briefings",[]];
-_briefings set [count _briefings, [_tittle,_string]];
+_briefings pushBack [_tittle,_string];
 MCC_server setVariable ["briefings",_briefings, true];
 
 _dummyGroup = creategroup sidelogic;
@@ -54,16 +53,16 @@ _dummy = _dummyGroup createunit ["Logic", [0, 90, 90],[],0.5,"NONE"];	//Logic - 
 waituntil {!isnull _dummy};
 
 //Are we dealing with mission wizard's missions?
-if (count _missionInfo > 0) then
-{
+if (count _missionInfo > 0) then {
 	_dummy setVariable ["missions",time,true];
 	_dummy setVariable ["missionsInfo",_missionInfo,true];
 	_dummy setVariable ["briefings",[_tittle, _string ,_missionTittle],true];
 	_dummy setVariable ["objectives",MCC_activeObjectives ,true]; //---- Do we need that?!
 };
 
-_init = format ["0 = _this spawn {if (!isDedicated && playerSide == %4) then {waituntil {alive player};player createDiaryRecord ['diary', ['%1',(toString %3) + '%2']];(_this getVariable 'missionsInfo') call MCC_fnc_MWopenBriefing;}};",_tittle, _string ,_missionTittle, _sidePlayer];
+//Start briefings
+if (_playMusic in [0,1]) then {
+	_init = format ["0 = _this spawn {if (!isDedicated && playerSide == %4) then {waituntil {alive player};player createDiaryRecord ['diary', ['%1',(toString %3) + '%2']];(_this getVariable 'missionsInfo') spawn MCC_fnc_MWopenBriefing;}};",_tittle, _string ,_missionTittle, _sidePlayer];
 
-[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
-
-//MCC_curator addCuratorEditableObjects [[_dummy],false];
+	[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
+};

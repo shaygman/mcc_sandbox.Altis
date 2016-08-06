@@ -30,7 +30,7 @@ if (!MCC_capture_state) then
 		_marker setMarkerShapeLocal MCC_Marker_type;
 		_marker setMarkerDirLocal MCC_Marker_dir;
 		_marker setMarkerSizeLocal (mcc_zone_size select mcc_zone_number);
-		_marker setMarkerAlphalocal 0.4;
+		_marker setMarkerAlphalocal 0.2;
 		mcc_zone_markername	setMarkerColorLocal MCC_MarkerZoneColor;
 
 		deleteMarkerLocal (format["LABEL_%1",mcc_zone_markername]);

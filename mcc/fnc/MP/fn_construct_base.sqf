@@ -140,6 +140,6 @@ if (_constType == "hq") then {
 	[_side, _object] call MCC_fnc_makeObjectVirtualBox
 };
 
-if (_constType == "workshop") then {
-	 [[_side, _module], "MCC_fnc_initWorkshop", false, false] spawn BIS_fnc_MP;
+if (_constType in ["workshop","barracks"]) then {
+	 [[_side, _module,_constType], "MCC_fnc_initWorkshop", false, false] spawn BIS_fnc_MP;
 };

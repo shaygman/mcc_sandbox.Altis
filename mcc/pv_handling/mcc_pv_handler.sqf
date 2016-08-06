@@ -184,6 +184,7 @@ my_pv_handler =
 									_p_mcc_zone_markername setMarkerShapeLocal _p_mcc_marker_zone_type;
 									_p_mcc_zone_markername setMarkerSizeLocal _p_mcc_zone_markerSize;
 									_p_mcc_zone_markername setMarkerDirLocal _p_mcc_marker_zone_dir;
+									_p_mcc_zone_markername setMarkerAlphaLocal 0;
 								}
 							else
 								{
@@ -191,6 +192,7 @@ my_pv_handler =
 									_p_mcc_zone_markername setMarkerShapeLocal _p_mcc_marker_zone_type;
 									_p_mcc_zone_markername setMarkerSizeLocal _p_mcc_zone_markerSize;
 									_p_mcc_zone_markername setMarkerDirLocal _p_mcc_marker_zone_dir;
+									//_p_mcc_zone_markername setMarkerAlphaLocal 0;
 								};
 							};
 

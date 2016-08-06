@@ -37,6 +37,7 @@ _lastKeyStroke pushBack (str _this);
 missionNamespace setvariable ["MCC_lastKeyStroke",_lastKeyStroke];
 
 if (tolower _ehType == "keyup") exitWith {
+
 	//ACE ui position
 	if (_dikCode == 219 && _ctrlKey && !(isnil "MCC_ACEKeyPos")) then {0 spawn {sleep 1; MCC_ACEKeyPos = nil}};
 
@@ -56,6 +57,9 @@ if (tolower _ehType == "keyup") exitWith {
 		};
 	};
 
+	//Disable key holding
+	MCC_interactionKey_holding = false;
+
 	//keybinds
 	switch (_action) do {
 		case 0 : {_null = [nil,nil,nil,nil,0] execVM format ["%1mcc\dialogs\mcc_PopupMenu.sqf",MCC_path]};	//MCC
@@ -66,11 +70,10 @@ if (tolower _ehType == "keyup") exitWith {
 			(uiNamespace getVariable ["MCC_INTERACTION_MENU",displayNull]) closeDisplay 1;
 			MCC_interactionKey_down = false;
 			MCC_interactionKey_up = true;
-			MCC_interactionKey_holding = false;
 			(missionNamespace setVariable ["MCC_interactionOn",false])
 		};	//Interaction
 		case 5 : {_null = [nil,nil,nil,nil,3] execVM format ["%1mcc\dialogs\mcc_PopupMenu.sqf",MCC_path]};	//Console
-		case 6 : {(uiNamespace getVariable ["MCC_INTERACTION_MENU",displayNull]) closeDisplay 1; MCC_interactionKey_down = false; MCC_interactionKey_up = true; MCC_interactionKey_holding = false;};	//Self Interaction
+		case 6 : {(uiNamespace getVariable ["MCC_INTERACTION_MENU",displayNull]) closeDisplay 1; MCC_interactionKey_down = false; MCC_interactionKey_up = true;};	//Self Interaction
 	};
 };
 
@@ -83,7 +86,9 @@ if (tolower _ehType == "keydown") exitWith {
 	//No need to go further if CBA
 	if (MCC_isCBA) exitWith {};
 
-	MCC_interactionKey_holding = {_x == str _this} count _lastKeyStroke >= 3;
+	if (!(missionNamespace getVariable ["MCC_interactionKey_holding",false]) && ({_x == str _this} count _lastKeyStroke >= 3)) then {
+		MCC_interactionKey_holding = true;
+	};
 
 	//keybinds
 	switch (_action) do {

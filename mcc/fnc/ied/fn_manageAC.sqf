@@ -11,17 +11,18 @@ _suspect 		= param [0,objNull];
 _side 			= param [1,sideEnemy];
 _rad  			= param [2,25];
 
-if (typeName _side == "STRING") then
-{
+if (typeName _side == "STRING") then {
 	_side = switch (tolower _side) do
 				{
-				   case "west":	{west};
-				   case "east":	{east};
-				   case "guer":	{resistance};
-				   case "civ":	{civilian};
-				   default {sideEnemy};
+				   case "west":	{[west]};
+				   case "east":	{[east]};
+				   case "guer":	{[resistance]};
+				   case "civ":	{[civilian]};
+				   default {[west]};
 				};
 };
+
+if (typeName _side == typeName sideLogic) then {_side = [_side]};
 
 _weaponList = [
                 ["hgun_P07_F", "16Rnd_9x21_Mag"],
@@ -47,8 +48,7 @@ _dummy setVariable ["fakeIed",_suspect];
 _dummy hideobjectGlobal true;
 _dummy attachto [_suspect,[0,0,0]];
 
-[_suspect, _dummy] spawn
-{
+[_suspect, _dummy] spawn {
 	private ["_suspect"];
 	_suspect 	= _this select 0;
 	_dummy 		= _this select 1;
@@ -68,46 +68,43 @@ _targ = ["Car","Man"];
 // =============================Chase script by Shay_Gman=================
  _check=true;
 
-while {alive _suspect && _check} do
-{
+while {alive _suspect && _check} do {
 	sleep 1;
 	_check = _suspect getvariable ["armed",true];
 	_close = (getPos _suspect) nearObjects _rad;
-	if(_side countSide _close > 0 || {isPlayer _x} count _close > 0) then
-	{
+
+	if(({side _x in _side} count _close > 0) || {isPlayer _x} count _close > 0) then {
 		_t=600;
-		while {(alive _suspect) && (_check) && (_t > 0)} do
-		{
+
+		while {(alive _suspect) && (_check) && (_t > 0)} do {
 			sleep 1;
 			_check = _suspect getvariable ["armed",true];
 			_closeunit = [];
 			{
-				if (side _x == _side || isPlayer _x) then {_closeunit = _closeunit + [_x]}
+				if (side _x in _side || isPlayer _x) then {_closeunit = _closeunit + [_x]}
 			} forEach _close;
 
 			_count=count _closeunit;
 
-			for [{_x=0},{_x<_count},{_x=_x+1}] do
-			{
+			for [{_x=0},{_x<_count},{_x=_x+1}] do {
 				_enemy = _closeunit select _x;
+
 				{
-					if(_enemy isKindOf _x && _check) then
-					{
-						while {alive _suspect && _check} do
-						{
+					if(_enemy isKindOf _x && _check) then {
+
+						while {alive _suspect && _check} do {
 							sleep 2;
 							_check = _suspect getvariable ["armed",true];
 							_rand = random 100;
 
-							if (((_suspect distance _enemy ) <=_rad) &&  (alive _enemy) && (_rand < 15)) then
-							{
+							if (((_suspect distance _enemy ) <=_rad) &&  (alive _enemy) && (_rand < 15)) then {
+
 								_suspect setbehaviour "COMBAT";
-								if (alive _suspect) then
-								{
-									if (!(_suspect hasweapon _weapon)) then
-									{
-										switch (side _enemy) do
-										{
+								if (alive _suspect) then {
+
+									if (!(_suspect hasweapon _weapon)) then {
+
+										switch (side _enemy) do {
 											case west: {_grp = createGroup east};
 											case east: {_grp = createGroup west};
 											case resistance:
@@ -143,8 +140,7 @@ while {alive _suspect && _check} do
 	};
 };
 
-if (!alive _suspect) then
-{
+if (!alive _suspect) then {
 	{deleteVehicle _x} forEach attachedObjects _suspect;
 };
 

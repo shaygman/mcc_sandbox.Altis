@@ -73,10 +73,10 @@ private["_tLoc","_tMap","_tDate","_tTime","_tTimeH","_tTimeM","_tDay","_tMonth",
 _showDate 	= true;
 
 
-_position  	= [_this, 0, getPos player, [[]]] call BIS_fnc_param;
-_date 	   	= [_this, 1, date, [[]]] call BIS_fnc_param;
-_tMap		= [_this, 2, "auto", [""]] call BIS_fnc_param;
-_tLoc		= [_this, 3, "auto", [""]] call BIS_fnc_param;
+_position  	= param [ 0, getPos player, [[]]];
+_date 	   	= param [ 1, date, [[]]];
+_tMap		= param [ 2, "auto", [""]];
+_tLoc		= param [ 3, "auto", [""]] ;
 
 if (_tMap != "") then
 {
@@ -104,9 +104,9 @@ if (_showMap && _tMap == "auto") then
 	_sector = _position call _fn_getSector;
 
 	_map = gettext (configfile >> "cfgworlds" >> worldname >> "description");
-	
-	if (isnil "_map") then {_map = ""}; 
-	
+
+	if (isnil "_map") then {_map = ""};
+
 	_template = switch (_sector) do
 	{
 		case 1: {localize "STR_A3_SectorNorthWest"};

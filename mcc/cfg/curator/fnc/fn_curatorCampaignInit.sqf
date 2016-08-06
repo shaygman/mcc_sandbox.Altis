@@ -1,7 +1,7 @@
 //============================================================MCC_fnc_curatorCampaignInit=============================================================================
 // Starts MCC Campaign
 //=======================================================================================================================================================================
-private ["_pos","_module","_factionArray","_resualt","_difficulty","_missionMax","_factionCiv","_factionPlayer","_sidePlayer","_factionEnemy","_sideEnemy","_sidePlayer2","_tickets","_missionRotation"];
+private ["_pos","_module","_factionArray","_resualt","_difficulty","_missionMax","_factionCiv","_factionPlayer","_sidePlayer","_factionEnemy","_sideEnemy","_sidePlayer2","_tickets","_missionRotation","_tileSize"];
 _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 if (isNull _module) exitWith {};
 
@@ -20,9 +20,10 @@ if (typeName (_module getVariable ["factionPlayer",true]) == typeName "") exitWi
 	_sidePlayer2 = [_module getVariable ["factionRivalPlayer",7]] call BIS_fnc_sideType;
 	_tickets = _module getVariable ["tickets",100];
 	_missionRotation = _module getVariable ["missionRotation",4];
+	_tileSize = _module getVariable ["tileSize",250];
 
 	//Start ambient civilians
-	[[_sidePlayer,_factionPlayer,_sideEnemy,_factionEnemy,_factionCiv,_missionMax,_difficulty,_sidePlayer2,_tickets,_missionRotation],"MCC_fnc_campaignInit",false,false] spawn BIS_fnc_MP;
+	[[_sidePlayer,_factionPlayer,_sideEnemy,_factionEnemy,_factionCiv,_missionMax,_difficulty,_sidePlayer2,_tickets,_missionRotation,_tileSize],"MCC_fnc_campaignInit",false,false] spawn BIS_fnc_MP;
 
 	//Start day/night cycle
 	[[_sidePlayer,_sidePlayer2],"MCC_fnc_dayCycle",false,false] spawn BIS_fnc_MP;
@@ -46,7 +47,8 @@ _factionArray = [];
  						["Difficulty",["Easy","Medium","Hard"]],
  						["Rival Players Side",["East","West","Resistance","None"]],
  						["Tickets",200],
- 						["Missions Rotation",10]
+ 						["Missions Rotation",10],
+ 						["Tile Size",500]
  					  ]] call MCC_fnc_initDynamicDialog;
 
 if (count _resualt == 0) exitWith {deleteVehicle _module};
@@ -61,9 +63,10 @@ _difficulty = ((_resualt select 4)+1)*10;
 _sidePlayer2 = [east,west,resistance,sideLogic] select (_resualt select 5);
 _tickets = _resualt select 6;
 _missionRotation = _resualt select 7;
+_tileSize = _resualt select 8;
 
 //Start ambient civilians
-[[_sidePlayer,_factionPlayer,_sideEnemy,_factionEnemy,_factionCiv,_missionMax,_difficulty,_sidePlayer2,_tickets,_missionRotation],"MCC_fnc_campaignInit",false,false] spawn BIS_fnc_MP;
+[[_sidePlayer,_factionPlayer,_sideEnemy,_factionEnemy,_factionCiv,_missionMax,_difficulty,_sidePlayer2,_tickets,_missionRotation,_tileSize],"MCC_fnc_campaignInit",false,false] spawn BIS_fnc_MP;
 
 //Start day/night cycle
 [[_sidePlayer,_sidePlayer2],"MCC_fnc_dayCycle",false,false] spawn BIS_fnc_MP;

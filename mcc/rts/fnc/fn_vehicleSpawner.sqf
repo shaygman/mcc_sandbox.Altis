@@ -41,6 +41,14 @@ if (_action == 0) exitWith {
             _ctrl = _ctrl +1;
         } forEach [_costAmmo,_costRepair,_costFuel];
     } else {
+
+         _ctrl = 1000;
+
+        {
+            ctrlSetText [_ctrl, str _x];
+            _ctrl = _ctrl +1;
+        } forEach [0,0,0];
+
         //Do we have enough personal fame
         _ctrl = _mccdialog displayctrl 1003;
         _ctrl ctrlSetText str _costValor;
@@ -83,19 +91,23 @@ if (_action == 1) then {
         player setVariable ["MCC_valorPoints",(player getVariable ["MCC_valorPoints",50])-_costValor,true];
     };
 
-    _vehicle = _cfgclass createVehicle _spawnPadPos;
+    if (tolower (getText(configfile >> "CfgVehicles" >>_cfgclass >> "simulation")) == "soldier") then {
+        _vehicle = group player createUnit [_cfgclass, _spawnPadPos, [], 0, "FORM"];
+    } else {
+        _vehicle = _cfgclass createVehicle _spawnPadPos;
 
-    _vehicle setpos _spawnPadPos;
-    _vehicle setdir getdir _spawnPad;
-    _vehicle setVariable ["mcc_delete",false,true];
-    _vehicle setVariable ["MCC_rtsObject",true,true];
-     if (missionNamespace getVariable ["CP_activated",false]) then {_vehicle disableTIEquipment true};
+        _vehicle setpos _spawnPadPos;
+        _vehicle setdir getdir _spawnPad;
+        _vehicle setVariable ["mcc_delete",false,true];
+        _vehicle setVariable ["MCC_rtsObject",true,true];
+         if (missionNamespace getVariable ["CP_activated",false]) then {_vehicle disableTIEquipment true};
 
-    //clear cargo
-    clearMagazineCargoGlobal _vehicle;
-    clearWeaponCargoGlobal _vehicle;
-    clearBackpackCargoGlobal _vehicle;
-    clearItemCargoGlobal _vehicle;
+        //clear cargo
+        clearMagazineCargoGlobal _vehicle;
+        clearWeaponCargoGlobal _vehicle;
+        clearBackpackCargoGlobal _vehicle;
+        clearItemCargoGlobal _vehicle;
+    };
 
     [[[_vehicle], {MCC_curator addCuratorEditableObjects [[_this select 0],false];}], "BIS_fnc_spawn", false, false, false] call BIS_fnc_MP;
     closeDialog 0;

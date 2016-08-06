@@ -45,9 +45,9 @@ _reqText = "";
 
 //If we don't have all the needed facilities around let the player know
 _text = if (_reqText != "") then {
-	 format ["<t color='#ff0000' underline='true'>%1</t><br />%2 <br /><t color='#ff0000'>Requires: %3</t>",(_cfgtext select 0),(_cfgtext select 1),_reqText];
+	 format ["<t color='#FFD700' underline='true'>%1</t><br />%2 <br /><t color='#ff0000'>Requires: %3</t>",(_cfgtext select 0),(_cfgtext select 1),_reqText];
 } else {
-	 format ["<t color='#ff0000' underline='true'>%1</t><br />%2 <br /></t>",(_cfgtext select 0),(_cfgtext select 1),_reqText];
+	 format ["<t color='#FFD700' underline='true'>%1</t><br />%2 <br /></t>",(_cfgtext select 0),(_cfgtext select 1),_reqText];
 };
 
 //Populate Resources

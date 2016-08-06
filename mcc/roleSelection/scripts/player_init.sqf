@@ -1,4 +1,4 @@
-private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight","_role","_exp","_level","_safePos","_rad","_teleportAtStart","_starLoc"];
+private ["_string","_logicPos","_logicEmpty","_nearObjects","_target","_nvgstate","_camLogic","_camBuildings","_camLight","_role","_exp","_level","_teleportAtStart","_starLoc"];
 
 // - TO DO  delete corpse and items from it.
 //******************************************************************************************************************************
@@ -133,30 +133,6 @@ detach player;
 
 detach CP_gearCam;
 CP_gearCam cameraeffect ["Terminate","back"];
-
-_safePos = [];
-_rad = 10;
-while {count _safepos == 0} do {
-	_safepos = playerDeployPos findEmptyPosition [0,_rad,"CAManBase"];
-	//_safePos = [(playerDeployPos),_rad,30,1,0,900,0,[],[[-500,-500,0],[-500,-500,0]]] call BIS_fnc_findSafePos;
-	_rad = _rad + 10;
-	sleep 0.1;
-};
-
-missionNamespace setvariable ["CP_gainXPFirstTime",true];
-
-//Teleport HALO or Paradrop
-_starLoc = missionNamespace getVariable ["CP_activeSpawn",objNull];
-_teleportAtStart = _starLoc getVariable ["teleportAtStart",1];
-
-
-//Teleport
-if (_teleportAtStart <= 1) then {
-	player setpos _safePos;
-} else {
-	[_safePos, ["",player], (_teleportAtStart !=2), 500, floor (random 3),false] spawn MCC_fnc_paradrop;
-};
-
 
 while {isnil "_role"} do {_role = player getvariable "CP_role";sleep 0.1;};
 

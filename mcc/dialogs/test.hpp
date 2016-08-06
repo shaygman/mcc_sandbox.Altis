@@ -16,87 +16,240 @@ class mcc_test
 
 	class controls
 	{
-		class MCC_ConsoleEvacText: MCC_RscText {
-			idc = -1;
-			text = "Evac Management:"; //--- ToDo: Localize;
-			x = 0.215581 * safezoneW + safezoneX;
-			y = 0.485997 * safezoneH + safezoneY;
-			w = 0.142187 * safezoneW;
-			h = 0.035 * safezoneH;
-			colorText[] = {0,1,1,1};
-			colorBackground[] = {1,1,1,0};
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-		};
-		class MCC_ConsoleEvacTypeText: MCC_RscText {
-			idc = -1;
-			text = "Evac:"; //--- ToDo: Localize;
-			x = 0.217813 * safezoneW + safezoneX;
-			y = 0.542009 * safezoneH + safezoneY;
-			w = 0.07875 * safezoneW;
-			h = 0.0280062 * safezoneH;
-			colorText[] = {1,1,1,1};
-			colorBackground[] = {1,1,1,0};
-		};
-		class MCC_ConsoleEvacType: MCC_RscCombo
+		class frame: MCC_RscText
 		{
-			idc = MCC_ConsoleEvacTypeText_IDD;
-			onLBSelChanged = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\evac_focus.sqf'");
-			x = 0.322812 * safezoneW + safezoneX;
-			y = 0.542009 * safezoneH + safezoneY;
-			w = 0.105 * safezoneW;
-			h = 0.0280062 * safezoneH;
-		};
-		class MCC_ConsoleEvacFlyHightText: MCC_RscText {
+			colorBackground[] = {0,0,0,0.9};
 			idc = -1;
-			text = "Flight Hight:"; //--- ToDo: Localize;
-			x = 0.217813 * safezoneW + safezoneX;
-			y = 0.626028 * safezoneH + safezoneY;
-			w = 0.0853125 * safezoneW;
-			h = 0.0280062 * safezoneH;
-			colorText[] = {1,1,1,1};
-			colorBackground[] = {1,1,1,0};
+			x = 0.29375 * safezoneW + safezoneX;
+			y = 0.225 * safezoneH + safezoneY;
+			w = 0.417656 * safezoneW;
+			h = 0.451 * safezoneH;
 		};
-		class MCC_ConsoleEvacFlyHightComboBox: MCC_RscCombo {
-			idc = MCC_ConsoleEvacFlyHightComboBox_IDD;
-			x = 0.322812 * safezoneW + safezoneX;
-			y = 0.626028 * safezoneH + safezoneY;
-			w = 0.105 * safezoneW;
-			h = 0.0280062 * safezoneH;
+
+		class vehicleClass: MCC_RscCombo
+		{
+			idc = 101;
+			onLBSelChanged = "[0] spawn MCC_fnc_vehicleSpawner";
+			x = 0.304062 * safezoneW + safezoneX;
+			y = 0.346 * safezoneH + safezoneY;
+			w = 0.278437 * safezoneW;
+			h = 0.055 * safezoneH;
 		};
-		class MCC_ConsoleEvacApproachText: MCC_RscText {
+
+		class SpawnButton: MCC_RscButton
+		{
+			idc = 102;
+			text = "Purchase";
+			x = 0.319531 * safezoneW + safezoneX;
+			y = 0.61 * safezoneH + safezoneY;
+			w = 0.139219 * safezoneW;
+			h = 0.055 * safezoneH;
+			onButtonClick = "[1] spawn MCC_fnc_vehicleSpawner";
+		};
+
+		class close: MCC_RscButton
+		{
 			idc = -1;
-			text = "Insertion:"; //--- ToDo: Localize;
-			x = 0.217813 * safezoneW + safezoneX;
-			y = 0.584019 * safezoneH + safezoneY;
-			w = 0.0853125 * safezoneW;
-			h = 0.0280062 * safezoneH;
-			colorBackground[] = {1,1,1,0};
+			text = "Close"; //--- ToDo: Localize;
+			x = 0.639219 * safezoneW + safezoneX;
+			y = 0.61 * safezoneH + safezoneY;
+			w = 0.061875 * safezoneW;
+			h = 0.055 * safezoneH;
+			onButtonClick = "closeDialog 0;";
 		};
-		class MCC_ConsoleEvacApproachComboBox: MCC_RscCombo {
-			idc = MCC_ConsoleEvacApproachComboBox_IDD;
-			x = 0.322812 * safezoneW + safezoneX;
-			y = 0.584019 * safezoneH + safezoneY;
-			w = 0.105 * safezoneW;
-			h = 0.0280062 * safezoneH;
+
+		class ammoPic: MCC_RscPicture
+		{
+			idc = 1100;
+			text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
+			tooltip = "Ammo";
+			x = 0.304062 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.0257812 * safezoneW;
+			h = 0.044 * safezoneH;
 		};
-		class MCC_ConsoleCallEvacButton: MCC_RscButton {
-			idc = -1;text = "Call EVAC";
-			x = 0.217813 * safezoneW + safezoneX;
-			y = 0.668037 * safezoneH + safezoneY;
-			w = 0.0853125 * safezoneW;
-			h = 0.0420094 * safezoneH;
-			tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
-			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
+		class repairPic: MCC_RscPicture
+		{
+			idc = 1101;
+			text = __EVAL(MCCPATH +"data\IconRepair.paa");
+			tooltip = "Supplies";
+			x = 0.37625 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.0257812 * safezoneW;
+			h = 0.044 * safezoneH;
 		};
-		class MCC_ConsoleCallEvac3WPButton: MCC_RscButton {
+		class fuelPic: MCC_RscPicture
+		{
+			idc = 1102;
+			text = __EVAL(MCCPATH +"data\IconFuel.paa");
+			tooltip = "Fuel";
+			x = 0.448438 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.0257812 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class ValorPic: MCC_RscPicture
+		{
+			idc = 1103;
+
+			text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
+			tooltip = "Valor";
+			x = 0.520625 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.0257812 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class ammoText: MCC_RscText
+		{
+			idc = 1000;
+			x = 0.329844 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.04125 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class repairText: MCC_RscText
+		{
+			idc = 1001;
+			x = 0.402031 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.04125 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class fuelText: MCC_RscText
+		{
+			idc = 1002;
+			x = 0.474219 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.04125 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class ValorText: MCC_RscText
+		{
+			idc = 1003;
+
+			x = 0.546406 * safezoneW + safezoneX;
+			y = 0.423 * safezoneH + safezoneY;
+			w = 0.04125 * safezoneW;
+			h = 0.044 * safezoneH;
+		};
+		class tittle: MCC_RscText
+		{
 			idc = -1;
-			text = "Call EVAC 3 WP";
-			x = 0.322812 * safezoneW + safezoneX;
-			y = 0.668037 * safezoneH + safezoneY;
-			w = 0.105 * safezoneW;
-			h = 0.0420094 * safezoneH;
-			tooltip = "Call selected EVAC - Mouse click on the mini-map to call it";
-			onButtonClick = __EVAL("nul=[1] execVM '"+MCCPATH+"mcc\general_scripts\console\evacwp.sqf'");
+			text = "Vehicle Spawn";
+			x = 0.319531 * safezoneW + safezoneX;
+			y = 0.258 * safezoneH + safezoneY;
+			w = 0.170156 * safezoneW;
+			h = 0.055 * safezoneH;
+			colorText[] = {0,1,1,1};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+		};
+		class availableResourcesTittle: MCC_RscText
+		{
+			idc = -1;
+
+			text = "Available Resources";
+			x = 0.592812 * safezoneW + safezoneX;
+			y = 0.247 * safezoneH + safezoneY;
+			w = 0.108281 * safezoneW;
+			h = 0.055 * safezoneH;
+			colorText[] = {0,1,1,1};
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+		};
+		class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
+		{
+			idc = 80;
+			x = 0.592812 * safezoneW + safezoneX;
+			y = 0.313 * safezoneH + safezoneY;
+			w = 0.108281 * safezoneW;
+			h = 0.286 * safezoneH;
+			class controls
+			{
+				class MCC_AmmoText: MCC_RscText
+				{
+					idc = 81;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.055 * safezoneH;
+					w = 0.04125 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+
+				class MCC_RepairText: MCC_RscText
+				{
+					idc = 82;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.099 * safezoneH;
+					w = 0.04125 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+
+				class MCC_FuelText: MCC_RscText
+				{
+					idc = 83;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.143 * safezoneH;
+					w = 0.04125 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+
+				class MCC_ValorText: MCC_RscText
+				{
+					idc = 84;
+
+					x = 0.0257812 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.04125 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+
+				class MCC_Ammo: MCC_RscPicture
+				{
+					idc = 91;
+
+					text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
+					tooltip = "Ammo";
+					x = 0.00515625 * safezoneW;
+					y = 0.055 * safezoneH;
+					w = 0.0154688 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_Repair: MCC_RscPicture
+				{
+					idc = 92;
+
+					text = __EVAL(MCCPATH +"data\IconRepair.paa");
+					tooltip = "Supplies";
+					x = 0.00515625 * safezoneW;
+					y = 0.099 * safezoneH;
+					w = 0.0154688 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+				class MCC_Fuel: MCC_RscPicture
+				{
+					idc = 93;
+
+					text = __EVAL(MCCPATH +"data\IconFuel.paa");
+					tooltip = "Fuel";
+					x = 0.00515625 * safezoneW;
+					y = 0.143 * safezoneH;
+					w = 0.0154688 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+
+				class MCC_ValorPic: MCC_RscPicture
+				{
+					idc = 94;
+
+					text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
+					tooltip = "Valor";
+					x = 0.00515625 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.0154688 * safezoneW;
+					h = 0.033 * safezoneH;
+				};
+			};
 		};
 	};
 };

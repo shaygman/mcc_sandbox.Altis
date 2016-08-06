@@ -205,11 +205,6 @@ if !mcc_isloading then
 	};
 
 	missionNameSpace setVariable ["MCC_surviveModAllowSearch", (lbCurSel 8428)==1];
-	//fire local EH
-	if (missionNamespace getVariable ["MCC_surviveMod",false]) then {
-		[] spawn MCC_fnc_surviveInit;
-	};
-
 	Hint "Mission Settings Saved";
     closedialog 0;
 };

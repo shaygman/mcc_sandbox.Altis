@@ -16,7 +16,7 @@ uiNameSpace setVariable ["MCC_interactionActive",false];
 			_obj 	= _x select 0;
 			_text 	= _x select 1;
 			_dist 	= (player distance _obj) / 10;
-			_color  = [1,0,1,1 - _dist];
+			_color  = [1,1,1,1 - _dist];
 			drawIcon3D [
 							"",
 							_color,
@@ -70,14 +70,12 @@ _text spawn
 
 	while {alive player} do
 	{
-		if (vehicle player == player) then
-		{
+		if (vehicle player == player && !(player getVariable ["MCC_medicUnconscious",false])) then {
 			_objects = player nearObjects ["UserTexture1m_F",7];
 			_interactiveObjects = [];
 
 			//Handle Objects
-			if (count _objects > 0) then
-			{
+			if (count _objects > 0) then {
 				_selected = objnull;
 				{
 					_tested = ([_objects,[],{player distance _x},"ASCEND"] call BIS_fnc_sortBy) select _foreachIndex;
@@ -85,8 +83,7 @@ _text spawn
 					if (_dir>340 || _dir < 20) exitWith {_selected = _tested};
 				} foreach _objects;
 
-				if (!isnull _selected) then
-				{
+				if (!isnull _selected) then {
 					//IED
 					_text =_selected getVariable ["MCC_helperText",""];
 					if ((_text != "") && !(_selected getVariable ["MCC_isInteracted",false])) then
