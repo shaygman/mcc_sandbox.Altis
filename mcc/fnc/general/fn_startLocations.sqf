@@ -56,7 +56,7 @@ missionNameSpace setVariable ["MCC_startLocationsRuning", false];
 _cpActivated = missionNamespace getVariable ["CP_activated",false];
 
 //Respawn menu on
-_respawnDialog = missionNamespace getVariable ["MCC_openRespawnMenu",(missionNamespace getVariable ["MCC_teleportAtStart",0])>0];
+_respawnDialog = missionNamespace getVariable ["MCC_openRespawnMenu",true];
 
 //Black Screen on mission startup
 if (!_cpActivated && _respawnDialog) then {

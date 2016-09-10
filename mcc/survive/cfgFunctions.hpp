@@ -16,4 +16,9 @@ class survive {
 	class surviveBuild {};
 	class getSurvivalPlaceHolders {};
 	class loadGear {};
+	class surviveItemClicked {};
+	class handleInventoryClick {};
+	class foodWaterConsumption {};
+	class survivalProgressBars {};
+	class spawnCratesInHouses {};
 };

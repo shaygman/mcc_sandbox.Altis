@@ -6,15 +6,15 @@
 //=============================================================================================================================================================================
 //Calculate reources
 private ["_resources","_penalty","_baseResource","_succeedObjectives","_sumResource","_CompleteText","_sidePlayer","_resourceGain","_allocationRatio","_allocatedResources","_randomAsset","_totalShells","_sumTickets"];
-_mission =  [_this, 0, "Main", [""]] call BIS_fnc_param;
-_activeObjectives = [_this, 1, 0, [0]] call BIS_fnc_param;
-_failedObjectives = [_this, 2, 0, [0]] call BIS_fnc_param;
-_sidePlayer = [_this, 3, west] call BIS_fnc_param;
-_totalPlayers = [_this, 4, 10, [0]] call BIS_fnc_param;
-_difficulty = [_this, 5, 10, [0]] call BIS_fnc_param;
-_baseResource = [_this, 6, 50, [0]] call BIS_fnc_param;
-_allocationRatio = [_this, 7, [0.3,0.3,0.2,0.15,0.05], [[]]] call BIS_fnc_param;
-_sumTickets =  ([_this, 8, 0, [0]] call BIS_fnc_param) max 0;
+_mission =  param [ 0, "Main", [""]];
+_activeObjectives =  param [ 1, 0, [0]];
+_failedObjectives =  param [ 2, 0, [0]];
+_sidePlayer =  param [ 3, west];
+_totalPlayers =  param [ 4, 10, [0]];
+_difficulty =  param [ 5, 10, [0]];
+_baseResource =  param [ 6, 50, [0]];
+_allocationRatio =  param [ 7, [0.3,0.3,0.2,0.15,0.05], [[]]];
+_sumTickets =  ( param [ 8, 0, [0]]) max 0;
 
 //How many resources we get
 _succeedObjectives = _activeObjectives - _failedObjectives;

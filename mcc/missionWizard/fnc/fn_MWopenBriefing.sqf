@@ -81,6 +81,12 @@ if (_playMusic == 0) then {
 
 		//Do we have a sky intro
 		_units = (getpos _object) nearEntities [["Man", "Air", "Car", "Tank"], 1000];
+		for "_i" from 0 to (count _units)-1 step 1 do {
+			if (side (_units select _i) in [side player, sideLogic, civilian]) then {
+				_units set [_i,-1];
+			}
+		};
+		_units = _units - [-1];
 		_sfx =  if (_isNight) then {"nv"} else {"none"};
 
 
@@ -88,7 +94,7 @@ if (_playMusic == 0) then {
 		_specialIntro = switch (true) do
 							{
 								case (overcast > 0.2 && random 1 < 0.3): {"sky"};
-								case (count _units > 0  && random 1 < 0.3): {_units};
+								case (count _units > 3  && random 1 < 0.3): {_units};
 								default	{"uav"};
 							};
 
@@ -420,6 +426,6 @@ endloadingscreen;
 ctrlsetfocus (_display displayctrl MCC_MINIMAP);
 
 //stop music
-0 spawn {sleep 5; playMusic ""};
+0 spawn {sleep 10; waitUntil {!dialog}; playMusic ""};
 
 _display

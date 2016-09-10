@@ -115,7 +115,7 @@ if (_specialIntro != "none") then {
 					//if not attached camera make it move
 					_cam camCommitPrepared 10;
 
-					sleep 10;
+					sleep 5;
 				};
 			};
 		};
@@ -155,9 +155,45 @@ if (_specialIntro != "none") then {
 	//music
 	playMusic _music;
 
+	/*
 	//Intel
 	[getpos _object] call MCC_fnc_camp_showOSD;
 	sleep 15;
+	*/
+	//Intel
+	//get daytime data
+	private ["_date","_tYear","_tMonth","_tDay","_tTimeH","_tTime","_tTimeM","_output"];
+	_date = date;
+	_tYear 	= _date select 0;
+	_tMonth = _date select 1;
+	_tDay 	= _date select 2;
+
+	if (_tMonth < 10) then {_tMonth = format["0%1",_tMonth]};
+	if (_tDay < 10) then {_tDay = format["0%1",_tDay]};
+
+	//get date text
+	_tDate = format["%1-%2-%3",_tYear,_tMonth,_tDay];
+
+	//get time text
+	_tTimeH = _date select 3;
+	_tTimeM = _date select 4;
+
+	if (_tTimeH < 10) then {_tTimeH = format["0%1",_tTimeH]};
+	if (_tTimeM < 10) then {_tTimeM = format["0%1",_tTimeM]};
+
+	_tTime = format["%1:%2",_tTimeH,_tTimeM];
+
+
+	//sum the output params & print it
+	_output =
+	[
+		[_tDate,"<t size='1.0' font='PuristaMedium'>%1</t><br/>",0],
+		[_tTime,"<t size='1.0' font='PuristaBold'>%1</t><br/>",5],
+		[worldName,"<t size='1.0' font='PuristaBold'>%1</t><br/>",5]
+	];
+
+	[_output,safezoneX,0,"<t color='#FFFFFFFF' align='left'>%1</t>"] call BIS_fnc_typeText;
+	sleep 5;
 
 	//Sounds
 	sleep 1;

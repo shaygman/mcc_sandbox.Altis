@@ -57,6 +57,7 @@ New Game Mods:
 
 MCC Campaign:
 - Added: Altis campaign template mission, mix between RTS and FPS on altis but you can create it where ever you want to: http://mccsandbox.wikia.com/wiki/Campaign
+- Added: Campaign progress and buildings will be saved when using inidbi2 on the server.
 - Enemy side will attack the players base randomly
 - Added: mission rotation - The random chance to get a recon mission - which isn't near the starting base and behind enemy lines.
 
@@ -105,7 +106,11 @@ Misc:
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
 
+TODO - return cinimetic to campaigns
 TODO - save campaign
+TODO - remove safe zone from start location - MCC_fnc_buildSpawnPoint
+TODO - levels and skills
+TODO - survivals items
 TODO - Test dedicated
 TODO - Join MCC Squad
 TODO - mission templates, test dedicated

@@ -160,43 +160,12 @@ switch (_mode) do
 			_null = [_pos, _dir , "MCC_rts_hq1", 0, _side] spawn MCC_fnc_construct_base;
 		};
 
-		switch (_side) do {
-			case west:	//west
-			{
-				if (_size == "FOB") then{
-					_building = "Land_TBox_F"; //"Land_BagBunker_Tower_F"
-					_flagTex = CP_flagWest;
-				} else {
-					_building = "ProtectionZone_Invisible_F";
-					_flagTex = CP_flagWest;
-				};
-			};
-
-			case east:	//east
-			{
-				if (_size == "FOB") then {
-					_building = "Land_TBox_F";
-					_flagTex = CP_flagEast;
-				} else {
-					_building = "ProtectionZone_Invisible_F";
-					_flagTex = CP_flagEast;
-				};
-			};
-			case resistance:	//east
-			{
-				if (_size == "FOB") then {
-					_building = "Land_TBox_F";
-					_flagTex = CP_flagGUER;
-				} else {
-					_building = "ProtectionZone_Invisible_F";
-					_flagTex = CP_flagGUER;
-				};
-			};
-
-			default	{
-				_building = "ProtectionZone_Invisible_F";
-				_flagTex = CP_flagGUER;
-			};
+		_building = if (_size == "FOB") then {"Land_TBox_F"} else {"ProtectionZone_Invisible_F"};
+		_flagTex = switch (_side) do {
+			case west:	{CP_flagWest};
+			case east:	{CP_flagEast};
+			case resistance:	{CP_flagGUER};
+			default	{CP_flagGUER};
 		};
 
 		_dummy = _building createvehicle _pos;

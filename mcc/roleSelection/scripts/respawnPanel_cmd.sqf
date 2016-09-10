@@ -1,4 +1,4 @@
-private ["_comboBox","_spawnArray","_pos","_spawn","_nearObjects","_spawnErrorCode","_safepos","_targets","_target","_groups","_countRole","_roleLimit","_role","_spawnPos","_playerDeployPos"];
+private ["_comboBox","_spawnArray","_pos","_spawn","_nearObjects","_spawnErrorCode","_targets","_target","_groups","_countRole","_roleLimit","_role","_spawnPos","_playerDeployPos"];
 disableSerialization;
 
 #define CP_RESPAWNPANEL_IDD (uiNamespace getVariable "CP_RESPAWNPANEL_IDD")
@@ -139,8 +139,16 @@ if (_activeSpawn == leader player && (vehicle _activeSpawn != _activeSpawn)) the
 		if (_teleportAtStart == 1) then {
 			player setpos _playerDeployPos;
 		} else {
-			private _helo = _teleportAtStart ==3;
-			[_safePos, ["",player], _helo, 5000, floor (random 40)] call MCC_fnc_paradrop;
+			private ["_helo","_height"];
+
+			if (_teleportAtStart ==3) then {
+				_helo = true;
+				_height = 5000;
+			} else {
+				_helo = false;
+				_height = 300;
+			};
+			[_playerDeployPos, ["",player], _helo, _height, floor (random 40)] call MCC_fnc_paradrop;
 		};
 	};
 };

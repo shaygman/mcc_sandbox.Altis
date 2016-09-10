@@ -216,6 +216,10 @@ class mp
 	class inidbGet	{};
 	class inidbSet 	{};
 	class handleDB {};
+	class saveServer {description = "Save persistent data about the server to the server";};
+	class loadServer {description = "Load persistent data about the server from the server";};
+	class savePlayer {description = "Save persistent data about the player to the server";};
+	class loadPlayer {description = "Load persistent data about the player from the server";};
 };
 
 class actions

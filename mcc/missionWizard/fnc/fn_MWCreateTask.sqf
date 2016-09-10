@@ -231,30 +231,47 @@ private ["_group","_vehicle"];
 
 _group = createGroup sidelogic;
 
-//spawn task for each side
-{
-  _vehicle = _group createunit ["ModuleObjective_F", _pos,[],0.5,"NONE"];
-  _vehicle setvariable ["RscAttributeOwners",[_x],true];
-  if (typeName _obj == "OBJECT") then {_vehicle setvariable ["AttachObject_object",_obj,true]};
-  _vehicle setvariable ["RscAttributeTaskState","created", true];
-  _vehicle setvariable ["customTask",_task,true];
-  [_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
-  MCC_curator addCuratorEditableObjects [[_vehicle],false];
-  _vehicle setvariable ["updated",true];
-  [_vehicle,_side,_maxObjectivesDistance] spawn MCC_fnc_customTasks;
-} foreach _sides;
+//clear area mission
 
-//sieze area mission
 if (_task == "clear_area") then {
-    //_vehicle setvariable ["Name",_nameTask];
-    _vehicle setvariable ["OnOwnerChange",format ["if ((_this select 1) == %1) then {(_this select 0) enableSimulation false};", _sidePlayer]];
-    _vehicle setvariable ["type",4];
-    _vehicle setvariable ["radius",_maxObjectivesDistance];
+    _vehicle = _group createunit ["ModuleObjective_F", _pos,[],0.5,"NONE"];
+    _vehicle setvariable ["RscAttributeOwners",_sides,true];
+    if (typeName _obj == "OBJECT") then {_vehicle setvariable ["AttachObject_object",_obj,true]};
+    _vehicle setvariable ["RscAttributeTaskState","created", true];
+    _vehicle setvariable ["customTask",_task,true];
+    [_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
+
+    //turn the sides into strings so we can compile it
+    private _sidesStr = [];
+    {_sidesStr pushBack str _x} forEach _sides;
+
+    _vehicle setvariable ["OnOwnerChange",format ["if (str (_this select 1) in %1) then {(_this select 0) enableSimulation false};", _sidesStr],true];
+    _vehicle setvariable ["type",4,true];
+    _vehicle setvariable ["radius",_maxObjectivesDistance,true];
     //_vehicle setvariable ["enableHUD",false];
-    _vehicle setvariable ["sides",_sides];
-    _vehicle setvariable ["owner",_side];
+    _vehicle setvariable ["sides",[east,west,resistance],true];
+    _vehicle setvariable ["owner",_side,true];
+
+     MCC_curator addCuratorEditableObjects [[_vehicle],false];
+    _vehicle setvariable ["updated",true,true];
+    [_vehicle,_side,_maxObjectivesDistance] spawn MCC_fnc_customTasks;
     [_vehicle] spawn MCC_fnc_moduleCapturePoint;
+} else {
+  //spawn task for each side
+  {
+    _vehicle = _group createunit ["ModuleObjective_F", _pos,[],0.5,"NONE"];
+    _vehicle setvariable ["RscAttributeOwners",[_x],true];
+    if (typeName _obj == "OBJECT") then {_vehicle setvariable ["AttachObject_object",_obj,true]};
+    _vehicle setvariable ["RscAttributeTaskState","created", true];
+    _vehicle setvariable ["customTask",_task,true];
+    [_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
+    MCC_curator addCuratorEditableObjects [[_vehicle],false];
+    _vehicle setvariable ["updated",true,true];
+    [_vehicle,_side,_maxObjectivesDistance] spawn MCC_fnc_customTasks;
+  } foreach _sides;
 };
+
+
 
 MCC_MWObjectivesNames = [_pos,"",_stringName,_stringDescription,"",_pic,1,[],_vehicle];
 publicVariable "MCC_MWObjectivesNames";

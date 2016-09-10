@@ -57,3 +57,14 @@ for "_y" from 0 to _mapSize step _size*2 do {
 };
 
 missionNamespace setVariable ["mcc_markersZonesExc",_markersArray];
+
+private ["_side","_allTiles"];
+
+//Get data from DB and paint the conquered areas
+{
+	_side = _x;
+	_allTiles = [format ["MCC_campaign_%1",worldname], "CAMPAIGN_MARKERS", str _x, "read",[],true] call MCC_fnc_handleDB;
+	{
+		[_x,(_size*0.5),_side] call MCC_fnc_campaignPaintMarkers;
+	} forEach _allTiles;
+} forEach ([west,east,resistance]-[_side]);

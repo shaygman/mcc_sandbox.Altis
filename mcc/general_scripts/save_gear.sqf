@@ -1,15 +1,13 @@
-private ["_unit","_goggles","_headgear","_uniform","_uniformItems","_vest","_magazines","_primMag","_secmMag","_handMag","_assigneditems",
-         "_vestItems","_handgunWeapon","_backpack","_primaryWeapon","_secondaryWeapon","_null","_killer"];
+private ["_unit","_goggles","_headgear","_uniform","_uniformItems","_vest","_magazines","_primMag","_secmMag","_handMag","_assigneditems","_side","_vestItems","_handgunWeapon","_backpack","_primaryWeapon","_secondaryWeapon","_null","_killer"];
 
 _unit 	= _this select 0;
 _killer = if (count _this > 1) then {_this select 1} else {objnull};
 
+//Reduce tickets if any
+_side = _unit getVariable ["CP_side", playerside];
+if ([_side] call BIS_fnc_respawnTickets > 0) then {
+	private ["_sideTickets","_tickets"];
 
-//Case we in role selection and have tickets
-if (CP_activated) then {
-	private ["_side","_sideTickets","_tickets"];
-
-	_side = _unit getVariable ["CP_side", playerside];
 	_tickets = [_side] call BIS_fnc_respawnTickets;
 
 	//Delete utility placed by the player

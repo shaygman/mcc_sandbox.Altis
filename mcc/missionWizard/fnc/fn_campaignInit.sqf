@@ -8,7 +8,7 @@
 //_missionRotation	INTEGER - max missions in the same area
 //_tileSize			INTEGER - Size of the tile while portfiling the map
 //=======================================================================================================================================================================
-private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets","_missionRotation","_basePos","_tileSize","_reconMission"];
+private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets","_missionRotation","_basePos","_tileSize","_reconMission","_tempVar"];
 
 //wait for MCC
 waitUntil {!isnil "MCC_initDone"};
@@ -24,10 +24,12 @@ _difficulty  = param [6, 20];
 _sidePlayer2=  param [7, sideLogic];
 _tickets = param [8, 100];
 _missionRotation = param [9, 4,[0]];
-_tileSize = param [10, 250,[0]];
+_tileSize = param [10, 400,[0]];
 
 _totalPlayers = ((playersNumber _sidePlayer)+1);
 _AOSize = 300;
+
+if (!isServer) exitWith {diag_log "MCC_fnc_campaignInit : Error not running on server"};
 
 //Set campaign var
 missionNamespace setVariable ["MCC_isCampaignRuning",true];
@@ -39,9 +41,54 @@ publicVariable "MCC_campaignEnemyFaction";
 //Time Multuplier
 if (timeMultiplier < 12) then {setTimeMultiplier 12};
 
-//Tickets
-if (([_sidePlayer] call BIS_fnc_respawnTickets)<_tickets) then {[_sidePlayer, _tickets] call BIS_fnc_respawnTickets};
-if (([_sidePlayer2] call BIS_fnc_respawnTickets)<_tickets && _sidePlayer2 != sideLogic) then {[_sidePlayer2, _tickets] call BIS_fnc_respawnTickets};
+//Load stuff from DB
+{
+
+	//Load Tickets
+	_tempVar = [format ["MCC_campaign_%1",worldname], "TICKETS", str _x, "read",_tickets, true] call MCC_fnc_handleDB;
+	if (([_x] call BIS_fnc_respawnTickets) < _tempVar && _x != sideLogic) then {[_x, _tempVar] call BIS_fnc_respawnTickets};
+
+	//Load Resources
+	_tempVar = [format ["MCC_campaign_%1",worldname], "RESOURCES", str _x, "read",(missionNameSpace getVariable [format ["MCC_res%1",_x],[1500,500,200,200,200]]),true] call MCC_fnc_handleDB;
+	missionNameSpace setVariable [format ["MCC_res%1",_x],_tempVar];
+	publicVariable format ["MCC_res%1",_x];
+
+	//Load civilian relation
+	_tempVar = [format ["MCC_campaign_%1",worldname], "CIV_RELATION", str _x, "read",(missionNamespace getvariable [format ["MCC_civRelations_%1",_x],0.5]),true] call MCC_fnc_handleDB;
+	missionNameSpace setVariable [format ["MCC_civRelations_%1",_x],_tempVar];
+	publicVariable format ["MCC_civRelations_%1",_x];
+
+	//Load CAS
+	_tempVar = [format ["MCC_campaign_%1",worldname], "CAS", str _x, "read",(missionNamespace getvariable [format ["MCC_CASConsoleArray%1",_x],[]]),true] call MCC_fnc_handleDB;
+	missionNameSpace setVariable [format ["MCC_CASConsoleArray%1",_x],_tempVar];
+	publicVariable format ["MCC_CASConsoleArray%1",_x];
+
+	//Load air drop
+	_tempVar = [format ["MCC_campaign_%1",worldname], "AIR_DROP", str _x, "read",(missionNamespace getvariable [format ["MCC_ConsoleAirdropArray%1",_x],[]]),true] call MCC_fnc_handleDB;
+	missionNameSpace setVariable [format ["MCC_ConsoleAirdropArray%1",_x],_tempVar];
+	publicVariable format ["MCC_ConsoleAirdropArray%1",_x];
+
+	//Load artillery
+	_tempVar = [format ["MCC_campaign_%1",worldname], "ARTILLERY", str _x, "read",(missionNamespace getvariable [format ["Arti_%1_shellsleft",_x],0]),true] call MCC_fnc_handleDB;
+	missionNameSpace setVariable [format ["Arti_%1_shellsleft",_x],_tempVar];
+	publicVariable format ["Arti_%1_shellsleft",_x];
+
+	//Load start locations
+	_tempVar = [format ["MCC_campaign_%1",worldname], "SPAWN_POINTS", str _x, "read",[],true] call MCC_fnc_handleDB;
+	systemChat str _tempVar;
+	{_x spawn MCC_fnc_buildSpawnPoint} forEach _tempVar;
+} forEach [_sidePlayer,_sidePlayer2];
+
+
+//Load RTS constuct
+_tempVar = [format ["MCC_campaign_%1",worldname], "BUILDINGS", "BUILDINGS", "read",[],true] call MCC_fnc_handleDB;
+{_x spawn MCC_fnc_construct_base} forEach _tempVar;
+
+//Load Arty types
+_tempVar = [format ["MCC_campaign_%1",worldname], "ARTILLERY", "TYPE", "read",(missionNamespace getvariable ["HW_arti_types",[["HE Laser-guided","Bo_GBU12_LGB",3,50],["HE 82mm","Sh_82mm_AMOS",1,75]]]),true] call MCC_fnc_handleDB;
+missionNamespace setVariable ["HW_arti_types",_tempVar];
+publicVariable "HW_arti_types";
+
 
 //init map
 [_sideEnemy,_tileSize,0.2] call MCC_fnc_campaignInitMap;
@@ -147,8 +194,12 @@ _locations = [_locations,[_basePos],{_input0 distance (_x select 0)},"ASCEND"] c
 //Start the campaign missions?
 if (_missionMax == 0) exitWith {};
 
+//Save DB
+["MCC_campaign",10,true] spawn MCC_fnc_saveServer;
 
-while {count _locations > 0 && _missionDone <= _missionMax } do {
+while { count _locations > 0 &&
+		_missionDone <= _missionMax
+	  } do {
 
 	//update borders
 	{
@@ -157,7 +208,7 @@ while {count _locations > 0 && _missionDone <= _missionMax } do {
 
 	//Find mission location
 	_goodLocation = false;
-	_reconMission = random 1 <= _missionRotation;
+	_reconMission = random 1 <= 0.2;
 
 	while {count _locations > 0 && !_goodLocation} do {
 		//_index = floor random count _locations;
@@ -201,7 +252,7 @@ while {count _locations > 0 && _missionDone <= _missionMax } do {
 	_obj3 = if (random 80 < _difficulty) then {["Destroy Vehicle","Destroy AA","Destroy Artillery","Destroy Weapon Cahce","Destroy Fuel Depot","Secure HVT","Kill HVT","Aquire Intel","Disarm IED"] call BIS_fnc_selectRandom} else {"None"};
 	_stealth = _reconMission;
 	_weatherChange = 0;
-	_playMusic = 0;
+	_playMusic = 2;
 	_preciseMarkers = false;
 
 	sleep 5;
@@ -261,32 +312,54 @@ while {count _locations > 0 && _missionDone <= _missionMax } do {
 	};
 
 	//Wait for mission end
-	private ["_ticketsStart"];
-	_totalObjectives =  _AOlocationPos nearObjects ["ModuleObjective_F", (_AOSize*2.5)];
-	_activeObjectives = count _totalObjectives;
-	_failedObjectives = {(_x getvariable ["RscAttributeTaskState",""])=="Failed"} count _totalObjectives;
+	private ["_ticketsStart","_activeObjectivesSide1","_activeObjectivesSide2","_failedObjectivesSide1","_failedObjectivesSide2"];
+
 	_ticketsStart = [_sidePlayer] call BIS_fnc_respawnTickets;
 
-	while {count _totalObjectives >0} do {
-		_failedObjectives = {(_x getvariable ["RscAttributeTaskState",""])=="Failed"} count _totalObjectives;
-		_totalObjectives =  _AOlocationPos nearObjects ["ModuleObjective_F", (_AOSize*2.5)];
-		sleep 5;
+	_totalObjectives =  _AOlocationPos nearObjects ["ModuleObjective_F", (_AOSize*2.5)];
+
+	while {	count _totalObjectives > 0} do {
+
+		sleep 1;
+		_totalObjectives = _AOlocationPos nearObjects ["ModuleObjective_F", (_AOSize*2.5)]
 	};
 
+	_activeObjectivesSide1 = missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_total",_sidePlayer],0];
+	_activeObjectivesSide2 = missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_total",_sidePlayer2],0];
+
+	_failedObjectivesSide1 = missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_failed",_sidePlayer],0];
+	_failedObjectivesSide2 = missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_failed",_sidePlayer2],0];
 	sleep 2;
 	_ticketsEnd = [_sidePlayer] call BIS_fnc_respawnTickets;
 	_sumTickets = _ticketsStart - _ticketsEnd;
 
-	["Main",_activeObjectives,_failedObjectives,_sidePlayer,_totalPlayers,_difficulty,40,[0.2,0.4,0.2,0.15,0.05]] call MCC_fnc_missionDone;
+	if (_sidePlayer != sideLogic) then {
+		["Main",_activeObjectivesSide1,_failedObjectivesSide1,_sidePlayer,_totalPlayers,_difficulty,40,[0.2,0.4,0.2,0.15,0.05],_sumTickets] spawn MCC_fnc_missionDone;
+	};
+
+	if (_sidePlayer2 != sideLogic) then {
+		["Main",_activeObjectivesSide2,_failedObjectivesSide2,_sidePlayer2,_totalPlayers,_difficulty,40,[0.2,0.4,0.2,0.15,0.05]] spawn MCC_fnc_missionDone;
+	};
+
+	//Reset objectives coutners
+	{
+		missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_total",_X],0];
+		missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_failed",_X],0];
+		missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_succeed",_X],0];
+	} forEach [_sidePlayer,_sidePlayer2];
+
 
 	//if we have another side give him some credit
+	/*
 	if (_sidePlayer2 != sideLogic) then {
-		["side",_activeObjectives,_failedObjectives,_sidePlayer2,_totalPlayers,_difficulty,40,[0.2,0.4,0.2,0.15,0.05],_sumTickets] call MCC_fnc_missionDone;
+		["side",_activeObjectivesSide2,_failedObjectivesSide2,_sidePlayer2,_totalPlayers,_difficulty,40,[0.2,0.4,0.2,0.15,0.05],_sumTickets] call MCC_fnc_missionDone;
 	};
+	*/
 
 	//clean up
 	[_AOlocationPos,_AOSize*4] spawn {sleep 1200; [_this select 0,_this select 1,0] call MCC_fnc_deleteBrush};
 
+	/*
 	//Mark area as captured
 	if !(_reconMission) then {
 		//if main mission capture it
@@ -305,7 +378,7 @@ while {count _locations > 0 && _missionDone <= _missionMax } do {
 			_x setMarkerAlpha 0.2;
 		} foreach ([_sideEnemy] call MCC_fnc_campaignGetBorders);
 	};
-
+	*/
 	_missionDone = _missionDone + 1;
 	_difficulty = (_difficulty * 1.1) min 60;
 
@@ -313,4 +386,4 @@ while {count _locations > 0 && _missionDone <= _missionMax } do {
 };
 
 //Mission won outro
-[["everyonewon"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP
+["sidetickets"] call  BIS_fnc_endMissionServer;

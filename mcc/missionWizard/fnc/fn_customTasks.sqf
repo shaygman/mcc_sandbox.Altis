@@ -19,6 +19,11 @@ _taskStateDestination 	= _logic getvariable ["RscAttributeTaskDestination",0];
 _taskDescription 		= _logic getvariable ["RscAttributeTaskDescription",["","", ""]];
 _taskType				= _logic getvariable ["customTask",""];
 
+//add the task to the mission counter
+{
+	missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_total",_x],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_total",_x],0])+1];
+} forEach _owners;
+
 //Not a custom task? exit
 if (_taskType == "") exitWith {};
 
@@ -41,6 +46,7 @@ switch (true) do {
 				{
 					if (_x distance _attachedUnit < 100) then {
 						_logic setvariable ["RscAttributeTaskState","Succeeded", true];
+						missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_succeed",(side leader _attachedUnit)],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_succeed",(side leader _attachedUnit)],0])+1];
 						_missionDone = true;
 					};
 				} forEach [missionNamespace getvariable ["MCC_START_WEST",[0,0,0]],
@@ -52,6 +58,7 @@ switch (true) do {
 
 				if (!alive _attachedUnit) then {
 					_logic setvariable ["RscAttributeTaskState","Failed", true];
+					missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_failed",(side leader _attachedUnit)],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_failed",(side leader _attachedUnit)],0])+1];
 					_missionDone = true;
 				};
 
@@ -59,20 +66,33 @@ switch (true) do {
 			};
 		} else {
 			_logic setvariable ["RscAttributeTaskState","Failed", true];
+			missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_failed",(side leader _attachedUnit)],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_failed",(side leader _attachedUnit)],0])+1];
 		};
 	};
 
-	case (_taskType in ["Kill_HVT"]): {
+	case (_taskType in ["Kill_HVT","destroy_tanks","destroy_aa","destroy_artillery","destroy_cache","destroy_fuel","destroy_radio","destroy_radar"]): {
 		waituntil {!alive _attachedUnit || isPlayer leader _attachedUnit};
 		_logic setvariable ["RscAttributeTaskState","Succeeded", true];
+
+		{
+			missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_succeed",_x],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_succeed",_x],0])+1];
+		} forEach [west,east,resistance];
 	};
 
 	case (_taskType in ["disableIED"]): {
 		waituntil {isnull _attachedUnit || (_attachedUnit getvariable ["iedTrigered",false])};
 		if (isNull _attachedUnit) then {
 			_logic setvariable ["RscAttributeTaskState","Succeeded", true];
+
+			{
+				missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_succeed",_x],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_succeed",_x],0])+1];
+			} forEach [west,east,resistance];
 		} else {
 			_logic setvariable ["RscAttributeTaskState","Failed", true];
+
+			{
+				missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_failed",_x],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_failed",_x],0])+1];
+			} forEach [west,east,resistance];
 		};
 	};
 
@@ -81,13 +101,32 @@ switch (true) do {
 		sleep 5;
 		if (isNull _attachedUnit && ((missionNamespace getVariable ["MCC_pickItem",sideLogic]) in _owners)) then {
 			_logic setvariable ["RscAttributeTaskState","Succeeded", true];
+
+			missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_succeed",(missionNamespace getVariable ["MCC_pickItem",sideUnknown])],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_succeed",(missionNamespace getVariable ["MCC_pickItem",sideUnknown])],0])+1];
 		} else {
 			_logic setvariable ["RscAttributeTaskState","Failed", true];
+
+			{
+				missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_failed",_x],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_failed",_x],0])+1];
+			} forEach ([west,east,resistance] - [(missionNamespace getVariable ["MCC_pickItem",sideUnknown])]);
 		};
 	};
 
 	case (_taskType in ["clear_area"]): {
 		waitUntil {!simulationEnabled _logic};
+		_logic setVariable ["SucceededSide",[(_logic getvariable ["owner",sideLogic])],true];
+
+		//succeed side
+		missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_succeed",(_logic getvariable ["owner",sideLogic])],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_succeed",(_logic getvariable ["owner",sideLogic])],0])+1];
+
+		//Failed side
+		{
+			missionNamespace setVariable [format ["MCC_campaignMissionsStatus_%1_failed",_x],(missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_failed",_x],0])+1];
+		} forEach ([west,east,resistance] - [(_logic getvariable ["owner",sideLogic])]);
+
+		//if capture area then capture it
+		[position _logic,(_logic getvariable ["radius",200])*3,(_logic getvariable ["owner",sideLogic]),0.2,[]] spawn MCC_fnc_campaignPaintMarkers;
+
 		/*
 		//Create Trigger
 		_pos = getpos _logic;
@@ -108,14 +147,8 @@ switch (true) do {
 		[2, "",[], "", "", "Empty", ("clearArea" + _name), []] call MCC_fnc_makeMarker;
 		*/
 
-		//_logic setvariable ["RscAttributeTaskState","Succeeded", true];
-	};
-
-	case (_taskType in ["destroy_tanks","destroy_aa","destroy_artillery","destroy_cache","destroy_fuel","destroy_radio","destroy_radar"]): {
-		waituntil {!alive _attachedUnit};
 		_logic setvariable ["RscAttributeTaskState","Succeeded", true];
 	};
-
 };
 
 if (!isNull _logic) then {

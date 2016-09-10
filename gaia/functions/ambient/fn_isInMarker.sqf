@@ -1,13 +1,13 @@
 //LV_fnc_isInMarker.sqf
 private ["_dir","_difx","_dify","_relativedir","_adis","_bdis","_borderdis","_positiondis","_in","_e","_posF1","_posF2","_total","_dis1","_dis2","_pos","_marker","_cPos","_posx","_posy","_area","_areax","_areay","_areadir","_shape"];
-_pos = _this select 0;
-_marker = _this select 1;
+_pos =  param [0,[0,0,0],[[]]];
+_marker = param [1,"",[""]];
 
 _cPos = getMarkerPos _marker;
 _posx = _cPos select 0;
 _posy = _cPos select 1;
 _area = getMarkerSize _marker;
-_areax = _area select 0; 
+_areax = _area select 0;
 _areay = _area select 1;
 _areadir = markerDir _marker;
 _shape = markerShape _marker;

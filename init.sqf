@@ -87,7 +87,7 @@ MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8R
 
 //MCC Survive mod
 // Set to true to activate survival mode - scavange for loot to survive
-[] spawn MCC_fnc_surviveInit;
+0 spawn MCC_fnc_surviveInit;
 if (isnil "MCC_surviveMod") then {missionNamespace setVariable ["MCC_surviveMod",false]};
 
 //How long in days(24H-game time) will it take for spawn position to refresh

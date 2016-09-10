@@ -12,16 +12,18 @@ _pos = param [0, [0,0,0], [[]]];
 _radius = param [1, 200, [0]];
 _filter = param [2, "", [""]];
 _return = [];
-{
-	if (markerPos _x distance2D _pos <= _radius) then {
-		if (_filter != "") then {
-			if ([_filter, _x] call BIS_fnc_inString) then {
+if (count _pos > 0) then {
+	{
+		if (markerPos _x distance2D _pos <= _radius) then {
+			if (_filter != "") then {
+				if ([_filter, _x] call BIS_fnc_inString) then {
+					_return pushBack _x;
+				};
+			} else {
 				_return pushBack _x;
 			};
-		} else {
-			_return pushBack _x;
 		};
-	};
-} forEach allMapMarkers;
+	} forEach allMapMarkers;
+};
 
 _return
