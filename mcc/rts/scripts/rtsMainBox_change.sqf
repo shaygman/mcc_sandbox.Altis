@@ -89,7 +89,7 @@ switch (_type) do {
 		    };
 		};
 
-		player setVariable ["MCC_valorPoints",_playerValor + _valor];
+		player setVariable ["MCC_valorPoints",_playerValor + _valor,true];
     };
 
     case (3): //Take

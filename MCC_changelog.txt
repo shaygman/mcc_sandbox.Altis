@@ -40,6 +40,11 @@ APEX:
 - added: Apex VTOL planes will now replace the default helicopters in Parachute, HALo or Drop Pods insertions.
 - added: Tanoa templates: Campaign, pvp, empty = TODO
 
+Persistent Data Base:
+- Added: MCC now have a persistent DB saving option from the save/load menu in MCC. Turn it on in your mission and MCC will save all players positions, gear, stats (health,calories, water - if used), resources, valor, base buildings exc. If there is already saved data on the server MCC will load it and will continue saving. Have fun in your campaigns - Requiers iniDBi 2.
+- Added: Able to clear persistent data from players/missions.
+- Added: MCC_fnc_savePlayer, MCC_fnc_saveServer, MCC_fnc_loadPlayer, MCC_fnc_loadServer functions with description for mission maker to use in their missions.
+
 Survival Mode:
 - Added: persistent survival mod. While running inidbi2 on the server MCC will save the players gear, xp, valor, health water, food, location exc every time they join the game.
 - Added: Can enable survival mod without allowing player to search for loot - if you want to add some thirst and hunger element without turning it into a Dayz. Enable it from the mission setting module or missionNamesSpace variable ["MCC_surviveModAllowSearch",false]
@@ -48,6 +53,7 @@ Survival Mode:
 RTS:
 - Added: RTS WIKIA for players - http://mccsandbox.wikia.com/wiki/Rts
 - Added: RTS WIKIA for developers - http://mccsandbox.wikia.com/wiki/RTS_editing
+- Added: Players can buy units from barracks/sleeping areas using valor and add them to their squad even if not the actual commanders.
 - Changed: Vehicle kiosk will load vehicles by side not by faction by default. - http://mccsandbox.wikia.com/wiki/Vehicle_kiosk
 - Changed: In RTS commander can purchase vehicles from kiosk using resources while players can purchase it using valor points.
 
@@ -106,7 +112,7 @@ Misc:
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
 
-TODO - return cinimetic to campaigns
+TODO - add clear DB
 TODO - save campaign
 TODO - remove safe zone from start location - MCC_fnc_buildSpawnPoint
 TODO - levels and skills

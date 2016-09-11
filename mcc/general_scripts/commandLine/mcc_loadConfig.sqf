@@ -46,8 +46,7 @@ _mccdialog = findDisplay MCC_SaveLoadScreen_IDD;
 _string = "";
 MCC_saveIndex = (lbCurSel MCC_SAVE_LIST);
 
-switch (_type) do
-{
+switch (_type) do {
 	case 0:	//Load MCC Mission config code
 	{
 		_string = ctrlText MCC_LOAD_INPUT;
@@ -180,5 +179,21 @@ switch (_type) do
 		//_null = [false] execVm "mcc\fnc\general\fn_saveToSQM.sqf";
 		[false] call MCC_fnc_saveToSQM;
 	};
+
+	//Activate persistent data
+	case 8:
+	{
+		//load server
+		["MCC_SERVER_DEFAULT",true,true,true,true,true,true,true,true,true] remoteExec ["MCC_fnc_loadServer", 2];
+
+		//load players
+		[true,true,true] remoteExec ["MCC_fnc_loadPlayer", 0];
+
+		//Save server
+		["MCC_SERVER_DEFAULT",10,false,true,true,true,true,true,true,true,true] remoteExec ["MCC_fnc_saveServer", 2];
+
+		//save players
+		[10,true,true,true] remoteExec ["MCC_fnc_savePlayer", 2];
+	}
 };
 

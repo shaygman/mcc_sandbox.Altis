@@ -42,52 +42,7 @@ publicVariable "MCC_campaignEnemyFaction";
 if (timeMultiplier < 12) then {setTimeMultiplier 12};
 
 //Load stuff from DB
-{
-
-	//Load Tickets
-	_tempVar = [format ["MCC_campaign_%1",worldname], "TICKETS", str _x, "read",_tickets, true] call MCC_fnc_handleDB;
-	if (([_x] call BIS_fnc_respawnTickets) < _tempVar && _x != sideLogic) then {[_x, _tempVar] call BIS_fnc_respawnTickets};
-
-	//Load Resources
-	_tempVar = [format ["MCC_campaign_%1",worldname], "RESOURCES", str _x, "read",(missionNameSpace getVariable [format ["MCC_res%1",_x],[1500,500,200,200,200]]),true] call MCC_fnc_handleDB;
-	missionNameSpace setVariable [format ["MCC_res%1",_x],_tempVar];
-	publicVariable format ["MCC_res%1",_x];
-
-	//Load civilian relation
-	_tempVar = [format ["MCC_campaign_%1",worldname], "CIV_RELATION", str _x, "read",(missionNamespace getvariable [format ["MCC_civRelations_%1",_x],0.5]),true] call MCC_fnc_handleDB;
-	missionNameSpace setVariable [format ["MCC_civRelations_%1",_x],_tempVar];
-	publicVariable format ["MCC_civRelations_%1",_x];
-
-	//Load CAS
-	_tempVar = [format ["MCC_campaign_%1",worldname], "CAS", str _x, "read",(missionNamespace getvariable [format ["MCC_CASConsoleArray%1",_x],[]]),true] call MCC_fnc_handleDB;
-	missionNameSpace setVariable [format ["MCC_CASConsoleArray%1",_x],_tempVar];
-	publicVariable format ["MCC_CASConsoleArray%1",_x];
-
-	//Load air drop
-	_tempVar = [format ["MCC_campaign_%1",worldname], "AIR_DROP", str _x, "read",(missionNamespace getvariable [format ["MCC_ConsoleAirdropArray%1",_x],[]]),true] call MCC_fnc_handleDB;
-	missionNameSpace setVariable [format ["MCC_ConsoleAirdropArray%1",_x],_tempVar];
-	publicVariable format ["MCC_ConsoleAirdropArray%1",_x];
-
-	//Load artillery
-	_tempVar = [format ["MCC_campaign_%1",worldname], "ARTILLERY", str _x, "read",(missionNamespace getvariable [format ["Arti_%1_shellsleft",_x],0]),true] call MCC_fnc_handleDB;
-	missionNameSpace setVariable [format ["Arti_%1_shellsleft",_x],_tempVar];
-	publicVariable format ["Arti_%1_shellsleft",_x];
-
-	//Load start locations
-	_tempVar = [format ["MCC_campaign_%1",worldname], "SPAWN_POINTS", str _x, "read",[],true] call MCC_fnc_handleDB;
-	systemChat str _tempVar;
-	{_x spawn MCC_fnc_buildSpawnPoint} forEach _tempVar;
-} forEach [_sidePlayer,_sidePlayer2];
-
-
-//Load RTS constuct
-_tempVar = [format ["MCC_campaign_%1",worldname], "BUILDINGS", "BUILDINGS", "read",[],true] call MCC_fnc_handleDB;
-{_x spawn MCC_fnc_construct_base} forEach _tempVar;
-
-//Load Arty types
-_tempVar = [format ["MCC_campaign_%1",worldname], "ARTILLERY", "TYPE", "read",(missionNamespace getvariable ["HW_arti_types",[["HE Laser-guided","Bo_GBU12_LGB",3,50],["HE 82mm","Sh_82mm_AMOS",1,75]]]),true] call MCC_fnc_handleDB;
-missionNamespace setVariable ["HW_arti_types",_tempVar];
-publicVariable "HW_arti_types";
+["MCC_campaign",true,true,true,true,true,true,true,true,true] call MCC_fnc_loadServer;
 
 
 //init map
@@ -252,7 +207,7 @@ while { count _locations > 0 &&
 	_obj3 = if (random 80 < _difficulty) then {["Destroy Vehicle","Destroy AA","Destroy Artillery","Destroy Weapon Cahce","Destroy Fuel Depot","Secure HVT","Kill HVT","Aquire Intel","Disarm IED"] call BIS_fnc_selectRandom} else {"None"};
 	_stealth = _reconMission;
 	_weatherChange = 0;
-	_playMusic = 2;
+	_playMusic = 0;
 	_preciseMarkers = false;
 
 	sleep 5;

@@ -1,5 +1,8 @@
 /*==================================================================MCC_fnc_saveServer===============================================================================================
-	Save persistent data about the server to the server
+	Save persistent data about the server to the server - must run on the server init
+
+	EXAMPLE:
+		["MCC_SERVER_SURVIVAL",10,false,false,true,false,false,false,false,false,false] spawn MCC_fnc_saveServer;
 
 	<IN>
 		0		: STRING file name - MCC will always add world name
@@ -36,8 +39,14 @@ _saveArtillery = param [8, true, [false]];
 _saveStartLoc = param [9, true, [false]];
 _saveRTSBuildngs = param [10, true, [false]];
 
+if (!isServer) exitWith {};
+
+//Don't allow more then one instanse of server monitoring
+if (missionNamespace getVariable ["MCC_fnc_saveServerIsrunning",false]) exitWith {};
+missionNamespace setVariable ["MCC_fnc_saveServerIsrunning",true];
 
 while {true} do {
+
 	sleep _waitTime;
 
 
@@ -71,7 +80,7 @@ while {true} do {
 		};
 
 		{
-			[format ["%1_%2",_fileName, worldname], "CAMPAIGN_MARKERS", str (_x select 0), "write",(_x select 1),true] call MCC_fnc_handleDB;
+			[format ["MCC_campaign_%1",worldname], "CAMPAIGN_MARKERS", str (_x select 0), "write",(_x select 1),true] call MCC_fnc_handleDB;
 		} forEach [[east,_markersEast],[west,_markersWest],[resistance,[_markersGuer]]];
 	};
 
@@ -139,7 +148,7 @@ while {true} do {
 
 	//Save RTS constuct - every few minutes heavy on resources
 	if (_saveRTSBuildngs) then {
-		if (time - (missionNamespace getVariable ["MCC_lastBuildngsSaveTime",0]) > 10) then {
+		if (time - (missionNamespace getVariable ["MCC_lastBuildngsSaveTime",0]) > 60) then {
 			missionNamespace setVariable ["MCC_lastBuildngsSaveTime",time];
 
 			_tempArray = [];

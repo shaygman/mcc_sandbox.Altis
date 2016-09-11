@@ -16,240 +16,210 @@ class mcc_test
 
 	class controls
 	{
-		class frame: MCC_RscText
+
+		//========================================= Input ========================================
+		class MCC_SaveLoadHeader: MCC_RscText
 		{
-			colorBackground[] = {0,0,0,0.9};
+			style = MCCST_CENTER;
 			idc = -1;
-			x = 0.29375 * safezoneW + safezoneX;
-			y = 0.225 * safezoneH + safezoneY;
-			w = 0.417656 * safezoneW;
-			h = 0.451 * safezoneH;
+			text = "Save / Load MCC configuration";
+			x = 0.276563 * safezoneW + safezoneX;
+			y = 0.247099 * safezoneH + safezoneY;
+			w = 0.446875 * safezoneW;
+			h = 0.0439828 * safezoneH;
+			colorBackground[] = {0,0,0,0.5};
 		};
 
-		class vehicleClass: MCC_RscCombo
-		{
-			idc = 101;
-			onLBSelChanged = "[0] spawn MCC_fnc_vehicleSpawner";
-			x = 0.304062 * safezoneW + safezoneX;
-			y = 0.346 * safezoneH + safezoneY;
-			w = 0.278437 * safezoneW;
-			h = 0.055 * safezoneH;
-		};
-
-		class SpawnButton: MCC_RscButton
-		{
-			idc = 102;
-			text = "Purchase";
-			x = 0.319531 * safezoneW + safezoneX;
-			y = 0.61 * safezoneH + safezoneY;
-			w = 0.139219 * safezoneW;
-			h = 0.055 * safezoneH;
-			onButtonClick = "[1] spawn MCC_fnc_vehicleSpawner";
-		};
-
-		class close: MCC_RscButton
+		class MCC_LoadHeader: MCC_RscText
 		{
 			idc = -1;
-			text = "Close"; //--- ToDo: Localize;
-			x = 0.639219 * safezoneW + safezoneX;
-			y = 0.61 * safezoneH + safezoneY;
-			w = 0.061875 * safezoneW;
-			h = 0.055 * safezoneH;
+			text = "Paste (crtl-v) MCC configuration code here:";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
+			x = 0.391146 * safezoneW + safezoneX;
+			y = 0.445021 * safezoneH + safezoneY;
+			w = 0.217168 * safezoneW;
+			h = 0.0235684 * safezoneH;
+			colorText[] = {1,1,1,1};
+			colorBackground[] = {1,0,1,0};
+		};
+
+		//========================================= Text Input Box =========================================
+		//class MCC_LoadInput : MCC_RscText {idc = MCC_LOAD_INPUT;type = MCCCT_EDIT;style = MCCST_MULTI;colorBackground[] = { 0, 0, 0, 0 };colorText[] = { 1, 1, 1, 1 };colorSelection[] = { 1, 1, 1, 1 };colorBorder[] = { 1, 1, 1, 1 };BorderSize = 0.01;autocomplete = false;x = 0.5; y = 0.275;w = 0.4; h = 0.04;sizeEx = 0.03;text = "";};
+
+		class MCC_LoadFrame: MCC_RscText
+		{
+			idc = MCC_LOAD_INPUT;
+			text = "";
+			type = MCCCT_EDIT;
+			style = MCCST_MULTI;
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			x = 0.288021 * safezoneW + safezoneX;
+			y = 0.302077 * safezoneH + safezoneY;
+			w = 0.429688 * safezoneW;
+			h = 0.142944 * safezoneH;
+			colorSelection[] = { 1, 1, 1, 1 };
+			colorDisabled[] = { 0, 0, 0, 1 };
+			autocomplete = false;
+			access = ReadAndWrite;
+		};
+
+		//========================================= Buttons ========================================
+		class MCC_SaveButton: MCC_RscButton		//Save to clipboard
+		{
+			idc = 0;
+			text = "Save To Clipboard";
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			x = 0.288021 * safezoneW + safezoneX;
+			y = 0.467013 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			tooltip = "Save current MCC configuration to ClipBoard";
+			onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+		};
+
+		class MCC_LoadButton: MCC_RscButton		//Load from clipboard
+		{
+			idc = -1;
+			text = "Load From Clipboard";
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			x = 0.608854 * safezoneW + safezoneX;
+			y = 0.467013 * safezoneH + safezoneY;
+			w = 0.108854 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			tooltip = "Paste MCC mission configuration code from clipboard (crtl-v) in text box first";
+			onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+		};
+
+		class MCC_CancelButton: MCC_RscButton	//Close dialog
+		{
+			idc = -1;
+			text = "Close";
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			x = 0.6375 * safezoneW + safezoneX;
+			y = 0.719914 * safezoneH + safezoneY;
+			w = 0.0802083 * safezoneW;
+			h = 0.0329871 * safezoneH;
 			onButtonClick = "closeDialog 0;";
 		};
 
-		class ammoPic: MCC_RscPicture
+		class MCC_saveList: MCC_RscListBox	//List of all the save slots
 		{
-			idc = 1100;
-			text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
-			tooltip = "Ammo";
-			x = 0.304062 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
-			w = 0.0257812 * safezoneW;
-			h = 0.044 * safezoneH;
+			idc = MCC_SAVE_LIST;
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			x = 0.282292 * safezoneW + safezoneX;
+			y = 0.510996 * safezoneH + safezoneY;
+			w = 0.20625 * safezoneW;
+			h = 0.15394 * safezoneH;
+			onLBSelChanged = __EVAL("[3] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
 		};
-		class repairPic: MCC_RscPicture
-		{
-			idc = 1101;
-			text = __EVAL(MCCPATH +"data\IconRepair.paa");
-			tooltip = "Supplies";
-			x = 0.37625 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
-			w = 0.0257812 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class fuelPic: MCC_RscPicture
-		{
-			idc = 1102;
-			text = __EVAL(MCCPATH +"data\IconFuel.paa");
-			tooltip = "Fuel";
-			x = 0.448438 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
-			w = 0.0257812 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class ValorPic: MCC_RscPicture
-		{
-			idc = 1103;
 
-			text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
-			tooltip = "Valor";
-			x = 0.520625 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
-			w = 0.0257812 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class ammoText: MCC_RscText
+		class MCC_saveDescription: MCC_RscText	//Description fo the saved mission
 		{
-			idc = 1000;
-			x = 0.329844 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
-			w = 0.04125 * safezoneW;
-			h = 0.044 * safezoneH;
+			idc = MCC_SAVE_DIS;
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			x = 0.5 * safezoneW + safezoneX;
+			y = 0.510996 * safezoneH + safezoneY;
+			w = 0.217708 * safezoneW;
+			h = 0.15394 * safezoneH;
+			text = "";
+			type = MCCCT_EDIT;
+			style = MCCST_MULTI;
+			autocomplete = false;
+			access = ReadAndWrite;
 		};
-		class repairText: MCC_RscText
-		{
-			idc = 1001;
-			x = 0.402031 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
-			w = 0.04125 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class fuelText: MCC_RscText
-		{
-			idc = 1002;
-			x = 0.474219 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
-			w = 0.04125 * safezoneW;
-			h = 0.044 * safezoneH;
-		};
-		class ValorText: MCC_RscText
-		{
-			idc = 1003;
 
-			x = 0.546406 * safezoneW + safezoneX;
-			y = 0.423 * safezoneH + safezoneY;
-			w = 0.04125 * safezoneW;
-			h = 0.044 * safezoneH;
+		class MCC_saveName: MCC_RscText	//Name of the saved mission
+		{
+			idc = MCC_SAVE_NAME;
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			x = 0.342604 * safezoneW + safezoneX;
+			y = 0.675931 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0329871 * safezoneH;
+			text = "";
+			type = MCCCT_EDIT;
+			style = MCCST_MULTI;
+			autocomplete = false;
+			access = ReadAndWrite;
 		};
-		class tittle: MCC_RscText
+
+		class MCC_saveNameTittle: MCC_RscText
 		{
 			idc = -1;
-			text = "Vehicle Spawn";
-			x = 0.319531 * safezoneW + safezoneX;
-			y = 0.258 * safezoneH + safezoneY;
-			w = 0.170156 * safezoneW;
-			h = 0.055 * safezoneH;
+			text = "Save Name:"; //--- ToDo: Localize;
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			x = 0.288021 * safezoneW + safezoneX;
+			y = 0.675931 * safezoneH + safezoneY;
+			w = 0.06875 * safezoneW;
+			h = 0.0329871 * safezoneH;
 			colorText[] = {0,1,1,1};
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
 		};
-		class availableResourcesTittle: MCC_RscText
+
+		class MCC_saveUIButton: MCC_RscButton	//Save to UI
 		{
 			idc = -1;
-
-			text = "Available Resources";
-			x = 0.592812 * safezoneW + safezoneX;
-			y = 0.247 * safezoneH + safezoneY;
-			w = 0.108281 * safezoneW;
-			h = 0.055 * safezoneH;
-			colorText[] = {0,1,1,1};
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+			onButtonClick = __EVAL("[2] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			tooltip = "Save a mission to profile name space - choose a slot from the above list first";
+			text = "Save To Profile"; //--- ToDo: Localize;
+			x = 0.5 * safezoneW + safezoneX;
+			y = 0.675931 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0329871 * safezoneH;
 		};
-		class MCC_ResourcesControlsGroup: MCC_RscControlsGroupNoScrollbars
+
+		class MCC_loadUIButton: MCC_RscButton	//Load from UI
 		{
-			idc = 80;
-			x = 0.592812 * safezoneW + safezoneX;
-			y = 0.313 * safezoneH + safezoneY;
-			w = 0.108281 * safezoneW;
-			h = 0.286 * safezoneH;
-			class controls
-			{
-				class MCC_AmmoText: MCC_RscText
-				{
-					idc = 81;
+			idc = -1;
+			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+			tooltip = "Load a mission from profile name space - choose a slot from the above list first";
+			text = "Load From Profile"; //--- ToDo: Localize;
+			x = 0.620312 * safezoneW + safezoneX;
+			y = 0.675931 * safezoneH + safezoneY;
+			w = 0.0973958 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
 
-					x = 0.0257812 * safezoneW;
-					y = 0.055 * safezoneH;
-					w = 0.04125 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
+		class MCC3DSaveAllToSQM: MCC_RscButton
+		{
+			idc = -1;
+			colorDisabled[] = {1,0.4,0.3,0.8};
+			onButtonClick = __EVAL("[5] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.85)";
+			tooltip = "Save all missions's object in SQM file format and copy it to clipboard."; //--- ToDo: Localize;
+			text = "Save All (SQM)"; //--- ToDo: Localize;
+			x = 0.288021 * safezoneW + safezoneX;
+			y = 0.719914 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
 
-				class MCC_RepairText: MCC_RscText
-				{
-					idc = 82;
+		class MCC3DSaveToSQM: MCC_RscButton
+		{
+			idc = -1;
+			colorDisabled[] = {1,0.4,0.3,0.8};
+			onButtonClick = __EVAL("[7] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.85)";
+			tooltip = "Save only MCC/Zeus missions's object in SQM file format and copy it to clipboard."; //--- ToDo: Localize;
+			text = "Save MCC (SQM)"; //--- ToDo: Localize;
+			x = 0.4 * safezoneW + safezoneX;
+			y = 0.719914 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0329871 * safezoneH;
+		};
 
-					x = 0.0257812 * safezoneW;
-					y = 0.099 * safezoneH;
-					w = 0.04125 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
-
-				class MCC_FuelText: MCC_RscText
-				{
-					idc = 83;
-
-					x = 0.0257812 * safezoneW;
-					y = 0.143 * safezoneH;
-					w = 0.04125 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
-
-				class MCC_ValorText: MCC_RscText
-				{
-					idc = 84;
-
-					x = 0.0257812 * safezoneW;
-					y = 0.011 * safezoneH;
-					w = 0.04125 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
-
-				class MCC_Ammo: MCC_RscPicture
-				{
-					idc = 91;
-
-					text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
-					tooltip = "Ammo";
-					x = 0.00515625 * safezoneW;
-					y = 0.055 * safezoneH;
-					w = 0.0154688 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
-				class MCC_Repair: MCC_RscPicture
-				{
-					idc = 92;
-
-					text = __EVAL(MCCPATH +"data\IconRepair.paa");
-					tooltip = "Supplies";
-					x = 0.00515625 * safezoneW;
-					y = 0.099 * safezoneH;
-					w = 0.0154688 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
-				class MCC_Fuel: MCC_RscPicture
-				{
-					idc = 93;
-
-					text = __EVAL(MCCPATH +"data\IconFuel.paa");
-					tooltip = "Fuel";
-					x = 0.00515625 * safezoneW;
-					y = 0.143 * safezoneH;
-					w = 0.0154688 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
-
-				class MCC_ValorPic: MCC_RscPicture
-				{
-					idc = 94;
-
-					text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
-					tooltip = "Valor";
-					x = 0.00515625 * safezoneW;
-					y = 0.011 * safezoneH;
-					w = 0.0154688 * safezoneW;
-					h = 0.033 * safezoneH;
-				};
-			};
+		class MCC3DSaveToComp: MCC_RscButton
+		{
+			idc = -1;
+			colorDisabled[] = {1,0.4,0.3,0.8};
+			onButtonClick = __EVAL("[6] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
+			tooltip = "Save MCC's 3D editor placments in a composition's format to clipboard and RPT file"; //--- ToDo: Localize;
+			text = "Save Comp"; //--- ToDo: Localize;
+			x = 0.402604 * safezoneW + safezoneX;
+			y = 0.719914 * safezoneH + safezoneY;
+			w = 0.103125 * safezoneW;
+			h = 0.0329871 * safezoneH;
 		};
 	};
 };
