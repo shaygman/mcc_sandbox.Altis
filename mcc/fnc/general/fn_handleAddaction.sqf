@@ -4,6 +4,8 @@
 // <in> Nothing
 //<out> Nothing
 //==============================================================================================================================================================================
+#define MCC_HELPER "UserTexture1m_F"
+
 private ["_string","_respawnItems","_airports","_counter","_searchArray","_key","_text"];
 
 //Interactive objects EH
@@ -71,7 +73,7 @@ _text spawn
 	while {alive player} do
 	{
 		if (vehicle player == player && !(player getVariable ["MCC_medicUnconscious",false])) then {
-			_objects = player nearObjects ["UserTexture1m_F",7];
+			_objects = player nearObjects [MCC_HELPER,7];
 			_interactiveObjects = [];
 
 			//Handle Objects

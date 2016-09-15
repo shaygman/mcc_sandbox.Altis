@@ -7,7 +7,21 @@ _ctrl 		= _this select 0;
 _ctrlData	= param [1,"",[""]];
 _suspect = (player getVariable ["interactWith",[]]) select 0;
 
-_pos = screenToWorld [0.5,0.5];
+//_pos = if (!isNull  cursorObject) then {position cursorObject) else {screenToWorld [0.5,0.5]};
+
+_ins = lineIntersectsSurfaces [
+		AGLToASL positionCameraToWorld [0,0,0],
+		AGLToASL positionCameraToWorld [0,0,1000],
+		player,
+		objNull,
+		true,
+		1,
+		"GEOM",
+		"NONE"
+	];
+if (count _ins == 0) exitWith {};
+
+_pos = ASLToATL (_ins select 0 select 0);
 
 switch (true) do {
 	case (_ctrlData == "medic"): {

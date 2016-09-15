@@ -26,7 +26,7 @@ Interaction Menu:
 - Changed: Total reworked Interaction layout from list to a rose dial menu.
 
 Ambient Civilians Module
-- Added: civilians relations variable added to the module. The civilians relation variable will determine how the ambient civilians will act near players starting form positive behavior to bad behavior where some of the civilians will be spawned as armed civilians, suicide bombers and place IEDs.
+- Added: civilians relations variable added to the module. The civilians relation variable will determine how the ambient civilians will act near players starting form positive behavior to bad behavior where some of the civilians will be turn into armed civilians, militias and suicide bombers and place IEDs.
 In the campaign killing civilians and failing objectives will decrease the player relation with them while while completing objectives will increase.  WIKI - http://mccsandbox.wikia.com/wiki/Modules
 
 Medical System:
@@ -87,7 +87,7 @@ Misc:
 - Added: Breach locked door by shooting on them use custom ammo such as shotgun slug (RHS or Prpl by defualt) as defined with MCC_breacingAmmo example: MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
 - Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point.
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file.
-
+- Added: 3D markers when spotting enemies.
 - Changed: Players spawns on Squad Leaders Rally Point will be paradrop and not simply teleported.
 - Changed: Medic system reworked to work with the new protection system.
 - Changed: Supply dropping an autonomous vehicle will drop it with crew
@@ -112,8 +112,6 @@ Misc:
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
 
-TODO - add clear DB
-TODO - save campaign
 TODO - remove safe zone from start location - MCC_fnc_buildSpawnPoint
 TODO - levels and skills
 TODO - survivals items

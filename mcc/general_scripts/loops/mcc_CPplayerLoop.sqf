@@ -124,6 +124,9 @@ MCC_fnc_mapDrawPlayersWPConsole =
 
 findDisplay 12 displayCtrl 51 ctrlAddEventHandler ["Draw","_this call MCC_fnc_mapDrawPlayersWPConsole"];
 
+//3D tag system 3DSpotting
+0 spawn MCC_fnc_tagSystem;
+
 sleep 10;
 //Loop
 private ["_wpArray","_rating","_exp","_level","_role","_oldLevel","_newLevel","_nextCheck","_time","_fnc_supplyBox","_vehicle"];
@@ -195,22 +198,6 @@ while {true} do {
 					_nextCheck = time + 300;
 				};
 			};
-		};
-
-		//Delete Markers
-		if (!isnil "MCC_PDAMarkers") then {
-			_time = time;
-			{
-				if (time > (_x +120)) then
-				{
-					deletemarkerlocal (MCC_PDAMarkers select _foreachindex);
-					MCC_PDAMarkers set [_foreachindex, -1];
-					MCC_PDAMarkersTime set [_foreachindex, -1];
-				};
-			} foreach MCC_PDAMarkersTime;
-
-			MCC_PDAMarkers = MCC_PDAMarkers - [-1];
-			MCC_PDAMarkersTime = MCC_PDAMarkersTime - [-1];
 		};
 
 		//Medic effects

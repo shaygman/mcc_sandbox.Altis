@@ -184,16 +184,25 @@ switch (_type) do {
 	case 8:
 	{
 		//load server
-		["MCC_SERVER_DEFAULT",true,true,true,true,true,true,true,true,true] remoteExec ["MCC_fnc_loadServer", 2];
+		["MCC_campaign",true,true,true,true,true,true,true,true,true] remoteExec ["MCC_fnc_loadServer", 2];
 
 		//load players
 		[true,true,true] remoteExec ["MCC_fnc_loadPlayer", 0];
 
+		sleep 20;
+
 		//Save server
-		["MCC_SERVER_DEFAULT",10,false,true,true,true,true,true,true,true,true] remoteExec ["MCC_fnc_saveServer", 2];
+		["MCC_campaign",10,false,true,true,true,true,true,true,true,true] remoteExec ["MCC_fnc_saveServer", 2];
 
 		//save players
 		[10,true,true,true] remoteExec ["MCC_fnc_savePlayer", 2];
-	}
+	};
+
+	//Delete data
+	case 9:
+	{
+		0 spawn MCC_fnc_clearPersistentData;
+		systemChat "DB cleared";
+	};
 };
 

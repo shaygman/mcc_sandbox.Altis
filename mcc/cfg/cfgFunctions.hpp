@@ -92,6 +92,7 @@ class ui
 	class getGroupIconData {description = "get group icon depends on the group type and size";};
 	class 3Dcredits	{};
 	class musicTrigger {description = "Execute music or sound on all clients triggers";};
+	class tagSystem {description = "Init MCC 3d markers - tagging system. Adds 3D markers when tagging an enemy";};
 };
 
 class ied
@@ -220,6 +221,7 @@ class mp
 	class loadServer {description = "Load persistent data about the server from the server";};
 	class savePlayer {description = "Save persistent data about the player to the server";};
 	class loadPlayer {description = "Load persistent data about the player from the server";};
+	class clearPersistentData {description = "Clear all data from saved files";};
 };
 
 class actions

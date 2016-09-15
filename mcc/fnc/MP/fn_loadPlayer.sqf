@@ -66,7 +66,9 @@ if (_gear) then {
 						  secondaryWeaponItems player,
 						  handgunItems player], "ARRAY"] remoteExec ["MCC_fnc_getVariable", 2];
 	waitUntil {!isNil _varName};
-	(missionNameSpace getVariable [_varName,[]]) call MCC_fnc_loadGear;
+	if (count (missionNameSpace getVariable [_varName,[]]) >0) then {
+		(missionNameSpace getVariable [_varName,[]]) call MCC_fnc_loadGear;
+	};
 };
 
 //Set player stats
