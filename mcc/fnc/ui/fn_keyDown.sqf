@@ -80,7 +80,20 @@ if (tolower _ehType == "keyup") exitWith {
 if (tolower _ehType == "keydown") exitWith {
 	//ACE ui position
 	if (MCC_isACE) then {
-		if (_dikCode == (((["ACE3 Common","ace_interact_menu_SelfInteractKey"] call CBA_fnc_getKeybind) select 5) select 0) && isnil "MCC_ACEKeyPos") then { MCC_ACEKeyPos =  screenToWorld [0.5,0.5];};
+		if (_dikCode == (((["ACE3 Common","ace_interact_menu_SelfInteractKey"] call CBA_fnc_getKeybind) select 5) select 0) && isnil "MCC_ACEKeyPos") then {
+
+			_ins = lineIntersectsSurfaces [
+					AGLToASL positionCameraToWorld [0,0,0],
+					AGLToASL positionCameraToWorld [0,0,3000],
+					player,
+					objNull,
+					true,
+					1,
+					"GEOM",
+					"NONE"
+				];
+			MCC_ACEKeyPos = if (count _ins == 0) then {screenToWorld [0.5,0.5]} else {ASLToATL (_ins select 0 select 0)};
+		};
 	};
 
 	//No need to go further if CBA

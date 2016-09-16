@@ -2,13 +2,14 @@
 private ["_enemySides","_group", "_unit", "_spotted", "_spottedWithWeapon", "_weapons", "_nearTargets", "_count", "_nearCount","_target","_leader","_canSee"];
 
 _target = _this select 0;
-_enemySides = [_target] call bis_fnc_enemySides;
 
 _spottedWithWeapon = false;
 _count = 0;
 
 while { true } do {
+	_enemySides = [_target] call bis_fnc_enemySides;
 	_spotted = false;
+
 	{
 		_group = _x;
 		if (side _group in _enemySides) then {

@@ -11,7 +11,7 @@ _suspect = (player getVariable ["interactWith",[]]) select 0;
 
 _ins = lineIntersectsSurfaces [
 		AGLToASL positionCameraToWorld [0,0,0],
-		AGLToASL positionCameraToWorld [0,0,1000],
+		AGLToASL positionCameraToWorld [0,0,3000],
 		player,
 		objNull,
 		true,
