@@ -88,7 +88,7 @@ if (_specialIntro != "none") then {
 
 			//if not attached camera make it move
 			_cam camPreparePos _targetPos;
-			_cam camCommitPrepared (_briefingsTime+8);
+			_cam camCommitPrepared 10;
 		};
 
 		case "track":

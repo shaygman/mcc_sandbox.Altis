@@ -34,7 +34,7 @@ waituntil {alive player &&
 
 //Get player location
 if (_position) then {
-	_varName = format ["%1_playerPos",worldname];
+	_varName = format ["%1_%2_playerPos",worldname,missionName];
 	[_varName, player,position player, "ARRAY"] remoteExec ["MCC_fnc_getVariable", 2];
 	waitUntil {!isNil _varName};
 
@@ -46,7 +46,7 @@ if (_position) then {
 
 //Set Gear
 if (_gear) then {
-	_varName = format ["%1_playerGear",worldname];
+	_varName = format ["%1_%2_playerGear",worldname,missionName];
 	[_varName, player,[   goggles player,
 						  headgear player,
 						  uniform player,
@@ -73,7 +73,7 @@ if (_gear) then {
 
 //Set player stats
 if (_stats) then {
-	_varName = format ["%1_playerStats",worldname];
+	_varName = format ["%1_%2_playerStats",worldname,missionName];
 	[_varName, player,[], "ARRAY"] remoteExec ["MCC_fnc_getVariable", 2];
 	waitUntil {!isNil _varName};
 	_var = missionNameSpace getVariable [_varName,[]];

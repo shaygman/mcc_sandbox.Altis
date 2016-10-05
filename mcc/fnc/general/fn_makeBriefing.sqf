@@ -62,7 +62,7 @@ if (count _missionInfo > 0) then {
 
 //Start briefings
 if (_playMusic in [0,1]) then {
-	_init = format ["0 = _this spawn {if (!isDedicated && playerSide == %4) then {waituntil {alive player};player createDiaryRecord ['diary', ['%1',(toString %3) + '%2']];(_this getVariable 'missionsInfo') spawn MCC_fnc_MWopenBriefing;}};",_tittle, _string ,_missionTittle, _sidePlayer];
+	_init = format ["0 = _this spawn {if (!isDedicated && str playerSide == str %4) then {waituntil {alive player};player createDiaryRecord ['diary', ['%1',(toString %3) + '%2']];(_this getVariable 'missionsInfo') spawn MCC_fnc_MWopenBriefing;}};",_tittle, _string ,_missionTittle, _sidePlayer];
 
 	[[[netid _dummy,_dummy], _init], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
 };

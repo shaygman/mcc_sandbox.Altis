@@ -45,24 +45,6 @@ if (timeMultiplier < 12) then {setTimeMultiplier 12};
 ["MCC_campaign",true,true,true,true,true,true,true,true,true] call MCC_fnc_loadServer;
 
 
-//init map
-[_sideEnemy,_tileSize,0.2] call MCC_fnc_campaignInitMap;
-
-//Mark the starting bases
-{
-	_basePos = switch (_x) do
-				{
-					case east: {missionNamespace getVariable ["MCC_START_EAST",[0,0,0]]};
-					case west: {missionNamespace getVariable ["MCC_START_WEST",[0,0,0]]};
-					case resistance: {missionNamespace getVariable ["MCC_START_GUER",[0,0,0]]};
-					default	{[0,0,0]};
-				};
-	if !(_basePos isEqualTo [0,0,0]) then {
-		[_basePos,1000,_x,0.2] spawn MCC_fnc_campaignPaintMarkers;
-	};
-} forEach [_sidePlayer,_sidePlayer2];
-
-
 //Build the faction's unitsArrays and send it to the server.
 _check = [_factionEnemy, _sideEnemy] call MCC_fnc_MWCreateUnitsArray;
 waituntil {_check};
@@ -119,6 +101,23 @@ if (count _locations == 0) then {
 	};
 };
 
+//init map markers
+[_sideEnemy,_tileSize,0.2,_locations,400,0.4] call MCC_fnc_campaignInitMap;
+
+//Mark the starting bases
+{
+	_basePos = switch (_x) do
+				{
+					case east: {missionNamespace getVariable ["MCC_START_EAST",[0,0,0]]};
+					case west: {missionNamespace getVariable ["MCC_START_WEST",[0,0,0]]};
+					case resistance: {missionNamespace getVariable ["MCC_START_GUER",[0,0,0]]};
+					default	{[0,0,0]};
+				};
+	if !(_basePos isEqualTo [0,0,0]) then {
+		[_basePos,1000,_x,0.2] spawn MCC_fnc_campaignPaintMarkers;
+	};
+} forEach [_sidePlayer,_sidePlayer2];
+
 //Spawn enemy ambient patrols
 [500,18,_factionEnemy] spawn MCC_fnc_campaignSpawnAIInit;
 
@@ -126,11 +125,13 @@ if (count _locations == 0) then {
 //Pick first location
 _missionDone = 0;
 
+/*
 //Mark all the locations as hot spots
 {
 	[(_x select 0),400,_sideEnemy,0.4,[_sidePlayer,_sidePlayer2]] spawn MCC_fnc_campaignPaintMarkers;
 	sleep 0.1;
 } forEach _locations;
+*/
 
 //main mission loop
 private ["_AOlocationPos","_AOlocationName","_index","_goodLocation"];

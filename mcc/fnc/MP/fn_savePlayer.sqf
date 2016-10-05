@@ -39,7 +39,7 @@ while {true} do {
 
 		//Position
 		if (_position) then {
-			[format ["%1_playerPos",worldname], _player,position _player, "ARRAY"] call MCC_fnc_setVariable;
+			[format ["%1_%2_playerPos",worldname,missionName], _player,position _player, "ARRAY"] call MCC_fnc_setVariable;
 		};
 
 		//Gear
@@ -63,7 +63,7 @@ while {true} do {
 						  secondaryWeaponItems _player,
 						  handgunItems _player];
 
-			[format ["%1_playerGear",worldname], _player,_tempArray, "ARRAY"] call MCC_fnc_setVariable;
+			[format ["%1_%2_playerGear",worldname,missionName], _player,_tempArray, "ARRAY"] call MCC_fnc_setVariable;
 
 		};
 
@@ -76,7 +76,7 @@ while {true} do {
 						  _player getVariable ["MCC_surviveIsSick",false]
 						 ];
 
-			[format ["%1_playerStats",worldname], _player,_tempArray, "ARRAY"] call MCC_fnc_setVariable;
+			[format ["%1_%2_playerStats",worldname,missionName], _player,_tempArray, "ARRAY"] call MCC_fnc_setVariable;
 		};
 
 	} forEach (if (isMultiplayer) then {playableUnits} else {[player]});

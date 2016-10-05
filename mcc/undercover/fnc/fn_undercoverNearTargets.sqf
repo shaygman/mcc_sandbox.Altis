@@ -37,7 +37,7 @@ while { true } do {
 						if ([_x,_target,500] call GAIA_fnc_haslineofsight) exitWith {_canSee = true};
 					} forEach units _group;
 
-					if (_canSee && ((_target distance _x) < 10 || (vehicle _target == _target && ((speed _target > 10) || (stance _target != "STAND"))))
+					if (_canSee && ((_target distance _unit) < 10 || (vehicle _target == _target && ((speed _target > 10) || (stance _target != "STAND"))))
 						&& !_spottedWithWeapon) then {
 
 						if (_target getVariable ["MCC_undercoverNearEnemy",false]) then {

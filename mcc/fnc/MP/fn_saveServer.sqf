@@ -55,6 +55,7 @@ while {true} do {
 		_markersEast = [];
 		_markersWest = [];
 		_markersGuer = [];
+		_markers = [];
 
 		//create tiles
 		_allTiles = missionNamespace getVariable ["mcc_markersZonesExc",[]];
@@ -70,6 +71,11 @@ while {true} do {
 
 				//categorize to sides
 				_selectedTile = _yTiles select _x;
+				if (_selectedTile != "") then {
+					_markers pushBack [markerPos _selectedTile, markerSize _selectedTile, markerColor _selectedTile,markerAlpha _selectedTile];
+				} else {
+					_markers pushBack [];
+				};
 
 				switch (markerColor _selectedTile) do {
 					case "ColorWEST": {_markersWest pushBack markerPos _selectedTile};
@@ -77,11 +83,17 @@ while {true} do {
 					case "ColorGUER": {_markersGuer pushBack markerPos _selectedTile};
 				};
 			};
+
+			//save DB
+			[format ["MCC_campaign_%1_%2",worldname,missionName], "CAMPAIGN_MARKERS", format ["row_%1", _y], "write",_markers,true] call MCC_fnc_handleDB;
+			_markers = [];
 		};
 
+		/*
 		{
-			[format ["MCC_campaign_%1",worldname], "CAMPAIGN_MARKERS", str (_x select 0), "write",(_x select 1),true] call MCC_fnc_handleDB;
+			[format ["MCC_campaign_%1_%2",worldname,missionName], "CAMPAIGN_MARKERS", str (_x select 0), "write",(_x select 1),true] call MCC_fnc_handleDB;
 		} forEach [[east,_markersEast],[west,_markersWest],[resistance,[_markersGuer]]];
+		*/
 	};
 
 	//Save stuff for each side
@@ -91,35 +103,35 @@ while {true} do {
 		//Save tickets
 		if (_saveTickets) then {
 			if (([_side] call BIS_fnc_respawnTickets) >= 0) then {
-				[format ["%1_%2",_fileName, worldname], "TICKETS", str _side, "write",([_side] call BIS_fnc_respawnTickets),true] call MCC_fnc_handleDB;
+				[format ["%1_%2_%3",_fileName, worldname,missionName], "TICKETS", str _side, "write",([_side] call BIS_fnc_respawnTickets),true] call MCC_fnc_handleDB;
 			};
 		};
 
 		//Save resources
 		if (_saveResources) then {
 			_tempArray = missionNameSpace getVariable [format ["MCC_res%1",_side],[1500,500,200,200,200]];
-			[format ["%1_%2",_fileName, worldname], "RESOURCES", str _side, "write",_tempArray,true] call MCC_fnc_handleDB;
+			[format ["%1_%2_%3",_fileName, worldname,missionName], "RESOURCES", str _side, "write",_tempArray,true] call MCC_fnc_handleDB;
 		};
 
 		//Save civilian relation
 		if (_saveCivRelation) then {
-			[format ["%1_%2",_fileName, worldname], "CIV_RELATION", str _side, "write",(missionNamespace getvariable [format ["MCC_civRelations_%1",_side],0.5]),true] call MCC_fnc_handleDB;
+			[format ["%1_%2_%3",_fileName, worldname,missionName], "CIV_RELATION", str _side, "write",(missionNamespace getvariable [format ["MCC_civRelations_%1",_side],0.5]),true] call MCC_fnc_handleDB;
 		};
 
 
 		//Save CAS
 		if (_saveCAS) then {
-			[format ["%1_%2",_fileName, worldname], "CAS", str _side, "write",(missionNamespace getvariable [format ["MCC_CASConsoleArray%1",_side],[]]),true] call MCC_fnc_handleDB;
+			[format ["%1_%2_%3",_fileName, worldname,missionName], "CAS", str _side, "write",(missionNamespace getvariable [format ["MCC_CASConsoleArray%1",_side],[]]),true] call MCC_fnc_handleDB;
 		};
 
 		//Save air drop
 		if (_saveAirDrop) then {
-			[format ["%1_%2",_fileName, worldname], "AIR_DROP", str _side, "write",(missionNamespace getvariable [format ["MCC_ConsoleAirdropArray%1",_side],[]]),true] call MCC_fnc_handleDB;
+			[format ["%1_%2_%3",_fileName, worldname,missionName], "AIR_DROP", str _side, "write",(missionNamespace getvariable [format ["MCC_ConsoleAirdropArray%1",_side],[]]),true] call MCC_fnc_handleDB;
 		};
 
 		//Save artillery
 		if (_saveArtillery) then {
-			[format ["%1_%2",_fileName, worldname], "ARTILLERY", str _side, "write",(missionNamespace getvariable [format ["Arti_%1_shellsleft",_side],0]),true] call MCC_fnc_handleDB;
+			[format ["%1_%2_%3",_fileName, worldname,missionName], "ARTILLERY", str _side, "write",(missionNamespace getvariable [format ["Arti_%1_shellsleft",_side],0]),true] call MCC_fnc_handleDB;
 		};
 
 		//Save start locations
@@ -138,13 +150,13 @@ while {true} do {
 				};
 			} forEach ([_side] call BIS_fnc_getRespawnPositions);
 
-			[format ["%1_%2",_fileName, worldname], "SPAWN_POINTS", str _side, "write",_tempArray,true] call MCC_fnc_handleDB;
+			[format ["%1_%2_%3",_fileName, worldname,missionName], "SPAWN_POINTS", str _side, "write",_tempArray,true] call MCC_fnc_handleDB;
 		};
 
 	} forEach [east,west,resistance];
 
 	//Arty type
-	[format ["%1_%2",_fileName, worldname], "ARTILLERY", "TYPE", "write",(missionNamespace getvariable ["HW_arti_types",[["HE Laser-guided","Bo_GBU12_LGB",3,50],["HE 82mm","Sh_82mm_AMOS",1,75]]]),true] call MCC_fnc_handleDB;
+	[format ["%1_%2_%3",_fileName, worldname,missionName], "ARTILLERY", "TYPE", "write",(missionNamespace getvariable ["HW_arti_types",[["HE Laser-guided","Bo_GBU12_LGB",3,50],["HE 82mm","Sh_82mm_AMOS",1,75]]]),true] call MCC_fnc_handleDB;
 
 	//Save RTS constuct - every few minutes heavy on resources
 	if (_saveRTSBuildngs) then {
@@ -162,7 +174,7 @@ while {true} do {
 					 					];
 				};
 			} foreach (allMissionObjects BASE_ANCHOR);
-			[format ["%1_%2",_fileName, worldname], "BUILDINGS", "BUILDINGS", "write",_tempArray,true] call MCC_fnc_handleDB;
+			[format ["%1_%2_%3",_fileName, worldname,missionName], "BUILDINGS", "BUILDINGS", "write",_tempArray,true] call MCC_fnc_handleDB;
 		};
 	};
 };

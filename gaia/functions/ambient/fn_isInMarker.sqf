@@ -3,6 +3,11 @@ private ["_dir","_difx","_dify","_relativedir","_adis","_bdis","_borderdis","_po
 _pos =  param [0,[0,0,0],[[]]];
 _marker = param [1,"",[""]];
 
+_pos inArea _marker;
+
+/*
+//Absoulte due to the new inarea command
+
 _cPos = getMarkerPos _marker;
 _posx = _cPos select 0;
 _posy = _cPos select 1;
@@ -11,6 +16,7 @@ _areax = _area select 0;
 _areay = _area select 1;
 _areadir = markerDir _marker;
 _shape = markerShape _marker;
+_in = false;
 
 if(_shape == "RECTANGLE")then{
 	_difx = (_pos select 0) - _posx;
@@ -33,3 +39,4 @@ if(_shape == "RECTANGLE")then{
 	_in = if (_dis1+_dis2 < _total) then {true} else {false};
 };
 _in;
+*/

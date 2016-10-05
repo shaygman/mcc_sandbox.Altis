@@ -32,6 +32,6 @@ _pos = getpos _module;
 _spawn = [_pos,3000,(_dir -180)] call BIS_fnc_relpos;
 _away = [_pos,3500,_dir] call BIS_fnc_relpos;
 
-[[6, [_casTypes select (_resualt select 1)] , _pos, [(_unitsArray select (_resualt select 0)) select 0], _spawn,_away,true],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
+[[6, [_casTypes select (_resualt select 1)] , _pos, [(_unitsArray select (_resualt select 0)) select 0], _spawn,_away,0],"MCC_fnc_airDrop",false,false] spawn BIS_fnc_MP;
 
 deleteVehicle _module;

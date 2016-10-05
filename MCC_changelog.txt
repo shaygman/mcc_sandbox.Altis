@@ -112,6 +112,13 @@ Misc:
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
 
+TODO - break MCC cinematic with esc
+TODO - MCC ammobox from ace/interaction
+TODO - place object near FOB - animation
+TODO - remove duplicated loading HQ
+TODO - Disable inibi when want to
+TODO - check with ACE
+TODO - mobile respawn
 TODO - remove safe zone from start location - MCC_fnc_buildSpawnPoint
 TODO - levels and skills
 TODO - survivals items
@@ -120,7 +127,26 @@ TODO - Join MCC Squad
 TODO - mission templates, test dedicated
 TODO - survival spawn crates in houses?!
 
-
+/*
+wirefence = "Land_New_WiredFence_5m_F" createVehicle position player;
+arrow = "Sign_Arrow_F" createVehicle [0,0,0];
+onEachFrame {
+ _ins = lineIntersectsSurfaces [
+  AGLToASL positionCameraToWorld [0,0,0],
+  AGLToASL positionCameraToWorld [0,0,1000],
+  player,
+  objNull,
+  true,
+  1,
+  "GEOM",
+  "NONE"
+ ];
+ if (count _ins == 0) exitWith {arrow setPosASL [0,0,0]};
+ arrow setPosASL (_ins select 0 select 0);
+ arrow setVectorUp (_ins select 0 select 1);
+ hintSilent str _ins;
+};
+*/
 Change log r18:
 -= New IED Mini Game =-
 - Added: Mini-game IED disarm, as shown in "keep talking and nobody explodes" game. Http://mccsandbox.wikia.com/wiki/Mini-game_IED
