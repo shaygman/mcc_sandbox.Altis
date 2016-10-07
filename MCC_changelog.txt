@@ -20,9 +20,17 @@ Role Selection:
 - Added: Resupply will resupply grenade launcher rounds.
 - Added: Ability to build sand bags around FOB - Squad leader - doesn't need resources but there is a limit to 14 sandbags per FOB
 
+Mobile Respawn
+- Added: Support for mobile respawn. Make any vehicle a mobile respawn by adding the presets from MCC 3d editor or Zeus. While mobile vehicle is alive you can spawn inside it if it holds enough space, outside of it if it don't and parachute out of it if its flying.
+
+Logistics:
+- Added: Can place constructions in hight such as HMG on balcony exc.
+- Added: Can build fortifications around FOB/Start location
+
 Interaction Menu:
 - Added: From MCC interaction mount/dismount weapons attachments with the proper animations doing so.
 - Added: Switch VON radio channels from the self interaction menu.
+- Added: You can place IED and mines on walls using MCC actions keys.
 - Changed: Total reworked Interaction layout from list to a rose dial menu.
 
 Ambient Civilians Module
@@ -34,7 +42,7 @@ Medical System:
 - AI will revive downed AI or players.
 
 Commander Console:
-- Changed: Commander Console UI.
+- Changed: Completely reworked Commander Console UI.
 
 APEX:
 - added: Apex VTOL planes will now replace the default helicopters in Parachute, HALo or Drop Pods insertions.
@@ -88,6 +96,7 @@ Misc:
 - Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point.
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file.
 - Added: 3D markers when spotting enemies.
+- Added: MCC ammoboxes can be placed from MCC self interaction.
 - Changed: Players spawns on Squad Leaders Rally Point will be paradrop and not simply teleported.
 - Changed: Medic system reworked to work with the new protection system.
 - Changed: Supply dropping an autonomous vehicle will drop it with crew
@@ -112,13 +121,11 @@ Misc:
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
 
-TODO - break MCC cinematic with esc
-TODO - MCC ammobox from ace/interaction
-TODO - place object near FOB - animation
 TODO - remove duplicated loading HQ
 TODO - Disable inibi when want to
 TODO - check with ACE
-TODO - mobile respawn
+TODO - in campaign buy units from the faction cfg
+TODO - vehicle buy faction
 TODO - remove safe zone from start location - MCC_fnc_buildSpawnPoint
 TODO - levels and skills
 TODO - survivals items

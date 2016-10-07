@@ -234,23 +234,6 @@ MCC_fnc_SQLPDAMenuclicked =
 		//Menu - Construct selected
 		case (_ctrlData in ["fob","bunker","hmg","gmg","at","aa","mortar"]):
 		{
-			_child =  MCC_sqlpdaMenu2;
-			_path = "";
-			_array = [
-					   ["0","Facing North",""],
-					   ["45","Facing NE",""],
-					   ["90","Facing East",""],
-					   ["135","Facing SE",""],
-					   ["180","Facing South",""],
-					   ["225","Facing SW",""],
-					   ["270","Facing West",""],
-					   ["315","Facing NW",""]
-					 ];
-		};
-
-		//Menu - Construct selected
-		case (_ctrlData in ["0","45","90","135","180","225","270","315"]):
-		{
 			_array = [];
 
 			//clear
@@ -258,6 +241,7 @@ MCC_fnc_SQLPDAMenuclicked =
 
 			_conType = uinamespace getVariable "MCC_sqlpdaMenu1Data";
 			[_conType,MCC_ConsoleWPpos] spawn MCC_fnc_initConstract;
+			closeDialog 0;
 		};
 	};
 

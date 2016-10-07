@@ -119,12 +119,18 @@ MCC_fnc_CPMapOpen_draw =
 			};
 
 			_pos = if (typeName _x == "GROUP") then {getpos leader _x} else {getpos _x};
+
 			//Squad leader
 			_title = 	if (_x == leader player) then {
 							format ["%1- %2",(_foreachIndex +1), "Leader"];
 						} else {
 							format ["%1- %2",(_foreachIndex +1), _x getvariable ["type","FOB"]];
 						};
+
+			//Mobile respawn
+			if (_x isKindOf "air" || _x isKindOf "vehicle" || _x isKindOf "tank" || _x isKindOf "ship") then {
+ 				_title = format ["%1- %2",(_foreachIndex +1), getText (configfile >> "CfgVehicles" >> typeof _x >> "displayName")];
+			};
 
 			_texture = format ["\A3\Ui_f\data\Map\GroupIcons\badge_rotate_%1_gs.paa",_textureAnimPhase];
 

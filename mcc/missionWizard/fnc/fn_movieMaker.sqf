@@ -21,7 +21,7 @@ create a movie scene made of intro if needed and a zoom in on an object
 				  	["More example Text","<t size='1.0' font='PuristaBold'>%1</t><br/>",0]
 				]
 =======================================================================================================================================================*/
-private ["_sfx","_blur","_cam","_camPos","_targetPos","_fnc_tranzEffect","_target","_units","_timeEnd"];
+private ["_sfx","_blur","_cam","_camPos","_targetPos","_fnc_tranzEffect","_target","_units","_timeEnd","_endCinimeticEH"];
 params ["_object","_taskDescription","_sfxName","_zoomStart","_zoomEnd","_shotDuration","_trazDuration","_specialIntro","_sounds","_music","_plainText","_distance"];
 
 MCC_fnc_tranzEffect = {
@@ -44,6 +44,7 @@ _sfx ppEffectEnable true;
 _sfx ppEffectAdjust [0.1, 1, 1, 0, 1];
 _sfx ppEffectEnable true;
 _sfx ppEffectCommit 0;
+ missionNamespace setVariable ["MCC_fnc_movieMaker_Sfx",_sfx];
 
 //NVG/TI
 switch (_sfxName) do {
@@ -60,12 +61,33 @@ _camPos = [(getPos _object), 300, random 360] call BIS_fnc_relPos;
 _cam = "camera" camCreate _camPos;
 _cam camPrepareFOV _zoomStart;
 showCinemaBorder true;
+missionNamespace setVariable ["MCC_fnc_movieMaker_cam",_cam];
 
 //if intro is an object
 if (typeName _specialIntro == typeName []) then {
 	_units = _specialIntro;
 	_specialIntro = "track";
 };
+
+missionNamespace setVariable ["MCC_fnc_movieMaker_running",true];
+
+_endCinimeticEH = (findDisplay 46) displayAddEventHandler ["KeyDown", {
+	_keyDown = _this select 1;
+
+	if (_keyDown == 1) then {
+		_sfx = missionNamespace getVariable ["MCC_fnc_movieMaker_Sfx",nil];
+		_sfx ppEffectEnable false;
+		ppEffectDestroy _sfx;
+
+		_cam = missionNamespace getVariable ["MCC_fnc_movieMaker_cam",nil];
+		_cam cameraeffect ["terminate", "back"];
+		camDestroy _cam;
+
+		missionNamespace setVariable ["MCC_fnc_movieMaker_running",false];
+	};
+
+	false;
+}];
 
 //First scene - make an intro
 if (_specialIntro != "none") then {
@@ -97,7 +119,7 @@ if (_specialIntro != "none") then {
 				private ["_target"];
 				params ["_units","_cam","_trazDuration"];
 
-				while {missionNamespace getVariable ["MCC_MWcenematicIntroFirstScene",false]} do {
+				while {(missionNamespace getVariable ["MCC_MWcenematicIntroFirstScene",false]) && (missionNamespace getVariable ["MCC_fnc_movieMaker_running",false])} do {
 					_target = _units call bis_fnc_selectrandom;
 
 					if (_target isKindOf "man") then {
@@ -134,7 +156,7 @@ if (_specialIntro != "none") then {
 				params ["_pos", "_alt", "_rad", "_ang", "_dir","_cam"];
 				private ["_coords"];
 
-				while {missionNamespace getVariable ["MCC_MWcenematicIntroFirstScene",false]} do {
+				while {(missionNamespace getVariable ["MCC_MWcenematicIntroFirstScene",false]) && (missionNamespace getVariable ["MCC_fnc_movieMaker_running",false])} do {
 					_coords = [_pos, _rad, _ang] call BIS_fnc_relPos;
 					_coords set [2, _alt];
 
@@ -162,6 +184,8 @@ if (_specialIntro != "none") then {
 	*/
 	//Intel
 	//get daytime data
+	if !(missionNamespace getVariable ["MCC_fnc_movieMaker_running",false]) exitWith {};
+
 	private ["_date","_tYear","_tMonth","_tDay","_tTimeH","_tTime","_tTimeM","_output"];
 	_date = date;
 	_tYear 	= _date select 0;
@@ -197,9 +221,11 @@ if (_specialIntro != "none") then {
 
 	//Sounds
 	sleep 1;
+	if !(missionNamespace getVariable ["MCC_fnc_movieMaker_running",false]) exitWith {};
 	[_sounds] spawn MCC_fnc_playBriefings;
 
 	//Briefings
+	if !(missionNamespace getVariable ["MCC_fnc_movieMaker_running",false]) exitWith {};
 	_timeEnd = time + _shotDuration;
 	[_plainText,safezoneX,0,"<t color='#FFFFFFFF' align='left'>%1</t>"] call BIS_fnc_typeText;
 
@@ -246,8 +272,14 @@ if (_specialIntro != "none") then {
 };
 
 //Clean up
+(findDisplay 46) displayRemoveEventHandler ["KeyDown", _endCinimeticEH];
+
+if !(missionNamespace getVariable ["MCC_fnc_movieMaker_running",false]) exitWith {};
+
 _sfx ppEffectEnable false;
 ppEffectDestroy _sfx;
 
 _cam cameraeffect ["terminate", "back"];
 camDestroy _cam;
+
+missionNamespace setVariable ["MCC_fnc_movieMaker_running",true];

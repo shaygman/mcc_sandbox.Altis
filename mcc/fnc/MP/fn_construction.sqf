@@ -63,10 +63,13 @@ switch (_conType) do {
 	};
 };
 
-_pos set [2,0];
 if (_conType in ["bunker","wall"]) then {
-	_bagFence = [[_vehicleType,[0,0,0.0237527],0.216771,1,0,{},true]];
-	_const = [_pos, _dir, _bagFence] call MCC_fnc_objectMapper;
+	_const = _vehicleType createVehicle _pos;
+	_const setDir _dir;
+	_const setPosASL _pos;
+	sleep 0.01;
+	_const setPosASL _pos;
+	//_const = [_pos, _dir, [[_vehicleType,[0,0,0.0237527],0.216771,1,0,{},true]]] call MCC_fnc_objectMapper;
 	_const setVariable ["MCC_CONST_FORT",true, true];
 } else {
 	_bagFence = [
@@ -83,6 +86,9 @@ if (_conType in ["bunker","wall"]) then {
 	_baseAnchor = ANCHOR_ITEM createVehicle _pos;
 	_baseAnchor setVariable ["MCC_conType",_conType,true];
 	_baseAnchor setVariable ["MCC_side",_side,true];
+	_baseAnchor setPosASL _pos;
+	sleep 0.01;
+	_baseAnchor setPosASL _pos;
 
 	//Create marker
 	_markerName = format ["MCC_constractMarkerName_%1",["MCC_constractMarkerName_",1] call bis_fnc_counter];
@@ -169,7 +175,14 @@ if (_conType in ["bunker","wall"]) then {
 	//We are done - build the object
 	if (_complete) then {
 		if (_vehicleType != "fob") then {
-			_const = [_pos, _dir, _bagFence] call MCC_fnc_objectMapper;
+			_const = _vehicleType createVehicle _pos;
+			_const setDir _dir;
+			_const setPosASL _pos;
+			sleep 0.01;
+			_const setPosASL _pos;
+
+			//_const = [_pos, _dir, _bagFence] call MCC_fnc_objectMapper;
+			_const setVariable ["MCC_CONST_FORT",true, true];
 			_const setVariable ["mcc_const_name",_markerName, true];
 			_const setVariable ["side",_side, true];
 

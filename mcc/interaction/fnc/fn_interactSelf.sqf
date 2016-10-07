@@ -13,7 +13,7 @@ if (dialog || vehicle player != player || missionNamespace getvariable ["MCC_int
 
 _array = [["closeDialog 0",format ["<t size='0.8' align='center' color='#ffffff'>%1</t>",if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect}],""]];
 
-//If MCC medic system off
+//If MCC medic system on
 if (missionNamespace getVariable ["MCC_medicSystemEnabled",false]) then {
 	_array pushBack  ["[(_this select 0),'medic'] spawn MCC_fnc_interactSelfClicked","Medical Examine",format ["%1data\IconMed.paa",MCC_path]];
 };
@@ -50,6 +50,11 @@ _array pushBack ["[(_this select 0),'radio'] spawn MCC_fnc_interactSelfClicked",
 
 //Attached gear
 _array pushBack  ["[(_this select 0),'gear'] spawn MCC_fnc_interactSelfClicked","Attach",format ["%1mcc\roleSelection\data\ui\uniform_ca.paa", MCC_path]];
+
+//Drop Ammo
+if ("MCC_ammoBoxMag" in items player) then {
+	_array pushBack  ["['MCC_ammoBoxMag','MCC_ammoBox'] spawn MCC_fnc_ACEdropAmmobox;","Drop<br/>Ammobox","\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa"];
+};
 
 if (count _array == 1) exitWith {};
 

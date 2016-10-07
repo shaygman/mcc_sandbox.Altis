@@ -127,7 +127,58 @@ private _teleportAtStart = _activeSpawn getVariable ["teleport",1];
 //wait until detach
 waitUntil {isNull attachedTo player};
 
-//Spawn in vehicle
+//Spawn mechanic
+switch (true) do
+{
+	//On leader
+	case (_activeSpawn == leader player && (vehicle _activeSpawn != _activeSpawn)):	{
+		player assignAsCargo (vehicle _activeSpawn);
+		player moveInCargo (vehicle _activeSpawn);
+	};
+
+	//Mobile
+	case (_activeSpawn isKindOf "air" || _activeSpawn isKindOf "vehicle" || _activeSpawn isKindOf "tank" || _activeSpawn isKindOf "ship"):	{
+
+		//If we have room in the vehicle spawn inside
+		if ((_activeSpawn emptyPositions "cargo") > 0) then {
+			player assignAsCargo (vehicle _activeSpawn);
+			player moveInCargo (vehicle _activeSpawn);
+		} else {
+			//If we don't have room spawn outside
+			if (((getPos _activeSpawn) select 2) < 20) then {
+				player setpos (_playerDeployPos findEmptyPosition [1, 50]);
+			} else {
+				//if the vehicle is flying parachute the player
+				[getPos _activeSpawn, ["",player], false, (getPos _activeSpawn) select 2, floor (random 40)] call MCC_fnc_paradrop;
+			};
+		};
+	};
+
+	//Default
+	default
+	{
+		if (_teleportAtStart != 0) then {
+
+			//Teleport
+			if (_teleportAtStart == 1) then {
+				player setpos _playerDeployPos;
+			} else {
+				private ["_helo","_height"];
+
+				if (_teleportAtStart ==3) then {
+					_helo = true;
+					_height = 5000;
+				} else {
+					_helo = false;
+					_height = 300;
+				};
+				[_playerDeployPos, ["",player], _helo, _height, floor (random 40)] call MCC_fnc_paradrop;
+			};
+		};
+	};
+};
+
+/*
 if (_activeSpawn == leader player && (vehicle _activeSpawn != _activeSpawn)) then {
 	player assignAsCargo (vehicle _activeSpawn);
 	player moveInCargo (vehicle _activeSpawn);
@@ -152,6 +203,7 @@ if (_activeSpawn == leader player && (vehicle _activeSpawn != _activeSpawn)) the
 		};
 	};
 };
+*/
 
 //Remove escape event handlers and reseting menu
 if (!isnil "CP_RESPAWNPANEL_IDD") then {CP_RESPAWNPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
