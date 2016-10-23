@@ -1,7 +1,7 @@
 //=================================================================MCC_fnc_vehicleSpawnerInitDialog====================================================================
 //  Open vehicle spawner Dialog
 //=======================================================================================================================================================================
- private ["_simTypesUnits","_side","_CfgVehicles","_CfgVehicle","_vehicleDisplayName","_cfgclass","_cfgSide","_simulation","_vehicleArray","_comboBox","_mccdialog","_displayname","_index","_array","_rtsAnchor","_caller","_vehicleType","_spawnPad","_arguments","_commadner","_pic"];
+ private ["_simTypesUnits","_side","_CfgVehicles","_CfgVehicle","_vehicleDisplayName","_cfgclass","_cfgSide","_simulation","_vehicleArray","_comboBox","_mccdialog","_displayname","_index","_array","_rtsAnchor","_caller","_vehicleType","_spawnPad","_arguments","_commadner","_pic","_faction","_cfgFaction"];
 
 //We got here from the addaction
 _caller = param [0, objNull, [objNull]];
@@ -44,6 +44,8 @@ _simTypesUnits = switch (tolower _vehicleType) do {
                         };
 
 _side = side _caller;
+_faction = faction _caller;
+
 if (isNil "_side") exitWith {};
 
 //Is there a user designed vehicle costs?
@@ -62,13 +64,16 @@ if (count _vehicleArray == 0) then {
             _cfgclass           = (configName (_CfgVehicle));
             _cfgSide            = (getNumber(_CfgVehicle >> "side")) call BIS_fnc_sideType;
             _simulation         = getText(_CfgVehicle >> "simulation");
+            _cfgFaction         = getText(_CfgVehicle >> "faction");
             _cost               = floor (getNumber(_CfgVehicle >> "cost")/400);
             _pic                =  if ((gettext(_CfgVehicle >> "editorPreview")) == "") then {gettext(_CfgVehicle >> "picture")} else {gettext(_CfgVehicle >> "editorPreview")};
             if (!(["paa", _pic] call BIS_fnc_inString) && !(["jpg", _pic] call BIS_fnc_inString)) then {_pic = ""};
             _vehicleDisplayName = [_vehicleDisplayName, _pic];
 
             if (_simulation in _simTypesUnits) then  {
-                if ((_cfgSide == _side) && !(tolower(getText(_CfgVehicle >> "vehicleClass")) in ["static","support","autonomous"])) then {
+                if ((((_cfgSide == _side) && (missionNamespace getVariable ["MCC_vehicleKioskBySide",false])) ||
+                      (_cfgFaction == _faction)) &&
+                      !(tolower(getText(_CfgVehicle >> "vehicleClass")) in ["static","support","autonomous"])) then {
                     _vehicleArray pushback [_cfgclass,_vehicleDisplayName,_cost];
                 };
             };

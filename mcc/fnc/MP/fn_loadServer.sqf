@@ -94,7 +94,17 @@ if (!isServer) exitWith {};
 //Load RTS constuct
 if (_loadRTSBuildngs) then {
 	_tempVar = [format ["%1_%2_%3",_fileName, worldname,missionName], "BUILDINGS", "BUILDINGS", "read",[],true] call MCC_fnc_handleDB;
-	{_x spawn MCC_fnc_construct_base} forEach _tempVar;
+	if (count _tempVar > 0) then {
+		//first delete all the buildings available
+		{
+			[_X, false] call MCC_fnc_rtsClearBuilding;
+		} foreach (allMissionObjects BASE_ANCHOR);
+
+		//Now load the new one
+		{
+			_x spawn MCC_fnc_construct_base
+		} forEach _tempVar;
+	};
 };
 
 //Load Arty types

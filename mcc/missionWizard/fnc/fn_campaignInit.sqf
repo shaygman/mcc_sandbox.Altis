@@ -290,11 +290,11 @@ while { count _locations > 0 &&
 	_sumTickets = _ticketsStart - _ticketsEnd;
 
 	if (_sidePlayer != sideLogic) then {
-		["Main",_activeObjectivesSide1,_failedObjectivesSide1,_sidePlayer,_totalPlayers,_difficulty,40,[0.2,0.4,0.2,0.15,0.05],_sumTickets] spawn MCC_fnc_missionDone;
+		["Main",_activeObjectivesSide1,_failedObjectivesSide1,_sidePlayer,_totalPlayers,_difficulty,50,[0.2,0.4,0.2,0.15,0.05],_sumTickets] spawn MCC_fnc_missionDone;
 	};
 
 	if (_sidePlayer2 != sideLogic) then {
-		["Main",_activeObjectivesSide2,_failedObjectivesSide2,_sidePlayer2,_totalPlayers,_difficulty,40,[0.2,0.4,0.2,0.15,0.05]] spawn MCC_fnc_missionDone;
+		["Main",_activeObjectivesSide2,_failedObjectivesSide2,_sidePlayer2,_totalPlayers,_difficulty,50,[0.2,0.4,0.2,0.15,0.05]] spawn MCC_fnc_missionDone;
 	};
 
 	//Reset objectives coutners

@@ -62,6 +62,7 @@ RTS:
 - Added: RTS WIKIA for players - http://mccsandbox.wikia.com/wiki/Rts
 - Added: RTS WIKIA for developers - http://mccsandbox.wikia.com/wiki/RTS_editing
 - Added: Players can buy units from barracks/sleeping areas using valor and add them to their squad even if not the actual commanders.
+- Added: Vehicle Kiosk will show vehicle by faction by default - can be changed to side by setting global variable (MCC_vehicleKioskBySide = true);
 - Changed: Vehicle kiosk will load vehicles by side not by faction by default. - http://mccsandbox.wikia.com/wiki/Vehicle_kiosk
 - Changed: In RTS commander can purchase vehicles from kiosk using resources while players can purchase it using valor points.
 
@@ -78,6 +79,7 @@ MCC Campaign:
 Mission Wizard:
 - Pick Intel and rescue HVT missions now supports new BIS hold action.
 - Missions tasks will be available to all sides except the enemy sides.
+- Spawned artiilery will roughly marked on map.
 - IED & armed civilians will be hostile to all sides except the enemy sides and not just to the player side.
 - No longer spawn units without primary weapons such as rangemasters for bluefor.
 
@@ -90,7 +92,8 @@ MCC CAS/Airdrops
 - Added: AC-130 - can be given to the side commander for him to use it as an asset the commander tab.
 
 Misc:
-- Added: Spawn on Squad Leader if enabled with "MCC_respawnOnGroupLeader" or in the MCC settings module
+- Changed: MCC will only initate a faction once. Drasticlly reduce the waiting time after changing to a faction that already has been picked before in MCC.
+- Added: Respawn on Squad Leader from MCC respawn screen. If enabled with "MCC_respawnOnGroupLeader" or in the MCC settings module
 - Added: Module to create zones from the editor - just sync triggers to the module and they will be zones.
 - Added: Breach locked door by shooting on them use custom ammo such as shotgun slug (RHS or Prpl by defualt) as defined with MCC_breacingAmmo example: MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
 - Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point.
@@ -121,11 +124,9 @@ Misc:
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
 
-TODO - remove duplicated loading HQ
 TODO - Disable inibi when want to
 TODO - check with ACE
 TODO - in campaign buy units from the faction cfg
-TODO - vehicle buy faction
 TODO - remove safe zone from start location - MCC_fnc_buildSpawnPoint
 TODO - levels and skills
 TODO - survivals items

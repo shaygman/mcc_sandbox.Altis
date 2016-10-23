@@ -172,7 +172,7 @@ class mcc_consoleF5: MCC_RscButton
 	colorBackgroundActive[] = {0,0,0,0};
 	colorDisabled[] = {0,0,0,0};
 	colorBackgroundDisabled[] = {0,0,0,0};
-	tooltip = "Construction interface";
+	tooltip = "Open RTS interface";
 	onButtonClick ="while {dialog} do {closeDialog 0}; createDialog 'MCC_LOGISTICS_BASE_BUILD'";
 };
 class mcc_consoleF6: MCC_RscButton

@@ -65,7 +65,7 @@ while { true } Do {
 	_abandoned = if (count (crew _object) == 0 && _abondanDistance > 0) then {{isPlayer _x && _x distance _object < _abondanDistance} count allUnits == 0} else {false};
 
 	//see if we have been damaged or disabled
-	if (((_abandoned && _object distance _vehPos > 50) || (!(alive _object) && _abandoned) || (!(canMove _object) && _respawnDisabled && _abandoned))) then {
+	if (((_abandoned && _object distance _vehPos > 50 && (count attachedObjects _object == 0)) || (!(alive _object) && _abandoned) || (!(canMove _object) && _respawnDisabled && _abandoned))) then {
 
 		_tickets = _tickets -1;
 		if (_destroyEffect) then {[position _object,"medium"] spawn MCC_fnc_IedDeadlyExplosion};

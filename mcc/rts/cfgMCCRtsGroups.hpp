@@ -49,7 +49,7 @@ class MCC_rtsGroup_MG
 	#endif
 
 	displayName = "Machinegun Team";
-	descriptionShort = "A heavyMG team";
+	descriptionShort = "A heavy MG team";
 	condition = "";
 	requiredBuildings[] = {{"barracks",1}};
 	unitsEast[] = {"O_HeavyGunner_F","O_Soldier_A_F"};
