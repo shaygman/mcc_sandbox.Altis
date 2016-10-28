@@ -902,7 +902,7 @@ if (isServer || isdedicated) then
 	};
 
 //******************************************************************************************************************************
-//											CP Stuff Ended
+//											Client side init
 //******************************************************************************************************************************
 
 //=============================Sync with server when JIP======================
@@ -937,6 +937,7 @@ if (isPlayer player && !isServer && !(MCC_isLocalHC) && (missionNameSpace getVar
 	Hint "Synchronizing Done";
 };
 
+//Client init
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	waituntil {!(IsNull (findDisplay 46))};
 
@@ -972,8 +973,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	if (local player) then {player addEventHandler ["HandleRating",{_this spawn MCC_fnc_handleRating}]};
 
 	//Curator
-	if(local player && (isMultiplayer)) then
-	{
+	if(local player && (isMultiplayer)) then {
 		[compile format ["MCC_curator addCuratorEditableObjects [[objectFromNetID '%1'],true]", netID player], "BIS_fnc_spawn", false, false] call BIS_fnc_MP;
 	};
 
@@ -984,6 +984,14 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	if (missionNameSpace getVariable ["MCC_VonRadio",false]) then {
 		[] spawn MCC_fnc_vonRadio;
 	};
+
+	//Handle CP stuff
+	MCC_CPplayerLoop = compile preprocessFile format ["%1mcc\general_scripts\loops\mcc_CPplayerLoop.sqf",MCC_path];
+	[] spawn MCC_CPplayerLoop;
+
+	//Handle Name Tags & cover
+	MCC_NameTagsPlayerLoop = compile preprocessFile format ["%1mcc\general_scripts\loops\MCC_NameTagsPlayerLoop.sqf",MCC_path];
+	[] spawn MCC_NameTagsPlayerLoop;
 
 	//Add start locations script
 	[]  spawn MCC_fnc_startLocations;
@@ -1015,41 +1023,6 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 												};
 											};
 										}];
-	};
-};
-
-//========= player Loops (for saving gear/name tag exc)=================================
-MCC_CPplayerLoop = compile preprocessFile format ["%1mcc\general_scripts\loops\mcc_CPplayerLoop.sqf",MCC_path];
-MCC_NameTagsPlayerLoop = compile preprocessFile format ["%1mcc\general_scripts\loops\MCC_NameTagsPlayerLoop.sqf",MCC_path];
-
-if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
-	//Handle CP stuff
-	[] spawn MCC_CPplayerLoop;
-
-	//Handle Name Tags
-	[] spawn MCC_NameTagsPlayerLoop;
-
-	//============ engineer data ========================
-	0 spawn
-	{
-		private ["_answer"];
-		if ((getNumber(configFile >> "CfgVehicles" >> typeOf player >> "canDeactivateMines") == 1)&& (profileNamespace getVariable ["MCC_tutorialEOD",true])) then	//Check if is engineer
-		{
-			_answer = ["<t font='TahomaB'>You have just been assigned as Engineer/EOD</t>
-				<br/><img size='8' img image='\a3\missions_f\data\img\mp_coop_m01_overview_ca.paa' />
-				<br/>You can disarm mines and improvised explosive devices (IED).
-				<br/>To make sure the IED isn't Radio Controlled IED (RCIED), scan for enemy's spotters that can trigger the IED and neutralize them first.
-				<br/>Approach the IED carefully (no faster then a slow crawl), once you get close to it you either have the option to disarm it. Or you can place a demo charge to set off a controlled explosion.
-				<br/>You can use Electronic Countermeasure Vehicles (ECM) to block RCIEDs.
-				<br/><br/>Do you want to show this message in the future?","MCC Engineer/EOD","No","Yes"] call BIS_fnc_guiMessage;
-
-				waituntil {!isnil "_answer"};
-
-				if (_answer) exitWith
-				{
-					profileNamespace setVariable ["MCC_tutorialEOD",false];
-				};
-		};
 	};
 };
 

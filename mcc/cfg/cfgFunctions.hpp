@@ -272,18 +272,6 @@ class medic
 	class medicArea		{description = "create a building as a medic area";};
 };
 
-class helpers
-{
-	#ifdef MCCMODE
-	file = "\mcc_sandbox_mod\mcc\fnc\helpers";
-	#else
-	file = "mcc\fnc\helpers";
-	#endif
-
-	class createHelper		{description = "Create ingame UI helper for interacted objects";};
-	class deleteHelper		{description = "Delete ingame UI helper for interacted objects";};
-};
-
 class logistics
 {
 	#ifdef MCCMODE

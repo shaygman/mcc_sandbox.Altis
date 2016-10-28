@@ -88,6 +88,7 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\radio\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\AAS\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\missionWizard\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\helpers\cfgFunctions.hpp"
 	};
 };
 
