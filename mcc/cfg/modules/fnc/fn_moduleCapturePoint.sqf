@@ -275,11 +275,13 @@ switch _mode do {
 				for "_i" from 0 to (count _playersInList)-1 do {
 					private ["_player"];
 					_player = _playersInList select _i;
-					if !(_player in list _x) then {
-						_playersInList set [_i,-1];
-						[[_logic,[],true,"player",false],"MCC_fnc_moduleCapturePoint",_player] call bis_fnc_mp;
+					if !(isNil "_player") then {
+						if !(_player in list _x) then {
+							_playersInList set [_i,-1];
+							[[_logic,[],true,"player",false],"MCC_fnc_moduleCapturePoint",_player] call bis_fnc_mp;
+						};
+						_playersInList = _playersInList - [-1];
 					};
-					_playersInList = _playersInList - [-1];
 				};
 
 				sleep 0.1;

@@ -10,7 +10,7 @@ private ["_CfgVehicles","_i","_CfgVehicle","_simulation","_simTypesUnits","_idx"
 _faction			=  toLower (param [0, "", [""]]);
 _simTypesUnits		=  toLower (param [1, "", [""]]);
 _classType			=  toLower (param [2, "", [""]]);
-_notArmed 				=  param [3, true, [true]]; 	//false for only armed units
+_notArmed 			=  param [3, true, [true]]; 	//false for only armed units
 
 if (_faction == "" || _simTypesUnits == "") exitWith {};
 

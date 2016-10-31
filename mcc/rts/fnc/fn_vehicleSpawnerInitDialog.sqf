@@ -65,7 +65,7 @@ if (count _vehicleArray == 0) then {
             _cfgSide            = (getNumber(_CfgVehicle >> "side")) call BIS_fnc_sideType;
             _simulation         = getText(_CfgVehicle >> "simulation");
             _cfgFaction         = getText(_CfgVehicle >> "faction");
-            _cost               = floor (getNumber(_CfgVehicle >> "cost")/400);
+            _cost               = floor (getNumber(_CfgVehicle >> "cost")/200);
             _pic                =  if ((gettext(_CfgVehicle >> "editorPreview")) == "") then {gettext(_CfgVehicle >> "picture")} else {gettext(_CfgVehicle >> "editorPreview")};
             if (!(["paa", _pic] call BIS_fnc_inString) && !(["jpg", _pic] call BIS_fnc_inString)) then {_pic = ""};
             _vehicleDisplayName = [_vehicleDisplayName, _pic];
