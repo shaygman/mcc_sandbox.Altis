@@ -15,9 +15,9 @@ _pos = getPosATL _vehicle;
 _convoyGroupArray = [];
 
  //Find cargo space
-_cargoNum = (_vehicle emptyPositions "cargo") - 2;
+_cargoNum = [typeOf _vehicle, "allCargo"] call MCC_fnc_crewCount;;
 
-if (_cargoNum > 0) then {
+if (_cargoNum > 2) then {
 	// random but at least majority of seats occupied
 	_fillSlots = _cargoNum - (round random (_cargoNum/4));
 	_locGr =  _pos findEmptyPosition [10, 100];

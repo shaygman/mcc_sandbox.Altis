@@ -24,7 +24,7 @@ Mobile Respawn
 - Added: Support for mobile respawn. Make any vehicle a mobile respawn by adding the presets from MCC 3d editor or Zeus. While mobile vehicle is alive you can spawn inside it if it holds enough space, outside of it if it don't and parachute out of it if its flying.
 
 Logistics:
-- Added: Can place constructions in hight such as HMG on balcony exc.
+- Added: Can place constructions in height such as HMG on balcony exc.
 - Added: Can build fortifications around FOB/Start location
 
 Interaction Menu:
@@ -34,7 +34,7 @@ Interaction Menu:
 - Changed: Total reworked Interaction layout from list to a rose dial menu.
 
 Ambient Civilians Module
-- Added: civilians relations variable added to the module. The civilians relation variable will determine how the ambient civilians will act near players starting form positive behavior to bad behavior where some of the civilians will be turn into armed civilians, militias and suicide bombers and place IEDs.
+- Added: civilians relations variable added to the module. The civilians relation variable will determine how the ambient civilians will act near players starting form positive behavior to bad behavior to extreme behavior where the civilian population will start to form militias to fight the players initializing suicide bombers and IEDs.
 In the campaign killing civilians and failing objectives will decrease the player relation with them while while completing objectives will increase.  WIKI - http://mccsandbox.wikia.com/wiki/Modules
 
 Medical System:
@@ -45,12 +45,13 @@ Commander Console:
 - Changed: Completely reworked Commander Console UI.
 
 APEX:
-- added: Apex VTOL planes will now replace the default helicopters in Parachute, HALo or Drop Pods insertions.
-- added: Tanoa templates: Campaign, pvp, empty = TODO
+- added: Apex VTOL planes will now replace the default helicopters in Parachute, HALO or Drop Pods insertions.
+- added: Tanoa templates: Campaign, pvp, Rgular
 
 Persistent Data Base:
-- Added: MCC now have a persistent DB saving option from the save/load menu in MCC. Turn it on in your mission and MCC will save all players positions, gear, stats (health,calories, water - if used), resources, valor, base buildings exc. If there is already saved data on the server MCC will load it and will continue saving. Have fun in your campaigns - Requiers iniDBi 2.
-- Added: Able to clear persistent data from players/missions.
+- Added: MCC now support inidbi2 and stopped supporting inidbi 1.
+- Added: MCC now have a persistent DB saving option from the save/load menu in MCC. Turn it on in your mission and MCC will save all players positions, gear, stats (health,calories, water - if used), resources, valor, RTS elements such as base buildings exc. If there is already saved data on the server MCC will load it and will continue saving. Have fun in your campaigns - Requires iniDBi 2.
+- Added: Clear persistent data from players/missions.
 - Added: MCC_fnc_savePlayer, MCC_fnc_saveServer, MCC_fnc_loadPlayer, MCC_fnc_loadServer functions with description for mission maker to use in their missions.
 
 Survival Mode:
@@ -62,16 +63,16 @@ RTS:
 - Added: RTS WIKIA for players - http://mccsandbox.wikia.com/wiki/Rts
 - Added: RTS WIKIA for developers - http://mccsandbox.wikia.com/wiki/RTS_editing
 - Added: Players can buy units from barracks/sleeping areas using valor and add them to their squad even if not the actual commanders.
-- Added: Vehicle Kiosk will show vehicle by faction by default - can be changed to side by setting global variable (MCC_vehicleKioskBySide = true);
-- Changed: Vehicle kiosk will load vehicles by side not by faction by default. - http://mccsandbox.wikia.com/wiki/Vehicle_kiosk
+- Added: Vehicle Kiosk will show vehicle by faction by default - can be changed to side by setting global variable (MCC_vehicleKioskBySide = true); - http://mccsandbox.wikia.com/wiki/Vehicle_kiosk
 - Changed: In RTS commander can purchase vehicles from kiosk using resources while players can purchase it using valor points.
 
 New Game Mods:
 - Added: Advance And Secure (AAS) module - turns sectors to be captured in a specific linear order like in Project Reality AAS.
-- Added: 2 template PvP AAS missions from my days at Project Reality group for ArmA 3 and WIKI on how to create more: http://mccsandbox.wikia.com/wiki/Aas
+- Added: 2 template PvP AAS missions and a WIKI on how to create more: http://mccsandbox.wikia.com/wiki/Aas
 
 MCC Campaign:
 - Added: Altis campaign template mission, mix between RTS and FPS on altis but you can create it where ever you want to: http://mccsandbox.wikia.com/wiki/Campaign
+- Added: The campaign module now categorized the island and divide it into zones.
 - Added: Campaign progress and buildings will be saved when using inidbi2 on the server.
 - Enemy side will attack the players base randomly
 - Added: mission rotation - The random chance to get a recon mission - which isn't near the starting base and behind enemy lines.
@@ -79,7 +80,7 @@ MCC Campaign:
 Mission Wizard:
 - Pick Intel and rescue HVT missions now supports new BIS hold action.
 - Missions tasks will be available to all sides except the enemy sides.
-- Spawned artiilery will roughly marked on map.
+- Spawned artillery will roughly marked on map.
 - IED & armed civilians will be hostile to all sides except the enemy sides and not just to the player side.
 - No longer spawn units without primary weapons such as rangemasters for bluefor.
 
@@ -92,10 +93,11 @@ MCC CAS/Airdrops
 - Added: AC-130 - can be given to the side commander for him to use it as an asset the commander tab.
 
 Misc:
-- Changed: MCC will only initate a faction once. Drasticlly reduce the waiting time when switching factions that already has been picked in MCC.
+- Added: MCC will initiate all factions once. Drastically reduce the waiting time when switching factions in MCC.
+- Added: Reinforcement helicopters will be faction related.
 - Added: Respawn on Squad Leader from MCC respawn screen. If enabled with "MCC_respawnOnGroupLeader" or in the MCC settings module
 - Added: Module to create zones from the editor - just sync triggers to the module and they will be zones.
-- Added: Breach locked door by shooting on them use custom ammo such as shotgun slug (RHS or Prpl by defualt) as defined with MCC_breacingAmmo example: MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
+- Added: Breach locked door by shooting on them use custom ammo such as shotgun slug (RHS or Prpl by default) as defined with MCC_breacingAmmo example: MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
 - Added: Start Location modules spawn options (none/teleport/halo/para drop) for each individual spawn point.
 - Added: MCC jukebox will read music and sounds from the mission cfg - description file.
 - Added: 3D markers when spotting enemies.
@@ -123,39 +125,6 @@ Misc:
 - Fixed: MCC_make_array_group error on server.
 - Fixed: Disabling MCC logistics will also disable the ability to command building from the SQL PDA
 
-TODO - evac used different helicopters
-
-
-TODO - Disable inibi when want to
-TODO - check with ACE
-TODO - remove safe zone from start location - MCC_fnc_buildSpawnPoint
-TODO - levels and skills
-TODO - survivals items
-TODO - Test dedicated
-TODO - Join MCC Squad
-TODO - mission templates, test dedicated
-TODO - survival spawn crates in houses?!
-
-/*
-wirefence = "Land_New_WiredFence_5m_F" createVehicle position player;
-arrow = "Sign_Arrow_F" createVehicle [0,0,0];
-onEachFrame {
- _ins = lineIntersectsSurfaces [
-  AGLToASL positionCameraToWorld [0,0,0],
-  AGLToASL positionCameraToWorld [0,0,1000],
-  player,
-  objNull,
-  true,
-  1,
-  "GEOM",
-  "NONE"
- ];
- if (count _ins == 0) exitWith {arrow setPosASL [0,0,0]};
- arrow setPosASL (_ins select 0 select 0);
- arrow setVectorUp (_ins select 0 select 1);
- hintSilent str _ins;
-};
-*/
 Change log r18:
 -= New IED Mini Game =-
 - Added: Mini-game IED disarm, as shown in "keep talking and nobody explodes" game. Http://mccsandbox.wikia.com/wiki/Mini-game_IED

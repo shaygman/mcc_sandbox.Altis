@@ -32,8 +32,7 @@ if (TypeName _side == "STRING") then
 };
 
 _unitsArray 	= [_faction,"soldier","men",false] call MCC_fnc_makeUnitsArray;
-if (count _unitsArray < 4) then
-{
+if (count _unitsArray < 4) then {
 	_unitsArray = [_faction,"soldier","",false] call MCC_fnc_makeUnitsArray;
 };
 
@@ -41,8 +40,7 @@ if ( (count _unitsArray) == 0 ) exitWith { diag_log format ["MCC Warning: no sui
 
 _vehiclesTypesArray 	= [_faction,"carx","car"] call MCC_fnc_makeUnitsArray;
 
-if(count _vehiclesTypesArray < 2) then
-{
+if(count _vehiclesTypesArray < 2) then {
 	_vehiclesTypesArray = [_faction,"carx"] call MCC_fnc_makeUnitsArray;
 };
 
@@ -127,9 +125,8 @@ _transportCarsGroup = createGroup _side;
 		_car = _x;
 
 		//If transport car
-		if ((count (configfile >> "CfgVehicles" >> typeOF _car >> "Turrets")  == 0)) then
-		{
-			_transportCars set [count _transportCars, _car];
+		if ((count (configfile >> "CfgVehicles" >> typeOF _car >> "Turrets")  == 0)) then {
+			_transportCars pushBack _car;
 			[_car] joinSilent _transportCarsGroup;
 		};
 
