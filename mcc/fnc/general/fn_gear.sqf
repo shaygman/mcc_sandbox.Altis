@@ -1,9 +1,14 @@
+/* =============================================================== MCC_fnc_gear ==========================================================
+	sets default gear.
+========================================================================================================================================== */
+
 private ["_unit","_role","_sideId","_isSF","_uniform","_uniformLight","_vest","_vestLight","_backPack","_backPackLight","_helmet","_helmetLight",
          "_GPS","_medPack","_medKit","_goggles","_primaryWeapon","_primaryWeaponMag","_primaryWeaponTracer","_hGrenade","_hsmokeW","_hsmokeR","_hsmokeG",
 		 "_attach","_mags","_light","_nvg","_seconderyWeapon","_seconderyWeaponMags","_extraAmmo","_extraGear","_extraItems","_binos"];
-_unit = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
-_role =  [_this, 1, "", [""]] call BIS_fnc_param;
+_unit = param [0, objNull, [objNull,""]];
+_role =  param [1, "", [""]];
 
+if (typeName _unit != typeName objNull) exitWith {};
 if (isnUll _unit || _role == "") exitWith {};
 
 //If not local get out

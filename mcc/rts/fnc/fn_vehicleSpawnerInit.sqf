@@ -8,7 +8,7 @@
 //==============================================================================================================================================================================
 private ["_object","_arguments","_null","_syncItems","_syncedObjects","_billboard","_helipad","_type"];
 
-_object = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
+_object = param [0, objNull, [objNull]];
 waitUntil {time > 1};
 //We came here from a moudle
 if (_object isKindOf "mcc_sandbox_modulevehicleSpawner" || _object isKindOf "MCC_Module_vehicleSpawnerCurator") exitWith {
@@ -24,6 +24,8 @@ if (_object isKindOf "mcc_sandbox_modulevehicleSpawner" || _object isKindOf "MCC
     };
 
     _type = _object getVariable ["type","vehicle"];
+    missionNamespace setVariable ["MCC_vehicleKioskBySide",(_object getVariable ["spawnFrom",0])==1];
+
     //Add the objects to curator
     [_billboard,_helipad,_type] spawn {
         private ["_billboard","_helipad","_type"];

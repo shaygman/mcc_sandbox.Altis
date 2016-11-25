@@ -147,6 +147,27 @@ class mcc_sandbox_moduleMedicSystem : Module_F
 				};
 			};
 		};
+
+		class medicShowUI
+		{
+			displayName = "Medic HUD";
+			description = "Show wounded on HUD";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
 	};
 
 	class ModuleDescription: ModuleDescription

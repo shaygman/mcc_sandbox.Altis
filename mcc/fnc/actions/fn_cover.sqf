@@ -79,10 +79,10 @@ if(alive player && vehicle player == player) then
 		if (_isWall && _cover == "up") then
 		{
 			_wallHigh = "";
-			_start = player modelToWorld [0,0,2.2];
-			_startL = player modelToWorld [0.4,0,2.2];
-			_startR = player modelToWorld [-0.4,0,2.2];
-			_target = player modelToWorld [0,3,2.2];
+			_start = player modelToWorld [0,0,2.5];
+			_startL = player modelToWorld [0.4,0,2.5];
+			_startR = player modelToWorld [-0.4,0,2.5];
+			_target = player modelToWorld [0,2,2.5];
 			if (!(lineIntersects [ATLtoASL _start, ATLtoASL _target]) &&
 				!(lineIntersects [ATLtoASL _startL, ATLtoASL _target]) &&
 				!(lineIntersects [ATLtoASL _startR, ATLtoASL _target])
@@ -105,9 +105,9 @@ if(alive player && vehicle player == player) then
 			_string = "";
 			switch (_cover) do
 			{
-				case "up": {_string = format ["<img align='left' size='1.5' image='%1data\cover\coverU.paa'/>",MCC_path]};
-				case "right": {_string = format ["<img align='left' size='1.5' image='%1data\cover\coverR.paa'/>",MCC_path]};
-				case "left": {_string = format ["<img align='left' size='1.5' image='%1data\cover\coverL.paa'/>",MCC_path]};
+				case "up": {_string = format ["<img align='left' size='1' image='%1data\cover\coverU.paa'/>",MCC_path]};
+				case "right": {_string = format ["<img align='left' size='1' image='%1data\cover\coverR.paa'/>",MCC_path]};
+				case "left": {_string = format ["<img align='left' size='1' image='%1data\cover\coverL.paa'/>",MCC_path]};
 			};
 
 			if ((player getVariable ["MCC_wallAhead", ""])!="") then {

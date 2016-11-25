@@ -222,8 +222,10 @@ MCC_fnc_SQLPDAMenuclicked =
 			_array = [
 					   ["fob","Forward Outpost","\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa"],
 					   ["bunker","Small Bunker","\A3\ui_f\data\map\mapcontrol\Stack_CA.paa"],
-					   ["hmg","HMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa"],
+					   ["hmg","HMG","\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa"],
+					   ["hmgh","HMG(Raised)","\A3\Static_f_gamma\data\ui\gear_staticturret_mg_high_ca.paa"],
 					   ["gmg","GMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_GMG_CA.paa"],
+					   ["gmgh","GMG(Raised)","\A3\Static_f_gamma\data\ui\gear_staticturret_gmg_high_ca.paa"],
 					   ["at","AT Pit","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AT_CA.paa"],
 					   ["aa","AA Pit","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AA_CA.paa"],
 					   ["mortar","Mortar Pit","\A3\Static_f\Mortar_01\data\UI\Mortar_01_ca.paa"]
@@ -232,7 +234,7 @@ MCC_fnc_SQLPDAMenuclicked =
 		};
 
 		//Menu - Construct selected
-		case (_ctrlData in ["fob","bunker","hmg","gmg","at","aa","mortar"]):
+		case (_ctrlData in ["fob","bunker","hmg","gmg","hmgh","gmgh""at","aa","mortar"]):
 		{
 			_array = [];
 

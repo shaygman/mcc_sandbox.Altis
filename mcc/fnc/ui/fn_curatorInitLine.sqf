@@ -31,10 +31,11 @@ _time 			= time +0.2;
 MCC_unitInit 	= "";
 MCC_unitName 	= "";
 
+/*
 //Recognize shift key so we can disable MCC custom Zeus if we want to
 _keyUp = (findDisplay 312) displayAddEventHandler  ["KeyUp", "if (_this select 2) then {missionNamespace setvariable ['MCC_shiftPressed',false]}"];
 _keyDown = (findDisplay 312) displayAddEventHandler  ["KeyDown", "if ((_this select 2) && !(missionNamespace getvariable ['MCC_shiftPressed',false])) then {missionNamespace setvariable ['MCC_shiftPressed',true]}"];
-
+*/
 if (!alive _target || isNull _target || isplayer _target || (_target isKindof "Module_F") || missionNamespace getVariable ["MCC_shiftPressed",false]) exitWith {};
 
 //What are we dealing here
@@ -48,7 +49,7 @@ if (_targetCategory != "Object") then {
 	waituntil {(time > _time)};
 };
 
-closeDialog 0;
+while {dialog} do {closeDialog 0};
 
 switch (_targetCategory) do {
 	case ("Soldier"): {
@@ -294,5 +295,7 @@ if (MCC_unitInit != "" && (MCC_unitInit != (_target getVariable ["vehicleInit","
 	[[[netid _target,_target], MCC_unitInit], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
 };
 
+/*
 _keyUp = (findDisplay 312) displayRemoveEventHandler  ["KeyUp",_keyUp];
 _keyDown = (findDisplay 312) displayRemoveEventHandler  ["KeyDown", _keyDown];
+*/

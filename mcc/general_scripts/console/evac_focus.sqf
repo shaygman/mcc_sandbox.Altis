@@ -27,7 +27,7 @@ if ((missionNameSpace getvariable ["MCC_evacVehicles_index",0]) !=_index && (cou
 	if (_type iskindof "helicopter") then
 	{
 		_markerType = "b_air";
-		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
+		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope","Precise Landing"];
 		ctrlShow [MCC_ConsoleEvacFlyHightComboBox_IDD,true];
 		_comboBox = _mccdialog displayCtrl MCC_ConsoleEvacFlyHightComboBox_IDD;		//fill combobox Fly in Hight
 		lbClear _comboBox;

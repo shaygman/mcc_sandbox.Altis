@@ -121,7 +121,7 @@ if (player == player && !( isDedicated) && !(missionNamespace getVariable ["MCC_
 
 				waituntil {!isnil "_answer" && !dialog};
 
-				profileNamespace setVariable ["MCC_FCtutorialLogistics",!_answer];
+				profileNamespace setVariable ["MCC_FCtutorialLogisticsHeli",!_answer];
 			};
 		};
 	};

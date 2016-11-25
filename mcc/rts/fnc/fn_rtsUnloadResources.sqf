@@ -17,11 +17,11 @@ if (count MCC_ConsoleGroupSelected <=0) exitWith {};
 _truck = vehicle leader (MCC_ConsoleGroupSelected select 0);
 _cratesType = missionNamespace getVariable ["MCC_logisticsCrates_TypesWest",[]];
 
-_attachPoint = switch ((missionNamespace getVariable ["MCC_supplyTracks",[]]) find typeof _truck) do {
-					case 0: {ANCHOR_POINT_WEST};
-					case 1: {ANCHOR_POINT_EAST};
-					case 2: {ANCHOR_POINT_GUER};
-					default {[0,0,0]};
+_attachPoint = switch (getnumber(configfile >> "CfgVehicles" >> typeof _truck >> "side" )) do
+				{
+					case 0: {ANCHOR_POINT_EAST};
+					case 1: {ANCHOR_POINT_WEST};
+					default {ANCHOR_POINT_GUER};
 				};
 if (str _attachPoint == "[0,0,0]") exitWith {};
 

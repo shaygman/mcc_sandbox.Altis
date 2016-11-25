@@ -552,11 +552,13 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 		_pilotGroup1		= group _plane1;
 		_pilot1				= driver _plane1;
 
+		/*
 		_plane2 			= [_planeType, _spawn, _pos, 150, false] call MCC_fnc_createPlane;		//Spawn plane 2
 		_pilotGroup2		= group _plane2;
 		_pilot2				= driver _plane2;
 
 		[_plane2] joinsilent _pilotGroup1;														//Join them together
+		*/
 
 		_wp = _pilotGroup1 addWaypoint [[_pos select 0, _pos select 1, 0], 0];	//Add WP
 		_wp setWaypointStatements ["true", ""];
@@ -843,10 +845,10 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 					time > _time || isnull _plane
 				};
 			};
-		} foreach [_plane1,_plane2];
+		} foreach [_plane1];
 
 		[_pilotGroup1, _pilot1, _plane1, _away] call MCC_fnc_deletePlane;
-		[_pilotGroup2, _pilot2, _plane2, _away] call MCC_fnc_deletePlane;
+		//[_pilotGroup2, _pilot2, _plane2, _away] call MCC_fnc_deletePlane;
 	};
 };
 

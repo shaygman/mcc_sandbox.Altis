@@ -26,10 +26,22 @@ switch (_conType) do {
 		_text = "HMG"
 	};
 
+	case "hmgh" : {
+		_reqCrates = 2;
+		_vehicleType = if (_side == west) then {"B_HMG_01_high_F"} else {"O_HMG_01_high_F"};
+		_text = "HMG(Raised)"
+	};
+
 	case "gmg" : {
 		_reqCrates = 3;
 		_vehicleType = if (_side == west) then {"B_GMG_01_F"} else {"O_GMG_01_F"};
 		_text = "GMG"
+	};
+
+	case "gmgh" : {
+		_reqCrates = 3;
+		_vehicleType = if (_side == west) then {"B_GMG_01_high_F"} else {"O_GMG_01_high_F"};
+		_text = "GMG(Raised)"
 	};
 
 	case "at" :	{
@@ -83,11 +95,9 @@ if (_conType in ["bunker","wall"]) then {
 
 	//Create the base item
 	_time = time;
-	_baseAnchor = ANCHOR_ITEM createVehicle _pos;
+	_baseAnchor = ANCHOR_ITEM createVehicle (ASLToATL _pos);
 	_baseAnchor setVariable ["MCC_conType",_conType,true];
 	_baseAnchor setVariable ["MCC_side",_side,true];
-	_baseAnchor setPosASL _pos;
-	sleep 0.01;
 	_baseAnchor setPosASL _pos;
 
 	//Create marker
@@ -117,7 +127,7 @@ if (_conType in ["bunker","wall"]) then {
 					{
 						if (isNull attachedTo _x && ((getpos _x) select 2 < 0.2) ) then
 						{
-							_nearByCrates set [count _nearByCrates, _x];
+							_nearByCrates pushBack  _x;
 						};
 					} foreach (getPosATL _baseAnchor nearObjects [_type, 50]);
 				} foreach _cratesArray;
@@ -125,9 +135,9 @@ if (_conType in ["bunker","wall"]) then {
 
 
 			//How many players from my side are near
-			_nearbyMen = {alive _x && (side _x == (_baseAnchor getVariable ["MCC_side",sidelogic]))} count (getPos _baseAnchor nearEntities ["CAManBase", 50]);
+			_nearbyMen = {alive _x && (side _x == _side)} count (getPos _baseAnchor nearEntities ["CAManBase", 50]);
 
-
+			systemChat str [_nearbyMen,count _nearbyCrates];
 			if (_nearbyMen >= REQUIRE_MEMBERS && count _nearbyCrates > 0) then
 			{
 				_prop = _nearbyCrates select 0;
@@ -161,7 +171,7 @@ if (_conType in ["bunker","wall"]) then {
 
 	sleep 5;
 	//Update marker
-	[compile format ['deleteMarker "%1";',_markerName],"BIS_fnc_spawn", _side ,false] call BIS_fnc_MP;
+	[compile format ['deleteMarker %1;',str _markerName],"BIS_fnc_spawn", _side ,false] call BIS_fnc_MP;
 
 	//Clear stuff
 	{

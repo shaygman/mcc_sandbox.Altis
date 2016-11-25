@@ -43,3 +43,6 @@ MCC_surviveModAllowSearch = _var ==1;
 //Action menu
 _var 	= _logic getvariable ["actionMenu",1];
 MCC_showActionKey = if (_var == 0) then {false} else {true};
+
+//Breaching Ammo
+MCC_breacingAmmo = call compile (_logic getvariable ["breachingAmmo","[]"]);

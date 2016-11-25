@@ -60,12 +60,10 @@ if (isplayer _source && _source != _unit) then {
 //Make it captive
 _unit setCaptive true;
 //_unit playmoveNow "Unconscious";
+if (damage _unit < 0.3) then {_unit setDamage 0.8};
 
 //Lets try ragdolls
-if (vehicle _unit != _unit) then {
-	unassignVehicle _unit;
-  	_unit action ["eject", vehicle _unit];
-};
+while {vehicle _unit != _unit} do {unassignVehicle _unit;_unit action ["eject", vehicle _unit];sleep 0.5};
 
 private "_rag";
 _rag = "Land_Can_V3_F" createVehicleLocal [0,0,0];

@@ -2,7 +2,7 @@
 // handles the add ambient civilians module
 //===========================================================================================================================================================================
 private ["_pos","_module","_factionArray","_resualt","_civRelations"];
-_module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
+_module = param [0, objNull, [objNull]];
 if (isNull _module) exitWith {deleteVehicle _module};
 
 //did we get here from the 2d editor?

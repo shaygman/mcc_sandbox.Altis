@@ -289,16 +289,18 @@ if (_action == 7) exitWith
 	_comboBox lbSetCurSel (missionNameSpace getvariable ["MCC_evacVehicles_index",0]);
 
 	//Change evac type by vehicle class
-	if (count _evacVehicles > 0) then {
+	if (count _evacVehicles > (missionNameSpace getvariable ["MCC_evacVehicles_index",0])-1 && ((missionNameSpace getvariable ["MCC_evacVehicles_index",0]) >= 0)) then {
 		private ["_insetionArray","_type"];
 		_insetionArray = ["Move (engine on)","Move (engine off)"];
 		ctrlShow [(_mccdialog displayCtrl 44),false];
 		_type = _evacVehicles select (missionNameSpace getvariable ["MCC_evacVehicles_index",0]);
 
+		if (isnil "_type") exitWith {};
+
 		//Case we choose aircrft
 		if (_type iskindof "helicopter") then
 		{
-			_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
+			_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope","Precise Landing"];
 			ctrlShow [(_mccdialog displayCtrl 44),true];
 		};
 

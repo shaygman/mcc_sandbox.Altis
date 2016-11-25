@@ -156,7 +156,7 @@ class CAManBase: Man {
     };
 	class ACE_SelfActions {
 		class ACE_MCC_CommanderTab {
-			condition = "((MCC_server getVariable [format ['CP_commander%1',playerside],'']) == getPlayerUID _player) && (missionNamespace getVariable ['MCC_allowConsole',true])";
+			condition = "((MCC_server getVariable [format ['CP_commander%1',playerside],'']) == getPlayerUID _player) && (missionNamespace getVariable ['MCC_allowConsole',true]) || 'MCC_itemConsole' in (assignedItems player)";
 			displayName = "Commander<br/>Tab";
 			icon = "\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa";
 			statement = "_null = [nil,nil,nil,nil,1] execVM '\mcc_sandbox_mod\mcc\dialogs\mcc_PopupMenu.sqf';";
@@ -373,11 +373,24 @@ class CAManBase: Man {
 					icon = "\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa";
 					statement = "['hmg'] call MCC_fnc_callConstruct";
 				};
+
+				class ACE_MCC_HMGH {
+					displayName = "HMG(Raised)";
+					icon = "\A3\Static_f_gamma\data\ui\gear_staticturret_mg_high_ca.paa";
+					statement = "['hmgh'] call MCC_fnc_callConstruct";
+				};
 				class ACE_MCC_GMG {
 					displayName = "GMG";
 					icon = "\A3\Static_f_gamma\data\ui\gear_StaticTurret_GMG_CA.paa";
 					statement = "['gmg'] call MCC_fnc_callConstruct";
 				};
+
+				class ACE_MCC_GMGH {
+					displayName = "GMG(Raised)";
+					icon = "\A3\Static_f_gamma\data\ui\gear_staticturret_gmg_high_ca.paa";
+					statement = "['gmgh'] call MCC_fnc_callConstruct";
+				};
+
 				class ACE_MCC_AT {
 					displayName = "AT";
 					icon = "\A3\Static_f_gamma\data\ui\gear_StaticTurret_AT_CA.paa";

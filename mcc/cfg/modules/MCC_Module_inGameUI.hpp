@@ -91,20 +91,26 @@ class MCC_Module_inGameUI : Module_F
 		{
 			displayName = "Name Tags";
 			description = "Show in-game name tags, ranks (role and health stats while Role Selection is active)";
-			typeName = "BOOL";
+			typeName = "NUMBER";
 			class values
 			{
 				class disable
 				{
 					name = "Disable";
-					value = false;
+					value = 0;
 					default = 1;
 				};
 
-				class enable
+				class enableDirect
 				{
-					name = "Enable";
-					value = true;
+					name = "Enable - Pointing";
+					value = 1;
+				};
+
+				class enableRadius
+				{
+					name = "Enable - Radius";
+					value = 2;
 				};
 			};
 		};

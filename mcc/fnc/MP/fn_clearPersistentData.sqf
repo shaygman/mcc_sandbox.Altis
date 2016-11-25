@@ -22,7 +22,7 @@ _fileName = "MCC_campaign";
 
 	//Tiles
 	for "_y" from 0 to 100 step 1 do {
-		[format ["%1_%2_%3",_fileName, worldname,missionName], "CAMPAIGN_MARKERS", format ["row_%1", _y], "write",[],true] call MCC_fnc_handleDB;
+		[format ["MCC_campaign_%1_%2",worldname,missionName], "CAMPAIGN_MARKERS", format ["row_%1", _y], "write",[],true] call MCC_fnc_handleDB;
 	};
 
 	//tickets

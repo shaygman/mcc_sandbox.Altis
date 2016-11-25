@@ -16,6 +16,9 @@ private ["_params","_ctrl","_pressed","_posX","_posY","_shift","_ctrlKey","_alt"
 #define MCC_ConsoleMapRulerDir 9164
 #define MCC_ConsoleMapRulerDis 9165
 
+#define BON_ARTY_DIRECTION 999907
+#define BON_ARTY_DISTANCE 999908
+
 disableSerialization;
 
 _params = _this select 0;
@@ -122,6 +125,8 @@ if (_pressed==0 && MCC_ConsoleRuler) exitWith
 	//Set control
 	ctrlSetText [MCC_ConsoleMapRulerDir,format ["Dir: %1",MCC_ConsoleRulerData select 0]];
 	ctrlSetText [MCC_ConsoleMapRulerDis,format ["Dis: %1m",MCC_ConsoleRulerData select 1]];
+	ctrlSetText [BON_ARTY_DIRECTION,format["%1",MCC_ConsoleRulerData select 0]]; //degrees
+	ctrlSetText [BON_ARTY_DISTANCE,format["%1",MCC_ConsoleRulerData select 1]]; //distance
 
 	MCC_ConsoleRuler = false;
 

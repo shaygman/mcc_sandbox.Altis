@@ -80,13 +80,23 @@ MCC_allowSquadDialogCamera = if (_var == 0) then {false} else {true};
 _var 	= _logic getvariable ["logistics",1];
 MCC_allowlogistics = if (_var == 0) then {false} else {true};
 
-//Role Selection
-_var 	= _logic getvariable ["roleSelection",0];
-CP_activated = if (_var == 0) then {false} else {true};
+//(RS)Role Selection
+CP_activated = ((_logic getvariable ["roleSelection",0])==1);
 
-//Allow changing kits without respawn in RS
-_var 	= _logic getvariable ["allowKitChange",0];
-MCC_allowChangingKits = if (_var == 0) then {false} else {true};
+//(RS)All Weapons
+MCC_rsAllWeapons = ((_logic getvariable ["rsAllWeapons",0])==1);
+
+//(RS)Kit Change
+MCC_allowChangingKits = ((_logic getvariable ["allowKitChange",0])==1);
+
+//(RS)XP Gain
+CP_gainXP = ((_logic getvariable ["rsGainXp",0])==1);
+
+//(RS)Kit Weapons
+MCC_rsEnableRoleWeapons = ((_logic getvariable ["rsEnableRoleWeapons",0])==1);
+
+//(RS)Drivers/Pilots
+MCC_rsEnableDriversPilots = ((_logic getvariable ["rsEnableDriversPilots",0])==1);
 
 //Allow RTS
 _var 	= _logic getvariable ["allowRTS",0];

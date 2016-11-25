@@ -11,9 +11,9 @@ if (MCC_isACE) then {
 	_hostage setVariable ["MCC_disarmed",true,true];
 	removeallweapons _hostage;
 	_hostage setcaptive true;
-	_init = "_this switchmove 'AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon';";
+	_init = "_this switchmove 'Acts_ExecutionVictim_Loop';";
 	[[[netID _hostage,_hostage], _init, false], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-	[[_hostage, "Hold %1 to interact"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
+	/*[[_hostage, "Hold %1 to interact"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;*/
 };
 
 [
@@ -35,8 +35,7 @@ if (MCC_isACE) then {
 				_this allowFleeing 1;
 				_this enableAI 'MOVE';
 				_this setUnitPos 'AUTO';
-				_this switchmove '';
-				_this playmoveNow 'amovpercmstpsnonwnondnon';
+				_this playmoveNow 'Acts_ExecutionVictim_Unbow';
 				";
 
 		sleep 1;

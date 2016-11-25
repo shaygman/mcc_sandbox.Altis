@@ -15,7 +15,7 @@ if (_action == 0) then
 			_this enableAI 'MOVE';
 			_this setUnitPos 'AUTO';
 			_this switchmove '';
-			_this playmoveNow 'amovpercmstpsnonwnondnon';
+			_this playmoveNow 'Acts_ExecutionVictim_Loop';
 			";
 
 	sleep 1;

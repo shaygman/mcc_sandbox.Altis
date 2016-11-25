@@ -163,11 +163,13 @@ switch (true) do {
 				   [format["['fob',%1] spawn MCC_fnc_initConstract",_pos],"Forward Outpost","\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"],
 				   [format["['bunker',%1] spawn MCC_fnc_initConstract",_pos],"Small Bunker","\A3\ui_f\data\map\mapcontrol\Bunker_CA.paa"],
 				   [format["['wall',%1] spawn MCC_fnc_initConstract",_pos],"Bag Fence","\A3\ui_f\data\map\mapcontrol\Stack_CA.paa"],
-				   [format["['hmg',%1] spawn MCC_fnc_initConstract",_pos],"HMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa"],
-				   [format["['gmg',%1] spawn MCC_fnc_initConstract",_pos],"GMG Pit","\A3\Static_f_gamma\data\ui\gear_StaticTurret_GMG_CA.paa"],
-				   [format["['at',%1] spawn MCC_fnc_initConstract",_pos],"AT Pit","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AT_CA.paa"],
-				   [format["['aa',%1] spawn MCC_fnc_initConstract",_pos],"AA Pit","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AA_CA.paa"],
-				   [format["['mortar',%1] spawn MCC_fnc_initConstract",_pos],"Mortar Pit","\A3\Static_f\Mortar_01\data\UI\Mortar_01_ca.paa"]
+				   [format["['hmg',%1] spawn MCC_fnc_initConstract",_pos],"HMG","\A3\Static_f_gamma\data\ui\gear_StaticTurret_MG_CA.paa"],
+				   [format["['hmgh',%1] spawn MCC_fnc_initConstract",_pos],"HMG(Raised)","\A3\Static_f_gamma\data\ui\gear_staticturret_mg_high_ca.paa"],
+				   [format["['gmg',%1] spawn MCC_fnc_initConstract",_pos],"GMG","\A3\Static_f_gamma\data\ui\gear_StaticTurret_GMG_CA.paa"],
+				   [format["['gmgh',%1] spawn MCC_fnc_initConstract",_pos],"GMG(Raised)","\A3\Static_f_gamma\data\ui\gear_staticturret_gmg_high_ca.paa"],
+				   [format["['at',%1] spawn MCC_fnc_initConstract",_pos],"AT","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AT_CA.paa"],
+				   [format["['aa',%1] spawn MCC_fnc_initConstract",_pos],"AA","\A3\Static_F_Gamma\data\UI\gear_StaticTurret_AA_CA.paa"],
+				   [format["['mortar',%1] spawn MCC_fnc_initConstract",_pos],"Mortar","\A3\Static_f\Mortar_01\data\UI\Mortar_01_ca.paa"]
 				 ];
 
 		_layer = 1;

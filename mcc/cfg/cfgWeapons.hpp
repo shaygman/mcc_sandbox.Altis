@@ -707,3 +707,13 @@ class MCC_battery : MCC_ItemCore
 		mass = 1;
 	};
 };
+
+class ItemGPS;
+
+class MCC_itemConsole : ItemGPS
+{
+	displayName = "MCC Console";
+	picture = "\mcc_sandbox_mod\data\console_small.paa";
+	descriptionShort = "Tactical PDA";
+	scope = 2;
+};

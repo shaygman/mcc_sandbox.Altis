@@ -24,7 +24,7 @@ if (count _evacVehicles > 0) then
 	//Case we choose aircrft
 	if (_type iskindof "helicopter") then
 	{
-		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope"];
+		_insetionArray = ["Free Landing (engine on)","Free Landing (engine off)","Hover","Helocasting(Water)","Smoke Signal","Fast-Rope","Precise Landing"];
 		ctrlShow [MCC_EVAC_FLIGHTHIGHT,true];
 	};
 

@@ -17,7 +17,7 @@ _array = [["closeDialog 0",format ["<t size='0.8' align='center' color='#ffffff'
 if (vehicle player == player) then {
 	//If MCC medic system on
 	if (missionNamespace getVariable ["MCC_medicSystemEnabled",false]) then {
-		_array pushBack  ["[(_this select 0),'medic'] spawn MCC_fnc_interactSelfClicked","Medical Examine",format ["%1data\IconMed.paa",MCC_path]];
+		_array pushBack  ["[(_this select 0),'medic'] spawn MCC_fnc_interactSelfClicked","Medical Examine",MCC_path + "mcc\interaction\data\IconBleeding.paa"];
 	};
 
 	//Needed at least two in squad to spot and build
@@ -51,7 +51,7 @@ if (vehicle player == player) then {
 
 //Commander Console
 _server = missionNamespace getVariable ["MCC_server",objNull];
-if (((_server getVariable [format ["CP_commander%1",playerside],""]) == getPlayerUID player) && (missionNamespace getVariable ["MCC_allowConsole",true])) then {
+if (((_server getVariable [format ["CP_commander%1",playerside],""]) == getPlayerUID player) && (missionNamespace getVariable ["MCC_allowConsole",true]) || "MCC_itemConsole" in (assignedItems player)) then {
 	_array pushBack [format["_null = [nil,nil,nil,nil,1] execVM '%1mcc\dialogs\mcc_PopupMenu.sqf'",MCC_path],"Commander Console","\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"];
 };
 

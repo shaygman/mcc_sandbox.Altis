@@ -38,10 +38,6 @@ if (isnil "MCC_AI_Aim") then {MCC_AI_Aim = 0.1};
 if (isnil "MCC_AI_Spot") then {MCC_AI_Spot	= 0.3};
 if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5};
 
-//---------------------Name Tags---------------------------------------------------
-// Show friendly name tags and vhicles' crew info - default - off
-//MCC_nameTags = false;
-
 //-------------------- Save Gear --------------------------------------------------
 if (isnil "MCC_saveGear") then {MCC_saveGear = true};
 
@@ -83,7 +79,7 @@ if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- 
 //non-lethal ammo & breaching ammo
 //Define non-lethal ammunition player using this ammunition on units closer then 30 meters will not kill them but stun them.
 MCC_nonLeathalAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
-MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
+if (isnil"MCC_breacingAmmo") then {MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"]};
 
 //MCC Survive mod
 // Set to true to activate survival mode - scavange for loot to survive
@@ -271,7 +267,7 @@ mccPresetsObjects = [
 //---------------------------General objects---------------------------------
 //Dummy object for OO saving "UserTexture_1x2_F"
 MCC_dummy = if (MCC_isACE) then {"ACE_DefuseObject"} else {"bomb"};
-MCC_supplyTracks = ["B_Truck_01_transport_F","O_Truck_03_transport_F","I_Truck_02_transport_F"]; //[west,east,guer];
+MCC_supplyTracks = ["B_Truck_01_transport_F","O_Truck_03_transport_F","I_Truck_02_transport_F","B_Truck_01_covered_F","B_T_Truck_01_transport_F","B_T_Truck_01_covered_F","O_Truck_03_covered_F","O_Truck_02_transport_F","O_Truck_02_covered_F","O_T_Truck_03_transport_ghex_F","O_T_Truck_03_covered_ghex_F","I_Truck_02_covered_F"];
 MCC_supplyAttachPoints = [
 							[[0,0,0],[0,-2,0],[0,-4,0]],
 							[[0,-1,0],[0,-2.5,0],[0,-4,0]],
@@ -988,10 +984,6 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	//Handle CP stuff
 	MCC_CPplayerLoop = compile preprocessFile format ["%1mcc\general_scripts\loops\mcc_CPplayerLoop.sqf",MCC_path];
 	[] spawn MCC_CPplayerLoop;
-
-	//Handle Name Tags & cover
-	MCC_NameTagsPlayerLoop = compile preprocessFile format ["%1mcc\general_scripts\loops\MCC_NameTagsPlayerLoop.sqf",MCC_path];
-	[] spawn MCC_NameTagsPlayerLoop;
 
 	//Add start locations script
 	[]  spawn MCC_fnc_startLocations;

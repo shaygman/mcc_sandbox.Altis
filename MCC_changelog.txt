@@ -1,3 +1,38 @@
+Change log r20:
+- Fixed: CBA error CTD.
+- Fixed: Config error when saving mission in the editor.
+- Fixed: Unable to spawn groups.
+- Fixed: Custom group will not shot each other.
+- Changed: CAS will only spawn one aircraft instead of two to limit CAS crushing into each other.
+- Fixed: Reinforcement helicopter will drop troops even under fire.
+- Fixed: Duplicate Zeus menus and units go prone.
+- Fixed: Building fortification and FOB didn't work.
+- Changed: While in MCC's artillery computer using the ruler will automatically insert the distance and direction to the computer.
+- added: Define breaching ammo from MCC mechanic module.
+- Added: Pacific trucks to MCC logistics trucks.
+- Added: Build raised MG/HMG.
+- Fixed: Tutorial helicopters message keep on showing even after selecting not to.
+- Changed: Evac helicopters precise landing or fast ropes will be smoother.
+- Added: Precise landing for helicopters - can land on rooftops.
+- Fixed: Clear persistent didn't work.
+- Fixed: No unconscious animations while inside a vehicle.
+- Added: Re introduce the Commander Console as an Item.
+- Fixed: Losing units markers after respawn in the MCC's UI Compass.
+- Added: In MCC setting module more control over Role Selections - such as:
+		- Manually gain XP
+		- Disable/Enable non pilots/drivers can use heavy vehicles/aircrafts.
+		- Disable/Enable weapon's penalty when picking "out of kit" weapon.
+		- All weapons - unlock all weapons and gear despite player's level.
+
+- Added: Name tags reworked. You can select if you want to see name tags over all friendly units around you or only when pointing on a unit.
+- Added: Medical system HUD. Mark nearby wounded units.
+- Added: UI settings moudle and Medical System  module to Zeus.
+
+TODO:
+- PvP
+
+
+
 Change log r19:
 
 UI Module:

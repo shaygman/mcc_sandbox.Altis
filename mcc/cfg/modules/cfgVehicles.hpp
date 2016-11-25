@@ -5,7 +5,7 @@
 #include "StartLocations.hpp"
 #include "MissionSettings.hpp"
 #include "GAIASettings.hpp"
-#include "cover.hpp"
+#include "MCC_Module_mechanics.hpp"
 #include "radio.hpp"
 #include "medicSystem.hpp"
 #include "modulevehicleSpawner.hpp"

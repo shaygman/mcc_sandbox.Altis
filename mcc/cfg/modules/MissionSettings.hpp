@@ -394,8 +394,29 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 
 		class roleSelection
 		{
-			displayName = "Role Selection";
+			displayName = "(RS)Role Selection";
 			description = "Enables Role selection by default";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+					default = 1;
+				};
+			};
+		};
+
+		class rsAllWeapons
+		{
+			displayName = "(RS)All Weapons";
+			description = "Unlock all weapons and gear regarding player level";
 			typeName = "NUMBER";
 			class values
 			{
@@ -415,7 +436,7 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 
 		class allowKitChange
 		{
-			displayName = "Kit Change";
+			displayName = "(RS)Kit Change";
 			description = "Enable changing kits in FOB/HQ - requires Role Selection enabled";
 			typeName = "NUMBER";
 			class values
@@ -433,6 +454,71 @@ class mcc_sandbox_moduleMissionSettings : Module_F
 				};
 			};
 		};
+
+		class rsGainXp
+		{
+			displayName = "(RS)XP Gain";
+			description = "Gain XP automatically from actions or just by admins";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Automatically";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "Manually";
+					value = 0;
+				};
+			};
+		};
+
+		class rsEnableRoleWeapons
+		{
+			displayName = "(RS)Kit Weapons";
+			description = "Enable penalty for picking heavy weapons not from your kit";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
+		class rsEnableDriversPilots
+		{
+			displayName = "(RS)Drivers/Pilots";
+			description = "Enable only drivers/pilots and pilot can operate tanks/helicopters";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
+
 
 		class allowRTS
 		{

@@ -19,9 +19,6 @@
 //	_p_mcc_spawnfaction		String, Faction name.
 //	_startPosDir				Array, spawn and de-spawn location for the helicopter.
 //===========================================================================================================================================================================
-#define DOORS ["door_back_L","door_back_R","door_L","door_R","Door_6_source","Door_rear_source"]
-
-
 private ["_away","_p_mcc_zone_markername","_heli","_heliCrew","_pos","_paraSide", "_paraType", "_helitype","_heli_pilot","_spawn","_heliPilot","_gunnersGroup","_type","_entry","_turrets","_path", "_timeOut","_unit", "_side", "_spawnParaGroup", "_paraGroupArray", "_paraGroup", "_paraMode", "_heliCrewCount","_p_mcc_spawnfaction", "_p_mcc_zone_behavior", "_mcc_awareness", "_newParaGroup", "_rampOutPos", "_flyHeight","_dropPos", "_rope", "_ropes","_vehicleClass"];
 
 _pos 					= _this select 0;
@@ -324,11 +321,10 @@ _heliCrew move _pos;
 _heli setSpeedMode "FULL";
 _heli setDestination [_away, "VehiclePlanned", true];
 
-waitUntil { sleep 1;(_heli distance _dropPos) < ((getPosATL _heli select 2) + 150)};  // include heli heigth else if flying higher then 250 m this wil be 'true'
+waitUntil { sleep 1;(driver _heli) move _pos;(_heli distance _dropPos) < ((getPosATL _heli select 2) + 150)};  // include heli heigth else if flying higher then 250 m this wil be 'true'
 
-{
-	_heli animateDoor [_x,1];
-} foreach DOORS;
+//Open doors
+[_heli,true] spawn MCC_fnc_heliOpenCloseDoor;
 
 if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 {
@@ -546,12 +542,8 @@ _heli setBehaviour "CARELESS";
 
 _heli setDestination [_away, "VehiclePlanned", true];
 
-
-{
-	_heli animateDoor [_x,0];
-} foreach ["door_back_L","door_back_R","door_L","door_R","Door_6_source","Door_rear_source"];
-
-_heli animate ["CargoRamp_Open", 0];
+//Close doors
+[_heli,false] spawn MCC_fnc_heliOpenCloseDoor;
 
 // Allow chopper to leave else AI will board again :-/
 sleep 5;

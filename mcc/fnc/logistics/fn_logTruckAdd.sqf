@@ -37,12 +37,11 @@ if (typeof vehicle player == "O_Heli_Transport_04_F") then {
 	MCC_logisticsCrates_Types = MCC_logisticsCrates_TypesWest;
 };
 
-_attachPoint = switch (MCC_supplyTracks find typeof _truck) do
+_attachPoint = switch (getnumber(configfile >> "CfgVehicles" >> typeof _truck >> "side" )) do
 				{
-					case 0: {ANCHOR_POINT_WEST};
-					case 1: {ANCHOR_POINT_EAST};
-					case 2: {ANCHOR_POINT_GUER};
-					default {[0,0,0]};
+					case 0: {ANCHOR_POINT_EAST};
+					case 1: {ANCHOR_POINT_WEST};
+					default {ANCHOR_POINT_GUER};
 				};
 _loadedCrates = if (_isHeli) then {
 					if !(isnull getSlingLoad _truck) then {[getSlingLoad _truck]} else {[]};

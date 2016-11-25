@@ -58,19 +58,23 @@ MCC_fnc_compHudEVH = {
         {
             if (_x != player) then {
                 _index = _x getVariable ["MCC_hud_compass_unitMarker",-1];
-                _iconSize = (1-((player distance _x)/300 min 1))*0.04;
+                _iconSize = ((1-((player distance _x)/300 min 1))*0.04) max 0.015;
 
-                if (_index == -1) then {
+                if (isnull ((uiNamespace getVariable "MCC_hud_compass") displayCtrl _index) || _index == -1) then {
                     //Create ctrl
-                    _indexCounter = _indexCounter + 1;
-                    (uiNamespace getVariable "MCC_hud_compass") ctrlCreate ["RscPicture", _indexCounter,((uiNamespace getVariable "MCC_hud_compass") displayCtrl 1)];
-                    _x setVariable ["MCC_hud_compass_unitMarker",_indexCounter];
-                    _units pushBack [_indexCounter,_x];
-                    uiNamespace setVariable ["MCC_HuD_indexCounter",_indexCounter];
+                    if (_index == -1) then {
+                        _index = _indexCounter + 1;
+                    };
+
+                    (uiNamespace getVariable "MCC_hud_compass") ctrlCreate ["RscPicture", _index,((uiNamespace getVariable "MCC_hud_compass") displayCtrl 1)];
+                    _x setVariable ["MCC_hud_compass_unitMarker",_index];
+                    _units pushBack [_index,_x];
+
+                    uiNamespace setVariable ["MCC_HuD_indexCounter",_index];
                     uiNamespace setVariable ["MCC_HuD_units",_units];
                 };
 
-                _index = _x getVariable ["MCC_hud_compass_unitMarker",-1];
+                //_index = _x getVariable ["MCC_hud_compass_unitMarker",-1];
 
                 //Get icon
                 switch (true) do {

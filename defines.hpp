@@ -78,7 +78,7 @@ class CfgFunctions
 		#include "mcc\undercover\cfgFunctions.hpp"
 		#include "mcc\bombDefuse\cfgFunctions.hpp"
 		#include "mcc\survive\cfgFunctions.hpp"
-		#include "mcc\compassHUD\cfgFunctions.hpp"
+		#include "mcc\HUD\cfgFunctions.hpp"
 		#include "mcc\roleSelection\cfgFunctions.hpp"
 		#include "mcc\interaction\cfgFunctions.hpp"
 		#include "mcc\supression\cfgFunctions.hpp"
@@ -86,6 +86,7 @@ class CfgFunctions
 		#include "mcc\AAS\cfgFunctions.hpp"
 		#include "mcc\missionWizard\cfgFunctions.hpp"
 		#include "mcc\helpers\cfgFunctions.hpp"
+		#include "mcc\helicopters\cfgFunctions.hpp"
 	};
 };
 
@@ -160,7 +161,7 @@ class RscTitles
 	#include "mcc\dialogs\mcc_3dObject.hpp"
 	#include "mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
 	#include "mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
-	#include "mcc\compassHUD\dialogs\compassDialog.hpp"
+	#include "mcc\HUD\cfg.hpp"
 
 	//----medic-----------------
 	#include "mcc\Dialogs\medic\mcc_uncMain.hpp"

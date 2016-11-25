@@ -2,31 +2,33 @@
 	manage inGameUI
 	[0,true,true,trur,true,false,true] call MCC_fnc_inGameUI
 	<IN>
-	_this select 0 		INTEGER -
+	_this select 0 		INTEGER - 3D view
 							-1 Disabled
 							0 force always
 							1 allow 3d all vehicles
 							2 allow 3d air only
 
-	_this select 1		BOOLEAN
+	_this select 1		BOOLEAN Compass
 							true - enable HUD compass
 							false - disable HUD compass
 
-	_this select 2		BOOLEAN
+	_this select 2		BOOLEAN Show teamate on compass
 							true - enable HUD compass show teammates
 							false - disable HUD compass show teammates
 
-	_this select 3		BOOLEAN
+	_this select 3		BOOLEAN Show group markers on map
 							true - enable Group Markers on map
 							false - disable Group Markers on map
 
-	_this select 4		BOOLEAN
+	_this select 4		BOOLEAN	Show indevidual markers on map
 							true - enable Indivdual Markers on map
 							false - disable Indivdual Markers on map
 
 	_this select 5		BOOLEAN
-							true - enable Name Tags
 							false - disable Name Tags
+							true - enable Name Tags only when pointing on unit
+							2 - enable Name Tags around the player
+
 
 	_this select 6		BOOLEAN
 							true - enable suppression
@@ -52,7 +54,8 @@ if (typeName _mode == typeName objNull) then {
 	missionNamespace setVariable ["MCC_indevidualMarkers",_module getvariable ["indevidualMarkers",false]];
 
 	//NameTags
-	missionNamespace setVariable ["MCC_nameTags",_module getvariable ["nameTags",false]];
+	missionNamespace setVariable ["MCC_nameTags",(_module getvariable ["nameTags",0])>1];
+	missionNamespace setVariable ["MCC_NameTags_direct",!((_module getvariable ["nameTags",0])==2)];
 
 	//Supression
 	missionNamespace setVariable ["MCC_suppressionOn",_module getvariable ["suppression",false]];
@@ -69,8 +72,11 @@ if (typeName _mode == typeName objNull) then {
 	//NameTags
 	missionNamespace setVariable ["MCC_nameTags",param [5,false,[false]]];
 
+	//NameTags Direct
+	missionNamespace setVariable ["MCC_NameTags_direct",param [6,true,[false]]];
+
 	//Supression
-	missionNamespace setVariable ["MCC_suppressionOn",param [6,false,[false]]];
+	missionNamespace setVariable ["MCC_suppressionOn",param [7,true,[false]]];
 };
 
 //Compass HUD
@@ -80,7 +86,7 @@ if (_compass) then {_compassTeamMates spawn MCC_fnc_initCompassHUD};
 if (missionNamespace getVariable ["MCC_suppressionOn",false]) then {[] spawn MCC_fnc_supressionInit};
 
 //Force Camera
-if (_mode > -1) then {
+if (_mode in [0,1,2]) then {
 	[_mode] spawn {
 		private ["_mode"];
 		_mode = param [0,0,[0,objNull]];

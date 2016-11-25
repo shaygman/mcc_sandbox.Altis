@@ -240,6 +240,7 @@ class actions
 	class attachPod		{description = "Attach a pod to Taru helicopter";};
 	class vault			{description = "Vault over an obstacle";};
 	class cover			{description = "Manage cover mechanics";};
+	class coverInit		{postint = 1; description = "Init Cover System";};
 	class weaponSelect	{description = "Change weapons and throw utility";};
 	class utilityUse	{description = "use utility";};
 	class grenadeThrow	{description = "Throw grenades";};

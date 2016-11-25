@@ -114,7 +114,7 @@ switch (_type) do {
 
 _alloweObjects = [];
 {
-	if (_playerLevel >= (_x select 0)+_levelFactor) then {
+	if (_playerLevel >= (_x select 0)+_levelFactor || (missionNamespace getVariable ["MCC_rsAllWeapons",false])) then {
 		_alloweObjects pushBack (_x select 1);
 	};
 } forEach _availableObjects;

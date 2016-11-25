@@ -9,12 +9,6 @@ _indexar   = 0;
 
 if (isNil "_faction") exitWith {};
 
-//If the faction has been inited once don't do it again
-if (missionNamespace getVariable [format ["MCC_faction_%1_initGroup", _faction],false]) exitWith {
-	_grp_array = (missionNamespace getVariable [format ["MCC_faction_%1_grp_array", _faction],[]]);
-	_grp_array
-};
-
 dumtel    = 0;
 dumar     = [];
 
@@ -91,7 +85,4 @@ for "_i" from 0 to ((count CONFIG) - 1)  do
 		 };
     };
 };
-
-missionNamespace setVariable [format ["MCC_faction_%1_grp_array",_faction],_grp_array];
-missionNamespace setVariable [format ["MCC_faction_%1_initGroup", _faction],true];
 _grp_array

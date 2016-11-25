@@ -28,7 +28,7 @@ if ((missionNamespace getVariable ["MCC_interactionKey_holding",false]) && (play
 			  ["['zip'] spawn MCC_fnc_interactManClicked","Restrain",format ["%1data\iconHandcuffs.paa",MCC_path]],
 			  ["['follow'] spawn MCC_fnc_interactManClicked","Order Around",format ["%1data\iconOrder.paa",MCC_path]],
 			  ["['pickKit'] spawn MCC_fnc_interactManClicked","Pick Up Kit",format ["%1data\IconAmmo.paa",MCC_path]],
-			  ["['medic'] spawn MCC_fnc_interactManClicked","Examine",format ["%1data\IconMed.paa",MCC_path]],
+			  ["['medic'] spawn MCC_fnc_interactManClicked","Examine",MCC_path + "mcc\interaction\data\IconBleeding.paa"],
 			  ["['drag'] spawn MCC_fnc_interactManClicked","Drag",format ["%1data\IconDrag.paa",MCC_path]]];
 
 	//Load wounded

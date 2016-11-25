@@ -17,3 +17,5 @@
 #include "MCC_Module_underCover.hpp"
 #include "MCC_ModuleCapturePoint.hpp"
 #include "MCC_Module_ambientCiviliansCuratorDenied.hpp"
+#include "MCC_Module_inGameUICurator.hpp"
+#include "MCC_Module_medicSystem.hpp"

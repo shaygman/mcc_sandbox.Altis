@@ -32,6 +32,9 @@ private ["_mccdialog","_comboBox","_displayname","_pic", "_index","_planeName","
 #define MCC_ConsoleMapRulerDir 9164
 #define MCC_ConsoleMapRulerDis 9165
 
+#define BON_ARTY_DIRECTION 999907
+#define BON_ARTY_DISTANCE 999908
+
 #define MCC_ResourcesControlsGroup 80
 
 disableSerialization;
@@ -60,6 +63,8 @@ ctrlShow [MCC_ResourcesControlsGroup,false];
 //set ruler data
 ctrlSetText [MCC_ConsoleMapRulerDir,format ["Dir: %1",MCC_ConsoleRulerData select 0]];
 ctrlSetText [MCC_ConsoleMapRulerDis,format ["Dis: %1m",MCC_ConsoleRulerData select 1]];
+ctrlSetText [BON_ARTY_DIRECTION,format["%1",MCC_ConsoleRulerData select 0]]; //degrees
+ctrlSetText [BON_ARTY_DISTANCE,format["%1",MCC_ConsoleRulerData select 1]]; //distance
 
 _mccdialog = findDisplay mcc_playerConsole_IDD;
 MCC_Console1Open = true;

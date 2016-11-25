@@ -44,6 +44,32 @@ class mcc_sandbox_modulevehicleSpawner : Module_F
 					name = "Ships";
 					value = "ship";
 				};
+				class units
+				{
+					name = "Units";
+					value = "units";
+				};
+			};
+		};
+
+		class spawnFrom
+		{
+			displayName = "Side Purchase";
+			description = "Purchase from the entire side or just faction";
+			typeName = "STRING";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
 			};
 		};
 	};

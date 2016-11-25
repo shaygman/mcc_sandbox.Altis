@@ -185,10 +185,14 @@ while {true} do {
 
 		if (CP_activated) then {
 			//Check if in vehicle
-			[] call MCC_fnc_allowedDrivers;
+			if (missionNamespace getVariable ["MCC_rsEnableDriversPilots",true]) then {
+				[] call MCC_fnc_allowedDrivers
+			};
 
 			//Check if allowed weapons
-			[] call MCC_fnc_allowedWeapons;
+			if (missionNamespace getVariable ["MCC_rsEnableRoleWeapons",true]) then {
+				[] call MCC_fnc_allowedWeapons
+			};
 
 			//Manage XP
 			if (missionNamespace getvariable ["CP_gainXP",true]) then {

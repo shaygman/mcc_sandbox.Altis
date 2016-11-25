@@ -9,6 +9,12 @@ publicVariable "mcc_request";
 _p_mcc_zone_markposition = (mcc_zone_pos select (mcc_zone_number));
 _p_maxrange				 = ((mcc_zone_size select (mcc_zone_number)) select 1);
 
+//workaround to make sure we sapwn vehicles from the correct side
+if (typeName(missionNamespace getVariable ["mcc_spawnname",""]) == typeName "") then {
+	if (isClass (configFile >> "cfgVehicles" >> ( missionNamespace getVariable ["mcc_spawnname",""]))) then {
+		mcc_spawnfaction =str ([getNumber (configFile >> "cfgVehicles" >> ( missionNamespace getVariable ["mcc_spawnname",""]) >> "side")] call BIS_fnc_sideType);
+	};
+};
 
 switch (mcc_classtype) do
 {
@@ -146,55 +152,6 @@ if (MCC_capture_state) then
 }
 else
 {
-	if (!mcc_isloading && mcc_isnewzone)then
-	{
-		/*
-		mcc_safe=mcc_safe + FORMAT ["
-			  mcc_spawntype='%1';
-			  mcc_classtype='%2';
-			  mcc_isnewzone=%3;
-			  mcc_spawnwithcrew=%4;
-			  mcc_spawnname='%5';
-			  mcc_spawnfaction='%6';
-			  mcc_zone_number=%7;
-			  mcc_zoneinform='%8';
-			  mcc_zone_markername='%9';
-			  mcc_spawnbehavior='%10';
-			  mcc_grouptype     ='%11';
-			  mcc_spawndisplayname ='%12';
-			  mcc_track_units = %13;
-			  mcc_awareness = '%14';
-			  mcc_sidename = '%15';
-			  mcc_hc = %16;
-			  mcc_spawn_dir = %18;
-			  mcc_marker_dir = %19;
-			  script_handler = [0] execVM '%17mcc\general_scripts\mcc_SpawnStuff.sqf';
-			   waitUntil {scriptDone script_handler};
-			  "
-			  , mcc_spawntype
-			  , mcc_classtype
-			  , mcc_isnewzone
-			  , mcc_spawnwithcrew
-			  , mcc_spawnname
-			  , mcc_spawnfaction
-			  , mcc_zone_number
-			  , mcc_zoneinform
-			  , mcc_zone_markername
-			  , mcc_spawnbehavior
-			  , mcc_grouptype
-			  , mcc_spawndisplayname
-			  , mcc_track_units
-			  , mcc_awareness
-			  , mcc_sidename
-			  , mcc_hc
-			  , MCC_path
-			  , mcc_spawn_dir
-			  , mcc_marker_dir
-			  ];
-
-			  */
-	};
-
 	#ifdef DEBUG
 	if !mcc_resetmissionmaker then
 		{
@@ -343,6 +300,7 @@ else
 				, mcc_delayed_spawn
 				];
 
+		systemchat str _ar;
 		// Send data over the network, or when on server, execute directly
 
 				if ( (isServer) && ( (mcc_hc == 0) || !(MCC_isHC) ) ) then

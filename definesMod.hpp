@@ -81,7 +81,7 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\undercover\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\bombDefuse\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\survive\cfgFunctions.hpp"
-		#include "\mcc_sandbox_mod\mcc\compassHUD\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\HUD\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\roleSelection\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\interaction\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\supression\cfgFunctions.hpp"
@@ -89,6 +89,7 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\AAS\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\missionWizard\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\helpers\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\helicopters\cfgFunctions.hpp"
 	};
 };
 
@@ -134,7 +135,7 @@ class RscTitles
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_3dObject.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\sqlPDA\MCC_SQLPDA_rsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\survive\dialogs\mcc_rscSurviveStats.hpp"
-	#include "\mcc_sandbox_mod\mcc\compassHUD\dialogs\compassDialog.hpp"
+	#include "\mcc_sandbox_mod\mcc\HUD\cfg.hpp"
 
 	//----medic-----------------
 	#include "mcc\Dialogs\medic\mcc_uncMain.hpp"
