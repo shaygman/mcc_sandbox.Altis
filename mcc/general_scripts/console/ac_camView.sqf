@@ -5,7 +5,7 @@ MCC_ConsoleACCameraMod = _this select 1;
 switch (MCC_ConsoleACCameraMod) do {
 	// Normal
 	case 0: {
-		_effectParams = [3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]];
+		_effectParams = [3,1,1,0.4,0,[0,0,0,0],[1,1,1,0],[1,1,1,1]];
 		MCC_ConsoleACvision = "VIDEO";
 	};
 

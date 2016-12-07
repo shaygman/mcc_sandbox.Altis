@@ -141,18 +141,21 @@ MCC_fnc_CPMapOpen_draw =
 				missionNamespace setVariable ["MCCSpawnPosSelected",_x];
 			};
 
-			_map drawIcon [
-				_texture,
-				_color,
-				_pos,
-				_size,
-				_size,
-				_dir,
-				" " + _title,
-				2,
-				0.08,
-				"PuristaBold"
-			];
+			//If the player is the leader don't let him spawn on himself
+			if !(_x == leader player && _X == player) then {
+				_map drawIcon [
+					_texture,
+					_color,
+					_pos,
+					_size,
+					_size,
+					_dir,
+					" " + _title,
+					2,
+					0.08,
+					"PuristaBold"
+				];
+			};
 		};
 	} foreach _spawnArray;
 };

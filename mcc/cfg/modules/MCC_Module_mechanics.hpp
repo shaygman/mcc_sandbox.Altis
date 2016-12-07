@@ -206,14 +206,23 @@ class mcc_sandbox_moduleCover : Module_F
 				};
 			};
 		};
+
+		class breachingAmmo
+		{
+			displayName = "Breaching Ammo";
+			description = "Shooting this ammo on a door will unlock and open it. Enter breaching ammo classes as an array";
+			defaultValue = "['prpl_8Rnd_12Gauge_Slug','prpl_6Rnd_12Gauge_Slug','rhsusf_8Rnd_Slug','rhsusf_5Rnd_Slug']";
+		};
+
+		class nonLeathalAmmo
+		{
+			displayName = "Non Lethal Ammo";
+			description = "Shooting this ammo on a unit from close range will disable the unit";
+			defaultValue = "['prpl_8Rnd_12Gauge_Slug','prpl_6Rnd_12Gauge_Slug','rhsusf_8Rnd_Slug','rhsusf_5Rnd_Slug']";
+		};
 	};
 
-	class breachingAmmo
-	{
-		displayName = "Breaching Ammo";
-		description = "Shooting this ammo on a door will unlock and open it. Enter breaching ammo classes as an array";
-		defaultValue = "['prpl_8Rnd_12Gauge_Slug','prpl_6Rnd_12Gauge_Slug','rhsusf_8Rnd_Slug','rhsusf_5Rnd_Slug']";
-	};
+
 
 	class ModuleDescription: ModuleDescription
 	{

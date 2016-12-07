@@ -218,8 +218,7 @@ if (_button == 1) then {
 	};
 
 	//Reveal UAV Control
-	if ((vehicle leader _group) in allUnitsUav) then
-	{
+	if ((vehicle leader _group) in allUnitsUav || (_group getvariable ["MCC_canbecontrolledUAV",false])) then {
 		MCC_ConolseUAV = (vehicle leader _group);
 		MCC_ConolseUAV disableAI "TARGET";
 		MCC_ConolseUAV disableAI "AUTOTARGET";

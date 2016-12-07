@@ -1,5 +1,5 @@
 //Returns the control, the pressed button, the x and y coordinates and the state of Shift, Ctrl and Alt.
-private ["_params","_ctrl","_posX","_posY","_posNew","_rand","_relDir","_distance"];
+private ["_params","_ctrl","_posX","_posY","_posNew","_rand","_relDir","_distance","_attahcPosition"];
 disableSerialization;
 
 _params = _this select 0;
@@ -12,9 +12,22 @@ if (isNil "MCC_fakeAC") exitWith {};
 if (isNull MCC_fakeAC) exitWith {};
 
 if (MCC_ConsoleACMouseButtonDown) then {
-	if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.11]};
-	_posNew = [((MCC_ACPos select 0) - _posX)*(MCC_fakeACFOV*150), ((MCC_ACPos select 1) - _posY)*(MCC_fakeACFOV*150),0];
+	if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.12]};
 	setMousePosition [0.5,0.44];
+
+
+	_uav = missionNamespace getVariable ["MCC_ACConsoleUp",objNull];
+	if (!alive _uav) exitWith {};
+	_attahcPosition = missionNamespace getVariable ["MCC_ConolseAC130_attahcPosition",[-200,2,-5]];
+	_attahcPosition set [1,(((_attahcPosition select 1)+((_posX-0.5)*100)) min 352) max -410];
+	_attahcPosition set [2,(((_attahcPosition select 2)-((_posY-0.44)*100)) min 195) max -205];
+
+	MCC_fakeACCenter attachTo [_uav,_attahcPosition];
+
+	missionNamespace setVariable ["MCC_ConolseAC130_attahcPosition",_attahcPosition];
+
+	/*
+	_posNew = [((MCC_ACPos select 0) - _posX)*(MCC_fakeACFOV*150), ((MCC_ACPos select 1) - _posY)*(MCC_fakeACFOV*150),0];
 	_relDir = [MCC_fakeAC, MCC_ACcenter] call BIS_fnc_relativeDirto;
 	//hint format ["%1", MCC_fakeAC distance MCC_fakeACCenter];
 	if ((_relDir <90) || (_relDir > 280))then
@@ -47,4 +60,5 @@ if (MCC_ConsoleACMouseButtonDown) then {
 				MCC_fakeACCenter setposatl [(getpos MCC_fakeACCenter select 0),(getpos MCC_fakeACCenter select 1),0];
 				};
 		};
+	*/
 };

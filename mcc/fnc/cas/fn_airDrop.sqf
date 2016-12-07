@@ -170,50 +170,79 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 	if (tolower _spawnkind == "ac-130") exitWith {
 		//AC-130
 
-		[[2,compile format ['["MCCNotifications",["AC-130 Entered the scene","%1data\AC130_icon.paa",""]] call bis_fnc_showNotification;',MCC_path]], "MCC_fnc_globalExecute", playerSide, false] spawn BIS_fnc_MP;
+		//If we pressed the AC 130 when we have one retired the last one.
+		if (alive(missionNamespace getVariable ["MCC_ACConsoleUp",objNull])) then {
+			missionNamespace setVariable ["MCC_ACConsoleUp",objNull];
+			publicVariable "MCC_ACConsoleUp";
+		} else {
 
-		_pos set [2,(_pos select 2)+500];
-		//register AC-130
-		missionNamespace setVariable ["MCC_ACConsoleUp",true];
-		missionNamespace setVariable ["MCC_consoleACpos",_pos];
-		missionNameSpace setVariable ["MCC_ConsoleACTimeStart",time];
-		missionNameSpace setVariable ["MCC_ConsoleACTime",120];
-		publicVariable "MCC_ConsoleACTimeStart";
-		publicVariable "MCC_ConsoleACTime";
+			[[2,compile format ['["MCCNotifications",["AC-130 Entered the scene","%1data\AC130_icon.paa",""]] call bis_fnc_showNotification;',MCC_path]], "MCC_fnc_globalExecute", playerSide, false] spawn BIS_fnc_MP;
 
-		while {dialog} do {closeDialog 0};
+			_pos set [2,(_pos select 2)+400];
 
-		//disable mouse control at start
-		MCC_ConsoleUAVMouseButtonDown = false;
+			//register AC-130
+			//==================================
+			_uav = [_planeType, _spawn, _pos, 400, true] call MCC_fnc_createPlane;
 
-		createDialog "MCC_playerConsole3";
+			_grp = group driver _uav;
+			_grp setCombatMode "BLUE";
+			_grp setBehaviour "CARELESS";
+
+			_wp = _grp addWaypoint [_pos, 0];
+			_wp setWaypointType "LOITER";
+			_wp setWaypointLoiterType "CIRCLE_L";
+			_wp setWaypointSpeed "LIMITED";
+			_wp setWaypointLoiterRadius 400;
+
+			{_x setCaptive true} forEach units _grp;
+			//=================================
+
+			missionNamespace setVariable ["MCC_ACConsoleUp",_uav];
+			missionNamespace setVariable ["MCC_consoleACpos",_pos];
+			missionNameSpace setVariable ["MCC_ConsoleACTime",9999];
+			publicVariable "MCC_ConsoleACTime";
+			publicVariable "MCC_ACConsoleUp";
+
+			while {alive(missionNamespace getVariable ["MCC_ACConsoleUp",objNull])} do {sleep 1};
+
+			if (alive _uav) then {
+				[group driver _uav, driver _uav, _uav, _away] call MCC_fnc_deletePlane;
+			};
+		};
 	};
 
 	//UAV
-	if (tolower _spawnkind in ["uav","uav armed"]) exitWith {
+	if (tolower _spawnkind in ["uav","controllable"]) exitWith {
 		//UAV
-		_pos = [_pos select 0, _pos select 1, (_pos select 2) + (if (tolower _spawnkind == "uav") then {200} else {1000})];
-		[_pos,_planeType,360] spawn {
-			private ["_uav","_time"];
-			params ["_center","_planeType","_time"];
 
-			_uav = _planeType createVehicle _center;
-			_uav setPos _center;
-			createVehicleCrew _uav;
-			_uav flyInHeight (_center select 2);
-			group driver _uav setCombatMode "BLUE";
+		[_pos,_planeType,360,_spawnkind,_spawn] spawn {
+			private ["_uav","_time","_grp","_wp","_flyHight"];
+			params ["_pos","_planeType","_time","_spawnkind","_spawn"];
 
-			for "_i" from 0 to 360 step 90 do
-			{
-				[0,([_center,300,_i] call BIS_fnc_relPos),[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","","",0],[group driver _uav]] spawn MCC_fnc_manageWp;
-				sleep 0.1;
-			};
+			_pos set [2,(_pos select 2)+500];
 
-			//Cycle WP
-			[0,([_center,200,0] call BIS_fnc_relPos),[7,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","","",0],[group driver _uav]] spawn MCC_fnc_manageWp;
+			_uav = [_planeType, _spawn, _pos, 500, true] call MCC_fnc_createPlane;
+
+			_grp = group driver _uav;
+			_grp setCombatMode "BLUE";
+			_grp setBehaviour "CARELESS";
+			_grp setSpeedMode "LIMITED";
+
+			_wp = _grp addWaypoint [_pos, 0];
+			_wp setWaypointType "LOITER";
+			_wp setWaypointLoiterType "CIRCLE_L";
+			_wp setWaypointSpeed "LIMITED";
+			_wp setWaypointLoiterRadius 1000;
+
+			//Make controlabel
+			_grp setvariable ["MCC_canbecontrolled",true,true];
+			_grp setvariable ["MCC_canbecontrolledUAV",true,true];
+			_uav setVehicleLock "LOCKED";
 
 			//Spawn detection
-			[_uav,_time] spawn MCC_fnc_uavDetect;
+			if (_spawnkind == "uav") then {
+				[_uav,_time] spawn MCC_fnc_uavDetect;
+			};
 		};
 	};
 

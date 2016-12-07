@@ -46,3 +46,6 @@ MCC_showActionKey = if (_var == 0) then {false} else {true};
 
 //Breaching Ammo
 MCC_breacingAmmo = call compile (_logic getvariable ["breachingAmmo","[]"]);
+
+//Non Lethal Ammo
+MCC_nonLeathalAmmo = call compile (_logic getvariable ["nonLeathalAmmo","[]"]);

@@ -92,8 +92,11 @@ if (_mode in [0,1,2]) then {
 		_mode = param [0,0,[0,objNull]];
 
 		if (missionNamespace getVariable ["MCC_forceCamera",false]) exitWith {};
+
+		missionNamespace setVariable ["MCC_forceCamera",true];
+
 		while {true} do {
-			missionNamespace setVariable ["MCC_forceCamera",true];
+
 			waitUntil {cameraView == "External"};
 
 			switch (_mode) do {

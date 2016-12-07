@@ -78,7 +78,7 @@ if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- 
 
 //non-lethal ammo & breaching ammo
 //Define non-lethal ammunition player using this ammunition on units closer then 30 meters will not kill them but stun them.
-MCC_nonLeathalAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"];
+if (isnil"MCC_nonLeathalAmmo") then {MCC_nonLeathalAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"]};
 if (isnil"MCC_breacingAmmo") then {MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"]};
 
 //MCC Survive mod
@@ -448,7 +448,6 @@ MCC_ConsoleGroups8 = [];
 MCC_ConsoleGroups9 = [];
 MCC_ConsoleGroups10 = [];
 
-MCC_ACConsoleUp = false;
 MCC_ConsoleACvision = "VIDEO";
 MCC_ConsoleACCameraMod = 0;
 MCC_uavConsoleACFirstTime = true;
@@ -460,7 +459,7 @@ MCC_consoleACgunReady3 = true;
 MCC_consoleACmousebuttonUp = true;
 
 MCC_airDropArray = [];
-MCC_CASBombs = ["Gun-run short","Gun-run long","Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)","S&D","Rockets-run","AT run","AA run","JDAM","LGB","Bombing-run","Cruise Missile","AC-130","UAV Armed"];
+MCC_CASBombs = ["Gun-run short","Gun-run long","Gun-run (Zeus)","Rockets-run (Zeus)","CAS-run (Zeus)","S&D","Rockets-run","AT run","AA run","JDAM","LGB","Bombing-run","Cruise Missile","AC-130","UAV","Controllable"];
 MCC_GunRunBusy = [0,0,0,0,0,0,0];
 MCC_CASrequestMarker = false;
 

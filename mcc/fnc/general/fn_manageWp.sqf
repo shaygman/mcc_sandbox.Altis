@@ -25,7 +25,7 @@ if (count _wpArray > 0) then
 {
 _WPTypeIndecator 	= _wpArray select 0;
 
-	_wpTypes = ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS","Helicopter - Land","Helicopter - Get in","Artillery - Fire Mission"];
+	_wpTypes = ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS","Helicopter - Land","Helicopter - Get in","Artillery - Fire Mission","Loiter"];
 	_wpType  = _wpTypes select _WPTypeIndecator;
 };
 
@@ -225,6 +225,15 @@ _WPTypeIndecator 	= _wpArray select 0;
 							_x setVariable ["GAIA_MortarRound",6];
 							[_x, _wpLoc] call GAIA_fnc_doMortar;
 						 };
+					};
+
+				case "Loiter":
+					{
+						_wp = _x addWaypoint [_wpLoc, 0];
+						_wp setWaypointType "LOITER";
+						_wp setWaypointLoiterType "CIRCLE_L";
+						_wp setWaypointSpeed "LIMITED";
+						_wp setWaypointLoiterRadius 1000;
 					};
 
 				default

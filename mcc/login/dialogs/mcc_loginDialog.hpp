@@ -43,7 +43,7 @@ class mcc_loginDialog
 		{
 			idc = -1;
 
-			text = "MCC Login"; //--- ToDo: Localize;
+			text = "MCC Login";
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
 
 			x = 0.459896 * safezoneW + safezoneX;
@@ -52,6 +52,15 @@ class mcc_loginDialog
 			h = 0.0439828 * safezoneH;
 			colorText[] = {0,1,1,1};
 		};
+
+		class MCC_version: MCC_LoginTittle
+		{
+			idc = -1;
+
+			text = MCCVersion;
+			x = (0.459896 * safezoneW + safezoneX) + (0.06 * safezoneW);
+		};
+
 		class MCC_viewDistanceTittle: MCC_RscText
 		{
 			idc = -1;

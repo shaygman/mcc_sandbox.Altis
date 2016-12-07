@@ -72,7 +72,7 @@ if ((_button == 0) && (count (missionNamespace getVariable ["MCC_ConsoleGroupSel
 		_displayname =  _x;
 		_index = _comboBox lbAdd _displayname;
 	} foreach ["Move", "Destroy", "Get In", "Search & Destroy", "Join Group", "Join Group As Leader", "Get Out", "Cycle Waypoints", "Load", "Unload", "Troops Unload", "Hold", "Senetry"
-			   ,"Guard","Support","Get In Nearest","Dismiss","Helicopter - Land","Helicopter - Get in","Artillery - Fire Mission"];
+			   ,"Guard","Support","Get In Nearest","Dismiss","Helicopter - Land","Helicopter - Get in","Artillery - Fire Mission","Loiter"];
 	_comboBox lbSetCurSel 0;
 
 	//Reveal WP  Formation Combo

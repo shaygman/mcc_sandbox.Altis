@@ -45,7 +45,7 @@ if (vehicle player == player) then {
 
 	//Drop Ammo
 	if ("MCC_ammoBoxMag" in items player) then {
-		_array pushBack  ["['MCC_ammoBoxMag','MCC_ammoBox'] spawn MCC_fnc_ACEdropAmmobox;","Drop<br/>Ammobox","\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa"];
+		_array pushBack  ["['MCC_ammoBoxMag','MCC_ammoBox'] spawn MCC_fnc_ACEdropAmmobox;","Drop Ammobox","\a3\ui_f\data\IGUI\Cfg\Actions\reload_ca.paa"];
 	};
 };
 
