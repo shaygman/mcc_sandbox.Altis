@@ -182,7 +182,8 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 
 			//register AC-130
 			//==================================
-			_uav = [_planeType, _spawn, _pos, 400, true] call MCC_fnc_createPlane;
+			_side =  (getNumber (configFile >> "CfgVehicles" >> _planeType >> "side")) call BIS_fnc_sideType;
+			_uav = [_planeType, _spawn, _pos, 500, false,_side] call MCC_fnc_createPlane;
 
 			_grp = group driver _uav;
 			_grp setCombatMode "BLUE";
@@ -194,14 +195,15 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 			_wp setWaypointSpeed "LIMITED";
 			_wp setWaypointLoiterRadius 400;
 
-			{_x setCaptive true} forEach units _grp;
-			//=================================
 
 			missionNamespace setVariable ["MCC_ACConsoleUp",_uav];
 			missionNamespace setVariable ["MCC_consoleACpos",_pos];
 			missionNameSpace setVariable ["MCC_ConsoleACTime",9999];
 			publicVariable "MCC_ConsoleACTime";
 			publicVariable "MCC_ACConsoleUp";
+
+			//Delete projectiles
+			_uav addeventhandler["fired", {deletevehicle (nearestobject[_this select 0, _this select 4])}];
 
 			while {alive(missionNamespace getVariable ["MCC_ACConsoleUp",objNull])} do {sleep 1};
 
@@ -216,12 +218,12 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 		//UAV
 
 		[_pos,_planeType,360,_spawnkind,_spawn] spawn {
-			private ["_uav","_time","_grp","_wp","_flyHight"];
+			private ["_uav","_time","_grp","_wp","_flyHight","_side"];
 			params ["_pos","_planeType","_time","_spawnkind","_spawn"];
 
 			_pos set [2,(_pos select 2)+500];
-
-			_uav = [_planeType, _spawn, _pos, 500, true] call MCC_fnc_createPlane;
+			_side =  (getNumber (configFile >> "CfgVehicles" >> _planeType >> "side")) call BIS_fnc_sideType;
+			_uav = [_planeType, _spawn, _pos, 500, false,_side] call MCC_fnc_createPlane;
 
 			_grp = group driver _uav;
 			_grp setCombatMode "BLUE";

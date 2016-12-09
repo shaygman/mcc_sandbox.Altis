@@ -136,7 +136,7 @@ MCC_convoyHVTcar = [["Default",""],["Hunter","B_Hunter_F"],["MRAP","I_MRAP_03_F"
 
 //------------------------MCC Console--------------------------------------------
 //AC-130 amo count by array [20mm,40mm,105mm]
-if (isnil "MCC_ConsoleACAmmo") then {MCC_ConsoleACAmmo = [500,80,20]};
+if (isnil "MCC_ConsoleACAmmo") then {MCC_ConsoleACAmmo = [4000,400,100]};
 
 //How much time can an AC-130 stay in the air before he is RTB
 if (isnil "MCC_ConsoleACTime") then {MCC_ConsoleACTime = 180};

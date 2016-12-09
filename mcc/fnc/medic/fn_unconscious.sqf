@@ -149,7 +149,7 @@ _unit spawn {
 	_this enableAI "FSM";
 	_this disableConversation false;
 
-	if ((_this getVariable ["MCC_medicUnconscious",false]) && alive _this) then {_this setDamage 1};
+	if ((_this getVariable ["MCC_medicUnconscious",false]) && alive _this && (damage _this > 0.3)) then {_this setDamage 1};
 
 	//Remove helper
 	[_this] spawn MCC_fnc_deleteHelper;

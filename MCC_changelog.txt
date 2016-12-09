@@ -28,8 +28,10 @@ Change log r20:
 - Added: Medical system HUD. Mark nearby wounded units.
 - Added: UI settings moudle and Medical System  module to Zeus.
 - Added: Loiter WP for the commander tablet.
+- Added: Custom Zeus Atmosphere Environment module. You can set your own atmosphere with color filters, snow, branches, litters exc.
 
 TODO:
+hit direction
 arcade tanks
 Role selection as curator module
 - PvP

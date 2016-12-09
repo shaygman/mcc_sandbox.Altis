@@ -1851,9 +1851,9 @@ class gun1
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\gun1.ogg", 1, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\gun1.ogg", 1, 1,3000};
 	#else
-	sound[] = {"mcc\sounds\gun1.ogg", 1, 1};
+	sound[] = {"mcc\sounds\gun1.ogg", 1, 1,3000};
 	#endif
 };
 
@@ -1863,9 +1863,9 @@ class gun2
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\gun2.ogg", 1, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\gun2.ogg", 1, 1,3000};
 	#else
-	sound[] = {"mcc\sounds\gun2.ogg", 1, 1};
+	sound[] = {"mcc\sounds\gun2.ogg", 1, 1,3000};
 	#endif
 };
 
@@ -1875,9 +1875,9 @@ class gun3
 	titles[] = {};
 
 	#ifdef MCCMODE
-	sound[] = {"\mcc_sandbox_mod\mcc\sounds\gun3.ogg", 1, 1};
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\gun3.ogg", 1, 1,3000};
 	#else
-	sound[] = {"mcc\sounds\gun3.ogg", 1, 1};
+	sound[] = {"mcc\sounds\gun3.ogg", 1, 1,3000};
 	#endif
 };
 

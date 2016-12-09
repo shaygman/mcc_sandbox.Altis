@@ -5,7 +5,7 @@ playSound "nvSound";
 switch (MCC_ConsoleUAVCameraMod) do {
 	// Normal
 	case 0: {
-		_effectParams = [3, 0.1,1, 1, 0, [0,0,0,0], [1.1,0.7,1.1,1.1], [1.0,0.7,1.0,1.1]];
+		_effectParams = [3,1,1,0.4,0,[0,0,0,0],[1,1,1,0],[1,1,1,1]];
 		MCC_ConsoleUAVvision = "VIDEO";
 	};
 

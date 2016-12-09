@@ -9,7 +9,7 @@ _posX = _params select 1;
 _posY = _params select 2;
 _fakeUav = missionNamespace getVariable ["MCC_fakeUAV",objNull];
 
-if (isNull _fakeUav) exitWith {};
+if !(alive _fakeUav) exitWith {};
 
 if (MCC_ConsoleUAVMouseButtonDown) then {
 	if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.11]};

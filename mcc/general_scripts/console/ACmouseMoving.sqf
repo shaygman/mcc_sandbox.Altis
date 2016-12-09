@@ -1,4 +1,6 @@
 //Returns the control, the pressed button, the x and y coordinates and the state of Shift, Ctrl and Alt.
+
+
 private ["_params","_ctrl","_posX","_posY","_posNew","_rand","_relDir","_distance","_attahcPosition"];
 disableSerialization;
 
@@ -8,10 +10,9 @@ _ctrl = _params select 0;
 _posX = _params select 1;
 _posY = _params select 2;
 
-if (isNil "MCC_fakeAC") exitWith {};
-if (isNull MCC_fakeAC) exitWith {};
+if (missionNamespace getVariable ["MCC_ConsoleACMouseButtonDown",false]) then {
 
-if (MCC_ConsoleACMouseButtonDown) then {
+	/*
 	if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.12]};
 	setMousePosition [0.5,0.44];
 
@@ -26,39 +27,84 @@ if (MCC_ConsoleACMouseButtonDown) then {
 
 	missionNamespace setVariable ["MCC_ConolseAC130_attahcPosition",_attahcPosition];
 
+	*/
+	private ["_fov","_ac","_center"];
+
+	#define MCC_ACPos [0.5,0.44]
+
+	_fov = missionNamespace getVariable ["MCC_fakeACFOV",0.8];
+	_ac = missionNamespace getVariable ["MCC_fakeAC",objNull];
+	_center = missionNamespace getVariable ["MCC_fakeACCenter",objNull];
+	_realAc = missionNamespace getVariable ["MCC_ACConsoleUp",objNull];
+
+	if (isNull _ac || isNull _center || !alive _realAc) exitWith {};
+
+	_relDir = [_realAc, _center] call BIS_fnc_relativeDirto;
+	_distance = _realAc distance2d _center;
+
+	if (_relDir < 340 && _relDir > 220 && _distance > 200 && _distance < 2000) then {
+		if (player getVariable ["MCC_lastSoundTime",time] <= time) then {playsound ["MCC_zoom",true];player setVariable ["MCC_lastSoundTime",time+0.12]};
+		if (random 10<0.03) then {playmusic format ["RadioAmbient%1", (floor (random 30) + 1)]};
+
+		_posNew = [((MCC_ACPos select 0) - _posX)*(_fov*150)*(_ac distance _center)/100 , ((MCC_ACPos select 1) - _posY)*(_fov*150)*(_ac distance _center)/100,0];
+		_center setdir (getdir _ac);
+		_center setpos (_center modeltoWorld[(_posNew select 0)*-1,(_posNew select 1),0]);
+	} else {
+		if (_relDir > 340) then {
+			//Left
+			_center setpos (_center modeltoWorld[(-10*_fov),0,0]);
+		} else {
+			//Right
+			_center setpos (_center modeltoWorld[(10*_fov),0,0]);
+		};
+
+		if (_distance < 350) then {
+			//Up
+			_center setpos (_center modeltoWorld[0,(10*_fov),0]);
+		} else {
+			//Down
+			_center setpos (_center modeltoWorld[0,(-10*_fov),0]);
+		};
+
+		_center setdir (getdir _ac);
+		_center setposatl [(getpos _center select 0),(getpos _center select 1),0];
+	};
+
+	setMousePosition [0.5,0.44];
+
+
 	/*
-	_posNew = [((MCC_ACPos select 0) - _posX)*(MCC_fakeACFOV*150), ((MCC_ACPos select 1) - _posY)*(MCC_fakeACFOV*150),0];
-	_relDir = [MCC_fakeAC, MCC_ACcenter] call BIS_fnc_relativeDirto;
-	//hint format ["%1", MCC_fakeAC distance MCC_fakeACCenter];
-	if ((_relDir <90) || (_relDir > 280))then
-	{
-		MCC_fakeACCenter setpos (MCC_fakeACCenter modeltoWorld[(_posNew select 0)*-1,(_posNew select 1),0]);
+	if ((_relDir <90) || (_relDir > 280))then {
+		_center setpos (_center modeltoWorld[(_posNew select 0)*-1,(_posNew select 1),0]);
 		_rand = random 10;
 		if (_rand<0.03) then {playmusic format ["RadioAmbient%1", (floor (random 30) + 1)]};
-	}
-	else
-	{
-				if ((_relDir>90) && !(_relDir>150)) then {
-					MCC_fakeACCenter setpos (MCC_fakeACCenter modeltoWorld[(10*MCC_fakeACFOV),0,0]);
-					MCC_fakeACCenter setposatl [(getpos MCC_fakeACCenter select 0),(getpos MCC_fakeACCenter select 1),0];
-					//hint "left";
-				} else {
-					MCC_fakeACCenter setpos (MCC_fakeACCenter modeltoWorld[(-10*MCC_fakeACFOV),0,0]);
-					MCC_fakeACCenter setposatl [(getpos MCC_fakeACCenter select 0),(getpos MCC_fakeACCenter select 1),0];
-					//hint "right";
-					};
+	} else {
+
+		if ((_relDir>90) && !(_relDir>150)) then {
+			//Left
+			_center setpos (_center modeltoWorld[(10*_fov),0,0]);
+		} else {
+			//Right
+			_center setpos (_center modeltoWorld[(-10*_fov),0,0]);
+		};
+
+		_center setposatl [(getpos _center select 0),(getpos _center select 1),0];
 	};
-	_distance = MCC_fakeAC distance MCC_fakeACCenter;
+
+	_distance = _ac distance _center;
+
 	if (_distance > 350 && _distance < 1000) then {
-		MCC_fakeACCenter setpos (MCC_fakeACCenter modeltoWorld[(_posNew select 0)*-1,(_posNew select 1),0]);
+		_center setpos (_center modeltoWorld[(_posNew select 0)*-1,(_posNew select 1),0]);
 		} else	{
 			if (_distance < 350) then {
-				MCC_fakeACCenter setpos (MCC_fakeACCenter modeltoWorld[0,(10*MCC_fakeACFOV),0]);
-				MCC_fakeACCenter setposatl [(getpos MCC_fakeACCenter select 0),(getpos MCC_fakeACCenter select 1),0];
+				//Up
+				_center setpos (_center modeltoWorld[0,(10*_fov),0]);
 			} else {
-				MCC_fakeACCenter setpos (MCC_fakeACCenter modeltoWorld[0,(-10*MCC_fakeACFOV),0]);
-				MCC_fakeACCenter setposatl [(getpos MCC_fakeACCenter select 0),(getpos MCC_fakeACCenter select 1),0];
-				};
+				//Down
+				_center setpos (_center modeltoWorld[0,(-10*_fov),0]);
+			};
+
+			_center setposatl [(getpos _center select 0),(getpos _center select 1),0];
 		};
 	*/
 };

@@ -56,15 +56,11 @@ while {_time > time && (str (finddisplay mcc_playerConsole2_IDD) != "no display"
 	};
 };
 
-if ((str (finddisplay mcc_playerConsole2_IDD) == "no display") && (isnil "MCC_ConolseUAV") ) exitWith {};
-
-if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && (isnil "MCC_ConolseUAV") && MCC_Console2Open) exitWith {
-	ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, "No UAV signal found, connection failed"];
+if ((str (finddisplay mcc_playerConsole2_IDD) == "no display") && (isNull (missionNamespace getVariable ["MCC_ConolseUAV",objNull]))) exitWith {
+	if (missionNamespace getVariable ["MCC_Console2Open",false]) then {
+		ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, "No UAV signal found, connection failed"];
 	};
-
-if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && MCC_Console2Open && !alive MCC_ConolseUAV) exitWith {
-	ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, "UAV signal lost, connection failed"];
-	};
+};
 
 //Create the UAV
 if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && (alive MCC_ConolseUAV) && MCC_Console2Open) then {
@@ -99,7 +95,7 @@ if ((str (finddisplay mcc_playerConsole2_IDD) != "no display") && (alive MCC_Con
 	{
 		// Normal
 		case 0: {
-			_effectParams = [3, 1, 1, 1, 0.1, [0, 0.4, 1, 0.1], [0, 0.2, 1, 1], [0, 0, 0, 0]];
+			_effectParams = [3,1,1,0.4,0,[0,0,0,0],[1,1,1,0],[1,1,1,1]];
 			MCC_ConsoleUAVvision = "VIDEO";
 		};
 
