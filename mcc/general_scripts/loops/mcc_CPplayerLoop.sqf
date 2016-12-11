@@ -166,9 +166,6 @@ while {true} do {
 		missionNamespace setVariable ["MCC_save_secondaryWeaponMagazine",secondaryWeaponMagazine player];
 		missionNamespace setVariable ["MCC_save_handgunMagazine",handgunMagazine player];
 
-		//Add XP/Fame
-		_null = [] spawn MCC_fnc_handleRating;
-
 		//Repair/refuel from boxed all this ifs are to reduce unnecessary nearObjects - efficiency
 		if (!MCC_isMode && vehicle player != player) then {
 			_vehicle = vehicle player;
@@ -183,11 +180,9 @@ while {true} do {
 			};
 		};
 
-		if (CP_activated) then {
-			//Check if in vehicle
-			if (missionNamespace getVariable ["MCC_rsEnableDriversPilots",true]) then {
-				[] call MCC_fnc_allowedDrivers
-			};
+		if (missionNamespace getVariable ["CP_activated",false]) then {
+			//Add XP/Fame
+			_null = [] spawn MCC_fnc_handleRating;
 
 			//Check if allowed weapons
 			if (missionNamespace getVariable ["MCC_rsEnableRoleWeapons",true]) then {
@@ -209,5 +204,5 @@ while {true} do {
 			[] call MCC_fnc_medicEffects;
 		};
 	};
-	sleep 2;
+	sleep 4;
 };

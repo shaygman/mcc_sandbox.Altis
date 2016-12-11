@@ -35,9 +35,9 @@ then
 							case "MotorizedRecon":
 								{ _dummy= [_group,_TargetPos] call GAIA_fnc_doAttackMotorizedRecon;};
 							case "MechanizedInfantry":
-								{ _dummy= [_group,_TargetPos] call GAIA_fnc_MechanizedInfantry;};
+								{ _dummy= [_group,_TargetPos] call GAIA_fnc_doAttackMechanizedInfantry;};
 							case "MotorizedInfantry":
-								{ _dummy= [_group,_TargetPos] call GAIA_fnc_doAttackMotorizedInfantry;};
+								{ _dummy= [_group,_TargetPos] call GAIA_fnc_doAttackMechanizedInfantry;};
 							case "Tank":
 								{ _dummy= [_group,_TargetPos] call GAIA_fnc_doAttackMotorizedRecon;};
 							case "Helicopter":

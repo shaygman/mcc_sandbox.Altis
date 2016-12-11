@@ -44,19 +44,6 @@ if (_pressed==1) then {
 };
 
 
-/*
- ["20mm",_uav ammo "gatling_20mm_VTOL_01","4000Rnd_20mm_Tracer_Red_shells","B_20mm_Tracer_Red"],
-							 ["40mm",_uav ammo "autocannon_40mm_VTOL_01","240Rnd_40mm_GPR_Tracer_Red_shells","B_40mm_GPR_Tracer_Red"],
-							 ["105mm",_uav ammo "cannon_105mm_VTOL_01","100Rnd_105mm_HEAT_MP","Sh_105mm_HEAT_MP"]
-
-
-gunner MCC_ACConsoleUp forceWeaponFire ["gatling_20mm_VTOL_01", "medium"];
-gunner MCC_ACConsoleUp forceWeaponFire ["cannon_105mm_VTOL_01", "medium"];
-gunner MCC_ACConsoleUp forceWeaponFire ["HE", "medium"];
-
-
-							 */
-
 //Fire
 if (_pressed==0) then {
 	MCC_consoleACmousebuttonUp = false;

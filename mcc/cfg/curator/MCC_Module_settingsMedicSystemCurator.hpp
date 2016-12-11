@@ -1,4 +1,4 @@
-class MCC_Module_medicSystem : MCC_Module_Base
+class MCC_Module_settingsMedicSystemCurator : MCC_Module_Base
 {
 	scopeCurator = 2;
 	category = "MCC";

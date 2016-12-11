@@ -10,7 +10,7 @@ if (MCC_teleportToTeam || !isPlayer _unit) then
 	//spawn to a specific unit?
 	if (isNull _unit) then
 	{
-		_unit = if (player == (leader player)) then {(((units player) - [player]) select 0)} else {leader player};
+		_unit = if (player == (leader player) && count units player > 1) then {(((units player) - [player]) select 0)} else {leader player};
 	};
 
 	if (!alive _unit) exitWith {};

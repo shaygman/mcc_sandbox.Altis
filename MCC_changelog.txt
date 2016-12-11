@@ -29,11 +29,19 @@ Change log r20:
 - Added: UI settings moudle and Medical System  module to Zeus.
 - Added: Loiter WP for the commander tablet.
 - Added: Custom Zeus Atmosphere Environment module. You can set your own atmosphere with color filters, snow, branches, litters exc.
+- Added: Real AC-130 (Blackfish) when spawning an AC-130.
+- Added: Role Selection's settings module to Eden and Zeus - might effect previous missions.
+- Added: UI's settings module to Zeus.
+- Added: Medic system's settings module to Zeus.
+- Added: MCC's settings module to Zeus.
+- Added: MCC mechanics settings module to Zeus.
 
 TODO:
 hit direction
 arcade tanks
+MCC key binds disapper.
 Role selection as curator module
+Fix all missions with RS
 - PvP
 
 

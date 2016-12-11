@@ -1,8 +1,8 @@
-class mcc_sandbox_moduleMedicSystem : Module_F
+class MCC_Module_settingsMedicSystem : Module_F
 {
 	category = "MCC";
 	author = "shay_gman";
-	displayName = "Settings (Medical System)";
+	displayName = "(Settings) Medical System";
 	icon = "\mcc_sandbox_mod\data\mccModule.paa";
 	picture = "\mcc_sandbox_mod\data\mccModule.paa";
 	vehicleClass = "Modules";

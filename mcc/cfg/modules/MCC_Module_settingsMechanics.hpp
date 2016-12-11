@@ -1,8 +1,8 @@
-class mcc_sandbox_moduleCover : Module_F
+class MCC_Module_settingsMechanics : Module_F
 {
 	category = "MCC";
 	author = "shay_gman";
-	displayName = "Settings (Mechanics)";
+	displayName = "(Settings) Mechanics";
 	icon = "\mcc_sandbox_mod\data\mccModule.paa";
 	picture = "\mcc_sandbox_mod\data\mccModule.paa";
 	vehicleClass = "Modules";
@@ -98,7 +98,7 @@ class mcc_sandbox_moduleCover : Module_F
 		*/
 		class coverVault
 		{
-			displayName = "Allow vault/climb";
+			displayName = "Allow Vault/Climb";
 			description = "While using cover players can climb over obstacles";
 			typeName = "NUMBER";
 			class values
@@ -119,7 +119,7 @@ class mcc_sandbox_moduleCover : Module_F
 
 		class switchWeapons
 		{
-			displayName = "Weapons binds";
+			displayName = "Weapons Binds";
 			description = "Quick weapons selection with the 1-5 buttons";
 			typeName = "NUMBER";
 			class values
@@ -180,9 +180,30 @@ class mcc_sandbox_moduleCover : Module_F
 			};
 		};
 
+		class arcadeTanks
+		{
+			displayName = "One Man Tanks";
+			description = "Allows one man tank's operation";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
 		class survive
 		{
-			displayName = "Survive mod";
+			displayName = "Survival Mod";
 			description = "Players can search objects in the world to find resources and weapons and need to drink and eat";
 			typeName = "NUMBER";
 			class values

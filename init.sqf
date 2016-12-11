@@ -955,6 +955,10 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyDown", "_null = ['keydown',_this] call MCC_fnc_keyDown"];
 	_keyDown = (findDisplay 46) displayAddEventHandler  ["KeyUp", "_null = ['keyup',_this] call MCC_fnc_keyDown"];
 
+	//Vehicles EH
+	_eh = player addEventHandler ["GetInMan",{_this spawn MCC_fnc_allowedDrivers}];
+	player setVariable ["MCC_rsEnableDriversPilotsEH",_eh];
+
 	// Teleport to team on Alt + T
 	if (isnil "MCC_teleportToTeam") then {MCC_teleportToTeam = true};
 

@@ -438,7 +438,7 @@ switch _mode do {
 
 		//_progress = _progress/100;
 
-		//Close the cature UI
+		//Close the capture UI
 		if (!(_this select 4) || _progress == 1) exitWith {(["MCC_captureProgressRsc"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];};
 
 

@@ -33,7 +33,7 @@ _dirTo = [_projectile,player] call BIS_fnc_relativeDirTo;
 //Manage only bulltes that are aimed on the player
 if (_dirTo > 310 || _dirTo < 50) then {
     _projectiles = missionNamespace getVariable ["MCC_supressionHitPos",[]];
-    _projectiles pushBack [_projectile, _distance, _hit];
+    _projectiles pushBack [_projectile, _distance, _unit];
     missionNamespace setVariable ["MCC_supressionHitPos",_projectiles];
 };
 

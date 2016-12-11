@@ -20,6 +20,9 @@
 #define MCC_CONSOLE_COMPASS_W 9119
 #define MCC_CONSOLE_AC_MAP 5022
 
+#define MCC_CONSOLEUAVFLIGHTHIGHT 9121
+#define MCC_CONSOLEUAVFLIGHTHIGHTTEXT 9122
+
 //-----------------------------------------------------------------------------
 // Main dialog
 //-----------------------------------------------------------------------------
@@ -68,8 +71,10 @@ class MCC_playerConsole3 {
   MCC_ConsoleCompassS,
   MCC_ConsoleCompassW,
   MCC_mapConsole,
-  MCC_ConsoleACMap
-
+  MCC_ConsoleACMap,
+  MCC_ConsoleUAVFlightHight,
+  MCC_ConsoleUAVFlightHightText,
+  MCC_ConsoleACFullScreen
   };
 
  //========================================= Background========================================
@@ -393,6 +398,7 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		w = 0.01 * safezoneW;
 		h = 0.01 * safezoneH;
 	};
+
 	class MCC_ConsoleACMap: MCC_RscButton
 	{
 		idc = MCC_CONSOLE_AC_MAP;
@@ -402,6 +408,39 @@ class MCC_ConsoleExitButton: MCC_RscButton
 		h = 0.0329871 * safezoneH;
 		text = "Open Map";
 		onButtonClick = __EVAL("[1] execVM '"+MCCPATH+"mcc\general_scripts\console\conoleMap.sqf'");
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	/*
+	class MCC_ConsoleACFullScreen: MCC_RscButton
+	{
+		idc = 5055;
+		x = 0.7 * safezoneW + safezoneX;
+		y = 0.708919 * safezoneH + safezoneY;
+		w = 0.07 * safezoneW;
+		h = 0.0329871 * safezoneH;
+		text = "Full Screen";
+		onButtonClick = __EVAL("[0] execVM '"+MCCPATH+"mcc\general_scripts\console\fn_ConsoleACFullScreen.sqf'");
+		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
+	};
+	*/
+	class MCC_ConsoleUAVFlightHight: MCC_RscSlider
+	{
+		idc = MCC_CONSOLEUAVFLIGHTHIGHT;
+		x = 0.391146 * safezoneW + safezoneX;
+		y = 0.75 * safezoneH + safezoneY;
+		w = 0.15 * safezoneW;
+		h = 0.0280063 * safezoneH;
+		onSliderPosChanged = __EVAL("[2,_this] execVM '"+MCCPATH+"mcc\general_scripts\console\uavControl.sqf'");
+	};
+	class MCC_ConsoleUAVFlightHightText: MCC_RscText
+	{
+		idc = MCC_CONSOLEUAVFLIGHTHIGHTTEXT;
+
+		text = "Flight Hight"; //--- ToDo: Localize;
+		x = 0.425521 * safezoneW + safezoneX;
+		y = 0.77 * safezoneH + safezoneY;
+		w = 0.0916667 * safezoneW;
+		h = 0.0219914 * safezoneH;
 		sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 	};
 };

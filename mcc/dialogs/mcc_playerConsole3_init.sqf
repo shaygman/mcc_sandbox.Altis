@@ -21,6 +21,8 @@ private ["_mccdialog","_comboBox","_displayname","_time", "_index","_message","_
 #define MCC_MINIMAP 9120
 #define MCC_CONSOLE_AC_MAP 5022
 
+#define MCC_CONSOLEUAVFLIGHTHIGHT 9121
+
 disableSerialization;
 _mccdialog = findDisplay mcc_playerConsole3_IDD;
 MCC_Console1Open = false;
@@ -34,7 +36,9 @@ ctrlShow [MCC_CONSOLE_COMPASS_E,false];
 ctrlShow [MCC_CONSOLE_COMPASS_S,false];
 ctrlShow [MCC_CONSOLE_COMPASS_W,false];
 ctrlShow [MCC_MINIMAP,false];
+
 ctrlShow [MCC_CONSOLE_AC_MAP,false];
+ctrlShow [5055,false];
 
 ctrlSetText [MCC_CONSOLE_ACPIP, ""];
 _time = time + (2 + random 5);
@@ -102,6 +106,11 @@ if (dialog && !isNull(missionNamespace getVariable ["MCC_ACConsoleUp",objNull]))
 		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT2, ("40mm: " + str (((crew _uav) select 3) ammo "HE"))];
 		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT3, ("105mm: " + str (_uav ammo "cannon_105mm_VTOL_01"))];
 
+		//Flight Height
+		sliderSetRange [MCC_CONSOLEUAVFLIGHTHIGHT, 300, 1500];
+		_alt = (((getpos _uav) select 2) min 1500) max 300;
+		sliderSetPosition [MCC_CONSOLEUAVFLIGHTHIGHT, _alt];
+
 		switch (MCC_ConsoleACCameraMod) do {
 			// Normal
 			case 0: {
@@ -146,21 +155,25 @@ if (dialog && !isNull(missionNamespace getVariable ["MCC_ACConsoleUp",objNull]))
 		ctrlShow [MCC_CONSOLE_COMPASS_S,true];
 		ctrlShow [MCC_CONSOLE_COMPASS_W,true];
 		ctrlShow [MCC_CONSOLE_AC_MAP,true];
+		ctrlShow [5055,true];
 
 		//Handle on screen data
 		[] spawn {
-			private ["_structured","_data","_mccdialog"];
+			private ["_structured","_data","_mccdialog","_uavPos","_uav"];
 			disableSerialization;
+			_uav = missionNamespace getVariable ["MCC_ACConsoleUp",objNull];
 
-			while {MCC_Console3Open && dialog} do
-			{
+
+			while {MCC_Console3Open && dialog && alive _uav} do {
 				_mccdialog = findDisplay mcc_playerConsole3_IDD;
 				_structured = composeText [""];
+				_uavPos = getpos MCC_fakeAC;
 				_data =
 					[
-					format ["Time: %1:%2",[date select 3]call MCC_fnc_time2string,[date select 4]call MCC_fnc_time2string],
-					format ["Remain: %1",[MCC_ConsoleACTime -(time - (missionNameSpace getVariable ["MCC_ConsoleACTimeStart",0]))] call MCC_fnc_time],
-					format ["X: %1 Y: %2",floor ((getpos MCC_fakeAC) select 0),floor ((getpos MCC_fakeAC) select 1)]
+						format ["Time: %1:%2",[date select 3]call MCC_fnc_time2string,[date select 4]call MCC_fnc_time2string],
+						format ["Remain: %1",[MCC_ConsoleACTime -(time - (missionNameSpace getVariable ["MCC_ConsoleACTimeStart",0]))] call MCC_fnc_time],
+						format ["X: %1 Y: %2",floor (_uavPos select 0),floor (_uavPos select 1)],
+						format ["Z %1",floor (_uavPos select 2)]
 					];
 				{_structured = composeText [_structured,_x,lineBreak]} forEach _data;
 				(_mccdialog displayctrl MCC_CONSOLE_AC_TIME_TEXT) ctrlSetStructuredText _structured;
@@ -185,8 +198,12 @@ if (dialog && !isNull(missionNamespace getVariable ["MCC_ACConsoleUp",objNull]))
 
 				//No time remain close the AC-130
 				if (MCC_ConsoleACTime -(time - (missionNameSpace getVariable ["MCC_ConsoleACTimeStart",time])) <=0) exitWith {
+
+					[group driver _uav, driver _uav, _uav, [_uav, 1500, floor random 360] call BIS_fnc_relPos] call MCC_fnc_deletePlane;
 					missionNamespace setVariable ["MCC_ACConsoleUp",objNull];
 					publicVariable "MCC_ACConsoleUp";
+
+					[[2,compile format ['["MCCNotifications",["AC-130 Left the scene","%1data\AC130_icon.paa",""]] call bis_fnc_showNotification;',MCC_path]], "MCC_fnc_globalExecute", playerSide, false] spawn BIS_fnc_MP;
 				};
 
 				if (isNull(missionNamespace getVariable ["MCC_ACConsoleUp",objNull])) exitWith {
@@ -202,11 +219,19 @@ if (dialog && !isNull(missionNamespace getVariable ["MCC_ACConsoleUp",objNull]))
 				sleep 0.1;
 			};
 
-			if !(isnil "MCC_fakeAC") then {MCC_fakeAC cameraeffect ["terminate","back"];camdestroy MCC_fakeAC;};
-			MCC_fakeAC = nil;
-		};
+			_cam = missionNamespace getVariable ["MCC_fakeAC",objNull];
+			_target = missionNamespace getVariable ["MCC_fakeACCenter",objNull];
 
-		MCC_ACcenter = getpos MCC_fakeACCenter;
+			if !(isNull _cam) then {
+				_cam cameraeffect ["terminate","back"];
+				camdestroy _cam;
+				MCC_fakeAC = nil;
+			};
+
+			if !(isNull _target) then {
+				deleteVehicle _target;
+			};
+		};
 
 		// Move camera in a circle
 		0 spawn	{

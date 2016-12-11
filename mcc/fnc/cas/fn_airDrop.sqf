@@ -172,8 +172,12 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 
 		//If we pressed the AC 130 when we have one retired the last one.
 		if (alive(missionNamespace getVariable ["MCC_ACConsoleUp",objNull])) then {
+			private _uav = (missionNamespace getVariable ["MCC_ACConsoleUp",objNull]);
+			[group driver _uav, driver _uav, _uav, _away] call MCC_fnc_deletePlane;
 			missionNamespace setVariable ["MCC_ACConsoleUp",objNull];
 			publicVariable "MCC_ACConsoleUp";
+
+			[[2,compile format ['["MCCNotifications",["AC-130 Left the scene","%1data\AC130_icon.paa",""]] call bis_fnc_showNotification;',MCC_path]], "MCC_fnc_globalExecute", playerSide, false] spawn BIS_fnc_MP;
 		} else {
 
 			[[2,compile format ['["MCCNotifications",["AC-130 Entered the scene","%1data\AC130_icon.paa",""]] call bis_fnc_showNotification;',MCC_path]], "MCC_fnc_globalExecute", playerSide, false] spawn BIS_fnc_MP;
@@ -202,13 +206,20 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 			publicVariable "MCC_ConsoleACTime";
 			publicVariable "MCC_ACConsoleUp";
 
+			//Make controlabel
+			_grp setvariable ["MCC_canbecontrolled",true,true];
+
 			//Delete projectiles
 			_uav addeventhandler["fired", {deletevehicle (nearestobject[_this select 0, _this select 4])}];
 
-			while {alive(missionNamespace getVariable ["MCC_ACConsoleUp",objNull])} do {sleep 1};
-
-			if (alive _uav) then {
-				[group driver _uav, driver _uav, _uav, _away] call MCC_fnc_deletePlane;
+			//Fire some flares
+			_uav spawn {
+				while {alive _this} do {
+					_plane = _this;
+					( driver _plane) forceweaponfire ["CMFlareLauncher","burst"];
+					_plane setAmmo ["CMFlareLauncher", 1];
+					sleep 30 + (random 30);
+				};
 			};
 		};
 	};

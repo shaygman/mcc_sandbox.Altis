@@ -29,7 +29,10 @@ if (vehicle player == player) then {
 			_array pushBack ["[(_this select 0),'build'] spawn MCC_fnc_interactSelfClicked","Construct",format["%1data\IconRepair.paa",MCC_path]];
 		};
 
-		_array pushBack ["createDialog 'MCC_SQLPDA'","Squad Leader PDA","\A3\Ui_f\data\IGUI\Cfg\VehicleToggles\wheelbreakiconon_ca.paa"];
+		//SQL PDA
+		if (missionNamespace getvariable ["MCC_allowsqlPDA",true]) then {
+			_array pushBack ["createDialog 'MCC_SQLPDA'","Squad Leader PDA","\A3\Ui_f\data\IGUI\Cfg\VehicleToggles\wheelbreakiconon_ca.paa"];
+		};
 
 		//Rally point
 		if ((missionNamespace getVariable ["MCC_allowSQLRallyPoint",false]) &&

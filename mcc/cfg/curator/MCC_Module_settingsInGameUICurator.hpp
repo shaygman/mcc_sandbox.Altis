@@ -1,4 +1,4 @@
-class MCC_Module_inGameUICurator : MCC_Module_Base
+class MCC_Module_settingsInGameUICurator : MCC_Module_Base
 {
 	scopeCurator = 2;
 	category = "MCC";

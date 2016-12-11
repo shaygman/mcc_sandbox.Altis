@@ -1,37 +1,36 @@
 #define MCC_CONSOLE_UAV_MISSILE 9109
 
-private ["_control","_action","_string"];
+private ["_control","_action","_string","_uav"];
 disableSerialization;
 _action = _this select 0;
 _control = _this select 1;
 
-if (isnil 'MCC_ConolseUAV') exitWith {}; 
-//Flyhight
-if (_action == 0) then	
+switch (_action) do
+{
+	case 0: //Flyhight
 	{
-		(_control select 0) ctrlSetTooltip str (_control select 1);  
-		if (ismultiplayer) then
-			{
-				_string = format ['objectfromnetid "%1" flyInHeight %2',netid MCC_ConolseUAV,(sliderPosition (_control select 0))];
-			}
-			else
-			{
-				_string = format ['MCC_ConolseUAV flyInHeight %1',(sliderPosition (_control select 0))];
-			};
-		[[2,compile _string], 'MCC_fnc_globalExecute', MCC_ConolseUAV, false] spawn BIS_fnc_MP;
+		_uav = missionNamespace getVariable ["MCC_ConolseUAV",objNull];
+		if (!alive _uav) exitWith {};
+
+		(_control select 0) ctrlSetTooltip str (_control select 1);
+		[_uav,sliderPosition (_control select 0)] remoteExec ["flyInHeight",_uav];
 	};
 
-//Fire Missile
-if (_action == 1) then	
+	case 1:
 	{
-		if (ismultiplayer) then
-			{
-				_string = format ['objectfromnetid "%1" fire "%2"',netid MCC_ConolseUAV,MCC_ConsoleUAVmissiles select 2];
-			}
-			else
-			{
-				_string = format ['MCC_ConolseUAV fire "%1"',MCC_ConsoleUAVmissiles select 2];
-			};
-		[[2,compile _string], 'MCC_fnc_globalExecute', MCC_ConolseUAV, false] spawn BIS_fnc_MP;
+		_uav = missionNamespace getVariable ["MCC_ConolseUAV",objNull];
+		if (!alive _uav) exitWith {};
+
+
+		[_uav,MCC_ConsoleUAVmissiles select 2] remoteExec ["fire",_uav];
 	};
 
+	case 2:
+	{
+		_uav = missionNamespace getVariable ["MCC_ACConsoleUp",objNull];
+		if (!alive _uav) exitWith {};
+
+		(_control select 0) ctrlSetTooltip str (_control select 1);
+		[_uav,sliderPosition (_control select 0)] remoteExec ["flyInHeight",_uav];
+	};
+};
