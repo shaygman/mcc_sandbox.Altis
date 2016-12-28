@@ -55,6 +55,11 @@ player setVariable ["MCC_medicBleeding",0,true];
 player setvariable ["MCC_medicRemainBlood",(missionNamespace getvariable ["MCC_medicBleedingTime",200])];
 player setCaptive false;
 
+//Fatigue
+if (missionNamespace getVariable ["MCC_disableFatigue",false]) then {
+	player enableFatigue false;
+};
+
 //Delete dead body
 if (missionNameSpace getVariable ["MCC_deletePlayersBody",false]) then {deleteVehicle _unit};
 

@@ -7,7 +7,7 @@
 // Return - [taskName,Task pos]
 //==============================================================================================================================================================================
 private ["_obj","_task","_preciseMarker","_type","_stringName","_stringDescription","_pos","_objectName","_missionTime","_missionIntel","_indecator","_capturVar",
-      "_stateCond","_name","_missionWherabouts","_side","_sidePlayer","_pic","_sides"];
+      "_stateCond","_name","_missionWherabouts","_side","_sidePlayer","_pic","_sides","_counter"];
 
 _obj 			= _this select 0;
 _task 			= _this select 1;
@@ -19,8 +19,9 @@ _sidePlayer = param [5, sideLogic];
 //define contesting sides
 _sides = [east,west,resistance] - [_side];
 
-_name = FORMAT ["MCCMWObject_%1", ["MCCMWObject_",1] call bis_fnc_counter];
-_nameTask = FORMAT ["Objective %1:", ["",1] call bis_fnc_counter];
+_counter =  ["MCCMWObject_",1] call bis_fnc_counter;
+_name = FORMAT ["MCCMWObject_%1", _counter];
+_nameTask = FORMAT ["Objective %1:", _counter];
 //Global defines for briefings.
 _missionTime =
    [

@@ -84,7 +84,6 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\HUD\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\roleSelection\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\interaction\cfgFunctions.hpp"
-		#include "\mcc_sandbox_mod\mcc\supression\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\radio\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\AAS\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\missionWizard\cfgFunctions.hpp"

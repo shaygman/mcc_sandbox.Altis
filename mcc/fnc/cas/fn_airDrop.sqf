@@ -205,6 +205,7 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 			missionNameSpace setVariable ["MCC_ConsoleACTime",9999];
 			publicVariable "MCC_ConsoleACTime";
 			publicVariable "MCC_ACConsoleUp";
+			publicVariable "MCC_consoleACpos";
 
 			//Make controlabel
 			_grp setvariable ["MCC_canbecontrolled",true,true];

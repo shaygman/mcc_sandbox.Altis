@@ -8,7 +8,7 @@ OUT <>
     Nothing
 
 Example:
-[[s1,s2,s3,s4,s5,s6],[west,east]] call MCC_fnc_aasInit;
+[_start,_end,"line1"] call MCC_fnc_AAS_drawLine;
 
 */
 

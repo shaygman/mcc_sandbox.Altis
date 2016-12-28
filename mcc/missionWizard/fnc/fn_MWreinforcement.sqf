@@ -61,7 +61,7 @@ sleep 5;
 while {!([getposAtl _trigger,(GAIA_CACHE_STAGE_1/2)] call GAIA_fnc_isNearPlayer)} do {sleep 10};
 
 _tlist = (_side countSide (list _trigger)) max 1;
-systemchat "captured:" + str _tlist;
+
 private ["_dir","_distance","_newPos","_script_handler","_rfc"];
 
 for "_i" from 0 to (count _cond) step 1 do

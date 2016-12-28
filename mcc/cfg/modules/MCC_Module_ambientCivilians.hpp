@@ -1,7 +1,7 @@
 class MCC_Module_ambientCivilians : Module_F
 {
 	category = "MCC";
-	displayName = "Ambient Civilians";
+	displayName = "Ambient Units";
 	function = "MCC_fnc_curatorAmbientCivilians";
 	scope = 2;
 	isGlobal = 0;

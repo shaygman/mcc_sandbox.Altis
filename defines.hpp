@@ -81,7 +81,6 @@ class CfgFunctions
 		#include "mcc\HUD\cfgFunctions.hpp"
 		#include "mcc\roleSelection\cfgFunctions.hpp"
 		#include "mcc\interaction\cfgFunctions.hpp"
-		#include "mcc\supression\cfgFunctions.hpp"
 		#include "mcc\radio\cfgFunctions.hpp"
 		#include "mcc\AAS\cfgFunctions.hpp"
 		#include "mcc\missionWizard\cfgFunctions.hpp"

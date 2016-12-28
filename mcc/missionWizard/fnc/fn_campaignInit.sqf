@@ -9,7 +9,9 @@
 //_tileSize			INTEGER - Size of the tile while portfiling the map
 //=======================================================================================================================================================================
 private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets","_missionRotation","_basePos","_tileSize","_reconMission","_tempVar"];
-
+/*
+CUP_C_CHERNARUS
+*/
 //wait for MCC
 waitUntil {!isnil "MCC_initDone"};
 waitUntil {MCC_initDone};
@@ -150,8 +152,8 @@ _locations = [_locations,[_basePos],{_input0 distance (_x select 0)},"ASCEND"] c
 //Start the campaign missions?
 if (_missionMax == 0) exitWith {};
 
-//Save DB
-["MCC_campaign",10,true] spawn MCC_fnc_saveServer;
+//Save DB every 10 minutes
+["MCC_campaign",1200,true] spawn MCC_fnc_saveServer;
 
 while { count _locations > 0 &&
 		_missionDone <= _missionMax

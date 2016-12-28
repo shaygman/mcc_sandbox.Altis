@@ -44,19 +44,16 @@ if (missionNamespace getVariable ["MCC_arcadeTanks",false]) then {
 
 		if (_vehiclePosition != "cargo") then {
 			enableSentences false;
-		    _unit = player;
-		    _unit action ["EngineOn", _playerVehicle];
-		    _unit action ["MoveToGunner", _playerVehicle];
-
-		    [_playerVehicle,true] remoteExec ["lockDriver",_playerVehicle];
+		    player action ["EngineOn", _playerVehicle];
+		    player action ["MoveToGunner", _playerVehicle];
 
 		    _playerVehicle spawn {
 		        waitUntil {!isNull gunner _this};
-		        _ai = createAgent [
-		            typeOf gunner _this, [0,0,0], [], 0, "NONE"
-		        ];
+		        _ai = createAgent [typeOf gunner _this, [0,0,0], [], 0, "NONE"];
 		        _ai allowDamage false;
 		        _ai moveInDriver _this;
+
+		        [_this,true] remoteExec ["lockDriver",_this];
 
 		        waitUntil {isNull gunner _this};
 		        _ai action ["EngineOff", _this];

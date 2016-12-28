@@ -9,7 +9,7 @@ OUT <>
     Nothing
 
 Example:
-[[s1,s2,s3,s4,s5,s6],[west,east]] call MCC_fnc_aasInit;
+[west,_markerPos,"markerName"] call MCC_fnc_AASmarkers;
 
 */
 

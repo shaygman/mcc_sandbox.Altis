@@ -50,7 +50,8 @@ if (count _resualt == 0) exitWith {deleteVehicle _module};
            "MCC_rsAllWeapons",
            "MCC_allowChangingKits",
            "CP_gainXP",
-           "MCC_rsEnableRoleWeapons"
+           "MCC_rsEnableRoleWeapons",
+           "MCC_rsEnableDriversPilots"
            ];
 
 if (missionNamespace getVariable ["CP_activated",false]) then {

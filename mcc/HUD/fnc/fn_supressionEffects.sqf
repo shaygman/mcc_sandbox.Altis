@@ -7,27 +7,27 @@ private ["_blurEffects"];
 params ["_ratio","_dir"];
 
 //Hit direction
-if (missionNamespace getVariable ["MCC_hitRadar",true]) then {
+if (missionNamespace getVariable ["MCC_hitRadar",false]) then {
 	switch (true) do
 	{
 		case (_dir > 315 || _dir <= 45):
 		{
-			systemChat "up";
+			(["MCC_rssHitUp"] call BIS_fnc_rscLayer) cutRsc ["MCC_rssHitUp", "PLAIN"];
 		};
 
 		case (_dir > 45 && _dir <= 135):
 		{
-			systemChat "right";
+			(["MCC_rssHitRight"] call BIS_fnc_rscLayer) cutRsc ["MCC_rssHitRight", "PLAIN"];
 		};
 
 		case (_dir > 135 && _dir <= 225):
 		{
-			systemChat "down";
+			(["MCC_rssHitDown"] call BIS_fnc_rscLayer) cutRsc ["MCC_rssHitDown", "PLAIN"];
 		};
 
 		default
 		{
-			systemChat "left";
+			(["MCC_rssHitLeft"] call BIS_fnc_rscLayer) cutRsc ["MCC_rssHitLeft", "PLAIN"];
 		};
 	};
 };

@@ -5,11 +5,11 @@ Change log r20:
 - Fixed: Custom group will not shot each other.
 - Changed: CAS will only spawn one aircraft instead of two to limit CAS crushing into each other.
 - Fixed: Reinforcement helicopter will drop troops even under fire.
-- Fixed: Duplicate Zeus menus and units go prone.
+- Fixed: When editing a unit in Zeus duplicate menus and units go prone.
 - Fixed: Building fortification and FOB didn't work.
 - Changed: While in MCC's artillery computer using the ruler will automatically insert the distance and direction to the computer.
 - added: Define breaching ammo from MCC mechanic module.
-- Added: Pacific faction's trucks to MCC logistics trucks.
+- Added: Pacific faction's trucks can be used as MCC logistics trucks.
 - Added: Build raised MG/HMG.
 - Fixed: Tutorial helicopters message keep on showing even after selecting not to.
 - Changed: Evac helicopters precise landing or fast ropes will be smoother.
@@ -35,13 +35,13 @@ Change log r20:
 - Added: Medic system's settings module to Zeus.
 - Added: MCC's settings module to Zeus.
 - Added: MCC mechanics settings module to Zeus.
+- Added: Arcade Stuff ***Spoiler if you like hard core milsim don't read it *******
+		- One Man Tanks (In mechanics settings) - Based on Killzone kid script. Drive and shoot a tank without the need for a driver.
+		- Disable Fatigue (In mechanics settings) - Disable in game fatigue.
+		- Hit Radar (In HUD settings) - Radial markers shows the general direction of bullets' sources while under fire.
 
 TODO:
-hit direction
-arcade tanks
-MCC key binds disapper.
-Role selection as curator module
-Fix all missions with RS
+- switch side button?
 - PvP
 
 

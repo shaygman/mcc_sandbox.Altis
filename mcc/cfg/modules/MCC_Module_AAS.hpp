@@ -1,7 +1,7 @@
 class MCC_Module_AAS : Module_F
 {
 	category = "MCC";
-	displayName = "Advance And Secure";
+	displayName = "(PvP)Advance And Secure";
 	function = "MCC_fnc_aasInit";
 	scope = 2;
 	isGlobal = 0;

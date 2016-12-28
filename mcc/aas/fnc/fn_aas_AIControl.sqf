@@ -6,10 +6,14 @@
 		*/
 private ["_side","_sectors","_attackZonesPos","_group","_leader","_closestZonePos","_defendRatio","_allPos","_wpPos"];
 _side = param [0, west];
-
 _defendRatio = 0.2;
 
 waituntil {time > 5};
+
+//If not server or already initilize exit
+if ((missionNamespace getVariable [format ["MCC_fnc_aas_AIControlInit_%1",_side],false]) || !isServer) exitWith {};
+missionNamespace setVariable [format ["MCC_fnc_aas_AIControlInit_%1",_side],true];
+
 
 _sectors = [];
 

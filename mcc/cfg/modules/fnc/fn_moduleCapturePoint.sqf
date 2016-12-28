@@ -531,6 +531,7 @@ switch _mode do {
 				};
 			};
 
+			/*
 			if (_winingSide != sideUnknown) then {
 				_sides = _sides - [_winingSide];
 
@@ -541,12 +542,14 @@ switch _mode do {
 						[_side,-1] call BIS_fnc_respawnTickets;
 					};
 
+
 					if (([_side] call BIS_fnc_respawnTickets)<1) exitWith {
 						[["sidetickets"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
 					};
+
 				} forEach _sides;
 			};
-
+			*/
 			sleep 10;
 		};
 	};

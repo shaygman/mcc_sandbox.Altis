@@ -21,6 +21,8 @@ _locked = param [ 4, true, [true]];
 _sidePlayer = param [5,west];
 _civRelations = param [6,0.8,[0]];
 
+if (count _vehiclesArray <= 0) exitWith {};
+
 _carArray = missionNamespace getVariable ["MCC_ambientParkedCars",[]];
 
 _nearHouses = [_pos,_carSpawnDistance] call MCC_fnc_findCivHouse;

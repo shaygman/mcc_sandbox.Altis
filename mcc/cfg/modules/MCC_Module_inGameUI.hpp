@@ -2,7 +2,7 @@ class MCC_Module_inGameUI : Module_F
 {
 	category = "MCC";
 	author = "shay_gman";
-	displayName = "Game UI";
+	displayName = "(Settings) HUD";
 	icon = "\mcc_sandbox_mod\data\mccModule.paa";
 	picture = "\mcc_sandbox_mod\data\mccModule.paa";
 	vehicleClass = "Modules";
@@ -119,6 +119,28 @@ class MCC_Module_inGameUI : Module_F
 		{
 			displayName = "Suppression";
 			description = "Activate client side suppression effects";
+			typeName = "BOOL";
+			class values
+			{
+				class disable
+				{
+					name = "Disable";
+					value = false;
+					default = 1;
+				};
+
+				class enable
+				{
+					name = "Enable";
+					value = true;
+				};
+			};
+		};
+
+		class hitRadar
+		{
+			displayName = "Hit Radar";
+			description = "Indicate the general direction of enemies firing on the player";
 			typeName = "BOOL";
 			class values
 			{

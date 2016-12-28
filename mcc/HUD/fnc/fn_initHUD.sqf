@@ -18,28 +18,43 @@
     //Name Tags
     MCC_fnc_NameTagsEVH = {
         if ((missionNamespace getvariable ["MCC_nameTags",false]) || (missionNamespace getvariable ["MCC_medicShowWounded",false])) then {
-            private ["_color","_textSize","_pic","_direct","_pos","_units","_leader","_alpha","_radius"];
+            private ["_color","_textSize","_pic","_direct","_pos","_units","_leader","_alpha","_radius","_aimedAt","_captiveSideId"];
             _radius = 30;
             _direct = missionNamespace getVariable ["MCC_NameTags_direct",true];
 
             //all units around or just what we looking at
             _units = if (!_direct || (missionNamespace getvariable ["MCC_medicShowWounded",false])) then {(getpos player nearEntities _radius)} else {[cursorTarget]};
 
+            _captiveSideId = switch (side player) do
+                    {
+                        case east: {20};
+                        case west: {30};
+                        case resistance: {40};
+                        default {50};
+                    };
+
             {
                 if (isNull _X) exitWith {};
 
                 if (
                        _x != player &&
-                       (side _x == side player || (_x getVariable ["MCC_medicUnconscious",false])) &&
+                       ((player getVariable ["CP_side",  playerside]) == (_x getVariable ["CP_side",  side _x]) || (captiveNum _x == _captiveSideId)) &&
                        alive _x
                     ) then {
+
+                    if (_direct) then {
+                         _aimedAt = cursorTarget == _x;
+                         _radius = _radius * 4;
+                    } else {
+                        _aimedAt = true;
+                    };
 
                     _textSize = 0.03;
                     _alpha = linearConversion [0,_radius,player distance _x,1,0.4];
 
-                    if  (!_direct || player distance2D _x < (_radius*2)) then {
+                    if  (_aimedAt && player distance2D _x < _radius) then {
                         if (_x isKindOf "Man") then {
-                            _color = if (_x in units player) then {[0,1,0,1]} else {[0,0,1,1]};
+                            _color = if (_x in units player) then {[0,1,0,1]} else {[1,1,1,1]};
                             _color set [3,_alpha];
                             _pic = if ((_x getvariable ["CP_roleImage", ""]) != "") then {_x getvariable ["CP_roleImage", ""]} else {[_x,"texture"] call BIS_fnc_rankParams};
                             _pos = _x selectionPosition "head";
@@ -52,14 +67,14 @@
                                 _leader = leader _X;
                                 _name = if (alive _leader) then {name _leader} else {"Unknown"};
 
-                                _color = if (_leader in units player) then {[0,1,0,1]} else {[0,0,1,1]};
+                                _color = if (_leader in units player) then {[0,1,0,1]} else {[1,1,1,1]};
                                 _pos = visiblePosition _X;
                                 _pos = _pos vectorAdd [0,0,3];
                             };
                         };
 
                         drawIcon3D ["", [1,1,1,_alpha],  _pos, 0, 0, 0, name _x, 2, _textSize,"PuristaSemiBold"];
-                        drawIcon3D [_pic, _color,  _pos, 0.6, 0.5, 0, "", 2, 0,"PuristaSemiBold"];
+                        drawIcon3D [_pic, _color,  _pos, 0.8, 0.8, 0, "", 2, 0,"PuristaSemiBold"];
                     };
 
                     //Add wounded icon

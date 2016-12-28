@@ -38,12 +38,12 @@
 
 ==============================================================================================================================================================*/
 private ["_mode","_compass","_compassTeamMates","_module"];
-_mode = param [0,0,[0,objNull]];
+_mode = param [0,3,[0,objNull]];
 
 //If it's a mod not a call
 if (typeName _mode == typeName objNull) then {
 	_module = _mode;
-	_mode = _module getVariable ["mode",0];
+	_mode = _module getVariable ["mode",3];
 	_compass = _module getVariable ["compass",false];
 	_compassTeamMates = _module getVariable ["compassTeamMates",false];
 
@@ -59,24 +59,30 @@ if (typeName _mode == typeName objNull) then {
 
 	//Supression
 	missionNamespace setVariable ["MCC_suppressionOn",_module getvariable ["suppression",false]];
+
+	//Hit Radar
+	missionNamespace setVariable ["MCC_hitRadar",_module getvariable ["hitRadar",false]];
 } else {
-	_compass = param [1,false,[false]];
-	_compassTeamMates = param [2,false,[false]];
+	_compass = param [1,true,[false]];
+	_compassTeamMates = param [2,true,[false]];
 
 	//Group Markers
-	missionNamespace setVariable ["MCC_groupMarkers",param [3,false,[false]]];
+	missionNamespace setVariable ["MCC_groupMarkers",param [3,true,[false]]];
 
 	//Indevidual Markers
-	missionNamespace setVariable ["MCC_indevidualMarkers",param [4,false,[false]]];
+	missionNamespace setVariable ["MCC_indevidualMarkers",param [4,true,[false]]];
 
 	//NameTags
-	missionNamespace setVariable ["MCC_nameTags",param [5,false,[false]]];
+	missionNamespace setVariable ["MCC_nameTags",param [5,true,[false]]];
 
 	//NameTags Direct
 	missionNamespace setVariable ["MCC_NameTags_direct",param [6,true,[false]]];
 
 	//Supression
 	missionNamespace setVariable ["MCC_suppressionOn",param [7,true,[false]]];
+
+	//Hit Radar
+	missionNamespace setVariable ["MCC_hitRadar",param [8,true,[false]]];
 };
 
 //Compass HUD
@@ -86,37 +92,37 @@ if (_compass) then {_compassTeamMates spawn MCC_fnc_initCompassHUD};
 if (missionNamespace getVariable ["MCC_suppressionOn",false]) then {[] spawn MCC_fnc_supressionInit};
 
 //Force Camera
-if (_mode in [0,1,2]) then {
-	[_mode] spawn {
-		private ["_mode"];
-		_mode = param [0,0,[0,objNull]];
+player setVariable ["MCC_forceCameraMode",_mode];
 
-		if (missionNamespace getVariable ["MCC_forceCamera",false]) exitWith {};
+[] spawn {
 
-		missionNamespace setVariable ["MCC_forceCamera",true];
+	if (missionNamespace getVariable ["MCC_forceCamera",false]) exitWith {};
 
-		while {true} do {
+	missionNamespace setVariable ["MCC_forceCamera",true];
 
-			waitUntil {cameraView == "External"};
+	while {true} do {
 
-			switch (_mode) do {
+		waitUntil {cameraView == "External"};
 
-				//Always
-			    case 0: {
-			    	player switchCamera "Internal";
-			    };
+		switch (player getVariable ["MCC_forceCameraMode",3]) do {
 
-			    //vehicles
-			    case 1: {
-			    	if (vehicle player == player || player != driver vehicle player) then {player switchCamera "Internal"};
-			    };
+			//Always
+		    case 0: {
+		    	player switchCamera "Internal";
+		    };
 
-			    default {
-			     	if (vehicle player == player || !(vehicle player isKindOf "air") || player != driver vehicle player) then {player switchCamera "Internal"};
-			    };
-			};
+		    //vehicles
+		    case 1: {
+		    	if (vehicle player == player) then {player switchCamera "Internal"};
+		    };
 
-			sleep 0.1;
+		    default {
+		     	if (!(vehicle player isKindOf "air") ) then {player switchCamera "Internal"};
+		    };
 		};
+
+		sleep 0.1;
 	};
+
+	missionNamespace setVariable ["MCC_forceCamera",false];
 };

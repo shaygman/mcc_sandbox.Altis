@@ -51,6 +51,10 @@ if (typeName (_module getVariable ["cover",true]) == typeName 0) exitWith {
 	//Arcade Tanks
 	MCC_arcadeTanks = ((_module getvariable ["arcadeTanks",0])==1);
 
+	//Disable Fatigue
+	MCC_disableFatigue = ((_module getvariable ["fatigue",0])==1);
+	player enableFatigue !(missionNamespace getVariable ["MCC_disableFatigue",false]);
+
 	//Breaching Ammo
 	MCC_breacingAmmo = call compile (_module getvariable ["breachingAmmo","[]"]);
 
@@ -70,6 +74,7 @@ _resualt = ["Settings MCC Mechanics",[
  						["Interaction",true],
  						["Interaction UI",true],
  						["One Man Tanks",true],
+ 						["Disable Fatigue",true],
  						["Survival Mod",["No","Yes - Enable searching loot","Yes - Disable searching loot"]]
  					  ]] call MCC_fnc_initDynamicDialog;
 
@@ -85,14 +90,19 @@ if (count _resualt == 0) exitWith {deleteVehicle _module};
            "MCC_quickWeaponChange",
            "MCC_interaction",
            "MCC_ingameUI",
-           "MCC_arcadeTanks"
+           "MCC_arcadeTanks",
+           "MCC_disableFatigue"
           ];
 
-_var = (_resualt select 8);
+//Survival
+_var = (_resualt select 9);
 MCC_surviveMod = _var > 0;
 publicvariable "MCC_surviveMod";
 
 MCC_surviveModAllowSearch = _var ==1;
 publicvariable "MCC_surviveModAllowSearch";
+
+//Fatigue
+{player enableFatigue !(missionNamespace getVariable ["MCC_disableFatigue",false])} remoteExec ["bis_fnc_call", 0];
 
 deleteVehicle _module;

@@ -11,20 +11,45 @@
 			_this select 6 -  _searchRadius		- INTEGER - how far should look for empty vehicles around the module location for empty vehicles
 			_this select 7 -  _useDefaultGear	- Array - define the roles to spawn and propobility leave empty for non [["rifleman","ar","at","corpsman","marksman","officer"],[0.5,0.1,0.1,0.1,0.1,0.1]] from the RS cfg files.
 			_this select 8 -  _startPos			- ARRAY - position of the defualt start location
+			_this select 9 -  _spawnVehicles	- BOOLEAN - if true will spawn empty vehicle similar to the enemy vheicles
 */
 
-private ["_sectors","_autoBalance","_minPerSide","_spawnInDefensive","_AIUnits","_enemyNumber","_startPos","_sideNumber","_counter","_unitsArray","_spawnPos","_numberOfGroups","_groupArray","_group","_enemySide","_side","_maxUnits","_defendZonesPos","_areas","_faction","_nearVehicles","_searchRadius","_vehicleClass","_simType","_wepArray","_useDefaultGear","_unitNumber","_groupSize","_tempGroup","_vehicleGear","_i"];
+private ["_sectors","_autoBalance","_minPerSide","_spawnInDefensive","_AIUnits","_enemyNumber","_startPos","_sideNumber","_counter","_unitsArray","_spawnPos","_numberOfGroups","_groupArray","_group","_enemySide","_side","_maxUnits","_defendZonesPos","_areas","_faction","_nearVehicles","_searchRadius","_vehicleClass","_simType","_wepArray","_useDefaultGear","_unitNumber","_groupSize","_tempGroup","_vehicleGear","_i","_enemyVehiclesSims","_spawnVehicles","_friendlyVehiclesSims","_vehiclesToSpawn","_vehiclesArray"];
 
-_side = param [0, west];
-_enemySide = param [1, east];
-_autoBalance = param [2, true];
-_minPerSide = param [3, 20];
-_spawnInDefensive = param [4, true];
-_faction =  param [5, "BLU_F"];
-_searchRadius = param [6, 200];
-_useDefaultGear = param [7, []];
-_startPos = param [8, [0,0,0]];
+//Module or function call
+if (typeName (_this select 0) == typeName []) then {
+	_side = param [0, west];
+	_enemySide = param [1, east];
+	_autoBalance = param [2, true];
+	_minPerSide = param [3, 20];
+	_spawnInDefensive = param [4, true];
+	_faction =  param [5, "BLU_F"];
+	_searchRadius = param [6, 200];
+	_useDefaultGear = param [7, []];
+	_startPos = param [8, [0,0,0]];
+	_spawnVehicles = param [9, true,[true]];
+} else {
+    _module = param [0, objNull, [objNull]];
+    if (isNull _module)  exitWith {diag_log "MCC MCC_fnc_aas_AIspawn: No module found"};
+    _faction =  _module getVariable ["faction1",""];
+	_side = [(getNumber (configfile >> "CfgFactionClasses" >> _faction >> "side"))] call BIS_fnc_sideType;
+	_enemySide = [_module getVariable ["enemySide",0]] call BIS_fnc_sideType;
+	_autoBalance = _module getVariable ["autoBalance",false];
+	_minPerSide = _module getVariable ["minAI",0];
+	_spawnInDefensive = _module getVariable ["spawnAIDefensive",true];
+	_searchRadius = _module getVariable ["searchRadius",100];
+	_useDefaultGear = if (_module getVariable ["useRoles",false]) then {["at","ar","corpsman","rifleman"]} else {[]};
+	_startPos = getpos _module;
+	_spawnVehicles = _module getVariable ["spawnVehicles",true];
+};
+
+
 _groupSize = 5;
+
+//If not server or already initilize exit
+if (!isServer) exitWith {};
+
+[_side] spawn MCC_fnc_aas_AIControl;
 
 //group spawn
 MCC_fnc_AASgroupSpawn  = {
@@ -196,6 +221,54 @@ while {true} do {
 		_spawnPos = _startPos;
 	};
 
+	//Spawn vehicles
+	if (_spawnVehicles) then {
+		private ["_vehicleClass","_vehicle"];
+
+		//Get how many vehicle class on each side.
+		_friendlyVehiclesSims = [];
+		_enemyVehiclesSims = [];
+		{
+			if (vehicle _x != _x &&
+			    driver vehicle _x == _x) then {
+
+				if (side _x == _enemySide) then {
+					_enemyVehiclesSims pushBack (getText(configFile >> "CfgVehicles">> typeof vehicle _x >> "simulation"));
+				};
+
+				if (side _x == _side) then {
+					_friendlyVehiclesSims pushBack (getText(configFile >> "CfgVehicles">> typeof vehicle _x >> "simulation"));
+				};
+			};
+		} forEach allUnits;
+
+		//Find only deltas between
+		_vehiclesToSpawn = [];
+		{
+			_vehicleClass = _x;
+			if ({_x == _vehicleClass} count _friendlyVehiclesSims <= 0) then {_vehiclesToSpawn pushBack _vehicleClass};
+		} forEach _enemyVehiclesSims;
+
+		//Spawn vehicles
+		{
+			_vehiclesArray	= [_faction,_x] call MCC_fnc_makeUnitsArray;
+			if (count _vehiclesArray > 0) then {
+				_vehicle = ((_vehiclesArray call bis_fnc_selectRandom) select 0) createVehicle _startPos;
+
+				//workaround to delete turrets that somehow simulate as tanks WTF?!
+				if !(_vehicle isKindOf "StaticMGWeapon") then {
+					_vehicleGear = if (_vehicle isKindOf "air") then {[["pilot"],[1]]} else {[["crew"],[1]]};
+					_group = [_groupSize,_groupSize,_vehicleGear,_vehicle,_side,_unitsArray,_spawnPos] call MCC_fnc_AASgroupSpawn;
+					_counter =( _counter - count crew _vehicle) max 0;
+					_vehicle lock true;
+				} else {
+					deleteVehicle _vehicle;
+					_counter = (_counter - 4) max 0;
+				};
+			};
+		} forEach _vehiclesToSpawn;
+	};
+
 	//Find nearest vehicles
 	_nearVehicles = nearestObjects [_startPos, ["Motorcycle","Car","Tank"], _searchRadius];  //"Helicopter"
 
@@ -211,8 +284,7 @@ while {true} do {
 			) then {
 				_vehicleGear = if (_x isKindOf "air") then {[["pilot"],[1]]} else {[["crew"],[1]]};
 				_group = [_groupSize,_groupSize,_vehicleGear,_x,_side,_unitsArray,_spawnPos] call MCC_fnc_AASgroupSpawn;
-				_counter = _counter - count crew _x;
-				_counter = _counter max 0;
+				_counter =( _counter - count crew _x) max 0;
 		};
 
 	} forEach _nearVehicles;
@@ -234,5 +306,5 @@ while {true} do {
 		};
 	};
 
-	sleep 120;
+	sleep 10;
 };

@@ -73,8 +73,7 @@ class MCC_playerConsole3 {
   MCC_mapConsole,
   MCC_ConsoleACMap,
   MCC_ConsoleUAVFlightHight,
-  MCC_ConsoleUAVFlightHightText,
-  MCC_ConsoleACFullScreen
+  MCC_ConsoleUAVFlightHightText
   };
 
  //========================================= Background========================================

@@ -6,7 +6,7 @@ player setVariable ["MCC_medicUnconscious",false]
 */
 //=============================================================================================================================================================================
 #define ANIM_WOUNDED "acts_injuredlyingrifle02_180"
-private ["_unit","_source","_string","_distance","_xpFactor"];
+private ["_unit","_source","_string","_distance","_xpFactor","_captiveSideId"];
 _unit 	= _this select 0;
 _source	= _this select 1;
 
@@ -58,7 +58,16 @@ if (isplayer _source && _source != _unit) then {
 
 
 //Make it captive
-_unit setCaptive true;
+_captiveSideId = switch (side _unit) do
+					{
+						case east: {20};
+                        case west: {30};
+                        case resistance: {40};
+                        default {50};
+					};
+
+_unit setCaptive _captiveSideId;
+
 //_unit playmoveNow "Unconscious";
 if (damage _unit < 0.3) then {_unit setDamage 0.8};
 

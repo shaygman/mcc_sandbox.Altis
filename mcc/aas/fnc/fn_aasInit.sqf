@@ -14,7 +14,7 @@ Example:
 
 */
 
-private ["_sectors","_zoneTriggers","_triggersAreas","_trigger","_fnc_drawLine","_sides","_bleedTickets"];
+private ["_sectors","_zoneTriggers","_triggersAreas","_trigger","_fnc_drawLine","_sides","_bleedTickets","_module"];
 
 MCC_fnc_AASHandleSector = {
     private ["_owner","_owners","_index","_sides","_factor","_nextTriggerIndex","_lastTriggerIndex","_triggers","_nextTriggerOwner","_tlist"];
@@ -80,12 +80,15 @@ if (typeName (_this select 0) == typeName []) then {
     _sides = _this select 1;
     _bleedTickets = param [2,5,[5]];
 } else {
-    _sectors = synchronizedObjects (_this select 0);
+    _module = param [0, objNull, [objNull]];
+    if (isNull _module)  exitWith {diag_log "MCC MCC_fnc_aasInit: No module found"};
+
+    _sectors = synchronizedObjects _module;
     _sides = [];
     {
-        _sides pushBack ([((_this select 0) getVariable [_x,1])] call BIS_fnc_sideType);
+        _sides pushBack ([(_module getVariable [_x,1])] call BIS_fnc_sideType);
     } forEach ["side1","side2"];
-    _bleedTickets = (_this select 0) getVariable ["bleedTickets",5];
+    _bleedTickets = _module getVariable ["bleedTickets",5];
 };
 
 //Win/Loose conditions

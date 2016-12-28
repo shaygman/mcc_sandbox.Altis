@@ -201,6 +201,27 @@ class MCC_Module_settingsMechanics : Module_F
 			};
 		};
 
+		class fatigue
+		{
+			displayName = "Disable Fatigue";
+			description = "Disable Fatigue";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
 		class survive
 		{
 			displayName = "Survival Mod";
@@ -232,14 +253,14 @@ class MCC_Module_settingsMechanics : Module_F
 		{
 			displayName = "Breaching Ammo";
 			description = "Shooting this ammo on a door will unlock and open it. Enter breaching ammo classes as an array";
-			defaultValue = "['prpl_8Rnd_12Gauge_Slug','prpl_6Rnd_12Gauge_Slug','rhsusf_8Rnd_Slug','rhsusf_5Rnd_Slug']";
+			defaultValue = '["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"]';
 		};
 
 		class nonLeathalAmmo
 		{
 			displayName = "Non Lethal Ammo";
 			description = "Shooting this ammo on a unit from close range will disable the unit";
-			defaultValue = "['prpl_8Rnd_12Gauge_Slug','prpl_6Rnd_12Gauge_Slug','rhsusf_8Rnd_Slug','rhsusf_5Rnd_Slug']";
+			defaultValue = '["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"]';
 		};
 	};
 

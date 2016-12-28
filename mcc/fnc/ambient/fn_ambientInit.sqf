@@ -9,7 +9,7 @@
 // _factionCiv			STRING - the units' faction
 // _factionCivCar		STRING - the units' cars faction
 //==================================================================================================================================================================
-private ["_spawnCenters","_isCiv","_player","_civArray","_civCount","_civSpawnDistance","_maxCivSpawn","_factionCiv","_unitsArray","_vehiclesArray","_isCar","_carCount","_carArray","_isParkedCar","_isLocked","_civRelations"];
+private ["_spawnCenters","_isCiv","_player","_civArray","_civCount","_civSpawnDistance","_maxCivSpawn","_factionCiv","_unitsArray","_vehiclesArray","_isCar","_carCount","_carArray","_isParkedCar","_isLocked","_civRelations","_factionCivCar"];
 _isCiv =  param [0, true, [true]];
 _isCar = param [1, true, [true]];
 _isParkedCar = param [2, true, [true]];

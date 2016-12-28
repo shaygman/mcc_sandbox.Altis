@@ -2,7 +2,7 @@
 // Handle xp for players when rating added
 // Example: [player, rating] call MCC_fnc_handleRating
 //========================================================================================================================================================================
-private ["_rating","_role","_exp","_oldLevel","_level","_newLevel"];
+private ["_rating","_role","_exp","_oldLevel","_level","_newLevel","_valor"];
 /*
 //No more then 500 exp per sec
 _rating = (param [1, 0, [0]]) min 1000;
@@ -21,7 +21,8 @@ player addrating (_rating*-1);
 if (missionNamespace getvariable ["MCC_isLevelingUp",false]) exitWith {};
 
 if (CP_debug) then {systemchat format ["rating add: %1", _rating]};
-player setVariable ["MCC_valorPoints",(player getVariable ["MCC_valorPoints",50])+(_rating/2),true];
+_valor = if (vehicle player == player) then {floor (_rating/2)} else {floor (_rating/4)};
+player setVariable ["MCC_valorPoints",(player getVariable ["MCC_valorPoints",50]) + _valor,true];
 
 _role = player getvariable ["CP_role",""];
 if (_role =="") exitWith {};
