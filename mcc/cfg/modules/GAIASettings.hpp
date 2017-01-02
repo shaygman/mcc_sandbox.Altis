@@ -21,53 +21,53 @@ class mcc_sandbox_moduleGAIASettings : Module_F
 				class rookie
 				{
 					name = "Rookie";
-					value = 0.1;
+					value = 1;
 				};
 				class level2
 				{
 					name = "0.2";
-					value = 0.2;
+					value = 2;
 				};
 				class level3
 				{
 					name = "0.3";
-					value = 0.3;
+					value = 3;
 				};
 				class moderate
 				{
 					name = "Moderate";
-					value = 0.4;
+					value = 4;
 					default = 1;
 				};
 				class level5
 				{
 					name = "0.5";
-					value = 0.5;
+					value = 5;
 				};
 				class level6
 				{
 					name = "0.6";
-					value = 0.6;
+					value = 6;
 				};
 				class level7
 				{
 					name = "0.7";
-					value = 0.7;
+					value = 7;
 				};
 				class level8
 				{
 					name = "0.8";
-					value = 0.8;
+					value = 8;
 				};
 				class level9
 				{
 					name = "0.9";
-					value = 0.9;
+					value = 9;
 				};
 				class vetran
 				{
 					name = "Vetran";
-					value = 1;
+					value = 10;
 				};
 			};
 		};
