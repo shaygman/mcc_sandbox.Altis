@@ -1,4 +1,4 @@
-//===================================================================MCC_fnc_paradrop======================================================================================
+//============================================================MCC_fnc_paradrop======================================================================================
 // Create a HALO or regular parachute jump for the given unit
 //Example:[[pos,[_unit, unitID],halo,hight,jumperNumber],"MCC_fnc_paradrop",true,false] call BIS_fnc_MP;
 // Params:
@@ -7,7 +7,7 @@
 //	halo:  boolean ,true - halo, false - parajump
 //	hight:  number,jump hight
 //  jumperNumber: number, jumper number if more then one is jumping inorder to spread them around
-//==============================================================================================================================================================================
+//=================================================================================================================================================================
 private ["_pos", "_unit", "_halo","_height", "_gwh", "_gwhpos", "_headgear", "_uniform", "_backpack", "_backPackItems","_useUnitPos","_uniformItems", "_parachute", "_jumperNumber", "_chute", "_packHolder","_parachuteBag","_transition"];
 
 _pos 			= _this select 0;

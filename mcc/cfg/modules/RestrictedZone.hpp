@@ -57,64 +57,45 @@ class mcc_sandbox_moduleRestrictedZone : Module_F
 			defaultValue = 10;
 		};
 
-		class inside
-		{
-			displayName = "Punished inside the zone";
-			description = "Should the players be punished for staying inside the zone or outside";
-			typeName = "NUMBER";
-			class values
-			{
-				class Enabled
-				{
-					name = "Inside";
-					value = 1;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Outside";
-					value = 0;
-				};
-			};
-		};
-
 		class air
 		{
 			displayName = "Air Vehicles";
 			description = "Should air vehicles be allowed";
-			typeName = "NUMBER";
+			typeName = "BOOL";
 			class values
 			{
-				class Enabled
+				class disable
 				{
-					name = "Yes";
-					value = 1;
+					name = "Disable";
+					value = false;
 					default = 1;
 				};
-				class Disabled
+
+				class enable
 				{
-					name = "No";
-					value = 0;
+					name = "Enable";
+					value = true;
 				};
 			};
 		};
 
-		class hide
+		class createMarker
 		{
 			displayName = "Create markers";
 			description = "Create markers on the triggers locations";
-			typeName = "NUMBER";
+			typeName = "BOOL";
 			class values
 			{
-				class Disabled
+				class disable
 				{
-					name = "No";
-					value = 0;
+					name = "Disable";
+					value = false;
 				};
-				class Enabled
+
+				class enable
 				{
-					name = "Yes";
-					value = 1;
+					name = "Enable";
+					value = true;
 					default = 1;
 				};
 			};

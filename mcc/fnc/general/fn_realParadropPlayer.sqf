@@ -29,16 +29,21 @@ if (isplayer _unit) then {
 	titleText ["","BLACK FADED",5];
 };
 
-if (_isHalo ==1) then {
-	_pod = _plane getVariable ["MCC_attachedPod",objnull];
-	if ((vehicle _unit != _unit) && (vehicle _unit != _pod )) then {unassignVehicle _unit; sleep 0.5;};
+//Pod or plane
+_pod = if (_isHalo ==1) then {_plane getVariable ["MCC_attachedPod",objnull]} else {_plane};
+
+//put the unit in the vehicle
+while {vehicle _unit != _pod &&
+	   alive _pod &&
+	   alive _unit &&
+	   _pod emptyPositions "cargo" > 0
+	  } do {
+	if (vehicle _unit != _unit) then {unassignVehicle _unit};
 	_unit assignAsCargo _pod ;
 	_unit moveInCargo _pod ;
-} else {
-	if ((vehicle _unit != _unit) && (vehicle _unit != _plane)) then {unassignVehicle _unit; sleep 0.5;};
-	_unit assignAsCargo _plane;
-	_unit moveInCargo _plane;
+	sleep 1;
 };
+
 
 sleep 5;
 [position _unit,["", _unit],_isHalo==2,(position _unit) select 2,0,false,true,false] spawn MCC_fnc_paradrop;

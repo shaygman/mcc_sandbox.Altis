@@ -16,7 +16,7 @@ class CfgPatches
 
 	class mcc_sandbox_curatorExp
 	{
-		units[] = {"MCC_Module_Base","MCC_Module_addUnitsToZeusCurator","MCC_Module_ambientCiviliansCurator","MCC_Module_MCCCASCurator","MCC_Module_createEvacCurator","MCC_Module_createIEDCurator","MCC_Module_createArmedCivilianCurator","MCC_Module_nightEffectsCurator","MCC_Module_lockDoorsCurator","MCC_Module_atmosphereCurator","MCC_Module_warZoneCurator","MCC_Module_garrisonBuildingsCurator","MCC_Module_damagePartCurator","MCC_Module_vehicleSpawnerCurator","MCC_Module_campaignInitCurator","MCC_Module_setResourcesCurator","MCC_Module_underCoverCurator","MCC_Module_settingsInGameUICurator","MCC_Module_settingsMedicSystemCurator","MCC_Module_settingsCurator","MCC_Module_settingsMechanicsCurator","MCC_Module_settingsRSCurator"};
+		units[] = {"MCC_Module_Base","MCC_Module_addUnitsToZeusCurator","MCC_Module_ambientCiviliansCurator","MCC_Module_MCCCASCurator","MCC_Module_createEvacCurator","MCC_Module_createIEDCurator","MCC_Module_createArmedCivilianCurator","MCC_Module_nightEffectsCurator","MCC_Module_lockDoorsCurator","MCC_Module_atmosphereCurator","MCC_Module_warZoneCurator","MCC_Module_garrisonBuildingsCurator","MCC_Module_damagePartCurator","MCC_Module_vehicleSpawnerCurator","MCC_Module_campaignInitCurator","MCC_Module_setResourcesCurator","MCC_Module_underCoverCurator","MCC_Module_settingsInGameUICurator","MCC_Module_settingsMedicSystemCurator","MCC_Module_settingsCurator","MCC_Module_settingsMechanicsCurator","MCC_Module_settingsRSCurator","MCC_Module_ambientBirds"};
 		weapons[] = {};
 		requiredVersion = 1.00;
 		author = "shay_gman";

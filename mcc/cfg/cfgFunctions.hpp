@@ -303,24 +303,6 @@ class evac
 	class fastRopeLocal {description = "handles fast rope on clients";};
 };
 
-class ambient
-{
-	#ifdef MCCMODE
-	file = "\mcc_sandbox_mod\mcc\fnc\ambient";
-	#else
-	file = "mcc\fnc\ambient";
-	#endif
-
-	class ambientInit {description = "init ambient civilians";};
-	class findCivHouse {description = "find nearest civilian house";};
-	class ambientDeleteCiv {description = "Delete civilians when not in range and not seen by players";};
-	class ambientSpawnCiv {description = "Spawn civilians around the player";};
-	class ambientDeleteCar {description = "Delete cars when not in range and not seen by players";};
-	class ambientSpawnCar {description = "Spawn cars around the player";};
-	class ambientSpawnCarParked  {description = "Spawn parked cars on street shulders";};
-	class ambientDeleteCarParked {description = "Delete parked cars when not in range and not seen by players";};
-};
-
 class dynamicDialog
 {
 	#ifdef MCCMODE

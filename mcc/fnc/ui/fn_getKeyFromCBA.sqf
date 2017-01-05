@@ -10,6 +10,9 @@ _ActionName = _this select 1;
 
 _name = "";
 _keySetup = (([_modName,_ActionName] call CBA_fnc_getKeybind) select 5) ;
+if (isNil "_keySetup") exitWith {};
+if (count _keySetup == 0) exitWith {};
+
 _specKeys = _keySetup select 1;
 
 {

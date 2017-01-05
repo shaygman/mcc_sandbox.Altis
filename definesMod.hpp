@@ -89,6 +89,7 @@ class CfgFunctions
 		#include "\mcc_sandbox_mod\mcc\missionWizard\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\helpers\cfgFunctions.hpp"
 		#include "\mcc_sandbox_mod\mcc\helicopters\cfgFunctions.hpp"
+		#include "\mcc_sandbox_mod\mcc\ambient\cfgFunctions.hpp"
 	};
 };
 

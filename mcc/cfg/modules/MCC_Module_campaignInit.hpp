@@ -142,7 +142,7 @@ class MCC_Module_campaignInit : Module_F
 		class tileSize
 		{
 			displayName = "Tile Size";
-			description = "MCC will categorize the map to tiles - the default size of a tile"
+			description = "MCC will categorize the map to tiles - the default size of a tile";
 			typeName = "NUMBER";
 			defaultValue = 3;
 		};

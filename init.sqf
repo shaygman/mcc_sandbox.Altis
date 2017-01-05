@@ -1102,3 +1102,125 @@ if(CP_activated && !isDedicated && !MCC_isLocalHC) then {
 //============= Init MCC done===========================
 MCC_initDone = true;
 finishMissionInit;
+
+/*=================================*/
+MCC_fnc_ambientFirePropagation = {
+	#define	FIRE_OBJECTSMALL	"IncinerateShell"
+	#define	FIRE_OBJECTBIG	"test_EmptyObjectForFireBig"
+	#define	PLACE_HOLDER	"Land_HelipadEmpty_F"
+
+	params [
+		["_startPos",[0,0,0],[[],objNull]],
+		["_fireDistance",10,[0]],
+		["_dir",0,[0]]
+	];
+
+	if (_fireDistance <=0) exitWith {};
+
+	private ["_pos","_fire","_fireSpread","_posTree","_dummy","_effect"];
+	_fireSpread = 7;
+
+	_pos = [_startPos,_fireSpread,_dir] call BIS_fnc_relPos;
+
+	//Some randomness
+	_pos set [0, (_pos select 0) + random 5 - random 5];
+	_pos set [1, (_pos select 1) + random 5 - random 5];
+	_pos set [2, 0.3];
+
+	//If rain then the fire will most likely die
+	if (random 1 < rain) exitWith {};
+
+	//Burn trees
+	{
+		_posTree = getPosATL _x;
+		if (damage _x < 0.5 && ({typeOf _x in [PLACE_HOLDER,FIRE_OBJECTBIG]} count (_posTree nearObjects 5) <= 0)) then {
+			systemChat str _x;
+
+			_dummy = PLACE_HOLDER createVehicle _posTree;
+			_dummy setPos _posTree;
+			_effect = FIRE_OBJECTBIG createVehicle _posTree;
+			_effect attachTo [_dummy,[0,0,0]];
+
+			//Each tree have a chance create new fire source
+			if (random 10 > 6) then {
+				[_posTree] spawn MCC_fnc_ambientFireStart;
+			};
+
+			//Put fire out after sometime
+			[_effect, _dummy, _x] spawn {
+				params ["_effect","_dummy","_tree"];
+				sleep 120 + random 120;
+				_tree setdamage 1;
+				sleep 30 + random 120;
+				while {!isnull (attachedTo _effect)} do {detach _effect};
+				_nearObjects =  (getpos _effect) nearObjects 5;
+				{
+					if (typeOf _x in [FIRE_OBJECTBIG,"#particlesource","#lightpoint"]) then {deletevehicle _x};
+				} foreach _nearObjects;
+			};
+		};
+	} foreach (nearestTerrainObjects [_pos, ["Tree","Bush","SMALL TREE"], 5]);
+
+	//Not grass surface? exit
+	if !(["grass", tolower (surfaceType _pos)] call BIS_fnc_inString) exitWith {};
+
+	_fire  = FIRE_OBJECTSMALL createVehicle _pos;
+	_fire setPos _pos;
+
+	//Next step
+	_fireDistance = _fireDistance - _fireSpread;
+
+	sleep 10 + (random 30);
+	[_pos,_fireDistance,_dir] spawn MCC_fnc_ambientFirePropagation;
+};
+
+MCC_fnc_ambientFireStart = {
+	#define	FIRE_OBJECTSMALL	"IncinerateShell"
+	#define	FIRE_OBJECTBIG	"test_EmptyObjectForFireBig"
+	#define	MAX_FIRES	20
+
+
+	params [
+		["_pos",[0,0,0],[[],objNull]]
+	];
+
+	private ["_fireDir","_fireDistance"];
+
+	if (typeName _pos == typeName objNull) then {
+		_pos = getPos _pos;
+	};
+
+	if (_pos isEqualTo [0,0,0]) exitWith {};
+
+	//Find fire direction and distance
+	_fireDir = windDir;
+	_fireDistance = (windStr max 0.1) * 100;
+
+	//Start the fire
+	for "_i" from (_fireDir - 45) to (_fireDir + 45) step 15 do  {
+
+		//Don't over use it
+		while {{typeOf _x in [FIRE_OBJECTSMALL,FIRE_OBJECTBIG]} count (_pos nearObjects 50) > MAX_FIRES} do {sleep 1};
+		[_pos,_fireDistance,_i] spawn MCC_fnc_ambientFirePropagation;
+
+		sleep 10 + floor (((random 30) - _fireDistance) max 5);
+	};
+};
+
+/*"test_EmptyObjectForFireBig" createVehicle (getpos _this);_effect setpos (getpos _this)};
+
+{
+ _pos = getPosATL _x;
+ _dummy = "Land_HelipadEmpty_F" createVehicle _pos;
+ _dummy setPos _pos;
+ _effect = "test_EmptyObjectForFireBig" createVehicle _pos;
+ _effect attachTo [_dummy,[0,0,0]];
+} foreach (nearestTerrainObjects [position player, ["Tree","Bush","SMALL TREE"], 20]);
+
+
+{
+ _pos = getPosATL _x;
+ _pos set [2,1];
+ _dummy = "IncinerateShell" createVehicle _pos;
+ _dummy setPos _pos;
+} foreach (nearestTerrainObjects [position player, ["Tree","Bush","SMALL TREE"], 20]);

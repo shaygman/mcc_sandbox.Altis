@@ -22,3 +22,4 @@
 #include "MCC_Module_settingsCurator.hpp"
 #include "MCC_Module_settingsMechanicsCurator.hpp"
 #include "MCC_Module_settingsRSCurator.hpp"
+#include "MCC_Module_ambientBirds.hpp"

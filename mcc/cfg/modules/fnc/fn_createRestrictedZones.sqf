@@ -1,39 +1,38 @@
-//==================================================================MCC_fnc_createRestrictedZones===========================================================================
+//==================================================================MCC_fnc_createRestrictedZones=================================================================
 /************************************************************
 Author:	Shay_gman
 
-Parameters: [ _sides<Array>,_time <Integer>,_air <boolean>,_delete<boolean>]
+Parameters: [ _sides<Array>,_time <Integer>,_air <boolean>,createMarker<boolean>]
 
 _logic:	if called by a function always leave objNull
 _sides: array containg the sides that will be punished.
 _time: time need to ellapsed before punishment
 _air: Should air unis be punished
-_delete: Should we delete the marker after placment if not then the trigger will move with the marker if the marker is moved
+_createMarker: Should we delete the marker after placment if not then the trigger will move with the marker if the marker is moved
 Create a restriction zone on a marker defined in mission sqf init.sqf
 
 Example:[[_logic, [east,west,resistance,civilian],10,false,false,false], "MCC_fnc_createRestrictedZones", false, false] spawn BIS_fnc_MP;
 
 ************************************************************/
-private ["_logic","_markerShape","_sides","_trg","_time","_air","_delete","_pos","_trgs","_location","_mName"];
+private ["_logic","_markerShape","_sides","_trg","_time","_air","_createMarker","_pos","_trgs","_location","_mName"];
 
 _logic	= _this select 0;
 
 //Did we got here by  a function call or by module
 if (isNull _logic) then {
-	_sides      = _this select 1;
-	_time       = _this select 2;
-	_air        = _this select 3;
-	_delete     = _this select 4;
+	_sides     	 	= _this select 1;
+	_time       	= _this select 2;
+	_air        	= _this select 3;
+	_createMarker   = _this select 4;
 } else {
 	_sides 	= _logic getvariable ["sides",-1];
 	_time 	= _logic getvariable ["time",10];
-	_air 	= (_logic getvariable ["air",1]) == 1;
-	_delete = (_logic getvariable ["hide",1]) == 1;
+	_air 	= _logic getvariable ["air",true];
+	_createMarker = _logic getvariable ["createMarker",true];
 
 	_sides = if (_sides == -1) then {[east,west,resistance,civilian]} else {[_sides call bis_fnc_sideType]};
 };
 
-//[_logic,  _sides ,_time , _air ,_delete] execVM "test.sqf";
 _trgs = [];
 _markers = [];
 
@@ -43,10 +42,10 @@ if (isServer) then {
 		if (typeOf _x == "LocationArea_F") then {
 			_location = _x;
 			{
-				if (typeOf _x == "EmptyDetector") then {
+				if (_x iskindof "EmptyDetector") then {
 					_x setTriggerActivation["ANY","PRESENT",true];
 					//Should we create markers for the trigger
-					if (_delete) then {
+					if (_createMarker) then {
 						_mName = createMarker [str _x, getpos _x];
 						_mName setMarkerColor "colorRed";
 						_mName setMarkerShape (if ((triggerArea _x) select 3) then {"RECTANGLE"} else {"ELLIPSE"});

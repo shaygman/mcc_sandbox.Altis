@@ -115,6 +115,7 @@ if (vehicle player == player) then {
 		_selected = _pointIntersect select ((count _pointIntersect)-1);
 
 		if (player distance _selected < 20) exitWith {
+			if (missionNamespace getVariable ["MCC_debug",false]) then {systemChat str _selected; copyToClipboard "MCC Items Name: " + str _selected};
 			if ((({[_x , str _selected] call BIS_fnc_inString} count _objArray)>0) && (isNull attachedTo _selected)) then {
 				missionNameSpace setVariable ["MCC_interactionObjects", [[getpos _selected, format ["Hold %1 to search",_keyName]]]];
 

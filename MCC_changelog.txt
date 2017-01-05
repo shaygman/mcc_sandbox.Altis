@@ -18,6 +18,7 @@ Change log r20:
 - Fixed: No unconscious animations while inside a vehicle.
 - Added: Re introduce the Commander Console as an Item.
 - Fixed: Losing units markers after respawn in the MCC's UI Compass.
+- Fixed: Heavy lags in the MCC Campaign
 - Added: In MCC setting module more control over Role Selections - such as:
 		- Manually gain XP
 		- Disable/Enable non pilots/drivers can use heavy vehicles/aircrafts.
@@ -40,7 +41,15 @@ Change log r20:
 		- Disable Fatigue (In mechanics settings) - Disable in game fatigue.
 		- Hit Radar (In HUD settings) - Radial markers shows the general direction of bullets' sources while under fire.
 
+Ambient
+- Added: Ambient birds moudle, try to recrate something similar to the awsome mod for ArmA2 JTD smoke add ambient birds. Placing this module will sometime spawn flocks of scared birds from trees next to the player or AIs units. Can give away your position in PvP or AI position in PvE. Birds chance is based on the unit's speed.
 TODO:
+- civil scared anim
+- breach door
+- birds and fire - 2d module
+- check the loot thing
+- Finishe the atmosphere module 2d
+- Zeus module spawn loot in houses
 - switch side button?
 - PvP
 

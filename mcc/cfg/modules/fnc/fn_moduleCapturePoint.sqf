@@ -271,21 +271,22 @@ switch _mode do {
 					};
 				} foreach list _x;
 
-				//Disable Progress Bar
-				for "_i" from 0 to (count _playersInList)-1 do {
-					private ["_player"];
-					_player = _playersInList select _i;
-					if !(isNil "_player") then {
-						if !(_player in list _x) then {
-							_playersInList set [_i,-1];
-							[[_logic,[],true,"player",false],"MCC_fnc_moduleCapturePoint",_player] call bis_fnc_mp;
-						};
-						_playersInList = _playersInList - [-1];
-					};
-				};
-
 				sleep 0.1;
 			} foreach _areas;
+
+			//Disable Progress Bar
+			for "_i" from 0 to (count _playersInList)-1 do {
+				private ["_player"];
+				_player = _playersInList select _i;
+				if !(isNil "_player") then {
+					if ({_player in list _x} count _areas <= 0) then {
+						_playersInList set [_i,-1];
+						[[_logic,[],true,"player",false],"MCC_fnc_moduleCapturePoint",_player] call bis_fnc_mp;
+					};
+				};
+			};
+
+			_playersInList = _playersInList - [-1];
 
 			//Lets find out who is wining
 			_extreme = [_sectorBalance, 1] call BIS_fnc_findExtreme;
@@ -362,7 +363,9 @@ switch _mode do {
 				if (_flagTexture =="") then {(_owner call bis_fnc_sidecolor) call bis_fnc_colorRGBAtoTexture};
 
 				//Change texture
-				{_x setflagtexture _flagTexture;} foreach nearestObjects [_logic,["FlagCarrierCore"],_radius];
+				{
+					{_x setflagtexture _flagTexture;} foreach nearestObjects [(getpos _x),["FlagCarrierCore"],_radius];
+				} foreach _areas;
 
 
 				//--- Show notification

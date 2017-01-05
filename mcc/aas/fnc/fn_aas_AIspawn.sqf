@@ -2,32 +2,31 @@
 /*
 			Spawns AI in AAS mission in start location and captured zones
 
-			_this select 0 -  _side 			- SIDE - side to handle
+			_this select 0 -  _faction			- STRING - faction's name as defined in cfgFaction
 			_this select 1 -  _enemySide 		- SIDE - enemy side to handle
 			_this select 2 -  _autoBalance		- BOOLEAN - auto balance the number of AI to the numbers of players
 			_this select 3 -  _minPerSide		- INTEGER - minimun number of AI no matter how many players
 			_this select 4 -  _spawnInDefensive	- BOOLEAN - spawn infantry on defence zones
-			_this select 5 -  _faction			- STRING - faction's name as defined in cfgFaction
-			_this select 6 -  _searchRadius		- INTEGER - how far should look for empty vehicles around the module location for empty vehicles
-			_this select 7 -  _useDefaultGear	- Array - define the roles to spawn and propobility leave empty for non [["rifleman","ar","at","corpsman","marksman","officer"],[0.5,0.1,0.1,0.1,0.1,0.1]] from the RS cfg files.
-			_this select 8 -  _startPos			- ARRAY - position of the defualt start location
-			_this select 9 -  _spawnVehicles	- BOOLEAN - if true will spawn empty vehicle similar to the enemy vheicles
+			_this select 5 -  _searchRadius		- INTEGER - how far should look for empty vehicles around the module location for empty vehicles
+			_this select 6 -  _useDefaultGear	- Array - define the roles to spawn and propobility leave empty for non [["rifleman","ar","at","corpsman","marksman","officer"],[0.5,0.1,0.1,0.1,0.1,0.1]] from the RS cfg files.
+			_this select 7 -  _startPos			- ARRAY - position of the defualt start location
+			_this select 8 -  _spawnVehicles	- BOOLEAN - if true will spawn empty vehicle similar to the enemy vheicles
 */
 
 private ["_sectors","_autoBalance","_minPerSide","_spawnInDefensive","_AIUnits","_enemyNumber","_startPos","_sideNumber","_counter","_unitsArray","_spawnPos","_numberOfGroups","_groupArray","_group","_enemySide","_side","_maxUnits","_defendZonesPos","_areas","_faction","_nearVehicles","_searchRadius","_vehicleClass","_simType","_wepArray","_useDefaultGear","_unitNumber","_groupSize","_tempGroup","_vehicleGear","_i","_enemyVehiclesSims","_spawnVehicles","_friendlyVehiclesSims","_vehiclesToSpawn","_vehiclesArray"];
 
 //Module or function call
-if (typeName (_this select 0) == typeName []) then {
-	_side = param [0, west];
+if (typeName (_this select 0) != typeName objNull) then {
+	_faction =  param [0, "BLU_F"];
+	_side = [(getNumber (configfile >> "CfgFactionClasses" >> _faction >> "side"))] call BIS_fnc_sideType;
 	_enemySide = param [1, east];
 	_autoBalance = param [2, true];
 	_minPerSide = param [3, 20];
 	_spawnInDefensive = param [4, true];
-	_faction =  param [5, "BLU_F"];
-	_searchRadius = param [6, 200];
-	_useDefaultGear = param [7, []];
-	_startPos = param [8, [0,0,0]];
-	_spawnVehicles = param [9, true,[true]];
+	_searchRadius = param [5, 200];
+	_useDefaultGear = param [6, []];
+	_startPos = param [7, [0,0,0]];
+	_spawnVehicles = param [8, true,[true]];
 } else {
     _module = param [0, objNull, [objNull]];
     if (isNull _module)  exitWith {diag_log "MCC MCC_fnc_aas_AIspawn: No module found"};
@@ -177,7 +176,7 @@ if (count _unitsArray < 4) then {
 };
 
 //No units get out
-if (count _unitsArray <4) exitWith {diag_log "MCC: MCC_fnc_aas_AIControl _unitsArray < 4"};
+if (count _unitsArray <2) exitWith {diag_log "MCC: MCC_fnc_aas_AIControl _unitsArray < 2"};
 
 _sectors = [];
 
@@ -196,7 +195,7 @@ while {true} do {
 	_enemyNumber = _enemySide countSide allUnits;
 	_sideNumber = _side countSide allUnits;
 
-	_maxUnits = _enemyNumber max _minPerSide;
+	_maxUnits = if (_autoBalance) then {_enemyNumber max _minPerSide} else {_minPerSide};
 	_counter = (_maxUnits - _sideNumber) max 0;
 
 	//Find spawn pos

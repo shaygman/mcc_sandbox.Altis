@@ -1,4 +1,4 @@
-private ["_pos", "_units", "_spawn","_away","_plane","_pilot","_wp","_count","_UMUnit", "_jumpers", "_i","_light","_isHalo","_flightHight","_unitsArray","_unit","_init","_chockArray","_heliClass","_pod"];
+private ["_pos", "_units", "_spawn","_away","_plane","_pilot","_wp","_UMUnit","_isHalo","_flightHight","_unitsArray","_unit","_chockArray","_heliClass","_pod"];
 _pos 		= _this select 0;
 _units 		= _this select 1;
 _UMUnit		= _this select 2;
@@ -112,13 +112,11 @@ _chockArray pushBack _unitsArray;
 	MCC_planeNameCount = MCC_planeNameCount + 1;
 
 
-	_count = 0;
-	for [{_x=0},{_x < count _unitsArray},{_x=_x+1}] do
-	{
+	for "_x" from 0 to (count _unitsArray -1) step 1 do {
 		_unit = _unitsArray select _x;
-		_null = [_plane, _unit,_count] remoteExec ["MCC_fnc_realParadropPlayer", _unit];
-		_count = _count + 1;
+		_null = [_plane, _unit,_x] remoteExec ["MCC_fnc_realParadropPlayer", _unit];
 	};
+
 
 
 	//Set waypoint
@@ -131,33 +129,15 @@ _chockArray pushBack _unitsArray;
 	_plane flyInHeight _flightHight;
 
 	[_plane, _pos, _flightHight, _pilot, _away, _isHalo] spawn {
-		params ["_plane","_pos","_flightHight","_pilot","_away","_isHalo","_anims"];
+		params ["_plane","_pos","_flightHight","_pilot","_away","_isHalo"];
 
 		//Make them stand on the deck
 		while {((_plane distance2d _pos) > 800) && (alive _plane)} do {sleep 1};
 
 		//Ready for the jump
 		_plane setVariable ["MCCjumpReady",true,true];
-		_anims =  switch (typeof _plane) do
-					{
-						case "B_T_VTOL_01_infantry_F":
-						{
-							["Door_1_source"]
-						};
 
-						case "O_T_VTOL_02_infantry_F":
-						{
-							["Door_1_source"]
-						};
-
-						default
-						{
-							["CargoRamp_Open"]
-						};
-					};
-
-		//_this animate ["CargoRamp_Open", 0];
-		{_plane animateDoor [_x, 1]} foreach _anims;
+		[_plane,true] spawn MCC_fnc_heliOpenCloseDoor;
 
 		sleep 5;
 
