@@ -8,16 +8,16 @@ private ["_logic","_var","_name","_string","_desc","_action","_preTask","_pos","
 _logic	= _this select 0;
 
 //AI skill - gen
-MCC_AI_Skill = _logic getvariable ["aiSkillGen",0.5];
+MCC_AI_Skill = 0.1 * (_logic getvariable ["aiSkillGen",5]);
 
 //AI skill - aim
-MCC_AI_Aim = _logic getvariable ["aiSkillAim",0.5];
+MCC_AI_Aim = 0.1 * (_logic getvariable ["aiSkillAim",5]);
 
 //AI skill - spot
-MCC_AI_Spot = _logic getvariable ["aiSkillSpot",0.5];
+MCC_AI_Spot = 0.1 * (_logic getvariable ["aiSkillSpot",5]);
 
 //AI skill - command
-MCC_AI_Command = _logic getvariable ["aiSkillCommand",0.5];
+MCC_AI_Command = 0.1 * (_logic getvariable ["aiSkillCommand",5]);
 
 //AI smoke
 MCC_GAIA_AMBIANT = _logic getvariable ["aiSmoke",true];
