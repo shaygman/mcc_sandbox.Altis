@@ -43,6 +43,8 @@ Change log r20:
 
 Ambient
 - Added: Ambient birds moudle, try to recrate something similar to the awsome mod for ArmA2 JTD smoke add ambient birds. Placing this module will sometime spawn flocks of scared birds from trees next to the player or AIs units. Can give away your position in PvP or AI position in PvE. Birds chance is based on the unit's speed.
+
+- Added: Ambient fire
 TODO:
 - civil scared anim
 - breach door

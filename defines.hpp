@@ -115,6 +115,7 @@ class CfgMusic
 class CfgSounds
 {
 	#include "mcc\cfg\CfgSounds.hpp"
+	#include "mcc\ambient\CfgSounds.hpp"
 };
 
 class CfgNotifications

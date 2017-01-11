@@ -7,6 +7,7 @@
 //If we came here from Zeus run on the server
 if !(isnull curatorcamera) exitWith {
 	[] remoteExec ["MCC_fnc_ambientBirdsSpawnInit", 2];
+	deleteVehicle (param [0,objNull,[objNull]]);
 };
 
 if  (!isServer || (missionNamespace getVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",false])) exitWith {};
@@ -15,7 +16,7 @@ missionNamespace setVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",true];
 private ["_unit"];
 while {(missionNamespace getVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",false])} do {
 	{
-		_unit = leader _x;
+		_unit = _x;
 		if ((_unit getVariable ["MCC_fnc_ambientBirdsNextTime",time]) <= time &&
 		    !(vehicle _unit isKindOf "air")) then {
 
@@ -24,7 +25,7 @@ while {(missionNamespace getVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",fals
 				[vehicle _unit] spawn MCC_fnc_ambientBirdsSpawn;
 			};
 		};
-	} forEach allGroups;
+	} forEach allUnits;
 
 	sleep (random 200);
 };

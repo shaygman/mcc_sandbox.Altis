@@ -35,7 +35,7 @@
 			sleep 5;
 
 			//Save DB
-			["MCC_SERVER_SURVIVAL",10,false,false,true,false,false,false,false,false,false] spawn MCC_fnc_saveServer;
+			["MCC_SERVER_SURVIVAL",1200,false,false,true,false,false,false,false,false,false] spawn MCC_fnc_saveServer;
 
 			//Save player
 			[5,true,true,true] spawn MCC_fnc_savePlayer;

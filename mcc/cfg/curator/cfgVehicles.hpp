@@ -23,3 +23,4 @@
 #include "MCC_Module_settingsMechanicsCurator.hpp"
 #include "MCC_Module_settingsRSCurator.hpp"
 #include "MCC_Module_ambientBirds.hpp"
+#include "MCC_module_ambientFire.hpp"

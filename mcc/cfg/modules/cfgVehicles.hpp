@@ -25,3 +25,5 @@
 #include "MCC_Module_AASSpawnAI.hpp"
 #include "mcc_Module_createZones.hpp"
 #include "MCC_Module_settingsRS.hpp"
+#include "MCC_Module_ambientBirds.hpp"
+#include "MCC_module_ambientFire.hpp"

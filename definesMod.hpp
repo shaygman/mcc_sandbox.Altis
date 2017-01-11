@@ -119,6 +119,7 @@ class CfgMusic
 class CfgSounds
 {
 	#include "\mcc_sandbox_mod\mcc\cfg\CfgSounds.hpp"
+	#include "\mcc_sandbox_mod\mcc\ambient\CfgSounds.hpp"
 };
 
 class CfgNotifications

@@ -152,7 +152,7 @@ _locations = [_locations,[_basePos],{_input0 distance (_x select 0)},"ASCEND"] c
 //Start the campaign missions?
 if (_missionMax == 0) exitWith {};
 
-//Save DB every 10 minutes
+//Save DB every 20 minutes
 ["MCC_campaign",1200,true] spawn MCC_fnc_saveServer;
 
 while { count _locations > 0 &&
