@@ -137,9 +137,7 @@ if (_conType in ["bunker","wall"]) then {
 			//How many players from my side are near
 			_nearbyMen = {alive _x && (side _x == _side)} count (getPos _baseAnchor nearEntities ["CAManBase", 50]);
 
-			systemChat str [_nearbyMen,count _nearbyCrates];
-			if (_nearbyMen >= REQUIRE_MEMBERS && count _nearbyCrates > 0) then
-			{
+			if (_nearbyMen >= REQUIRE_MEMBERS && count _nearbyCrates > 0) then {
 				_prop = _nearbyCrates select 0;
 				_propPos = getposATL _prop;
 				_availableCrates = _availableCrates + (if (typeof _prop == MCC_SUPPLY_CRATEITEM) then {1} else {4});

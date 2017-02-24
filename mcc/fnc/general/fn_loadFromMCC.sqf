@@ -43,7 +43,7 @@ if (count _arrayGroups > 0) then
 			if ((_objectData select 0) isKindOf "CAManBase") then
 			{
 				_vehicle = _group createUnit [_objectData select 0, _objectData select 1, [], 0 ,_objectData select 10];
-				MCC_curator addCuratorEditableObjects [[_vehicle],false];
+				{_x addCuratorEditableObjects [[_vehicle],false]} forEach allCurators;
 			}
 			else
 			{
@@ -51,12 +51,12 @@ if (count _arrayGroups > 0) then
 				{
 					_vehicle = createvehicle [(_objectData select 0),(_objectData select 1),[],0,"none"];
 					_crew = [_vehicle, _group] call BIS_fnc_spawnCrew;
-					MCC_curator addCuratorEditableObjects [[_vehicle],false];
+					{_x addCuratorEditableObjects [[_vehicle],false]} forEach allCurators;
 				}
 				else
 				{
 					_vehicle = ([(_objectData select 1), (_objectData select 2),(_objectData select 0), _group] call bis_fnc_spawnvehicle) select 0;
-					MCC_curator addCuratorEditableObjects [[_vehicle],true];
+					{_x addCuratorEditableObjects [[_vehicle],true]} forEach allCurators;
 				};
 			};
 
@@ -138,7 +138,8 @@ if ((count _arrayVehicles) > 0) then
 			_vehicle = _group createUnit [_class, _pos, [], 0, "NONE"];
 		};
 
-		MCC_curator addCuratorEditableObjects [[_vehicle],false];
+		{_x addCuratorEditableObjects [[_vehicle],false]} forEach allCurators;
+
 		_vehicle setposATL _pos;
 		sleep 0.01;
 		_vehicle setposATL _pos;
@@ -227,7 +228,7 @@ if ((count _allCuratorObjectives) > 0) then
 			};
 		};
 
-		MCC_curator addCuratorEditableObjects [[_vehicle],false];
+		{_x addCuratorEditableObjects [[_vehicle],false]} forEach allCurators;
 		_vehicle setvariable ["updated",true];
 
 	} foreach _allCuratorObjectives;

@@ -87,7 +87,7 @@ for "_i" from 0 to ((count _objs) - 1) do {
 		MCC_lastSpawn pushBack _newObj;
 
 		//Curator
-		MCC_curator addCuratorEditableObjects [[_newObj],false];
+		{_x addCuratorEditableObjects [[_newObj],false]} forEach allCurators;
 };
 publicVariable "MCC_lastSpawn";
 if (!isNil "_target") then {_target};

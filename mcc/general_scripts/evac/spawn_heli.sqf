@@ -77,4 +77,4 @@ _evac setVariable ["MCC_evacStartPos", getposATL _evac, true];
 MCC_evacVehicles set [count MCC_evacVehicles, _evac];
 publicvariable "MCC_evacVehicles";
 
-MCC_curator addCuratorEditableObjects [[_evac],false];
+{_x addCuratorEditableObjects [[_evac],false]} forEach allCurators;

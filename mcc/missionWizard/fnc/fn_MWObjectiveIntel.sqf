@@ -77,7 +77,7 @@ if (_isCQB) then {
 //Pick Item
 _init = '_this call MCC_fnc_pickItem';
 [[[netID _object,_object], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-MCC_curator addCuratorEditableObjects [[_object],false];
+{_x addCuratorEditableObjects [[_object],false]} forEach allCurators;
 
 //Start Briefings
 [_object,"pick_intel",_preciseMarkers,_side,400,_sidePlayer] call MCC_fnc_MWCreateTask;

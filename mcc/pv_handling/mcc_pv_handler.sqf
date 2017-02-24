@@ -232,7 +232,7 @@ my_pv_handler =
 							_dummyUnit = _unitspawned createUnit [_p_mcc_spawnname, _p_safepos, [],0,""];
 
 							//Curator
-							MCC_curator addCuratorEditableObjects [[_dummyUnit],false];
+							{_x addCuratorEditableObjects [[_dummyUnit],false]} forEach allCurators;
 
 									_dummyUnit setSkill ["aimingspeed", MCC_AI_Aim];
 									_dummyUnit setSkill ["spotdistance", MCC_AI_Spot];
@@ -270,7 +270,7 @@ my_pv_handler =
 							_dummyUnit = _unitspawned createUnit [_p_mcc_spawnname, _p_safepos, [],0,""];
 
 							//Curator
-							MCC_curator addCuratorEditableObjects [[_dummyUnit],false];
+							{_x addCuratorEditableObjects [[_dummyUnit],false]} forEach allCurators;
 
 							if (MCC_Chat) then
 							{
@@ -306,7 +306,7 @@ my_pv_handler =
 										};
 
 									//Curator
-									MCC_curator addCuratorEditableObjects [[(_unitspawned select 0)],true];
+									{_x addCuratorEditableObjects [[(_unitspawned select 0)],true]} forEach allCurators;
 
 									//Find out who is the poor bastard leading this joint and then give him something to do with UPS
 									//Specific resctrictions or lifting rescrictions on type of unit in UPS
@@ -371,7 +371,7 @@ my_pv_handler =
 									_unitspawned 	= _p_mcc_spawnname createVehicle _p_safepos;
 
 									//Curator
-									MCC_curator addCuratorEditableObjects [[_unitspawned],false];
+									{_x addCuratorEditableObjects [[_unitspawned],false]} forEach allCurators;
 
 									if (MCC_Chat) then
 									{

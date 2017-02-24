@@ -59,10 +59,11 @@ if (_cargoNum > 2) then {
 			};
 
 			{
-				_x assignAsCargo _vehicle;
-				[_x] orderGetIn true;
-				_x moveInCargo _vehicle;
-				MCC_curator addCuratorEditableObjects [[_x],false];
+				_unit = _x;
+				_unit assignAsCargo _vehicle;
+				[_unit] orderGetIn true;
+				_unit moveInCargo _vehicle;
+				{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 			} forEach units _group;
 
 			_fillSlots = _fillSlots - (count units _group);

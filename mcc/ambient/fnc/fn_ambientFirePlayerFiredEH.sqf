@@ -32,7 +32,7 @@ player addEventHandler ["firedMan", {
 										};
 
 										if (!isNil "_pos") then {
-											[_pos] spawn MCC_fnc_ambientFireStart;
+											[_pos] remoteExec ["MCC_fnc_ambientFireStart",2];
 										};
 									};
 								};

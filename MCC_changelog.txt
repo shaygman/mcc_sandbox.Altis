@@ -1,57 +1,90 @@
 Change log r20:
-- Fixed: CBA error CTD.
-- Fixed: Config error when saving mission in the editor.
-- Fixed: Unable to spawn groups.
-- Fixed: Custom group will not shot each other.
-- Changed: CAS will only spawn one aircraft instead of two to limit CAS crushing into each other.
-- Fixed: Reinforcement helicopter will drop troops even under fire.
-- Fixed: When editing a unit in Zeus duplicate menus and units go prone.
-- Fixed: Building fortification and FOB didn't work.
-- Changed: While in MCC's artillery computer using the ruler will automatically insert the distance and direction to the computer.
-- added: Define breaching ammo from MCC mechanic module.
-- Added: Pacific faction's trucks can be used as MCC logistics trucks.
-- Added: Build raised MG/HMG.
-- Fixed: Tutorial helicopters message keep on showing even after selecting not to.
-- Changed: Evac helicopters precise landing or fast ropes will be smoother.
-- Added: Precise landing for helicopters - can land on rooftops.
-- Fixed: Clear persistent didn't work.
-- Fixed: No unconscious animations while inside a vehicle.
-- Added: Re introduce the Commander Console as an Item.
-- Fixed: Losing units markers after respawn in the MCC's UI Compass.
-- Fixed: Heavy lags in the MCC Campaign
-- Added: In MCC setting module more control over Role Selections - such as:
-		- Manually gain XP
-		- Disable/Enable non pilots/drivers can use heavy vehicles/aircrafts.
-		- Disable/Enable weapon's penalty when picking "out of kit" weapon.
-		- All weapons - unlock all weapons and gear despite player's level.
 
-- Added: Name tags reworked. You can select if you want to see name tags over all friendly units around you or only when pointing on a unit.
-- Added: Medical system HUD. Mark nearby wounded units.
-- Added: UI settings moudle and Medical System  module to Zeus.
-- Added: Loiter WP for the commander tablet.
-- Added: Custom Zeus Atmosphere Environment module. You can set your own atmosphere with color filters, snow, branches, litters exc.
-- Added: Real AC-130 (Blackfish) when spawning an AC-130.
-- Added: Role Selection's settings module to Eden and Zeus - might effect previous missions.
-- Added: UI's settings module to Zeus.
-- Added: Medic system's settings module to Zeus.
-- Added: MCC's settings module to Zeus.
-- Added: MCC mechanics settings module to Zeus.
-- Added: Arcade Stuff ***Spoiler if you like hard core milsim don't read it *******
-		- One Man Tanks (In mechanics settings) - Based on Killzone kid script. Drive and shoot a tank without the need for a driver.
+-= Ambient Birds and Fire=- **NEW**
+	- Added: Ambient birds moudle, try to recrate something similar to the awsome mod for ArmA2 JTD smoke add ambient birds. Placing this module will sometime spawn flocks of scared birds from trees next to the player or AIs units. Can give away your position in PvP or AI position in PvE. Birds chance is based on the unit's speed.
+	- Added: Ambient fire module. Placing this module will give a chance that explosion can cause forest fires that will propagate depends on the wind and the nearby environment. This feature has three features:
+	- Ammunation fire and vehicle fire: Explosive rounds and vehicle explosion have a chance to light the enviorment on fire.
+	- Fire Propagation: The fire will propagate in a 60 degree of the wind direction based on the wind force and humidity. The fire will continue to propagate as long as it have where to spread.
+	- Burning crew: When a vehicle is destroyed there is a chance that the crew inside will catch on fire and will escape the vehicle while burning and screaming and a chance to start new fire where they fall.
+
+-= Arcade Options =- **NEW**
+	- Added: Arcade Stuff ***Spoiler if you like hard core milsim don't read it *******
+		- One Man Tanks (In mechanics settings) - Based on Killzone kid script. Solo drive and shoot a tank.
 		- Disable Fatigue (In mechanics settings) - Disable in game fatigue.
 		- Hit Radar (In HUD settings) - Radial markers shows the general direction of bullets' sources while under fire.
 
-Ambient
-- Added: Ambient birds moudle, try to recrate something similar to the awsome mod for ArmA2 JTD smoke add ambient birds. Placing this module will sometime spawn flocks of scared birds from trees next to the player or AIs units. Can give away your position in PvP or AI position in PvE. Birds chance is based on the unit's speed.
+-= Engine =-
+	- added: Define breaching ammo from MCC mechanic module.
+	- Added: Scared civilians behavior. Civis will run away in panic if shots fired nearby.
+	- Added: Show suset and sunrise time in the time change menu.
+	- Changed: While in MCC's artillery computer using the ruler will automatically insert the distance and direction to the computer.
+	- Changed: Converted all MCC's template to Eden 3d editor.
+	- Changed: Garrisson will spawn less units inside buildings.
+	- Fixed: Missing configs entry in spectator mode.
+	- Fixed: Disarmed AI didn't drop their weapons.
+	- Fixed: CBA error CTD.
+	- Fixed: Config error when saving mission in the editor.
+	- Fixed: Unable to spawn groups.
+	- Fixed: Custom group will not shot each other.
 
-- Added: Ambient fire
+-= Zeus =-
+	- Added: MCC's settings module to Zeus.
+	- Added: MCC mechanics settings module to Zeus.
+	- Added: UI settings moudle to Zeus.
+	- Added: Medical System  module to Zeus.
+	- Added: Zeus and Eden module: Spawn Loot in Buildings - spawns loot crates for MCC's survival in buildings.
+	- Fixed: MCC dialogs can be opened while in Zeus camera.
+	- Fixed: When editing a unit in Zeus duplicate menus and units go prone.
+	- Fixed: MCC's modules and units didn't show on non-MCC Zeus.
+	- Fixed: "No unit selected" error when using MCC suicide bomber/armed civilian modules from Zeus.
+
+-= Evac & CAS =-
+	- Added: Real AC-130 (Blackfish) when spawning an AC-130.
+	- Added: Precise landing for helicopters - can land on rooftops.
+	- Changed: CAS will only spawn one aircraft instead of two to limit CAS crushing into each other.
+	- Changed: Evac helicopters precise landing or fast ropes will be smoother.
+	- Fixed: Reinforcement helicopter will drop troops even under fire.
+
+-= Logistics =-
+	- Added: Pacific faction's trucks can be used as MCC logistics trucks.
+	- Added: Build raised MG/HMG.
+	- Fixed: Building fortification and FOB didn't work.
+
+-= UI =-
+	- Added: Custom Atmosphere Environment module (Zeus & Eden). You can set your own atmosphere with color filters, snow, flying branches, newspapers exc.
+	- Added: Name tags reworked. You can select if you want to see name tags over all friendly units around you or only when pointing a unit.
+	- Fixed: Tutorial helicopters message keep on showing even after selecting not to.
+	- Fixed: Losing units markers after respawn in the MCC's UI Compass.
+
+-= Role Selection =-
+	- Added: Role Selection's settings module to Eden and Zeus - might effect previous missions.
+	- Added: In setting module more control over Role Selections - such as:
+			- Manually gain XP
+			- Disable/Enable non pilots/drivers can use heavy vehicles/aircrafts.
+			- Disable/Enable weapon's penalty when picking "out of kit" weapon.
+			- All weapons - unlock all weapons and gear no matter player's level.
+
+-= Commander Console =-
+	- Added: Re introduce the Commander Console as an Item.
+	- Added: Loiter WP for the commander tablet.
+
+-= Medic system =-
+	- Added: Medical system HUD. Mark nearby wounded units.
+	- Fixed: No unconscious animations while inside a vehicle.
+	- Fixed: Medic wounded animation sometimes didn't kick in.
+
+-= Campaign & Persistent Database =-
+	- Fixed: Heavy lags in the MCC Campaign
+	- Fixed: Clear persistent didn't work.
+
+-= Interaction =-
+	- Added: Open & Bang on door interaction. Can open throw a grenade in and close the door while using ACE or MCC interaction on the door.
+	- Fixed: MCC Interaction overlaped ACE interaction.
+	- Fixed: Spot enemies & call support didn't worked in ACE self interaction.
+
+
 TODO:
-- civil scared anim
-- breach door
-- birds and fire - 2d module
-- check the loot thing
-- Finishe the atmosphere module 2d
-- Zeus module spawn loot in houses
+- Fix templates
 - switch side button?
 - PvP
 

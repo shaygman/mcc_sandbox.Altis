@@ -55,6 +55,7 @@ _group setVariable ["MCC_rtsGroupCfg",_cfgName,true];
 												_killer = name (_this select 1);
 												[["MCCNotificationBad",["Unit Down",format ["%1 was killed by %2",_unit,_killer],""]], "bis_fnc_showNotification", _sidePlayer, false] spawn BIS_fnc_MP;
 											  }];
-	MCC_curator addCuratorEditableObjects [[_x],true];
+	_unit = _x;
+	{_x addCuratorEditableObjects [[_unit],true]} forEach allCurators;
 	_x setVariable ["MCC_isRTSunit",true,true];
 } forEach units _group;

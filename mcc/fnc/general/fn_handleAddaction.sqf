@@ -6,12 +6,14 @@
 //==============================================================================================================================================================================
 #define MCC_HELPER "UserTexture1m_F"
 
-private ["_string","_respawnItems","_airports","_counter","_searchArray","_key","_text"];
+private ["_string","_respawnItems","_airports","_counter","_searchArray","_key","_text","_nul"];
 
 //Interactive objects EH
 uiNameSpace setVariable ["MCC_interactionActive",false];
 
-["MCC_interactionEH", "onEachFrame", {
+_nul = ["MCC_interactionEH", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;;
+
+_nul = ["MCC_interactionEH", "onEachFrame", {
 		if !(missionNameSpace getVariable ["MCC_ingameUI", true]) exitWith {};
 		_interactiveObjects = missionNameSpace getVariable ["MCC_interactionObjects",[]];
 		{

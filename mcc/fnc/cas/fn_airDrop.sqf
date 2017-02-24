@@ -95,7 +95,7 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 			waituntil {isNull _this};
 			_object = _class createvehicle _pos;
 			_object setDir _dir;
-			MCC_curator addCuratorEditableObjects [[_object],false];
+			{_x addCuratorEditableObjects [[_object],false]} forEach allCurators;
 		};
 
 		sleep 5;

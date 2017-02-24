@@ -32,4 +32,6 @@ class interaction
 	class attachItemUniform {description = "attach item to uniform";};
 	class interactionMarkerCreate {description = "create a marker on the player cursor";};
 	class attachItemWeapons {description = "Attach items to weapon";};
+	class ACE_addGrenadesChildren {description = "Build ACE childrens for grenades";};
+	class interactDoorGrenadeThrow {description = "Throw a grenade into a house";};
 };

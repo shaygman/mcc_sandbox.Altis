@@ -73,7 +73,7 @@ while {_counter <=_limit} do
 		_counter = _counter + 1;
 
 		//Curator
-		MCC_curator addCuratorEditableObjects [[(_vehicle select 0)],true];
+		{_x addCuratorEditableObjects [[(_vehicle select 0)],true]} forEach allCurators;
 	};
 };
 sleep 0.5;

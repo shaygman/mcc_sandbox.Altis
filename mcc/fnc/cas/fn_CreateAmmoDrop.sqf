@@ -17,7 +17,8 @@ _paras = [];
 if (!isnull _pilot) then {while {(_pos distance vehicle _pilot) < 20} do {sleep 0.2}};
 
  _drop = createVehicle [_spawnkind, _pos, [], 0, "CAN_COLLIDE"];
-MCC_curator addCuratorEditableObjects [[_drop],false];
+{_x addCuratorEditableObjects [[_drop],false]} forEach allCurators;
+
 _objectData = (_drop call bis_fnc_objectType) select 1;
 
 _para = createVehicle [_class, getpos _drop,[],0,"CAN_COLLIDE"];

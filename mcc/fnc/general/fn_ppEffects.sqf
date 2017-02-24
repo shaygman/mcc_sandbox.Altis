@@ -302,7 +302,12 @@ switch (tolower _effect) do {
 		_parray = [["\A3\data_f\ParticleEffects\Universal\Universal.p3d", 16, 12, 8], "", "Billboard", 1, 6, [0, 0, 6], wind, 3, 1.6, 1, 0.1, [0.09], [[1, 1, 1, 1]], [0.08], 1, 0, "", "", vehicle player];
 
 		//Set Weather
-		[param [11,[],[[]]]] spawn MCC_fnc_setWeather;
+		private _weather = param [11,[],[[]]];
+
+		if !(_weather isEqualTo []) then {
+			[_weather] spawn MCC_fnc_setWeather;
+		};
+
 		//extra
 		player setVariable ["MCC_ppEffectRuning",_effect];
 	};

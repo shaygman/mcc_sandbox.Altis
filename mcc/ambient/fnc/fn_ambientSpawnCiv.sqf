@@ -121,6 +121,9 @@ for "_i" from 1 to _counter do {
 														missionNamespace setvariable [format ["MCC_civiliansKilled_%1",side _killer],_killed];
 														publicVariable format ["MCC_civiliansKilled_%1",side _killer];
 													}}];
+
+				//Scared anim
+				_unit addEventHandler ["FiredNear", {_this spawn MCC_fnc_ambientCivilianFiredNearEH}];
 			};
 			_civArray pushBack _unit;
 
@@ -155,7 +158,7 @@ for "_i" from 1 to _counter do {
 			_wp = _civGroup addWaypoint [_pos,(count waypoints _civGroup)];
 			_wp setWaypointType "Cycle";
 
-			MCC_curator addCuratorEditableObjects [[_unit],false];
+			{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 		} else {
 			//Militia
 			if (count _enemyArray == 0) exitWith {};

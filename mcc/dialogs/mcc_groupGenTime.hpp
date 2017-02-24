@@ -16,17 +16,16 @@ class MCC_TimeDialogControls:MCC_RscControlsGroup
 			h = 0.197923 * safezoneH;
 			colorBackground[] = {0,0,0,0.9};
 		};
-		class MCC_timeDialogTittle: MCC_RscText
+		class MCC_timeDialogTittle: MCC_RscStructuredText
 		{
-			idc = -1;
-			text = "Time:"; //--- ToDo: Localize;
+			idc = 20;
 			colorText[] = {0,1,1,1};
-			
-			x = 0.0630206 * safezoneW;
+
+			x = 0.00572965 * safezoneW;
 			y = 0.0109958 * safezoneH;
-			w = 0.06875 * safezoneW;
+			w = 0.15 * safezoneW;
 			h = 0.0329871 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
+			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 		};
 		class MCC_timeS1Tittle: MCC_RscText
 		{
@@ -43,7 +42,7 @@ class MCC_TimeDialogControls:MCC_RscControlsGroup
 			idc = -1;
 			onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\pop_menu\mission_settings.sqf'");
 			text = "Confirm"; //--- ToDo: Localize;
-			
+
 			x = 0.120313 * safezoneW;
 			y = 0.15394 * safezoneH;
 			w = 0.0630208 * safezoneW;
@@ -54,7 +53,7 @@ class MCC_TimeDialogControls:MCC_RscControlsGroup
 			idc = -1;
 			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 502) ctrlShow false";
 			text = "Close"; //--- ToDo: Localize;
-			
+
 			x = 0.00572965 * safezoneW;
 			y = 0.15394 * safezoneH;
 			w = 0.0572917 * safezoneW;
@@ -63,6 +62,7 @@ class MCC_TimeDialogControls:MCC_RscControlsGroup
 		class MCC_timeMonthCombo: MCC_RscCombo
 		{
 			idc = 15;
+			onLBSelChanged=__EVAL ("[5] execVM '"+MCCPATH+"mcc\pop_menu\mission_settings.sqf'");
 			x = 0.00572965 * safezoneW;
 			y = 0.0549788 * safezoneH;
 			w = 0.0515625 * safezoneW;
@@ -71,6 +71,7 @@ class MCC_TimeDialogControls:MCC_RscControlsGroup
 		class MCC_timeDayCombo: MCC_RscCombo
 		{
 			idc = 16;
+			onLBSelChanged=__EVAL ("[5] execVM '"+MCCPATH+"mcc\pop_menu\mission_settings.sqf'");
 			x = 0.0687497 * safezoneW;
 			y = 0.0549788 * safezoneH;
 			w = 0.0515625 * safezoneW;
@@ -79,6 +80,7 @@ class MCC_TimeDialogControls:MCC_RscControlsGroup
 		class MCC_timeYearCombo: MCC_RscCombo
 		{
 			idc = 17;
+			onLBSelChanged=__EVAL ("[5] execVM '"+MCCPATH+"mcc\pop_menu\mission_settings.sqf'");
 			x = 0.131771 * safezoneW;
 			y = 0.0549788 * safezoneH;
 			w = 0.0515625 * safezoneW;

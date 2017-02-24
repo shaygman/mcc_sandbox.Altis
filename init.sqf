@@ -843,12 +843,6 @@ if ( isServer ) then {
 	};
 };
 
-//----------------- CURATOR---------------------------------------------
-//Curator custom menus
-//Add eventHandler when editing object
-MCC_curator addEventHandler ["CuratorObjectDoubleClicked", {_this spawn MCC_fnc_curatorInitLine}];
-MCC_curator addEventHandler ["CuratorObjectPlaced", {if (local (_this select 1)) then {missionNamespace setVariable ["MCC_curatorMouseOver",curatorMouseOver]}}];
-
 // Handler code for the server for MP purpose
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_pv_handler.sqf";
 _null=[] execVM MCC_path + "mcc\pv_handling\mcc_extras_pv_handler.sqf";
@@ -942,6 +936,11 @@ if (isPlayer player && !isServer && !(MCC_isLocalHC) && (missionNameSpace getVar
 //Client init
 if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	waituntil {!(IsNull (findDisplay 46))};
+
+	{
+		_x addEventHandler ["CuratorObjectDoubleClicked", {_this spawn MCC_fnc_curatorInitLine}];
+		_x addEventHandler ["CuratorObjectPlaced", {if (local (_this select 1)) then {missionNamespace setVariable ["MCC_curatorMouseOver",curatorMouseOver]}}];
+	} forEach allCurators;
 
 	//If player is using CBA add CBA keybinds
 	if (MCC_isCBA) then {

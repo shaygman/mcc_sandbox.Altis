@@ -7,7 +7,7 @@
 //<OUT>
 //	_nearhouses ARRAY of objects - good houses found
 //===========================================================================================================================================================================
-private ["_pos","_module","_object","_house","_resualt"];
+private ["_pos","_module","_object","_house","_resualt","_unit"];
 _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 if (isNull _module) exitWith {};
 
@@ -25,7 +25,8 @@ if (count _resualt == 0) exitWith {deleteVehicle _module};
 
 {
 	if !(_x isKindOf "Animal") then {
-		[[[_x], {MCC_curator addCuratorEditableObjects [[_this select 0],true];}], "BIS_fnc_spawn", false, false, false] call BIS_fnc_MP;
+		_unit = _x;
+		{[[_x,_unit],{(_this select 0) addCuratorEditableObjects [[_this select 1],true];}] remoteExec ["BIS_fnc_spawn",_x]} forEach allCurators;
 	};
 
 } forEach (nearestObjects [_pos, [], (_resualt select 0)]);

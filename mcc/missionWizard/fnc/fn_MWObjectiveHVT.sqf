@@ -88,7 +88,7 @@ MCC_MWcreateHostage =
 		false
 	] remoteExec ["bis_fnc_holdActionAdd", 0];
 
-	MCC_curator addCuratorEditableObjects [[_unit],false];
+	{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 	_unit;
 };
 
@@ -219,7 +219,7 @@ if (_isCQB) then
 			_spawnPos = (getpos _unit) findEmptyPosition [0,100,(_type select 0)];
 			_unit = _group createUnit [_type select 0,_spawnPos,[],0.5,"NONE"];
 			waituntil {alive _unit};
-			MCC_curator addCuratorEditableObjects [[_unit],false];
+			{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 		};
 
 		_group setFormDir (round(random 360));

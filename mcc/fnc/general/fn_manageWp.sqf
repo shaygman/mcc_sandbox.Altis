@@ -1,4 +1,4 @@
-//==================================================================MCC_fnc_manageWp===============================================================================================
+//==================================================================MCC_fnc_manageWp==================================================================================
 // Create and control AI WP on map
 // Example [] call MCC_fnc_manageWp or [[action,WPlocation,[WPType,WPcombat,WPformation,WPspeed,WPbehavior,WPcondition, WPstatment,WPtimeout],[selectedGroup1,selectedGroup2......] ]],"MCC_fnc_manageWp", group, false] spawn BIS_fnc_MP;
 // action: Integer, 0 - ADD WP,  1 - Replace WP, 2-Delete all WP

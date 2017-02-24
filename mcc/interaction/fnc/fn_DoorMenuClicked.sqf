@@ -18,8 +18,8 @@ _animation = _tempArray select 1;
 _phase = _tempArray select 2;
 _closed = _tempArray select 3;
 
-switch (_ctrlData) do {
-	case "charge": {
+switch (true) do {
+	case (_ctrlData == "charge"): {
 		closedialog 0;
 		enableSentences false;
 		player removeMagazine MCC_CHARGE;
@@ -47,7 +47,7 @@ switch (_ctrlData) do {
 		enableSentences true;
 	};
 
-	case "camera": {
+	case (_ctrlData == "camera"): {
 		private ["_camera","_ppgrain","_ppblair","_keyDown","_tablet"];
 		closedialog 0;
 		player setVariable ["MCC_mirrorCamOff",false];
@@ -69,7 +69,7 @@ switch (_ctrlData) do {
 		if (cameraView != "INTERNAL") then {player switchCamera "INTERNAL"};
 
 
-		_camera = "Camera" camcreate (player modelToworld [0,2,0.3]);
+		_camera = "Camera" camcreate (player modelToworld [0,2,0.4]);
 		_camera setdir (getDir player);
 		_camera cameraeffect ["internal","back","uavrtt"];
 		_camera camPrepareFOV 0.900;
@@ -116,19 +116,19 @@ switch (_ctrlData) do {
 		*/
 	};
 
-	case "unlock": {
+	case (_ctrlData == "unlock"): {
 		closedialog 0;
 		["Unlocking",15] call MCC_fnc_interactProgress;
 		_object setVariable [format ["bis_disabled_%1",_door],0,true];
 	};
 
-	case "lock": {
+	case (_ctrlData == "lock"): {
 		closedialog 0;
 		["Locking",15] call MCC_fnc_interactProgress;
 		_object setVariable [format ["bis_disabled_%1",_door],1,true];
 	};
 
-	case "check": {
+	case (_ctrlData == "check"): {
 		_object animate [_animation, 0.1];
 		sleep 0.1;
 		_object animate [_animation, 0];
@@ -136,7 +136,32 @@ switch (_ctrlData) do {
 		_object setVariable [format ["bis_disabled_%1_info",_door],true];
 	};
 
-	case "close": {
+	case (_ctrlData == "close"): {
 		closedialog 0;
+	};
+
+	case (_ctrlData == "breachandbang"):
+	{
+		//Breach & bang
+		private ["_grenadesType","_grenade","_grenadePic","_grenadeText","_array"];
+		_array = [["closeDialog 0","<t size='1' align='center' color='#ffffff'>Breach N Bang</t>",""]];
+
+		_grenadesType = [];
+		{
+			_grenade = _x;
+			if (count ( format ["'%1' in getArray( _x >> 'magazines' )",_grenade] configClasses ( configFile >> "CfgWeapons" >> "Throw" ) ) > 0 &&
+			    !(_grenade in _grenadesType)) then {
+				_grenadesType pushBack _grenade;
+				_grenadePic = getText(configFile >> "CfgMagazines">> _grenade >> "picture");
+				_grenadeText = getText(configFile >> "CfgMagazines">> _grenade >> "displayName");
+
+				_array pushBack [format ["['%1'] spawn MCC_fnc_DoorMenuClicked",_grenade],format ["Breach & Bang (%1)", _grenadeText],_grenadePic];
+			};
+		} forEach (magazines player);
+
+		[_array,1] call MCC_fnc_interactionsBuildInteractionUI;
+	};
+	case (_ctrlData in (magazines player)): {
+		[player,player,[_ctrlData,_object]] spawn MCC_fnc_interactDoorGrenadeThrow;
 	};
 };

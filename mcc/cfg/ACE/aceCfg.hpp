@@ -210,6 +210,15 @@ class CAManBase: Man {
 				icon = "\a3\ui_f\data\IGUI\Cfg\Actions\ladderdown_ca.paa";
 				statement = "[cursorTarget] spawn MCC_fnc_doorCamera;";
 			};
+
+			class ACE_MCC_door_bang {
+                    displayName =  "Bang<br/>N<br/>Clear";
+                    condition = "!(currentThrowable _player isEqualTo [])";
+                    icon = "\mcc_sandbox_mod\mcc\interaction\data\grenade.paa";
+                    statement = "";
+                    insertChildren = "[_player] call MCC_fnc_ACE_addGrenadesChildren";
+                    exceptions[] = {"isNotSwimming"};
+                };
 		};
 
 		class ACE_MCC_survivalInteraction {

@@ -308,7 +308,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do {
 			//for saving
 			_init = format ["['', %1, 100, 100, '%2', '%3', 'AlarmSfx',false] call MCC_fnc_MusicTrigger",getpos _alarm, _activate, _cond];
 			_alarm setVariable ["vehicleinit",_init];
-			MCC_curator addCuratorEditableObjects [[_alarm],false];
+			{_x addCuratorEditableObjects [[_alarm],false]} forEach allCurators;
 
 			[["", getpos _alarm, 100, 100, _activate, _cond,"AlarmSfx",false],"MCC_fnc_MusicTrigger",true,false] spawn BIS_fnc_MP;
 		};

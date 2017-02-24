@@ -15,10 +15,7 @@ player globalRadio "SentEnemyDetectedClose";
 _markerName = (getplayerUID player) + str floor time;
 _path = "";
 
-if (!isnil "MCC_ACEKeyPos") then {
-  _pos = MCC_ACEKeyPos
-} else {
-    private _ins = lineIntersectsSurfaces [
+private _ins = lineIntersectsSurfaces [
                                     AGLToASL positionCameraToWorld [0,0,0],
                                     AGLToASL positionCameraToWorld [0,0,3000],
                                     player,
@@ -28,8 +25,7 @@ if (!isnil "MCC_ACEKeyPos") then {
                                     "GEOM",
                                     "NONE"
                                   ];
-    _pos = if (count _ins == 0) then {screenToWorld [0.5,0.5]} else {ASLToATL (_ins select 0 select 0)};
-};
+_pos = if (count _ins == 0) then {screenToWorld [0.5,0.5]} else {ASLToATL (_ins select 0 select 0)};
 
 
 

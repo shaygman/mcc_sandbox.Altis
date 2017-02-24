@@ -84,3 +84,19 @@ if !([_suspect] call MCC_fnc_canHaltAI) exitWith {player setVariable ["MCC_inter
 [_suspect] call MCC_fnc_doHaltAI;
 
 player setVariable ["MCC_interactionActive",false];
+
+
+/*
+MCC_morale= true;
+_id = addMissionEventHandler ["EntityKilled",{ if (missionNamespace getVariable ["MCC_morale",false]) then {
+								params [
+									["_killed",objNull,[objNull]],
+									["_killer",objNull,[objNull]]
+								];
+
+								{
+									if !(isPlayer _x) then {
+										[_x,_killer,false] spawn MCC_fnc_doHaltAI;
+									};
+								} forEach units _killed;
+							}}];

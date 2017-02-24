@@ -13,7 +13,7 @@
 	while {!(missionNamespace getVariable ["MCC_surviveMod",false])} do {sleep 1};
 
 	//if no server get out
-	if (!(missionNamespace getVariable ["MCC_isLocalHC",false]) && hasInterface) then {
+	if (hasInterface) then {
 
 		//Food water consumption
 		0 spawn MCC_fnc_foodWaterConsumption;
@@ -38,7 +38,7 @@
 			["MCC_SERVER_SURVIVAL",1200,false,false,true,false,false,false,false,false,false] spawn MCC_fnc_saveServer;
 
 			//Save player
-			[5,true,true,true] spawn MCC_fnc_savePlayer;
+			[30,true,true,true] spawn MCC_fnc_savePlayer;
 		};
 	};
 };

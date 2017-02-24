@@ -20,6 +20,9 @@ _time 	= _this select 3;
 _npc setVariable ["MCC_animRunning",true];
 
 _prevAnim = animationState _npc;
+
+_npc DisableAI "ANIM";
+
 _npc switchMove "";
 
 if (_switch) then
@@ -33,17 +36,18 @@ else
 
 if (_time > 0) then
 {
-	_t = 0;
-	while {alive _npc && (_t < _time)} do {sleep 0.1; _t = _t +0.1};
+	_t = time + _time;
+	while {alive _npc && (_t > time)} do {sleep 0.1};
 	_npc switchMove _prevAnim;
 };
 
 if (_time == -1) then
 {
-	_npc DisableAI "ANIM";
+
 	_npc switchMove _anim;
 	while {alive _npc && (animationState _npc == _anim)} do {sleep 1};
 	_npc switchMove "";
-	_npc enableAI "ANIM";
 };
+
+_npc enableAI "ANIM";
 _npc setVariable ["MCC_animRunning",false];

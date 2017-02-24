@@ -101,7 +101,12 @@ MCC_fnc_ambientFireEntityKilled = {
 	};
 };
 
-_id = addMissionEventHandler ["EntityKilled",{ if (missionNamespace getVariable ["MCC_ambientFire",false]) then {[(_this select 0)] spawn MCC_fnc_ambientFireEntityKilled}}];
+if ((missionNamespace getVariable ["MCC_fnc_ambientFireInitEH",-1]) <=0) then {
+	_id = addMissionEventHandler ["EntityKilled",{ if (missionNamespace getVariable ["MCC_ambientFire",false]) then {[(_this select 0)] spawn MCC_fnc_ambientFireEntityKilled}}];
+
+	missionNamespace setVariable ["MCC_fnc_ambientFireInitEH",_id];
+};
+
 
 //Add explosive rounds fire
 [] remoteExec ["MCC_fnc_ambientFirePlayerFiredEH",0];

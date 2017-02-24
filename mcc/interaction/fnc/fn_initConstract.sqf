@@ -144,7 +144,7 @@ if (_available) then {
 
 
 	if (!_success ) exitWith {};
-	if (player distance _pos > 30) exitWith {};
+	if (player distance2D _pos > 30) exitWith {};
 
 
 	//If fortification do it locally otherwise send to server
@@ -167,7 +167,7 @@ if (_available) then {
 		//_const = [_pos, _dir, [[_vehicleType,[0,0,0.0237527],0.216771,1,0,{},true]]] call MCC_fnc_objectMapper;
 		_const setVariable ["MCC_CONST_FORT",true, true];
 	} else {
-		[[_conType, _pos, playerside, str _dir] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
+		[[_conType, ASLToATL (_pos), playerside, str _dir] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
 	};
 
 	//broadcast

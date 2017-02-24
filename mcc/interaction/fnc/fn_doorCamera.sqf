@@ -41,7 +41,7 @@ playSound "nvSound";
 if (cameraView != "INTERNAL") then {player switchCamera "INTERNAL"};
 
 
-_camera = "Camera" camcreate (player modelToworld [0,2,0.3]);
+_camera = "Camera" camcreate (player modelToworld [0,2,0.4]);
 _camera setdir (getDir player);
 _camera cameraeffect ["internal","back","uavrtt"];
 _camera camPrepareFOV 0.900;

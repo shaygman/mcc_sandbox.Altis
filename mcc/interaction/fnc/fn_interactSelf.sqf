@@ -4,7 +4,7 @@
 //========================================================================================================================================================================
 private ["_suspect","_men","_rand","_factor","_null","_suspectCorage","_keyName","_pos","_server"];
 _suspect 	= _this select 0;
-//if ((MCC_isACE && MCC_isMode)) exitWith {};
+if ((missionNamespace getVariable ["MCC_isACE",false])  && (missionNamespace getVariable ["MCC_isMode",false])) exitWith {};
 
 disableSerialization;
 if (missionNamespace getVariable ["MCC_interactionKey_down",false]) exitWith {MCC_interactionKey_holding = false};

@@ -347,8 +347,8 @@ class mcc_groupGen
 		class MCC_spectator: MCC_RscButton
 		{
 			idc = -1;
-			text = "Camera";
-			tooltip = "Open Camera";
+			text = "Spectator";
+			tooltip = "Open Spectator Mode";
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			onButtonClick = __EVAL("[4] execVM '"+MCCPATH+"mcc\Pop_menu\mission_settings.sqf'");
 

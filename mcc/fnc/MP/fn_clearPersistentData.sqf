@@ -16,7 +16,7 @@
 private ["_side","_fileName"];
 _fileName = "MCC_campaign";
 
-//Save stuff for each side
+//Clear Save stuff for each side
 {
 	_side = _x;
 
@@ -54,3 +54,7 @@ _fileName = "MCC_campaign";
 
 //Save RTS constuct - every few minutes heavy on resources
 [format ["%1_%2_%3",_fileName, worldname,missionName], "BUILDINGS", "BUILDINGS", "write",[],true] call MCC_fnc_handleDB;
+
+//Clear survival stuff
+//resources
+[format ["%1_%2_%3","MCC_SERVER_SURVIVAL", worldname,missionName], "RESOURCES", str _side, "write",[1500,500,200,200,200],true] call MCC_fnc_handleDB;

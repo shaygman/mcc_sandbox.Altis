@@ -286,7 +286,7 @@ if (_cargoNum > 0) then {
 				_unit = _unitspawned createUnit [_type, _spawn, [], 0.5, "NONE"];
 
 				//Curator
-				MCC_curator addCuratorEditableObjects [[_unit],false];
+				{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 			};
 		};
 

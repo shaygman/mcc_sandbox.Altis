@@ -118,7 +118,7 @@ MCC_fnc_AASgroupSpawn  = {
 				[_selectedRole,_unit] call MCC_fnc_gearAI;
 			};
 
-			MCC_curator addCuratorEditableObjects [[_unit],false];
+			{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 		} forEach _groupArray;
 	} else {
 		private ["_cfg","_turrets","_path","_index","_isCargo","_t"];
@@ -138,7 +138,7 @@ MCC_fnc_AASgroupSpawn  = {
 		if (count _useDefaultGear > 0) then {
 			[(_useDefaultGear) call bis_fnc_selectRandomWeighted,_unit] spawn MCC_fnc_gearAI;
 		};
-		MCC_curator addCuratorEditableObjects [[_unit],false];
+		{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 
 		while {_t < (count _turrets)} do {
 			private ["_turretIndex", "_thisTurret"];
@@ -157,7 +157,7 @@ MCC_fnc_AASgroupSpawn  = {
 				};
 
 				_unit addEventHandler ["killed",format ["[%1, -1] call BIS_fnc_respawnTickets", _side]];
-				MCC_curator addCuratorEditableObjects [[_unit],false];
+				{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 			};
 
 			_t = _t + 2;

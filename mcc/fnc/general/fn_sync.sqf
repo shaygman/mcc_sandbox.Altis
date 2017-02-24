@@ -6,6 +6,8 @@
 //==============================================================================================================================================================================
 private ["_ok","_briefings","_logics"];
 
+/*
+//No need to sync weather with server anymore
 if !(missionNamespace getVariable ["MCC_isACE",false]) then {
 	if (!isnil "MCC_Overcast") then {0 setOvercast MCC_Overcast};
 	if (!isnil "MCC_WindForce") then {0 setWindForce MCC_WindForce};
@@ -19,7 +21,7 @@ if !(missionNamespace getVariable ["MCC_isACE",false]) then {
 	sleep 2;
 	skipTime 24;
 };
-
+*/
 if (!isnil "MCC_date") then {setDate MCC_date};
 
 if (!isnil "MCC_sync") then {

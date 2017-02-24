@@ -41,7 +41,7 @@ _casGroup = _cas select 2;
 
 _casVehicle allowCrewInImmobile TRUE;
 _casVehicle lock 2;
-MCC_curator addCuratorEditableObjects [[_casVehicle],true];
+{_x addCuratorEditableObjects [[_casVehicle],true]} forEach allCurators;
 
 
 if (_IsCAS) then {

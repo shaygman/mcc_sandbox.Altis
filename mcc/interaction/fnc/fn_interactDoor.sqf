@@ -28,28 +28,42 @@ switch (true) do {
 		//Open dialog
 		if ((missionNamespace getVariable ["MCC_interactionKey_holding",false]) && _closed) exitWith {
 
-			_array = [["closeDialog 0","<t size='1' align='center' color='#ffffff'>Door</t>",""],
-			          ["['charge'] spawn MCC_fnc_DoorMenuClicked",format ["Place Breaching Charge (%1)",{_x == MCC_CHARGE} count magazines player],getText(configFile >> "CfgMagazines">> MCC_CHARGE >> "picture")],
-					  ["['check'] spawn MCC_fnc_DoorMenuClicked","Check door","\A3\ui_f\data\map\markers\military\unknown_CA.paa"],
-					  ["['camera'] spawn MCC_fnc_DoorMenuClicked","Mirror under the door",MCC_path + "data\tacticalProbe.paa"]];
+			_array = [["closeDialog 0","<t size='1' align='center' color='#ffffff'>Door</t>",""]];
 
-			//If door is unlocked change the action to lock
-			if (_object getVariable [format ["bis_disabled_%1_info",_door],false]) then {
-				if (({_x in items player} count MCC_LOCKPICK)!=0) then {
-					if ((_object getVariable [format ["bis_disabled_%1",_door],0])==0) then {
-						_array set [2, ["['lock'] spawn MCC_fnc_DoorMenuClicked","Lock Door",MCC_path + "mcc\interaction\data\lock.paa"]];
-					} else {
-						_array set [2, ["['unlock'] spawn MCC_fnc_DoorMenuClicked","Pick Lock",MCC_path + "mcc\interaction\data\unlock.paa"]];
+			//Check door
+			/*if (_object getVariable [format ["bis_disabled_%1_info",_door],false]) then {*/
+
+				//Door Info
+				_array pushBack ["['nothing'] spawn MCC_fnc_DoorMenuClicked",if (((_object getVariable [format ["bis_disabled_%1",_door],0])==0)) then {"Door Unlocked"} else {"Door Locked"},"\A3\ui_f\data\map\groupicons\waypoint.paa"];
+
+				//if locked or not
+				if ((_object getVariable [format ["bis_disabled_%1",_door],0])==0) then {
+
+					//Door unlocked
+					if (({_x in items player} count MCC_LOCKPICK)!=0) then {
+						_array pushBack ["['lock'] spawn MCC_fnc_DoorMenuClicked","Lock Door",MCC_path + "mcc\interaction\data\lock.paa"];
+					};
+
+					//Breach & bang
+					if !(currentThrowable player isEqualTo []) then {
+						_array pushBack ["['breachandbang'] spawn MCC_fnc_DoorMenuClicked","Breach & Bang",MCC_path + "mcc\interaction\data\grenade.paa"];
 					};
 				} else {
-						_array set [2, ["['nothing'] spawn MCC_fnc_DoorMenuClicked",if (((_object getVariable [format ["bis_disabled_%1",_door],0])==0)) then {"Door Unlocked"} else {"Door Locked"},"\A3\ui_f\data\map\groupicons\waypoint.paa"]]
+					//Door Locked
+					if (({_x in items player} count MCC_LOCKPICK)!=0) then {
+						_array pushBack ["['unlock'] spawn MCC_fnc_DoorMenuClicked","Pick Lock",MCC_path + "mcc\interaction\data\unlock.paa"];
+					};
 				};
-			};
+			/*} else {
+				_array pushBack ["['check'] spawn MCC_fnc_DoorMenuClicked","Check door","\A3\ui_f\data\map\markers\military\unknown_CA.paa"];
+			};*/
 
-			//Check if we have the tools for the job
-			if !(MCC_CHARGE in magazines player) then {_array set [1,-1]};
-			if (({_x in items player} count MCC_MIROR)==0) then {_array set [3,-1]};
-			_array = _array - [-1];
+			//Do we have charges
+			if (MCC_CHARGE in magazines player) then {_array pushBack ["['charge'] spawn MCC_fnc_DoorMenuClicked",format ["Place Breaching Charge (%1)",{_x == MCC_CHARGE} count magazines player],getText(configFile >> "CfgMagazines">> MCC_CHARGE >> "picture")]};
+
+
+			//Do we have mirrors?
+			if (({_x in items player} count MCC_MIROR)==0) then {_array pushBack ["['camera'] spawn MCC_fnc_DoorMenuClicked","Mirror under the door",MCC_path + "data\tacticalProbe.paa"]};
 
 			if (count _array == 1) exitWith {};
 

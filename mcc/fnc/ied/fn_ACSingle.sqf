@@ -42,6 +42,6 @@ _init = FORMAT [";%2 = _this;[_this, '%1',25] spawn MCC_fnc_manageAC;"
 
 [[[netid _sb,_sb], _init], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
 
-MCC_curator addCuratorEditableObjects [[_sb],false];
+{_x addCuratorEditableObjects [[_sb],false]} forEach allCurators;
 
 _sb;

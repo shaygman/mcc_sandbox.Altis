@@ -16,8 +16,11 @@ _shift 		= _keyVarable select 2;
 _ctrlKey 	= _keyVarable select 3;
 _alt 		= _keyVarable select 4;
 
-//Disable keybinds id uncconcious or role selection
-if (!(player getVariable ["cpReady",true]) || (player getvariable ["MCC_medicUnconscious",false])) exitWith {};
+//Disable keybinds id uncconcious or role selection or in Zeus
+if (!(player getVariable ["cpReady",true]) ||
+    (player getvariable ["MCC_medicUnconscious",false]) ||
+    !(isnull curatorcamera)
+   ) exitWith {};
 
 //IF CBA do not use the keybinds
 if !(MCC_isCBA) then {

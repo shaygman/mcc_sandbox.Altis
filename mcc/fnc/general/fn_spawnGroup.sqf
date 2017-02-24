@@ -163,7 +163,7 @@ for "_i" from 0 to ((count _types) - 1) do
 		};
 
 		//Curator
-		MCC_curator addCuratorEditableObjects [[_unit],false];
+		{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 
 		//If given, set the unit's rank.
 		if ((count _ranks) > 0) then

@@ -45,7 +45,7 @@ _pos = _pos1;
 		//_vehicle setposatl (getpos _vehicle);
 		_vehicle lockdriver true;
 		_pos = _vehicle modelToWorld [0,-25,0];
-		MCC_curator addCuratorEditableObjects [[_vehicle],true];
+		{_x addCuratorEditableObjects [[_vehicle],true]} forEach allCurators;
 		_convoyArray pushBack _vehicle;
 	};
 } forEach _vehicleArray;
@@ -78,7 +78,7 @@ if (_vipclass != "0") then {
 		_hvtCar setpos _pos;
 		_hvtCar setdir _angle;
 		_convoyArray set [_index,_hvtCar];
-		MCC_curator addCuratorEditableObjects [[_hvtCar],true];
+		{_x addCuratorEditableObjects [[_hvtCar],true]} forEach allCurators;
 	};
 
 	_cargoNum = _hvtCar emptyPositions "cargo";
@@ -107,9 +107,10 @@ if (_vipclass != "0") then {
 		_unit setVariable ["MCC_disarmed",true,true];
 	};
 
-
-
-	{MCC_curator addCuratorEditableObjects [[_x],false]} foreach (units _group);
+	{
+		_unit = _x;
+		{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
+	} foreach (units _group);
 };
 
 missionNamespace setVariable ["MCC_convoyVehicles",_convoyArray];

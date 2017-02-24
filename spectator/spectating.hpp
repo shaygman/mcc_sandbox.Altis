@@ -1,6 +1,6 @@
 //
 // Spectating Script for Armed Assault
-// by Kegetys <kegetys [ät] dnainternet.net>
+// by Kegetys <kegetys [?t] dnainternet.net>
 //
 
 //#include "common.hpp"
@@ -47,7 +47,7 @@
 #define COL_GRAY			{0.2, 0.2, 0.2, 1}
 
 
-class KEGsRscText 
+class KEGsRscText
 {
 
 	access = ReadAndWrite;
@@ -67,7 +67,7 @@ class KEGsRscText
 };
 
 
-class KEGsRscListBox 
+class KEGsRscListBox
 {
 
 	access = ReadAndWrite;
@@ -93,12 +93,12 @@ class KEGsRscListBox
 	colorShadow[] = {0, 0, 0, 0.5};
 	color[] = {1, 1, 1, 1};
 	colorDisabled[] = {1, 1, 1, 0.25};
-	maxHistoryDelay = 1;	
+	maxHistoryDelay = 1;
 	autoScrollSpeed = -1;
 	autoScrollDelay = 5;
 	autoScrollRewind = 0;
-	
-	class ScrollBar 
+
+	class ScrollBar
 	{
 		color[] = {1, 1, 1, 0.6};
 		colorActive[] = {1, 1, 1, 1};
@@ -108,7 +108,7 @@ class KEGsRscListBox
 		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
 		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
 	};
-	
+
 	class ListScrollBar
 	{
 		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
@@ -132,7 +132,7 @@ class KEGsRscListBox
 
 
 	};
-	
+
 };
 
 
@@ -192,7 +192,7 @@ class KEGsRscMapControl {
 	fontLevel = "PuristaMedium";
 	sizeExLevel = 0.027;
 	text = "#(argb,8,8,3)color(1,1,1,1)";
-	
+
 	colorTracks[] = {0.84, 0.76, 0.65, 0.15};
 	colorRoads[] = {0.7, 0.7, 0.7, 1};
 	colorMainRoads[] = {0.9, 0.5, 0.3, 1};
@@ -444,7 +444,7 @@ class KEGsRscMapControl {
 		coefMax = 1;
 		icon = "\A3\ui_f\data\map\mapcontrol\waypointCompleted_ca.paa";
 	};
-	
+
 	moveOnEdges = 1;
 	x = "SafeZoneXAbs";
 	y = "SafeZoneY + 1.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
@@ -458,7 +458,7 @@ class KEGsRscMapControl {
 	maxSatelliteAlpha = 0.85;
 	alphaFadeStartScale = 0.35;
 	alphaFadeEndScale = 0.4;
-	
+
 	class power {
 		icon = "\A3\ui_f\data\map\mapcontrol\power_CA.paa";
 		size = 24;
@@ -511,23 +511,23 @@ class KEGsRscControlsGroup {
 	y = SafeZoneY;
 	w = SafeZoneW;
 	h = SafeZoneH;
-	
+
 	class VScrollbar {
 		color[] = {1, 1, 1, 1};
 		width = 0.021;
 		autoScrollSpeed = -1;
 		autoScrollDelay = 5;
-		autoScrollRewind = false;	
+		autoScrollRewind = false;
 	};
-	
+
 	class HScrollbar {
 		color[] = {1, 1, 1, 1};
 		height = 0.028;
 		autoScrollSpeed = -1;
 		autoScrollDelay = 5;
-		autoScrollRewind = false;	
+		autoScrollRewind = false;
 	};
-	
+
 	class Controls {};
 };
 
@@ -547,7 +547,7 @@ class KEGsRscSpectate {
 				arrowFull = "\A3\ui_f\data\ui_arrow_top_active_ca.paa";
 				arrowEmpty = "\A3\ui_f\data\ui_arrow_top_ca.paa";
 				border = "\A3\ui_f\data\ui_border_scroll_ca.paa";
-			
+
 			};
 			onMouseMoving = "[""MouseMoving"",_this] call KEGs_fnc_spectateEvents";
 			onMouseButtonDown = "[""MouseButtonDown"",_this] call KEGs_fnc_spectateEvents";
@@ -667,6 +667,8 @@ class KEGsRscSpectate {
 			style = 0;
 			sizeEx = 0.025;
 			color[] = {1.0, 1.0, 1.0, 0.9};
+			colorActive[] = {1,1,1,1};
+			colorDisabled[] = {1,1,1,0.3};
 			shadow = true;
 			font = "PuristaMedium";
 			onMouseButtonUp = "[""ToggleCameraMenu"",0] call KEGs_fnc_spectateEvents";
@@ -694,7 +696,7 @@ class KEGsRscSpectate {
 			type = 13;
 			idc = IDC_HELP;
 			x = SafeZoneX + BORDERXSIZE*3;y=SafeZoneY + BORDERSIZE*3; w = SafeZoneW-(2*BORDERXSIZE*3); h = SafeZoneH-(2*BORDERSIZE*2);
-			text = "Kegetys Spectating Script for ArmA 3<br/><br/>Click at the camera/target text at the top to open camera/target menus.<br/>Units on the map can be clicked to set the camera focus to them<br/><br/>Keyboard controls:<br/><br/>A/D - Previous/Next target<br/>1-4 - Direct camera change<br/>N - NV view: Toggle night vision/FLIR on/off<br/>N - Full map: Toggle marker text off/names/types<br/>T - Toggle unit tags on/off<br/>Y - Toggle unit combat awareness tags on/off<br/>F - Toggle AI menu filter on/off<br/>H - Toggle Map Markers Updates on/off<br/>M - Toggle map: minimap/full/off<br/>Numpad plus/minus - Increase/decrease full map marker size<br/>W,S,A,D,Q,Z keys - free camera movement<br/>Alt + W,S,A,D,Q,Z keys - increase speed free camera movement<br/>Ctrl + W,S,A,D keys - turbo speed free camera movement<br/>V - toggle Viewdistance 4x<br/>Alt + V - toggle Viewdistance up to 12km<br/>Ctrl + V - increase Viewdistance to 20km<br/>Tab - Toggle UI on/off<br/>Esc - Exit Spectator mode<br/><br/>Mouse controls:<br/><br/>Mousewheel - zoom in/out of units or map<br/>Alt + Mousewheel - increase speed free camera movement<br/>Ctrl + Mousewheel - turbo speed free camera movement<br/>Right button - Rotate camera (lock-on and free camera mode)<br/>Left button - Move camera<br/>Alt + Left and right button - change FOV<br/>Ctrl + Alt + Left and right button - reset FOV<br/><br/>Improvement modifications by Dwarden, ViperMaul, ShayGman, and Ollem</br>";			
+			text = "Kegetys Spectating Script for ArmA 3<br/><br/>Click at the camera/target text at the top to open camera/target menus.<br/>Units on the map can be clicked to set the camera focus to them<br/><br/>Keyboard controls:<br/><br/>A/D - Previous/Next target<br/>1-4 - Direct camera change<br/>N - NV view: Toggle night vision/FLIR on/off<br/>N - Full map: Toggle marker text off/names/types<br/>T - Toggle unit tags on/off<br/>Y - Toggle unit combat awareness tags on/off<br/>F - Toggle AI menu filter on/off<br/>H - Toggle Map Markers Updates on/off<br/>M - Toggle map: minimap/full/off<br/>Numpad plus/minus - Increase/decrease full map marker size<br/>W,S,A,D,Q,Z keys - free camera movement<br/>Alt + W,S,A,D,Q,Z keys - increase speed free camera movement<br/>Ctrl + W,S,A,D keys - turbo speed free camera movement<br/>V - toggle Viewdistance 4x<br/>Alt + V - toggle Viewdistance up to 12km<br/>Ctrl + V - increase Viewdistance to 20km<br/>Tab - Toggle UI on/off<br/>Esc - Exit Spectator mode<br/><br/>Mouse controls:<br/><br/>Mousewheel - zoom in/out of units or map<br/>Alt + Mousewheel - increase speed free camera movement<br/>Ctrl + Mousewheel - turbo speed free camera movement<br/>Right button - Rotate camera (lock-on and free camera mode)<br/>Left button - Move camera<br/>Alt + Left and right button - change FOV<br/>Ctrl + Alt + Left and right button - reset FOV<br/><br/>Improvement modifications by Dwarden, ViperMaul, ShayGman, and Ollem</br>";
 			style = 2;
 			sizeEx = 0.025;
 			size = 0.025;
@@ -742,6 +744,13 @@ class KEGsRscSpectate {
 				importance = 1;
 				coefMin = 1;
 				coefMax = 1;
+			};
+			class LineMarker {
+				lineDistanceMin = 3e-005;
+				lineLengthMin = 5;
+				lineWidthThick = 0.014;
+				lineWidthThin = 0.008;
+				textureComboBoxColor = "#(argb,8,8,3)color(1,1,1,1)";
 			};
 			idc = IDC_MAP;
 			x = SafeZoneX + SafeZoneW-MAPWIDTH; y = SafeZoneY + SafeZoneH-MAPHEIGHT;

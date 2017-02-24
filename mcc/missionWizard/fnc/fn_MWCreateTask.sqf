@@ -253,7 +253,7 @@ if (_task == "clear_area") then {
     _vehicle setvariable ["sides",[east,west,resistance],true];
     _vehicle setvariable ["owner",_side,true];
 
-     MCC_curator addCuratorEditableObjects [[_vehicle],false];
+    {_x addCuratorEditableObjects [[_vehicle],false]} forEach allCurators;
     _vehicle setvariable ["updated",true,true];
     [_vehicle,_side,_maxObjectivesDistance] spawn MCC_fnc_customTasks;
     [_vehicle] spawn MCC_fnc_moduleCapturePoint;
@@ -266,7 +266,7 @@ if (_task == "clear_area") then {
     _vehicle setvariable ["RscAttributeTaskState","created", true];
     _vehicle setvariable ["customTask",_task,true];
     [_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
-    MCC_curator addCuratorEditableObjects [[_vehicle],false];
+    {_x addCuratorEditableObjects [[_vehicle],false]} forEach allCurators;
     _vehicle setvariable ["updated",true,true];
     [_vehicle,_side,_maxObjectivesDistance] spawn MCC_fnc_customTasks;
   } foreach _sides;

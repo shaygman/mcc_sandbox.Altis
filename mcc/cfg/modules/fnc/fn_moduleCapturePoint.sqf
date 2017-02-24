@@ -181,7 +181,8 @@ switch _mode do {
 			//build flag pole
 			if (_flag) then {
 				_dummy = "FlagPole_F" createVehicle position _trigger;
-				MCC_curator addCuratorEditableObjects [[_dummy],false];
+				{_x addCuratorEditableObjects [[_dummy],false]} forEach allCurators;
+
 			};
 
 			_trigger setvariable ["markers",_triggerMarkers];

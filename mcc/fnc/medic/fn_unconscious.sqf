@@ -1,10 +1,10 @@
-//=================================================================MCC_fnc_unconscious=========================================================================================
+//=================================================================MCC_fnc_unconscious====================================================================================
 //Handle unconscious behavior
 /*
 player setVariable ["MCC_medicUnconscious",false]
 [player,player] spawn MCC_fnc_unconscious;
 */
-//=============================================================================================================================================================================
+//=======================================================================================================================================================================
 #define ANIM_WOUNDED "acts_injuredlyingrifle02_180"
 private ["_unit","_source","_string","_distance","_xpFactor","_captiveSideId"];
 _unit 	= _this select 0;
@@ -88,7 +88,7 @@ detach _rag;
 waitUntil{sleep 0.05; (velocity _unit) distance [0,0,0] < 0.1};
 
 //play wounded animation
-_unit switchMove ANIM_WOUNDED;
+[_unit,ANIM_WOUNDED] remoteExec ["switchMove",2];
 
 //add 'anim changed' event handler to ensure unit stays in the incap animation
 private _ehAnimChanged = _unit addEventHandler
@@ -97,9 +97,8 @@ private _ehAnimChanged = _unit addEventHandler
 	{
 		params["_unit","_anim"];
 
-		if (_anim != ANIM_WOUNDED && alive _unit && (_unit getVariable ["MCC_medicUnconscious",false])) then
-		{
-			_unit switchMove ANIM_WOUNDED;
+		if (_anim != ANIM_WOUNDED && alive _unit && (_unit getVariable ["MCC_medicUnconscious",false])) then {
+			[_unit,ANIM_WOUNDED] remoteExec ["switchMove",2];
 		};
 	}
 ];

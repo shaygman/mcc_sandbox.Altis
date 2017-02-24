@@ -1,7 +1,7 @@
 //============================================================MCC_fnc_curatorAtmoshphere========================================================================================
 // Manage atmosphere
 //===========================================================================================================================================================================
-private ["_pos","_module","_resualt","_atmosphere"];
+private ["_pos","_module","_resualt","_atmosphere","_weather"];
 _module = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 if (isNull _module) exitWith {};
 
@@ -10,8 +10,45 @@ _pos = getpos _module;
 //did we get here from the 2d editor?
 if (typeName (_module getVariable ["atmosphere",true]) == typeName 0) exitWith {
 
-	_atmosphere =  (_module getVariable ["_atmosphere",14]);
-	[_pos, 0, _atmosphere] spawn MCC_fnc_deleteBrush;
+    _effect = (["custom","random","clearWeather","cloudy","rain","stormy","sandstorm","storm","snow","heatwave"]) select (_module getVariable ["atmosphere",1]);
+    _dust = _module getVariable ["dust",false];
+    _snow = _module getVariable ["snow",false];
+    _papers = _module getVariable ["newspapers",false];
+    _mist = _module getVariable ["mist",false];
+    _fog = _module getVariable ["fog",false];
+    _leaves = _module getVariable ["leaves",false];
+    _wind = _module getVariable ["windsounds",false];
+    _color = (["none","cold","murky","green","sand","yellow","hot","gray"]) select (_module getVariable ["filtercolor",0]);
+    _grain = (["none","low","medium","heavy"]) select (_module getVariable ["filtergrain",0]);
+    _weather = [];
+
+    if (_effect == "random") then {
+        _effect = [["clearWeather","cloudy","rain","stormy","sandstorm","storm","snow","heatwave"],[0.4,0.15,0.15,0.15,0.045,0.045,0.045,0.045]] call bis_fnc_selectRandomWeighted;
+    };
+
+    switch (_effect) do {
+        case "clearWeather": {
+            _weather = [(random 0.2), (random 0.2), (random 0.2), 0, 0,(random 0.1),0];
+            _effect = "custom";
+        };
+
+        case "cloudy": {
+            _weather =[0.4 + (random 0.2), 0.4 +(random 0.2), 0.4 +(random 0.2), 0.4 +(random 0.2), 0.4 +(random 0.2),0 +(random 0.2),0];
+            _effect = "custom";
+        };
+
+        case "rain": {
+            _weather = [0.6 + (random 0.2), 0.6 +(random 0.2), 0.6 +(random 0.2), 0.6 +(random 0.2), 0.6 +(random 0.2),0.1 +(random 0.2),0];
+            _effect = "custom";
+        };
+
+        case "stormy": {
+            _weather = [0.8 + (random 0.2), 0.8 +(random 0.2), 0.8 +(random 0.2), 0.8 +(random 0.2), 0.8 +(random 0.2),0.3 +(random 0.2),0];
+            _effect = "custom";
+        };
+    };
+
+	[_effect,false,_dust,_snow,_papers,_mist,_fog,_leaves,_wind,_color,_grain,_weather] spawn MCC_fnc_ppEffects;
 };
 
 //Not curator exit

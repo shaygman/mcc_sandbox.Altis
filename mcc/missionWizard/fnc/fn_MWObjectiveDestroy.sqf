@@ -222,7 +222,7 @@ if (_objType in ["tanks","aa","artillery","air"]) then {
 
 
 //Add to curator
-MCC_curator addCuratorEditableObjects [[_object],false];
+{_x addCuratorEditableObjects [[_object],false]} forEach allCurators;
 
 //Start Briefings
 switch _objType do

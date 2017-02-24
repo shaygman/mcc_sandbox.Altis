@@ -11,9 +11,7 @@
 //	_groupUnits (optional) if broadcast will build all units in the same group
 //=========================================================================================
 
-private ["_center","_radius","_spawnVehicles","_intanse","_faction","_unitsArray","_vehiclesArray","_SpawnUnit","_SpawnVehicle","_group",
-		"_unitsCount","_vehiclesCount","_buildingsArray","_buildingscount","_side","_spawnBuilding","_spawnPos","_unit","_type",
-		"_vehiclesNumber","_roads","_road","_vehicle","_vehicleClass","_groupUnits","_static","_locked"];
+private ["_center","_radius","_spawnVehicles","_intanse","_faction","_unitsArray","_vehiclesArray","_SpawnUnit","_SpawnVehicle","_group","_unitsCount","_vehiclesCount","_buildingsArray","_buildingscount","_side","_spawnBuilding","_spawnPos","_unit","_type","_vehiclesNumber","_roads","_road","_vehicle","_vehicleClass","_groupUnits","_static","_locked","_roadPos"];
 
 disableSerialization;
 
@@ -67,7 +65,7 @@ if (_buildingscount < 1) exitwith {hint "No buildings found"};	//No available bu
 			_spawnPos	= _x buildingPos _i;
 
 			//Let's roll the dice
-			if (random 10 < _intanse) then {
+			if (random 30 < _intanse) then {
 				//No other unit in the spawn position?
 				if (count (nearestObjects [_spawnPos, ["Man"], 1])<1) then {
 					_type = _unitsArray select round (random 4);
@@ -96,7 +94,7 @@ if (_buildingscount < 1) exitwith {hint "No buildings found"};	//No available bu
 					_group setVariable ["mcc_gaia_cache",mcc_caching];
 
 					//Curator
-					MCC_curator addCuratorEditableObjects [[_unit],false];
+					{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 					//_unit setVariable ["vehicleinit",";_this setpos (getpos_this);"];
 
 				};
@@ -105,31 +103,29 @@ if (_buildingscount < 1) exitwith {hint "No buildings found"};	//No available bu
 	};
 } foreach _buildingsArray;
 
-if (_spawnVehicles) then	{	//vehicles
+//vehicles
+if (_spawnVehicles) then	{
 	private ["_roadConnectedTo","_connectedRoad","_dir"];
 
-	_vehiclesNumber=round((_buildingscount*_intanse)/6);
+	_vehiclesNumber=round((_buildingscount*_intanse)/12);
 	if (_vehiclesNumber > 8) then {_vehiclesNumber = 8};
 
 	_roads = _center nearRoads _radius;
 	if (count _roads < 5) exitWith {};
 
-	for "_i" from 1 to _vehiclesNumber do
-	{
+	for "_i" from 1 to _vehiclesNumber do {
+		if (count _roads <= 0) exitWith {};
+
 		_road = _roads call BIS_fnc_selectRandom;
 		_roads = _roads - [_road];
 
 		_roadConnectedTo 	= roadsConnectedTo _road;
 		_connectedRoad 		= _roadConnectedTo select 0;
 
-		if (!isnil "_connectedRoad") then
-		{
+		if (!isnil "_connectedRoad") then {
 			_dir = [_road, _connectedRoad] call BIS_fnc_DirTo;
 			if (isnil "_dir") then {_dir = getdir _road};
-			_spawnPos = _road modelToWorld [5,0,0];
-
-			//Make sure the vehicle is not in a wall on the road side
-			_spawnPos = _spawnPos findEmptyPosition [0.1,10];
+			_roadPos = if (random 1 > 0.5) then {_road modelToWorld [6,0,0]} else {_road modelToWorld [-6,0,0]};
 
 			//Why the hell we have karts in a milsim?!
 			_type = "";
@@ -138,17 +134,35 @@ if (_spawnVehicles) then	{	//vehicles
 				sleep 0.1;
 			};
 
+			_spawnPos = [];
+			_radius = 5;
+			//Make sure the vehicle is not in a wall on the road side
+			while {_spawnPos isEqualTo []} do {
+				_spawnPos = _roadPos findEmptyPosition [0.1,_radius, _type];
+				_radius = _radius +5;
+				sleep 0.1;
+			};
+
 			_vehicle= _type createVehicle _spawnPos;
 			waituntil {alive _vehicle};
-
+			_vehicle allowDamage false;
 			_vehicle setpos _spawnPos;
 			_vehicle setDir _dir;
+
 			if (_locked || random 1 > 0.5) then {
 				_vehicle setVehicleLock "LOCKED";
 			};
 
-			//Curator
-			MCC_curator addCuratorEditableObjects [[_vehicle],false];
+			sleep 0.1;
+
+			if (!isTouchingGround _vehicle || !alive _vehicle) then {
+				deleteVehicle _vehicle;
+			} else {
+				_vehicle allowDamage true;
+
+				//Curator
+				{_x addCuratorEditableObjects [[_vehicle],false]} forEach allCurators;
+			};
 		};
 	};
 };

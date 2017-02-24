@@ -1,16 +1,16 @@
 //==================================================================MCC_fnc_disarmUnit===============================================================================================
 //Disarm a unit and create a weapon holder
-// Example:[_npc, _pos]  call MCC_fnc_disarmUnit;
+// Example:[_npc, _anim]  call MCC_fnc_disarmUnit;
 // <IN>
 //	_npc:					Object- unit.
-//	anim:					String or side, animation set after disarm leave "" for non
+//	_anim:					String or side, animation set after disarm leave "" for non
 //
 // <OUT>
 //		Boolean
 //===========================================================================================================================================================================
-private["_pos","_npc","_wepHolder"];
-_npc = _this select 0;
-_pos = _this select 1;
+private["_anim","_npc","_wepHolder","_weapon","_weaponsNPC"];
+_npc = param [0,objNull,[objNull]];
+_anim = param [1,"",[""]];
 
 if (!alive _npc || !canmove _npc || _npc != vehicle _npc || !(_npc iskindof "Man")) exitwith{};
 
@@ -18,30 +18,31 @@ if (MCC_isACE) then {
 	[_npc, true] call ACE_captives_fnc_setSurrendered;
 	_npc setVariable ["MCC_disarmed",true,true];
 } else {
-	_wepHolder = "GroundWeaponHolder" createVehicle position _npc;
-	_wepHolder setpos(_npc modeltoWorld [1,0,0]);
+	_weaponsNPC = weapons _npc;
+	_wepHolder = "Weapon_Empty" createVehicle getpos _npc;
+	waituntil {!isnil "_wepHolder"};
+	_wepHolder setpos getpos _npc;
 
 	{
-		_npc action ["DropWeapon",_wepHolder, _x];
-		waituntil {!(_x in (weapons _npc))};
-	} foreach (weapons _npc);
+		_weapon = if (typeName _x == "STRING") then {_x} else {_x select 0};
+		_npc action ["DropWeapon", _wepHolder, _weapon];
+	} foreach _weaponsNPC;
 
-	sleep 1;
-	removeAllweapons _npc;
+	removeAllWeapons _npc;
 	_npc disableAI "MOVE";
 	_npc disableAI "AUTOTARGET";
 
 	_npc setVariable ["MCC_disarmed",true,true];
 	[[_npc, "Hold %1 to interact"], "MCC_fnc_createHelper", false] call BIS_fnc_MP;
 
-	if (_pos != "") then
+	if (_anim != "") then
 	{
 		_npc disableAI "ANIM";
 		while {alive _npc && _npc getVariable ["MCC_disarmed",false]} do
 		{
-			if ((animationState _npc)!=_pos) then
+			if ((animationState _npc)!=_anim) then
 			{
-				_npc playMoveNow _pos;
+				_npc playMoveNow _anim;
 			};
 			sleep 1;
 		};

@@ -196,6 +196,8 @@ switch (_type) do {
 
 		//save players
 		[10,true,true,true] remoteExec ["MCC_fnc_savePlayer", 2];
+
+		systemChat "DB Activated";
 	};
 
 	//Delete data

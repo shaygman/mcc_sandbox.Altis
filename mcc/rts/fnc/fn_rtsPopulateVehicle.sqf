@@ -38,7 +38,7 @@ if ((_units + _emptyPos)> _unitsSpace) exitWith {
 createVehicleCrew _obj;
 
 (group _obj) setVariable ["MCC_canbecontrolled",true,true];
-MCC_curator addCuratorEditableObjects [[_obj],true];
+{_x addCuratorEditableObjects [[_obj],true]} forEach allCurators;
 
 _ehID = _obj addMPEventHandler ["mpkilled", {
 												_unit = getText (configfile >> "CfgVehicles" >> typeof (_this select 0) >> "displayName");

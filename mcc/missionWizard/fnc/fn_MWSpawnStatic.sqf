@@ -57,7 +57,7 @@ if (count _arrayUnits > 0) then {
 			};
 
 			_vehicle = [_spawnPos, (random 360), _vehicleClass, _group] call bis_fnc_spawnvehicle;
-			MCC_curator addCuratorEditableObjects [[_vehicle select 0],true];
+			{_x addCuratorEditableObjects [[_vehicle select 0],true]} forEach allCurators;
 			(_vehicle select 2) setVariable ["GAIA_ZONE_INTEND",[str _zone,"NOFOLLOW"], true];
 		};
 

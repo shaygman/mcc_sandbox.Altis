@@ -95,6 +95,6 @@ for [{_i=0},{_i<=(_zoneX*2)},{_i=_i+30}] do
 			_fakeIed = createvehicle [_mineClass ,_minePos,[],0,"none"];
 		};
 
-		MCC_curator addCuratorEditableObjects [[_fakeIed],false];
+		{_x addCuratorEditableObjects [[_fakeIed],false]} forEach allCurators;
 	};
 };

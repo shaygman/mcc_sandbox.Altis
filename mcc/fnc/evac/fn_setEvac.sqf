@@ -73,7 +73,7 @@ _evacVehicles pushBack _object;
 missionNamespace setvariable ([format ["MCC_evacVehicles_%1",_side],_evacVehicles]);
 publicvariable (format ["MCC_evacVehicles_%1",_side]);
 
-MCC_curator addCuratorEditableObjects [[_object],true];
+{_x addCuratorEditableObjects [[_object],true]} forEach allCurators;
 
 //If campaignEvac then spawn evac every day
 if (_campaignEvac) then {

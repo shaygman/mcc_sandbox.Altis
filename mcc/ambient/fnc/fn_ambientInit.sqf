@@ -31,6 +31,33 @@ if(count _vehiclesArray < 4) then {
 	_vehiclesArray = [_factionCivCar,"carx"] call MCC_fnc_makeUnitsArray;
 };
 
+//Scared civi AI beahvior
+MCC_fnc_ambientCivilianFiredNearEH = {
+	params ["_civ","_shooter"];
+	private ["_runAwayPos"];
+	if ((_civ getVariable ["MCC_ambientCiviliansIsScared",false]) || !(_civ == driver vehicle _civ)) exitWith {};
+
+	_civ setVariable ["MCC_ambientCiviliansIsScared",true];
+	if (!(lineIntersects [ eyePos _civ, getPosASL _shooter, _civ, _shooter]) &&
+	    vehicle _civ == _civ
+	   ) then {
+		_runAwayPos = [_shooter, (50 + random 200),([_shooter,_civ] call BIS_fnc_dirTo)] call BIS_fnc_relPos;
+
+		_civ setSpeedMode "FULL";
+		_civ setBehaviour "COMBAT";
+
+		if (vehicle _civ == _civ ) then {
+			_civ playMoveNow (switch (round (random 2)) do {
+				case 0:{"ApanPpneMstpSnonWnonDnon_G01"};
+				default {"ApanPknlMsprSnonWnonDf"};
+			});
+		};
+
+		//Give WP
+		[1,_runAwayPos,[0,"RED","NO CHANGE","FULL","COMBAT","", {},0],[group _civ]] spawn MCC_fnc_manageWp;
+	};
+};
+
 while {true} do {
 	_spawnCenters = if (isMultiplayer) then {playableUnits} else {[player]};
 
