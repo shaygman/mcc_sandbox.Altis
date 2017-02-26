@@ -60,8 +60,8 @@ if (_index == 0) exitWith {
 };
 
 //Console
-_commander = MCC_server getVariable [format ["CP_commander%1",side player],""];
-if ((_index == 1) && (_commander == getPlayerUID player) && (missionNamespace getVariable ["MCC_allowConsole",true])) exitWith {
+_commander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player) or ("MCC_itemConsole" in (assignedItems player));
+if ((_index == 1) && _commander && (missionNamespace getVariable ["MCC_allowConsole",true])) exitWith {
 	if (dialog) then {
 		while {dialog} do {closeDialog 0};
 	} else {
@@ -71,19 +71,12 @@ if ((_index == 1) && (_commander == getPlayerUID player) && (missionNamespace ge
 
 //Squad Dialog
 if (_index == 2 && (missionNamespace getVariable ["MCC_allowSquadDialog",true])) exitWith {
-	if (dialog) then {
-		while {dialog} do {closeDialog 0; sleep 0.01};
-	} else {
-		while {dialog} do {closeDialog 0; sleep 0.01};
-		createDialog "CP_RESPAWNPANEL";
-	};
+	while {dialog} do {closeDialog 0; sleep 0.01};
+	createDialog "CP_RESPAWNPANEL";
 };
 
 //SQL PDA
-if (_index == 3 && ((count units player > 1) && (leader player == player)) && (missionNamespace getVariable ["MCC_allowsqlPDA",true]) && "ItemGPS" in (assignedItems player)) exitWith {
-		if (dialog) then {
-			while {dialog} do {closeDialog 0};
-		} else {
-			createDialog "MCC_SQLPDA";
-		};
+if (_index == 3 && ((count units player > 1) && (leader player == player)) && (missionNamespace getVariable ["MCC_allowsqlPDA",true])) exitWith {
+	while {dialog} do {closeDialog 0};
+	createDialog "MCC_SQLPDA";
 };

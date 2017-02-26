@@ -54,7 +54,7 @@ MCC_fnc_ambientFireEntityKilled = {
 				if (_pos isEqualTo []) exitWith {};
 
 
-				_group = createGroup ([(getNumber(configFile >> "cfgVehicles" >> "side"))] call BIS_fnc_sideType);
+				_group = createGroup ([(getNumber(configFile >> "cfgVehicles" >> _class >> "side"))] call BIS_fnc_sideType);
 				//_unit = createAgent [_class, _pos, [], 0, "FORM"];
 				_unit = _group createUnit [_class, _pos, [], 0, "NONE"];
 				_unit disableAI "ALL";

@@ -56,7 +56,7 @@ while {_time > time && (str (finddisplay mcc_playerConsole2_IDD) != "no display"
 	};
 };
 
-if ((str (finddisplay mcc_playerConsole2_IDD) == "no display") && (isNull (missionNamespace getVariable ["MCC_ConolseUAV",objNull]))) exitWith {
+if ((str (finddisplay mcc_playerConsole2_IDD) == "no display") || (isNull (missionNamespace getVariable ["MCC_ConolseUAV",objNull]))) exitWith {
 	if (missionNamespace getVariable ["MCC_Console2Open",false]) then {
 		ctrlSetText [MCC_CONSOLE_UAVPIP_BCKG, "No UAV signal found, connection failed"];
 	};

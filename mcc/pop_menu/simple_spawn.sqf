@@ -17,10 +17,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 			{
 				case "MAN":
 				{
-					if (_faction=="GUER") then {_unitspawned = createGroup resistance;};
-					if (_faction=="WEST") then {_unitspawned = createGroup west;};
-					if (_faction=="EAST") then {_unitspawned = createGroup east;};
-					if (_faction=="CIV") then {_unitspawned = createGroup civilian;};
+					_unitspawned = createGroup (((getNumber (configFile >> "CfgVehicles" >> _class >> "side")) call BIS_fnc_sideType));
 					_dummy = _unitspawned createUnit [_class, _pos, [], 0, "NONE"];
 					_dummy setpos _pos;
 					_dummy setdir _dir;
@@ -89,13 +86,7 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					if (_notEmpty) then
 					{
 						private ["_side","_veh","_crew"];
-						_side = switch (_faction) do
-								{
-									case "GUER" :  {resistance};
-									case "WEST" : {WEST};
-									case "EAST" : {EAST};
-									case "CIV" :  {civilian};
-								};
+						_side = (((getNumber (configFile >> "CfgVehicles" >> _class >> "side")) call BIS_fnc_sideType));
 
 						if (!isnil "Object3D") then {waitUntil {_pos distance Object3D > 15}};
 						_veh = createvehicle [_class,_pos,[],0,"none"];

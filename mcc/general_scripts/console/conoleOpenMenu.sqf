@@ -8,7 +8,7 @@ disableSerialization;
 
 _type = (_this select 3) select 0; 								//Switch we are opening the console or the other options
 
-closedialog 0; 
+closedialog 0;
 _ok = createDialog "MCC_playerConsoleLoading";
 
 _time = time + 3;
@@ -18,21 +18,21 @@ if (_type == 0) then {											//Opening the conole
 		{
 			switch (stance player) do
 				{
-				   case "STAND":	
-					{ 
+				   case "STAND":
+					{
 						_stance = "AinvPercMstpSrasWrflDnon";
 					};
-					
-					case "CROUCH":	
-					{ 
+
+					case "CROUCH":
+					{
 						_stance = "AinvPknlMstpSrasWrflDnon";
 					};
-					
-					case "LYING":	
-					{ 
+
+					case "LYING":
+					{
 						_stance = "AinvPpneMstpSrasWrflDnon";
 					};
-					
+
 					default
 					{
 						_stance = "";
@@ -40,9 +40,9 @@ if (_type == 0) then {											//Opening the conole
 				};
 			player playMove _stance;
 		};
-	if (MCC_CASConsoleFirstTime) then	
+	if (MCC_CASConsoleFirstTime) then
 	{
-		while {_time > time && dialog} do 
+		while {_time > time && dialog} do
 		{
 			_message = "";
 			_messageFinal = ["S","e","a","r","c","h","i","n","g"," ","S","a","t","e","l","l","i","t","e","s",".",".",".",".","."];
@@ -52,17 +52,17 @@ if (_type == 0) then {											//Opening the conole
 				sleep 0.05;
 			};
 		};
-		MCC_CASConsoleFirstTime = false; 
+		MCC_CASConsoleFirstTime = false;
 	};
 
-	if (dialog) then 
+	if (dialog) then
 	{
-		_time = time + random 1; 
-		while {_time > time && dialog} do 
+		_time = time + random 1;
+		while {_time > time && dialog} do
 		{
 			_message = "";
 			_messageFinal = ["C","o","n","n","e","c","t","i","n","g",".",".",".",".","."];
-			for "_i" from 0 to (count _messageFinal - 1) do 
+			for "_i" from 0 to (count _messageFinal - 1) do
 			{
 				_message = _message + (_messageFinal select _i);
 				ctrlSetText [9105, _message];
@@ -71,21 +71,21 @@ if (_type == 0) then {											//Opening the conole
 		};
 	};
 
-	_commander = (MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player;
-	
-	//sign in 
-	if (dialog && _commander) then 
-	{									
-		closedialog 0; 
+	_commander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player) or ("MCC_itemConsole" in (assignedItems player));
+
+	//sign in
+	if (dialog && _commander) then
+	{
+		closedialog 0;
 		_ok = createDialog "MCC_playerConsole";
 	};
-	
+
 	//access denied
-	if (dialog && !_commander) then 
-	{									
+	if (dialog && !_commander) then
+	{
 		ctrlSetText [9105, "Access denied: Not commander"];
 		sleep 2;
-		closedialog 0; 
+		closedialog 0;
 	};
 	};
 
@@ -101,7 +101,7 @@ if (_type == 1) then {											//Switching to Artillery
 		};
 	};
 	if (dialog) then {
-		closedialog 0; 
+		closedialog 0;
 		MCC_Console1Open = false;
 		MCC_Console2Open = false;
 		MCC_Console3Open = false;

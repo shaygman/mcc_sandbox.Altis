@@ -17,7 +17,7 @@ if (missionNamespace getVariable ["MCC_faction_initilized_units",false]) exitWit
 };
 
 
-_simTypesUnits 	= ["soldier", "car","carx", "motorcycle", "tank", "helicopter", "airplane", "ship", "parachute","helicopterX","helicopterrtd","shipx","shipX","tankX","submarinex","airplanex"];
+_simTypesUnits 	= ["soldier", "car","carx", "motorcycle", "tank", "helicopter", "airplane", "ship", "parachute","helicopterx","helicopterrtd","shipx","shipx","tankx","submarinex","airplanex"];
 _CfgVehicles 		= configFile >> "CfgVehicles" ;
 
 

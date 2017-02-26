@@ -46,7 +46,7 @@ if (_baseFire) then {
 for "_i" from (_fireDir - 45) to (_fireDir + 45) step 15 do  {
 
 	//Don't over use it
-	if {{typeOf _x in [FIRE_OBJECTSMALL,FIRE_OBJECTBIG]} count (_pos nearObjects 50) > MAX_FIRES} exitWith {};
+	if ({typeOf _x in [FIRE_OBJECTSMALL,FIRE_OBJECTBIG]} count (_pos nearObjects 50) > MAX_FIRES) exitWith {};
 	[_pos,_fireDistance,_i] spawn MCC_fnc_ambientFirePropagation;
 	/*
 	if ({typeOf _x in [FIRE_OBJECTSMALL,FIRE_OBJECTBIG]} count (_pos nearObjects 50) < MAX_FIRES) then {

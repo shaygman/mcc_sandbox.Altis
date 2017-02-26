@@ -1,3 +1,10 @@
+Change log r21:
+- Renamed all MCC items with (MCC) at the begging so you can easily find or disregard them.
+- Fixed: MCC console didn't open with hotkey or action menu.
+- Fixed: Tracked units don't show up in MCC.
+- Fixed: Mismatch sides while spawning using MCC 3d editor.
+- Fixed: Ambient fire if error.
+
 Change log r20:
 
 -= Ambient Birds and Fire=- **NEW**
