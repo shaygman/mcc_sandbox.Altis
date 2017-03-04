@@ -15,6 +15,7 @@ _unit allowDamage false;
 _unit setVariable ["MCC_medicSeverInjury",false,true];
 _unit setVariable ["MCC_medicUnconscious",true,true];
 
+//Handle XP
 if (isplayer _source && _source != _unit) then {
 	//Teamkill
 	if (side _source == side _unit && (missionNamespace getVariable ["MCC_medicPunishTK",false])) then {
@@ -87,6 +88,10 @@ detach _rag;
 
 waitUntil{sleep 0.05; (velocity _unit) distance [0,0,0] < 0.1};
 
+//If water kill player
+if (surfaceIsWater position _unit) exitWith {_unit setDamage 1};
+
+/*
 //play wounded animation
 [_unit,ANIM_WOUNDED] remoteExec ["switchMove",2];
 
@@ -102,8 +107,10 @@ private _ehAnimChanged = _unit addEventHandler
 		};
 	}
 ];
+*/
 
-_unit setVariable ["bis_ehAnimChanged", _ehAnimChanged];
+_unit setUnconscious true;
+//_unit setVariable ["bis_ehAnimChanged", _ehAnimChanged];
 _unit allowDamage true;
 
 //Add helper
@@ -140,7 +147,7 @@ _unit spawn {
 	_this allowDamage true;
 
 	while {alive _this && time < _t && (_this getVariable ["MCC_medicUnconscious",false])} do {
-		if (animationState _this != "unconscious") then {_this playmoveNow "Unconscious"};
+		//if (animationState _this != "unconscious") then {_this playmoveNow "Unconscious"};
 		//It wake up
 		if (random 100 < 0.05) then	{
 			_this setVariable ["MCC_medicUnconscious",false,true];

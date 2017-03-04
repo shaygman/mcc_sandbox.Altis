@@ -29,7 +29,7 @@ _index 	= _this select 1;
 _artidialog = findDisplay BON_ARTY_DIALOG;
 
 //is the player the commander or just using the artillery computer
-_isCommander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player);
+_isCommander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player) or ("MCC_itemConsole" in (assignedItems player));
 
 switch (ctrlIDC _ctrl) do
 {

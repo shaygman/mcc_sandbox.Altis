@@ -108,7 +108,7 @@ switch (_type) do
 					,MCC_spawnkind
 					,MCC_planeType
 					,_arrayName
-					,_isParachute
+					,(missionNamespace getVariable ["MCC_airdropIsParachute",0])
 					];
 			}
 			else
@@ -118,11 +118,11 @@ switch (_type) do
 				,MCC_spawnkind
 				,MCC_planeType
 				,_arrayName
-				,_isParachute
+				,(missionNamespace getVariable ["MCC_airdropIsParachute",0])
 				];
 
 				_array = missionNameSpace getVariable [_arrayName,[]];
-				_array set [count _array,[MCC_spawnkind, MCC_planeType,_isParachute]];
+				_array set [count _array,[MCC_spawnkind, MCC_planeType,(missionNamespace getVariable ["MCC_airdropIsParachute",0])]];
 				missionNameSpace setVariable [_arrayName,_array];
 				publicvariable _arrayName;
 			};

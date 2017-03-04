@@ -42,7 +42,7 @@ class MCC_rts_scanResourcesBasic
 
 	displayName = "Basic Mission Scan";
 	descriptionShort = "Order HQ to look for basic resources missions";
-	condition = "!(missionNamespace getVariable [format ['MCC_rtsMissionOn_%1', playerSide],false]) && (missionNamespace getVariable ['MCC_isCampaignRuning',false]);";
+	condition = "!(missionNamespace getVariable [format ['MCC_rtsMissionOn_%1', playerSide],false]);";
 	requiredBuildings[] = {{"hq",1}};
 	needelectricity = 1;
 	actionFNC = "MCC_fnc_rtsScanResourcesBasic";
@@ -59,7 +59,7 @@ class MCC_rts_scanResourcesAdvanced
 
 	displayName = "Advanced Mission Scan";
 	descriptionShort = "Order HQ to look for advanced resources missions";
-	condition = "!(missionNamespace getVariable [format ['MCC_rtsMissionOn_%1', playerSide],false]) && (missionNamespace getVariable ['MCC_isCampaignRuning',false]);";
+	condition = "!(missionNamespace getVariable [format ['MCC_rtsMissionOn_%1', playerSide],false]);";
 	requiredBuildings[] = {{"hq",1}};
 	needelectricity = 1;
 	actionFNC = "MCC_fnc_rtsScanResourcesAdvanced";
@@ -76,7 +76,7 @@ class MCC_rts_scanResourcesCancel
 
 	displayName = "Abort Mission";
 	descriptionShort = "Abort the mission and delete all units and crates";
-	condition = "(missionNamespace getVariable [format ['MCC_rtsMissionOn_%1', playerSide],false]) && (missionNamespace getVariable ['MCC_isCampaignRuning',false]);";
+	condition = "(missionNamespace getVariable [format ['MCC_rtsMissionOn_%1', playerSide],false]);";
 	requiredBuildings[] = {{"hq",1}};
 	needelectricity = 0;
 	actionFNC = "MCC_fnc_rtsScanResourcesCancel";

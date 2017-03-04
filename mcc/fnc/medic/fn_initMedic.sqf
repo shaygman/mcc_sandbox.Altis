@@ -22,26 +22,6 @@ private ["_maxBleeding","_bleeding","_remaineBlood","_unit"];
 							if (!isplayer (_this select 1)) then {(_this select 0) setVariable ["MCC_medicUnconscious",false,true]};
 							false}];
 					};
-
-					_unit spawn	{
-						//Gear scripts exc
-						sleep 5;
-						if (missionNamespace getVariable ["MCC_medicComplex",false]) then {
-							{
-								if (_x == "FirstAidKit") then {
-									_this removeItem _x;
-									{_this additem "MCC_bandage"} forEach [1,2];
-								};
-								if (_x == "Medikit") then {
-									_this removeItem _x;
-									{_this additem "MCC_bandage"} forEach [1,2,3,4,5,6,7,8,9,10,11,12];
-									{_this additem "MCC_epipen"} forEach [1,2,3,4,5,6,7,8,9,10,11,12];
-									{_this additem "MCC_salineBag"} forEach [1,2,3,4];
-									_this additem "MCC_firstAidKit";
-								};
-							} forEach (items _this);
-						};
-					};
 				};
 
 				//Manage AI blood losse and bandaging
@@ -82,6 +62,25 @@ private ["_maxBleeding","_bleeding","_remaineBlood","_unit"];
 					};
 
 					_unit setvariable ["MCC_medicRemainBlood",_remaineBlood,true];
+				} else {
+					if (missionNamespace getVariable ["MCC_medicComplex",false]) then {
+						_unit spawn	{
+							//Gear scripts exc
+							{
+								if (_x == "FirstAidKit") then {
+									_this removeItem _x;
+									{_this additem "MCC_bandage"} forEach [1,2];
+								};
+								if (_x == "Medikit") then {
+									_this removeItem _x;
+									{_this additem "MCC_bandage"} forEach [1,2,3,4,5,6,7,8,9,10,11,12];
+									{_this additem "MCC_epipen"} forEach [1,2,3,4,5,6,7,8,9,10,11,12];
+									{_this additem "MCC_salineBag"} forEach [1,2,3,4];
+									_this additem "MCC_firstAidKit";
+								};
+							} forEach (items _this);
+						};
+					};
 				};
 			};
 		} foreach allUnits;

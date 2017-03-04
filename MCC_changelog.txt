@@ -1,3 +1,17 @@
+Change log r22:
+- Fixed: Stuck on Squad menu "P".
+- Fixed: Missing insertion types in start locations.
+- Fixed: Teleport to team always enabled.
+- Fixed: Placing HUD module forces to 1st person.
+- Fixed: Airdrops didn't worked in the commander console.
+- Fixed: Medic system animations.
+- Fixed: Spawn outside the map when spawning on constructed FOB.
+- Changed: Decreased ambient birds chance.
+- Changed: In RTS mode can call HQ missions even while the campaign isn't enabled.
+
+TODO - corpsman kit
+TODO - missions
+
 Change log r21:
 - Renamed all MCC items with (MCC) at the begging so you can easily find or disregard them.
 - Fixed: MCC console didn't open with hotkey or action menu.

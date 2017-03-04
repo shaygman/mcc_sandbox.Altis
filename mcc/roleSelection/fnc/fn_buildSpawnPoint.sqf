@@ -20,7 +20,7 @@ if ((typeName (_this select 0)) == "OBJECT") then {
 	_destructable	= _logic getvariable ["distractable",true];
 	_animate		= false;
 	_construct 		= (_logic getvariable ["construct",0]) ==1;
-	_teleport 		= _logic getVariable ["teleportAtStart",0];
+	_teleport 		= _logic getVariable ["teleportAtStart",1];
 	_enableHud		= _logic getVariable ["hud",false];
 	_mode			= _logic getVariable ["mode","init"];
 
@@ -32,7 +32,7 @@ if ((typeName (_this select 0)) == "OBJECT") then {
 	_destructable	= _this select 4;
 	_animate		= param [5,false,[false]];
 	_construct 		= param [6, false, [false]];
-	_teleport 		= param [7, 0, [0]];
+	_teleport 		= param [7, 1, [0]];
 	_enableHud		= param [8, false, [false]];
 	_mode			= param [9, "init", [""]];
 };

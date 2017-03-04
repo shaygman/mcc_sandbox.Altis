@@ -98,7 +98,7 @@ if (((missionNamespace getvariable ["mcc_missionmaker",""])== name player) && (p
 
 if (isnil "MCC_TRAINING") then {
 	//------------T2T---------------------------------
-	if (MCC_t2tIndex == 2) then {MCC_teleportToTeam = true};
+	if ((missionNamespace getVariable ["MCC_t2tIndex",0]) > 1) then {MCC_teleportToTeam = true};
 
 	//-------------------Role selection -------------------------------------------
 	if (CP_activated) then	{

@@ -62,7 +62,7 @@
                             _pos = _x modelToWorld _pos;
                         } else {
 
-                             if (_x isKindOf "Car" || _x isKindOf "Tank" || _x isKindOf "Air" || _x isKindOf "ship") then {
+                            //if (_x isKindOf "Car" || _x isKindOf "Tank" || _x isKindOf "Air" || _x isKindOf "ship") then {
                                 _pic = getText (configFile >> "cfgVehicles" >> (typeOf _x) >> "picture");
                                 _leader = leader _X;
                                 _name = if (alive _leader) then {name _leader} else {"Unknown"};
@@ -70,7 +70,7 @@
                                 _color = if (_leader in units player) then {[0,1,0,1]} else {[1,1,1,1]};
                                 _pos = visiblePosition _X;
                                 _pos = _pos vectorAdd [0,0,3];
-                            };
+                           // };
                         };
 
                         drawIcon3D ["", [1,1,1,_alpha],  _pos, 0, 0, 0, name _x, 2, _textSize,"PuristaSemiBold"];

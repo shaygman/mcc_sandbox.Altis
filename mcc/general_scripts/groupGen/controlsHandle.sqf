@@ -101,14 +101,6 @@ if (_action == 2) exitWith
 	_control ctrlShow true;
 
 	//--------------------------------------Fill index--------------------------------------------------------------------------
-	_comboBox = (_mccdialog displayCtrl 20);		// Teleport
-	lbClear _comboBox;
-	{
-		_displayname = _x;
-		_comboBox lbAdd _displayname;
-	} foreach ["None","Teleport","Paradrop","HALO"];
-	_comboBox lbSetCurSel 1;
-
 	_comboBox = (_mccdialog displayCtrl 21);		// FOB
 	lbClear _comboBox;
 	{
@@ -116,6 +108,15 @@ if (_action == 2) exitWith
 		_comboBox lbAdd _displayname;
 	} foreach ["Primary","F.O.B"];
 	_comboBox lbSetCurSel 0;
+
+	_comboBox = (_mccdialog displayCtrl 201212);		// Teleport
+
+	lbClear _comboBox;
+	{
+		_displayname = _x;
+		_comboBox lbAdd _displayname;
+	} foreach ["None","Teleport","Paradrop","HALO"];
+	_comboBox lbSetCurSel 1;
 };
 
 //-------------------------------------------------------------------------------------DEBUG----------------------------------------------------------------------------------------------

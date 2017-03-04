@@ -62,7 +62,7 @@ class mcc_uncMain
 		class RespawnText: MCC_RscText
 		{
 			idc = -1;
-			text = "Hold Space To Revive";
+			text = "Hold Space To Respawn";
 			x = 0.46 * safezoneW + safezoneX;
 			y = 0.76* safezoneH + safezoneY;
 			w = 0.15 * safezoneW;

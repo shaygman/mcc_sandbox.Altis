@@ -112,6 +112,8 @@ waitUntil {
 if (format["%1",_playerDeployPos] == "[-500,-500,0]" ) exitWith {
 	[9999,"No good position found! Try again.",3,true] spawn MCC_fnc_setIDCText
 };
+
+//Mark as deoployed
 playerDeploy = true;
 
 //Is it a spawn tent and we spawned as the squad leader - delete the tent

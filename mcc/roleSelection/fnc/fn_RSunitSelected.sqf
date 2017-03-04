@@ -20,7 +20,7 @@ if (player == leader _unit && _unit != player) then {
 	_array pushBack ["commander","Promot to Leader","\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa"];
 };
 
-if (((missionNamespace getVariable ["MCC_teleportToTeam",false]) || !isPlayer _unit) && _unit in (units player) && _unit != player) then {
+if ((missionNamespace getVariable ["MCC_teleportToTeam",false]) && _unit in (units player) && _unit != player) then {
 	_array pushBack ["teleport","Teleport","\A3\ui_f\data\map\markers\handdrawn\pickup_CA.paa"];
 };
 

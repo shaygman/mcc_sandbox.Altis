@@ -13,7 +13,7 @@
 #define REQUIRE_FOB_FOB_MIN_DISTANCE 500
 #define REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE 100
 #define MAX_WALLS 14
-#define ANCHOR_ITEM "Land_Bricks_V3_F"
+#define ANCHOR_ITEM "Land_TreeBin_F"
 
 private ["_conType","_available","_errorMessegeIndex","_errorMesseges","_check","_respawPositions","_error","_dir","_pos","_vehicleType","_const","_success"];
 
@@ -142,7 +142,6 @@ if (_available) then {
 	player removeAction _action;
 	["MCC_placeFOBObject_ID", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 
-
 	if (!_success ) exitWith {};
 	if (player distance2D _pos > 30) exitWith {};
 
@@ -167,7 +166,7 @@ if (_available) then {
 		//_const = [_pos, _dir, [[_vehicleType,[0,0,0.0237527],0.216771,1,0,{},true]]] call MCC_fnc_objectMapper;
 		_const setVariable ["MCC_CONST_FORT",true, true];
 	} else {
-		[[_conType, ASLToATL (_pos), playerside, str _dir] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
+		[[_conType, _pos, playerside, str _dir] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;
 	};
 
 	//broadcast

@@ -24,7 +24,7 @@ disableSerialization;
 private ["_newArray","_vehicle","_isArty","_cannon","_displayName","_index","_realCannons","_isCommander"];
 
 //is the player the commander or just using the artillery computer
-_isCommander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player);
+_isCommander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player) or ("MCC_itemConsole" in (assignedItems player));
 
 //Clear stuff
 player setVariable ["requesting_cannons",[]];

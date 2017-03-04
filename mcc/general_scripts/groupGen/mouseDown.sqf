@@ -365,8 +365,8 @@ if (mcc_missionmaker == (name player)) then {
 		// set plane spawn and away position
 		_markerPos 	= getmarkerpos _marker;
 		_markerDir 	= markerDir _marker;
-		_spawn 		= [_markerPos,4500,(_markerDir -180)] call BIS_fnc_relpos;
-		_away 		= [_markerPos,4500,_markerDir] call BIS_fnc_relpos;
+		_spawn 		= [_markerPos,2000,(_markerDir -180)] call BIS_fnc_relpos;
+		_away 		= [_markerPos,2000,_markerDir] call BIS_fnc_relpos;
 
 		//[getmarkerpos _marker, MCC_selectedUnits, MCC_UMUnit, MCC_UMparadropIsHalo,_spawn,_away] execVM "mcc\fnc\general\fn_realParadrop.sqf";
 

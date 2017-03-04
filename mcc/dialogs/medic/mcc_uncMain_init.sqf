@@ -114,11 +114,29 @@ while { alive player && (player getvariable ["MCC_medicUnconscious",false])} do 
 
 //Cleanup
 //_disp displayRemoveEventHandler ["KeyDown", _escEH];
+
+//remove unconscious state
+player setUnconscious false;
+
+//hotfix: revived while performing an action & playing animation
+player playAction "Stop";
+
+//hotfix: revived while having no weapon
+if (currentWeapon player == "") then {
+	[] spawn {
+		sleep 0.1;
+		if (currentWeapon player == "") then {player playAction "Civil";};
+	};
+};
+
+//Destroy effects
 ppEffectDestroy  _rPPEffect;
 ppEffectDestroy  _cPPEffect;
 player setFatigue 0;
 player setCaptive false;
-player playmoveNow "amovppnemstpsraswrfldnon";
+
+
+//player playmoveNow "amovppnemstpsraswrfldnon";
 
 //Remove helper
 [player] spawn MCC_fnc_deleteHelper;
@@ -127,10 +145,11 @@ player playmoveNow "amovppnemstpsraswrfldnon";
 //close rsc
 (["mcc_uncMain"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];
 
+/*
 //remove 'anim changed' event handler
 private _ehAnimChanged = player getVariable ["bis_ehAnimChanged", -1];
 if (_ehAnimChanged != -1) then {player removeEventHandler ["AnimChanged", _ehAnimChanged]};
-
+*/
 
 //Enable action menu
 {inGameUISetEventHandler [_x, "false"]} forEach ["PrevAction", "Action", "NextAction"];

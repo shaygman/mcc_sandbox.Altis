@@ -388,33 +388,33 @@ class ArtilleryDialog
 			colorSelectBackground[] = { 0, 0, 0, 1 };
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			onLBSelChanged = "_this call arti_dlgUpdate";
-			x = 0.282292 * safezoneW + safezoneX;
+			x = 0.27 * safezoneW + safezoneX;
 			y = 0.445 * safezoneH + safezoneY;
-			w = 0.0515625 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
 		class HW_ArtiNrShells : HW_ArtiType
 		{
 			idc = BON_ARTY_NRSHELLS;
-			x = 0.282292 * safezoneW + safezoneX;
+			x = 0.27 * safezoneW + safezoneX;
 			y = 0.478 * safezoneH + safezoneY;
-			w = 0.0515625 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
 		class HW_ArtiSpread : HW_ArtiType
 		{
 			idc = BON_ARTY_SPREAD;
-			x = 0.282292 * safezoneW + safezoneX;
+			x = 0.27 * safezoneW + safezoneX;
 			y = 0.511 * safezoneH + safezoneY;
-			w = 0.0515625 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
 		class HW_ArtiMission : HW_ArtiType
 		{
 			idc = BON_ARTY_MISSIONTYPE;
-			x = 0.282292 * safezoneW + safezoneX;
+			x = 0.27 * safezoneW + safezoneX;
 			y = 0.544 * safezoneH + safezoneY;
-			w = 0.0515625 * safezoneW;
+			w = 0.08 * safezoneW;
 			h = 0.022 * safezoneH;
 		};
 

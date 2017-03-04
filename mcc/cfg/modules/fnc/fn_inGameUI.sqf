@@ -116,7 +116,7 @@ player setVariable ["MCC_forceCameraMode",_mode];
 		    	if (vehicle player == player) then {player switchCamera "Internal"};
 		    };
 
-		    default {
+		    case 2: {
 		     	if (!(vehicle player isKindOf "air") ) then {player switchCamera "Internal"};
 		    };
 		};

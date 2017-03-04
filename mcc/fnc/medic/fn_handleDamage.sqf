@@ -25,7 +25,7 @@ if (!local _unit || (damage _unit >=1) || !alive _unit) then {
 	if (_selectionName in ["","body","head","spine1","spine2","spine3","face_hub","pelvis","neck"] && (_damage > 0.9)) then {
 		//AI will not always get unconscious and sometimes just die
 
-		if  (!(isPlayer _unit) && (random 1 > 0.3)) then {
+		if  (!(isPlayer _unit) && (random 1 > 0.1)) then {
 			_damage;
 		} else {
 			_damage = 0.9;

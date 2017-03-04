@@ -33,7 +33,7 @@ switch (toLower _data) do {
     };
 
     case "teleport": {
-    	if (((missionNamespace getVariable ["MCC_teleportToTeam",false]) || !isPlayer _unit) && _unit in (units player) && _unit != player) then {
+    	if ((missionNamespace getVariable ["MCC_teleportToTeam",false]) && _unit in (units player) && _unit != player) then {
     		[_unit] execVM format ["%1mcc\general_scripts\mcc_SpawnToPosition.sqf",MCC_path];
     	};
     };

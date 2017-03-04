@@ -16,7 +16,7 @@ missionNamespace setVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",true];
 private ["_unit"];
 while {(missionNamespace getVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",false])} do {
 	{
-		_unit = _x;
+		_unit = [units _x] call BIS_fnc_selectRandom;
 		if ((_unit getVariable ["MCC_fnc_ambientBirdsNextTime",time]) <= time &&
 		    !(vehicle _unit isKindOf "air")) then {
 
@@ -25,7 +25,7 @@ while {(missionNamespace getVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",fals
 				[vehicle _unit] spawn MCC_fnc_ambientBirdsSpawn;
 			};
 		};
-	} forEach allUnits;
+	} forEach allGroups;
 
 	sleep (random 200);
 };

@@ -3,6 +3,7 @@
 //======================================================================================================================================================================
 private ["_cfgClass","_anchorType","_anchorDir","_pos","_objs","_constType","_anchor","_object","_BuildTime","_buildingObjs","_builtArray","_side","_level","_instant","_endTime","_boxName","_boxArray","_box","_text","_res","_displayName","_markerName","_root"];
 #define BASE_ANCHOR "UserTexture10m_F"
+#define ANCHOR_ITEM "Land_TreeBin_F"
 
 _pos			= _this select 0;
 _anchorDir 		= _this select 1;
@@ -43,7 +44,7 @@ _buildingObjs = [
 					["Land_Pipes_large_F", [-7,0,-1],70],
 					["Land_Pallets_stack_F",[7,0,-0.4],70],
 					["Land_Bricks_V1_F", [0,7,-1],70],
-					["Land_Bricks_V3_F", [0,-7,-1],-70]
+					[ANCHOR_ITEM, [0,-7,-1],-70]
                 ];
 
 if (isnil "_constType") exitWith {};
@@ -68,7 +69,7 @@ _module setVariable ["mcc_markerName",_markerName,true];
 
 //Building anim
 if !(_instant) then {
-	_anchor = "Land_Bricks_V3_F" createVehicle _pos;
+	_anchor = ANCHOR_ITEM createVehicle _pos;
 	waituntil {!isnil "_anchor"};
 	_anchor enableSimulation false;
 	_builtArray = [_anchor];

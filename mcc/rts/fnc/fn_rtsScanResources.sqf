@@ -4,7 +4,7 @@
 //     	_side: SIDE
 //		_dif: INTEGER - 10 basic 20 - advanced
 //		_delete: BOOLEAN - if true then delete
-//==============================================================================================================================================================================
+//======================================================================================================================================================================
 private ["_side","_dif","_delete","_startLocation","_trg","_missionPos","_crateNumbers","_crateType","_crates","_missionItems","_object","_unitsArray","_enemyFaction","_enemySide","_counter","_totalPlayers","_scenario","_propObject","_missionText","_missionTittle","_effect"];
 
 _side = param [0, west, [west]];
@@ -126,7 +126,7 @@ switch (_scenario) do {
 _effect setpos (getpos _object);
 _missionItems pushBack _effect;
 
-_crateNumbers = if (_dif == 10) then {(floor random 3)+1} else {(floor random 5)+1};
+_crateNumbers = if (_dif == 10) then {(floor random 4)+1} else {(floor random 6)+1};
 for "_i" from 1 to _crateNumbers do {
 	_crateType = [_crates,[0.3,0.5,0.2]] call bis_fnc_selectRandomWeighted;
 	_object = _crateType createVehicle _missionPos;

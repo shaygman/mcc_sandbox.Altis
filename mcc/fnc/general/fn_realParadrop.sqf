@@ -1,4 +1,4 @@
-private ["_pos", "_units", "_spawn","_away","_plane","_pilot","_wp","_UMUnit","_isHalo","_flightHight","_unitsArray","_unit","_chockArray","_heliClass","_pod"];
+private ["_pos", "_units", "_spawn","_away","_plane","_pilot","_wp","_UMUnit","_isHalo","_flightHight","_unitsArray","_unit","_chockArray","_heliClass","_pod","_fnc_findVehicles"];
 _pos 		= _this select 0;
 _units 		= _this select 1;
 _UMUnit		= _this select 2;
@@ -11,7 +11,7 @@ if (count _units == 0) exitWith {};
 
 _flightHight = switch (_isHalo) do
 				{
-					case 1:{500};
+					case 1:{400};
 					case 2:{4000};
 					default{300};
 				};
@@ -42,6 +42,8 @@ if (_UMUnit==0) then {
 	} foreach _units;
 };
 
+systemChat str _isHalo;
+
 _heliClass = if (_isHalo == 1) then  {"O_Heli_Transport_04_F"} else {
 				switch (true) do
 				{
@@ -56,6 +58,52 @@ _heliClass = if (_isHalo == 1) then  {"O_Heli_Transport_04_F"} else {
 
 //Add the last chock even if it isn't full
 _chockArray pushBack _unitsArray;
+
+_fnc_findVehicles = {
+	params ["_choke","_classA","_classB"];
+	//Try to find an helicopter from the faction
+	private ["_minSpaces","_vehiclesTypesArray","_availableSpaces","_newHeliClassesArray","_totalSeats","_crewSeats","_faction","_return"];
+	_minSpaces = count (_chockArray select 0);
+	_faction = faction ((_chockArray select 0) select 0);
+	_return = "";
+	_vehiclesTypesArray = [_faction,"helicopterrtd","air"] call MCC_fnc_makeUnitsArray;
+	if (count _vehiclesTypesArray < 2) then {
+		_vehiclesTypesArray = [_faction,"helicopterrtd"] call MCC_fnc_makeUnitsArray;
+	};
+
+	_vehiclesTypesArray = _vehiclesTypesArray + ([_faction,"helicopterX"] call MCC_fnc_makeUnitsArray);
+
+	_newHeliClassesArray = [];
+
+	for "_i" from 0 to (count _vehiclesTypesArray)-1 step 1 do {
+		_vehicleClass = (_vehiclesTypesArray select _i) select 0;
+	    _availableSpaces = [_vehicleClass, "allCargo"] call MCC_fnc_crewCount;
+
+		//if enogh cargo space add it
+		if ( _availableSpaces >= _minSpaces) then {
+			_newHeliClassesArray pushBack [_availableSpaces, _vehicleClass]
+		};
+	};
+
+	if (count _newHeliClassesArray > 0) then {
+		_newHeliClassesArray sort true;
+		_return = (_newHeliClassesArray select 0) select 1;
+	};
+
+	_return
+};
+
+if (_isHalo == 0) then  {
+	_class = [_chockArray,"airplane","airplaneX"] call _fnc_findVehicles;
+	if (_class != "") then {
+		_heliClass = _class;
+	} else {
+		_class = [_chockArray,"helicopterrtd","helicopterX"] call _fnc_findVehicles;
+		if (_class != "") then {
+			_heliClass = _class;
+		};
+	};
+};
 
 {
 	_unitsArray = _x;
@@ -115,6 +163,7 @@ _chockArray pushBack _unitsArray;
 	for "_x" from 0 to (count _unitsArray -1) step 1 do {
 		_unit = _unitsArray select _x;
 		_null = [_plane, _unit,_x] remoteExec ["MCC_fnc_realParadropPlayer", _unit];
+		waitUntil {_unit in crew _plane};
 	};
 
 
@@ -123,7 +172,7 @@ _chockArray pushBack _unitsArray;
 	_wp = (group _plane) addWaypoint [_away, 0];	//Add WP
 	_wp setWaypointStatements ["true", ""];
 	_wp setWaypointType "MOVE";
-	_wp setWaypointSpeed "LIMITED";
+	_wp setWaypointSpeed "NORMAL";
 	_wp setWaypointCombatMode "BLUE";
 	_wp setWaypointCompletionRadius 200;
 	_plane flyInHeight _flightHight;

@@ -28,7 +28,7 @@ _requestor = player;
 _dlg = findDisplay BON_ARTY_DIALOG;
 
 //is the player the commander or just using the artillery computer
-_isCommander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player);
+_isCommander = ((MCC_server getVariable [format ["CP_commander%1",side player],""]) == getPlayerUID player) or ("MCC_itemConsole" in (assignedItems player));
 
 // read out the dialog input
 _spotter_xpos = (parseNumber ctrlText (_dlg displayCtrl BON_ARTY_XRAYEDIT)) mod 100000;
