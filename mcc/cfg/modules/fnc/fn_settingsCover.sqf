@@ -39,10 +39,25 @@ if (typeName (_module getVariable ["cover",true]) == typeName 0) exitWith {
 	_var 	= _module getvariable ["interactionUI",0];
 	MCC_ingameUI = if (_var == 0) then {false} else {true};
 
+
+
+	/* =========================	SURVIVE MOD	========================================*/
+	//Survive mod player Pos
+	MCC_surviveModPlayerPos	= _module getvariable ["survivePlayerPosition",false];
+
+	//Survive mod player Gear
+	MCC_surviveModPlayerGear	= _module getvariable ["survivePlayerGear",false];
+
+	//Survive mod player status
+	MCC_surviveModPlayerStats	= _module getvariable ["survivePlayerStats",false];
+
 	//Survive mod
 	_var 	= _module getvariable ["survive",0];
 	MCC_surviveMod = _var > 0;
 	MCC_surviveModAllowSearch = _var ==1;
+
+	/* =================================================================================*/
+
 
 	//Action menu
 	_var 	= _module getvariable ["actionMenu",1];
@@ -63,7 +78,7 @@ if (typeName (_module getVariable ["cover",true]) == typeName 0) exitWith {
 };
 
 //Not curator exit
-if (!(local _module) || isnull curatorcamera) exitWith {};
+if !(local _module) exitWith {};
 
 _resualt = ["Settings MCC Mechanics",[
  						["Action Menu",true],
@@ -75,7 +90,10 @@ _resualt = ["Settings MCC Mechanics",[
  						["Interaction UI",true],
  						["One Man Tanks",true],
  						["Disable Fatigue",true],
- 						["Survival Mod",["No","Yes - Enable searching loot","Yes - Disable searching loot"]]
+ 						["Survival Mod",["No","Yes - Enable searching loot","Yes - Disable searching loot"]],
+ 						["(Survival) Load Player Position",false],
+ 						["(Survival) Load Player Gear",false],
+ 						["(Survival) Load Player Stats",false]
  					  ]] call MCC_fnc_initDynamicDialog;
 
 if (count _resualt == 0) exitWith {deleteVehicle _module};
@@ -95,6 +113,10 @@ if (count _resualt == 0) exitWith {deleteVehicle _module};
           ];
 
 //Survival
+MCC_surviveModPlayerPos = (_resualt select 10);
+MCC_surviveModPlayerGear = (_resualt select 11);
+MCC_surviveModPlayerStats = (_resualt select 12);
+
 _var = (_resualt select 9);
 MCC_surviveMod = _var > 0;
 publicvariable "MCC_surviveMod";

@@ -998,32 +998,36 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 	[]  spawn MCC_fnc_startLocations;
 
 	//Add beanbag ammo for shouguns
-	if (count (missionNamespace getvariable ["MCC_nonLeathalAmmo",[]]) > 0 || count (missionNamespace getvariable ["MCC_breacingAmmo",[]]) > 0) then {
-		player addEventHandler ["firedMan", {
-											//Breach door
-											if (_this select 5 in (missionNamespace getvariable ["MCC_breacingAmmo",[]])) then {
-												private ["_door","_animation","_phase","_closed","_tempArray","_object"];
-												_object = cursorTarget;
-												_tempArray = [_object]  call MCC_fnc_isDoor;
-												_door = _tempArray select 0;
-												_animation = _tempArray select 1;
-												_phase = _tempArray select 2;
-												_closed = _tempArray select 3;
+	0 spawn {
+		waituntil {time > 10};
 
-												if (_closed) then {
-													_object animate [_animation, _phase];
-												};
-											};
+		if (count (missionNamespace getvariable ["MCC_nonLeathalAmmo",[]]) > 0 || count (missionNamespace getvariable ["MCC_breacingAmmo",[]]) > 0) then {
+			player addEventHandler ["firedMan", {
+												//Breach door
+												if (_this select 5 in (missionNamespace getvariable ["MCC_breacingAmmo",[]])) then {
+													private ["_door","_animation","_phase","_closed","_tempArray","_object"];
+													_object = cursorTarget;
+													_tempArray = [_object]  call MCC_fnc_isDoor;
+													_door = _tempArray select 0;
+													_animation = _tempArray select 1;
+													_phase = _tempArray select 2;
+													_closed = _tempArray select 3;
 
-											//Natrulize AI
-											if ((_this select 5) in (missionNamespace getvariable ["MCC_nonLeathalAmmo",[]])) then {
-												_unit 	= cursorTarget;
-												if (_unit isKindof "CAManBase" && ((_this select 0) distance _unit < 30)) then {
-													deleteVehicle (_this select 6);
-													[_unit, 5] spawn MCC_fnc_stunBehav;
+													if (_closed) then {
+														_object animate [_animation, _phase];
+													};
 												};
-											};
-										}];
+
+												//Natrulize AI
+												if ((_this select 5) in (missionNamespace getvariable ["MCC_nonLeathalAmmo",[]])) then {
+													_unit 	= cursorTarget;
+													if (_unit isKindof "CAManBase" && ((_this select 0) distance _unit < 30)) then {
+														deleteVehicle (_this select 6);
+														[_unit, 5] spawn MCC_fnc_stunBehav;
+													};
+												};
+											}];
+		};
 	};
 };
 

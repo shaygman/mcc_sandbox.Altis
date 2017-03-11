@@ -1,4 +1,6 @@
 Change log r22:
+- Added: Enable/disable teleport player to last known location while activating the survival module.
+- Added: GAIA settings module to Zeus.
 - Fixed: Stuck on Squad menu "P".
 - Fixed: Missing insertion types in start locations.
 - Fixed: Teleport to team always enabled.
@@ -6,11 +8,13 @@ Change log r22:
 - Fixed: Airdrops didn't worked in the commander console.
 - Fixed: Medic system animations.
 - Fixed: Spawn outside the map when spawning on constructed FOB.
+- Fixed: Non leathal ammmo didn't work for clients.
+
 - Changed: Decreased ambient birds chance.
 - Changed: In RTS mode can call HQ missions even while the campaign isn't enabled.
 
-TODO - corpsman kit
 TODO - missions
+TODO - Campaign enable/disable persistante.
 
 Change log r21:
 - Renamed all MCC items with (MCC) at the begging so you can easily find or disregard them.

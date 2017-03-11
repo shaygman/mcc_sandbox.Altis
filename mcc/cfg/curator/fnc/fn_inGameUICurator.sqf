@@ -6,7 +6,7 @@ _module = param [0, objNull, [objNull]];
 if (isNull _module) exitWith {deleteVehicle _module};
 
 //Not curator exit
-if (!(local _module) || isnull curatorcamera) exitWith {};
+if !(local _module) exitWith {};
 
 _pos = getpos _module;
 

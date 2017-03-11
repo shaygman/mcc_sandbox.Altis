@@ -22,7 +22,9 @@
 		0 spawn MCC_fnc_survivalProgressBars;
 
 		//Load player
-		[true,true,true] spawn MCC_fnc_loadPlayer;
+		[(missionNamespace getVariable ["MCC_surviveModPlayerPos",false]),
+		(missionNamespace getVariable ["MCC_surviveModPlayerGear",false]),
+		(missionNamespace getVariable ["MCC_surviveModPlayerStats",false])] spawn MCC_fnc_loadPlayer;
 
 	};
 

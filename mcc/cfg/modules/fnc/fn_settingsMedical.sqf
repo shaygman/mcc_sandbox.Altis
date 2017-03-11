@@ -44,7 +44,7 @@ if (typeName (_module getVariable ["medicComplex",true]) == typeName 0) exitWith
 };
 
 //Not curator exit
-if (!(local _module) || isnull curatorcamera) exitWith {};
+if !(local _module) exitWith {};
 
 _pos = getpos _module;
 

@@ -249,6 +249,72 @@ class MCC_Module_settingsMechanics : Module_F
 			};
 		};
 
+		class survivePlayerPosition
+		{
+			displayName = "Survival - Load Player Position";
+			description = "Load Players last know position and teleport it there";
+			typeName = "BOOL";
+			class values
+			{
+				class disable
+				{
+					name = "Disable";
+					value = false;
+				};
+
+				class enable
+				{
+					name = "Enable";
+					value = true;
+					default = 1;
+				};
+			};
+		};
+
+		class survivePlayerGear
+		{
+			displayName = "Survival - Load Player Gear";
+			description = "Load Players last saved gear";
+			typeName = "BOOL";
+			class values
+			{
+				class disable
+				{
+					name = "Disable";
+					value = false;
+				};
+
+				class enable
+				{
+					name = "Enable";
+					value = true;
+					default = 1;
+				};
+			};
+		};
+
+		class survivePlayerStats
+		{
+			displayName = "Survival - Load Player Stats";
+			description = "Load Players last known stats such as health and food";
+			typeName = "BOOL";
+			class values
+			{
+				class disable
+				{
+					name = "Disable";
+					value = false;
+				};
+
+				class enable
+				{
+					name = "Enable";
+					value = true;
+					default = 1;
+				};
+			};
+		};
+
 		class breachingAmmo
 		{
 			displayName = "Breaching Ammo";

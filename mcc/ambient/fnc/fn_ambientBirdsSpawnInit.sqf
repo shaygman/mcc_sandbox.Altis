@@ -16,13 +16,15 @@ missionNamespace setVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",true];
 private ["_unit"];
 while {(missionNamespace getVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",false])} do {
 	{
-		_unit = [units _x] call BIS_fnc_selectRandom;
-		if ((_unit getVariable ["MCC_fnc_ambientBirdsNextTime",time]) <= time &&
-		    !(vehicle _unit isKindOf "air")) then {
+		IF (count units _x > 0) then {
+			_unit = [units _x] call BIS_fnc_selectRandom;
+			if ((_unit getVariable ["MCC_fnc_ambientBirdsNextTime",time]) <= time &&
+			    !(vehicle _unit isKindOf "air")) then {
 
-			if ((random (speed _unit) min 9) > 4.3) then {
-				_unit setVariable ["MCC_fnc_ambientBirdsNextTime",time+(random 200)];
-				[vehicle _unit] spawn MCC_fnc_ambientBirdsSpawn;
+				if ((random (speed _unit) min 9) > 4.3) then {
+					_unit setVariable ["MCC_fnc_ambientBirdsNextTime",time+(random 200)];
+					[vehicle _unit] spawn MCC_fnc_ambientBirdsSpawn;
+				};
 			};
 		};
 	} forEach allGroups;

@@ -30,7 +30,7 @@ if (typeName (_module getVariable ["rsAllWeapons",true]) == typeName 0) exitWith
 };
 
 //Not curator exit
-if (!(local _module) || isnull curatorcamera) exitWith {};
+if !(local _module) exitWith {};
 
 _resualt = ["Settings Role Selection",[
  						["(RS)Role Selection",true],

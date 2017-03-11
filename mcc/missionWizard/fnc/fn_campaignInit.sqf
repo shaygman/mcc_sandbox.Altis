@@ -9,9 +9,7 @@
 //_tileSize			INTEGER - Size of the tile while portfiling the map
 //=======================================================================================================================================================================
 private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets","_missionRotation","_basePos","_tileSize","_reconMission","_tempVar"];
-/*
-CUP_C_CHERNARUS
-*/
+
 //wait for MCC
 waitUntil {!isnil "MCC_initDone"};
 waitUntil {MCC_initDone};
