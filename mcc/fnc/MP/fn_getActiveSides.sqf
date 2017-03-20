@@ -10,7 +10,9 @@ private ["_activeSides"];
 _activeSides = [];
 
 {
-	if !(isNil format["MCC_START_%1",_x]) then {_activeSides set [count _activeSides, _x]}
+	if (count ([_x] call BIS_fnc_getRespawnPositions) > 0) then {
+		_activeSides pushBack _x;
+	};
 } foreach [west, east, resistance];
 
 _activeSides

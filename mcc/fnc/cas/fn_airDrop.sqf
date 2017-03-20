@@ -290,17 +290,17 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 
 			switch (_spawnkind) do
 			{
-				case "Gun-run (Zeus)":					//east
+				case "Gun-run (Zeus)":
 				{
 					_casType = 0;
 				};
 
-				case "Rockets-run (Zeus)":					//west
+				case "Rockets-run (Zeus)":
 				{
 					_casType = 1;
 				};
 
-				case "CAS-run (Zeus)":					//GUR
+				case "CAS-run (Zeus)":
 				{
 					_casType = 2;
 				};
@@ -591,36 +591,101 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 		};
 	} else {
 		//Lets Spawn a plane
+		/*
 		_plane1 			= [_planeType, _spawn, _pos, 150, false] call MCC_fnc_createPlane;		//Spawn plane 1
 		_pilotGroup1		= group _plane1;
 		_pilot1				= driver _plane1;
 
-		/*
+
 		_plane2 			= [_planeType, _spawn, _pos, 150, false] call MCC_fnc_createPlane;		//Spawn plane 2
 		_pilotGroup2		= group _plane2;
 		_pilot2				= driver _plane2;
 
 		[_plane2] joinsilent _pilotGroup1;														//Join them together
-		*/
+
 
 		_wp = _pilotGroup1 addWaypoint [[_pos select 0, _pos select 1, 0], 0];	//Add WP
 		_wp setWaypointStatements ["true", ""];
-		_wp setWaypointSpeed "NORMAL";
+		_wp setWaypointSpeed "FULL";
 		_wp setWaypointCompletionRadius 100;
+		*/
 
-		if (_spawnkind == "SnD") then	{			//Set WP behaviour
+		private ["_dir","_dis","_alt","_pitch","_speed","_duration","_planePos","_planeSide","_planeArray","_vectorDir","_velocity","_vectorUp","_planeCfg","_time"];
+		_planeCfg = configfile >> "cfgvehicles" >> _planeType;
+		_pos set [2,(_pos select 2) + getterrainheightasl _pos];
+		_dir =[_spawn, _pos] call BIS_fnc_dirTo;
+		_dis =  2500;
+		_alt = 600;
+		_pitch = atan (_alt / _dis);
+		_speed = 400 / 3.6;
+		_duration = ([0,0] distance [_dis,_alt]) / _speed;
+
+		//--- Create plane
+		_planePos = [_pos,_dis,_dir + 180] call bis_fnc_relpos;
+		_planePos set [2,(_pos select 2) + _alt];
+		_planeSide = (getnumber (_planeCfg >> "side")) call bis_fnc_sideType;
+		_planeArray = [_planePos,_dir,_planeType,_planeSide] call bis_fnc_spawnVehicle;
+		_plane1 = _planeArray select 0;
+		_plane1 setposasl _planePos;
+		_pilotGroup1 = group _plane1;
+		_pilot1		= driver _plane1;
+
+		//--- Play radio
+		[_plane1,"CuratorModuleCAS"] call bis_fnc_curatorSayMessage;
+
+		//Set WP behaviour for flat bombing
+		if (_spawnkind == "S&D") then	{
+			systemChat "ok";
+			_wp = _pilotGroup1 addWaypoint [[_pos select 0, _pos select 1, 0], 0];	//Add WP
+			_wp setWaypointStatements ["true", ""];
+			_wp setWaypointSpeed "FULL";
+			_wp setWaypointCompletionRadius 100;
+
+			_plane1 setcombatmode "RED";
 			_wp setWaypointType "SAD";
 			_wp setWaypointCombatMode "RED";
-			}	else	{
-				_wp setWaypointType "MOVE";
-				_wp setWaypointCombatMode "BLUE";
+
+		}	else	{
+
+			_plane1 move ([_pos,_dis,_dir] call bis_fnc_relpos);
+			_plane1 disableai "move";
+			_plane1 disableai "target";
+			_plane1 disableai "autotarget";
+			_plane1 setcombatmode "blue";
+
+
+			_vectorDir = [_planePos,_pos] call bis_fnc_vectorFromXtoY;
+			_velocity = [_vectorDir,_speed] call bis_fnc_vectorMultiply;
+			_plane1 setvectordir _vectorDir;
+			[_plane1,-90 + atan (_dis / _alt),0] call bis_fnc_setpitchbank;
+			_vectorUp = vectorup _plane1;
+
+			[_plane1,_planePos,_pos,_velocity,_vectorDir,_vectorUp,_duration] spawn {
+
+				params ["_plane1","_planePos","_pos","_velocity","_vectorDir","_vectorUp","_duration"];
+				_time = time;
+				private _gain = if (_plane1 isKindOf "helicopter") then {40} else {0};
+				waituntil {
+					//--- Set the plane approach vector
+					_plane1 setVelocityTransformation [
+						_planePos, [_pos select 0,_pos select 1,(_pos select 2) + 20 + _gain],
+						_velocity, _velocity,
+						_vectorDir,_vectorDir,
+						_vectorUp, _vectorUp,
+						(time - _time) / _duration
+					];
+					_plane1 setvelocity velocity _plane1;
+
+					(_plane1 getVariable ["MCC_casDone",false]) || !(canMove _plane1) || ((position _plane1) select 2) < 100;
 				};
+			};
+		};
 
 		switch (_spawnkind) do
 		{
-			case "SnD":	//Seek and Destroy
+			case "S&D":	//Seek and Destroy
 			{
-				 waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 2000) || (!alive _plane1)};
+				 waitUntil {((_plane1 distance2D _pos) < 1500) || (!alive _plane1)};
 				_pilotGroup1 setSpeedMode "FULL";
 				_pilotGroup1 setCombatMode "RED";
 				_pilotGroup1 setBehaviour "COMBAT";
@@ -630,89 +695,88 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 
 			case "JDAM":	//JDAM Bomb
 			{
-			   waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 500) || (!alive _plane1)};
+			   waitUntil {((_plane1 distance2D _pos) < 500) || (!alive _plane1)};
 			   _nul=[_pos, getpos _plane1,"Bo_GBU12_LGB",100,false,""] execVM MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf"
 			};
 
 			case "LGB":    //LGB
 			{
-				waitUntil {((_plane1 distance _pos) < 1000) || (!alive _plane1)};
+				waitUntil {((_plane1 distance2D _pos) < 1000) || (!alive _plane1)};
 				_lasertargets = nearestObjects[_pos,["LaserTarget"],1000];
-				if (!isnull (_lasertargets select 0)) then
-					{
+				if (!isnull (_lasertargets select 0)) then {
 					_pos = getpos (_lasertargets select 0);
-					waitUntil {((_plane1 distance[_pos select 0, _pos select 1, 200]) < 300) || (!alive _plane1)};
+					waitUntil {((_plane1 distance2D _pos) < 300) || (!alive _plane1)};
 					_nul=[(_lasertargets select 0), getpos _plane1,"Bo_GBU12_LGB",100,false,""] execVM MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf"
-					};
+				};
 			};
 
 			case "Bombing-run":	//Bombing run
 			{
-				waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 500) || (!alive _plane1)};
+				private ["_offset"];
+				waitUntil {((_plane1 distance2D _pos) < 600) || (!alive _plane1)};
 				//Make the drop
-				for [{_x=1},{_x<=_ammount},{_x=_x+1}] do
+				for [{_i=1},{_i<=_ammount*2},{_i=_i+1}] do
 					{
+						_offset = if (_i mod 2 == 0) then {4} else {-4};
 						_bomb = "Bo_Mk82" createvehicle [getpos _plane1 select 0,getpos _plane1 select 1,3000]; 	//make the bomb
-						_bomb setpos [getpos _plane1 select 0,(getpos _plane1 select 1)-4,(getpos _plane1 select 2) -2];
+						_bomb setpos (_plane1 modelToWorld [_offset,-3,-6]);
 						_bomb setdir getdir _plane1;
+						_bomb setVectorUp (vectorup _plane1);
+						_velocity = (velocity _plane1) apply {_x * 1.2};
+						_velocity set [2,-30];
+						_bomb setVelocity _velocity;
+
 						[[[netid _bomb,_bomb], format["bon_Shell_In_v0%1",[1,2,3,4,5,6,7] select round random 6]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-						sleep 0.25;
-						_bomb setVelocity [((velocity vehicle _pilot1) select 0)/3, ((velocity vehicle _pilot1) select 1)/3,-30];
-						_bomb2 = "Bo_Mk82" createvehicle [getpos _plane1 select 0,getpos _plane1 select 1,3000]; 	//make the bomb
-						_bomb2 setpos [getpos _plane1 select 0,(getpos _plane1 select 1)+4,(getpos _plane1 select 2) -2];
-						_bomb2 setdir getdir _plane1;
-						_bomb2 setVelocity [((velocity vehicle _pilot1) select 0)/3, ((velocity vehicle _pilot1) select 1)/3,-30];
-						[[[netid _bomb2,_bomb2], format["bon_Shell_In_v0%1",[1,2,3,4,5,6,7] select round random 6]], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-						sleep 0.25;
+						sleep 0.5;
 					};
 			};
 
 			case "Rockets-run":	//Rockets run
 			{
-				waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 800) || (!alive _plane1)};
+				waitUntil {((_plane1 distance2D _pos) < 500) || (!alive _plane1)};
 				//Make the drop
 				if (!alive _plane1) exitWith {};
 
-				for [{_x=1},{_x<=_ammount},{_x=_x+1}] do
+				for [{_x=1},{_x<=_ammount*2},{_x=_x+1}] do
 					{
 						_nul=[[(_pos select 0)+50 - random 100,(_pos select 1)+50 - random 100,_pos select 2], getpos _plane1,"M_AT",200,true,""] execVM MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
 						[[[netid _plane1,_plane1], "missileLunch"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-						sleep 0.6;
-						_nul=[[(_pos select 0)+50 - random 100,(_pos select 1)+50 - random 100,_pos select 2], getpos _plane1,"M_AT",200,true,""] execVM MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
-						[[[netid _plane1,_plane1], "missileLunch"], "MCC_fnc_globalSay3D", true, false] spawn BIS_fnc_MP;
-						sleep 0.6;
+						sleep 0.2;
 					};
+
+				sleep 1;
 			};
 
 			case "AT run":	//SnD Armor
 			{
-				waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 800) || (!alive _plane1)};
+				waitUntil {((_plane1 distance2D _pos) < 600) || (!canMove _plane1)};
 				_targets = nearestObjects [[_pos select 0,_pos select 1,0] ,["Car","Tank"],200];	//Find targets: cars or tanks
-				_x = 0;
-				_loop = true;
-				while {_loop} do {
-					if (_x<count _targets && _x < _ammount) then {
-						_nul=[_targets select _x, getpos _plane1,"M_PG_AT",200,true,""] execVM  MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
-						sleep 1;
-						_x = _x +1;
-						} else {_loop = false};
+				_i = 0;
+
+				{
+					if (([side _x, side _plane1] call BIS_fnc_sideIsEnemy) && _i <= _ammount) then {
+						_nul=[ _x, getpos _plane1,"M_PG_AT",200,true,""] execVM  MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
+						sleep 0.8;
+						_nul=[ _x, getpos _plane1,"M_PG_AT",200,true,""] execVM  MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
+						_i = _i +1;
 					};
+				} forEach _targets;
 			};
 
 			case "AA run":	//SnD Air
 			{
 				_plane1 flyInHeight 150;
-				waitUntil {((_plane1 distance [_pos select 0, _pos select 1, 200]) < 1500) || (!alive _plane1)};
+				waitUntil {((_plane1 distance2D _pos) < 600) || (!canMove _plane1)};
 				_targets = nearestObjects [[_pos select 0,_pos select 1,0] ,["Helicopter","Plane"],1000];	//Find targets: cars or tanks
-				_x = 0;
-				_loop = true;
-				while {_loop} do {
-					if (_x<count _targets && _x < _ammount) then {
-						_nul=[_targets select _x, getpos _plane1,"M_PG_AT",200,true,""] execVM  MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
-						sleep 1;
-						_x = _x +1;
-						} else {_loop = false};
+				_i = 0;
+				{
+					if (([side _x, side _plane1] call BIS_fnc_sideIsEnemy) && _i <= _ammount) then {
+						_nul=[_x, getpos _plane1,"M_PG_AT",200,true,""] execVM  MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
+						sleep 0.8;
+						_nul=[_x, getpos _plane1,"M_PG_AT",200,true,""] execVM  MCC_path + "mcc\general_scripts\CAS\missile_guide.sqf";
+						_i = _i +1;
 					};
+				} forEach _targets;
 			};
 
 			case "CBU-97(ACE)":	//MCC_fnc_CBU-97
@@ -867,6 +931,9 @@ if (tolower _planeType in ["west","east","guer","civ","logic"]) then  {
 				[_plane1, _pos, _nukeType] spawn MCC_NUKE_AIR;
 			}
 		};
+
+		_plane1 enableAI "move";
+		_plane1 setVariable ["MCC_casDone",true];
 		//Delete the plane when finished
 		sleep 1;
 

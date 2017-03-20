@@ -1,11 +1,14 @@
-//======================================================MCC_fnc_MWObjectiveHVT=========================================================================================================
+//=====================================MCC_fnc_MWObjectiveHVT=========================================================================================================
 // Create an HVT objective
 // Example:[_objPos,_isCQB,_alive] call MCC_fnc_MWObjectiveHVT;
 // _objPos = position, objectice position
 //_isCQB = Boolean, true - for CQB areay false if it doesn't matters.
 //_alive = Boolean, true - catch him alive, False - kill him
 // Return - nothing
-//========================================================================================================================================================================================
+//===============================================================================================================================================================
+#define	MCC_UNTIE_ICON "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa"
+
+
 private ["_objPos","_isCQB","_alive","_buildingPos","_spawnPos","_unitsArray","_faction","_type","_group","_side","_unit",
          "_building","_unitPlaced","_time","_array","_sidePlayer","_factionPlayer","_walking","_preciseMarkers"];
 
@@ -32,61 +35,8 @@ MCC_MWcreateHostage =
 	_unit setrank _rank;
 	MCC_tempName = format ["MCC_objectUnits_%1", ["MCC_objectUnitsCounter",1] call bis_fnc_counter];
 
-	if (MCC_isACE) then {
-	 	[_unit, true] call ACE_captives_fnc_setHandcuffed;
-	} else {
-		_unit setBehaviour "SAFE";
-		_unit setUnitPos "UP";
-		_unit setpos _spawnPos;
-		_unit setpos _spawnPos;
-		removeallweapons _unit;
-		_unit setVariable ["MCC_disarmed",true,true];
-		_init = format [";%2 = _this;_this setcaptive true; _this allowFleeing 0;_this disableAI 'MOVE'; removeallweapons _this; _this switchmove 'AmovPercMstpSsurWnonDnon'; dostop _this;"
-					,MCC_path
-					,MCC_tempName
-					];
-		[[[netID _unit,_unit], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-	};
-
-	//Add action
-	[
-		_unit,
-		format ["Untie %1",name _unit],
-		"\a3\Data_f\clear_empty.paa",
-		"\a3\Data_f\clear_empty.paa",
-		"(alive _target) && (_target distance _this < 5)",
-		"(alive _target) && (_target distance _this < 5)",
-		{
-			[name _target,"Hurry up!"] remoteExec ["BIS_fnc_showSubtitle", _caller];
-		},
-		{},
-		{
-			[name _target,"Thank you!"] remoteExec ["BIS_fnc_showSubtitle", _caller];
-			_target setVariable ["MCC_neutralize",true,true];
-			_init = "
-					_this setcaptive false;
-					_this allowFleeing 1;
-					_this enableAI 'MOVE';
-					_this setUnitPos 'AUTO';
-					_this switchmove '';
-					_this playmoveNow 'amovpercmstpsnonwnondnon';
-					";
-
-			sleep 1;
-			[_target] join _caller;
-			_nul = _caller addaction [format ["Disband %1", name _target],MCC_path + "mcc\general_scripts\hostages\hostage.sqf",[1,_target],6,false,true,"","_target == _this"];
-			[[[netID _target,_target], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-			[_target] spawn MCC_fnc_deleteHelper;
-		},
-		{
-			[name _target,"What are you doing?"] remoteExec ["BIS_fnc_showSubtitle", _caller];
-		},
-		[],
-		3,
-		0,
-		true,
-		false
-	] remoteExec ["bis_fnc_holdActionAdd", 0];
+	//Spawn Hostage
+	_null = _unit execVM format ["%1mcc\general_scripts\hostages\create_hostage.sqf", MCC_path];
 
 	{_x addCuratorEditableObjects [[_unit],false]} forEach allCurators;
 	_unit;

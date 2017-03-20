@@ -1,4 +1,6 @@
 private ["_hostage","_init"];
+#define	MCC_UNTIE_ICON "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa"
+
 _hostage = _this;
 
 removeallweapons _hostage;
@@ -19,33 +21,23 @@ if (MCC_isACE) then {
 [
 	_hostage,
 	format ["Untie %1",name _hostage],
-	"\a3\Data_f\clear_empty.paa",
-	"\a3\Data_f\clear_empty.paa",
+	MCC_UNTIE_ICON,
+	MCC_UNTIE_ICON,
 	"(alive _target) && (_target distance _this < 5)",
 	"(alive _target) && (_target distance _this < 5)",
 	{
-		[name _target,"Hurry up!"] remoteExec ["BIS_fnc_showSubtitle", _caller];
+		//Start action
+		[name _target,"Oh thank you, Please hurry up!"] remoteExec ["BIS_fnc_showSubtitle", _caller];
 	},
 	{},
 	{
+		//Success
+		_null = [_target, player, 0,[0]] execVM format ["%1mcc\general_scripts\hostages\hostage.sqf",MCC_path];
 		[name _target,"Thank you!"] remoteExec ["BIS_fnc_showSubtitle", _caller];
-		_target setVariable ["MCC_neutralize",true,true];
-		_init = "
-				_this setcaptive false;
-				_this allowFleeing 1;
-				_this enableAI 'MOVE';
-				_this setUnitPos 'AUTO';
-				_this playmoveNow 'Acts_ExecutionVictim_Unbow';
-				";
-
-		sleep 1;
-		[_target] join _caller;
-		_nul = _caller addaction [format ["Disband %1", name _target],MCC_path + "mcc\general_scripts\hostages\hostage.sqf",[1,_target],6,false,true,"","_target == _this"];
-		[[[netID _target,_target], _init], "MCC_fnc_setVehicleInit", true, true] spawn BIS_fnc_MP;
-		[_target] spawn MCC_fnc_deleteHelper;
 	},
 	{
-		[name _target,"What are you doing?"] remoteExec ["BIS_fnc_showSubtitle", _caller];
+		//When stopped
+		[name _target,"Why did you stopped?"] remoteExec ["BIS_fnc_showSubtitle", _caller];
 	},
 	[],
 	3,

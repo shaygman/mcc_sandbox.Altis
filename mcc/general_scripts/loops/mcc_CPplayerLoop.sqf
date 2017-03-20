@@ -142,6 +142,9 @@ _fnc_supplyBox = {
 	if (count _nearItems == 0) exitWith {false};
 
 	_box = _nearItems select 0;
+
+	if !(isNull attachedTo _box) exitWith {false};
+
 	_value = _box getVariable [_type,500];
 	titleText [_text,"PLAIN DOWN"];
 	titleFadeOut 1;

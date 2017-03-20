@@ -14,8 +14,7 @@ if (_action == 0) then
 			_this allowFleeing 1;
 			_this enableAI 'MOVE';
 			_this setUnitPos 'AUTO';
-			_this switchmove '';
-			_this playmoveNow 'Acts_ExecutionVictim_Loop';
+			_this playmoveNow 'Acts_ExecutionVictim_Unbow';
 			";
 
 	sleep 1;
@@ -25,7 +24,7 @@ if (_action == 0) then
 	[_hostage] spawn MCC_fnc_deleteHelper;
 };
 
-//disabnd Hostage TODO no leave group while doing so
+//disabnd Hostage
 if (_action == 1) then
 {
 	_hostage = (_this select 3) select 1;

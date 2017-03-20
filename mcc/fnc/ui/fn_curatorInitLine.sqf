@@ -27,16 +27,19 @@ disableSerialization;
 
 _curator 		= _this select 0;
 _target 		= _this select 1;
-_time 			= time +0.2;
+_time 			= time +0.1;
 MCC_unitInit 	= "";
 MCC_unitName 	= "";
 
-/*
+
 //Recognize shift key so we can disable MCC custom Zeus if we want to
 _keyUp = (findDisplay 312) displayAddEventHandler  ["KeyUp", "if (_this select 2) then {missionNamespace setvariable ['MCC_shiftPressed',false]}"];
 _keyDown = (findDisplay 312) displayAddEventHandler  ["KeyDown", "if ((_this select 2) && !(missionNamespace getvariable ['MCC_shiftPressed',false])) then {missionNamespace setvariable ['MCC_shiftPressed',true]}"];
-*/
+
 if (!alive _target || isNull _target || isplayer _target || (_target isKindof "Module_F") || missionNamespace getVariable ["MCC_shiftPressed",false]) exitWith {};
+
+_str = "<t size='0.8' t font = 'puristaLight' color='#FFFFFF'>" + "Hold Shift to disable MCC edit" + "</t>";
+_null = [_str,0,1.1,2,0.1,0.0] spawn bis_fnc_dynamictext;
 
 //What are we dealing here
 _targetData = _target call bis_fnc_objectType;
@@ -44,7 +47,7 @@ _targetCategory = _targetData select 0;
 _targetType = _targetData select 1;
 
 if (_targetCategory != "Object") then {
-	waituntil {dialog};
+	waituntil {dialog || (time > _time)};
 } else {
 	waituntil {(time > _time)};
 };

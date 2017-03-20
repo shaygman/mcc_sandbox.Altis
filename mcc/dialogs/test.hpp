@@ -16,118 +16,272 @@ class mcc_test
 
 	class controls
 	{
+		class Group : MCC_RscControlsGroupNoScrollbars
+		{
+			idc = 10;
+			x = 0.27;
+			y = safeZoneY + safeZoneH - (2.5/(2048/64)*(4/3));
+			w = 0; //0.46;
+			h = 0; //2.5/(2048/64)*(4/3);
 
-		class MCC_timeDialogframe: MCC_RscText
-		{
-			idc = -1;
+			class Controls
+			{
+				class CompassStripe : MCC_RscPicture
+				{
+					idc = 13;
+					x = -1.02;
+					y = 0;
+					w = 2.5;
+					h = 2.5/(2048/64)*(4/3);
+					text = __EVAL(MCCPATH +"mcc\HUD\data\compass.paa");
+				};
+				class ObjectiveMarker : MCC_RscPicture
+				{
+					idc = 14;
+					x = 0;
+					y = 0;
+					w = 0.023;
+					h = 0.03 * (4/3);
+					text = __EVAL(MCCPATH +"mcc\HUD\data\needleGreen.paa");
+					colorText[] = {1,1,1,1};
+				};
+				class Needle : MCC_RscPicture
+				{
+					idc = -1;
+					x = 0.21;
+					y =  0.04;
+					w = 0.023;
+					h = 0.03 * (4/3);
+					text = __EVAL(MCCPATH +"mcc\HUD\data\needle.paa");
+					colorText[] = {1,1,1,1};
+				};
+			};
+		};
 
-			w = 0.189063 * safezoneW;
-			h = 0.197923 * safezoneH;
-			colorBackground[] = {0,0,0,0.9};
-		};
-		class MCC_timeDialogTittle: MCC_RscText
+		class MCC_captureProgressCTG: MCC_RscControlsGroup
 		{
-			idc = -1;
-			text = "Time:"; //--- ToDo: Localize;
-			colorText[] = {0,1,1,1};
+			idc = 20;
+			x = 0.298906 * safezoneW + safezoneX;
+			y = 0.159 * safezoneH + safezoneY
+			w = 0 * safezoneW;
+			h = 0 * safezoneH;
 
-			x = 0.0630206 * safezoneW;
-			y = 0.0109958 * safezoneH;
-			w = 0.06875 * safezoneW;
-			h = 0.0329871 * safezoneH;
-			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
-		};
-		class MCC_timeS1Tittle: MCC_RscText
-		{
-			idc = -1;
+			class controls
+			{
+				class MCC_captureProgressPRBarBG: MCC_RscText
+				{
+					idc = -1;
+					x = 0 * safezoneW;
+					y = 0 * safezoneH;
+					w = 0.4 * safezoneW;
+					h = 0.02 * safezoneH;
+					colorBackground[] = {0.8,0,0,0.5};
+				};
 
-			text = "/"; //--- ToDo: Localize;
-			x = 0.0572916 * safezoneW;
-			y = 0.0549788 * safezoneH;
-			w = 0.0114583 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
-		class MCC_timeDialogConfirm: MCC_RscButton
-		{
-			idc = -1;
-			onButtonClick = __EVAL("[3] execVM '"+MCCPATH+"mcc\pop_menu\mission_settings.sqf'");
-			text = "Confirm"; //--- ToDo: Localize;
+				class MCC_captureProgressPRBar: MCC_RscProgress
+				{
+					idc = 21;
+					x = 0 * safezoneW;
+					y =0 * safezoneH;
+					w = 0.4 * safezoneW;
+					h = 0.02 * safezoneH;
+					colorBar[] = {0,0,0.8,1};
+					colorFrame[] = {1,1,1,0.8};
+					colorBackground[] = {0.8,0,0,0.6};
+				};
 
-			x = 0.120313 * safezoneW;
-			y = 0.15394 * safezoneH;
-			w = 0.0630208 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
-		class MCC_timeDialogClose: MCC_RscButtonMenu
-		{
-			idc = -1;
-			onButtonClick = "((uiNamespace getVariable 'MCC_groupGen_Dialog') displayCtrl 502) ctrlShow false";
-			text = "Close"; //--- ToDo: Localize;
+				class MCC_captureProgressText: MCC_RscText
+				{
+					idc = 22;
+					style = 0x02;
+					sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+					colorText[] = {1,1,1,1};
+					x = 0.15 * safezoneW;
+					y = 0 * safezoneH;
+					w = 0.1 * safezoneW;
+					h = 0.018 * safezoneH;
+				};
 
-			x = 0.00572965 * safezoneW;
-			y = 0.15394 * safezoneH;
-			w = 0.0572917 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
-		class MCC_timeMonthCombo: MCC_RscCombo
-		{
-			idc = 15;
-			x = 0.00572965 * safezoneW;
-			y = 0.0549788 * safezoneH;
-			w = 0.0515625 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
-		class MCC_timeDayCombo: MCC_RscCombo
-		{
-			idc = 16;
-			x = 0.0687497 * safezoneW;
-			y = 0.0549788 * safezoneH;
-			w = 0.0515625 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
-		class MCC_timeYearCombo: MCC_RscCombo
-		{
-			idc = 17;
-			x = 0.131771 * safezoneW;
-			y = 0.0549788 * safezoneH;
-			w = 0.0515625 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
-		class MCC_timeHourCombo: MCC_RscCombo
-		{
-			idc = 18;
-			x = 0.0343746 * safezoneW;
-			y = 0.0989618 * safezoneH;
-			w = 0.0515625 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
-		class MCC_timeMinuteCombo: MCC_RscCombo
-		{
-			idc = 19;
-			x = 0.0973957 * safezoneW;
-			y = 0.0989618 * safezoneH;
-			w = 0.0515625 * safezoneW;
-			h = 0.0329871 * safezoneH;
-		};
-		class MCC_timeS2Tittle: MCC_RscText
-		{
-			idc = -1;
+				class sMCC_captureProgressFrame: MCC_RscFrame
+				{
+					idc = -1;
+					colorText[] = {0,0,0,1};
+					shadow = 2;
+					sizeEx = 0.1;
 
-			text = "/"; //--- ToDo: Localize;
-			x = 0.120313 * safezoneW;
-			y = 0.0549788 * safezoneH;
-			w = 0.0114583 * safezoneW;
-			h = 0.0329871 * safezoneH;
+					x = 0 * safezoneW;
+					y = 0 * safezoneH;
+					w = 0.4 * safezoneW;
+					h = 0.02 * safezoneH;
+				};
+			};
 		};
-		class MCC_timeS3Tittle: MCC_RscText
-		{
-			idc = -1;
 
-			text = ":"; //--- ToDo: Localize;
-			x = 0.0859376 * safezoneW;
-			y = 0.0989618 * safezoneH;
-			w = 0.0114583 * safezoneW;
-			h = 0.0329871 * safezoneH;
+		class MCC_rivalSide1: MCC_RscControlsGroup
+		{
+			idc = 30;
+			x = 0.427812 * safezoneW + safezoneX;
+			y = 0.00500001 * safezoneH + safezoneY;
+			w = 0 * safezoneW;	// w = 0.04125 * safezoneW;
+			h = 0 * safezoneH;		// h = 0.11 * safezoneH;
+			class Controls
+			{
+				class side1Flag: MCC_RscPicture
+				{
+					idc = 32;
+					text = "\a3\Data_f\Flags\flag_nato_co.paa";
+					x = 0.00515624 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.044 * safezoneH;
+				};
+				class side1FlagFrame: MCC_RscFrame
+				{
+					idc = 31;
+					colorText[] = {0,0,1,1};
+					shadow = 2;
+					sizeEx = 0.1;
+
+					x = 0.00515602 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.044 * safezoneH;
+				};
+				class side1Name: MCC_RscText
+				{
+					idc = 33;
+					text = "NATO";
+					sizeEx ="(((((safezoneW / safezoneH) min 0.9) / 0.9) / 25) * 0.9)";
+					x = 0.00515602 * safezoneW;
+					y = 0.055 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.022 * safezoneH;
+				};
+				class side1Score: MCC_RscText
+				{
+					idc = 34;
+					text = "50";
+					x = 0.00515602 * safezoneW;
+					y = 0.077 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.022 * safezoneH;
+				};
+			};
+		};
+
+		class MCC_rivalSide2: MCC_RscControlsGroup
+		{
+			idc = 40;
+			x = 0.474219 * safezoneW + safezoneX;
+			y = 0.00500001 * safezoneH + safezoneY;
+			w = 0 * safezoneW;	// w = 0.04125 * safezoneW;
+			h = 0 * safezoneH;		// h = 0.11 * safezoneH;
+			class Controls
+			{
+				class side2Flag: MCC_RscPicture
+				{
+					idc = 42;
+					text = "\a3\Data_f\Flags\flag_CSAT_co.paa";
+					x = 0.00515624 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.044 * safezoneH;
+				};
+				class side2FlagFrame: MCC_RscFrame
+				{
+					idc = 41;
+					colorText[] = {1,0,0,1};
+					shadow = 2;
+					sizeEx = 0.1;
+
+					x = 0.00515602 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.044 * safezoneH;
+				};
+				class side2Name: MCC_RscText
+				{
+					idc = 43;
+					text = "CSAT";
+					sizeEx ="(((((safezoneW / safezoneH) min 0.9) / 0.9) / 25) * 0.9)";
+					x = 0.00515602 * safezoneW;
+					y = 0.055 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.022 * safezoneH;
+				};
+				class side2Score: MCC_RscText
+				{
+					idc = 44;
+					text = "50";
+					x = 0.00515602 * safezoneW;
+					y = 0.077 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.022 * safezoneH;
+				};
+			};
+		};
+
+		class MCC_rivalSide3: MCC_RscControlsGroup
+		{
+			idc = 50;
+			x = 0.520625 * safezoneW + safezoneX;
+			y = 0.00500001 * safezoneH + safezoneY;
+			w = 0 * safezoneW;	// w = 0.04125 * safezoneW;
+			h = 0 * safezoneH;		// h = 0.11 * safezoneH;
+			class Controls
+			{
+				class side3Flag: MCC_RscPicture
+				{
+					idc = 52;
+					text = "\a3\Data_f\Flags\flag_AAF_co.paa";
+					x = 0.00515624 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.044 * safezoneH;
+				};
+				class side3FlagFrame: MCC_RscFrame
+				{
+					idc = 51;
+					colorText[] = {0,1,0,1};
+					shadow = 2;
+					sizeEx = 0.1;
+
+					x = 0.00515602 * safezoneW;
+					y = 0.011 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.044 * safezoneH;
+				};
+				class side3Name: MCC_RscText
+				{
+					idc = 53;
+					text = "AAF";
+					sizeEx ="(((((safezoneW / safezoneH) min 0.9) / 0.9) / 25) * 0.9)";
+					x = 0.00515602 * safezoneW;
+					y = 0.055 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.022 * safezoneH;
+				};
+				class side3Score: MCC_RscText
+				{
+					idc = 54;
+					text = "50";
+					x = 0.00515602 * safezoneW;
+					y = 0.077 * safezoneH;
+					w = 0.0309375 * safezoneW;
+					h = 0.022 * safezoneH;
+				};
+			};
+		};
+
+		class MCC_timeLeft:  MCC_RscText
+		{
+			idc = 60;
+			text = "";
+			sizeEx ="(((((safezoneW / safezoneH) min 1.1) / 1) / 25) * 0.9)";
+			x = 0.47 * safezoneW + safezoneX;
+			y = 0.115 * safezoneH + safezoneY;
+			w = 0.04125 * safezoneW;
+			h = 0.033 * safezoneH;
 		};
 	};
 };

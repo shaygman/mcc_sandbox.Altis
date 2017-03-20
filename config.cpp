@@ -4,7 +4,7 @@ class CfgPatches
 
 	class mcc_sandbox
 	{
-		units[] = {"mcc_sandbox_module","mcc_sandbox_moduleSF","mcc_sandbox_moduleRestrictedZone","mcc_sandbox_moduleUndercover","MCC_Module_AAS","mcc_Module_createZones","MCC_Module_settingsMechanics","MCC_Module_settings","MCC_Module_settingsMedicSystem","MCC_Module_settingsRS","MCC_Module_ambientBirds","MCC_module_ambientFire"};
+		units[] = {"mcc_sandbox_module","mcc_sandbox_moduleSF","mcc_sandbox_moduleRestrictedZone","mcc_sandbox_moduleUndercover","MCC_Module_AAS","mcc_Module_createZones","MCC_Module_settingsMechanics","MCC_Module_settings","MCC_Module_settingsMedicSystem","MCC_Module_settingsRS","MCC_Module_ambientBirds","MCC_module_ambientFire","MCC_Module_createIntel"};
 		weapons[] = {};
 		requiredVersion = 1.00;
 		requiredAddons[] = {"A3_Modules_F"};
@@ -16,7 +16,7 @@ class CfgPatches
 
 	class mcc_sandbox_curatorExp
 	{
-		units[] = {"MCC_Module_Base","MCC_Module_addUnitsToZeusCurator","MCC_Module_ambientCiviliansCurator","MCC_Module_MCCCASCurator","MCC_Module_createEvacCurator","MCC_Module_createIEDCurator","MCC_Module_createArmedCivilianCurator","MCC_Module_nightEffectsCurator","MCC_Module_lockDoorsCurator","MCC_Module_atmosphereCurator","MCC_Module_warZoneCurator","MCC_Module_garrisonBuildingsCurator","MCC_Module_damagePartCurator","MCC_Module_vehicleSpawnerCurator","MCC_Module_campaignInitCurator","MCC_Module_setResourcesCurator","MCC_Module_underCoverCurator","MCC_Module_settingsInGameUICurator","MCC_Module_settingsMedicSystemCurator","MCC_Module_settingsCurator","MCC_Module_settingsMechanicsCurator","MCC_Module_settingsRSCurator","MCC_Module_ambientBirdsCurator","MCC_module_ambientFireCurator","MCC_module_survivalSpawnCratesCurator","MCC_Module_settingsGAIACurator"};
+		units[] = {"MCC_Module_Base","MCC_Module_addUnitsToZeusCurator","MCC_Module_ambientCiviliansCurator","MCC_Module_MCCCASCurator","MCC_Module_createEvacCurator","MCC_Module_createIEDCurator","MCC_Module_createArmedCivilianCurator","MCC_Module_nightEffectsCurator","MCC_Module_lockDoorsCurator","MCC_Module_atmosphereCurator","MCC_Module_warZoneCurator","MCC_Module_garrisonBuildingsCurator","MCC_Module_damagePartCurator","MCC_Module_vehicleSpawnerCurator","MCC_Module_campaignInitCurator","MCC_Module_setResourcesCurator","MCC_Module_underCoverCurator","MCC_Module_settingsInGameUICurator","MCC_Module_settingsMedicSystemCurator","MCC_Module_settingsCurator","MCC_Module_settingsMechanicsCurator","MCC_Module_settingsRSCurator","MCC_Module_ambientBirdsCurator","MCC_module_ambientFireCurator","MCC_module_survivalSpawnCratesCurator","MCC_Module_settingsGAIACurator","MCC_Module_createIntelCurator"};
 		weapons[] = {};
 		requiredVersion = 1.00;
 		author = "shay_gman";

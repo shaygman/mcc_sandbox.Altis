@@ -1,20 +1,35 @@
 Change log r22:
 - Added: Enable/disable teleport player to last known location while activating the survival module.
 - Added: GAIA settings module to Zeus.
+- Added: Set Intel module to Eden and Zeus: Allows making items or unit as Intel providers. Giving the players option to interact with the them in order to get information and map location. - as defined by the mission maker.
+- Added: Hold Shift while editing a unit in Zeus to open the default Zeus menu and not MCC menu.
+- Added: Tickets in the MCC UI/HUD settings. Enable it will show time Battlefield kind of HuD including time left, opposing sides names and flags, tickets left exc.
+- Changed: Decreased ambient birds chance.
+- Changed: In RTS mode can call HQ missions even while the campaign isn't enabled.
+- Changed: CAS airplanes will have an angle of attack to targets and will react faster.
 - Fixed: Stuck on Squad menu "P".
 - Fixed: Missing insertion types in start locations.
 - Fixed: Teleport to team always enabled.
 - Fixed: Placing HUD module forces to 1st person.
 - Fixed: Airdrops didn't worked in the commander console.
 - Fixed: Medic system animations.
-- Fixed: Spawn outside the map when spawning on constructed FOB.
-- Fixed: Non leathal ammmo didn't work for clients.
+- Fixed: Spawn outside the map when spawning on FOB built by the players.
+- Fixed: Non lethal ammo didn't work for clients.
+- Fixed: CAS crash with some mods.
+- Fixed: Non-lethal ammo & breaching ammo didn't work on dedicated.
+- Fixed: MCC interaction with door on CUP maps didn't work.
+- Fixed: Ammo/supply/crates box disappear after depletion while on the logistic's truck - Logistics Module.
 
-- Changed: Decreased ambient birds chance.
-- Changed: In RTS mode can call HQ missions even while the campaign isn't enabled.
+היי, אני בן 35, נאה ומסודר. מחפש קשר דיסקרטי לפנק ולהתפנק. מישהי קבועה ורצינית עם ראש פתוח שתאתגר אותי לא רק במיטה. מה את אומרת?
 
+TODO - HuD for PvP - add to UI module
+TODO - wiki: modules fire, birds, intel, hud.
 TODO - missions
 TODO - Campaign enable/disable persistante.
+TODO - weather add fog volume and wind direction
+TODO - animation module
+TODO - CUP LHD
+TODO - add reinforcment to curator
 
 Change log r21:
 - Renamed all MCC items with (MCC) at the begging so you can easily find or disregard them.

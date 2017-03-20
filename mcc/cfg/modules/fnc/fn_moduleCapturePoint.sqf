@@ -442,19 +442,33 @@ switch _mode do {
 
 		//_progress = _progress/100;
 
-		//Close the capture UI
-		if (!(_this select 4) || _progress == 1) exitWith {(["MCC_captureProgressRsc"] call BIS_fnc_rscLayer) cutText ["", "PLAIN"];};
-
-
-
 		//Create progress bar
-		if (isnull (uiNamespace getVariable ["MCC_captureProgressRsc",objNull])) then {
-			(["MCC_captureProgressRsc"] call BIS_fnc_rscLayer) cutRsc ["MCC_captureProgressRsc", "PLAIN"];
+		if (isnull (uiNamespace getVariable ["MCC_hud",objNull])) then {
+			(["MCC_hud"] call BIS_fnc_rscLayer) cutRsc ["MCC_hud", "PLAIN"];
+			_ctrl = ((uiNameSpace getVariable "MCC_hud") displayCtrl 20);
+			_ctrl ctrlSetPosition  [(0.5 * safezoneW + safezoneX), (0.1 * safezoneH + safezoneY), 0, (0.033 * safezoneH)];
+			_ctrl ctrlCommit 0;
 		};
 
-		_ctrl = ((uiNameSpace getVariable "MCC_captureProgressRsc") displayCtrl 2);
+		_ctrl = ((uiNameSpace getVariable "MCC_hud") displayCtrl 20);
+
+		//Close the capture UI
+		if ((!(_this select 4) || _progress == 1 || !(alive player) || (player getvariable ["MCC_medicUnconscious",false])) && (((ctrlPosition _ctrl) select 2) > 0)) exitWith {
+			_ctrl ctrlSetPosition  [(0.5 * safezoneW + safezoneX), (0.1 * safezoneH + safezoneY), 0, (0.033 * safezoneH)];
+			_ctrl ctrlCommit 0.2;
+			playSound "MCC_pop";
+		};
+
+		//Open ctrl
+		if (((ctrlPosition _ctrl) select 2) == 0 && _progress < 1) then {
+			_ctrl ctrlSetPosition  [(0.298906 * safezoneW + safezoneX), (0.1 * safezoneH + safezoneY), (0.4125 * safezoneW), (0.033 * safezoneH)];
+			_ctrl ctrlCommit 0.2;
+			playSound "MCC_pop"
+		};
+
+		_ctrl = ((uiNameSpace getVariable "MCC_hud") displayCtrl 22);
 		_ctrl ctrlSetText (_logic getvariable ["name",""]);
-		_ctrl = ((uiNameSpace getVariable "MCC_captureProgressRsc") displayCtrl 1);
+		_ctrl = ((uiNameSpace getVariable "MCC_hud") displayCtrl 21);
 
 		_ctrl progressSetPosition _progress;
 	};

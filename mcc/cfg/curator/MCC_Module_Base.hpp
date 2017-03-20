@@ -5,7 +5,7 @@ class MCC_Module_Base : Module_F
 	vehicleClass = "Modules";
 	category = "MCC";
 	icon = "\mcc_sandbox_mod\data\mccModule.paa";
-	picture = "";
+	picture = "\mcc_sandbox_mod\data\mccModule.paa";
 	portrait = "\mcc_sandbox_mod\data\mccModule.paa";
 
 	scope = 1;

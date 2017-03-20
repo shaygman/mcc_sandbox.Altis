@@ -254,6 +254,23 @@ class MCC_RscProgress
 	y = 0.619;
 };
 
+class MCC_RscIGProgress
+{
+	access = 0;
+	colorBar[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+	colorFrame[] = {0.706,0.098,0.9294,0};
+	deletable = 0;
+	fade = 0;
+	h = 0.178;
+	shadow = 2;
+	style = 1;
+	texture = "#(argb,8,8,3)color(1,1,1,1)";
+	type = 8;
+	w = 0.009;
+	x = 0.344;
+	y = 0.619;
+};
+
 class MCC_RscButton
 {
   access = 0;

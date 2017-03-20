@@ -129,7 +129,6 @@ class CfgNotifications
 
 class RscTitles
 {
-	#include "\mcc_sandbox_mod\mcc\cfg\modules\dialogs\mcc_captureProgressRsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "\mcc_sandbox_mod\mcc\dialogs\compass.hpp"
 	#include "\mcc_sandbox_mod\hcam\hcam.hpp"

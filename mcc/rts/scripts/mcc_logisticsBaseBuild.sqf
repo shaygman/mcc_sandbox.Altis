@@ -25,7 +25,11 @@ if !(missionNamespace getVariable ["MCC_allowRTS",false]) exitWith {closeDialog 
 _size = 200;
 player setVariable ["MCC_baseSize",_size];
 
-if (isnil format ["MCC_START_%1",playerSide]) exitWith {closeDialog 0; systemchat "You must have a base to expand"};
+if (isnil format ["MCC_START_%1",playerSide]) exitWith {
+	closeDialog 0;
+	_str = "<t size='1' t font = 'puristaLight' color='#FFFFFF'>" + "No H.Q found" + "</t>";
+	_null = [_str,0,0.2,4,0.5,0.0] spawn bis_fnc_dynamictext;
+};
 
 //Camera effects
 _camera = "Camera" camcreate [(getpos player) select 0, (getpos player) select 1,((getpos player) select 2) + 100];

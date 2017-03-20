@@ -124,7 +124,7 @@ MCC_fnc_CPMapOpen_draw =
 			_title = 	if (_x == leader player) then {
 							format ["%1- %2",(_foreachIndex +1), "Leader"];
 						} else {
-							format ["%1- %2",(_foreachIndex +1), _x getvariable ["type","FOB"]];
+							format ["%1- %2",(_foreachIndex +1), if (_x getVariable ["MCC_isLHD",false]) then {"LHD"} else {_x getvariable ["type","FOB"]}];
 						};
 
 			//Mobile respawn
@@ -135,7 +135,7 @@ MCC_fnc_CPMapOpen_draw =
 			_texture = format ["\A3\Ui_f\data\Map\GroupIcons\badge_rotate_%1_gs.paa",_textureAnimPhase];
 
 			//--- Icon is under cursor
-			if ((_pos distance _mousePos) < (_mouseLimit * _size * (ctrlMapScale (uiNamespace getVariable "CP_deployPanelMiniMap") *7))) then {
+			if ((_pos distance2d _mousePos) < (_mouseLimit * _size * (ctrlMapScale (uiNamespace getVariable "CP_deployPanelMiniMap") *7))) then {
 				_size = _size * 1.6;
 				_alpha = 1;
 				missionNamespace setVariable ["MCCSpawnPosSelected",_x];

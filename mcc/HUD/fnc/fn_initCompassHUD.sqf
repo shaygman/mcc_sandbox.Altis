@@ -14,7 +14,14 @@ if (missionNamespace getVariable ["MCC_initCompassHUD",false]) exitWith {};
 
 //Init
 missionNamespace setVariable ["MCC_initCompassHUD",true];
-(["MCC_hud_compass"] call BIS_fnc_rscLayer) cutRsc ["MCC_hud_compass", "PLAIN"];
+
+if (isnull (uiNamespace getVariable ["MCC_hud",objNull])) then {
+    (["MCC_hud"] call BIS_fnc_rscLayer) cutRsc ["MCC_hud", "PLAIN"];
+};
+
+//Open Compass
+((uiNameSpace getVariable "MCC_hud") displayCtrl 10) ctrlSetPosition  [(0.27), (safeZoneY + safeZoneH - (2.5/(2048/64)*(4/3))), (0.46), (2.5/(2048/64)*(4/3))];
+((uiNameSpace getVariable "MCC_hud") displayCtrl 10) ctrlCommit 0.2;
 
 _compassTeamMates = param [0,true,[true]];
 
@@ -31,10 +38,10 @@ MCC_fnc_compHudEVH = {
 
     _offset = if (_orgDir > 180) then {0.6083} else {-1.023};
     _pos = _offset + (-_orgDir * _click);
-    _dialog = (uiNamespace getVariable "MCC_hud_compass");
+    _dialog = (uiNamespace getVariable "MCC_hud");
 
-    (_dialog displayCtrl 3) ctrlSetPosition [_pos, 0];
-    (_dialog displayCtrl 3) ctrlCommit 0;
+    (_dialog displayCtrl 13) ctrlSetPosition [_pos, 0];
+    (_dialog displayCtrl 13) ctrlCommit 0;
 
     //Wp marker
     _wpPos = waypointPosition [group player, currentWaypoint group player];
@@ -44,11 +51,11 @@ MCC_fnc_compHudEVH = {
         _offset = if (_dir > 180) then {1.847} else {0.216};
         _pos = _offset + (-_dir * _click);
 
-        (_dialog displayCtrl 4) ctrlShow true;
-        (_dialog displayCtrl 4) ctrlSetPosition [_pos, 0.07];
-        (_dialog displayCtrl 4) ctrlCommit 0;
+        (_dialog displayCtrl 14) ctrlShow true;
+        (_dialog displayCtrl 14) ctrlSetPosition [_pos, 0.07];
+        (_dialog displayCtrl 14) ctrlCommit 0;
     } else {
-        (_dialog displayCtrl 4) ctrlShow false;
+        (_dialog displayCtrl 14) ctrlShow false;
     };
 
     //Group markers
@@ -61,10 +68,10 @@ MCC_fnc_compHudEVH = {
 
         {
             if (_x != player) then {
-                _index =  (_foreachindex)+10;
+                _index =  (_foreachindex)+1000;
                 _iconSize = ((1-((player distance _x)/300 min 1))*0.04) max 0.015;
 
-                _dialog ctrlCreate ["RscPicture",_index,(_dialog displayCtrl 1)];
+                _dialog ctrlCreate ["RscPicture",_index,(_dialog displayCtrl 10)];
                 _ctrls pushBack _index;
 
                 uiNamespace setVariable ["MCC_hud_compassUnits",_ctrls];

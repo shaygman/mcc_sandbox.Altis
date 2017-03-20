@@ -78,8 +78,8 @@ if (isnil"MCC_t2tIndex") then {MCC_t2tIndex	= 1}; 			//0 - Disabled. 1- JIP, 2- 
 
 //non-lethal ammo & breaching ammo
 //Define non-lethal ammunition player using this ammunition on units closer then 30 meters will not kill them but stun them.
-if (isnil"MCC_nonLeathalAmmo") then {MCC_nonLeathalAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"]};
-if (isnil"MCC_breacingAmmo") then {MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug"]};
+if (isnil"MCC_nonLeathalAmmo") then {MCC_nonLeathalAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug","CUP_8Rnd_B_Beneli_74Slug"]};
+if (isnil"MCC_breacingAmmo") then {MCC_breacingAmmo = ["prpl_8Rnd_12Gauge_Slug","prpl_6Rnd_12Gauge_Slug","rhsusf_8Rnd_Slug","rhsusf_5Rnd_Slug","CUP_8Rnd_B_Beneli_74Slug"]};
 
 //MCC Survive mod
 // Set to true to activate survival mode - scavange for loot to survive
@@ -730,9 +730,11 @@ if ( isServer ) then {
 		if (! (["a3_", _name] call BIS_fnc_inString)) then {_newAddons pushBack _name};
 	};
 	if (count _newAddons > 0) then {_dummy addCuratorAddons _newAddons};
-	*/
 
 	_null = [_dummy,[],true] call BIS_fnc_moduleCurator;
+	*/
+
+
 
 	//Add curator presets
 	[MCC_curator, "player",["%ALL"]] call BIS_fnc_setCuratorAttributes;
@@ -1015,6 +1017,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 
 													if (_closed) then {
 														_object animate [_animation, _phase];
+														//_object animateSource [_animation, _phase];
 													};
 												};
 
@@ -1023,7 +1026,7 @@ if ( !( isDedicated) && !(MCC_isLocalHC) ) then {
 													_unit 	= cursorTarget;
 													if (_unit isKindof "CAManBase" && ((_this select 0) distance _unit < 30)) then {
 														deleteVehicle (_this select 6);
-														[_unit, 5] spawn MCC_fnc_stunBehav;
+														[_unit, 5] remoteExec ["MCC_fnc_stunBehav",_unit];
 													};
 												};
 											}];

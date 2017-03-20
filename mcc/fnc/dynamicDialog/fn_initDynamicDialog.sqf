@@ -7,6 +7,7 @@
                    2. ARRAY of ARRAYS (combo boxs) like above but can have the options var as an array containing the option text + picture path [["question1",[["Option1","option1pic.paa"],"option2"]],["question2",["Option1","option2"]]]
                    3. BOOLEAN will create a checkbox example: ["question1",flase]
                    4. INTEGER will create a slider with max number as given example ["question1",10] wiil create a slider with up to 10
+                   5. STRING will create an open text box
 
      Example ["My dialog",[["question1",["Option1","option2"]],["question2",["Option1","option2"]],["question3",["Option1","option2"]]],"MCC_fnc_artillery"] call MCC_fnc_initDynamicDialog
 */
@@ -111,6 +112,13 @@ _ctrls = [];
         _control ctrlCommit 0;
     };
 
+    //If the option is an empty string create a text box
+    if (typeName _options == typeName "") then {
+        _control = _display ctrlCreate ["RscEdit", IDC_BASE + _forEachIndex,_ctrlContent];
+        _control ctrlSetPosition [DEFAULT_WIDTH*1.1, _posY, DEFAULT_WIDTH, DEFAULT_HEIGHT];
+        _control ctrlCommit 0;
+    };
+
     _ctrls pushBack _control;
     _posY = _posY + DEFAULT_HEIGHT*1.2;
 } forEach _array;
@@ -161,6 +169,7 @@ if !(missionNamespace getVariable ["MCC_DynamicDialogOK",false]) exitWith {_resa
     if (ctrlClassName _ctrl == "RscCombo") then {_resaults pushBack (lbCurSel _ctrl)};
     if (ctrlClassName _ctrl == "RscCheckbox") then {_resaults pushBack (cbChecked _ctrl)};
     if (ctrlClassName _ctrl == "RscXSliderH") then {_resaults pushBack (sliderPosition _ctrl)};
+    if (ctrlClassName _ctrl == "RscEdit") then {_resaults pushBack (ctrlText _ctrl)};
 } forEach _ctrls;
 
 //if ok

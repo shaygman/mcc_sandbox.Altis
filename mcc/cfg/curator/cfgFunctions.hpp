@@ -25,4 +25,5 @@ class curator
 	class curatorModuleCapturePoint {};
 	class ambientDenied {};
 	class inGameUICurator {description = "setting MCC's UI"};
+	class curatorSetIntel {description = "set an item as pickable intel"};
 };

@@ -1,6 +1,8 @@
-//==================================================================MCC_fnc_pickItem===============================================================================================
+//======================================================MCC_fnc_pickItem===============================================================================================
 //  _objet = object (the picable object)
-//==================================================================================================================================================================================
+//==============================================================================================================================================================
+#define MCC_INTEL_ICON	"\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_search_ca.paa"
+
 private["_object", "_action", "_displayName","_isMode","_path"];
 
 _object = _this;
@@ -18,9 +20,9 @@ _action = _object addaction [format ["<t color=""#CC0000"">Pick %1</t>",_display
 
 _action = [
 		 _object,
-		 format ["Pick %1",_displayName],
-		 "\a3\Data_f\clear_empty.paa",
-		 "\a3\Data_f\clear_empty.paa",
+		 if (_object isKindOf "man") then {format ["Interrogate %1",_displayName]} else {format ["Search %1",_displayName]},
+		 MCC_INTEL_ICON,
+		 MCC_INTEL_ICON,
 		 "(alive _target) && (_target distance _this < 5)",
 		 "(alive _target) && (_target distance _this < 5)",
 		 {},

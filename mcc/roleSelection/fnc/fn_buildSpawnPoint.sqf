@@ -1,4 +1,4 @@
-//================================================================MCC_fnc_buildSpawnPoint======================================================================================
+//================================================================MCC_fnc_buildSpawnPoint=============================================================================
 //Create a spawn point to the given side - SERVER ONLY
 // Example: [[pos, dir, side,size,destructable], "MCC_fnc_buildSpawnPoint", false, false] spawn BIS_fnc_MP;
 // pos: Array, position
@@ -8,7 +8,7 @@
 // destructable: Boolean
 // animate: Boolean
 // construct: Boolean
-//==============================================================================================================================================================================
+//======================================================================================================================================================================
 private ["_side","_size","_destructable","_building","_dummy","_sphere","_dir","_animate","_flag","_flagTex","_name","_logic","_pos","_construct","_teleport","_enableHud","_mode"];
 if ((typeName (_this select 0)) == "OBJECT") then {
 	_logic			= _this select 0;
@@ -170,11 +170,22 @@ switch (_mode) do
 
 		_dummy = _building createvehicle _pos;
 		_dummy setdir _dir;
+
+		//For LHD
+		if (surfaceIsWater _pos) then {
+			_dummy setPosASL _pos;
+		};
+
 		_dummy setVariable ["mcc_delete",false,true];
 
 		_flag = "FlagPole_F" createvehicle _pos;
 		sleep 0.5;
 		_flag setFlagTexture _flagTex;
+
+		//For LHD
+		if (surfaceIsWater _pos) then {
+			_flag setPosASL _pos;
+		};
 
 		_dummy setvariable ["type",_size,true];
 		_dummy setvariable ["side",_side,true];

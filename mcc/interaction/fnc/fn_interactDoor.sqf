@@ -1,7 +1,7 @@
-//==================================================================MCC_fnc_interactDoor========================================================================================
+//==================================================================MCC_fnc_interactDoor==============================================================================
 // Interaction with Door type
 // Example: [_object] spawn MCC_fnc_interactMan;
-//==============================================================================================================================================================================
+//===============================================================================================================================================================
 private ["_object","_optionalDoors","_suspectCorage","_typeOfSelected","_doorTypes","_loadName","_waitTime","_array","_str"];
 #define MCC_CHARGE "ClaymoreDirectionalMine_Remote_Mag"
 #define MCC_MIROR ["MineDetector","MCC_videoProbe"]
@@ -79,11 +79,15 @@ switch (true) do {
 
 		//We just pressed open/close door
 		if (((_object getVariable [format ["bis_disabled_%1",_door],0])==1) && !MCC_interactionKey_holding) exitWith {
-			_object animate [_animation, 0.1];
+						_object animate [_animation, 0.1];
+			//_object animateSource [_animation,  0.1];
 			sleep 0.1;
 			_object animate [_animation, 0];
+			//_object animateSource [_animation, 0];
 		};
 
+		//systemChat format ["%1 - %2", _object,_animation];
+		//_object animateSource [_animation, _phase];
 		_object animate [_animation, _phase];
 		sleep _waitTime;
 		player setVariable ["MCC_interactionActive",false];

@@ -156,7 +156,6 @@ class RscTitles
         };
 	};
 
-	#include "mcc\cfg\modules\dialogs\mcc_captureProgressRsc.hpp"
 	#include "mcc\dialogs\mcc_InteractionRsc.hpp"
 	#include "mcc\dialogs\compass.hpp"
 	#include "mcc\dialogs\mcc_3dObject.hpp"

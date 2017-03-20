@@ -26,7 +26,7 @@ if ((missionNamespace getVariable ["MCC_interactionKey_holding",false]) && (play
 	_suspectName = if (name _suspect == "Error: No unit") then {"John Doe"} else {name _suspect};
 	_array = [["closeDialog 0","<t size='1' align='center' color='#ffffff'>"+_suspectName+"</t>",""],
 			  ["['zip'] spawn MCC_fnc_interactManClicked","Restrain",format ["%1data\iconHandcuffs.paa",MCC_path]],
-			  ["['follow'] spawn MCC_fnc_interactManClicked","Order Around",format ["%1data\iconOrder.paa",MCC_path]],
+			  ["['follow'] spawn MCC_fnc_interactManClicked","Command",format ["%1data\iconOrder.paa",MCC_path]],
 			  ["['pickKit'] spawn MCC_fnc_interactManClicked","Pick Up Kit",format ["%1data\IconAmmo.paa",MCC_path]],
 			  ["['medic'] spawn MCC_fnc_interactManClicked","Examine",MCC_path + "mcc\interaction\data\IconBleeding.paa"],
 			  ["['drag'] spawn MCC_fnc_interactManClicked","Drag",format ["%1data\IconDrag.paa",MCC_path]]];

@@ -1,7 +1,7 @@
 /*======================================================================= MCC_fnc_login =========================================================
 =================================================================================================================================================*/
 #define MCCMISSIONMAKERNAME 1020
-private ["_p_mcc_player","_p_mcc_player_name","_p_mcc_request","_isAdmin","_mccChat","_missionMaker"];
+private ["_p_mcc_player","_p_mcc_player_name","_p_mcc_request","_isAdmin","_mccChat","_missionMaker","_array"];
 
 disableSerialization;
 
@@ -47,27 +47,45 @@ if ((_missionMaker == "") || _isAdmin) exitWith {
 
 	//load custom units arrays
 	//helicopters
-	missionNamespace setVariable ["MCC_vehicles_helicopters" ,["all","helicopterrtd","air"] call MCC_fnc_makeUnitsArray];
+	_array = ["all","helicopterrtd","air"] call MCC_fnc_makeUnitsArray;
+	_array = _array + (["all","helicopter","air"] call MCC_fnc_makeUnitsArray);
+
+	missionNamespace setVariable ["MCC_vehicles_helicopters" ,_array];
 	publicVariable "MCC_vehicles_helicopters";
 
 	//planes
-	missionNamespace setVariable ["MCC_vehicles_airplanes" ,["all","airplanex","air"] call MCC_fnc_makeUnitsArray];
+	_array = ["all","airplanex","air"] call MCC_fnc_makeUnitsArray;
+	_array = _array + (["all","airplane","air"] call MCC_fnc_makeUnitsArray);
+
+	missionNamespace setVariable ["MCC_vehicles_airplanes" ,_array];
 	publicVariable "MCC_vehicles_airplanes";
 
 	//cars
-	missionNamespace setVariable ["MCC_vehicles_vehicles" ,["all","carx"] call MCC_fnc_makeUnitsArray];
+	_array = ["all","carx"] call MCC_fnc_makeUnitsArray;
+	_array = _array + (["all","car"] call MCC_fnc_makeUnitsArray);
+
+	missionNamespace setVariable ["MCC_vehicles_vehicles" ,_array];
 	publicVariable "MCC_vehicles_vehicles";
 
 	//armor
-	missionNamespace setVariable ["MCC_vehicles_tanks" ,["all","tankx"] call MCC_fnc_makeUnitsArray];
+	_array = ["all","tankx"] call MCC_fnc_makeUnitsArray;
+	_array = _array + (["all","tank"] call MCC_fnc_makeUnitsArray);
+
+	missionNamespace setVariable ["MCC_vehicles_tanks" ,_array];
 	publicVariable "MCC_vehicles_tanks";
 
 	//motorcycle
-	missionNamespace setVariable ["MCC_vehicles_motorcycles" ,["all","motorcyclex"] call MCC_fnc_makeUnitsArray];
+	_array = ["all","motorcyclex"] call MCC_fnc_makeUnitsArray;
+	_array = _array + (["all","motorcycle"] call MCC_fnc_makeUnitsArray);
+
+	missionNamespace setVariable ["MCC_vehicles_motorcycles" ,_array];
 	publicVariable "MCC_vehicles_motorcycle";
 
 	//ships
-	missionNamespace setVariable ["MCC_vehicles_ships" ,["all","shipx"] call MCC_fnc_makeUnitsArray];
+	_array = ["all","shipx"] call MCC_fnc_makeUnitsArray;
+	_array = _array + (["all","ship"] call MCC_fnc_makeUnitsArray);
+
+	missionNamespace setVariable ["MCC_vehicles_ships" ,_array];
 	publicVariable "MCC_vehicles_ships";
 };
 

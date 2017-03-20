@@ -26,3 +26,4 @@
 #include "MCC_module_ambientFire.hpp"
 #include "MCC_module_survivalSpawnCratesCurator.hpp"
 #include "MCC_Module_settingsGAIACurator.hpp"
+#include "MCC_Module_createIntelCurator.hpp"

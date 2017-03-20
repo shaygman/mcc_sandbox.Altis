@@ -67,7 +67,7 @@ if (missionNamespace getVariable ["CP_activated",false]) then {
 //Check if no enemy is close by
 if (_activeSpawn == leader player) then {
 	_targets = ["Car","Tank","Man"];
-	_nearObjects = (getpos _activeSpawn) nearObjects 100;
+	_nearObjects = (getpos _activeSpawn) nearObjects 50;
 
 	if ((count _nearObjects) > 0) then {
 		private ["_enemySides"];
@@ -103,10 +103,14 @@ private ["_maxPos","_cpPos"];
 _maxPos = 1;
 _cpPos = getpos _activeSpawn;
 
-waitUntil {
-	_maxPos = _maxPos +1;
-	_playerDeployPos  =_cpPos findEmptyPosition [0,_maxPos];
-	count _playerDeployPos > 0;
+if (_activeSpawn getVariable ["MCC_isLHD",false]) then {
+	_playerDeployPos  =_cpPos;
+} else {
+	waitUntil {
+		_maxPos = _maxPos +2;
+		_playerDeployPos  =_cpPos findEmptyPosition [0,_maxPos];
+		count _playerDeployPos > 0;
+	};
 };
 
 if (format["%1",_playerDeployPos] == "[-500,-500,0]" ) exitWith {
@@ -132,6 +136,11 @@ waitUntil {isNull attachedTo player};
 //Spawn mechanic
 switch (true) do
 {
+	//LHD
+	case (_activeSpawn getVariable ["MCC_isLHD",false]):	{
+		[_activeSpawn, player] call CUP_fnc_moveInCargo;
+	};
+
 	//On leader
 	case (_activeSpawn == leader player && (vehicle _activeSpawn != _activeSpawn)):	{
 		player assignAsCargo (vehicle _activeSpawn);
