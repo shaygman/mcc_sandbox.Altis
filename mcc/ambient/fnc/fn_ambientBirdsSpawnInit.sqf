@@ -5,8 +5,10 @@
 //==================================================================================================================================================================*/
 
 //If we came here from Zeus run on the server
-if !(isnull curatorcamera) exitWith {
-	[] remoteExec ["MCC_fnc_ambientBirdsSpawnInit", 2];
+if (!isnull curatorcamera) exitWith {
+	_str = "<t size='0.8' t font = 'puristaLight' color='#FFFFFF'>" + "Ambient Birds Enabled" + "</t>";
+	_null = [_str,0,1.1,2,0.1,0.0] spawn bis_fnc_dynamictext;
+	if (!isServer) then {[] remoteExec ["MCC_fnc_ambientBirdsSpawnInit", 2]};
 	deleteVehicle (param [0,objNull,[objNull]]);
 };
 
@@ -18,12 +20,15 @@ while {(missionNamespace getVariable ["MCC_fnc_ambientBirdsSpawnInitRuning",fals
 	{
 		IF (count units _x > 0) then {
 			_unit = [units _x] call BIS_fnc_selectRandom;
-			if ((_unit getVariable ["MCC_fnc_ambientBirdsNextTime",time]) <= time &&
-			    !(vehicle _unit isKindOf "air")) then {
 
-				if ((random (speed _unit) min 9) > 4.3) then {
-					_unit setVariable ["MCC_fnc_ambientBirdsNextTime",time+(random 200)];
-					[vehicle _unit] spawn MCC_fnc_ambientBirdsSpawn;
+			if (typeName _unit isEqualTo typeName objNull) then {
+				if ((_unit getVariable ["MCC_fnc_ambientBirdsNextTime",time]) <= time &&
+				    !(vehicle _unit isKindOf "air")) then {
+
+					if ((random (speed _unit) min 9) > 4.3) then {
+						_unit setVariable ["MCC_fnc_ambientBirdsNextTime",time+(random 200)];
+						[vehicle _unit] spawn MCC_fnc_ambientBirdsSpawn;
+					};
 				};
 			};
 		};

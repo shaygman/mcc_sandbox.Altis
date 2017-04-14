@@ -2,14 +2,14 @@ class mcc_sandbox_moduleGAIASettings : Module_F
 {
 	category = "MCC";
 	author = "shay_gman";
-	displayName = "Settings (GAIA)";
+	displayName = "(Settings) GAIA";
 	icon = "\mcc_sandbox_mod\data\mccModule.paa";
 	picture = "\mcc_sandbox_mod\data\mccModule.paa";
 	vehicleClass = "Modules";
 	function = "MCC_fnc_GAIASettings";
 	scope = 2;
 	isGlobal = 1;
-	
+
 	class Arguments
 	{
 		class aiSkillGen
@@ -71,22 +71,22 @@ class mcc_sandbox_moduleGAIASettings : Module_F
 				};
 			};
 		};
-		
+
 		class aiSkillAim : aiSkillGen
 		{
 			displayName = "AI Skill(Aim)";
 		};
-		
+
 		class aiSkillSpot : aiSkillGen
 		{
 			displayName = "AI Skill(Spot)";
 		};
-		
+
 		class aiSkillCommand : aiSkillGen
 		{
 			displayName = "AI Skill(Command)";
 		};
-		
+
 		class aiSmoke
 		{
 			displayName = "AI use smoke/flare";
@@ -106,7 +106,7 @@ class mcc_sandbox_moduleGAIASettings : Module_F
 				};
 			};
 		};
-		
+
 		class aiSmokeChance
 		{
 			displayName = "Smoke/flares Chance";
@@ -132,7 +132,7 @@ class mcc_sandbox_moduleGAIASettings : Module_F
 				};
 			};
 		};
-		
+
 		class cacheDistance
 		{
 			displayName = "Cache Distance";
@@ -158,7 +158,7 @@ class mcc_sandbox_moduleGAIASettings : Module_F
 				};
 			};
 		};
-		
+
 		class gaiacontrol
 		{
 			displayName = "GAIA Controlls";
@@ -180,7 +180,7 @@ class mcc_sandbox_moduleGAIASettings : Module_F
 			};
 		};
 	};
-	
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Define MCC settings";

@@ -2,21 +2,28 @@
 // ILS for aircrafts based on ILS Pro II 1.0 (by TiGGa)
 //Call from an ILS logic
 //===========================================================================================================================================================================
-private ["_counter","_glideslope","_loc","_arrestingear","_runwayname","_vectorglide","_rwydirection","_angle","_numberofcircles",
-         "_distanceofcircles","_ringarray","_rwydirection2","_devhor","_ycord","_xcord","_zcord","_horizontal","_vertical","_circlepos","_ring","_helpers"];
+private ["_counter","_glideslope","_loc","_arrestingear","_runwayname","_vectorglide","_rwydirection","_angle","_numberofcircles","_landPos","_distanceofcircles","_ringarray","_rwydirection2","_devhor","_ycord","_xcord","_zcord","_horizontal","_vertical","_circlepos","_ring","_helpers"];
 
 //If we came here from ACE get the airport
 if (typeName _this == typeName 0) then {
 	_this = ((player getVariable ["interactWith",[]]) select _this);
 };
 
-_loc 			=  _this select 0;
+_loc 			=  param [0,objNull,[objNull]];
 _rwydirection 	= getdir _loc;
-_runwayname 	= _this select 1;
-_glideslope 	=  "Land_HelipadEmpty_F" createVehicleLocal ([_loc, (_this select 2), _rwydirection] call BIS_fnc_relPos);
+_runwayname 	= param [1,"",[""]];
+_landPos		= param [2,100,[0,objNull]];
+_arrestingear 	= param [3,objNull,[objNull]];
+_helpers 		= param [4,false,[false]];
+
+ if (!isNull _arrestingear) then {
+	_glideslope 	= "Land_HelipadEmpty_F" createVehicleLocal (getPosASL _arrestingear);
+	_glideslope setPosASL (getPosASL _arrestingear);
+} else {
+	_glideslope 	= "Land_HelipadEmpty_F" createVehicleLocal ([_loc, _landPos, _rwydirection] call BIS_fnc_relPos);
+};
+
 _glideslope setdir (if (_rwydirection > 180) then {_rwydirection-180} else {_rwydirection+180});
-_arrestingear 	= _this select 3;
-_helpers 		= _this select 4;
 
 _vectorglide = vectordir _glideslope;
 
@@ -77,9 +84,9 @@ if (_helpers) then
 
 //Add WP
 _circlepos=[(getposasl _glideslope select 0) + (_vectorglide select 0) *_distanceofcircles*_numberofcircles, (getposasl _glideslope select 1) + (_vectorglide select 1) *_distanceofcircles*_numberofcircles,((getposasl _glideslope select 2)+(tan _angle)*_distanceofcircles*_numberofcircles)-12];
-[1,_circlepos,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group player],true] call MCC_fnc_manageWp;
+[1,_circlepos,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", "",0],[group player],true] call MCC_fnc_manageWp;
 
-[0,getpos _glideslope,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group player],true] call MCC_fnc_manageWp;
+[0,getpos _glideslope,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", "",0],[group player],true] call MCC_fnc_manageWp;
 
 for [{_loop=0}, {(((getPos player) select 2) > 20) and (player == driver player) and !(player getVariable ["MCC_ILSAbort",false])}, {_loop=_loop}] do
 {
@@ -262,4 +269,4 @@ deletevehicle _glideslope;
 _ringarray=[];
 
 //Clear up
-[2,getpos _loc,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", {},0],[group player]] call MCC_fnc_manageWp;
+[2,getpos _loc,[0,"NO CHANGE","NO CHANGE","UNCHANGED","UNCHANGED","", "",0],[group player]] call MCC_fnc_manageWp;

@@ -3,15 +3,17 @@ class MCC_Module_captureZone : Module_F
 	scope = 2;
 	isGlobal = 0;
 	category = "MCC";
-	displayName = "Capture Zone";
+	displayName = "(PvP)Capture Zone";
 	function = "MCC_fnc_moduleCapturePoint";
 
-	class Arguments
+	class Attributes: AttributesBase
 	{
-		class type
+		class type : Combo
 		{
 			displayName = "Type";
 			typeName = "NUMBER";
+			property = "type";
+
 			class values
 			{
 				class Ammo
@@ -38,57 +40,37 @@ class MCC_Module_captureZone : Module_F
 			};
 		};
 
-		class ScoreReward
+		class ScoreReward : Edit
 		{
 			displayName = "Score Reward";
 			typeName = "NUMBER";
 			defaultValue = 50;
+			property = "ScoreReward";
 		};
 
-		class flag
+		class flag : Checkbox
 		{
 			displayName = "Flag";
 			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "On";
-					value = true;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Off";
-					value = false;
-				};
-			};
+			property = "faction1";
 		};
 
-		class enableHUD
+		class enableHUD  : Checkbox
 		{
 			displayName = "HUD";
 			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "On";
-					value = true;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Off";
-					value = false;
-				};
-			};
+			property = "enableHUD";
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Create a capture zone that yield resources over time";
+		position = 1;
+		direction = 1;
+		optional = 0;
 		sync[] = {"LocationArea_F","MiscUnlock_F","FlagPole_F"};
 
 		class LocationArea_F

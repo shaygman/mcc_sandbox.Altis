@@ -6,12 +6,14 @@ class MCC_Module_createArmedCivilian : Module_F
 	scope = 2;
 	isGlobal = 0;
 
-	class Arguments
+	class Attributes: AttributesBase
 	{
-		class side
+		class side : Combo
 		{
 			displayName = "Attack Side";
 			typeName = "NUMBER";
+			property = "side";
+
 			class values
 			{
 				class BLUFOR
@@ -38,10 +40,12 @@ class MCC_Module_createArmedCivilian : Module_F
 			};
 		};
 
-		class patrol
+		class patrol : Combo
 		{
 			displayName = "Random Patrol";
 			typeName = "NUMBER";
+			property = "patrol";
+
 			class values
 			{
 				class yes
@@ -57,6 +61,8 @@ class MCC_Module_createArmedCivilian : Module_F
 				};
 			};
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription

@@ -7,8 +7,10 @@ Starts a Init ambient fire - MUST RUN ON SERVER
 		Nothing
 ==============================================================================================================================================================*/
 //If we came here from Zeus run on the server
-if !(isnull curatorcamera) exitWith {
-	[] remoteExec ["MCC_fnc_ambientFireInit", 2];
+if (!isnull curatorcamera) exitWith {
+	_str = "<t size='0.8' t font = 'puristaLight' color='#FFFFFF'>" + "Ambient Fire Enabled" + "</t>";
+	_null = [_str,0,1.1,2,0.1,0.0] spawn bis_fnc_dynamictext;
+	if (!isServer) then {[] remoteExec ["MCC_fnc_ambientFireInit", 2]};
 	deleteVehicle (param [0,objNull,[objNull]]);
 };
 

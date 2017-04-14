@@ -11,13 +11,15 @@ class mcc_sandbox_moduleRestrictedZone : Module_F
 	isGlobal = 2;
 	isTriggerActivated = 1;
 
-	class Arguments
+	class Attributes: AttributesBase
 	{
-		class sides
+		class sides : Combo
 		{
 			displayName = "Restricted Sides";
 			description = "Enter the restricted sides as array [west,east,resistance,civlian]";
 			typeName = "NUMBER";
+			property = "sides";
+
 			class values
 			{
 				class All
@@ -49,62 +51,37 @@ class mcc_sandbox_moduleRestrictedZone : Module_F
 			};
 		};
 
-		class time
+		class time : Combo
 		{
 			displayName = "Time Before Punishment";
 			description = "How much time in seconds should elapsed before the player will be punished";
 			typeName = "NUMBER";
 			defaultValue = 10;
+			property = "time";
 		};
 
-		class air
+		class air : Checkbox
 		{
 			displayName = "Air Vehicles";
 			description = "Should air vehicles be allowed";
 			typeName = "BOOL";
-			class values
-			{
-				class disable
-				{
-					name = "Disable";
-					value = false;
-					default = 1;
-				};
-
-				class enable
-				{
-					name = "Enable";
-					value = true;
-				};
-			};
+			property = "air";
 		};
 
-		class createMarker
+		class createMarker : Checkbox
 		{
 			displayName = "Create markers";
 			description = "Create markers on the triggers locations";
 			typeName = "BOOL";
-			class values
-			{
-				class disable
-				{
-					name = "Disable";
-					value = false;
-				};
-
-				class enable
-				{
-					name = "Enable";
-					value = true;
-					default = 1;
-				};
-			};
+			property = "createMarker";
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription
 	{
-		description = "Create restricted areas";
+		description = "Sync with any trigger to create restricted areas";
 		sync[] = {"LocationArea_F"};
 
 		class LocationArea_F

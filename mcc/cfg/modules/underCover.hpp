@@ -10,13 +10,15 @@ class mcc_sandbox_moduleUndercover : Module_F
 	scope = 2;
 	isGlobal = 1;
 
-	class Arguments
+	class Attributes: AttributesBase
 	{
-		class removeGear
+		class removeGear : Combo
 		{
 			displayName = "Remove Weapons:";
 			description = "Remove all weapons on game start";
 			typeName = "NUMBER";
+			property = "removeGear";
+
 			class values
 			{
 				class yes
@@ -32,6 +34,8 @@ class mcc_sandbox_moduleUndercover : Module_F
 				};
 			};
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription

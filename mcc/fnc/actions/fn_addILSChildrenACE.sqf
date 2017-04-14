@@ -24,7 +24,7 @@ _searchArray = if (MCC_isMode) then {allMissionObjects "mcc_sandbox_moduleILS"} 
 
 	if (((_x getVariable ["MCC_runwayDis",0])>0) && (playerside in _sides)) then
 	{
-		_airports set [_counter,[_x,(_x getVariable ["MCC_runwayName","Runway"]),(_x getVariable ["MCC_runwayDis",0]),(_x getVariable ["MCC_runwayAG",false]),(_x getVariable ["MCC_runwayCircles",true])]];
+		_airports set [_counter,[_x,(_x getVariable ["MCC_runwayName","Runway"]),(_x getVariable ["MCC_runwayDis",0]),(_x getVariable ["MCC_runwayAG",objNull]),(_x getVariable ["MCC_runwayCircles",true])]];
 		_counter = _counter +1;
 	};
 } foreach _searchArray;

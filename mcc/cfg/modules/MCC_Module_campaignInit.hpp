@@ -6,21 +6,24 @@ class MCC_Module_campaignInit : Module_F
 	displayName = "Start Campaign";
 	function = "MCC_fnc_curatorCampaignInit";
 
-	class Arguments
+	class Attributes: AttributesBase
 	{
-		class factionPlayer
+		class factionPlayer : Edit
 		{
 			displayName = "Players Faction";
 			description = "Config name";
 			typeName = "STRING";
-			defaultValue = "BLU_F";
+			defaultValue = """BLU_F""";
+			property = "factionPlayer";
 		};
 
-		class factionRivalPlayer
+		class factionRivalPlayer : Combo
 		{
 			displayName = "Rival Players Side";
 			description = "Players on rival side will gain resources from killing main faction's players";
 			typeName = "NUMBER";
+			property = "factionRivalPlayer";
+
 			class values
 			{
 				class none
@@ -52,27 +55,30 @@ class MCC_Module_campaignInit : Module_F
 			};
 		};
 
-		class factionEnemy
+		class factionEnemy : Edit
 		{
 			displayName = "Enemy Faction";
 			typeName = "STRING";
 			description = "Config name";
-			defaultValue = "OPF_F";
+			defaultValue = """OPF_F""";
+			property = "factionEnemy";
 		};
 
-		class factionCiv
+		class factionCiv : Edit
 		{
 			displayName = "Civilian Faction";
 			typeName = "STRING";
 			description = "Config name";
-			defaultValue = "CIV_F";
+			defaultValue = """CIV_F""";
+			property = "factionCiv";
 		};
 
-		class missionMax
+		class missionMax : Combo
 		{
 			displayName = "Number of Missions";
 			description = "Until Campaign Ends - 0 means no mission will be generated";
 			typeName = "NUMBER";
+			property = "missionMax";
 			class values
 			{
 				class five
@@ -99,10 +105,12 @@ class MCC_Module_campaignInit : Module_F
 			};
 		};
 
-		class difficulty
+		class difficulty : Combo
 		{
 			displayName = "Difficulty";
 			typeName = "NUMBER";
+			property = "difficulty";
+
 			class values
 			{
 				class easy
@@ -124,28 +132,33 @@ class MCC_Module_campaignInit : Module_F
 			};
 		};
 
-		class tickets
+		class tickets : Edit
 		{
 			displayName = "Starting Tickets";
 			typeName = "NUMBER";
 			defaultValue = 100;
+			property = "tickets";
 		};
 
-		class missionRotation
+		class missionRotation : Edit
 		{
 			displayName = "Missions Rotation";
 			description = "After each set of mission passed MCC will pick a new location for the next mission";
 			typeName = "NUMBER";
 			defaultValue = 3;
+			property = "missionRotation";
 		};
 
-		class tileSize
+		class tileSize : Edit
 		{
 			displayName = "Tile Size";
 			description = "MCC will categorize the map to tiles - the default size of a tile";
 			typeName = "NUMBER";
 			defaultValue = 3;
+			property = "tileSize";
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription

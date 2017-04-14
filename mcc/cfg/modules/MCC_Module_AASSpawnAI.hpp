@@ -5,21 +5,24 @@ class MCC_Module_AASSpawnAI : Module_F
 	function = "MCC_fnc_aas_AIspawn";
 	scope = 2;
 	isGlobal = 0;
-	class Arguments
+
+	class Attributes: AttributesBase
 	{
-		class faction1
+		class faction1 : Edit
 		{
 			displayName = "Spawn Faction";
 			description = "As defined in cfgFaction";
-			typeName = "STRING";
-			defaultValue = "BLU_F";
+			defaultValue = """BLU_F""";
+			property = "faction1";
 		};
 
-		class enemySide
+		class enemySide : Combo
 		{
 			displayName = "Enemy Side";
 			description = "Who are we fighting";
 			typeName = "NUMBER";
+			property = "enemySide";
+
 			class values
 			{
 				class BLUFOR
@@ -41,104 +44,61 @@ class MCC_Module_AASSpawnAI : Module_F
 			};
 		};
 
-		class autoBalance
+		class autoBalance : Checkbox
 		{
 			displayName = "Auto balance AI";
 			description = "Auto balance the number of AI to players";
-			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "Enable";
-					value = true;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Disable";
-					value = false;
-				};
-			};
+			property = "autoBalance";
 		};
 
-		class minAI
+		class minAI : Edit
 		{
 			displayName = "Minimum number of AI per side";
 			description = "Minimum number of AI no matter how many players";
 			typeName = "NUMBER";
-			defaultValue = 0;
+			defaultValue = 10;
+			property = "minAI";
 		};
 
-		class spawnAIDefensive
+		class spawnAIDefensive : Checkbox
 		{
-			displayName = "Spawn on captured";
+			displayName = "Spawn at Sectors";
 			description = "Spawn AI on captured sectors or just at start location";
 			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "Enable";
-					value = true;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Disable";
-					value = false;
-				};
-			};
+			property = "spawnAIDefensive";
 		};
 
-		class searchRadius
+		class searchRadius : Edit
 		{
-			displayName = "Search Radius";
+			displayName = "Search Vehicles Radius";
 			description = "How far AI will look for empty vehicles around the spawn point";
 			typeName = "NUMBER";
 			defaultValue = 300;
+			property = "searchRadius";
 		};
 
-		class useRoles
+		class useRoles : Checkbox
 		{
 			displayName = "Use MCC roles gear";
 			description = "AI will use roles kits as defined in MCC_loadouts";
 			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "Enable";
-					value = true;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Disable";
-					value = false;
-				};
-			};
+			property = "useRoles";
 		};
 
-		class spawnVehicles
+		class spawnVehicles : Checkbox
 		{
 			displayName = "Spawn Vehicles";
 			description = "AI will spawn vehicles equals to the enemy vehicels";
 			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "Enable";
-					value = true;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Disable";
-					value = false;
-				};
-			};
+			property = "spawnVehicles";
 		};
+
+		class ModuleDescription: ModuleDescription{};
+	};
+
+	class ModuleDescription: ModuleDescription
+	{
+		description = "Spawn AI that will try to conquer enemy sectors in MCC AAS";
+		position = 1;
 	};
 };

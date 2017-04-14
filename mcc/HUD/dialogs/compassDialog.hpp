@@ -56,7 +56,7 @@ class MCC_hud {
 		{
 			idc = 20;
 			x = 0.298906 * safezoneW + safezoneX;
-			y = 0.11 * safezoneH + safezoneY;
+			y = 0.118 * safezoneH + safezoneY;
 			w = 0 * safezoneW;
 			h = 0 * safezoneH;
 

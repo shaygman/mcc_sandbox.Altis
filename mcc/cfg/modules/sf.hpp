@@ -1,4 +1,4 @@
-class mcc_sandbox_moduleSF : Module_F 
+class mcc_sandbox_moduleSF : Module_F
 {
 	category = "MCC";
 	author = "shay_gman";
@@ -9,14 +9,16 @@ class mcc_sandbox_moduleSF : Module_F
 	function = "MCC_fnc_SF";
 	scope = 2;
 	isGlobal = 1;
-	
-	class Arguments
+
+	class Attributes: AttributesBase
 	{
-		class hcam_actionKey
+		class hcam_actionKey : Combo
 		{
-			displayName = "User custom key:"; 
-			description = "Which user's custom key will activate the helmet cam"; 
+			displayName = "User custom key:";
+			description = "Which user's custom key will activate the helmet cam";
 			typeName = "NUMBER"; // Value type, can be "NUMBER", "STRING" or "BOOL"
+			property = "hcam_actionKey";
+
 			class values
 			{
 				class 1key	{name = "Use Action 1";	value = 1; default = 1;};
@@ -41,37 +43,41 @@ class mcc_sandbox_moduleSF : Module_F
 				class 20key	{name = "Use Action 20"; value = 20;};
 			};
 		};
-		
-		class hcam_goggles
+
+		class hcam_goggles : Edit
 		{
 			displayName = "Display Goggles";
 			description = "Goggles needed to watch the live feed camera by defaul 'G_Tactical_Clear'. enter as array ['G_Tactical_Clear',G_Tactical_Clear2'...]";
-			defaultValue = "[]";
+			defaultValue = """[]""";
+			property = "hcam_goggles";
 		};
-		
-		class hcam_headgear
+
+		class hcam_headgear : Edit
 		{
 			displayName = "Headger Needed";
 			description = "Headger needed to broadcast the live feed camera by live empty to all or enter as array ['H_Cap_red',H_HelmetB'...]";
-			defaultValue = "[]";
+			defaultValue = """[]""";
+			property = "hcam_headgear";
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
-	
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Sync to any player role to gain access to the helmet camera";
 		sync[] = {"BLUFORunit"};
- 
+
 		class BLUFORunit
 		{
-			description[] = { 
+			description[] = {
 				"Sync with any player's role"
 			};
-			displayName = "SF Team camera"; 
-			icon = "iconMan"; 
-			optional = 1; 
+			displayName = "SF Team camera";
+			icon = "iconMan";
+			optional = 1;
 			duplicate = 1;
-			synced[] = {"AnyBrain"}; 
+			synced[] = {"AnyBrain"};
 		};
 	};
 };

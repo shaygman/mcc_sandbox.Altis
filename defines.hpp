@@ -60,6 +60,7 @@
 #include "mcc\bombDefuse\cfg.hpp"
 #include "mcc\survive\cfg.hpp"
 #include "mcc\interaction\cfg.hpp"
+#include "mcc\LHD\cfg.hpp"
 
 //--------------------------Cfg----------------------------------------------------
 class CfgFunctions
@@ -87,6 +88,7 @@ class CfgFunctions
 		#include "mcc\helpers\cfgFunctions.hpp"
 		#include "mcc\helicopters\cfgFunctions.hpp"
 		#include "mcc\ambient\cfgFunctions.hpp"
+		#include "mcc\LHD\cfgFunctions.hpp"
 	};
 };
 

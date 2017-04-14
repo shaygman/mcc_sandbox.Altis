@@ -682,7 +682,7 @@ _music = ["LeadTrack01a_F","LeadTrack02_F","LeadTrack03_F","LeadTrack04a_F","Lea
 
 if (_playMusic > 0 ) then {_music = ""};
 
-[[_html2, ((_missionName1 select 0) +" " + (_missionName2  select 0)), _missionTittle, [_missionCenter,_objectives,1,_html,_sounds,_music,_plainText,_sidePlayer,_playMusic,_preciseMarkers]],"MCC_fnc_makeBriefing",false,false] spawn BIS_fnc_MP;
+[[_html2, ((_missionName1 select 0) +" " + (_missionName2  select 0)), [_missionTittle], [_missionCenter,_objectives,1,_html,_sounds,_music,_plainText,_sidePlayer,_playMusic,_preciseMarkers]],"MCC_fnc_makeBriefing",false,false] spawn BIS_fnc_MP;
 
 
 //Broadcast missionInfo to all side

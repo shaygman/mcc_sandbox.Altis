@@ -6,12 +6,14 @@ class MCC_Module_createEvac : Module_F
 	scope = 2;
 	isGlobal = 0;
 
-	class Arguments
+	class Attributes : AttributesBase
 	{
-		class side
+		class side : Combo
 		{
 			displayName = "Evac Side";
 			typeName = "NUMBER";
+			property = "side";
+
 			class values
 			{
 				class BLUFOR
@@ -38,10 +40,12 @@ class MCC_Module_createEvac : Module_F
 			};
 		};
 
-		class gunners
+		class gunners : Combo
 		{
 			displayName = "Add Gunners";
 			typeName = "NUMBER";
+			property = "gunners";
+
 			class values
 			{
 				class yes
@@ -58,11 +62,13 @@ class MCC_Module_createEvac : Module_F
 			};
 		};
 
-		class campaign
+		class campaign : Combo
 		{
 			displayName = "Campaign Evac";
 			description = "Campaign Evac vehicle will respawn each ingame day if MCC campaign is activated";
 			typeName = "NUMBER";
+			property = "campaign";
+
 			class values
 			{
 				class yes
@@ -78,6 +84,8 @@ class MCC_Module_createEvac : Module_F
 				};
 			};
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription

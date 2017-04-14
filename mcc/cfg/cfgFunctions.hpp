@@ -60,7 +60,6 @@ class general
 	class openArtillery {};
 	class deleteBrush{};
 	class crewCount {description = "return empty seats of a specific vehicle with or without FFV (firing From Vehicles)";};
-	class LHDspawn {description = "Spawn CUP LHD at a given position and set it as a MCC's start location"}
 };
 
 class ui

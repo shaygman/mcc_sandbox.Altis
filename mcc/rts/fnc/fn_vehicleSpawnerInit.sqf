@@ -24,7 +24,7 @@ if (_object isKindOf "mcc_sandbox_modulevehicleSpawner" || _object isKindOf "MCC
     };
 
     _type = _object getVariable ["type","vehicle"];
-    missionNamespace setVariable ["MCC_vehicleKioskBySide",(_object getVariable ["spawnFrom",0])==1];
+    missionNamespace setVariable ["MCC_vehicleKioskBySide",(_object getVariable ["spawnFrom",0]) isEqualTo 1];
 
     //Add the objects to curator
     [_billboard,_helipad,_type] spawn {

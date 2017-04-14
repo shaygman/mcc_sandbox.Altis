@@ -6,6 +6,11 @@ class mcc_Module_createZones : Module_F
 	scope = 2;
 	isGlobal = 0;
 
+	class Attributes: AttributesBase
+	{
+		class ModuleDescription: ModuleDescription{};
+	};
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Sync with triggers to create MCC zones";

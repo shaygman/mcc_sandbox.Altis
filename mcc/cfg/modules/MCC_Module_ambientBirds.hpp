@@ -6,8 +6,13 @@ class MCC_Module_ambientBirds : Module_F
 	scope = 2;
 	isGlobal = 0;
 
+	class Attributes: AttributesBase
+	{
+		class ModuleDescription: ModuleDescription{};
+	};
+
 	class ModuleDescription: ModuleDescription
 	{
-		description = "Spawn random flocks of birds when a unit get close to trees";
+		description = "Enables spawning random flocks of birds when units get close to trees";
 	};
 };

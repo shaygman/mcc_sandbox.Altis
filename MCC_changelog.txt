@@ -4,9 +4,11 @@ Change log r22:
 - Added: Set Intel module to Eden and Zeus: Allows making items or unit as Intel providers. Giving the players option to interact with the them in order to get information and map location. - as defined by the mission maker.
 - Added: Hold Shift while editing a unit in Zeus to open the default Zeus menu and not MCC menu.
 - Added: Tickets in the MCC UI/HUD settings. Enable it will show time Battlefield kind of HuD including time left, opposing sides names and flags, tickets left exc.
+- Added: Modules info in Eden.
 - Changed: Decreased ambient birds chance.
 - Changed: In RTS mode can call HQ missions even while the campaign isn't enabled.
 - Changed: CAS airplanes will have an angle of attack to targets and will react faster.
+- Changed: Can call any plane type (Addons includded) to act as an AC-130 from CAS Menu.
 - Fixed: Stuck on Squad menu "P".
 - Fixed: Missing insertion types in start locations.
 - Fixed: Teleport to team always enabled.
@@ -19,8 +21,6 @@ Change log r22:
 - Fixed: Non-lethal ammo & breaching ammo didn't work on dedicated.
 - Fixed: MCC interaction with door on CUP maps didn't work.
 - Fixed: Ammo/supply/crates box disappear after depletion while on the logistic's truck - Logistics Module.
-
-היי, אני בן 35, נאה ומסודר. מחפש קשר דיסקרטי לפנק ולהתפנק. מישהי קבועה ורצינית עם ראש פתוח שתאתגר אותי לא רק במיטה. מה את אומרת?
 
 TODO - HuD for PvP - add to UI module
 TODO - wiki: modules fire, birds, intel, hud.

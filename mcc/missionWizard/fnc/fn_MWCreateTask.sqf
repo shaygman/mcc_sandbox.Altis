@@ -265,14 +265,17 @@ if (_task == "clear_area") then {
     if (typeName _obj == "OBJECT") then {_vehicle setvariable ["AttachObject_object",_obj,true]};
     _vehicle setvariable ["RscAttributeTaskState","created", true];
     _vehicle setvariable ["customTask",_task,true];
-    [_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
+   [_vehicle,"RscAttributeTaskDescription",[_stringDescription,_stringName,_stringName]] call bis_fnc_setServerVariable;
     {_x addCuratorEditableObjects [[_vehicle],false]} forEach allCurators;
     _vehicle setvariable ["updated",true,true];
     [_vehicle,_side,_maxObjectivesDistance] spawn MCC_fnc_customTasks;
   } foreach _sides;
 };
 
-
+/*
+["perentTask",west,["description", "title", "destroy"],position player,"AUTOASSIGNED",1,true,true,"destroy",true] call BIS_fnc_setTask;
+[["childTask","perentTask"],west,["description", "title", "destroy"],[player,false],"AUTOASSIGNED",1,true,true,"destroy",true] call BIS_fnc_setTask
+*/
 
 MCC_MWObjectivesNames = [_pos,"",_stringName,_stringDescription,"",_pic,1,[],_vehicle];
 publicVariable "MCC_MWObjectivesNames";

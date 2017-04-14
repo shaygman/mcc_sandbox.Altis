@@ -5,79 +5,61 @@ class MCC_module_vehicleRespawn : Module_F
 	function = "MCC_fnc_vehicleRespawn";
 	scope = 2;
 	isGlobal = 0;
-	class Arguments
+
+	class Attributes: AttributesBase
 	{
-		class abondanDistance
+		class abondanDistance : Edit
 		{
 			displayName = "Abandon Distance";
 			description = "How far must a unit be before vehicle is forced to respawn if empty, leave empty for none";
 			typeName = "NUMBER";
+			defaultValue = 300;
+			property = "abondanDistance";
 		};
 
-		class waitTime
+		class waitTime : Edit
 		{
 			displayName = "Wait Time";
 			description = "How long before vehicle respawn in seconds";
 			typeName = "NUMBER";
 			defaultValue = 5;
+			property = "waitTime";
 		};
 
-		class tickets
+		class tickets : Edit
 		{
 			displayName = "Respawns";
 			description = "How many time can the vehicle repsawn, leave empty for infinite";
 			typeName = "NUMBER";
+			property = "tickets";
 		};
 
-		class destroyEffect
+		class destroyEffect : Checkbox
 		{
 			displayName = "Explosion Effect";
 			description = "Vehicle wreck will explode before delete";
 			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "On";
-					value = true;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Off";
-					value = false;
-				};
-			};
+			property = "destroyEffect";
 		};
 
-		class respawnDisabled
+		class respawnDisabled : Checkbox
 		{
 			displayName = "Disabled Vehicles";
 			description = "Respawn Disabled Vehicles";
 			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "On";
-					value = true;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Off";
-					value = false;
-				};
-			};
+			property = "respawnDisabled";
 		};
 
-		class code
+		class code : Edit
 		{
 			displayName = "Code";
 			description = "Code to execute on respawn vehicle refers as _this";
 			typeName = "STRING";
 			defaultValue = "";
+			property = "code";
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription

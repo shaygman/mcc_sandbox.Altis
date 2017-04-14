@@ -5,13 +5,16 @@ class MCC_Module_ambientCivilians : Module_F
 	function = "MCC_fnc_curatorAmbientCivilians";
 	scope = 2;
 	isGlobal = 0;
-	class Arguments
+
+	class Attributes: AttributesBase
 	{
-		class isCiv
+		class isCiv : Combo
 		{
 			displayName = "Ambient Patrols";
 			description = "Units will move between buildings";
 			typeName = "NUMBER";
+			property = "isCiv";
+
 			class values
 			{
 				class Enabled
@@ -28,11 +31,13 @@ class MCC_Module_ambientCivilians : Module_F
 			};
 		};
 
-		class isCar
+		class isCar : Combo
 		{
 			displayName = "Ambient Cars";
 			description = "Cars will spawn and drive around";
 			typeName = "NUMBER";
+			property = "isCar";
+
 			class values
 			{
 				class Enabled
@@ -49,11 +54,13 @@ class MCC_Module_ambientCivilians : Module_F
 			};
 		};
 
-		class isParkedCar
+		class isParkedCar : Combo
 		{
 			displayName = "Parked Cars";
 			description = "Empty cars will spawn on the road's sides";
 			typeName = "NUMBER";
+			property = "isParkedCar";
+
 			class values
 			{
 				class Enabled
@@ -70,11 +77,13 @@ class MCC_Module_ambientCivilians : Module_F
 			};
 		};
 
-		class isLocked
+		class isLocked : Combo
 		{
 			displayName = "Parked Cars Locked";
 			description = "Parked cars will always be locked";
 			typeName = "NUMBER";
+			property = "isLocked";
+
 			class values
 			{
 				class Enabled
@@ -91,27 +100,31 @@ class MCC_Module_ambientCivilians : Module_F
 			};
 		};
 
-		class factionCiv
+		class factionCiv : Edit
 		{
 			displayName = "Faction";
 			typeName = "STRING";
 			description = "Config name";
-			defaultValue = "CIV_F";
+			defaultValue = """CIV_F""";
+			property = "factionCiv";
 		};
 
-		class factionCivCar
+		class factionCivCar : Edit
 		{
 			displayName = "Car's Faction";
 			typeName = "STRING";
 			description = "Config name";
-			defaultValue = "CIV_F";
+			defaultValue = """CIV_F""";
+			property = "factionCivCar";
 		};
 
-		class civRelations
+		class civRelations : Combo
 		{
 			displayName = "Civilians Reaction";
 			description = "Civilians Reaction to players";
 			typeName = "NUMBER";
+			property = "civRelations";
+
 			class values
 			{
 				class bad
@@ -142,10 +155,14 @@ class MCC_Module_ambientCivilians : Module_F
 				};
 			};
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Server side: spawn AI around players when next to towns and despawn them when no player around";
+		position = 0;
+		direction = 0;
 	};
 };

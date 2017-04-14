@@ -2123,3 +2123,15 @@ class MCC_pop
 	sound[] = {"mcc\sounds\pop.ogg",db+2, 1};
 	#endif
 };
+
+class MCC_landing
+{
+	name = "MCC_landing";
+	titles[] = {};
+
+	#ifdef MCCMODE
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\landing.ogg", db+2, 1};
+	#else
+	sound[] = {"mcc\sounds\landing.ogg",db+2, 1};
+	#endif
+};

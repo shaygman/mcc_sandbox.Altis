@@ -6,14 +6,17 @@ class MCC_Module_ambientCiviliansDenied : Module_F
 	scope = 2;
 	isGlobal = 0;
 
-	class Arguments
+	class Attributes: AttributesBase
 	{
-		class radius
+		class radius : Edit
 		{
 			displayName = "Radius";
 			typeName = "NUMBER";
 			defaultValue = 500;
+			property = "radius";
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription

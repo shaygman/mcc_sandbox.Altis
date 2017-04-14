@@ -1,4 +1,4 @@
-private ["_mccdialog","_comboBox","_displayname","_time", "_index","_message","_messageFinal","_type","_insetionArray","_control","_data","_rad","_alt","_coords","_effectParams","_leftDownPos","_uav"];
+private ["_mccdialog","_comboBox","_displayname","_time", "_index","_message","_messageFinal","_type","_insetionArray","_control","_data","_rad","_alt","_coords","_effectParams","_leftDownPos","_uav","_ammoLeft"];
 // By: Shay_gman
 // Version: 1.1 (April 2013)
 #define mcc_playerConsole3_IDD 5010
@@ -47,7 +47,7 @@ _uav = (missionNamespace getVariable ["MCC_ACConsoleUp",objNull]);
 
 while {_time > time && dialog && (isNil "MCC_fakeAC")} do {
 	_message = "";
-	_messageFinal = ["C","o","n","n","e","c","t","i","n","g"," ","A","C","-","1","3","0"," ","B","l","a","c","k","f","i","s","h",".",".","."];
+	_messageFinal = ["C","o","n","n","e","c","t","i","n","g"," ","A","C","-","1","3","0",".",".","."];
 	for "_i" from 0 to (count _messageFinal - 1) do {
 		_message = _message + (_messageFinal select _i);
 		ctrlSetText [MCC_CONSOLE_AC_BCKG, _message];
@@ -95,16 +95,25 @@ if (dialog && !isNull(missionNamespace getVariable ["MCC_ACConsoleUp",objNull]))
 		ctrlSetText [MCC_CONSOLE_AC_ZOOM_TEXT, format ["ZOOM: %1x",(10-(10*MCC_fakeACFOV))]];
 		ctrlSetText [MCC_CONSOLE_AC_VISION_TEXT, MCC_ConsoleACvision];
 
-		//AmmosetVehicleAmmo
-		MCC_ConsoleACAmmo = [
-							 ["20mm",_uav ammo "gatling_20mm_VTOL_01","4000Rnd_20mm_Tracer_Red_shells","B_20mm_Tracer_Red"],
-							 ["40mm",((crew _uav) select 3) ammo "HE","240Rnd_40mm_GPR_Tracer_Red_shells","B_40mm_GPR_Tracer_Red"],
-							 ["105mm",_uav ammo "cannon_105mm_VTOL_01","100Rnd_105mm_HEAT_MP","Sh_105mm_HEAT_MP"]
-							];
+		if (typeOf _uav == "B_T_VTOL_01_armed_F") then {
+			//AmmosetVehicleAmmo
+			_ammoLeft = [
+						 ["20mm",_uav ammo "gatling_20mm_VTOL_01","gatling_20mm_VTOL_01","B_25mm"],
+						 ["40mm",((crew _uav) select 3) ammo "HE","HE","B_40mm_GPR_Tracer_Red"],
+						 ["105mm",_uav ammo "cannon_105mm_VTOL_01","cannon_105mm_VTOL_01","Sh_105mm_HEAT_MP"]
+						];
 
-		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT, ("20mm: " + str (_uav ammo "gatling_20mm_VTOL_01"))];
-		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT2, ("40mm: " + str (((crew _uav) select 3) ammo "HE"))];
-		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT3, ("105mm: " + str (_uav ammo "cannon_105mm_VTOL_01"))];
+		} else {
+			_ammoLeft = _uav getVariable ["MCC_ConsoleACAmmo",[
+								 ["20mm",4000,"gatling_20mm_VTOL_01","B_25mm"],
+								 ["40mm",400,"HE","B_40mm_GPR_Tracer_Red"],
+								 ["105mm",40,"cannon_105mm_VTOL_01","Sh_105mm_HEAT_MP"]
+								]];
+		};
+
+		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT, ("20mm: " + str ((_ammoLeft select 0) select 1))];
+		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT2, ("40mm: " + str ((_ammoLeft select 1) select 1))];
+		ctrlSetText [MCC_CONSOLE_AC_MISSILE_COUNT3, ("105mm: " + str ((_ammoLeft select 2) select 1))];
 
 		//Flight Height
 		sliderSetRange [MCC_CONSOLEUAVFLIGHTHIGHT, 300, 1500];

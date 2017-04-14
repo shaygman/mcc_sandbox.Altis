@@ -6,6 +6,11 @@ class MCC_module_ambientFire : Module_F
 	scope = 2;
 	isGlobal = 0;
 
+	class Attributes: AttributesBase
+	{
+		class ModuleDescription: ModuleDescription{};
+	};
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Explosives and destroyed vehicles will propagate fire";

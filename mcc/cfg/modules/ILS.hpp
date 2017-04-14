@@ -9,22 +9,24 @@ class mcc_sandbox_moduleILS : Module_F
 	function = "";
 	scope = 2;
 	isGlobal = 1;
-	
-	class Arguments
+
+	class Attributes: AttributesBase
 	{
-		class MCC_runwayName
+		class MCC_runwayName : Edit
 		{
+			control = "Edit";
 			displayName = "Runway Name";
 			description = "Runway Name display in ILS";
-			typeName = "STRING";
-			defaultValue = "Runway";
+			defaultValue = """Runway""";
+			property = "MCC_runwayName";
 		};
-		
-		class MCC_runwayDis
+
+		class MCC_runwayDis : Combo
 		{
 			displayName = "Runway Length";
 			description = "Runway length in meters";
 			typeName = "NUMBER";
+			property = "MCC_runwayDis";
 			class values
 			{
 				class L100
@@ -45,12 +47,13 @@ class mcc_sandbox_moduleILS : Module_F
 				};
 			};
 		};
-		
-		class MCC_runwaySide
+
+		class MCC_runwaySide : Combo
 		{
 			displayName = "Allowed Sides";
 			description = "Only specific sides can use this airfield";
 			typeName = "NUMBER";
+			property = "MCC_runwaySide";
 			class values
 			{
 				class All
@@ -81,31 +84,21 @@ class mcc_sandbox_moduleILS : Module_F
 				};
 			};
 		};
-		
-		class MCC_runwayCircles
+
+		class MCC_runwayCircles : Checkbox
 		{
 			displayName = "Circles Helpers";
 			description = "Allow virtual circles to show the landing path";
-			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "On";
-					value = 1;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Off";
-					value = 0;
-				};
-			};
+			property = "MCC_runwayCircles";
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
-	
+
 	class ModuleDescription: ModuleDescription
 	{
 		description = "Place ILS module on each runway's start facing the same diraction as the runway";
+		position = 1;
+		direction = 1;
 	};
 };

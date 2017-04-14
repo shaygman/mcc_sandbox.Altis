@@ -6,13 +6,15 @@ class MCC_Module_createIntel : Module_F
 	scope = 2;
 	isGlobal = 0;
 
-	class Arguments
+	class Attributes : AttributesBase
 	{
-		class shared
+		class shared : Combo
 		{
 			displayName = "Shared With";
 			description = "Who will get the intel notification";
 			typeName = "NUMBER";
+			property = "shared";
+
 			class values
 			{
 				class all
@@ -34,45 +36,39 @@ class MCC_Module_createIntel : Module_F
 			};
 		};
 
-		class tittle
+		class tittle : Edit
 		{
 			displayName = "Intel's Tittle";
 			typeName = "STRING";
+			defaultValue = """Tittle""";
+			property = "tittle";
 		};
 
-		class text
+		class text : Edit
 		{
 			displayName = "Intel's Text";
 			typeName = "STRING";
+			defaultValue = """Text""";
+			property = "text";
 		};
 
-		class marker
+		class marker : Edit
 		{
 			displayName = "Marker Name";
 			typeName = "STRING";
+			defaultValue = """Marker""";
+			property = "marker";
 		};
 
-		class delete
+		class delete : Checkbox
 		{
 			displayName = "Delete Object After";
 			description = "Shoul the object be deleted after using it";
 			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "Yes";
-					value = true;
-				};
-				class Disabled
-				{
-					name = "No";
-					value = false;
-					default = 1;
-				};
-			};
+			property = "delete";
 		};
 
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription

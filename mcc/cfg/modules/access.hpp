@@ -10,35 +10,25 @@ class mcc_sandbox_module : Module_F
 	scope = 2;
 	isGlobal = 1;
 
-	class Arguments
+	class Attributes: AttributesBase
 	{
-		class names
+		class names : Edit
 		{
 			displayName = "MCC Operators";
 			description = "Enter the player's UID of the players that will have access to MCC. Example ['123213',12312321','1322131231']";
-			defaultValue = "[]";
+			defaultValue = """[]""";
+			property = "names";
 		};
 
-		class allowAdmin
+		class allowAdmin : Checkbox
 		{
 			displayName = "Admin Access";
 			description = "Allow admin or host access to MCC";
 			typeName = "BOOL";
-			class values
-			{
-				class Enabled
-				{
-					name = "On";
-					value = true;
-					default = 1;
-				};
-				class Disabled
-				{
-					name = "Off";
-					value = false;
-				};
-			};
+			property = "allowAdmin";
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription

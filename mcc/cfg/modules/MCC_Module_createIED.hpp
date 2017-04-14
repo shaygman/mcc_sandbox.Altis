@@ -6,12 +6,14 @@ class MCC_Module_createIED : Module_F
 	scope = 2;
 	isGlobal = 0;
 
-	class Arguments
+	class Attributes : AttributesBase
 	{
-		class side
+		class side : Combo
 		{
 			displayName = "Activate Side";
 			typeName = "NUMBER";
+			property = "side";
+
 			class values
 			{
 				class BLUFOR
@@ -38,10 +40,12 @@ class MCC_Module_createIED : Module_F
 			};
 		};
 
-		class size
+		class size : Combo
 		{
 			displayName = "Explosion Size";
 			typeName = "STRING";
+			property = "size";
+
 			class values
 			{
 				class small
@@ -63,10 +67,12 @@ class MCC_Module_createIED : Module_F
 			};
 		};
 
-		class effect
+		class effect : Combo
 		{
 			displayName = "Explosion Effect";
 			typeName = "NUMBER";
+			property = "effect";
+
 			class values
 			{
 				class Deadly
@@ -93,10 +99,12 @@ class MCC_Module_createIED : Module_F
 			};
 		};
 
-		class disarmTime
+		class disarmTime : Combo
 		{
 			displayName = "Disarm Time";
 			typeName = "NUMBER";
+			property = "disarmTime";
+
 			class values
 			{
 				class t10
@@ -128,10 +136,12 @@ class MCC_Module_createIED : Module_F
 			};
 		};
 
-		class Jammable
+		class Jammable : Combo
 		{
 			displayName = "Jammable";
 			typeName = "NUMBER";
+			property = "Jammable";
+
 			class values
 			{
 				class yes
@@ -148,10 +158,12 @@ class MCC_Module_createIED : Module_F
 			};
 		};
 
-		class ActivationType
+		class ActivationType : Combo
 		{
 			displayName = "Activation Type";
 			typeName = "NUMBER";
+			property = "ActivationType";
+
 			class values
 			{
 				class Proximity
@@ -183,10 +195,12 @@ class MCC_Module_createIED : Module_F
 			};
 		};
 
-		class Distance
+		class Distance : Combo
 		{
 			displayName = "Activation Distance";
 			typeName = "NUMBER";
+			property = "Distance";
+
 			class values
 			{
 				class t5
@@ -222,6 +236,8 @@ class MCC_Module_createIED : Module_F
 				};
 			};
 		};
+
+		class ModuleDescription: ModuleDescription{};
 	};
 
 	class ModuleDescription: ModuleDescription

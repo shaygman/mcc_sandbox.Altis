@@ -1,9 +1,9 @@
-//===================================================================MCC_fnc_startLocations=========================================================================================
+//===================================================================MCC_fnc_startLocations===============================================================================
 // Teleport the player when start location has been found
 // Example: []  call MCC_fnc_startLocations;
 // <IN>	side : integer - side number to take effect
 //<OUT>	Nothing
-//==============================================================================================================================================================================
+//=================================================================================================================================================================
 private ["_playerClass","_playerSideNr","_safePos","_null","_side","_startLocationName","_teleportAtStart","_helo","_cpActivated","_respawnDialog","_markerName","_pos","_respawnName","_starLoc","_openDialog"];
 _side = _this select 0;
 if (!local player || missionNameSpace getVariable ["MCC_startLocationsRuning", false]) exitWith {};
@@ -15,6 +15,10 @@ _playerSideNr =  getNumber (configFile >> "CfgVehicles" >> _playerClass >> "side
 
 if (isnil "_side") then {
 	_side = _playerSideNr;
+};
+
+if (typeName _side isEqualTo typeName west) then {
+	_side = [_side] call BIS_fnc_sideID;
 };
 
 if (_side !=  _playerSideNr) exitWith {};
@@ -61,12 +65,13 @@ _respawnDialog = missionNamespace getVariable ["MCC_openRespawnMenu",true];
 //Black Screen on mission startup
 if (!_cpActivated && _respawnDialog) then {
 
-	cutText ["","BLACK",0.1];
-	sleep 3;
 	_startLocations = [player] call BIS_fnc_getRespawnPositions;
 	_openDialog = {(_x getVariable ["teleport",0]) != 0} count _startLocations > 0;
 
 	if (_openDialog) then {
+		cutText ["","BLACK",0.1];
+		sleep 3;
+
 		player setVariable ["cpReady",false,true];
 		playerDeploy = false;
 		sleep 0.1;
