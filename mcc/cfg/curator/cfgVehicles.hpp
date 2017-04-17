@@ -27,3 +27,5 @@
 #include "MCC_module_survivalSpawnCratesCurator.hpp"
 #include "MCC_Module_settingsGAIACurator.hpp"
 #include "MCC_Module_createIntelCurator.hpp"
+#include "MCC_Module_LHDSpawnCurator.hpp"
+#include "MCC_Module_LHDSpawnMenuCurator.hpp"

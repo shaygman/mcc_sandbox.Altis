@@ -1,19 +1,26 @@
 /*===================================================================MCC_fnc_LHDspawn=====================================================================================
 	Spawn CUP LHD at a given position and set it as a MCC's start location
- 	Example: [_pos] spawn MCC_fnc_LHDspawn
+ 	Example: [_pos,_dir,_loadVehicleCargo] spawn MCC_fnc_LHDspawn
 
  		<IN>
-		_pos:	ARRAY/OBJECT - position or Object
+		0:	ARRAY/OBJECT - position or Object
+		1:	INTEGER	 - direction of LHD
+		2: 	BOOLEAN - if true will spawn default vehicles
+		3: 	SIDE	- side of the owner
+		4: 	BOOLEAN	- if true the LHD will act as a spawning pos
+
 
 		<OUT>
 		Name of the LHD
 ==================================================================================================================================================================*/
+//If we came here from Zeus run on the server
+if  (!isServer || (missionNamespace getVariable ["MCC_ambientFireInit",false])) exitWith {};
+
 private ["_shipParts","_dir","_shipPos","_objects","_parts","_heliPads","_cargoPos","_ship","_pos","_markers"];
 
 params [
 	["_pos", objNull, [objNull,[]]],
 	["_dir", 0, [0]],
-	["_loadVehicleCargo", false, [false]],
 	["_side", west, [west]],
 	["_hq", true, [true]]
 ];
@@ -26,6 +33,9 @@ if (typeName _pos isEqualTo typeName objNull) then {
 
 if (!isServer) exitWith {};
 
+//CLose Curator
+if ( !isNull(findDisplay 312) ) then {(findDisplay 312) closeDisplay 1};
+
 _markers = [];
 
 /*
@@ -33,6 +43,12 @@ shipParts[] = {"CUP_LHD_1","CUP_LHD_2","CUP_LHD_3","CUP_LHD_4","CUP_LHD_5","CUP_
 
 model = "\CUP\WaterVehicles\CUP_WaterVehicles_LHD\LHD_select_B.p3d";
 */
+
+if !(isClass (configFile >> "CfgVehicles" >> "CUP_LHD_BASE")) exitWith {
+	private ["_str","_null"];
+	_str = "<t size='0.8' t font = 'puristaLight' color='#FFFFFF'>" + "CUP Addon is required" + "</t>";
+	_null = [_str,0,1.1,2,0.1,0.0] spawn bis_fnc_dynamictext;
+};
 
 //Delete old LHD first
 if !(isNull (missionNamespace getVariable ["MCC_lhd",objNull])) then {
@@ -95,13 +111,6 @@ _ship hideObjectGlobal true;
 
 _ship setVariable ["CUP_WaterVehicles_BuildFinished",true];
 
-
-if (_loadVehicleCargo) then {
-	_ship setVariable ["CUP_WaterVehicles_loadVehicleCargo",true];
-
-	[_ship,"VehicleCargo"] call CUP_fnc_createVehicleCargo;
-	[_ship,"FlightDeckCargo"] call CUP_fnc_createVehicleCargo;
-};
 
 // Spawn weapons and lights
 //[_ship] call CUP_fnc_spawnShipWeapons;
@@ -198,6 +207,33 @@ _markers pushBack _dummy;
 */
 
 _ship setVariable ["teleport",1,true];
+
+private ["_vehicle","_displayName"];
+
+//Spawn two tractors
+{
+	_vehicle = createVehicle ["CUP_B_TowingTractor_USMC", [0,0,0], [], 0, "NONE"];
+	_vehicle allowDamage false;
+	_vehicle setDamage 0;
+	_vehicle attachTo [_ship, [0,0,1], _x];
+	_vehicle setVariable ["CUP_WaterVehicles_LHD_respawnPosition", _x, true];
+
+	detach _vehicle;
+	_vehicle setDir (direction _ship);
+	_vehicle allowDamage true;
+
+	// Get display name
+	_displayName = getText (configFile >> "CfgVehicles" >> "CUP_B_TowingTractor_USMC" >> "displayName");
+
+	// For each vehicle add an action to detach from the ship - MP compliant
+	[
+		[_vehicle,[format ["%1 %2",localize "STR_CUP_CFG_RELEASEVEHICLE", _displayName], {[_this, "CUP_fnc_detachFromShip", _this select 0, false, true] call BIS_fnc_MP},nil, 1.5, false, true]],
+		"addAction", true, true
+	] call BIS_fnc_MP;
+
+
+	{_x addCuratorEditableObjects [[_vehicle],false]} forEach allCurators;
+} forEach ["fd_cargo_pos_20","fd_cargo_pos_21"];
 
 //Create start location
 [_side,_ship] call BIS_fnc_addRespawnPosition;

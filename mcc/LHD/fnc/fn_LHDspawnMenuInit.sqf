@@ -1,5 +1,5 @@
 /*===================================================================MCC_fnc_LHDspawnMenuInit======================================================================
-	Open the spawn menu
+	Open the LHD spawn menu
  		<IN>
 		0:	INTEGER - LHD level
 
@@ -8,13 +8,28 @@
 ==================================================================================================================================================================*/
 //[0] execvm "mcc\lhd\fnc\fn_LHDspawnMenuInit.sqf";
 params [
-	["_deck", 0, [0]]
+	["_deck", 0, [0,objNull]]
 ];
+
+//We came here from curator
+if (typeName _deck == typeName objNull) exitWith {
+	if ((local _deck) && !(isnull curatorcamera)) then {
+		deleteVehicle _deck;
+		while {dialog} do {closeDialog 0};
+
+		[0] spawn MCC_fnc_LHDspawnMenuInit;
+	};
+};
 
 private ["_lhd","_camera","_display","_spawnPos","_pos","_dummy","_objects","_displayname","_index"];
 
 _lhd = (missionNamespace getVariable ["MCC_lhd",objNull]);
-if (isNull _lhd) exitWith {};
+
+if (isNull _lhd) exitWith {
+	private ["_str","_null"];
+	_str = "<t size='0.8' t font = 'puristaLight' color='#FFFFFF'>" + "Spawn LHD first" + "</t>";
+	_null = [_str,0,1.1,2,0.1,0.0] spawn bis_fnc_dynamictext;
+};
 
 MCC_fnc_LHDspawnMenuClicked = {
 	disableSerialization;
@@ -23,7 +38,7 @@ MCC_fnc_LHDspawnMenuClicked = {
 		["_deck", 0, [0]],
 		["_selection", "", [""]]
 	];
-	systemChat _selection;
+
 	private ["_ctrl","_display","_ctrlPos","_vehiclesArray","_index"];
 	_display = uiNamespace getVariable ["MCC_LHD_MENU", displayNull];
 	_ctrl = _display displayCtrl 2300;
@@ -142,10 +157,19 @@ MCC_fnc_LHDspawnMenuClicked = {
 	//spawn Button
 	_ctrl = _display displayCtrl 2400;
 	_ctrl ctrlRemoveAllEventHandlers "MouseButtonUp";
-	//_ctrl ctrlAddEventHandler ["MouseButtonUp",format ["['spawn',%1,'%2'] spawn MCC_fnc_LHDspawnVehicle;",_deck,_selection]];
-	_ctrl ctrlAddEventHandler ["MouseButtonUp",format ["0 =['spawn',%1,'%2'] execVM 'mcc\lhd\fnc\fn_LHDspawnVehicle.sqf';",_deck,_selection]];
+	_ctrl ctrlAddEventHandler ["MouseButtonUp",format ["['spawn',%1,'%2'] spawn MCC_fnc_LHDspawnVehicle;",_deck,_selection]];
+};
 
+//Close all dialogs
+while {dialog} do {
+	closeDialog 0;
+	sleep 0.1;
+};
 
+//CLose Curator
+if ( !isNull(findDisplay 312) ) then {
+	(findDisplay 312) closeDisplay 1
+	sleep 1;
 };
 
 if (isnil "MCC_LHD_CAM") then {

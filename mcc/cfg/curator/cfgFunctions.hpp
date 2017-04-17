@@ -24,6 +24,7 @@ class curator
 	class curatorunderCover {description = "Sets player as undercover unit";};
 	class curatorModuleCapturePoint {};
 	class ambientDenied {};
-	class inGameUICurator {description = "setting MCC's UI"};
-	class curatorSetIntel {description = "set an item as pickable intel"};
+	class inGameUICurator {description = "setting MCC's UI";};
+	class curatorSetIntel {description = "set an item as pickable intel";};
+	class curatorLHDSpawn {description = "Spawn LHD";};
 };

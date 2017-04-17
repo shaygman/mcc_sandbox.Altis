@@ -39,15 +39,11 @@ _plane = vehicle _unit;
 _planeposx = getPos _plane select 0;
 _planeposy = getPos _plane select 1;
 
-systemChat str _this;
-systemChat str _cablesPosASL;
 
 if (((abs (_glidepath1x-_planeposx)<=30) && (abs (_glidepath1y-_planeposy)<=30))
 	&& (driver _plane == _unit)
 	&& (_plane iskindof "Plane")
 	&& !(_plane getVariable ["MCC_isArrestingGear",false])) then {
-
-	systemChat "we going";
 
 	_plane setVariable ["MCC_isArrestingGear",true,true];
 

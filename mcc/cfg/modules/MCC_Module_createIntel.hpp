@@ -63,7 +63,7 @@ class MCC_Module_createIntel : Module_F
 		class delete : Checkbox
 		{
 			displayName = "Delete Object After";
-			description = "Shoul the object be deleted after using it";
+			description = "Should the object be deleted after using it";
 			typeName = "BOOL";
 			property = "delete";
 		};

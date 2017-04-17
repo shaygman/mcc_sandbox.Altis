@@ -125,9 +125,21 @@ switch (tolower _fnc) do
 			detach _cargo;
 			_cargo setDir _direction;
 			_cargo allowDamage true;
-
-			/*
 			_cargo setFuel 0;
+
+			if (_cargo isKindOf "air") then {
+
+				[_cargo,["<t color=""#ff1111"">Steam Catapult</t>",{
+					_target = (_this select 0);
+					driver (_target) action ["ENGINEON", _target];
+					addCamShake [5, 4, 15];
+					for [{_i=1},{_i<=50},{_i=_i+5}] do {
+						_target setvelocity [_i* sin (getdir _target),_i * cos (getdir _target),.15];
+						sleep 0.02;
+					};
+					},[],1,true,true,"action","(driver _target == _this) && (isEngineOn _target) &&(_target distance2D (missionNamespace getVariable ['MCC_startfly',[0,0,0]])<15)"]] remoteExec ["addAction",0];
+			};
+
 			// Get display name
 			_displayName = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "displayName");
 
@@ -136,7 +148,7 @@ switch (tolower _fnc) do
 				[_cargo,[format ["%1 %2",localize "STR_CUP_CFG_RELEASEVEHICLE", _displayName], {[_this, "CUP_fnc_detachFromShip", _this select 0, false, true] call BIS_fnc_MP},nil, 1.5, false, true]],
 				"addAction", true, true
 			] call BIS_fnc_MP;
-			*/
+
 
 			{_x addCuratorEditableObjects [[_cargo],false]} forEach allCurators;
 		};
