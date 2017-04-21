@@ -1,4 +1,4 @@
-/*======================================================MCC_fnc_campaignSpawnAIInit=====================================================================================================
+/*======================================================MCC_fnc_campaignSpawnAIInit=======================================================================================
 // Spawn selected units around the player
 // Example: [_spawnDistance,_maxSpawn,_faction] spawn MCC_fnc_campaignSpawnAIInit;
 // _spawnDistance		INTEGER - Spawn distance around the players
@@ -117,6 +117,7 @@ while {true} do {
 	};
 
 
+	sleep 600;
 
 	//Delete stuff
 	{
@@ -136,7 +137,5 @@ while {true} do {
 			};
 		};
 	} forEach allgroups;
-
-	sleep 5;
 };
 

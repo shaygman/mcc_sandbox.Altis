@@ -168,7 +168,7 @@ while {dialog} do {
 
 //CLose Curator
 if ( !isNull(findDisplay 312) ) then {
-	(findDisplay 312) closeDisplay 1
+	(findDisplay 312) closeDisplay 1;
 	sleep 1;
 };
 

@@ -3,7 +3,7 @@ class MCC_Module_campaignInit : Module_F
 	scope = 2;
 	isGlobal = 0;
 	category = "MCC";
-	displayName = "Start Campaign";
+	displayName = "Campaign init";
 	function = "MCC_fnc_curatorCampaignInit";
 
 	class Attributes: AttributesBase
@@ -156,6 +156,13 @@ class MCC_Module_campaignInit : Module_F
 			typeName = "NUMBER";
 			defaultValue = 3;
 			property = "tileSize";
+		};
+
+		class loadDB : Checkbox
+		{
+			displayName = "Load from DB";
+			description = "Load saved camapign data from Data Base";
+			property = "loadDB";
 		};
 
 		class ModuleDescription: ModuleDescription{};

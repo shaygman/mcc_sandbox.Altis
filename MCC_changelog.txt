@@ -3,8 +3,11 @@ Change log r22:
 - Added: GAIA settings module to Zeus.
 - Added: Set Intel module to Eden and Zeus: Allows making items or unit as Intel providers. Giving the players option to interact with the them in order to get information and map location. - as defined by the mission maker.
 - Added: Hold Shift while editing a unit in Zeus to open the default Zeus menu and not MCC menu.
-- Added: Tickets in the MCC UI/HUD settings. Enable it will show time Battlefield kind of HuD including time left, opposing sides names and flags, tickets left exc.
+- Added: Show Tickets in the MCC UI/HUD settings. Enable it will show a Battlefield kind of HuD including time left, opposing sides names and flags, tickets left exc.
 - Added: Modules info in Eden.
+- Added: CUP LHD (will add A3 Jets Carrier when it will be released) - Spawn CUP LHD that will function as Zeus respawn point and a MCC HQ. Spawn vehicles/aircraft on top of the LHD and use the steam catapults to take off and the arresting gears to land.
+- Added: Enable/Disable loading MCC Campaign data from data base.
+- Changed: Reduced the amount of ambient patrols while traveling on red squares.
 - Changed: Decreased ambient birds chance.
 - Changed: In RTS mode can call HQ missions even while the campaign isn't enabled.
 - Changed: CAS airplanes will have an angle of attack to targets and will react faster.
@@ -22,14 +25,9 @@ Change log r22:
 - Fixed: MCC interaction with door on CUP maps didn't work.
 - Fixed: Ammo/supply/crates box disappear after depletion while on the logistic's truck - Logistics Module.
 
-TODO - HuD for PvP - add to UI module
 TODO - wiki: modules fire, birds, intel, hud.
-TODO - missions
-TODO - Campaign enable/disable persistante.
 TODO - weather add fog volume and wind direction
 TODO - animation module
-TODO - CUP LHD
-TODO - add reinforcment to curator
 
 Change log r21:
 - Renamed all MCC items with (MCC) at the begging so you can easily find or disregard them.

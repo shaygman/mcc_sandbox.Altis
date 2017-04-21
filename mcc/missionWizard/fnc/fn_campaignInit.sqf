@@ -8,7 +8,7 @@
 //_missionRotation	INTEGER - max missions in the same area
 //_tileSize			INTEGER - Size of the tile while portfiling the map
 //=======================================================================================================================================================================
-private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets","_missionRotation","_basePos","_tileSize","_reconMission","_tempVar"];
+private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets","_missionRotation","_basePos","_tileSize","_reconMission","_tempVar","_loadDb"];
 
 //wait for MCC
 waitUntil {!isnil "MCC_initDone"};
@@ -25,6 +25,7 @@ _sidePlayer2=  param [7, sideLogic];
 _tickets = param [8, 100];
 _missionRotation = param [9, 4,[0]];
 _tileSize = param [10, 400,[0]];
+_loadDb = param [11, false,[false]];
 
 _totalPlayers = ((playersNumber _sidePlayer)+1);
 _AOSize = 300;
@@ -42,7 +43,9 @@ publicVariable "MCC_campaignEnemyFaction";
 if (timeMultiplier < 12) then {setTimeMultiplier 12};
 
 //Load stuff from DB
-["MCC_campaign",true,true,true,true,true,true,true,true,true] call MCC_fnc_loadServer;
+if (_loadDb) then {
+	["MCC_campaign",true,true,true,true,true,true,true,true,true] call MCC_fnc_loadServer;
+};
 
 
 //Build the faction's unitsArrays and send it to the server.
@@ -194,9 +197,9 @@ while { count _locations > 0 &&
 	_isCQB =  (count (nearestObjects  [_aoPos,["House","Ruins","Church","FuelStation","Strategic"],200])) > 2;
 	_isCiv = false;
 	_animals = random 1 > 0.5;
-	_vehicles = random 100 < (_difficulty)*2;
-	_armor = random 100 < (_difficulty);
-	_artillery = if (random 100 < (_difficulty)*2) then {[1,1,1,1,2] call BIS_fnc_selectRandom} else {0};
+	_vehicles = (random 100 < (_difficulty)*2) && (_missionDone >= 3); //No vehicles in the first 3 missions
+	_armor = (random 100 < (_difficulty)) && (_missionDone >= 4); //No armor in the first 4 missions;
+	_artillery = if ((random 100 < (_difficulty)*2) && (_missionDone >= 3)) then {[1,1,1,1,2] call BIS_fnc_selectRandom} else {0}; //No armor in the first 3 missions;
 	_isRoadblocks = random 1 > 0.5;
 	_isIED = random 1 > 0.7;
 	_isAS = random 1 > (missionNamespace getvariable [format ["MCC_civRelations_%1",_sidePlayer],0.5]);
@@ -206,7 +209,7 @@ while { count _locations > 0 &&
 
 	_obj2 = if (random 80 < _difficulty) then {"Destroy Radar/Radio"} else {"None"};
 	_obj3 = if (random 80 < _difficulty) then {["Destroy Vehicle","Destroy AA","Destroy Artillery","Destroy Weapon Cahce","Destroy Fuel Depot","Secure HVT","Kill HVT","Aquire Intel","Disarm IED"] call BIS_fnc_selectRandom} else {"None"};
-	_stealth = _reconMission;
+
 	_weatherChange = 0;
 	_playMusic = 0;
 	_preciseMarkers = false;
@@ -216,7 +219,7 @@ while { count _locations > 0 &&
 		[_AOlocation, _totalEnemyUnits,  100, _AOSize, _weatherChange, _preciseMarkers, _playMusic],
 		[_sideEnemy, _factionEnemy, _sidePlayer, _factionPlayer, _factionCiv],
 		[_obj1, _obj2, _obj3],
-		[_isCQB, _isCiv, _armor, _vehicles, _stealth, _isIED, _isAS, _isSB, _isRoadblocks, _animals],
+		[_isCQB, _isCiv, _armor, _vehicles, _reconMission, _isIED, _isAS, _isSB, _isRoadblocks, _animals],
 		[_reinforcement, _artillery]
 	] spawn MCC_fnc_MWinitMission;
 

@@ -661,6 +661,7 @@ _StartTimeIssueOrders = time;
 
 
 		   	 				};
+		   	 		  if (isNil "_MortarFired") then {_MortarFired = false};
 		   	 		  if (_MortarFired) exitwith {true;};
 		   	 		} forEach _CA;
 		   	 };

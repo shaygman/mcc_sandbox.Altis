@@ -344,7 +344,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do {
 		private ["_name","_objectType","_unitsArray","_pos"];
 		_unitsArray 	= [_civFaction, "soldier"] call MCC_fnc_makeUnitsArray;		//Let's build the faction unit's array
 
-		if (_isSB) then {
+		if (_isSB && (count _unitsArray > 0)) then {
 			for [{_i = 0},{_i <=(_totalEnemyUnits/30)},{_i = _i+1}] do {
 				if (random 1 >0.5) then {
 					//Name the bomber.
@@ -368,7 +368,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do {
 		};
 
 		//Armed Civilans
-		if (_isAS) then {
+		if (_isAS && (count _unitsArray > 0)) then {
 			for [{_i = 0},{_i <=(_totalEnemyUnits/15)},{_i = _i+1}] do {
 				if (random 1 >0.5) then {
 					//Name the AC.

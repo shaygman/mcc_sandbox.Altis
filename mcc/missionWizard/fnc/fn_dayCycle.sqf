@@ -28,75 +28,79 @@ while {true} do {
 			_resources = missionNamespace getvariable [format ["MCC_res%1",_side],[500,500,200,200,100]];
 
 			_startPos = call compile format ["MCC_START_%1",_side];
-			_buildings = _startPos nearObjects ["UserTexture10m_F", 300];
-			_cargoSpace = 500;
-			_unitsSpace = 4;
-			_elecUnits= [];
-			_showText = false;
 
-			//Find buildings
-			{
-				if ((_x getVariable ["mcc_constructionItemType",""]) == "storage" && !(isNull attachedTo _x)) then {
-					_cargoSpace = _cargoSpace + ((_x getVariable ["mcc_constructionItemTypeLevel",0])*500);
-				};
+			//If we have a start location
+			if (!isnil "_startPos") then {
+				_buildings = _startPos nearObjects ["UserTexture10m_F", 300];
+				_cargoSpace = 500;
+				_unitsSpace = 4;
+				_elecUnits= [];
+				_showText = false;
 
-				if ((_x getVariable ["mcc_constructionItemType",""]) == "barracks" && !(isNull attachedTo _x)) then {
-					_unitsSpace = _unitsSpace + ((_x getVariable ["mcc_constructionItemTypeLevel",0])*4);
-				};
-
-				if ((_x getVariable ["mcc_constructionItemType",""]) == "elecPower" && !(isNull attachedTo _x)) then {
-					_elecUnits pushBack _x;
-				};
-
-			} foreach _buildings;
-
-			//get resources
-			_resVar = format ["MCC_res%1", _side];
-			_resArray = missionNamespace getvariable [_resVar,[]];
-
-			//Electricity
-			_elecVar = format ["MCC_rtsElecOn_%1", _side];
-			_isElecOn = missionNamespace getvariable [_elecVar,false];
-			if (_isElecOn) then {
+				//Find buildings
 				{
-					_buildingLevel = _x getVariable ["mcc_constructionItemTypeLevel",1];
-					if (_buildingLevel <3) then {
-						_resArray set [2,((_resArray select 2) - (_buildingLevel*3)) max 0];
-
-						//No fuel no electricity
-						if (_resArray select 2 <=0) then {
-							missionNamespace setvariable [_elecVar,false];
-							publicVariable _elecVar;
-							_CompleteText = _CompleteText + format ["<img image='%1data\IconFuel.paa'/> The Diesel Generator is out of fuel<br/><br/>", MCC_path];
-							_showText = true;
-						};
+					if ((_x getVariable ["mcc_constructionItemType",""]) == "storage" && !(isNull attachedTo _x)) then {
+						_cargoSpace = _cargoSpace + ((_x getVariable ["mcc_constructionItemTypeLevel",0])*500);
 					};
-				} forEach _elecUnits;
-			};
 
-			//reduce resources
-			_resourceDecreasing = false;
-			{
-				if (_x > _cargoSpace) then {
-					_resArray set [_foreachindex, _x *0.9];
-					_resourceDecreasing = true;
+					if ((_x getVariable ["mcc_constructionItemType",""]) == "barracks" && !(isNull attachedTo _x)) then {
+						_unitsSpace = _unitsSpace + ((_x getVariable ["mcc_constructionItemTypeLevel",0])*4);
+					};
+
+					if ((_x getVariable ["mcc_constructionItemType",""]) == "elecPower" && !(isNull attachedTo _x)) then {
+						_elecUnits pushBack _x;
+					};
+
+				} foreach _buildings;
+
+				//get resources
+				_resVar = format ["MCC_res%1", _side];
+				_resArray = missionNamespace getvariable [_resVar,[]];
+
+				//Electricity
+				_elecVar = format ["MCC_rtsElecOn_%1", _side];
+				_isElecOn = missionNamespace getvariable [_elecVar,false];
+				if (_isElecOn) then {
+					{
+						_buildingLevel = _x getVariable ["mcc_constructionItemTypeLevel",1];
+						if (_buildingLevel <3) then {
+							_resArray set [2,((_resArray select 2) - (_buildingLevel*3)) max 0];
+
+							//No fuel no electricity
+							if (_resArray select 2 <=0) then {
+								missionNamespace setvariable [_elecVar,false];
+								publicVariable _elecVar;
+								_CompleteText = _CompleteText + format ["<img image='%1data\IconFuel.paa'/> The Diesel Generator is out of fuel<br/><br/>", MCC_path];
+								_showText = true;
+							};
+						};
+					} forEach _elecUnits;
 				};
-			} foreach _resArray;
 
-			if (_resourceDecreasing) then {
-				_CompleteText = _CompleteText + format ["<img image='%1data\IconRepair.paa'/> We are loosing resources. Build more Storage Areas<br/><br/>", MCC_path];
-				_showText = true;
-			} else {
-				_CompleteText = _CompleteText + format ["<img image='%1data\IconRepair.paa'/> We have enough Storage Areas<br/><br/>", MCC_path];
-			};
+				//reduce resources
+				_resourceDecreasing = false;
+				{
+					if (_x > _cargoSpace) then {
+						_resArray set [_foreachindex, _x *0.9];
+						_resourceDecreasing = true;
+					};
+				} foreach _resArray;
 
-			//Broadcast resources
-			missionNamespace setVariable [_resVar,_resArray];
-			publicVariable _resVar;
+				if (_resourceDecreasing) then {
+					_CompleteText = _CompleteText + format ["<img image='%1data\IconRepair.paa'/> We are loosing resources. Build more Storage Areas<br/><br/>", MCC_path];
+					_showText = true;
+				} else {
+					_CompleteText = _CompleteText + format ["<img image='%1data\IconRepair.paa'/> We have enough Storage Areas<br/><br/>", MCC_path];
+				};
 
-			//Send hint
-			if (_showText) then {
-				[[_CompleteText,true],"MCC_fnc_globalHint",_side,false] spawn BIS_fnc_MP;
+				//Broadcast resources
+				missionNamespace setVariable [_resVar,_resArray];
+				publicVariable _resVar;
+
+				//Send hint
+				if (_showText) then {
+					[[_CompleteText,true],"MCC_fnc_globalHint",_side,false] spawn BIS_fnc_MP;
+				};
 			};
 		} forEach _sides;
 	};

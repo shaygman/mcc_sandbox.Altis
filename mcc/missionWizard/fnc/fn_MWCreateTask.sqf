@@ -275,6 +275,7 @@ if (_task == "clear_area") then {
 /*
 ["perentTask",west,["description", "title", "destroy"],position player,"AUTOASSIGNED",1,true,true,"destroy",true] call BIS_fnc_setTask;
 [["childTask","perentTask"],west,["description", "title", "destroy"],[player,false],"AUTOASSIGNED",1,true,true,"destroy",true] call BIS_fnc_setTask
+BIS_fnc_taskCreate
 */
 
 MCC_MWObjectivesNames = [_pos,"",_stringName,_stringDescription,"",_pic,1,[],_vehicle];
