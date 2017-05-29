@@ -1,31 +1,46 @@
 Change log r22:
-- Added: Enable/disable teleport player to last known location while activating the survival module.
-- Added: GAIA settings module to Zeus.
-- Added: Set Intel module to Eden and Zeus: Allows making items or unit as Intel providers. Giving the players option to interact with the them in order to get information and map location. - as defined by the mission maker.
-- Added: Hold Shift while editing a unit in Zeus to open the default Zeus menu and not MCC menu.
-- Added: Show Tickets in the MCC UI/HUD settings. Enable it will show a Battlefield kind of HuD including time left, opposing sides names and flags, tickets left exc.
-- Added: Modules info in Eden.
-- Added: CUP LHD (will add A3 Jets Carrier when it will be released) - Spawn CUP LHD that will function as Zeus respawn point and a MCC HQ. Spawn vehicles/aircraft on top of the LHD and use the steam catapults to take off and the arresting gears to land.
-- Added: Enable/Disable loading MCC Campaign data from data base.
-- Changed: Reduced the amount of ambient patrols while traveling on red squares.
-- Changed: Decreased ambient birds chance.
-- Changed: In RTS mode can call HQ missions even while the campaign isn't enabled.
-- Changed: CAS airplanes will have an angle of attack to targets and will react faster.
-- Changed: Can call any plane type (Addons includded) to act as an AC-130 from CAS Menu.
-- Fixed: Stuck on Squad menu "P".
-- Fixed: Missing insertion types in start locations.
-- Fixed: Teleport to team always enabled.
-- Fixed: Placing HUD module forces to 1st person.
-- Fixed: Airdrops didn't worked in the commander console.
-- Fixed: Medic system animations.
-- Fixed: Spawn outside the map when spawning on FOB built by the players.
-- Fixed: Non lethal ammo didn't work for clients.
-- Fixed: CAS crash with some mods.
-- Fixed: Non-lethal ammo & breaching ammo didn't work on dedicated.
-- Fixed: MCC interaction with door on CUP maps didn't work.
-- Fixed: Ammo/supply/crates box disappear after depletion while on the logistic's truck - Logistics Module.
+-= Intel Module =- **NEW**
+	- Added: Set Intel module to Eden and Zeus: Allows making items or unit as Intel providers. Giving the players option to interact with the them in order to get information and map location. - as defined by the mission maker.
 
-TODO - wiki: modules fire, birds, intel, hud.
+-= Aircraft Carrier =-  **NEW**
+	- Added: CUP LHD (will add A3 Jets Carrier when it will be released) - Spawn CUP LHD that will function as Zeus respawn point and a MCC HQ. Spawn vehicles/aircraft on top of the LHD and use the steam catapults to take off and the arresting gears to land.
+
+-= UI =-
+	- Added: Show Tickets in the MCC UI/HUD settings. Enable it will show a Battlefield kind of HuD including time left, opposing sides names and flags, tickets left exc
+	- Fixed: Stuck on Squad menu "P".
+	- Fixed: Placing HUD module forces to 1st person.
+
+-= Campaign =-
+	- Added: Enable/Disable loading MCC Campaign data from data base.
+	- Changed: Reduced the amount of ambient patrols while traveling on red squares.
+
+-= CAS =-
+	- Changed: CAS airplanes will have an angle of attack to targets and will react faster.
+	- Changed: Can call any plane type (Addons includded) to act as an AC-130 from CAS Menu.
+	- Fixed: Airdrops didn't worked in the commander console.
+	- Fixed: CAS crash with some mods.
+
+-= Misc =-
+	- Added: GAIA settings module to Zeus.
+	- Added: Hold Shift while editing a unit in Zeus to open the default Zeus menu and not MCC menu.
+	- Added: Modules info in Eden.
+	- Changed: Enable/disable teleport player to last known location while activating the survival module.
+	- Changed: Decreased ambient birds chance.
+	- Changed: In RTS mode can call HQ missions even while the campaign isn't enabled.
+	- Fixed: MCC redused 2 tickets per death and finished mission when tickets reaches zero even when MCC PvP mod was disabled.
+	- Fixed: Wind set by MCC was too strong.
+	- Fixed: Ambient fire and ambient birds didn't wokr from Zeus when called on local MP.
+	- Fixed: Missing insertion types in start locations.
+	- Fixed: Teleport to team always enabled.
+	- Fixed: Medic system animations.
+	- Fixed: Spawn outside the map when spawning on FOB built by the players.
+	- Fixed: Non lethal ammo didn't work for clients.
+	- Fixed: Non-lethal ammo & breaching ammo didn't work on dedicated.
+	- Fixed: MCC interaction with door on CUP maps didn't work.
+	- Fixed: Ammo/supply/crates box disappear after depletion while on the logistic's truck - Logistics Module.
+
+TODO - video: AAS, Intel and LHD
+TODO - wiki: modules fire, birds, intel, hud, LHD
 TODO - weather add fog volume and wind direction
 TODO - animation module
 

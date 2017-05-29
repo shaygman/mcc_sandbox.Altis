@@ -29,7 +29,7 @@ if (MCC_isACE) then {
 sleep 2;
 if ((count _weather) > 1) then {
 	setWind [(_weather select 1)*20, (_weather select 1)*20, true];
-	_time setWindForce 	(_weather select 1);
+	_time setWindStr (_weather select 1);
 	_time setGusts (_weather select 1);
 };
 if ((count _weather) > 2) then {_time setWaves (_weather select 2)};

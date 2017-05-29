@@ -184,7 +184,7 @@ _sectors = [];
 {_sectors pushBack _x} foreach (allMissionObjects "moduleSector_f");
 {_sectors pushBack _x} foreach (allMissionObjects "moduleSectorDummy_f");
 {
-	if ((_x getvariable ["ScoreReward",-1])>0) then {_sectors pushBack _x}
+	if (((_x getvariable ["ScoreReward",0]) call bis_fnc_parsenumber)>0) then {_sectors pushBack _x}
 } foreach (allMissionObjects "logic");
 
 while {true} do {

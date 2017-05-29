@@ -18,8 +18,11 @@ disableSerialization;
 params [
 	["_fnc", "", [""]],
 	["_deck", 0, [0]],
-	["_selection", "", [""]]
+	["_selection", "", ["",[]]],
+	["_lhdType", "", ["",objNull]]
 ];
+
+if (_selection isEqualTo "" || _selection isEqualTo []) exitWith {};
 
 _display = uiNamespace getVariable ["MCC_LHD_MENU", displayNull];
 _ctrl = _display displayCtrl 2300;
@@ -60,18 +63,20 @@ switch (tolower _fnc) do
 
 	case "spawn":
 	{
-		private ["_lhd","_vehicleClass","_direction","_cargo","_dummy","_str","_null"];
-		_lhd = (missionNamespace getVariable ["MCC_lhd",objNull]);
+		private ["_lhd","_vehicleClass","_direction","_cargo","_dummy","_str","_null","_isCUPLHD"];
+		_lhd = (missionNamespace getVariable [_lhdType,objNull]);
 		_vehicleClass = (_display displayCtrl 1502) lbData (lbCurSel 1502);
+		_isCUPLHD = _lhd isKindOf "CUP_LHD_BASE";
+
 
 		_direction = switch (true) do
 					{
-						case (_selection in ["fd_cargo_pos_2","fd_cargo_pos_3","fd_cargo_pos_4","fd_cargo_pos_5","fd_cargo_pos_6","fd_cargo_pos_11","fd_cargo_pos_12","fd_cargo_pos_13","fd_cargo_pos_14","fd_cargo_pos_16","fd_cargo_pos_18"]):
+						case (_selection in ["fd_cargo_pos_2","fd_cargo_pos_3","fd_cargo_pos_4","fd_cargo_pos_5","fd_cargo_pos_6","fd_cargo_pos_11","fd_cargo_pos_12","fd_cargo_pos_13","fd_cargo_pos_14","fd_cargo_pos_16","fd_cargo_pos_18","[-30,70,28]","[-30,50,28]","[-30,30,28]","[-30,10,28]","[-30,-10,28]"]):
 						{
 							(direction _lhd)+90
 						};
 
-						case (_selection in ["fd_cargo_pos_7","fd_cargo_pos_8","fd_cargo_pos_9","fd_cargo_pos_10","fd_cargo_pos_15","fd_cargo_pos_17","fd_cargo_pos_19"]):
+						case (_selection in ["fd_cargo_pos_7","fd_cargo_pos_8","fd_cargo_pos_9","fd_cargo_pos_10","fd_cargo_pos_15","fd_cargo_pos_17","fd_cargo_pos_19","[20,50,28]","[37,70,28]","[-22,-55,28]","[5,-55,28]"]):
 						{
 							(direction _lhd)+180
 						};
@@ -88,8 +93,13 @@ switch (tolower _fnc) do
 		_dummy = "HeliH" createVehicle [0,0,0];
 		waitUntil {alive _dummy};
 
-		_dummy attachTo [_lhd,[0,0,0],_selection];
-		if (count (nearestObjects [getPosASL _dummy, ["Land","Air"], 1]) > 0 || (_selection == "")) then {
+		if (_isCUPLHD) then {
+			_dummy attachTo [_lhd,[0,0,0],_selection]
+		} else {
+			_dummy attachTo [_lhd,(call compile _selection)]
+		};
+
+		if (count (nearestObjects [getPosASL _dummy, ["Land","Air"], 1]) > 0 || (_selection isEqualTo "")) then {
 			_str = "<t size='0.8' t font = 'puristaLight' color='#FFFFFF'>" + "Spawn point is occupied" + "</t>";
 			_null = [_str,0,1.1,2,0.1,0.0] spawn bis_fnc_dynamictext;
 
@@ -119,36 +129,43 @@ switch (tolower _fnc) do
 				};
 			} foreach CUP_WATERVEHICLES_FOLDABLE;
 
-			_cargo attachTo [_lhd, [0,0,1], _selection];
-			_cargo setVariable ["CUP_WaterVehicles_LHD_respawnPosition", _selection, true];
+			if (_isCUPLHD) then {
+				_cargo attachTo [_lhd, [0,0,1], _selection];
+				_cargo setVariable ["CUP_WaterVehicles_LHD_respawnPosition", _selection, true];
+			} else {
+				_cargo attachTo [_lhd,(call compile _selection)];
+			};
+
 
 			detach _cargo;
 			_cargo setDir _direction;
 			_cargo allowDamage true;
-			_cargo setFuel 0;
 
-			if (_cargo isKindOf "air") then {
+			if (_isCUPLHD) then {
+				_cargo setFuel 0;
 
-				[_cargo,["<t color=""#ff1111"">Steam Catapult</t>",{
-					_target = (_this select 0);
-					driver (_target) action ["ENGINEON", _target];
-					addCamShake [5, 4, 15];
-					for [{_i=1},{_i<=50},{_i=_i+5}] do {
-						_target setvelocity [_i* sin (getdir _target),_i * cos (getdir _target),.15];
-						sleep 0.02;
-					};
-					},[],1,true,true,"action","(driver _target == _this) && (isEngineOn _target) &&(_target distance2D (missionNamespace getVariable ['MCC_startfly',[0,0,0]])<15)"]] remoteExec ["addAction",0];
+				if (_cargo isKindOf "air") then {
+
+					[_cargo,["<t color=""#ff1111"">Steam Catapult</t>",{
+						_target = (_this select 0);
+						driver (_target) action ["ENGINEON", _target];
+						addCamShake [5, 4, 15];
+						for [{_i=1},{_i<=50},{_i=_i+5}] do {
+							_target setvelocity [_i* sin (getdir _target),_i * cos (getdir _target),.15];
+							sleep 0.02;
+						};
+						},[],1,true,true,"action","(driver _target == _this) && (isEngineOn _target) &&(_target distance2D (missionNamespace getVariable ['MCC_startfly',[0,0,0]])<15)"]] remoteExec ["addAction",0];
+				};
+
+				// Get display name
+				_displayName = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "displayName");
+
+				// For each vehicle add an action to detach from the ship - MP compliant
+				[
+					[_cargo,[format ["%1 %2",localize "STR_CUP_CFG_RELEASEVEHICLE", _displayName], {[_this, "CUP_fnc_detachFromShip", _this select 0, false, true] call BIS_fnc_MP},nil, 1.5, false, true]],
+					"addAction", true, true
+				] call BIS_fnc_MP;
 			};
-
-			// Get display name
-			_displayName = getText (configFile >> "CfgVehicles" >> _vehicleClass >> "displayName");
-
-			// For each vehicle add an action to detach from the ship - MP compliant
-			[
-				[_cargo,[format ["%1 %2",localize "STR_CUP_CFG_RELEASEVEHICLE", _displayName], {[_this, "CUP_fnc_detachFromShip", _this select 0, false, true] call BIS_fnc_MP},nil, 1.5, false, true]],
-				"addAction", true, true
-			] call BIS_fnc_MP;
-
 
 			{_x addCuratorEditableObjects [[_cargo],false]} forEach allCurators;
 		};

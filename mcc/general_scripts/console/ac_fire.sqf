@@ -19,6 +19,9 @@ if (typeName _primaryTarget == "OBJECT") then {
 _missile = _missileType createVehicle [_missileStart select 0, _missileStart select 1,(_missileStart select 2)-5];
 _missile setPos [_missileStart select 0, _missileStart select 1,(_missileStart select 2)-5];
 
+//broadcast onwership
+[_missile,(owner player)] remoteExec ["setOwner", 2];
+
 //procedure for guiding the missile
 _homeMissile = {
 				//altering the direction, pitch and trajectory of the missile

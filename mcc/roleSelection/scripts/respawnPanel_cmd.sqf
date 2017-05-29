@@ -138,7 +138,13 @@ switch (true) do
 {
 	//LHD
 	case (_activeSpawn getVariable ["MCC_isLHD",false]):	{
-		[_activeSpawn, player] call CUP_fnc_moveInCargo;
+
+		//If CUP
+		if (_activeSpawn isKindOf "CUP_LHD_BASE") then {
+			[_activeSpawn, player] call CUP_fnc_moveInCargo;
+		} else {
+			player setPosASL  [getPosASL _activeSpawn select 0, getPosASL _activeSpawn select 1, 24];
+		};
 	};
 
 	//On leader

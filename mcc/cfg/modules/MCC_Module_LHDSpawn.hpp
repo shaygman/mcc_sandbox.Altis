@@ -47,6 +47,14 @@ class MCC_Module_LHDSpawn : Module_F
 			property = "hq";
 		};
 
+		class isCUP : Checkbox
+		{
+			displayName = "Spawn CUP LHD";
+			description = "Requires CUP addon";
+			typeName = "BOOL";
+			property = "isCUP";
+		};
+
 		class ModuleDescription: ModuleDescription{};
 	};
 

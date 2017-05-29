@@ -21,7 +21,7 @@ _sectors = [];
 {_sectors pushBack _x} foreach (allMissionObjects "moduleSector_f");
 {_sectors pushBack _x} foreach (allMissionObjects "moduleSectorDummy_f");
 {
-	if ((_x getvariable ["ScoreReward",-1])>0) then {_sectors pushBack _x}
+	if (((_x getvariable ["ScoreReward",0]) call bis_fnc_parsenumber)>0) then {_sectors pushBack _x}
 } foreach (allMissionObjects "logic");
 
 _AIUnits = [];
@@ -78,9 +78,9 @@ while {true} do {
 					_wpPos = if (random 1 < _defendRatio && (count _defendZonesPos > 0)) then {(_defendZonesPos select 0)} else {_closestZonePos};
 
 					if (vehicle _leader isKindOf "air") then {
-						[1,_wpPos,[3,"NO CHANGE","NO CHANGE","FULL","AWARE","", "",0],[_group]] call MCC_fnc_manageWp;
+						[1,_wpPos,[3,"NO CHANGE","NO CHANGE","FULL","AWARE","true", "",0],[_group]] call MCC_fnc_manageWp;
 					} else {
-						[1,_wpPos,[0,"NO CHANGE","NO CHANGE","FULL","AWARE","", "",0],[_group]] call MCC_fnc_manageWp;
+						[1,_wpPos,[0,"NO CHANGE","NO CHANGE","FULL","AWARE","true", "",0],[_group]] call MCC_fnc_manageWp;
 					};
 			};
 		};

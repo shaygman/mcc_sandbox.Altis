@@ -8,7 +8,8 @@
 ==================================================================================================================================================================*/
 //[0] execvm "mcc\lhd\fnc\fn_LHDspawnMenuInit.sqf";
 params [
-	["_deck", 0, [0,objNull]]
+	["_deck", 0, [0,objNull,[]]],
+	["_lhdType", "", ["",objNull,[]]]
 ];
 
 //We came here from curator
@@ -21,22 +22,39 @@ if (typeName _deck == typeName objNull) exitWith {
 	};
 };
 
-private ["_lhd","_camera","_display","_spawnPos","_pos","_dummy","_objects","_displayname","_index"];
+private ["_lhd","_camera","_display","_spawnPos","_pos","_dummy","_objects","_displayname","_index","_decks","_isCUPLHD","_availableLHD"];
 
-_lhd = (missionNamespace getVariable ["MCC_lhd",objNull]);
+_availableLHD = [];
+{
+	if !(isNull(missionNamespace getVariable [_x,objNull])) then {
+		_availableLHD pushBack _x;
+	};
+} forEach ["MCC_lhd","MCC_carrier"];
 
-if (isNull _lhd) exitWith {
+if (count _availableLHD == 0) exitWith {
 	private ["_str","_null"];
-	_str = "<t size='0.8' t font = 'puristaLight' color='#FFFFFF'>" + "Spawn LHD first" + "</t>";
+	_str = "<t size='0.8' t font = 'puristaLight' color='#FFFFFF'>" + "Spawn CUP LHD or Carrier first" + "</t>";
 	_null = [_str,0,1.1,2,0.1,0.0] spawn bis_fnc_dynamictext;
 };
+
+if (_lhdType isEqualTo "") then {
+	_lhdType = (_availableLHD select 0);
+};
+
+_lhd = (missionNamespace getVariable [_lhdType,objNull]);
+
+if (isNull _lhd) exitWith {};
+
+_isCUPLHD = _lhd isKindOf "CUP_LHD_BASE";
+
 
 MCC_fnc_LHDspawnMenuClicked = {
 	disableSerialization;
 	params [
 		["_update","updateClass",[""]],
 		["_deck", 0, [0]],
-		["_selection", "", [""]]
+		["_selection", "", [""]],
+		["_lhdType", "", [""]]
 	];
 
 	private ["_ctrl","_display","_ctrlPos","_vehiclesArray","_index"];
@@ -76,7 +94,7 @@ MCC_fnc_LHDspawnMenuClicked = {
 		//Change faction or vehicle type
 		{
 			_ctrl = _display displayCtrl _x;
-			_ctrl ctrlAddEventHandler ["LBSelChanged",format ["['updateClass',%1,'%2'] spawn MCC_fnc_LHDspawnMenuClicked;",_deck,_selection]];
+			_ctrl ctrlAddEventHandler ["LBSelChanged",format ["['updateClass',%1,'%2','%3'] spawn MCC_fnc_LHDspawnMenuClicked;",_deck,_selection,_lhdType]];
 			_ctrl ctrlCommit 0;
 		} forEach [8008,1501];
 
@@ -157,7 +175,7 @@ MCC_fnc_LHDspawnMenuClicked = {
 	//spawn Button
 	_ctrl = _display displayCtrl 2400;
 	_ctrl ctrlRemoveAllEventHandlers "MouseButtonUp";
-	_ctrl ctrlAddEventHandler ["MouseButtonUp",format ["['spawn',%1,'%2'] spawn MCC_fnc_LHDspawnVehicle;",_deck,_selection]];
+	_ctrl ctrlAddEventHandler ["MouseButtonUp",format ["['spawn',%1,'%2','%3'] spawn MCC_fnc_LHDspawnVehicle;",_deck,_selection,_lhdType]];
 };
 
 //Close all dialogs
@@ -193,39 +211,35 @@ switch (_deck) do
 	case 0:
 	{
 		_camera camSetRelPos [100,0,100];
-		_spawnPos = ["fd_cargo_pos_2","fd_cargo_pos_3","fd_cargo_pos_4","fd_cargo_pos_5","fd_cargo_pos_6","fd_cargo_pos_7","fd_cargo_pos_8","fd_cargo_pos_9","fd_cargo_pos_10","fd_cargo_pos_11","fd_cargo_pos_12","fd_cargo_pos_13","fd_cargo_pos_14","fd_cargo_pos_15","fd_cargo_pos_16","fd_cargo_pos_17","fd_cargo_pos_18","fd_cargo_pos_19"];
-		/*
-		trucks = "fd_cargo_pos_20","fd_cargo_pos_21";
 
-		FlightDeckAnchorPositions[] = {"fd_cargo_pos_1","fd_cargo_pos_2","fd_cargo_pos_3","fd_cargo_pos_4","fd_cargo_pos_5","fd_cargo_pos_6","fd_cargo_pos_7","fd_cargo_pos_8","fd_cargo_pos_9","fd_cargo_pos_10","fd_cargo_pos_11","fd_cargo_pos_12","fd_cargo_pos_13","fd_cargo_pos_14","fd_cargo_pos_15","fd_cargo_pos_16","fd_cargo_pos_17","fd_cargo_pos_18","fd_cargo_pos_19","fd_cargo_pos_20","fd_cargo_pos_21","fd_cargo_pos_22","fd_cargo_pos_23"};
-
-		heliPads[] = {"fd_cargo_pos_7","fd_cargo_pos_8","fd_cargo_pos_9","fd_cargo_pos_10","fd_cargo_pos_15","fd_cargo_pos_17","fd_cargo_pos_19"};
-
-		VehicleCargoPositions[] = {"veh_cargo_pos_1","veh_cargo_pos_2","veh_cargo_pos_3","veh_cargo_pos_4","veh_cargo_pos_5","veh_cargo_pos_6","veh_cargo_pos_7","veh_cargo_pos_8","veh_cargo_pos_9","veh_cargo_pos_10","veh_cargo_pos_11","veh_cargo_pos_12","veh_cargo_pos_13","veh_cargo_pos_14","veh_cargo_pos_15","veh_cargo_pos_16","veh_cargo_pos_17","veh_cargo_pos_18","veh_cargo_pos_19","veh_cargo_pos_20","veh_cargo_pos_21","veh_cargo_pos_22","veh_cargo_pos_23","veh_cargo_pos_24","veh_cargo_pos_25","veh_cargo_pos_26","veh_cargo_pos_27","veh_cargo_pos_28","veh_cargo_pos_29","veh_cargo_pos_30","veh_cargo_pos_31","veh_cargo_pos_32","veh_cargo_pos_33","veh_cargo_pos_34","veh_cargo_pos_35","veh_cargo_pos_36","veh_cargo_pos_37","veh_cargo_pos_38","veh_cargo_pos_39","veh_cargo_pos_40","veh_cargo_pos_41","veh_cargo_pos_42","veh_cargo_pos_43","veh_cargo_pos_44","veh_cargo_pos_45","veh_cargo_pos_46"};
-		*/
+		if (_isCUPLHD) then {
+			_spawnPos = ["fd_cargo_pos_2","fd_cargo_pos_3","fd_cargo_pos_4","fd_cargo_pos_5","fd_cargo_pos_6","fd_cargo_pos_7","fd_cargo_pos_8","fd_cargo_pos_9","fd_cargo_pos_10","fd_cargo_pos_11","fd_cargo_pos_12","fd_cargo_pos_13","fd_cargo_pos_14","fd_cargo_pos_15","fd_cargo_pos_16","fd_cargo_pos_17","fd_cargo_pos_18","fd_cargo_pos_19"];
+		} else {
+			_spawnPos = [[20,50,28],[37,70,28],[-22,-55,28],[5,-55,28],[-30,70,28],[-30,50,28],[-30,30,28],[-30,10,28],[-30,-10,28]];
+		};
 	};
 
 	case 1:
 	{
-		_camera camSetRelPos [-4,50,-6];
+		_camera camSetRelPos [-4,50,-8];
 		_spawnPos = ["veh_cargo_pos_8","veh_cargo_pos_9","veh_cargo_pos_13","veh_cargo_pos_14","veh_cargo_pos_18","veh_cargo_pos_19","veh_cargo_pos_10","veh_cargo_pos_11","veh_cargo_pos_12","veh_cargo_pos_15"];
 	};
 
 	case 2:
 	{
-		_camera camSetRelPos [-5,98,-6];
+		_camera camSetRelPos [-5,98,-8];
 		_spawnPos = ["veh_cargo_pos_1","veh_cargo_pos_2","veh_cargo_pos_3","veh_cargo_pos_4","veh_cargo_pos_5"];
 	};
 
 	case 3:
 	{
-		_camera camSetRelPos [-4,50,-14];
+		_camera camSetRelPos [-4,50,-16];
 		_spawnPos = ["veh_cargo_pos_29","veh_cargo_pos_30","veh_cargo_pos_31","veh_cargo_pos_32","veh_cargo_pos_33","veh_cargo_pos_34","veh_cargo_pos_35","veh_cargo_pos_36","veh_cargo_pos_37","veh_cargo_pos_38","veh_cargo_pos_39","veh_cargo_pos_40"];
 	};
 
 	case 4:
 	{
-		_camera camSetRelPos [0,110,-14];
+		_camera camSetRelPos [0,110,-16];
 		_spawnPos = ["veh_cargo_pos_41","veh_cargo_pos_42","veh_cargo_pos_43","veh_cargo_pos_44","veh_cargo_pos_45","veh_cargo_pos_46"];
 	};
 };
@@ -236,22 +250,39 @@ disableSerialization;
 
 _display = uiNamespace getVariable ["MCC_LHD_MENU", displayNull];
 
+_decks = if (_isCUPLHD) then {["Flight Deck","Upper Deck Front","Upper Deck Back","Lower Deck","Well Deck"]} else {["Flight Deck"]};
+
 //Add decks control
 {
 	_ctrl = _display ctrlCreate ["RscButtonMenu", -1];
 	_ctrl ctrlSetPosition [0.05*safezoneW+safezoneX, 0.05*safezoneH+safezoneY + (_foreachindex*0.06*safezoneH),0.1*safezoneW,0.05*safezoneH];
 	_ctrl ctrlsetText _x;
 
-	//TODO - CHANGE TO FUNCTION
 
 	_ctrl ctrlAddEventHandler ["MouseButtonUp",format [
 	    "
 	   closeDialog 0;
-	   [%1] spawn MCC_fnc_LHDspawnMenuInit;
-	",_foreachindex]];
+	   [%1,'%2'] spawn MCC_fnc_LHDspawnMenuInit;
+	",_foreachindex,_lhdType]];
 
 	_ctrl ctrlCommit 0;
-} forEach ["Flight Deck","Upper Deck Front","Upper Deck Back","Lower Deck","Well Deck"];
+} forEach _decks;
+
+//If more then one carrier
+{
+	_ctrl = _display ctrlCreate ["RscButtonMenu", -1];
+	_ctrl ctrlSetPosition [0.21*safezoneW+safezoneX + (_foreachindex*0.11*safezoneW), 0.05*safezoneH+safezoneY ,0.1*safezoneW,0.05*safezoneH];
+	_ctrl ctrlsetText (if (_x == "MCC_lhd") then {"LHD"} else {"Carrier"});
+
+
+	_ctrl ctrlAddEventHandler ["MouseButtonUp",format [
+	    "
+	   closeDialog 0;
+	   [%1,'%2'] spawn MCC_fnc_LHDspawnMenuInit;
+	",0,_x]];
+
+	_ctrl ctrlCommit 0;
+} forEach _availableLHD;
 
 //Add exit ctrl
 _ctrl = _display ctrlCreate ["RscButtonMenu", -1];
@@ -260,22 +291,27 @@ _ctrl ctrlsetText "Exit";
 _ctrl ctrlAddEventHandler ["MouseButtonUp","closeDialog 0"];
 _ctrl ctrlCommit 0;
 
+sleep 0.1;
 //Build SpawnPos
 _objects = [];
 {
 	_dummy = "HeliH" createVehicle [0,0,0];
 	waitUntil {alive _dummy};
-	_dummy attachTo [_lhd,[0,0,0],_x];
+	if (_isCUPLHD) then {
+		_dummy attachTo [_lhd,[0,0,0],_x];
+	} else {
+		_dummy attachTo [_lhd,_x];
+	};
 	_pos = worldToScreen (getPosASL _dummy);
 	_pos set [2,0.02*safezoneW];
 	_pos set [3,0.03*safezoneH];
 
-	if (typeName (_pos select 0) isEqualTo typeName 0) then {
+	if ((typeName (_pos select 0) isEqualTo typeName 0)) then {
 		_ctrl = _display ctrlCreate ["RscButtonMenu", -1];
 		_ctrl ctrlSetPosition _pos;
 		_ctrl ctrlsetText (str _foreachindex);
 		_ctrl ctrlSetBackgroundColor [0, 0, 0, 0.5];
-		_ctrl ctrlAddEventHandler ["MouseButtonUp",format ["['updateSpawn',%1,'%2'] spawn MCC_fnc_LHDspawnMenuClicked",_deck,_x]];
+		_ctrl ctrlAddEventHandler ["MouseButtonUp",format ["['updateSpawn',%1,'%2','%3'] spawn MCC_fnc_LHDspawnMenuClicked",_deck,_x,_lhdType]];
 		_ctrl ctrlCommit 0;
 		_objects pushBack _dummy;
 	};

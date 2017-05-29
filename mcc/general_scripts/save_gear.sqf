@@ -3,15 +3,17 @@ private ["_unit","_goggles","_headgear","_uniform","_uniformItems","_vest","_mag
 _unit 	= _this select 0;
 _killer = if (count _this > 1) then {_this select 1} else {objnull};
 
+
+//Delete utility placed by the player
+{deleteVehicle _x} foreach (player getVariable ["MCC_utilityActiveCharges",[]]);
+
+/*
 //Reduce tickets if any
 _side = _unit getVariable ["CP_side", playerside];
 if ([_side] call BIS_fnc_respawnTickets > 0) then {
 	private ["_sideTickets","_tickets"];
 
 	_tickets = [_side] call BIS_fnc_respawnTickets;
-
-	//Delete utility placed by the player
-	{deleteVehicle _x} foreach (player getVariable ["MCC_utilityActiveCharges",[]]);
 
 	if (_tickets > 1) then {
 		_tickets = -1;
@@ -20,6 +22,7 @@ if ([_side] call BIS_fnc_respawnTickets > 0) then {
 		[["sidetickets"], "BIS_fnc_endMissionServer", false, false] spawn BIS_fnc_MP;
 	};
 };
+*/
 
 if (missionNamespace getvariable ["MCC_saveGear",false]) then {
 	_goggles = goggles _unit; 			//Can't  save gear after killed EH
