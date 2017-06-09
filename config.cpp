@@ -90,6 +90,12 @@ class CfgMissions
 			directory = "mcc_sandbox_mod\sampleMissions\MCC_campaign_CSAT.Tanoa";
 		};
 
+		class MCC_PVP_TANOA
+		{
+			briefingName = "(MCC) PvP";
+			directory = "mcc_sandbox_mod\sampleMissions\PvPmine.Tanoa";
+		};
+
 		//Malden
 		class MCC_CAMPAIGN_NOE_abel
 		{

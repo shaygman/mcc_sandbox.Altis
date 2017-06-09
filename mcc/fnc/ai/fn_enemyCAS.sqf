@@ -1,9 +1,9 @@
-//======================================================MCC_fnc_enemyCAS=====================================================================================================
+//======================================================MCC_fnc_enemyCAS================================================================================================
 // Create CAS in zone while radio tower is available
 // Example:[_tower] spawn MCC_fnc_enemyCAS;
 // _tower 	OBJECT  while object alive
 // Return - nothing
-//=============================================================================================================================================================================
+//=======================================================================================================================================================================
 private ["_tower","_sideEnemy","_factionEnemy","_sidePlayer","_casArray","_heliArray","_spawnPos","_casGroup","_IsCAS","_vehicleClass","_casType","_cas","_casVehicle","_casPilot","_ClosestZone","_totalCASActive","_tempArray"];
 _tower = [_this, 0, objNull, [objNull]] call BIS_fnc_param;
 _sideEnemy = [_this, 1, east] call BIS_fnc_param;

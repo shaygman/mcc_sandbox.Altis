@@ -260,7 +260,8 @@ if (_isCUP) then {
 	_ship setVariable ["MCC_LHDMarkers",_markers,true];
 } else {
 	[_ship] call BIS_fnc_Carrier01PosUpdate;
-	//[_ship] call MCC_fnc_BICarrierInit;
+	sleep 5;
+	_ship remoteExec ["BIS_fnc_Carrier01Init",0];
 };
 
 /*

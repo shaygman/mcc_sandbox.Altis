@@ -68,6 +68,27 @@ class MCC_Module_atmosphere : Module_F
 			};
 		};
 
+		class changeTime
+		{
+			displayName = "Random Time";
+			description = "Random time and date";
+			typeName = "BOOL";
+			class values
+			{
+				class Enabled
+				{
+					name = "Enabled";
+					value = true;
+				};
+				class Disabled
+				{
+					name = "Disabled";
+					value = false;
+					default = 1;
+				};
+			};
+		};
+
 		class dust
 		{
 			displayName = "Dust";

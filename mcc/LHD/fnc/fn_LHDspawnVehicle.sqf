@@ -167,7 +167,9 @@ switch (tolower _fnc) do
 				] call BIS_fnc_MP;
 			};
 
-			{_x addCuratorEditableObjects [[_cargo],false]} forEach allCurators;
+			[netId _cargo,{{_x addCuratorEditableObjects [[objectFromNetId (_this)],true]} forEach allCurators}] remoteExec ["BIS_fnc_spawn",2];
+
+			//{[[_x,_cargo],{(_this select 0) addCuratorEditableObjects [[_this select 1],true];}] remoteExec ["BIS_fnc_spawn",_x]} forEach allCurators;
 		};
 	};
 };

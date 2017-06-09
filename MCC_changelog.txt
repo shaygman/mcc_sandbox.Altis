@@ -1,11 +1,14 @@
 Change log r22:
 -= Intel Module =- **NEW**
 	- Added: Set Intel module to Eden and Zeus: Allows making items or unit as Intel providers. Giving the players option to interact with the them in order to get information and map location. - as defined by the mission maker.
+	- Wiki Page - http://mccsandbox.wikia.com/wiki/Intel
 
 -= Aircraft Carrier =-  **NEW**
-	- Added: CUP LHD (will add A3 Jets Carrier when it will be released) - Spawn CUP LHD that will function as Zeus respawn point and a MCC HQ. Spawn vehicles/aircraft on top of the LHD and use the steam catapults to take off and the arresting gears to land.
+	- Added: CUP LHD & BI Aircraft Carrier - Spawn LHD/Carrier that will function as Zeus respawn point and a MCC HQ. Spawn vehicles/aircraft on top of the LHD/Carrier and use the steam catapults to take off and the arresting gears to land.
+	- Wiki Page - http://mccsandbox.wikia.com/wiki/Aircraft_Carrier
 
 -= UI =-
+	- Updated: HUD/UI module Wiki including the Hit Radar and the Tickets HUD - http://mccsandbox.wikia.com/wiki/UI_Module
 	- Added: Show Tickets in the MCC UI/HUD settings. Enable it will show a Battlefield kind of HuD including time left, opposing sides names and flags, tickets left exc
 	- Fixed: Stuck on Squad menu "P".
 	- Fixed: Placing HUD module forces to 1st person.
@@ -21,9 +24,11 @@ Change log r22:
 	- Fixed: CAS crash with some mods.
 
 -= Misc =-
+	- Added: MCC wiki page for ambient fire, birds and units http://mccsandbox.wikia.com/wiki/Ambient_fireBirds
 	- Added: GAIA settings module to Zeus.
 	- Added: Hold Shift while editing a unit in Zeus to open the default Zeus menu and not MCC menu.
 	- Added: Modules info in Eden.
+	- Changed: Atmosphere module can select random time and date.
 	- Changed: Enable/disable teleport player to last known location while activating the survival module.
 	- Changed: Decreased ambient birds chance.
 	- Changed: In RTS mode can call HQ missions even while the campaign isn't enabled.
@@ -39,8 +44,9 @@ Change log r22:
 	- Fixed: MCC interaction with door on CUP maps didn't work.
 	- Fixed: Ammo/supply/crates box disappear after depletion while on the logistic's truck - Logistics Module.
 
-TODO - video: AAS, Intel and LHD
-TODO - wiki: modules fire, birds, intel, hud, LHD
+TODO - AAS missions to mod,
+TODO - wiki: intel, LHD
+TODO - Change armaments?
 TODO - weather add fog volume and wind direction
 TODO - animation module
 

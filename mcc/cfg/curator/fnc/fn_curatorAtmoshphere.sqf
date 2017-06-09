@@ -18,9 +18,20 @@ if (typeName (_module getVariable ["atmosphere",true]) == typeName 0) exitWith {
     _fog = _module getVariable ["fog",false];
     _leaves = _module getVariable ["leaves",false];
     _wind = _module getVariable ["windsounds",false];
+    _changeTime = _module getVariable ["changeTime",false];
+
     _color = (["none","cold","murky","green","sand","yellow","hot","gray"]) select (_module getVariable ["filtercolor",0]);
     _grain = (["none","low","medium","heavy"]) select (_module getVariable ["filtergrain",0]);
     _weather = [];
+
+    //If change Time
+    if (_changeTime) then {
+        MCC_date    = date;
+        MCC_date    = [(MCC_date select 0) + floor (random 10 - random 10), floor ((random 12)+1)  ,  floor ((random 28)+1), floor ((random 24)+1),  floor (random 60)];
+        publicVariable "MCC_date";
+
+        [MCC_date] remoteExec ["MCC_fnc_setTime",0];
+    };
 
     if (_effect == "random") then {
         _effect = [["clearWeather","cloudy","rain","stormy","sandstorm","storm","snow","heatwave"],[0.4,0.15,0.15,0.15,0.045,0.045,0.045,0.045]] call bis_fnc_selectRandomWeighted;
@@ -48,6 +59,7 @@ if (typeName (_module getVariable ["atmosphere",true]) == typeName 0) exitWith {
         };
     };
 
+
 	[_effect,false,_dust,_snow,_papers,_mist,_fog,_leaves,_wind,_color,_grain,_weather] spawn MCC_fnc_ppEffects;
 };
 
@@ -56,6 +68,7 @@ if (!(local _module) || isnull curatorcamera) exitWith {};
 
 _resualt = ["Add Atmosphere",[
  						["Atmosphere",["Custom","Random","Clear","Cloudy","Rain","Storm","Sandstorm","Blizzard","Snow","Heat Wave","Remove All"]],
+                        ["Random Weather",false],
  						["Dust",false],
  						["Snow",false],
  						["Papers",false],
@@ -76,16 +89,26 @@ _resualt = ["Add Atmosphere",[
 if (count _resualt == 0) exitWith {deleteVehicle _module};
 private ["_effect","_dust","_snow","_papers","_mist","_fog","_leaves","_wind","_color","_grain","_weather","_preDefinedWeather"];
 _effect = (["custom","random","clearWeather","cloudy","rain","stormy","sandstorm","storm","snow","heatwave","clear"]) select (_resualt select 0);
-_dust = _resualt select 1;
-_snow = _resualt select 2;
-_papers = _resualt select 3;
-_mist = _resualt select 4;
-_fog = _resualt select 5;
-_leaves = _resualt select 6;
-_wind = _resualt select 7;
-_color = (["none","cold","murky","green","sand","yellow","hot","gray"]) select (_resualt select 8);
-_grain = (["none","low","medium","heavy"]) select (_resualt select 9);
-_weather = [(_resualt select 10)/10,(_resualt select 11)/10,(_resualt select 12)/10,(_resualt select 13)/10,(_resualt select 14)/10,(_resualt select 15)/10];
+_changeTime = _resualt select 1;
+_dust = _resualt select 2;
+_snow = _resualt select 3;
+_papers = _resualt select 4;
+_mist = _resualt select 5;
+_fog = _resualt select 6;
+_leaves = _resualt select 7;
+_wind = _resualt select 8;
+_color = (["none","cold","murky","green","sand","yellow","hot","gray"]) select (_resualt select 9);
+_grain = (["none","low","medium","heavy"]) select (_resualt select 10);
+_weather = [(_resualt select 11)/10,(_resualt select 12)/10,(_resualt select 13)/10,(_resualt select 14)/10,(_resualt select 15)/10,(_resualt select 16)/10];
+
+//If change Time
+if (_changeTime) then {
+    MCC_date    = date;
+    MCC_date    = [(MCC_date select 0) + floor (random 10 - random 10), floor ((random 12)+1)  ,  floor ((random 28)+1), floor ((random 24)+1),  floor (random 60)];
+    publicVariable "MCC_date";
+
+    [MCC_date] remoteExec ["MCC_fnc_setTime",0];
+};
 
 if (_effect == "random") then {
 	_effect = [["clearWeather","cloudy","rain","stormy","sandstorm","storm","snow","heatwave"],[0.4,0.15,0.15,0.15,0.045,0.045,0.045,0.045]] call bis_fnc_selectRandomWeighted;

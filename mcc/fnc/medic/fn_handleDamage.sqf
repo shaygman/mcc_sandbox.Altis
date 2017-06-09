@@ -8,6 +8,12 @@ _damage			= _this select 2;
 _source			= _this select 3;
 
 if (_damage < 0.0001) exitWith {};
+
+if (!alive vehicle _unit) then {
+	unassignVehicle _unit;
+  	_unit action ["eject", vehicle _unit];
+};
+
 if (!local _unit || (damage _unit >=1) || !alive _unit) then {
 	0;
 } else {
@@ -22,7 +28,7 @@ if (!local _unit || (damage _unit >=1) || !alive _unit) then {
 		"dynamicBlur" ppEffectCommit (_damage*10 max 0.5);
 	};
 
-	if (_selectionName in ["","body","head","spine1","spine2","spine3","face_hub","pelvis","neck"] && (_damage > 0.9)) then {
+	if ((_selectionName in ["","body","head","spine1","spine2","spine3","face_hub","pelvis","neck"] && (_damage > 0.9)) || !alive (vehicle player)) then {
 		//AI will not always get unconscious and sometimes just die
 
 		if  (!(isPlayer _unit) && (random 1 > 0.1)) then {

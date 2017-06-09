@@ -1,7 +1,7 @@
 class MCC_Module_LHDSpawn : Module_F
 {
 	category = "MCC";
-	displayName = "LHD-Spawn";
+	displayName = "Carrier-Spawn";
 	function = "MCC_fnc_curatorLHDSpawn";
 	scope = 2;
 	isGlobal = 0;
@@ -10,6 +10,8 @@ class MCC_Module_LHDSpawn : Module_F
 	{
 		class side : Combo
 		{
+			displayName = "Side";
+			description = "Which side the carrier belong to";
 			typeName = "NUMBER";
 			property = "side";
 
@@ -42,7 +44,7 @@ class MCC_Module_LHDSpawn : Module_F
 		class hq : Checkbox
 		{
 			displayName = "Respawn Position";
-			description = "The LHD will act as a respawn position";
+			description = "The carrier will act as a respawn position";
 			typeName = "BOOL";
 			property = "hq";
 		};
