@@ -224,6 +224,28 @@ class MCC_Module_inGameUI : Module_F
 				};
 			};
 		};
+
+		class tutorials
+		{
+			displayName = "MCC Tutorials";
+			description = "Enable MCC Tutorials such as Squad Leader role exc";
+			typeName = "BOOL";
+			class values
+			{
+				class disable
+				{
+					name = "Disable";
+					value = false;
+				};
+
+				class enable
+				{
+					name = "Enable";
+					value = true;
+					default = 1;
+				};
+			};
+		};
 	};
 
 	class ModuleDescription: ModuleDescription

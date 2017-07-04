@@ -16,8 +16,7 @@ MCC_GAIA_CA_DEBUG					= [];
 MCC_GAIA_CACHE						= false;
 GAIA_CACHE_SLEEP					= 0.5;
 
-GAIA_CACHE_STAGE_1				= 1000;
-GAIA_CACHE_STAGE_2				= (2*GAIA_CACHE_STAGE_1);
+GAIA_CACHE_STAGE_2				= (2*(missionNamespace getVariable ["GAIA_CACHE_STAGE_1",1000]));
 MCC_GAIA_CACHE_STAGE2			= [];
 
 
@@ -53,11 +52,6 @@ MCC_GAIA_AMBIENT_minRange			 = 800;
 MCC_GAIA_AMBIENT_maxRange 		 = 1000;
 //>>>>>>> parent of f16fa86... Refactoring of GAIA cache functions
 MCC_GAIA_AMBIENT_ZONE_RESERVED = 1000;
-
-
-MCC_GAIA_AMBIANT							 = true;
-MCC_GAIA_AMBIANT_CHANCE				 = 20;
-
 
 //Side specific
 MCC_GAIA_CA_WEST					= [];

@@ -35,13 +35,13 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 					//setskill
 					_unitspawned setformdir _dir;
 
-					_dummy setSkill ["aimingspeed", MCC_AI_Aim];
-					_dummy setSkill ["spotdistance", MCC_AI_Spot];
-					_dummy setSkill ["aimingaccuracy", MCC_AI_Aim];
-					_dummy setSkill ["aimingshake", MCC_AI_Aim];
-					_dummy setSkill ["spottime", MCC_AI_Spot];
-					_dummy setSkill ["commanding", MCC_AI_Command];
-					_dummy setSkill ["general", MCC_AI_Skill];
+					_dummy setSkill ["aimingspeed", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+					_dummy setSkill ["spotdistance", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+					_dummy setSkill ["aimingaccuracy", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+					_dummy setSkill ["aimingshake", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+					_dummy setSkill ["spottime", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+					_dummy setSkill ["commanding", (missionNamespace getVariable ["MCC_AI_Command",0.5])];
+					_dummy setSkill ["general", (missionNamespace getVariable ["MCC_AI_Skill",0.5])];
 
 					if (_name != "") then
 					{
@@ -104,13 +104,13 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 						_crew = [_veh, _grp] call BIS_fnc_spawnCrew;
 						_dummy = [_veh,_crew,_grp];
 
-						(_dummy select 0) setSkill ["aimingspeed", MCC_AI_Aim];
-						(_dummy select 0) setSkill ["spotdistance", MCC_AI_Spot];
-						(_dummy select 0) setSkill ["aimingaccuracy", MCC_AI_Aim];
-						(_dummy select 0) setSkill ["aimingshake", MCC_AI_Aim];
-						(_dummy select 0) setSkill ["spottime", MCC_AI_Spot];
-						(_dummy select 0) setSkill ["commanding", MCC_AI_Command];
-						(_dummy select 0) setSkill ["general", MCC_AI_Skill];
+						(_dummy select 0) setSkill ["aimingspeed", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+						(_dummy select 0) setSkill ["spotdistance", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+						(_dummy select 0) setSkill ["aimingaccuracy", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+						(_dummy select 0) setSkill ["aimingshake", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+						(_dummy select 0) setSkill ["spottime", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+						(_dummy select 0) setSkill ["commanding", (missionNamespace getVariable ["MCC_AI_Command",0.5])];
+						(_dummy select 0) setSkill ["general", (missionNamespace getVariable ["MCC_AI_Skill",0.5])];
 
 						if (_name != "") then
 						{

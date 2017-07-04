@@ -788,7 +788,7 @@ _StartTimeIssueOrders = time;
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 {
 
-			if (MCC_GAIA_AMBIANT)
+			if (missionNamespace getVariable ["MCC_GAIA_AMBIANT",true])
 			then
 			{
 				 if (
@@ -814,7 +814,7 @@ _StartTimeIssueOrders = time;
 		   	 {
 
 		   	 		 _IsNight			= (((selectBestPlaces [position (leader _x),2, "night", 1, 1]) select 0 select 1)>0.8);
-		   	 		 _LetsDoSome	= ((round(random(MCC_GAIA_AMBIANT_CHANCE)))==1);
+		   	 		 _LetsDoSome	= ((round(random(missionNamespace getVariable ["MCC_GAIA_AMBIANT_CHANCE",20])))==1);
 		   	 		 _ClosestCA		= ([_CA,leader _x] call BIS_fnc_nearestPosition);
 		   	 		 _PosLead			= position leader _x;
 

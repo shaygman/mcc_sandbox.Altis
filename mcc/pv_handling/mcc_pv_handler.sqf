@@ -234,13 +234,13 @@ my_pv_handler =
 							//Curator
 							{_x addCuratorEditableObjects [[_dummyUnit],false]} forEach allCurators;
 
-									_dummyUnit setSkill ["aimingspeed", MCC_AI_Aim];
-									_dummyUnit setSkill ["spotdistance", MCC_AI_Spot];
-									_dummyUnit setSkill ["aimingaccuracy", MCC_AI_Aim];
-									_dummyUnit setSkill ["aimingshake", MCC_AI_Aim];
-									_dummyUnit setSkill ["spottime", MCC_AI_Spot];
-									_dummyUnit setSkill ["commanding", MCC_AI_Command];
-									_dummyUnit setSkill ["general", MCC_AI_Skill];
+									_dummyUnit setSkill ["aimingspeed", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+									_dummyUnit setSkill ["spotdistance", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+									_dummyUnit setSkill ["aimingaccuracy", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+									_dummyUnit setSkill ["aimingshake", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+									_dummyUnit setSkill ["spottime", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+									_dummyUnit setSkill ["commanding", (missionNamespace getVariable ["MCC_AI_Command",0.5])];
+									_dummyUnit setSkill ["general", (missionNamespace getVariable ["MCC_AI_Skill",0.5])];
 
 							if (MCC_Chat) then
 							{
@@ -402,22 +402,22 @@ my_pv_handler =
 									_p_mcc_spawnfaction = if (typeName _p_mcc_spawnfaction == "STRING") then {(call compile _p_mcc_spawnfaction)} else {_p_mcc_spawnfaction};
 									//Depending on faction we spawn for side
 									if (_p_mcc_grouptype=="GUER") then
-										{_unitspawned=[_p_safepos, resistance, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};
+										{_unitspawned=[_p_safepos, resistance, _p_mcc_spawnfaction,[],[],[0.1,(missionNamespace getVariable ["MCC_AI_Skill",0.5])]] call MCC_fnc_spawnGroup;};
 									if (_p_mcc_grouptype=="WEST") then
-										{_unitspawned=[_p_safepos, west, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};
+										{_unitspawned=[_p_safepos, west, _p_mcc_spawnfaction,[],[],[0.1,(missionNamespace getVariable ["MCC_AI_Skill",0.5])]] call MCC_fnc_spawnGroup;};
 									if (_p_mcc_grouptype=="EAST") then
-										{_unitspawned=[_p_safepos, east, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};
+										{_unitspawned=[_p_safepos, east, _p_mcc_spawnfaction,[],[],[0.1,(missionNamespace getVariable ["MCC_AI_Skill",0.5])]] call MCC_fnc_spawnGroup;};
 									if (_p_mcc_grouptype=="CIV") then
-										{_unitspawned=[_p_safepos, civilian, _p_mcc_spawnfaction,[],[],[0.1,MCC_AI_Skill]] call MCC_fnc_spawnGroup;};
+										{_unitspawned=[_p_safepos, civilian, _p_mcc_spawnfaction,[],[],[0.1,(missionNamespace getVariable ["MCC_AI_Skill",0.5])]] call MCC_fnc_spawnGroup;};
 
 									{
-										_x setSkill ["aimingspeed", MCC_AI_Aim];
-										_x setSkill ["spotdistance", MCC_AI_Spot];
-										_x setSkill ["aimingaccuracy", MCC_AI_Aim];
-										_x setSkill ["aimingshake", MCC_AI_Aim];
-										_x setSkill ["spottime", MCC_AI_Spot];
-										_x setSkill ["commanding", MCC_AI_Command];
-										_x setSkill ["general", MCC_AI_Skill];
+										_x setSkill ["aimingspeed", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+										_x setSkill ["spotdistance", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+										_x setSkill ["aimingaccuracy", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+										_x setSkill ["aimingshake", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+										_x setSkill ["spottime", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+										_x setSkill ["commanding", (missionNamespace getVariable ["MCC_AI_Command",0.5])];
+										_x setSkill ["general", (missionNamespace getVariable ["MCC_AI_Skill",0.5])];
 									} foreach units _unitspawned;
 
 									//Find out who is the poor bastard leading this joint and then give him something to do with UPS

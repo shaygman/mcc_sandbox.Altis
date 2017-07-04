@@ -20,7 +20,8 @@ _pos = getpos _module;
  						["Name Tags Only When Pointing",true],
  						["Suppression Effects",true],
  						["Hit Radar",true],
- 						["Tickets",true]
+ 						["Tickets",true],
+ 						["Tutorials",true]
  					  ]] call MCC_fnc_initDynamicDialog;
 
 if (count _resualt == 0) exitWith {deleteVehicle _module};

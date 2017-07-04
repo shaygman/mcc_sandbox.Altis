@@ -275,7 +275,7 @@ if (_cargoNum > 0) then {
 	for "_i" from 0 to (ceil (_cargoNum /6)) step 1 do {
 
 		if !( _customParaGroup ) then {
-			_unitspawned=[[100,100,5000], _side, (call compile _spawnParaGroup),[],[],[0.1,MCC_AI_Skill],[],[(6 min _cargoNum), 0]] call MCC_fnc_spawnGroup;
+			_unitspawned=[[100,100,5000], _side, (call compile _spawnParaGroup),[],[],[0.1,(missionNamespace getVariable ["MCC_AI_Skill",0.5])],[],[(6 min _cargoNum), 0]] call MCC_fnc_spawnGroup;
 			sleep 0.1;
 		} else {
 
@@ -296,12 +296,12 @@ if (_cargoNum > 0) then {
 		{
 			_x assignAsCargo _heli;
 			_x moveInCargo _heli;
-			_x setSkill ["aimingspeed", MCC_AI_Aim];
-			_x setSkill ["spotdistance", MCC_AI_Spot];
-			_x setSkill ["aimingaccuracy", MCC_AI_Aim];
-			_x setSkill ["aimingshake", MCC_AI_Aim];
-			_x setSkill ["spottime", MCC_AI_Spot];
-			_x setSkill ["commanding", MCC_AI_Command];
+			_x setSkill ["aimingspeed", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+			_x setSkill ["spotdistance", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+			_x setSkill ["aimingaccuracy", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+			_x setSkill ["aimingshake", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+			_x setSkill ["spottime", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+			_x setSkill ["commanding", (missionNamespace getVariable ["MCC_AI_Command",0.5])];
 			_x setSkill ["general", MCC_AI_Skill];
 			/*
 				removeBackpack _x;

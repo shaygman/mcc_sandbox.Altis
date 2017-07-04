@@ -223,11 +223,13 @@ while { count _locations > 0 &&
 		[_reinforcement, _artillery]
 	] spawn MCC_fnc_MWinitMission;
 
-	private ["_activeObjectives","_failedObjectives","_totalObjectives","_tower"];
-	sleep 60;
+
+	//Wait untill mission wizard mission is runing
+	waitUntil {missionNamespace getVariable ["MCC_MWMissionRuning",false]};
 
 	//CAS
 	if (_obj2 == "Destroy Radar/Radio") then {
+		private ["_tower"];
 		_tower = _AOlocationPos nearObjects [MCC_MWRadio select 0, (_AOSize*2.5)];
 		if (count _tower > 0) then {
 			_tower = _tower select 0;
@@ -275,13 +277,8 @@ while { count _locations > 0 &&
 
 	_ticketsStart = [_sidePlayer] call BIS_fnc_respawnTickets;
 
-	_totalObjectives =  _AOlocationPos nearObjects ["ModuleObjective_F", (_AOSize*2.5)];
-
-	while {	count _totalObjectives > 0} do {
-
-		sleep 1;
-		_totalObjectives = _AOlocationPos nearObjects ["ModuleObjective_F", (_AOSize*2.5)]
-	};
+	//Wait untill mission wizard mission is done
+	waitUntil {!(missionNamespace getVariable ["MCC_MWMissionRuning",true])};
 
 	_activeObjectivesSide1 = missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_total",_sidePlayer],0];
 	_activeObjectivesSide2 = missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_total",_sidePlayer2],0];

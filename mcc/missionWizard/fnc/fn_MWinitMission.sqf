@@ -575,7 +575,7 @@ _tempText = [
 			] call BIS_fnc_selectRandom;
 _html = _html + format ["<br/><br/><t size='0.8' color='#E2EEE0'>%1 %2. </t>",_factionName, _tempText select 0];
 _html2 = format ["<br/><br/><t>%1 %2.</t>",_factionName,_tempText select 0];
-_plainText pushback [format ["%1 %2. ",_factionName, _tempText select 0],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+//_plainText pushback [format ["%1 %2. ",_factionName, _tempText select 0],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 _sounds set [count _sounds, _tempText select 1];
 
 //_isCQB
@@ -586,20 +586,20 @@ if (_isCQB) then {
 				] call BIS_fnc_selectRandom;
     _html = _html + format ["<t size='0.8' color='#E2EEE0'> %1.</t>",_tempText select 0];
 	_html2 = _html2 + format ["%1",_tempText select 0];
-	_plainText pushback [_tempText select 0,"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+	//_plainText pushback [_tempText select 0,"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 	_sounds set [count _sounds, _tempText select 1];
 };
 
 
 _html = _html + format ["<t size='0.8' color='#E2EEE0'>HQ informs us that infantry are present. </t>",_factionName];
-_plainText pushback ["HQ informs us that infantry are present.","<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+//_plainText pushback ["HQ informs us that infantry are present.","<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 _sounds set [count _sounds, ["infantrypresent",3]];
 
 //_vehicles
 if (_vehicles) then {
     _html = _html + format ["<t size='0.8' color='#E2EEE0'>You may also encounter %1 technicals or soft vehicles. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>You may also encounter %1 technicals or soft vehicles.",_factionName];
-	_plainText pushback [format ["You may also encounter %1 technicals or soft vehicles.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+	//_plainText pushback [format ["You may also encounter %1 technicals or soft vehicles.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 	_sounds set [count _sounds, ["isVehicles",2.88]];
 };
 
@@ -607,7 +607,7 @@ if (_vehicles) then {
 if (_armor) then {
     _html = _html + format ["<t size='0.8' color='#E2EEE0'>Be aware that there may be %1 armored vehicles or even MBT's operating in the OP. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>Be aware that there may be %1 armored vehicles or even MBT operating in the OP.",_factionName];
-	_plainText pushback [format ["Be aware that there may be %1 armored vehicles or even MBT operating in the OP.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+	//_plainText pushback [format ["Be aware that there may be %1 armored vehicles or even MBT operating in the OP.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 	_sounds set [count _sounds, ["isArmor",4.68]];
 };
 
@@ -615,7 +615,7 @@ if (_armor) then {
 if (_artillery != 0) then {
 	_html = _html + format ["<t size='0.8' color='#E2EEE0'>%1 may also have artillery operating in the area. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>%1 may also have artillery operating in the area.",_factionName];
-	_plainText pushback [format ["%1 may also have artillery operating in the area.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+	//_plainText pushback [format ["%1 may also have artillery operating in the area.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 	_sounds set [count _sounds, ["isArtillery",2.96]];
 };
 
@@ -623,7 +623,7 @@ if (_artillery != 0) then {
 if (_isRoadblocks) then {
     _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>%1 forces have established hasty checkpoints on some of the roads leading in and out of the area. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>%1 forces have established hasty checkpoints on some of the roads leading in and out of the area.",_factionName];
-	_plainText pushback [format ["%1 forces have established hasty checkpoints on some of the roads leading in and out of the area.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+	//_plainText pushback [format ["%1 forces have established hasty checkpoints on some of the roads leading in and out of the area.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 	_sounds set [count _sounds, ["isRoadblocks",4.33]];
 };
 
@@ -631,14 +631,14 @@ if (_isRoadblocks) then {
 if (_isIED || _isSB) then {
     _html = _html + format ["<t size='0.8' color='#E2EEE0'>Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks. </t>",_factionName];
 	_html2 = _html2 + format ["<br/>Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks.",_factionName];
-	_plainText pushback [format ["Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+	//_plainText pushback [format ["Keep an eye out for anything that might look suspicious, as we believe that %1 may employ IEDs, or even suicide attacks.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 	_sounds set [count _sounds, ["isIED",6.4]];
 };
 //_isAS
 if (_isAS) then {
     _html = _html + format ["<t size='0.8' color='#E2EEE0'>The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass don't want to draw unnecessary attention. </t>",_factionName];
 	_html2 = _html2 + format ["The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass do not want to draw unnecessary attention.",_factionName];
-	_plainText pushback [format ["The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass do not want to draw unnecessary attention.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+	//_plainText pushback [format ["The local civilians support %1, so be on the look out for any strange behavior. But keep civilian casualties to a minimum as the top Brass do not want to draw unnecessary attention.",_factionName],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 	_sounds set [count _sounds, ["isAS",10.77]];
 };
 
@@ -670,7 +670,7 @@ if (_reinforcement in [1,2,3] || _stealth) then {
 
 	_html = _html +"<br/><t size='0.8' color='#E2EEE0'>The enemy have" + _text + "QRF forces nearby. Expect enemy reinforcements should they become aware of your presence. </t>";
 	_html2 = _html2 +"<br/>The enemy have" + _text + "QRF forces nearby. Expect enemy reinforcements should they become aware of your presence.";
-	_plainText pushback [format ["The enemy have%1QRF forces nearby. Expect enemy reinforcements should they become aware of your presence",_text],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
+	//_plainText pushback [format ["The enemy have%1QRF forces nearby. Expect enemy reinforcements should they become aware of your presence",_text],"<t size='0.7' color='#E2EEE0' font='PuristaMedium'>%1</t>",0];
 };
 
 _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Go over your objectives, gear up and get ready. Mission is a go!</t>",_factionName];
@@ -695,3 +695,21 @@ publicVariable "MCC_MWisGenerating";
 
 if (!isnil "MCC_worldArea") then {deleteVehicle MCC_worldArea;	MCC_worldArea = nil};
 if (!isnil "MWMissionArea") then {deleteVehicle MWMissionArea;	MWMissionArea = nil};
+
+//Wait till mission end
+[_missionCenter,_maxObjectivesDistance] spawn {
+	params ["_missionCenter","_maxObjectivesDistance"];
+
+	missionNamespace setVariable ["MCC_MWMissionRuning",true];
+	publicvariable "MCC_MWMissionRuning";
+
+	while {	count (_missionCenter nearObjects ["ModuleObjective_F", (_maxObjectivesDistance*2.5)]) > 0} do {
+		sleep 5;
+	};
+
+	missionNamespace setVariable ["MCC_MWMissionRuning",false];
+	publicvariable "MCC_MWMissionRuning";
+
+	//Global Radio message when done
+	(selectRandom ["cp_mission_accomplished_1", "cp_mission_accomplished_2", "cp_mission_accomplished_3"]) remoteExec ["playSound",0];
+};

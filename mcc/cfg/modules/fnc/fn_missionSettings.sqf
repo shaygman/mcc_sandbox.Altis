@@ -106,7 +106,8 @@ _resualt = ["Settings MCC",[
  						["Logistics",true],
  						["Real Time Strategy",true],
  						["Artilery Computer",true],
- 						["Time Acceleration",20]
+ 						["Time Acceleration",20],
+ 						["Resistance Hostile To",["All","East","West"]]
  					  ]] call MCC_fnc_initDynamicDialog;
 
 if (count _resualt == 0) exitWith {deleteVehicle _module};
@@ -133,5 +134,39 @@ if (count _resualt == 0) exitWith {deleteVehicle _module};
 
 (_resualt select 14) remoteExec ["enableEngineArtillery",0];
 (_resualt select 15) remoteExec ["setTimeMultiplier",2];
+
+//Resistance Hostility
+switch (_resualt select 16) do {
+
+	//East
+	case 1:
+	{
+		[resistance,[east, 0]] remoteExec ["setfriend",2];
+		[resistance,[west, 0.8]] remoteExec ["setfriend",2];
+		[east,[resistance, 0]] remoteExec ["setfriend",2];
+		[west,[resistance, 0.8]] remoteExec ["setfriend",2];
+	};
+
+	//West
+	case 2:
+	{
+		[resistance,[east, 0.8]] remoteExec ["setfriend",2];
+		[resistance,[west, 0]] remoteExec ["setfriend",2];
+		[east,[resistance, 0.8]] remoteExec ["setfriend",2];
+		[west,[resistance, 0]] remoteExec ["setfriend",2];
+	};
+
+	//All
+	default
+	{
+		[resistance,[east, 0.8]] remoteExec ["setfriend",2];
+		[resistance,[west, 0]] remoteExec ["setfriend",2];
+		[east,[resistance, 0.8]] remoteExec ["setfriend",2];
+		[west,[resistance, 0]] remoteExec ["setfriend",2];
+	};
+};
+
+missionNamespace setVariable ["RESISTANCE_HOSTILE_index",_resualt select 16];
+publicvariable "RESISTANCE_HOSTILE_index";
 
 deleteVehicle _module;

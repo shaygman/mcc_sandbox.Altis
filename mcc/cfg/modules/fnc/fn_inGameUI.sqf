@@ -66,6 +66,11 @@ if (typeName _mode == typeName objNull) then {
 	//Tickets
 	missionNamespace setVariable ["MCC_UIModuleTickets",_module getvariable ["tickets",false]];
 
+	//Tutorials
+	if (_module getvariable ["tutorials",false]) then {
+		0 spawn MCC_fnc_helpersInit;
+	};
+
 } else {
 	_compass = param [1,true,[false]];
 	_compassTeamMates = param [2,true,[false]];
@@ -90,6 +95,11 @@ if (typeName _mode == typeName objNull) then {
 
 	//Tickets
 	missionNamespace setVariable ["MCC_UIModuleTickets",param [9,true,[false]]];
+
+	//Tutorials
+	if (param [10,false,[false]]) then {
+		0 spawn MCC_fnc_helpersInit;
+	};
 };
 
 //Compass HUD

@@ -36,7 +36,7 @@ if (_cargoNum > 2) then {
 		While { true } do {
 
 			if !( (count _convoyGroupArray) == 0 ) then {
-				_group = [_locGr, side _vehicle, (call compile (_convoyGroupArray select 0)),[],[],[0.1,MCC_AI_Skill],[],[_fillSlots, 0]] call MCC_fnc_spawnGroup;
+				_group = [_locGr, side _vehicle, (call compile (_convoyGroupArray select 0)),[],[],[0.1,(missionNamespace getVariable ["MCC_AI_Skill",0.5])],[],[_fillSlots, 0]] call MCC_fnc_spawnGroup;
 				sleep 0.1;
 			} else {
 				// no default groups found so let's build the faction custom unit's array

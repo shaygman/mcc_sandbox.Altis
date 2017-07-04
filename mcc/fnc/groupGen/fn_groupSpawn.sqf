@@ -93,13 +93,13 @@ if ( ( (isServer) && ( (_loc == 0) || !(MCC_isHC) ) ) || ( (MCC_isLocalHC) && (_
 
 		//Set skill
 		{
-			_x setSkill ["aimingspeed", MCC_AI_Aim];
-			_x setSkill ["spotdistance", MCC_AI_Spot];
-			_x setSkill ["aimingaccuracy", MCC_AI_Aim];
-			_x setSkill ["aimingshake", MCC_AI_Aim];
-			_x setSkill ["spottime", MCC_AI_Spot];
-			_x setSkill ["commanding", MCC_AI_Command];
-			_x setSkill ["general", MCC_AI_Skill];
+			_x setSkill ["aimingspeed", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+			_x setSkill ["spotdistance", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+			_x setSkill ["aimingaccuracy", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+			_x setSkill ["aimingshake", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
+			_x setSkill ["spottime", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
+			_x setSkill ["commanding", (missionNamespace getVariable ["MCC_AI_Command",0.5])];
+			_x setSkill ["general", (missionNamespace getVariable ["MCC_AI_Skill",0.5])];
 		} foreach units _group;
 
 		_group setVariable ["mcc_gaia_cache",_cache, true];

@@ -81,6 +81,8 @@ class MCC_VEHICLESPAWNER
 			idc = 1100;
 			text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
 			tooltip = "Ammo";
+			colorText[] = { 0.9, 0, 0, 1 };
+
 			x = 0.298906 * safezoneW + safezoneX;
 			y = 0.324 * safezoneH + safezoneY;
 			w = 0.0257812 * safezoneW;
@@ -89,6 +91,7 @@ class MCC_VEHICLESPAWNER
 		class repairPic: MCC_RscPicture
 		{
 			idc = 1101;
+			colorText[] = { 0, 0.5, 0.9, 10 };
 			text = __EVAL(MCCPATH +"data\IconRepair.paa");
 			tooltip = "Supplies";
 			x = 0.371094 * safezoneW + safezoneX;
@@ -101,6 +104,8 @@ class MCC_VEHICLESPAWNER
 			idc = 1102;
 			text = __EVAL(MCCPATH +"data\IconFuel.paa");
 			tooltip = "Fuel";
+			colorText[] = { 0, 0.9, 0.5, 1 };
+
 			x = 0.443281 * safezoneW + safezoneX;
 			y = 0.324 * safezoneH + safezoneY;
 			w = 0.0257812 * safezoneW;
@@ -228,6 +233,8 @@ class MCC_VEHICLESPAWNER
 
 					text =  __EVAL(MCCPATH +"data\IconAmmo.paa");
 					tooltip = "Ammo";
+					colorText[] = { 0.9, 0, 0, 1 };
+
 					x = 0.00515625 * safezoneW;
 					y = 0.055 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -236,7 +243,7 @@ class MCC_VEHICLESPAWNER
 				class MCC_Repair: MCC_RscPicture
 				{
 					idc = 92;
-
+					colorText[] = { 0, 0.5, 0.9, 10 };
 					text = __EVAL(MCCPATH +"data\IconRepair.paa");
 					tooltip = "Supplies";
 					x = 0.00515625 * safezoneW;
@@ -250,6 +257,8 @@ class MCC_VEHICLESPAWNER
 
 					text = __EVAL(MCCPATH +"data\IconFuel.paa");
 					tooltip = "Fuel";
+					colorText[] = { 0, 0.9, 0.5, 1 };
+
 					x = 0.00515625 * safezoneW;
 					y = 0.143 * safezoneH;
 					w = 0.0154688 * safezoneW;
@@ -259,9 +268,10 @@ class MCC_VEHICLESPAWNER
 				class MCC_ValorPic: MCC_RscPicture
 				{
 					idc = 94;
-
-					text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
 					tooltip = "Valor";
+					text = __EVAL(MCCPATH +"mcc\rts\data\valorIcon.paa");
+					colorText[] = { 0.9, 0.9, 0, 1 };
+
 					x = 0.00515625 * safezoneW;
 					y = 0.011 * safezoneH;
 					w = 0.0154688 * safezoneW;

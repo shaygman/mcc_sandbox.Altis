@@ -62,7 +62,7 @@ while {true} do
 				publicVariable "MCC_GAIA_CYCLE" ;
 				//vlag setvariable ['gaia_cycle',MCC_GAIA_CYCLE,true];
 
-				GAIA_CACHE_STAGE_2				= (2*GAIA_CACHE_STAGE_1);
+				GAIA_CACHE_STAGE_2				= (2*(missionNamespace getVariable ["GAIA_CACHE_STAGE_1",1000]));
 
 
 				// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =

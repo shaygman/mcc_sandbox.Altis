@@ -106,7 +106,7 @@ if (_action == 2) exitWith
 	{
 		_displayname = _x;
 		_comboBox lbAdd _displayname;
-	} foreach ["Primary","F.O.B"];
+	} foreach ["H.Q","F.O.B"];
 	_comboBox lbSetCurSel 0;
 
 	_comboBox = (_mccdialog displayCtrl 201212);		// Teleport

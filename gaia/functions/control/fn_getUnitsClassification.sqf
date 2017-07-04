@@ -18,22 +18,22 @@ _class			= "";
 _Assets = [_units] call GAIA_fnc_getUnitTypeAmounts;
 
 _infantryCount 		= _Assets select 0;
-_reconCount				=	_Assets select 6;
-_CarCount	 				= _Assets select 1;
-_tankCount		 		= _Assets select 2;
+_reconCount			= _Assets select 6;
+_CarCount	 		= _Assets select 1;
+_tankCount		 	= _Assets select 2;
 _artilleryCount 	= _Assets select 3;
-_airCount				 	= _Assets select 4;
-_shipCount				= _Assets select 5;
-_supportCount			=	_Assets select 7;
+_airCount			= _Assets select 4;
+_shipCount			= _Assets select 5;
+_supportCount		= _Assets select 7;
 _autonomousCount	= _Assets select 8;
-_staticCount			=	_Assets select 9;
-_submarineCount		=	_Assets select 10;
-_AACount					=	_Assets select 11;
-_CargoCount				=	_Assets select 12;
-_MortarCount			=	_Assets select 13;
+_staticCount		= _Assets select 9;
+_submarineCount		= _Assets select 10;
+_AACount			= _Assets select 11;
+_CargoCount			= _Assets select 12;
+_MortarCount		= _Assets select 13;
 
 //What is the total shit we got
-_totalCount				= _infantryCount+_CarCount+_tankCount+_artilleryCount+_airCount+_shipCount+_reconCount+_supportCount+_autonomousCount+_staticCount+_submarineCount+_AACount+_mortarcount;
+_totalCount	= _infantryCount+_CarCount+_tankCount+_artilleryCount+_airCount+_shipCount+_reconCount+_supportCount+_autonomousCount+_staticCount+_submarineCount+_AACount+_mortarcount;
 
 //We have enough cargo for all units? Important to load / unload shit and affects the speed.
 _EnoughCargo 			= (_cargocount >= (_infantryCount+_reconCount));
@@ -44,14 +44,14 @@ _NrOfVehicleGuns  = 0;
 _DoClear 			= ['DoClear'];
 _DoPatrol			= ['DoPatrol'];
 _DoRecon			= ['DoRecon'];
-_DoAttack			=	['DoAttack'];
+_DoAttack			= ['DoAttack'];
 _DoHide				= ['DoHide'];
-_DoMortar			=	['DoMortar'];
-_DoArtillery	=	['DoArtillery'];
-_DoTransport	= ['DoTransport'];
+_DoMortar			= ['DoMortar'];
+_DoArtillery		= ['DoArtillery'];
+_DoTransport		= ['DoTransport'];
 _DoCAS				= ['DoCAS'];
-_DoSupport		= ['DoSupport'];
-_DoGuard			=	['DoGuard'];
+_DoSupport			= ['DoSupport'];
+_DoGuard			= ['DoGuard'];
 _DoPark				= ['DoPark'];
 _DoWait				= ['DoWait'];
 

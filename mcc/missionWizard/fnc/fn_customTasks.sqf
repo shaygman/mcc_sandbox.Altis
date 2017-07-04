@@ -127,26 +127,6 @@ switch (true) do {
 		//if capture area then capture it
 		[position _logic,(_logic getvariable ["radius",200])*3,(_logic getvariable ["owner",sideLogic]),0.2,[]] spawn MCC_fnc_campaignPaintMarkers;
 
-		/*
-		//Create Trigger
-		_pos = getpos _logic;
-		_trg = createTrigger["EmptyDetector", _pos];
-		_trg setTriggerArea[_maxObjectivesDistance*2,_maxObjectivesDistance*2,0,false];
-
-		_trg setTriggerActivation [str _side, "PRESENT", false];
-
-		_name = format ["%1", ["MCCMWClearObjective_",1] call bis_fnc_counter];
-
-		//Create Marker
-		[1, "ColorRed",[_maxObjectivesDistance*2,_maxObjectivesDistance*2], "ELLIPSE", "DiagGrid", "Empty", ("clearArea" + _name), _pos] call MCC_fnc_makeMarker;
-
-		sleep 5;
-		//Waituntil there are no more enemy units in the area
-		waituntil {count list _trg < 3};
-		deleteVehicle _trg;
-		[2, "",[], "", "", "Empty", ("clearArea" + _name), []] call MCC_fnc_makeMarker;
-		*/
-
 		_logic setvariable ["RscAttributeTaskState","Succeeded", true];
 	};
 };

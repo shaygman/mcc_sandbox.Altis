@@ -3,7 +3,9 @@
 //  Parameter(s):
 //     _center: POSITION
 //     _size: INTEGER
-//==============================================================================================================================================================================
+//======================================================================================================================================================================
+#define	MCC_RTS_BORDER_MARKERS_ITEM "Sign_Sphere200cm_F"
+
 private ["_center","_oldBorder","_border","_width","_pi","_perimeter","_size","_wallcount","_total","_centerObj","_dir","_xpos","_ypos","_zpos","_a"];
 disableSerialization;
 
@@ -31,7 +33,7 @@ _size = (_perimeter / _pi);
 _wallcount = _perimeter / _width * 2;
 _total = _wallcount;
 
-_centerObj = "VR_Area_01_circle_4_yellow_F" createvehiclelocal _center;
+_centerObj = MCC_RTS_BORDER_MARKERS_ITEM createvehiclelocal _center;
 _centerObj setpos _center;
 _centerObj hideObject true;
 _border = _border + [_centerObj];
@@ -43,10 +45,11 @@ for "_i" from 1 to _total do
 	_ypos = (_center select 1) + (cos _dir * _size);
 	_zpos = (_center select 2);
 
-	_a = "Sign_Circle_F" createvehiclelocal [_xpos,_ypos,_zpos];
+	_a = MCC_RTS_BORDER_MARKERS_ITEM createvehiclelocal [_xpos,_ypos,_zpos];
 	_a setpos [_xpos,_ypos,0];
 	_a setdir (_dir + 90);
 	_a enableSimulation false;
+	_a setObjectTexture [0, "#(argb,8,8,3)color(1,0,0,0.3,ca)"];
 	_border = _border + [_a];
 };
 

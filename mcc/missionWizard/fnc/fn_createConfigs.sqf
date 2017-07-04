@@ -84,7 +84,7 @@ for "_i" from 0 to ((count CONFIG) - 1)  do
 										{
 												_unitName 	= getText (_CfgUnit >> "vehicle");
 												_unitClass 	= getText (configfile >> "CfgVehicles" >> _unitName  >> "vehicleClass");
-												_simulation	= getText (configfile >> "CfgVehicles" >> _unitName  >> "simulation");
+												_simulation	= tolower (getText (configfile >> "CfgVehicles" >> _unitName  >> "simulation"));
 												_count = _count + 1;
 												//Search by vehicleClass
 												if (_unitClass in ["Men","MenDiver","MenRecon","MenSniper","MenSupport","MenStory","Car","Armored","Air","Autonomous","Support","Ship","Submarine","Static"]) then
@@ -151,63 +151,34 @@ for "_i" from 0 to ((count CONFIG) - 1)  do
 												}
 												else //no vehicleClass go to simulate
 												{
-													switch (toLower(_simulation)) do
+													switch (true) do
 													{
-														case "soldier":
+														case (_simulation in ["soldier"]):
 														{
 															_man = _man +1;
 														};
 
-														case "car":
+														case (_simulation in ["car","carx","motorcycle","motorcyclex"]):
 														{
 															_car = _car +1;
 														};
 
-														case "carx":
-														{
-															_car = _car +1;
-														};
-														case "motorcycle":
-														{
-															_car = _car +1;
-														};
-														case "tank":
+														case (_simulation in ["tank","tankx"]):
 														{
 															_armored = _armored +1;
 														};
-														case "tankx":
-														{
-															_armored = _armored +1;
-														};
-														case "helicopter":
+
+														case (_simulation in ["helicopter","helicopterx","helicopterrtd","airplane","airplanex"]):
 														{
 															_air = _air +1;
 														};
-														case "helicopterx":
-														{
-															_air = _air +1;
-														};
-														case "helicopterrtd":
-														{
-															_air = _air +1;
-														};
-														case "airplane":
-														{
-															_air = _air +1;
-														};
-														case "airplanex":
-														{
-															_air = _air +1;
-														};
-														case "ship":
+
+														case (_simulation in ["ship","shipx","helicopterrtd","airplane","airplanex"]):
 														{
 															_ship = _ship +1;
 														};
-														case "shipx":
-														{
-															_ship = _ship +1;
-														};
-														case "submarinex":
+
+														case (_simulation in ["submarinex"]):
 														{
 															_submarine = _submarine +1;
 														};

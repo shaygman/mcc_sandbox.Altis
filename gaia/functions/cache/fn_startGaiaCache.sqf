@@ -23,7 +23,7 @@ while {true} do
 											case (
 																!(_x getVariable  ["GAIA_CACHED_STAGE_1",false])
 																and
-																!([getPosATL(leader _x),GAIA_CACHE_STAGE_1] call GAIA_fnc_isNearPlayer)
+																!([getPosATL(leader _x),(missionNamespace getVariable ["GAIA_CACHE_STAGE_1",1000])] call GAIA_fnc_isNearPlayer)
 																and
 																(behaviour(leader _x)!="COMBAT")
 																and
@@ -46,7 +46,7 @@ while {true} do
 											case (
 																(_x getVariable  ["GAIA_CACHED_STAGE_1",false])
 																and
-																([getPosATL(leader _x),GAIA_CACHE_STAGE_1] call GAIA_fnc_isNearPlayer)
+																([getPosATL(leader _x),(missionNamespace getVariable ["GAIA_CACHE_STAGE_1",1000])] call GAIA_fnc_isNearPlayer)
 													  ):  {_x spawn GAIA_fnc_uncache;};
 
 					  					//We are in combat, decache him at all times, no matter the range

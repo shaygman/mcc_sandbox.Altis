@@ -31,13 +31,6 @@ waituntil {!isnil "MCC_path"};
 //Host or server admin will always have access
 //if (isnil "MCC_allowedPlayers") then {MCC_allowedPlayers = ["all"]};
 
-//----------------------General settings---------------------------------------
-//Default AI skill
-if (isnil "MCC_AI_Skill") then {MCC_AI_Skill = 0.5};
-if (isnil "MCC_AI_Aim") then {MCC_AI_Aim = 0.1};
-if (isnil "MCC_AI_Spot") then {MCC_AI_Spot	= 0.3};
-if (isnil "MCC_AI_Command") then {MCC_AI_Command = 0.5};
-
 //-------------------- Save Gear --------------------------------------------------
 if (isnil "MCC_saveGear") then {MCC_saveGear = true};
 
@@ -194,6 +187,7 @@ mccPresetsVehicle = [
 					,['Virtual Arsenal (BIS)', 'if (isServer) then {["AmmoboxInit",[_this,true]] call BIS_fnc_arsenal};']
 					,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
 					,['God mod', '_this allowDamage false;']
+					,['Aircraft Carrier Console', '[_this,"Aircraft Carrier Console","","","(alive _target) && (_target distance _this < 5)","(alive _target) && (_target distance _this < 5)",{},{},{[] spawn MCC_fnc_LHDspawnMenuInit},{},[],3,10,false,false] call bis_fnc_holdActionAdd;']
 					,['', '']
 					,['======= Effects =======','']
 					,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
@@ -244,6 +238,7 @@ mccPresetsObjects = [
 					,['Virtual Arsenal (BIS)', '["AmmoboxInit",[_this,true]] call BIS_fnc_arsenal']
 					,['Destroyable by satchels only', '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1;(_this select 3) addRating 1500} else {0}}];']
 					,['God mod', '_this allowDamage false;']
+					,['Aircraft Carrier Console', '[_this,"Aircraft Carrier Console","","","(alive _target) && (_target distance _this < 5)","(alive _target) && (_target distance _this < 5)",{},{},{[] spawn MCC_fnc_LHDspawnMenuInit},{},[],3,10,false,false] call bis_fnc_holdActionAdd;']
 					,['', '']
 					,['======= Effects =======','']
 					,['Sandstorm','[_this] call BIS_fnc_sandstorm;']
@@ -500,12 +495,6 @@ MCC_planeNameCount	= 0;
 //Mission Settings Index
 HW_arti_number_shells_per_hourIndex		= 0;
 MCC_resistanceHostileIndex				= 0;
-
-// autoadjust based on settings above or publicVariable
-MCC_aiSkillIndex					= (MCC_AI_Skill*10)-1;    //5;
-MCC_aiAimIndex						= (MCC_AI_Aim*10)-1;    //0;
-MCC_aiSpotIndex						= (MCC_AI_Spot*10)-1;    //3;
-MCC_aiCommandIndex					= (MCC_AI_Command*10)-1;    //5;
 
 MCC_artilleryComputerIndex				= 1;
 MCC_saveGearIndex						= 0;

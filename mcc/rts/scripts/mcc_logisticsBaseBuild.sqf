@@ -7,6 +7,9 @@ uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD", _disp];
 uiNamespace setVariable ["MCC_LOGISTICS_BASE_BUILD_MOUSEAREA", _disp displayCtrl 2];
 
 #define MCC_LOGISTICS_BASE_BUILD_MOUSEAREA (uiNamespace getVariable "MCC_LOGISTICS_BASE_BUILD_MOUSEAREA")
+#define	MCC_RTS_SELECTED_MARKERS_ITEM "Sign_Sphere100cm_F"
+#define	MCC_RTS_BUILDING_DUMMY_ANCHOR "UserTexture10m_F"
+
 
 //reset controls array
 missionNamespace setVariable ["MCC_rtsUIGroupsIcons", []];
@@ -97,11 +100,6 @@ if (isnil "MCC_CONST_CAM") then {
 	MCC_CONST_CAM = _camera;
 };
 
-//Create Selector
-if (isnil "MCC_CONST_SELECTOR") then {
-	MCC_CONST_SELECTOR = [];
-};
-
 //Selected
 MCC_ConsoleGroupSelected = [];
 MCC_CONST_PLACEHOLDER = objnull;
@@ -130,7 +128,7 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 	_array = call compile format ["MCC_res%1",playerside];
 	while {(str (_disp displayCtrl 2) != "No control")} do {
 		//get number of storage
-		_buildings = _startPos nearObjects ["UserTexture10m_F", _size];
+		_buildings = _startPos nearObjects [MCC_RTS_BUILDING_DUMMY_ANCHOR, _size];
 		_cargoSpace = 500;
 		_unitsSpace = 4;
 
@@ -454,24 +452,13 @@ MCC_fnc_isGroupConsoleAllowed = {
 };
 
 MCC_fnc_rtsMakeMarkers = {
-	private ["_marker","_obj"];
+	private ["_obj"];
 	{
-		detach _x;
-		deletevehicle _x;
-	} forEach MCC_CONST_SELECTOR;
-
-	{
-		_marker = "Sign_Circle_F" createVehicleLocal [0,0,0];
-
-		MCC_CONST_SELECTOR pushBack _marker;
+		//Place the sphere around it
 		_obj = if (typeName _x == typeName grpNull) then {vehicle leader _x} else {_x};
-
-		if (_obj isKindOf "UserTexture10m_F") then {
-			_marker setposatl (getposatl _obj);
-		} else {
-			_marker attachTo [_obj,[0,0,0]];
-		};
-		_marker setVectorDirAndUp [[0,0,1],[0,1,0]];
+		{
+			_x setpos ([getPosVisual _obj, (sizeof typeof _obj) max 5, _forEachIndex * 20 ] call BIS_fnc_relPos);
+		} foreach (missionnamespace getVariable ["MCC_RTS_selectionMarkersConstruction",[]]);
 	} foreach MCC_ConsoleGroupSelected;
 };
 
@@ -519,11 +506,7 @@ MCC_fnc_rtsMakeMarkersGroups = {
 	private ["_marker","_obj","_group","_ctrl","_disp","_ctrlColor"];
 	_disp = uiNamespace getVariable ["MCC_LOGISTICS_BASE_BUILD", displayNull];
 
-	//remove logic markers
-	{
-		detach _x;
-		deletevehicle _x;
-	} forEach MCC_CONST_SELECTOR;
+	{_x setpos [0,0,0]} foreach (missionnamespace getVariable ["MCC_RTS_selectionMarkersConstruction",[]]);
 
 	//remove all markers
 	{
@@ -592,6 +575,17 @@ MCC_fnc_highlightUICtrl = {
 //Create borders
 _createBorderScope = [_startPos,_size] call MCC_fnc_baseBuildBorders;
 
+//Create Selection markers - Objects
+{
+	while {(count (missionnamespace getVariable [_x,[]])) < 18 } do {
+		_dummyArray = (missionnamespace getVariable [_x,[]]);
+		_dummyArray pushBack (MCC_RTS_SELECTED_MARKERS_ITEM createVehicleLocal [0,0,0]);
+		missionnamespace setVariable [_x,_dummyArray];
+	};
+} foreach ["MCC_RTS_selectionMarkersObjects","MCC_RTS_selectionMarkersConstruction"];
+
+
+
 //Create structures Icons
 ["mcc_constBaseID", "onEachFrame",
 {
@@ -619,6 +613,7 @@ _createBorderScope = [_startPos,_size] call MCC_fnc_baseBuildBorders;
 								];
 	} forEach (missionNamespace getvariable ["MCC_rtsBuildingsIcons",[]]);
 
+	private _sideBarCounter = 0;
 	{
 		_ctrl = _x select 0;
 		_group = _x select 1;
@@ -660,6 +655,7 @@ _createBorderScope = [_startPos,_size] call MCC_fnc_baseBuildBorders;
 					_ctrl = _disp displayCtrl (_ctrlIdc + 2);
 					_ctrl progressSetPosition (1-_value);
 					_ctrl ctrlShow true;
+					_ctrl ctrlCommit 0;
 
 					//fuel
 					_ctrl =  _disp displayCtrl (_ctrlIdc + 3);
@@ -669,12 +665,41 @@ _createBorderScope = [_startPos,_size] call MCC_fnc_baseBuildBorders;
 					} else {
 						_ctrl ctrlShow false;
 					};
+					_ctrl ctrlCommit 0;
 				} else {
 					for "_i" from 2 to 3 do {(_disp displayCtrl (_ctrlIdc + _i)) ctrlshow false};
 				};
 			};
 		} else {
-			_ctrl ctrlShow false
+			//Show Groups that not in the FOV on the side bar
+			_ctrl ctrlSetPosition [0.02*safezoneW+safezoneX + (floor (_sideBarCounter/8)*0.08*safezoneW), 0.6*safezoneH+safezoneY - ((_sideBarCounter mod 8)*0.08*safezoneH),0.1*safezoneW,0.05*safezoneH];
+			_sideBarCounter = _sideBarCounter + 1;
+			_ctrl ctrlCommit 0;
+
+			_disp = (ctrlParent _ctrl);
+			_ctrlIdc = ctrlIDC _ctrl;
+
+			//Show fuel and health
+			_value = 0;
+			{
+				_value = _value + getDammage vehicle _x;
+			} forEach (units _group);
+			_value = _value/count units _group;
+
+			_ctrl = _disp displayCtrl (_ctrlIdc + 2);
+			_ctrl progressSetPosition (1-_value);
+			_ctrl ctrlShow true;
+			_ctrl ctrlCommit 0;
+
+			//fuel
+			_ctrl =  _disp displayCtrl (_ctrlIdc + 3);
+			if (vehicle _leader != _leader) then {
+				_ctrl progressSetPosition (fuel vehicle _leader);
+				_ctrl ctrlShow true;
+			} else {
+				_ctrl ctrlShow false;
+			};
+			_ctrl ctrlCommit 0;
 		};
 
 		//draw WP
@@ -740,6 +765,9 @@ MCC_CONST_CAM_Handler =
 	_keyRight		= actionKeys "CarRight";
 	_keyUp			= actionKeys "HeliRudderLeft";
 	_keyDown		= actionKeys "HeliDown";
+
+	//Reset selection circle
+	{_x setpos [0,0,0]} foreach (missionnamespace getVariable ["MCC_RTS_selectionMarkersObjects",[]]);
 
 	//--- Key DOWN
 	if (_mode == "keydown") exitWith
@@ -928,7 +956,7 @@ MCC_CONST_CAM_Handler =
 
 			for "_i" from 0 to (count _list)-1 do {if !(isNull attachedTo (_list select _i)) then {_list set [_i, -1]}};
 			_list = _list - [-1];
-			_list = _list + ((screenToWorld [_posX,_posY]) nearObjects ["UserTexture10m_F", 20]);
+			_list = _list + ((screenToWorld [_posX,_posY]) nearObjects [MCC_RTS_BUILDING_DUMMY_ANCHOR, 20]);
 			_list = [_list,[],{(screenToWorld [_posX,_posY]) distance _x},"ASCEND"] call BIS_fnc_sortBy;
 
 			if (count _list > 0 && !_isFort) then {
@@ -937,12 +965,12 @@ MCC_CONST_CAM_Handler =
 				    &&
 				    !(_obj in MCC_ConsoleGroupSelected)
 				    &&
-				    ((count crew _obj == 0) || _obj isKindOf "UserTexture10m_F")
+				    ((count crew _obj == 0) || _obj isKindOf MCC_RTS_BUILDING_DUMMY_ANCHOR)
 				    ) then {
-					MCC_ConsoleGroupSelected = [_list select 0];
-					[MCC_ConsoleGroupSelected] spawn MCC_fnc_baseSelected;
+						MCC_ConsoleGroupSelected = [_list select 0];
+						[MCC_ConsoleGroupSelected] spawn MCC_fnc_baseSelected;
 
-					[] call MCC_fnc_rtsMakeMarkers;
+						[] call MCC_fnc_rtsMakeMarkers;
 				};
 			};
 		};
@@ -1077,9 +1105,14 @@ MCC_CONST_CAM_Handler =
 
 				MCC_CONST_PLACEHOLDER setpos _pos;
 
+				//Place the sphere around it
+				{
+					_x setpos ([_pos, (sizeOf typeOf MCC_CONST_PLACEHOLDER), _forEachIndex * 20 ] call BIS_fnc_relPos);
+				} foreach (missionnamespace getVariable ["MCC_RTS_selectionMarkersObjects",[]]);
+
 				//--- No Place To Build
 				_isFlat = _pos isflatempty [
-					(sizeof typeof MCC_CONST_PLACEHOLDER)/8,	//--- Minimal distance from another object
+					(sizeof typeof MCC_CONST_PLACEHOLDER)/4,	//--- Minimal distance from another object
 					0,				//--- If 0, just check position. If >0, select new one
 					0.7,				//--- Max gradient
 					(sizeof typeof MCC_CONST_PLACEHOLDER)/8,	//--- Gradient area
@@ -1089,12 +1122,14 @@ MCC_CONST_CAM_Handler =
 				];
 
 				_center = (missionnamespace getvariable ["MCC_CON_border",[]]) select 0;
+				_isFort = MCC_CONST_PLACEHOLDER getVariable ["MCC_baseBuildingIsFort",false];
 
 				_colorGreen = "#(argb,8,8,3)color(0,1,0,0.3,ca)";
 				_colorRed = "#(argb,8,8,3)color(1,0,0,0.3,ca)";
 				_color = "#(argb,8,8,3)color(1,0,0,0.3,ca)";
 
-				if ((count _isFlat == 0) || (([position MCC_CONST_PLACEHOLDER,_center] call BIS_fnc_distance2D) > (player getVariable ["MCC_baseSize",300]))) then {
+				if ((count _isFlat == 0 &&!_isFort) ||
+				    (([position MCC_CONST_PLACEHOLDER,_center] call BIS_fnc_distance2D) > (player getVariable ["MCC_baseSize",300]))) then {
 					_color = _colorRed;
 					MCC_canSpawn3DConst = false;
 				} else {
@@ -1102,7 +1137,8 @@ MCC_CONST_CAM_Handler =
 					MCC_canSpawn3DConst = true;
 				};
 
-				{MCC_CONST_PLACEHOLDER setObjectTexture [_x,_color]} foreach [0,1,2];
+				//Set selection circle Color
+				{_x setObjectTexture [0, _color]} foreach (missionnamespace getVariable ["MCC_RTS_selectionMarkersObjects",[]]);
 			};
 
 
@@ -1167,15 +1203,15 @@ waituntil {!dialog};
 if !(isnil "MCC_CONST_CAM") then {MCC_CONST_CAM cameraeffect ["terminate","back"];camdestroy MCC_CONST_CAM;};
 MCC_CONST_CAM = nil;
 
+//Reset selection circles
+{_x setpos [0,0,0]} foreach (missionnamespace getVariable ["MCC_RTS_selectionMarkersObjects",[]]);
+{_x setpos [0,0,0]} foreach (missionnamespace getVariable ["MCC_RTS_selectionMarkersConstruction",[]]);
+
 //Clear borders
 _border = missionnamespace getvariable ["MCC_CON_border",[]];
 {deletevehicle _x} foreach _border;
 missionnamespace setvariable ["MCC_CON_border",nil];
 
-//Clear Selector
-if (!isnil "MCC_CONST_SELECTOR") then {
-	{deleteVehicle _x} forEach MCC_CONST_SELECTOR;
-};
 if (!isnil "MCC_CONST_PLACEHOLDER") then {deleteVehicle MCC_CONST_PLACEHOLDER; MCC_CONST_PLACEHOLDER = objnull};
 MCC_ConsoleGroupSelected = [];
 
