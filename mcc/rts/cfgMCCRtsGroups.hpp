@@ -14,7 +14,7 @@ class MCC_rtsGroup_Transport
 	unitsWest[] = {"B_Truck_01_transport_F"};
 	unitsGuer[] = {"I_Truck_02_transport_F"};
 	needelectricity = 0;
-	actions[] = {"MCC_rts_orderStop","MCC_rts_OrderGetout","MCC_rts_LoadResources","MCC_rts_UnLoadResources","","","","",""};
+	actions[] = {"MCC_rts_orderStop","MCC_rts_OrderGetout","MCC_rts_LoadResources","MCC_rts_UnLoadResources","MCC_rts_LoadResourcesWithdrawAmmo","MCC_rts_LoadResourcesWithdrawSupply","MCC_rts_LoadResourcesWithdrawFuel", "MCC_rts_takeControl"};
 	actionFNC = "MCC_fnc_rtsCreateGroup";
 	resources[] = {{"ammo",30},{"repair",30},{"fuel",15},{"food",100},{"time",15}};
 };

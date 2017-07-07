@@ -5,12 +5,12 @@ class MCC_rts_car
 
 class MCC_rts_vehicle_Man
 {
-	actions[] = {"MCC_rts_orderStop","","","","","","", "MCC_rts_takeControl"};
+	actions[] = {"MCC_rts_orderStop","","MCC_rts_orderStanceUp","MCC_rts_orderStanceDown","MCC_rts_orderPlaceSatchel","","MCC_rts_orderStealth","MCC_rts_orderAware","","","MCC_rts_takeControl","MCC_rts_respawnUnits"};
 };
 
 class MCC_rts_vehicle_car
 {
-	actions[] = {"MCC_rts_orderStop","MCC_rts_OrderGetout","MCC_rts_LoadResources","MCC_rts_UnLoadResources","","","", "MCC_rts_takeControl"};
+	actions[] = {"MCC_rts_orderStop","MCC_rts_OrderGetout","MCC_rts_LoadResources","MCC_rts_UnLoadResources","MCC_rts_LoadResourcesWithdrawAmmo","MCC_rts_LoadResourcesWithdrawSupply","MCC_rts_LoadResourcesWithdrawFuel", "MCC_rts_takeControl"};
 };
 
 class MCC_rts_vehicle_Motorcycle

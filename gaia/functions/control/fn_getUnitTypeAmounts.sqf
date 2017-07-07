@@ -46,18 +46,19 @@ _art  =false;
 
 {
 	if (alive _x) then {
-			_class = typeof (assignedVehicle _x);
+			_class = typeof (vehicle _x);
 			_vehicleClass = tolower (gettext (configFile >> "CfgVehicles" >> _class >> "vehicleClass"));
 			_SoldierCargo  = getNumber  (configFile >> "CfgVehicles" >> _class >> "transportSoldier");
+			_simulation	= toLower (getText (configfile >> "CfgVehicles" >> _class  >> "simulation"));
 
-			if ((assignedVehicle _x) != _x) then {
+			if ((vehicle _x) != _x) then {
 
-				if (!((assignedVehicle _x) in _tempVehicles) and !(_x in (assignedCargo assignedVehicle _x))) then {
+				if (!((vehicle _x) in _tempVehicles) and !(_x in (assignedCargo vehicle _x))) then {
 
 					_tempVehicles pushBack (vehicle _x);
 					_TurretWeapons = _class call GAIA_fnc_getTurretWeapons;
 
-					_UnitAssets = [assignedVehicle _x] call GAIA_fnc_getUnitAssets;
+					_UnitAssets = [vehicle _x] call GAIA_fnc_getUnitAssets;
 					_at = (_UnitAssets select 0);
 					_aa = (_UnitAssets select 2);
 					_art = (_UnitAssets select 3);
@@ -135,8 +136,6 @@ _art  =false;
 						default
 						{
 							/* BRUTE FORCE IF NO CLASS */
-							_simulation	= toLower (getText (configfile >> "CfgVehicles" >> _class  >> "simulation"));
-
 							switch (true) do
 							{
 								case (_simulation in ["car","carx","motorcycle","motorcyclex"]):
@@ -199,8 +198,13 @@ _art  =false;
 					(format["%1", (assignedVehicleRole _x)]=='["Cargo"]')
 			 )
 		then {
-			if (_vehicleClass == "men" || _vehicleClass == "menstory"  || _vehicleClass == "mensupport") then {_infantryCount = _infantryCount + 1};
-			if (_vehicleClass == "mendiver" || _vehicleClass == "menrecon" || _vehicleClass == "mensniper") then {_reconCount = _reconCount + 1};
+			if (_vehicleClass == "mendiver" || _vehicleClass == "menrecon" || _vehicleClass == "mensniper") then {
+				_reconCount = _reconCount + 1
+			} else {
+				if (_simulation == "soldier") then {
+					_infantryCount = _infantryCount + 1
+				};
+			};
 		};
 
 	};

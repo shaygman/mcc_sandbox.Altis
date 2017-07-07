@@ -55,6 +55,9 @@ class rts
 	class rtsTradeforFood {description = "Trade resources for food";};
 	class rtsCreateGroup {description = "Spawn group";};
 	class rtsLoadResources {description = "Load logistics crates";};
+	class rtsLoadResourcesAmmo {description = "Withdraw supply crates";};
+	class rtsLoadResourcesSupply {description = "Withdraw supply crates";};
+	class rtsLoadResourcesFuel {description = "Withdraw supply crates";};
 	class rtsUnloadResources {description = "Unload logistics crates";};
 	class rtsBuildingProgress {description = "manage building progress";};
 	class rtsIsRespawnUnits{description = "checks if we can respawn units";};

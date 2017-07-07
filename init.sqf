@@ -271,9 +271,7 @@ if (MCC_isMode) then
 {
 	MCC_logisticsCrates_TypesWest = ["MCC_crateAmmo","MCC_crateSupply","MCC_crateFuel","MCC_crateAmmoBigWest","MCC_crateSupplyBigWest","MCC_crateFuelBigWest"];
 	MCC_logisticsCrates_TypesEast = ["MCC_crateAmmo","MCC_crateSupply","MCC_crateFuel","MCC_crateAmmoBigEast","MCC_crateSupplyBigEast","MCC_crateFuelBigEast","Land_Pod_Heli_Transport_04_bench_F","Land_Pod_Heli_Transport_04_covered_F"];
-}
-else
-{
+} else {
 	MCC_logisticsCrates_TypesWest = ["Box_NATO_AmmoVeh_F","CargoNet_01_box_F","CargoNet_01_barrels_F","B_Slingload_01_Ammo_F","B_Slingload_01_Repair_F","B_Slingload_01_Fuel_F"];
 	MCC_logisticsCrates_TypesEast = ["Box_NATO_AmmoVeh_F","CargoNet_01_box_F","CargoNet_01_barrels_F","Land_Pod_Heli_Transport_04_ammo_F","Land_Pod_Heli_Transport_04_repair_F","Land_Pod_Heli_Transport_04_fuel_F","Land_Pod_Heli_Transport_04_bench_F","Land_Pod_Heli_Transport_04_covered_F"];
 };

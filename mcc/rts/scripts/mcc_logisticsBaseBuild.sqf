@@ -171,17 +171,18 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 		};
 
 		//Fog of war
-		private ["_fog","_cam"];
+		private ["_fog","_cam","_camPos"];
 		_cam = missionnamespace getVariable ["MCC_CONST_CAM",objNull];
 		if (isNull _cam) exitWith {};
-
+		_camPos = getpos _cam;
+		_camPos set [2,0];
 		_fog = true;
 		{
 			if (side _x == playerSide) exitWith {_fog = false}
-		} forEach ((position _cam) nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 100]);
+		} forEach (_camPos nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 150]);
 
-		if (_fog && (viewDistance > 100) && (_cam distance _startPos > 300)) then {setViewDistance 100};
-		if ((!_fog || (_cam distance _startPos < 300)) && viewDistance < 1800 ) then {setViewDistance 1800};
+		if (_fog && (viewDistance > 100) && (_cam distance2D _startPos > 300)) then {setViewDistance 100};
+		if ((!_fog || (_cam distance2D _startPos < 300)) && viewDistance < 1800 ) then {setViewDistance 1800};
 
 		//Buildings UI
 		private ["_type","_endTime","_startTime","_cfgName","_text","_segmentsElapsed","_elec","_icon","_texture","_color","_buildingIcons"];
@@ -261,15 +262,15 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 
 			if !(isnil "_leader") then {
 
-				_inFOV = ((worldToScreen (visiblePosition _leader)) select 0 > (0 * safezoneW + safezoneX)) && ((worldToScreen (visiblePosition _leader)) select 0 <(1 * safezoneW + safezoneX)) && _cam distance _leader < 2000;
+				//_inFOV = ((worldToScreen (visiblePosition _leader)) select 0 > (0 * safezoneW + safezoneX)) && ((worldToScreen (visiblePosition _leader)) select 0 <(1 * safezoneW + safezoneX)) && _cam distance _leader < 2000;
 
-				if (isNil "_inFOV") then {_inFOV = false};
+				//if (isNil "_inFOV") then {_inFOV = false};
 
-				if (_inFOV) then {
-					_side = side _x;
+				//if (_inFOV) then {
+					_side = side _group;
 					_pos = position _leader;
 
-					if (_side == playerside) then {
+					if (_side == playerside && !(_leader iskindof "Logic") && alive _leader) then {
 						_ctrlIndex = [_groupCtrls, _group] call bis_fnc_findNestedElement;
 						_ctrl = if (count _ctrlIndex <= 0) then {controlNull} else {(_groupCtrls select (_ctrlIndex select 0)) select 0};
 
@@ -295,7 +296,7 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 							};
 						} forEach units _group;
 					};
-				};
+				//};
 			};
 		} foreach allGroups;
 		missionNamespace setVariable ["MCC_rtsHiddenUnits", _hiddenUnits];
@@ -463,7 +464,7 @@ MCC_fnc_rtsMakeMarkers = {
 };
 
 MCC_fnc_rtsSelectGroup = {
-	private ["_groupCtrls","_ctrl","_index","_group","_pos","_groups"];
+	private ["_groupCtrls","_ctrl","_index","_group","_pos","_groups","_visPos","_leader","_inFOV"];
 	_ctrl = _this select 0;
 	_key = _this select 1;
 
@@ -472,6 +473,35 @@ MCC_fnc_rtsSelectGroup = {
 	_group = (_groupCtrls select _index) select 1;
 	if !([_group] call MCC_fnc_isGroupConsoleAllowed) exitWith {};
 	playsound "click";
+
+	//If not in FOV then center camera on it
+	_leader = leader _group;
+	_visPos = (worldToScreen (visiblePosition _leader));
+
+	if (count _visPos > 1) then {
+		_inFOV = ((_visPos select 0 > safezoneX) &&
+		          (_visPos select 0 < (safezonex+safezonew)) &&
+		          (_visPos select 1 > safezoneY) &&
+		          (_visPos select 1 < (safezoneY+safezoneH))
+				 );
+	} else {
+		_inFOV = false;
+	};
+
+	//Center camera
+	if (!_inFOV) then {
+		private ["_cam","_hight","_pos"];
+		_cam = missionNamespace getVariable ["MCC_CONST_CAM",objNull];
+		if !(isNull _cam) then {
+			_hight = (getpos _cam) select 2;
+			_cam setpos (_leader modelToWorld [0,60,_hight]);
+			_cam camCommit 0;
+			_cam camsetTarget vehicle _leader;
+			_cam camCommit 0;
+			_cam camsetTarget objNull;
+			_cam camCommit 0;
+		};
+	};
 
 	//Get inside vehicle
 	if (_key == 1) then {
@@ -556,6 +586,7 @@ MCC_fnc_highlightUICtrl = {
 		_iconCtrl ctrlSetScale 1.1;
 		_iconCtrl ctrlSetTextColor [1,1,1,1];
 		_group setVariable ["MCC_rtsHighlightedGroup",true];
+		[[_group],true] spawn MCC_fnc_baseSelected;
 	} else {
 		if ({ctrlidc _ctrl == (_x getVariable ["MCC_rtsGroupIcon",-1])} count MCC_ConsoleGroupSelected ==  0) then {
 			_ctrlColor set [3,0.8];
@@ -684,7 +715,7 @@ _createBorderScope = [_startPos,_size] call MCC_fnc_baseBuildBorders;
 			{
 				_value = _value + getDammage vehicle _x;
 			} forEach (units _group);
-			_value = _value/count units _group;
+			_value = _value/((count units _group) max 1);
 
 			_ctrl = _disp displayCtrl (_ctrlIdc + 2);
 			_ctrl progressSetPosition (1-_value);
@@ -1064,6 +1095,8 @@ MCC_CONST_CAM_Handler =
 		_ctrl 	= _input select 0;
 		_posX 	= _input select 1;
 		_posY 	= _input select 2;
+
+		//systemChat str [_posx,_posY];
 
 		if (!isnil "MCC_mousePos") then {
 			_ctrlPos 	= ctrlPosition _ctrl;

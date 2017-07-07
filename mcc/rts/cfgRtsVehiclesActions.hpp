@@ -33,6 +33,59 @@ class MCC_rts_LoadResources
 	actionFNC = "MCC_fnc_rtsLoadResources";
 	resources[] = {};
 };
+class MCC_rts_LoadResourcesWithdrawAmmo
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\mcc\rts\data\groups\RTS_trucLoadAmmo.paa";
+	#else
+	picture = "mcc\rts\data\groups\RTS_trucLoadAmmo.paa";
+	#endif
+
+	displayName = "Withdraw Ammo";
+	descriptionShort = "Withdraw Ammo crate from HQ";
+	condition = "typeOf _target in (missionNameSpace getVariable ['MCC_supplyTracks',[]]) && alive _target";
+	dontShowDisabled = 0;
+	requiredBuildings[] = {{"hq",1}};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsLoadResourcesAmmo";
+	resources[] = {};
+};
+
+class MCC_rts_LoadResourcesWithdrawSupply
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\mcc\rts\data\groups\RTS_trucLoadRepair.paa";
+	#else
+	picture = "mcc\rts\data\groups\RTS_trucLoadRepair.paa";
+	#endif
+
+	displayName = "Withdraw Supply";
+	descriptionShort = "Withdraw Supply crate from HQ";
+	condition = "typeOf _target in (missionNameSpace getVariable ['MCC_supplyTracks',[]]) && alive _target";
+	dontShowDisabled = 0;
+	requiredBuildings[] = {{"hq",1}};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsLoadResourcesSupply";
+	resources[] = {};
+};
+
+class MCC_rts_LoadResourcesWithdrawFuel
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\mcc\rts\data\groups\RTS_trucLoadfuel.paa";
+	#else
+	picture = "mcc\rts\data\groups\RTS_trucLoadfuel.paa";
+	#endif
+
+	displayName = "Withdraw Fuel";
+	descriptionShort = "Withdraw Fuel crate from HQ";
+	condition = "typeOf _target in (missionNameSpace getVariable ['MCC_supplyTracks',[]]) && alive _target";
+	dontShowDisabled = 0;
+	requiredBuildings[] = {{"hq",1}};
+	needelectricity = 0;
+	actionFNC = "MCC_fnc_rtsLoadResourcesFuel";
+	resources[] = {};
+};
 
 class MCC_rts_respawnUnits
 {

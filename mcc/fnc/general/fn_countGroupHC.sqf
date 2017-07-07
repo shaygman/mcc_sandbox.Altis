@@ -2,74 +2,138 @@
 // Count the number of infantry, vehicles, tank, air, ships in a group expand
 // Example: [_group1] call MCC_fnc_countGroupHC;
 // _group1 = group, the group name
-//===========================================================================================================================================================================	
-private ["_group","_infantryCount","_vehicleCount","_tankCount","_airCount","_shipCount","_vehiclePic",
-		 "_pic","_tankPic","_airPic","_boatPic","_vehicleClass","_reconCount","_supportPic","_supportCount","_autonomousCount","_autonomousPic"];
+//===========================================================================================================================================================================
+private ["_group","_infantryCount","_vehicleCount","_tankCount","_airCount","_shipCount","_vehiclePic","_pic","_tankPic","_airPic","_boatPic","_vehicleClass","_reconCount","_supportPic","_supportCount","_autonomousCount","_autonomousPic"];
 
-_group 			= _this select 0; 
+_group 			=  param [0,grpNull,[grpNull]];
+
+if (isNull _group) exitWith {};
+
+
+
 _infantryCount 	= 0;
 _reconCount		= 0;
 
-_vehicleCount	= 0;
+_CarCount		= 0;
 _tankCount		= 0;
 _supportCount	= 0;
 _airCount		= 0;
 _shipCount		= 0;
-_autonomousCount = 0;
+_autonomousCount= 0;
+_SoldierCargo	= 0;
 
-_tempVehicles	= [];
-_vehiclePic		= []; 
-_tankPic		= []; 
-_supportPic		= [];
-_airPic			= []; 
-_boatPic		= []; 
-_autonomousPic	= [];
 
-if (! isnil "_group") then {
-	{
-		_vehicleClass = tolower (gettext (configFile >> "CfgVehicles" >> typeof (vehicle _x) >> "vehicleClass")); 
+_tempVehicles		= [];
+_vehiclePic			= [];
+_tankPic			= [];
+_airPic 			= [];
+_boatPic 			= [];
+_supportPic			= [];
+_autonomousPic		= [];
+
+
+{
+	if (alive _x) then {
+		_class = typeof (vehicle _x);
+		_vehicleClass = tolower (gettext (configFile >> "CfgVehicles" >> _class >> "vehicleClass"));
+		_SoldierCargo  = getNumber  (configFile >> "CfgVehicles" >> _class >> "transportSoldier");
+		_simulation	= toLower (getText (configfile >> "CfgVehicles" >> _class  >> "simulation"));
+		_pic = gettext (configFile >> "CfgVehicles" >> _class >> "picture");
+
 		if ((vehicle _x) != _x) then {
-			if (!((vehicle _x) in _tempVehicles)) then {
-				_tempVehicles set [count _tempVehicles, vehicle _x];
-				_pic = gettext (configFile >> "CfgVehicles" >> typeof (vehicle _x) >> "picture"); 
-				
-				if (_vehicleClass == "car") then 
+
+			if (!((vehicle _x) in _tempVehicles) and !(_x in (assignedCargo vehicle _x))) then {
+
+				_tempVehicles pushBack (vehicle _x);
+
+				switch (true) do
+				{
+					case (_vehicleClass in ["car"]):
 					{
-						_vehicleCount = _vehicleCount + 1;
-						_vehiclePic set [count _vehiclePic,_pic];
+						_CarCount = _CarCount + 1;
+						_vehiclePic pushBack _pic;
 					};
-				if (_vehicleClass == "armored") then 
+
+					case  (_vehicleClass in ["armored","support","static"]):
 					{
 						_tankCount = _tankCount + 1;
-						_tankPic set [count _tankPic,_pic];
+						_tankPic pushBack _pic;
 					};
-					
-				if (_vehicleClass == "support" || _vehicleClass == "static") then 									//support
-					{
-						_supportCount = _supportCount + 1;
-						_supportPic set [count _supportPic,_pic];
-					};
-					
-				if (_vehicleClass == "air") then 
+
+					case (_vehicleClass in ["air"]):
 					{
 						_airCount = _airCount + 1;
-						_airPic set [count _airPic,_pic];
+						_airPic pushBack _pic;
 					};
-				if (_vehicleClass == "ship" || _vehicleClass == "submarine") then
+
+					case (_vehicleClass in ["ship","submarine"]):
 					{
 						_shipCount = _shipCount + 1;
-						_boatPic set [count _boatPic,_pic];
+						_boatPic pushBack _pic;
 					};
-				if (_vehicleClass == "autonomous") then 											//atunomos
+
+					case "support":
+					{
+						_supportCount = _supportCount + 1;
+						_supportPic pushBack _pic;
+					};
+
+					case "autonomous":
 					{
 						_autonomousCount = _autonomousCount + 1;
-						_autonomousPic set [count _autonomousPic,_pic]; 
+						_autonomousPic pushBack _pic;
+					};
+
+					default
+					{
+						/* BRUTE FORCE IF NO CLASS */
+						switch (true) do
+						{
+							case (_simulation in ["car","carx","motorcycle","motorcyclex"]):
+							{
+								_CarCount = _CarCount + 1;
+								_vehiclePic pushBack _pic;
+							};
+
+							case (_simulation in ["tank","tankx"]):
+							{
+								_tankCount = _tankCount + 1;
+								_tankPic pushBack _pic;
+							};
+
+							case (_simulation in ["helicopter","helicopterx","helicopterrtd","airplane","airplanex"]):
+							{
+								_airCount = _airCount + 1;
+								_airPic pushBack _pic;
+							};
+
+							case (_simulation in ["ship","shipx","submarine","submarinex"]):
+							{
+								_shipCount = _shipCount + 1;
+								_boatPic pushBack _pic;
+							};
+						};
 					};
 				};
-			} else	{
-					if (_vehicleClass == "men" || _vehicleClass == "menstory"  || _vehicleClass == "mensupport") then {_infantryCount = _infantryCount + 1}; 
-					if (_vehicleClass == "mendiver" || _vehicleClass == "menrecon" || _vehicleClass == "mensniper") then {_reconCount = _reconCount + 1};
+			};
+		};
+
+		if (
+					(format["%1", (assignedVehicleRole _x)]=="[]")
+					or
+					(format["%1", (assignedVehicleRole _x)]=='["Cargo"]')
+			 )
+		then {
+			if (_vehicleClass in ["mendiver","menrecon","mensniper"]) then {
+				_reconCount = _reconCount + 1
+			} else {
+				if (_simulation == "soldier") then {
+					_infantryCount = _infantryCount + 1
 				};
-	} foreach units _group; 
-	[_infantryCount,_vehicleCount,_tankCount,_airCount,_shipCount,_reconCount,_supportCount,_autonomousCount,[_vehiclePic,_tankPic,_airPic,_boatPic,_supportPic,_autonomousPic]];
-};
+			};
+		};
+	};
+} foreach (units _group);
+
+[_infantryCount,_CarCount,_tankCount,_airCount,_shipCount,_reconCount,_supportCount,_autonomousCount,[_vehiclePic,_tankPic,_airPic,_boatPic,_supportPic,_autonomousPic]];
+

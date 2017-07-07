@@ -2,21 +2,30 @@ Change log r22:
 - Added: Resistance relation to bluefor and opfor re added to mission settings.
 - Added: Radio message when completing generated/campaign mission.
 - Added: Enable/Disable MCC tutorials ("You have picked the commander role... Do you want to show this message in the future?" exc) from MCC UI settings module
+- Added: Commander console action to the action menu.
+- Added: You can now drag resource crates.
 - Changed: Shortened MCC campaign/Mission Wizard intro movies time.
 - Changed: Commander Console F1-F5 buttons are visable.
+- Changed: Reduce needed units to build a FOB or other battle emplacements to zero.
 - Fixed: GAIA support for RHS units.
 - Fixed: GAIA settings don't work from Zeus.
 
 - RTS
 	- Changed: UI for selection circles and borders in RTS interface.
 	- Changed: Added different colors for resources.
+	- Added: UI controls for all available forces to the left hand side - click on any to quickly control it.
+	- Added: Show group information when mouse hovering its icon.
+	- Added: Supply track can withdraw supply crates from the HQ.
+	- Fixed: Units info wasn't showing the amount of units and vehicles classes available.
+	- Fixed: Men units didn't have the place satchel, rules of fire, change stances actions.
 
-TODO - Commander permissions
+TODO
+	- igui color - https://community.bistudio.com/wiki/User_Interface_Colors
+	- Commander permissions
 	- Hud timer for satchels
 	- Sound for generator
 	- After destoying structure reset markers and refund
 	- Add CAS and airdops after building sat comms
-	- All Controlled units on HuD - double cick focus on group/logistic withdraw crates from HQ
 	- Show get in exc when hovering over vehicle/house and selecting a unit
 	- Remove meds and food
 	- In RTS use MCC HuD UI
@@ -25,6 +34,7 @@ TODO - Commander permissions
 	- Wipe save game in campaigns description
 	- Logistic runs
 
+TODO - campaign delete brush delete buildings and units
 TODO - Fix squad names can't be edited
 TODO - Movie on spawn
 TODO - Convoy missions

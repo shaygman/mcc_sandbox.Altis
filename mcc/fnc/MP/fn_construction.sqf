@@ -9,7 +9,7 @@ _pos	 	=_this select 1;
 _side	 	=_this select 2;
 _dir	 	=call compile (_this select 3);
 
-#define REQUIRE_MEMBERS 2
+#define REQUIRE_MEMBERS 0
 #define ANCHOR_ITEM "Land_TreeBin_F"
 #define TIME_BEFORE_DELETE 1200
 
