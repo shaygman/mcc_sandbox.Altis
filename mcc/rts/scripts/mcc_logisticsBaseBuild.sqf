@@ -1015,14 +1015,8 @@ MCC_CONST_CAM_Handler =
 
 			//Add WP
 			if (isnull MCC_CONST_PLACEHOLDER && abs (_posX - ((uiNamespace getVariable ["MCC_rtsMenuXYpos",[0,0]]) select 0))<0.005) then {
-				private ["_groups","_action","_groupCtrls"];
+				private ["_groups","_groupCtrls"];
 				_groupCtrls = missionNamespace getVariable ['MCC_rtsUIGroupsIcons', []];
-				_action = switch (true) do {
-							//Get In
-						    case ({ctrlScale (_x select 0) > 1} count _groupCtrls > 0): {2};
-						    //move
-						    default {0};
-						};
 
 				_groups = [];
 				{
@@ -1041,12 +1035,13 @@ MCC_CONST_CAM_Handler =
 					player globalRadio "CuratorWaypointPlaced";
 
 					{
-						if (leader _x isKindOf "Man") then {
-							_list = (_wpPos nearObjects ["LandVehicle", 10]);
-							_list = _list + (_wpPos nearObjects ["Ship", 10]);
+						if (vehicle leader _x == leader _x) then {
+							_list = (_wpPos nearObjects ["LandVehicle", 20]);
+							_list = _list + (_wpPos nearObjects ["Ship", 20]);
+
 
 							//Fortify buildings
-							if ((nearestBuilding _wpPos) distance _wpPos < 5) then {
+							if ((nearestBuilding _wpPos) distance _wpPos < 20) then {
 								_buildingPos = [(nearestBuilding _wpPos), count units _x] call BIS_fnc_buildingPositions;
 								_x setVariable ["MCC_rtsIsFortified",true,true];
 
@@ -1125,6 +1120,24 @@ MCC_CONST_CAM_Handler =
 
 					_ctrl ctrlSetPosition (worldToScreen (_camPos vectoradd _offset));
 					_ctrl ctrlCommit 0;
+				};
+			};
+
+			//Text for overing over entrable object
+			(_disp displayCtrl 9191) ctrlShow false;
+			if ({vehicle leader _x == leader _x} count (missionnamespace getVariable ["MCC_ConsoleGroupSelected",[]]) > 0) then {
+				private ["_list","_listHouses"];
+				_pos = screenToWorld [_posX,_posY];
+				_list = (_pos nearObjects ["LandVehicle", 10]);
+				_list = _list + (_pos nearObjects ["Ship", 10]);
+				_listHouses = (nearestObjects  [_pos,["Building","House"], 20]);
+
+				//Fortify buildings
+				if (count _list > 0 || {[_x] call BIS_fnc_isBuildingEnterable} count _listHouses > 1) then {
+					(_disp displayCtrl 9191) ctrlShow true;
+					(_disp displayCtrl 9191) ctrlSetPosition [_posX,_posY,0.05 * safezoneW,0.066 * safezoneH];
+					(_disp displayCtrl 9191) ctrlSetText "Get In";
+					(_disp displayCtrl 9191) ctrlCommit 0;
 				};
 			};
 

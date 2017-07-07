@@ -115,7 +115,7 @@ class ReammoBox_F: thingX {
         class ACE_MCC_supplyBoxDrag {
                 displayName = "Drag";
                 distance = 7;
-               	condition = "typeOf _target in (missionNamespace getVariable ['MCC_logisticsCrates_TypesWest',[]]";
+               	condition = "typeOf _target in (missionNamespace getVariable ['MCC_logisticsCrates_TypesWest',[]])";
                 statement =  "[_target,true] call MCC_fnc_dragObject;";
                 icon = "\mcc_sandbox_mod\mcc\data\iconDrag.paa";
                 showDisabled = 0;

@@ -42,8 +42,39 @@ class MCC_LOGISTICS_BASE_BUILD
 			colorBackground[] = { 0.051, 0.051, 0.051,0.9};
 			x = -0.000156274 * safezoneW + safezoneX;
 			y = 0.665 * safezoneH + safezoneY;
-			w = 0.226875 * safezoneW;
+			w = 0.225 * safezoneW;
 			h = 0.088 * safezoneH;
+		};
+
+		class frameMiddle: MCC_RscFrame
+		{
+			idc = -1;
+
+			x = 0.226719 * safezoneW + safezoneX;
+			y = 0.764 * safezoneH + safezoneY;
+			w = 0.417656 * safezoneW;
+			h = 0.242 * safezoneH;
+			colorBackground[] = {0.224,0.224,0.224,1};
+		};
+		class frameLeft: MCC_RscFrame
+		{
+			idc = -1;
+
+			x = 0.649531 * safezoneW + safezoneX;
+			y = 0.764 * safezoneH + safezoneY;
+			w = 0.345469 * safezoneW;
+			h = 0.253 * safezoneH;
+			colorBackground[] = {0.224,0.224,0.224,1};
+		};
+		class frameRight: MCC_RscFrame
+		{
+			idc = -1;
+
+			x = -0.000156274 * safezoneW + safezoneX;
+			y = 0.665 * safezoneH + safezoneY;
+			w = 0.225 * safezoneW;
+			h = 0.352 * safezoneH;
+			colorBackground[] = {0.224,0.224,0.224,1};
 		};
 	};
 
@@ -107,6 +138,17 @@ class MCC_LOGISTICS_BASE_BUILD
 			y = 0.698 * safezoneH + safezoneY;
 			w = 0.4125 * safezoneW;
 			h = 0.066 * safezoneH;
+		};
+
+		class mouseFeedBackText: MCC_RscText
+		{
+			idc = 9191;
+			style = 2;
+			//colorText[] = {1,0,0,0.8};
+			x = 0 * safezoneW + safezoneX;
+			y = 0 * safezoneH + safezoneY;
+			w = 0 * safezoneW;
+			h = 0 * safezoneH;
 		};
 
 		class selectBox: MCC_RscFrame

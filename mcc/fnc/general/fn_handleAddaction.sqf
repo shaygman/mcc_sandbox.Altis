@@ -120,13 +120,12 @@ if (MCC_isMode) then {
 
 if (missionNamespace getvariable ["MCC_showActionKey",true]) then {
 
-	if !(MCC_isACE && MCC_isMode) then {
-		//Add MCC Comander
-		if ((player getVariable ["MCC_actionCommander",-1]) != -1) then	{player removeAction (player getVariable ["MCC_actionCommander",nil])};
-		_string = format ["((MCC_server getVariable ['CP_commander%1','']) == getPlayerUID _this )&& (vehicle _target == vehicle _this) && (missionNamespace getVariable ['MCC_allowConsole',true]) && (missionNamespace getvariable ['MCC_showActionKey',true])",side player];
-		_null = player addaction ["<img size='1.5' image='\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa'/>""<t color=""#FFCC01"">Commander - Console</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,1],-1,false,true,"",_string];
-		player setVariable ["MCC_actionCommander",_null];
-	};
+	//Add MCC Comander
+	if ((player getVariable ["MCC_actionCommander",-1]) != -1) then	{player removeAction (player getVariable ["MCC_actionCommander",nil])};
+	_string = format ["((MCC_server getVariable ['CP_commander%1','']) == getPlayerUID _this )&& (vehicle _target == vehicle _this) && (missionNamespace getVariable ['MCC_allowConsole',true]) && (missionNamespace getvariable ['MCC_showActionKey',true])",side player];
+	_null = player addaction ["<img size='1.5' image='\A3\Ui_f\data\GUI\Cfg\Ranks\colonel_gs.paa'/>""<t color=""#FFCC01"">Commander - Console</t>", MCC_path + "mcc\dialogs\mcc_PopupMenu.sqf",[nil,nil,nil,nil,1],-1,false,true,"",_string];
+	player setVariable ["MCC_actionCommander",_null];
+
 
 	/*
 		//Add MCC Squad leader PDA
