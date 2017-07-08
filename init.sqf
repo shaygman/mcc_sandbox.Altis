@@ -267,6 +267,7 @@ MCC_supplyAttachPoints = [
 							[[0,0.2,0],[0,-1.3,0],[0,-2.8,0]]
 						 ];
 
+//-------------------------- Logistics -------------------------------------
 if (MCC_isMode) then
 {
 	MCC_logisticsCrates_TypesWest = ["MCC_crateAmmo","MCC_crateSupply","MCC_crateFuel","MCC_crateAmmoBigWest","MCC_crateSupplyBigWest","MCC_crateFuelBigWest"];
@@ -278,6 +279,16 @@ if (MCC_isMode) then
 
 MCC_SUPPLY_CRATEITEM = MCC_logisticsCrates_TypesWest select 1;
 MCC_SUPPLY_CRATEITEMBIG = [MCC_logisticsCrates_TypesWest select 4, MCC_logisticsCrates_TypesEast select 4];
+
+//Default drops used in RTS or when enabled
+if (isNil "MCC_RTSDefaultSupplyDrops") then {
+	MCC_RTSDefaultSupplyDrops =  [
+									["B_G_Offroad_01_armed_F",[["ammo",100],["repair",200],["fuel",50]]],
+									[(missionNamespace getVariable ["MCC_logisticsCrates_TypesWest",["","",""]]) select 0,[["ammo",200],["fuel",50]]],
+									[(missionNamespace getVariable ["MCC_logisticsCrates_TypesWest",["","",""]]) select 1,[["repair",200],["fuel",50]]],
+									[(missionNamespace getVariable ["MCC_logisticsCrates_TypesWest",["","",""]]) select 2,[["fuel",200],["fuel",50]]]
+								];
+};
 
 //----------------------gaia------------------------------------------------------
 call compile preprocessfile format ["%1gaia\gaia_init.sqf",MCC_path];

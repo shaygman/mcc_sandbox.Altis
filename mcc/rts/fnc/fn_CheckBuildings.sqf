@@ -1,17 +1,19 @@
-//=================================================================MCC_fnc_CheckBuildings==============================================================================
+//===========================================================MCC_fnc_CheckBuildings==============================================================================
 //	Check if we have the selected building in the side base
 //  Parameter(s):
 //     _req: ARRAY
-//     _center: POSITION OR OBJECT
+//     _center: POSITION OR OBJECT OR SIDE
 //     _radius: INTEGER
 //
 //	OUT <BOOLEAN>
-//==============================================================================================================================================================================
+//================================================================================================================================================================
+#define    MCC_ANCHOROBJECT    "UserTexture10m_F"
+
 private ["_req","_center","_radius","_available","_facility","_var","_level","_buildings","_pos"];
 //Let see what we already built
-_req =  [_this,0,missionnamespace,[missionnamespace,"",[]]] call bis_fnc_param;
-_center =  [_this,1,objNull,[missionnamespace,objNull,[],grpNull]] call bis_fnc_param;
-_radius =  [_this,2,10,[missionnamespace,0]] call bis_fnc_param;
+_req =  param [0,missionnamespace,[missionnamespace,"",[]]];
+_center = param [1,objNull,[missionnamespace,objNull,[],grpNull,sideLogic]];
+_radius =  param [2,10,[missionnamespace,0]];
 
 _pos = switch (true) do {
     case (typeName _center == "OBJECT"): {
@@ -27,10 +29,15 @@ _pos = switch (true) do {
     };
 };
 
-_buildings = _pos nearObjects ["UserTexture10m_F", _radius];
+//If center is side bring all the objects
+_buildings =  if (typeName _center == typeName sideLogic) then {
+                allMissionObjects MCC_ANCHOROBJECT;
+            } else {
+                _pos nearObjects [MCC_ANCHOROBJECT, _radius];
+            };
+
 
 _available = true;
-
 _facility = [];
 {
 	_var = _x getVariable ["mcc_constructionItemType",""];

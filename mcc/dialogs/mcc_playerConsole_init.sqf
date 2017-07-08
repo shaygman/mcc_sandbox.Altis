@@ -104,6 +104,23 @@ _evacVehicles = missionNamespace getvariable [format ["MCC_evacVehicles_%1",play
 	}];
 } forEach [1011,1021,1031];
 
+//Add default drops
+if (([["hq",2], playerSide] call MCC_fnc_CheckBuildings || (missionNamespace getVariable ["MCC_defaultSupplyDropsEnabled",false])) &&
+    !(missionNamespace getVariable ["MCC_RTSAddDefaultSupplyDrops",false])) then {
+
+	private ["_varName","_airDrops","_cratesTypes","_costsTable"];
+	_varName = format ["MCC_ConsoleAirdropArray%1",playerSide];
+	_airDrops = missionNamespace getVariable [_varName,[]];
+
+	{
+		_airDrops pushBack [[[_x select 0]],[""],2];
+		missionNamespace setVariable [str ([[[_x select 0]],[""],2]), _x select 1];
+		publicVariable str ([[[_x select 0]],[""],2]);
+	} forEach (missionNamespace getVariable ["MCC_RTSDefaultSupplyDrops",[]]);
+
+	missionNamespace setVariable ["MCC_RTSAddDefaultSupplyDrops",true];
+	publicVariable "MCC_RTSAddDefaultSupplyDrops";
+};
 
 //--------------------------------------------------Evac-------------------------------------------------------------------------------
 if (count _evacVehicles > 0) then {

@@ -17,14 +17,14 @@ Change log r22:
 	- Added: Show group information when mouse hovering its icon.
 	- Added: Supply track can withdraw supply crates from the HQ.
 	- Added: Show "get in" text when mouse hovering over enterable building/vehicle.
+	- Added: Engine sounds for generator.
 	- Fixed: Units info wasn't showing the amount of units and vehicles classes available.
 	- Fixed: Men units didn't have the place satchel, rules of fire, change stances actions.
 
 TODO
+	- Add settings for enabling default supply drops and default CAS "MCC_defaultSupplyDropsEnabled" - TODO WIKI
 	- igui color - https://community.bistudio.com/wiki/User_Interface_Colors
 	- Commander permissions
-	- Sound for generator
-	- After destoying structure reset markers and refund
 	- Add CAS and airdops after building sat comms
 	- In RTS use MCC HuD UI
 	- Build helipad and hanger for building helis exc

@@ -937,7 +937,7 @@ MCC_CONST_CAM_Handler =
 					_dummy setVariable ["MCC_rtsObject",true,true];
 					playsound "click";
 				} else {
-					player globalRadio "SentAssemble";
+					playSound "MCC_consturctionInitialized";
 					[[getpos MCC_CONST_PLACEHOLDER, getdir MCC_CONST_PLACEHOLDER ,_cfgName, 1, playerside],"MCC_fnc_construct_base",false] call bis_fnc_MP;
 				};
 

@@ -2135,3 +2135,15 @@ class MCC_landing
 	sound[] = {"mcc\sounds\landing.ogg",db+2, 1};
 	#endif
 };
+
+class MCC_consturctionInitialized
+{
+	name = "MCC_consturctionInitialized";
+	titles[] = {};
+
+	#ifdef MCCMODE
+	sound[] = {"\mcc_sandbox_mod\mcc\sounds\constuctionInitilized.ogg", db+2, 1};
+	#else
+	sound[] = {"mcc\sounds\constuctionInitilized.ogg",db+2, 1};
+	#endif
+};
