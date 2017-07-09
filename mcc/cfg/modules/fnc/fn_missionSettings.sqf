@@ -85,6 +85,12 @@ if (typeName (_module getVariable ["t2t",true]) == typeName 0) exitWith {
 	//Allow RTS
 	_var 	= _module getvariable ["allowRTS",0];
 	MCC_allowRTS = if (_var == 0) then {false} else {true};
+
+	//Purchable airDrops
+	MCC_defaultSupplyDropsEnabled = _module getvariable ["defaultSupplyDropsEnabled",false];
+
+	//Purchable CAS
+	MCC_defaultCASEnabled = _module getvariable ["defaultCASEnabled",false];
 };
 
 //Not curator exit
@@ -92,19 +98,21 @@ if !(local _module) exitWith {};
 
 _resualt = ["Settings MCC",[
  						["Teleport 2 Team",["Disabled","JIP Only","After Respawn","Always"]],
- 						["Save Gear",true],
- 						["MCC Messages",true],
- 						["Delete Players' Bodies",true],
- 						["Respawn Menu",true],
- 						["Respawn On Leader",true],
- 						["Squad Leader PDA",true],
- 						["(CS) Commander Console",true],
- 						["(CS) Show groups with GPS only",true],
- 						["(CS) Show friendly WP",true],
- 						["CS) Can command AI",true],
- 						["Squad Dialog",true],
- 						["Logistics",true],
- 						["Real Time Strategy",true],
+ 						["Save Gear",(missionNamespace getVariable ["MCC_saveGear",true])],
+ 						["MCC Messages",(missionNamespace getVariable ["MCC_Chat",true])],
+ 						["Delete Players' Bodies",(missionNamespace getVariable ["MCC_deletePlayersBody",true])],
+ 						["Respawn Menu",(missionNamespace getVariable ["MCC_openRespawnMenu",true])],
+ 						["Respawn On Leader",(missionNamespace getVariable ["MCC_respawnOnGroupLeader",true])],
+ 						["Squad Leader PDA",(missionNamespace getVariable ["MCC_allowsqlPDA",true])],
+ 						["(CS) Commander Console",(missionNamespace getVariable ["MCC_allowConsole",true])],
+ 						["(CS) Show groups with GPS only",(missionNamespace getVariable ["MCC_ConsoleOnlyShowUnitsWithGPS",true])],
+ 						["(CS) Show friendly WP",(missionNamespace getVariable ["MCC_ConsolePlayersCanSeeWPonMap",true])],
+ 						["(CS) Can command AI",(missionNamespace getVariable ["MCC_ConsoleCanCommandAI",true])],
+ 						["Squad Dialog",(missionNamespace getVariable ["MCC_allowSquadDialog",true])],
+ 						["Logistics",(missionNamespace getVariable ["MCC_allowlogistics",true])],
+ 						["Real Time Strategy",(missionNamespace getVariable ["MCC_allowRTS",true])],
+ 						["Purchasable Supply Drops",(missionNamespace getVariable ["MCC_defaultSupplyDropsEnabled",true])],
+ 						["Purchasable CAS",(missionNamespace getVariable ["MCC_defaultCASEnabled",true])],
  						["Artilery Computer",true],
  						["Time Acceleration",20],
  						["Resistance Hostile To",["All","East","West"]]
@@ -129,14 +137,15 @@ if (count _resualt == 0) exitWith {deleteVehicle _module};
            "MCC_allowSquadDialog",
            "MCC_allowlogistics",
            "MCC_allowRTS",
-           "MCC_rsEnableDriversPilots"
+           "MCC_defaultSupplyDropsEnabled",
+           "MCC_defaultCASEnabled"
            ];
 
-(_resualt select 14) remoteExec ["enableEngineArtillery",0];
-(_resualt select 15) remoteExec ["setTimeMultiplier",2];
+(_resualt select 16) remoteExec ["enableEngineArtillery",0];
+(_resualt select 17) remoteExec ["setTimeMultiplier",2];
 
 //Resistance Hostility
-switch (_resualt select 16) do {
+switch (_resualt select 18) do {
 
 	//East
 	case 1:

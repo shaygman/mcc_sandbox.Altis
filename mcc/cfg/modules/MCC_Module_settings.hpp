@@ -391,6 +391,20 @@ class MCC_Module_settings : Module_F
 				};
 			};
 		};
+
+		class defaultSupplyDropsEnabled : Checkbox
+		{
+			displayName = "Purchasable Supply Drops";
+			typeName = "BOOL";
+			property = "defaultSupplyDropsEnabled";
+		};
+
+		class defaultCASEnabled : Checkbox
+		{
+			displayName = "Purchasable CAS";
+			typeName = "BOOL";
+			property = "defaultCASEnabled";
+		};
 	};
 
 	class ModuleDescription: ModuleDescription

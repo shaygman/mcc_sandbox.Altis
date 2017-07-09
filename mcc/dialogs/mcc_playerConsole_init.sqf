@@ -104,22 +104,75 @@ _evacVehicles = missionNamespace getvariable [format ["MCC_evacVehicles_%1",play
 	}];
 } forEach [1011,1021,1031];
 
-//Add default drops
+//Add default drops & CAS
+private ["_cfg","_varName","_airDrops","_cratesTypes","_costsTable","_airDropsAvaliable"];
 if (([["hq",2], playerSide] call MCC_fnc_CheckBuildings || (missionNamespace getVariable ["MCC_defaultSupplyDropsEnabled",false])) &&
     !(missionNamespace getVariable ["MCC_RTSAddDefaultSupplyDrops",false])) then {
 
-	private ["_varName","_airDrops","_cratesTypes","_costsTable"];
+	_cfg = if (isClass (missionconfigFile >> "CfgMCCRtsAirdrops" >> str playerSide)) then {
+		missionconfigFile >>  "CfgMCCRtsAirdrops" >> str playerSide;
+	} else {
+		configFile >>  "CfgMCCRtsAirdrops" >> str playerSide;
+	};
+
+	//AIrdrop
+	_airDrops = [];
+	for "_i" from 0 to (count (_cfg >> "airdrops") -1) step 1 do
+	{
+		if (isClass ((_cfg >> "airdrops") select _i)) then {
+			_airDrops pushBack [getText(((_cfg >> "airdrops") select _i) >> "className"),
+								getArray(((_cfg >> "airdrops") select _i) >> "resources")];
+		};
+	};
+
 	_varName = format ["MCC_ConsoleAirdropArray%1",playerSide];
-	_airDrops = missionNamespace getVariable [_varName,[]];
+	_airDropsAvaliable = missionNamespace getVariable [_varName,[]];
 
 	{
-		_airDrops pushBack [[[_x select 0]],[""],2];
+		_airDropsAvaliable pushBack [[[_x select 0]],[""],2];
 		missionNamespace setVariable [str ([[[_x select 0]],[""],2]), _x select 1];
 		publicVariable str ([[[_x select 0]],[""],2]);
-	} forEach (missionNamespace getVariable ["MCC_RTSDefaultSupplyDrops",[]]);
+	} forEach _airDrops;
+
+	publicVariable _varName;
 
 	missionNamespace setVariable ["MCC_RTSAddDefaultSupplyDrops",true];
 	publicVariable "MCC_RTSAddDefaultSupplyDrops";
+};
+
+if (([["hq",3], playerSide] call MCC_fnc_CheckBuildings || (missionNamespace getVariable ["MCC_defaultCASEnabled",false])) &&
+    !(missionNamespace getVariable ["MCC_RTSAddDefaultCAS",false])) then {
+
+	_cfg = if (isClass (missionconfigFile >> "CfgMCCRtsAirdrops" >> str playerSide)) then {
+		missionconfigFile >>  "CfgMCCRtsAirdrops" >> str playerSide;
+	} else {
+		configFile >>  "CfgMCCRtsAirdrops" >> str playerSide;
+	};
+
+	//CAS
+	_airDrops = [];
+	for "_i" from 0 to (count (_cfg >> "cas") -1) step 1 do
+	{
+		if (isClass ((_cfg >> "cas") select _i)) then {
+			_airDrops pushBack [getText(((_cfg >> "cas") select _i) >> "casType"),
+								getText(((_cfg >> "cas") select _i) >> "className"),
+								getArray(((_cfg >> "cas") select _i) >> "resources")];
+		};
+	};
+
+	_varName = format ["MCC_CASConsoleArray%1",playerSide];
+	_airDropsAvaliable = missionNamespace getVariable [_varName,[]];
+
+	{
+		_airDropsAvaliable pushBack [[_x select 0],[_x select 1]];
+		missionNamespace setVariable [str ([[_x select 0],[_x select 1]]), _x select 2];
+		publicVariable str ([[_x select 0],[_x select 1]]);
+	} forEach _airDrops;
+
+	publicVariable _varName;
+
+	missionNamespace setVariable ["MCC_RTSAddDefaultCAS",true];
+	publicVariable "MCC_RTSAddDefaultCAS";
 };
 
 //--------------------------------------------------Evac-------------------------------------------------------------------------------
