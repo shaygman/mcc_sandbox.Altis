@@ -269,4 +269,22 @@ class MCC_rts_rtsbuyVehicle
 	actionFNC = "MCC_fnc_rtsbuyVehicle";
 	resources[] = {};
 };
+
+class MCC_rts_addArtilleryAmmo
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\mcc\rts\data\RTS_buttonArtillery.paa";
+	#else
+	picture = "mcc\rts\data\RTS_buttonArtillery.paa";
+	#endif
+
+	displayName = "Buy Artillery Shells";
+	descriptionShort = "Buy 10 Artillery Shells - Use the commander console to call artillery";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 1;
+	actionFNC = "MCC_fnc_rtsaddArtilleryAmmo";
+	resources[] = {{"ammo",50}};
+};
+
 #include "forts\forts.hpp"

@@ -14,6 +14,9 @@ if (count MCC_ConsoleGroupSelected <=0) exitWith {};
 _obj = MCC_ConsoleGroupSelected select 0;
 _side = playerSide;
 
+//Remove old marker
+[[objNull]] spawn MCC_fnc_baseSelected;
+[] call MCC_fnc_rtsMakeMarkersGroups;
 
 //remove resources
 [_res] spawn MCC_fnc_baseResourceReduce;

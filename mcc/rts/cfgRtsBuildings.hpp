@@ -13,7 +13,7 @@ class MCC_rts_hq1
 	needelectricity = 0;
 	upgradeTo[] = {"MCC_rts_hq2"};
 	buildings[] = {"MCC_rts_barracks1","MCC_rts_workshop1","MCC_rts_triage1","MCC_rts_tradePost1"};
-	actions[] = {"MCC_rts_rtsBuildUIContainer","MCC_rts_rtsFortUIContainer","","","MCC_rts_scanResourcesBasic","","MCC_rts_scanResourcesCancel",""};
+	actions[] = {"MCC_rts_rtsBuildUIContainer","MCC_rts_rtsFortUIContainer","MCC_rts_addArtilleryAmmo","","MCC_rts_scanResourcesBasic","","MCC_rts_scanResourcesCancel",""};
 	fortifications[] = {"MCC_rts_fortSandbagLong","MCC_rts_fortSandbagRound","MCC_rts_fortRazorwire"};
 	constType = "hq";
 	level = 1;
@@ -30,7 +30,7 @@ class MCC_rts_hq2 : MCC_rts_hq1
 	requiredBuildings[] = {{"workshop",2},{"barracks",1},{"elecPower",1}};
 	needelectricity = 1;
 	upgradeTo[] = {"MCC_rts_hq3"};
-	actions[] = {"MCC_rts_rtsBuildUIContainer","MCC_rts_rtsFortUIContainer","","","MCC_rts_scanResourcesBasic","MCC_rts_scanResourcesAdvanced","","MCC_rts_scanResourcesCancel"};
+	actions[] = {"MCC_rts_rtsBuildUIContainer","MCC_rts_rtsFortUIContainer","MCC_rts_addArtilleryAmmo","","MCC_rts_scanResourcesBasic","MCC_rts_scanResourcesAdvanced","","MCC_rts_scanResourcesCancel"};
 	level = 2;
 	resources[] = {{"ammo",200},{"repair",500},{"food",300},{"time",30}};
 	actionFNC = "MCC_fnc_baseActionClicked";

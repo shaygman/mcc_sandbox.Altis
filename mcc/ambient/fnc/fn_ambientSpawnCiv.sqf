@@ -98,7 +98,7 @@ for "_i" from 1 to _counter do {
 	private ["_spawn"];
 	_spawn = true;
 	{
-		if (_x distance _pos < (_x getVariable ["radius",100])) exitWith {_spawn = false};
+		if (_x distance _pos < ((_x getVariable ["radius",100])*2)) exitWith {_spawn = false};
 	} forEach _deniedZones;
 
 	if (_spawn) then {
