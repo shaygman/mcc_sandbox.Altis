@@ -21,5 +21,5 @@ class survive {
 	class foodWaterConsumption {};
 	class survivalProgressBars {};
 	class spawnCratesInHouses {};
-	class spawnCratesInHousesInit {description = "Spawn survival spawn crates in houses"};
+	class spawnCratesInHousesInit {description = "Spawn survival spawn crates in houses";};
 };

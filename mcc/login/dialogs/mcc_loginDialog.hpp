@@ -203,15 +203,16 @@ class mcc_loginDialog
 
 		class MCC_Help: MCC_RscStructuredText
 		{
-			idc = -1;
+			idc = 1000;
 			text = "(?)";
-			colorBackground[] = { 0, 0, 0, 0.7};
-			onMouseEnter = "[_this, true,[5,1],'mcclogin'] spawn MCC_fnc_help";
+			colorBackground[] = { 1, 1, 1, 0.7};
+			tooltip = "Click to open a link on your default browser";
+			//onMouseEnter = "[_this, true,[5,1],'mcclogin'] spawn MCC_fnc_help";
 
-			x = 0.305208 * safezoneW + safezoneX;
-			y = 0.247099 * safezoneH + safezoneY;
-			w = 0.020625 * safezoneW;
-			h = 0.033 * safezoneH;
+				x = 0.309219 * safezoneW + safezoneX;
+				y = 0.467 * safezoneH + safezoneY;
+				w = 0.170156 * safezoneW;
+				h = 0.088 * safezoneH;
 		};
 	};
 };

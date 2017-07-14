@@ -67,6 +67,7 @@ class rts
 	class mainBoxInit {};
 	class saveCargoBox {description = "save or load the cargo box items from the server using iniDB";};
 	class rtsaddArtilleryAmmo {description = "Buy 10 artillery shells";};
+	class rtsCalculateResourceTreshold {description = "calculate resources tresholds";};
 };
 
 class forts

@@ -34,10 +34,6 @@ if (_open) then
 			{
 				_text = _text + "<a underline='true' href='http://mccsandbox.wikia.com/wiki/Squad_Dialog'>Wiki:&#160;Squad&#160;Dialog</a>"
 			};
-			case ("mcclogin") :
-			{
-				_text = _text + "<a underline='true' href='http://mccsandbox.wikia.com/wiki/Getting_started'>Wiki:&#160;MCC</a>"
-			};
 
 			case ("mccmain") :
 			{

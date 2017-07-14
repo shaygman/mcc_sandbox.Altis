@@ -10,13 +10,14 @@ class MCC_Module_settings : Module_F
 	scope = 2;
 	isGlobal = 1;
 
-	class Arguments
+	class Attributes : AttributesBase
 	{
-		class t2t
+		class t2t : Combo
 		{
 			displayName = "Teleport 2 Team";
 			description = "When players willbe able to teleport to the squad leader via the Squad Dialog or key bind";
 			typeName = "NUMBER";
+			property = "t2t";
 			class values
 			{
 				class disabled
@@ -42,11 +43,13 @@ class MCC_Module_settings : Module_F
 				};
 			};
 		};
-		class saveGear
+		class saveGear : Combo
 		{
 			displayName = "Save Gear";
 			description = "Respawn with the same gear the player had when they player died";
 			typeName = "NUMBER";
+			property = "saveGear";
+
 			class values
 			{
 				class Enabled
@@ -62,11 +65,13 @@ class MCC_Module_settings : Module_F
 				};
 			};
 		};
-		class messages
+		class messages : Combo
 		{
 			displayName = "MCC Messages";
 			description = "Show MCC messages";
 			typeName = "NUMBER";
+			property = "messages";
+
 			class values
 			{
 				class Enabled
@@ -83,11 +88,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class sync
+		class sync : Combo
 		{
 			displayName = "Sync JIP";
 			description = "Sync join in progress players with the server";
 			typeName = "NUMBER";
+			property = "sync";
+
 			class values
 			{
 				class Enabled
@@ -104,11 +111,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class artilleryComputer
+		class artilleryComputer : Combo
 		{
 			displayName = "Artilery Computer";
 			description = "Enable/Disable the default BI artillery computer";
 			typeName = "NUMBER";
+			property = "artilleryComputer";
+
 			class values
 			{
 				class Enabled
@@ -125,11 +134,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class timeAccel
+		class timeAccel : Combo
 		{
 			displayName = "Time Acceleration";
 			description = "Shorten day/night cycle";
 			typeName = "NUMBER";
+			property = "timeAccel";
+
 			class values
 			{
 				class disabled
@@ -161,11 +172,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class deleteBody
+		class deleteBody : Combo
 		{
 			displayName = "Delete Players' Bodies";
 			description = "Delete dead player body after respawn";
 			typeName = "NUMBER";
+			property = "deleteBody";
+
 			class values
 			{
 				class Enabled
@@ -182,11 +195,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class respawnMenu
+		class respawnMenu : Combo
 		{
 			displayName = "Respawn Menu";
 			description = "Allow start location dialog on JIP or after respawn";
 			typeName = "NUMBER";
+			property = "respawnMenu";
+
 			class values
 			{
 				class Enabled
@@ -203,11 +218,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class respawnOnGroupLeader
+		class respawnOnGroupLeader : Combo
 		{
 			displayName = "Respawn On Leader";
 			description = "Allow Respawn On Group Leader If Respawn Menu Is Enabled";
 			typeName = "NUMBER";
+			property = "respawnOnGroupLeader";
+
 			class values
 			{
 				class Enabled
@@ -224,11 +241,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class sqlPDA
+		class sqlPDA : Combo
 		{
 			displayName = "Squad Leader PDA";
 			description = "Allow Squad Leader PDA";
 			typeName = "NUMBER";
+			property = "sqlPDA";
+
 			class values
 			{
 				class Enabled
@@ -245,11 +264,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class commanderConsole
+		class commanderConsole : Combo
 		{
 			displayName = "Commander Console";
 			description = "Allow Commander Console";
 			typeName = "NUMBER";
+			property = "commanderConsole";
+
 			class values
 			{
 				class Enabled
@@ -266,11 +287,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class commanderConsoleShowGPS
+		class commanderConsoleShowGPS : Combo
 		{
 			displayName = "Commander Console: Show groups with GPS only";
 			description = "Show groups with GPS only";
 			typeName = "NUMBER";
+			property = "commanderConsoleShowGPS";
+
 			class values
 			{
 				class Enabled
@@ -287,11 +310,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class commanderConsoleWP
+		class commanderConsoleWP : Combo
 		{
 			displayName = "Commander Console: Show friendly WP";
 			description = "Show friendly WP";
 			typeName = "NUMBER";
+			property = "commanderConsoleWP";
+
 			class values
 			{
 				class Enabled
@@ -308,11 +333,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class commanderConsoleAI
+		class commanderConsoleAI : Combo
 		{
 			displayName = "Commander Console: Can command AI";
 			description = "Can command AI";
 			typeName = "NUMBER";
+			property = "commanderConsoleAI";
+
 			class values
 			{
 				class Enabled
@@ -329,11 +356,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class squadDialog
+		class squadDialog : Combo
 		{
 			displayName = "Squad Dialog";
 			description = "Players can open the squad dialog and form/change squads - requires key binding";
 			typeName = "NUMBER";
+			property = "squadDialog";
+
 			class values
 			{
 				class Enabled
@@ -350,11 +379,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class logistics
+		class logistics : Combo
 		{
 			displayName = "Logistics";
 			description = "Enables MCC logistics";
 			typeName = "NUMBER";
+			property = "logistics";
+
 			class values
 			{
 				class Enabled
@@ -371,11 +402,13 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
-		class allowRTS
+		class allowRTS : Combo
 		{
 			displayName = "Real Time Strategy";
 			description = "Enable RTS interface in the commander console";
 			typeName = "NUMBER";
+			property = "allowRTS";
+
 			class values
 			{
 				class Enabled

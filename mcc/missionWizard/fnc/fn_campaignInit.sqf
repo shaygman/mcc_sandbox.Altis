@@ -1,13 +1,18 @@
-//======================================================MCC_fnc_campaignInit===========================================================================================
-//Init campaign - SERVER ONLY
-// _sidePlayer		SIDE - player side
-// _sideEnemy		SIDE - enemy side
-// _factionCiv		STRING - faction civilians
-// _factionEnemy	STRING - faction enemy
-//_missionMax		INTEGER - max amount of missions before mission over
-//_missionRotation	INTEGER - max missions in the same area
-//_tileSize			INTEGER - Size of the tile while portfiling the map
-//=======================================================================================================================================================================
+/*======================================================MCC_fnc_campaignInit===========================================================================================
+	Init campaign - SERVER ONLY
+	_sidePlayer			SIDE - player side
+	_factionPlayer		STRNG - faction player- defult "BLU_F"
+	_sideEnemy			SIDE - enemy side
+	_factionEnemy		STRING - faction enemy default "OPF_F"
+	_factionCiv			STRING - faction civilians
+	_missionMax			INTEGER - max amount of missions before mission over
+	_difficulty			INTEGER - difficulty between 10-40 default is 20
+	_sidePlayer2		SIDE - Side of the rival players faction
+	_tickets			INTEGER - starting respawn tickets for each side
+	_missionRotation	INTEGER - max missions in the same area
+	_tileSize			INTEGER - Size of the tile while portfiling the map
+	_loadDB				INTEGER - Should we load the last saved data base
+//=====================================================================================================================================================================*/
 private ["_sidePlayer","_sideEnemy","_factionCiv","_center","_arrayAssets","_locations","_pos","_temploc","_AOlocation","_missionDone","_missionMax","_AOSize","_factionPlayer","_difficulty","_totalPlayers","_sidePlayer2","_tickets","_missionRotation","_basePos","_tileSize","_reconMission","_tempVar","_loadDb"];
 
 //wait for MCC

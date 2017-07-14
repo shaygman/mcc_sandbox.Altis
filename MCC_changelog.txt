@@ -8,7 +8,10 @@ Change log r22:
 - Changed: Shortened MCC campaign/Mission Wizard intro movies time.
 - Changed: Commander Console F1-F5 buttons are visable.
 - Changed: Reduce needed units to build a FOB or other battle emplacements to zero.
-- Changed: Restrict ambient unit module spawn radius has beed doubled.
+- Changed: Restrict ambient unit module spawn radius has been doubled.
+- Changed: MCC capture moduel won't give more resources then the available free storage space.
+- Changed: MCC campaign missions won't give more resources then the available free storage space.
+- Fixed: Vehicle Kiosk Custom vehicles array expected [className,[displayName, pictureName],cost] instead of [className,displayName,cost]
 - Fixed: GAIA support for RHS units.
 - Fixed: GAIA settings don't work from Zeus.
 
@@ -25,22 +28,21 @@ Change log r22:
 	- Added: Level 3 HQ will unlock the ability to purchase CAS runs from commander console.
 	- Fixed: Units info wasn't showing the amount of units and vehicles classes available.
 	- Fixed: Men units didn't have the place satchel, rules of fire, change stances actions.
-	- Fixed: After buiding or upgrading a structure the UI reset itself to prevent infinte building exploites.
+	- Fixed: After building or upgrading a structure the UI reset itself to prevent infinite building exploit
+	- Fixed: Will not show side tickets if non has been set
 
 TODO
-	- Add join Discord channel
 	- igui color - https://community.bistudio.com/wiki/User_Interface_Colors
 	- Commander permissions
-	- In RTS use MCC HuD UI
 	- Build helipad and hanger for building helis exc
 	- Real resources in RTS storage
 	- Wipe save game in campaigns description
 
-TODO - check the ammount of resources gain from a mission
+TODO - fix the vehicle kiosk array
 TODO - Logistics while starting a campaing from Zeus doesn't work.
 TODO - campaign delete brush delete buildings and units
 TODO - Fix squad names can't be edited
-TODO - Movie on spawn
+TODO - Movie on spawn and fix the focus on units movie
 TODO - Convoy missions
 TODO - Resource cap points in campaign and passsive occuption
 TODO - AAS missions to mod,

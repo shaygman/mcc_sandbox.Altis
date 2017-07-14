@@ -383,11 +383,18 @@ switch _mode do {
 
 			//Add resources
 			if (_step mod 5 == 0 && _owner != sideUnknown && _type <3) then {
-				private ["_array","_res"];
+				private ["_array","_res","_resources"];
 				_array = call compile format ["MCC_res%1",_owner];
+
+				//get number of storage
+				_resources = ["resources",_owner] call MCC_fnc_rtsCalculateResourceTreshold;
 				_res = (_array select _type)+5;
-				_array set [_type,_res];
-				publicvariable format ["MCC_res%1",_owner];
+
+				//Don't add more resources then can handle
+				if (_res <= _resources) then {
+					_array set [_type,_res];
+					publicvariable format ["MCC_res%1",_owner];
+				};
 			};
 
 			_step =_step + 1;

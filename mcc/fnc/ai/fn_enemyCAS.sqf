@@ -28,7 +28,7 @@ _heliArray = [];
 //No CAS to this faction
 if (count _casArray == 0 && count _heliArray == 0) exitWith {};
 
-_IsCAS = (random 1 > 0.5 && count _casArray > 0);
+_IsCAS = (random 1 > 0.5 && (count _casArray > 0 || count _heliArray == 0));
 _spawnPos = [_tower, 5000, random 360] call BIS_fnc_relPos;
 _casType = if (_IsCAS) then {(_casArray call bis_fnc_selectRandom)} else {(_heliArray call bis_fnc_selectRandom)};
 _vehicleClass = _casType select 1;

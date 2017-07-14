@@ -5,7 +5,7 @@
 // Return - nothing
 //=============================================================================================================================================================================
 //Calculate reources
-private ["_resources","_penalty","_baseResource","_succeedObjectives","_sumResource","_CompleteText","_sidePlayer","_resourceGain","_allocationRatio","_allocatedResources","_randomAsset","_totalShells","_sumTickets"];
+private ["_resources","_penalty","_baseResource","_succeedObjectives","_sumResource","_CompleteText","_sidePlayer","_resourceGain","_allocationRatio","_allocatedResources","_randomAsset","_totalShells","_sumTickets","_maxResources","_storagePenalty","_res"];
 _mission =  param [ 0, "Main", [""]];
 _activeObjectives =  param [ 1, 0, [0]];
 _failedObjectives =  param [ 2, 0, [0]];
@@ -29,12 +29,31 @@ if (_mission == "Main") then {
 		_resourceGain = _resourceGain + (floor (_sumTickets*_difficulty) max 1);
 	};
 
-_sumResource = _resourceGain - _penalty;
-
 _allocatedResources = [];
 {
 	_allocatedResources set [_foreachIndex, floor (_resourceGain * _x)];
 } forEach _allocationRatio;
+
+//Make sure we are not giving more resources then storage areas
+_maxResources = ["resources",_sidePlayer] call MCC_fnc_rtsCalculateResourceTreshold;
+_sumResource = (_resourceGain - _penalty) max 0;
+
+//Make sure we are not giving more resources then storage areas
+_storagePenalty = 0;
+for "_i" from 0 to 4 do {
+	_res = (_resources select _i)+(_allocatedResources select _i);
+	_storagePenalty = _storagePenalty + ((_res - _maxResources) max 0);
+	_resources set [_i,(_resources select _i)+(_allocatedResources select _i) min _maxResources];
+};
+
+_sumResource = (_sumResource - _storagePenalty) max 0;
+
+//Calculate resources allocation again this time from the sum resouces for the UI
+_allocatedResources = [];
+{
+	_allocatedResources set [_foreachIndex, floor (_sumResource * _x)];
+} forEach _allocationRatio;
+
 
 //Generate summary
 if (_mission != "side") then {
@@ -45,8 +64,9 @@ if (_mission != "side") then {
 							+ format ["Objectives Failed: <t color='#FF0000'>%1</t><br/>", _failedObjectives]
 							+ "____________________<br/>"
 							+ format ["Resource Gained: <t color='#2CC916'>%1</t><br/>",_resourceGain max 0]
-							+ format ["Collateral Damage Penalty: <t color='#FF0000'>%1</t><br/>", _penalty]
-							+ format ["Total Resource gained: %1<br/>",_sumResource]
+							+ format ["Penalty - Collateral Damage: <t color='#FF0000'>%1</t><br/>", _penalty]
+							+ format ["Penalty - No Storage: <t color='#FF0000'>%1</t><br/>", _storagePenalty]
+							+ format ["Total Resource gained: <t color='#2CC916'>%1</t><br/>",_sumResource]
 							+ "____________________<br/><br/>";
 } else {
 	_CompleteText =         "<t align='center' size='1.8' color='#FFCF11'>Enemy Have Completed A Mission</t><br/>"
@@ -56,15 +76,12 @@ if (_mission != "side") then {
 							+ format ["Objectives Failed: <t color='#2CC916'>%1</t><br/>", _failedObjectives]
 							+ "____________________<br/>"
 							+ format ["Enemy Casualties: <t color='#2CC916'>%1</t><br/>", _sumTickets]
-							+ format ["Resource Gained: <t color='#2CC916'>%1</t><br/>",_resourceGain max 0]
 							+ "____________________<br/><br/>";
 
 };
 
 
-for "_i" from 0 to 4 do {
-	_resources set [_i,(_resources select _i)+(_allocatedResources select _i)];
-};
+
 
 missionNamespace setvariable [format ["MCC_res%1",_sidePlayer],_resources];
 publicVariable format ["MCC_res%1",_sidePlayer];

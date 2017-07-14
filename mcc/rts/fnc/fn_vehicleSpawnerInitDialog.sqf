@@ -93,9 +93,9 @@ _mccdialog = uiNamespace getVariable "MCC_VEHICLESPAWNER_IDD";
 _comboBox = _mccdialog displayCtrl 101;
 lbClear _comboBox;
 {
-    _displayname = (_x select 1) select 0;
+    _displayname = if (typeName (_x select 1) isEqualTo typeName []) then {(_x select 1) select 0} else {(_x select 1)};
     _index = _comboBox lbAdd _displayname;
-    _comboBox lbSetPicture [_index,(_x select 1) select 1];
+    _comboBox lbSetPicture [_index,(gettext (configFile >> "CfgVehicles" >> (_x select 0) >> "picture"))];
 } foreach _vehicleArray;
 _comboBox lbSetCurSel 0;
 

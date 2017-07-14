@@ -117,7 +117,7 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 
 //Loop while open
 [_startPos,_size] spawn {
-	private ["_startPos","_size","_buildings","_cargoSpace","_value","_ctrl","_units","_unitsSpace"];
+	private ["_startPos","_size","_cargoSpace","_value","_ctrl","_units","_unitsSpace","_resources"];
 	_startPos = _this select 0;
 	_size = _this select 1;
 
@@ -127,22 +127,11 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 	//Load available resources
 	_array = call compile format ["MCC_res%1",playerside];
 	while {(str (_disp displayCtrl 2) != "No control")} do {
+
 		//get number of storage
-		_buildings = _startPos nearObjects [MCC_RTS_BUILDING_DUMMY_ANCHOR, _size];
-		_cargoSpace = 500;
-		_unitsSpace = 4;
+		_resources = [["resources","units"],playerSide] call MCC_fnc_rtsCalculateResourceTreshold;
 
-		{
-			if ((_x getVariable ["mcc_constructionItemType",""]) == "storage" && !(isNull attachedTo _x)) then {
-				_cargoSpace = _cargoSpace + ((_x getVariable ["mcc_constructionItemTypeLevel",0])*500);
-			};
-
-			if ((_x getVariable ["mcc_constructionItemType",""]) == "barracks" && !(isNull attachedTo _x)) then {
-				_unitsSpace = _unitsSpace + ((_x getVariable ["mcc_constructionItemTypeLevel",0])*4);
-			};
-		} foreach _buildings;
-
-
+		_cargoSpace = _resources select 0;
 
 		{
 			_value = floor (_array select _forEachIndex);
@@ -156,6 +145,8 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 		} foreach [81,82,83,84,85];
 
 		//units
+		_unitsSpace = _resources select 1;
+
 		_units = {side _x == playerSide && (isPlayer _x || _x getVariable ["MCC_isRTSunit",false])} count allUnits;
 		_ctrl = (_disp displayCtrl 86);
 		_ctrl ctrlSetText format ["%1/%2",_units,_unitsSpace];
@@ -174,8 +165,8 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 		private ["_fog","_cam","_camPos"];
 		_cam = missionnamespace getVariable ["MCC_CONST_CAM",objNull];
 		if (isNull _cam) exitWith {};
-		_camPos = getpos _cam;
-		_camPos set [2,0];
+		_camPos = positionCameraToWorld [0,0,0];
+		//_camPos set [2,0];
 		_fog = true;
 		{
 			if (side _x == playerSide) exitWith {_fog = false}
@@ -185,7 +176,8 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 		if ((!_fog || (_cam distance2D _startPos < 300)) && viewDistance < 1800 ) then {setViewDistance 1800};
 
 		//Buildings UI
-		private ["_type","_endTime","_startTime","_cfgName","_text","_segmentsElapsed","_elec","_icon","_texture","_color","_buildingIcons"];
+		private ["_type","_endTime","_startTime","_cfgName","_text","_segmentsElapsed","_elec","_icon","_texture","_color","_buildingIcons","_buildings"];
+		_buildings = _camPos nearObjects [MCC_RTS_BUILDING_DUMMY_ANCHOR, (_size*3)];
 
 		_buildingIcons = [];
 		{
@@ -302,11 +294,19 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 		missionNamespace setVariable ["MCC_rtsHiddenUnits", _hiddenUnits];
 
 		//Set tickets
+		private ["_availableTickets","_index"];
+
 		_activeSides = [] call MCC_fnc_getActiveSides;
-		_idc = 20;
 		{
-			ctrlSetText [_idc, str ([_x] call BIS_fnc_respawnTickets)];
-			_idc = _idc + 1;
+			_availableTickets = [_x] call BIS_fnc_respawnTickets;
+			_index = (20 + _forEachIndex);
+
+			if (_availableTickets > 0) then {
+				ctrlShow [_index,true];
+				ctrlSetText [_index, str _availableTickets];
+			} else {
+				ctrlShow [_index,false];
+			};
 		} foreach _activeSides;
 
 		sleep 0.5;
@@ -1045,7 +1045,7 @@ MCC_CONST_CAM_Handler =
 
 
 							//Fortify buildings
-							if ((nearestBuilding _wpPos) distance _wpPos < 20) then {
+							if ((nearestBuilding _wpPos) distance _wpPos < 10) then {
 								_buildingPos = [(nearestBuilding _wpPos), count units _x] call BIS_fnc_buildingPositions;
 								_x setVariable ["MCC_rtsIsFortified",true,true];
 
@@ -1134,7 +1134,7 @@ MCC_CONST_CAM_Handler =
 				_pos = screenToWorld [_posX,_posY];
 				_list = (_pos nearObjects ["LandVehicle", 10]);
 				_list = _list + (_pos nearObjects ["Ship", 10]);
-				_listHouses = (nearestObjects  [_pos,["Building","House"], 20]);
+				_listHouses = (nearestObjects  [_pos,["Building","House"], 10]);
 
 				//Fortify buildings
 				if (count _list > 0 || {[_x] call BIS_fnc_isBuildingEnterable} count _listHouses > 1) then {

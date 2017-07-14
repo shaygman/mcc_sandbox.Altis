@@ -19,9 +19,18 @@ private ["_text","_key","_textKey","_mmName"];
 _mmName = if (mcc_missionmaker != "") then {mcc_missionmaker} else {"Not Assigned"};
 ctrlSetText [MCCMISSIONMAKERNAME, format["%1",_mmName]];
 
-//----------------------------------------------------------Client Side settings----------------------------------------------------------------------------
+
 _mccdialog = finddisplay 2990;
 
+//set text
+_text = format["<img size='2' align='center' shadow='0' image='%1data\iconWikia.paa' />",MCC_path] +
+		"<a underline='true' color='#0000FF' align='center' shadow='1' href='http://mccsandbox.wikia.com/wiki/Getting_started'>Visit MCC Wiki</a> <br />" +
+		format["<img size='2' align='center' shadow='0' image='%1data\iconDiscord.paa' />",MCC_path] +
+		"<a underline='true' color='#0000FF' align='center' shadow='1' href='https://discord.gg/3DzkzAn'>Join our Discord</a> <br />";
+
+(_mccdialog displayCtrl 1000) ctrlSetStructuredText parseText _text;
+
+//----------------------------------------------------------Client Side settings----------------------------------------------------------------------------
 _comboBox = _mccdialog displayCtrl MCCGRASSDENSITY;		//fill combobox Grass
 lbClear _comboBox;
 {

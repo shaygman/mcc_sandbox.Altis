@@ -61,9 +61,9 @@ if (isnil "MCC_ticketsGUER") then {MCC_ticketsGUER = 200};
 //--------------------logistics -------------------------------------------------------
 //Default resources
 //[ammo,supply,fuel]
-if (isnil "MCC_resWest") then {MCC_resWest = [1500,500,200,200,200]};
-if (isnil "MCC_resEast") then {MCC_resEast = [1500,500,200,200,200]};
-if (isnil "MCC_resGUER") then {MCC_resGUER = [1500,500,200,200,200]};
+if (isnil "MCC_resWest") then {MCC_resWest = [1000,1000,1000,200,200]};
+if (isnil "MCC_resEast") then {MCC_resEast = [1000,1000,1000,200,200]};
+if (isnil "MCC_resGUER") then {MCC_resGUER = [1000,1000,1000,200,200]};
 
 //--------------------Screens -------------------------------------------------------
 //Teleport 2 Team
