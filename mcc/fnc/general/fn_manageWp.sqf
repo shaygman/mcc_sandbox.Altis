@@ -1,18 +1,19 @@
-//==================================================================MCC_fnc_manageWp==================================================================================
-// Create and control AI WP on map
-// Example [] call MCC_fnc_manageWp or [[action,WPlocation,[WPType,WPcombat,WPformation,WPspeed,WPbehavior,WPcondition, WPstatment,WPtimeout],[selectedGroup1,selectedGroup2......] ]],"MCC_fnc_manageWp", group, false] spawn BIS_fnc_MP;
-// action: Integer, 0 - ADD WP,  1 - Replace WP, 2-Delete all WP
-// WPlocation: Array location
-//		WPType: Integer, a indecator from this array ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD", "SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS"];
-//		WPcombat: string, ["NO CHANGE", "BLUE", "GREEN", "WHITE", "YELLOW", "RED"]
-//		WPformation: string, ["NO CHANGE", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"]
-//		WPspeed: string, ["UNCHANGED", "LIMITED", "NORMAL", "FULL"]
-//		WPbehavior: string, ["UNCHANGED", "CARELESS", "SAFE", "AWARE", "COMBAT", "STEALTH"]
-//		WPcondition: string, condition for WP to be complete
-//		WPstatment: string, code will run after the WP is complete
-//		WPtimeout: number, waiting time  between condition is made till the WP is set to complete
-// SelectedGroups: Array containing all the groups to be effected
-//==============================================================================================================================================================================
+/*==================================================================MCC_fnc_manageWp==================================================================================
+	Create and control AI WP on map
+	Example [] call MCC_fnc_manageWp or [[action,WPlocation,[WPType,WPcombat,WPformation,WPspeed,WPbehavior,WPcondition, WPstatment,WPtimeout],[selectedGroup1,selectedGroup2......] ]],"MCC_fnc_manageWp", group, false] spawn BIS_fnc_MP;
+
+	0	action: Integer, 0 - ADD WP,  1 - Replace WP, 2-Delete all WP
+	1	WPlocation: Array location
+			2.1		WPType: Integer, a indecator from this array ["MOVE", "DESTROY", "GETIN", "SAD", "JOIN", "LEADER", "GETOUT", "CYCLE", "LOAD", "UNLOAD", "TR UNLOAD", "HOLD","SENTRY","GUARD","SUPPORT","GETIN NEAREST","DISMISS"];
+			2.2		WPcombat: string, ["NO CHANGE", "BLUE", "GREEN", "WHITE", "YELLOW", "RED"]
+			2.3		WPformation: string, ["NO CHANGE", "COLUMN", "STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE", "LINE", "FILE", "DIAMOND"]
+			2.4		WPspeed: string, ["UNCHANGED", "LIMITED", "NORMAL", "FULL"]
+			2.5		WPbehavior: string, ["UNCHANGED", "CARELESS", "SAFE", "AWARE", "COMBAT", "STEALTH"]
+			2.6		WPcondition: string, condition for WP to be complete
+			2.7		WPstatment: string, code will run after the WP is complete
+			2.8		WPtimeout: number, waiting time  between condition is made till the WP is set to complete
+	3 	SelectedGroups: Array containing all the groups to be effected
+//==========================================================================================================================================================*/
 private ["_wpArray","_wp","_wpType","_objects","_wpObject","_wp2","_groups","_wpLoc","_WPTypeIndecator","_wpTypes","_isShown"];
 
 _action 			= _this select 0;

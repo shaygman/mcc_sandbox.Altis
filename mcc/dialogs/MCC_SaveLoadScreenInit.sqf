@@ -23,7 +23,7 @@ if (MCC_isDedicated) then {MCC_SaveButton ctrlEnable false};
 _tempText = ctrlText MCC_LOAD_INPUT;
 ctrlSetText [MCC_LOAD_INPUT,format ["%1",MCC_safe]];
 
-(_disp displayCtrl MCC_SAVE_PERSISTENT) ctrlEnable (!(missionnamespace getVariable ["MCC_fnc_saveServerIsrunning",false]) && !(missionnamespace getVariable ["MCC_fnc_savePlayerIsrunning",false]) && (missionnamespace getVariable ["MCC_iniDBenabled",false]));
+(_disp displayCtrl MCC_SAVE_PERSISTENT) ctrlEnable (!(missionnamespace getVariable ["MCC_fnc_saveServerIsrunning",false]) && !(missionnamespace getVariable ["MCC_fnc_savePlayerIsrunning",false]));
 
 _comboBox = _disp displayCtrl MCC_SAVE_LIST;
 	lbClear _comboBox;

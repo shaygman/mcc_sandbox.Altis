@@ -1,4 +1,4 @@
-/*==================================================================MCC_fnc_clearPersistentData============================================================================================
+/*==================================================================MCC_fnc_clearPersistentData=========================================================================
 	Clear all data from saved files
 
 	EXAMPLE
@@ -12,7 +12,7 @@
 
 		Nothing
 
-//==================================================================================================================================================================================*/
+//==============================================================================================================================================*/
 private ["_side","_fileName"];
 _fileName = "MCC_campaign";
 
@@ -21,8 +21,10 @@ _fileName = "MCC_campaign";
 	_side = _x;
 
 	//Tiles
-	for "_y" from 0 to 100 step 1 do {
-		[format ["MCC_campaign_%1_%2",worldname,missionName], "CAMPAIGN_MARKERS", format ["row_%1", _y], "write",[],true] call MCC_fnc_handleDB;
+	0 spawn {
+		for "_y" from 0 to 100 step 1 do {
+			[format ["MCC_campaign_%1_%2",worldname,missionName], "CAMPAIGN_MARKERS", format ["row_%1", _y], "write",[],true] call MCC_fnc_handleDB;
+		};
 	};
 
 	//tickets
@@ -45,7 +47,7 @@ _fileName = "MCC_campaign";
 	[format ["%1_%2_%3",_fileName, worldname,missionName], "ARTILLERY", str _side, "write",0,true] call MCC_fnc_handleDB;
 
 	//start locations
-	[format ["%1_%2_%3",_fileName, worldname,missionName], "SPAWN_POINTS", str _side, "write",[],true] call MCC_fnc_handleDB;;
+	[format ["%1_%2_%3",_fileName, worldname,missionName], "SPAWN_POINTS", str _side, "write",[],true] call MCC_fnc_handleDB;
 
 } forEach [east,west,resistance];
 

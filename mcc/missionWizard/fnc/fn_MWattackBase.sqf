@@ -6,7 +6,7 @@
 /
 /	OUT <NOTHING>
 /=========================================================================================================*/
-private ["_side","_factionEnemy","_enemySide","_startLocation","_strength","_fronts","_d","_spawnPos","_simu","_roads","_unitsArray","_grp"];
+private ["_side","_factionEnemy","_enemySide","_startLocation","_strength","_fronts","_d","_spawnPos","_simu","_roads","_unitsArray","_grp","_vehicle","_pos"];
 _side = param [0, sideLogic, [sideLogic]];
 _factionEnemy = param [1,"OPF_F",[""]];
 _enemySide = (getNumber (configfile >> "CfgFactionClasses" >> _factionEnemy >> "side")) call BIS_fnc_sideType;
@@ -14,6 +14,7 @@ _enemySide = (getNumber (configfile >> "CfgFactionClasses" >> _factionEnemy >> "
 _startLocation = missionNamespace getVariable [format ["MCC_START_%1",_side],[0,0,0]];
 
 if (str _startLocation == "[0,0,0]") exitWith {diag_log "MCC: MCC_fnc_attackBase error - base not found"};
+if (_factionEnemy isEqualTo "") exitWith {diag_log "MCC: MCC_fnc_MWattackBase - error No enemy faction found "};
 
 //Lets calculate strength
 _strength = (_side countSide allUnits) max 10;
@@ -72,10 +73,25 @@ for "_i" from 0 to _strength step 5 do {
 			};
 			_grp = [_spawnPos, _enemySide, _units] call BIS_fnc_spawnGroup;
 		} else {
-			_grp = ([_spawnPos, 200, ((_unitsArray call BIS_fnc_selectRandom) select 0), _enemySide] call bis_fnc_spawnvehicle) select 2;
+			([_spawnPos, 200, ((_unitsArray call BIS_fnc_selectRandom) select 0), _enemySide] call bis_fnc_spawnvehicle) params [
+					["_vehicle",objNull,[objNull]],
+					["_units",[],[[]]],
+					["_grp",grpNull,[grpNull]]
+				];
+
+			//Populate vehicle
+			[_vehicle] call MCC_fnc_populateVehicle;
 		};
 
 		//order attack
-		_grp setVariable ["GAIA_ZONE_INTEND",[([_startLocation,1500] call MCC_fnc_campaignGetNearestTile) select 0, "MOVE"], true];
+		//TODO change to attack WP and use reinforcments
+		_pos = [[[_startLocation, 250]],[]] call BIS_fnc_randomPos;
+		[1,_pos,[3,"NO CHANGE","NO CHANGE","FULL","AWARE","true", "",0],[_grp]] spawn MCC_fnc_manageWp;
+
+		//Add some reinforcments
+		/*
+		_pos = [[[_startLocation, 250]],[]] call BIS_fnc_randomPos;
+		[_pos,_enemySide,(floor random 9),"","bisp","AWARE",_factionEnemy,nil] spawn MCC_fnc_paratroops;
+		*/
 	};
 };

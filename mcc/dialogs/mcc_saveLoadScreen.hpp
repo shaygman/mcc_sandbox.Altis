@@ -257,7 +257,7 @@ class MCC_SaveLoadScreen
 			h = 0.044 * safezoneH;
 			onButtonClick = __EVAL("[8] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
 			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			tooltip = "Activate  Persistent data saving and loading from DB used with inidbi2"; //--- ToDo: Localize;
+			tooltip = "Activate Persistent data saving and loading from DB"; //--- ToDo: Localize;
 		};
 		class clearPersistent: MCC_RscButton
 		{
@@ -269,7 +269,7 @@ class MCC_SaveLoadScreen
 			h = 0.044 * safezoneH;
 			onButtonClick = __EVAL("[9] execVM '"+MCCPATH+"mcc\general_scripts\commandLine\mcc_loadConfig.sqf'");
 			sizeEx ="(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-			tooltip = "Clear  defualt persistent data from DB for this world"; //--- ToDo: Localize;
+			tooltip = "Clear defualt persistent data from DB"; //--- ToDo: Localize;
 		};
 	};
 };

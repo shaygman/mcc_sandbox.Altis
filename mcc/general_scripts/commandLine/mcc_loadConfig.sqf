@@ -192,10 +192,10 @@ switch (_type) do {
 		sleep 20;
 
 		//Save server
-		["MCC_campaign",10,false,true,true,true,true,true,true,true,true] remoteExec ["MCC_fnc_saveServer", 2];
+		["MCC_campaign",600,false,true,true,true,true,true,true,true,true] remoteExec ["MCC_fnc_saveServer", 2];
 
 		//save players
-		[10,true,true,true] remoteExec ["MCC_fnc_savePlayer", 2];
+		[300,true,true,true] remoteExec ["MCC_fnc_savePlayer", 2];
 
 		systemChat "DB Activated";
 	};
@@ -203,7 +203,7 @@ switch (_type) do {
 	//Delete data
 	case 9:
 	{
-		0 spawn MCC_fnc_clearPersistentData;
+		[] remoteExec ["MCC_fnc_clearPersistentData",2];
 		systemChat "DB cleared";
 	};
 };

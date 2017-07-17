@@ -74,7 +74,7 @@ class MCC_rts_storage1
 	upgradeTo[] = {"MCC_rts_storage2"};
 	constType = "storage";
 	level = 1;
-	resources[] = {{"repair",100},{"time",30}};
+	resources[] = {{"repair",200},{"time",30}};
 	actionFNC = "MCC_fnc_baseActionClicked";
 	objectsArray[] = {{"Land_PaperBox_open_full_F", {2,1,0},{{0,1,0},{0,0,1}}},{"Land_Pallet_MilBoxes_F", {0,1,-0.1},{{0,1,0},{0,0,1}}},{"Land_Pallet_MilBoxes_F", {-2,1,-0.1},{{0,1,0},{0,0,1}}},{"Land_WaterBarrel_F", {1,-1,0},{{0,1,0},{0,0,1}}},{"Land_Sacks_heap_F", {-1,-1,-0.2},{{0,1,0},{0,0,1}}}};
 };
@@ -89,7 +89,7 @@ class MCC_rts_storage2 : MCC_rts_storage1
 	upgradeTo[] = {"MCC_rts_storage3"};
 	constType = "storage";
 	level = 2;
-	resources[] = {{"repair",200},{"time",30}};
+	resources[] = {{"repair",300},{"time",30}};
 	objectsArray[] = {{"Land_WaterTank_F", {3.5,2,0.6},{{1,0,0},{0,0,1}}},{"Land_WaterTank_F", {5,2,0.6},{{1,0,0},{0,0,1}}},{"Land_PaperBox_open_full_F", {2,3,0.5},{{1,0,0},{0,0,1}}},{"Land_PaperBox_open_full_F", {0,3,0.5},{{1,0,0},{0,0,1}}},{"Land_Pallet_MilBoxes_F", {0,1.5,0.4},{{1,0,0},{0,0,1}}},{"Land_Pallet_MilBoxes_F", {2,1.5,0.4},{{1,0,0},{0,0,1}}}};
 };
 

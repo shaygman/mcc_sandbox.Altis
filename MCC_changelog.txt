@@ -14,6 +14,9 @@ Change log r22:
 - Fixed: Vehicle Kiosk Custom vehicles array expected [className,[displayName, pictureName],cost] instead of [className,displayName,cost]
 - Fixed: GAIA support for RHS units.
 - Fixed: GAIA settings don't work from Zeus.
+- Fixed: Clear persistent data run localy and not on the server
+- Fixed: Save persistent data will work without inidbi2
+- Fixed: Save persistent data will save every 5 minutes to reduce lags
 
 - RTS
 	- Changed: UI for selection circles and borders in RTS interface.
@@ -38,13 +41,21 @@ TODO
 	- Real resources in RTS storage
 	- Wipe save game in campaigns description
 
-TODO - fix the vehicle kiosk array
+TODO - attack base funciton is broken
+TODO - daynight cycle from RTS
+TODO - resources move to the left and give option on HUD
+TODO - fast rope for CH47AAF and NATO isn't working
+TODO - Add buy artillery shells to BON
+TODO - remove protection from HQ
+TODO - mortars in MW kill themself
 TODO - Logistics while starting a campaing from Zeus doesn't work.
 TODO - campaign delete brush delete buildings and units
 TODO - Fix squad names can't be edited
+TODO - save doesn't resave start location nor RTS buildings
 TODO - Movie on spawn and fix the focus on units movie
 TODO - Convoy missions
 TODO - Resource cap points in campaign and passsive occuption
+TODO - persistent save vehicles and groups
 TODO - AAS missions to mod,
 TODO - wiki: Mission Gen and customize it
 TODO - Change mission wizard objectives

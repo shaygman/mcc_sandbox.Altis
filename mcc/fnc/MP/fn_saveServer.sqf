@@ -47,8 +47,6 @@ missionNamespace setVariable ["MCC_fnc_saveServerIsrunning",true];
 
 while {true} do {
 
-	sleep _waitTime;
-
 
 	//save tiles usualy for campaign
 	if (_saveTiles) then {
@@ -177,4 +175,6 @@ while {true} do {
 			[format ["%1_%2_%3",_fileName, worldname,missionName], "BUILDINGS", "BUILDINGS", "write",_tempArray,true] call MCC_fnc_handleDB;
 		};
 	};
+
+	sleep _waitTime;
 };

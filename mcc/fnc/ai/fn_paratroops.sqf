@@ -1,24 +1,24 @@
-//==================================================================MCC_fnc_paratroops===============================================================================================
+/*==================================================================MCC_fnc_paratroops==========================================================================
 //Contorol the paratroop reinforcement spawn
 // Example:[_pos,_paraSide,_paraType,_p_mcc_zone_markername,_p_mcc_zone_behavior,_p_mcc_awareness,_p_mcc_spawnfaction,_startPosDir] spawn MCC_fnc_paratroops;
 // <IN>
 //	_pos:					Array- position.
 //	_paraSide:				String, side to call "West","East","Resistance"
 //	_paraType:				Integer, 	0 - "paradrop: small - Spec-Ops "
-//									1 - "paradrop: medium - QRF"
-//									2 - "paradrop: large - Airborne"
-//									3 - "drop-off: small - Spec-Ops "
-//									4 - "drop-off: medium - QRF"
-//									5 - "drop-off: large - Airborne"
-//									6 - "fast-rope: small - Spec-Ops "
-//									7 - "fast-rope: medium - QRF"
-//									8 - "fast-rope: large - Airborne"
-//	_p_mcc_zone_markername	String, Zone number the helicopter's cargo will patrol that zone.
+//										1 - "paradrop: medium - QRF"
+//										2 - "paradrop: large - Airborne"
+//										3 - "drop-off: small - Spec-Ops "
+//										4 - "drop-off: medium - QRF"
+//										5 - "drop-off: large - Airborne"
+//										6 - "fast-rope: small - Spec-Ops "
+//										7 - "fast-rope: medium - QRF"
+//										8 - "fast-rope: large - Airborne"
+//	_p_mcc_zone_markername		String, Zone number the helicopter's cargo will patrol that zone.
 //	_p_mcc_zone_behavior		String, The helicopter's cargo will have this behavior ("MOVE","FORTIFY" exc...)
 // 	_p_mcc_awareness			String, The helicopter's cargo will have this awareness ("default","safe" exc...)
-//	_p_mcc_spawnfaction		String, Faction name.
+//	_p_mcc_spawnfaction			String, Faction name.
 //	_startPosDir				Array, spawn and de-spawn location for the helicopter.
-//===========================================================================================================================================================================
+//==============================================================================================================================================================*/
 private ["_away","_p_mcc_zone_markername","_heli","_heliCrew","_pos","_paraSide", "_paraType", "_helitype","_heli_pilot","_spawn","_heliPilot","_gunnersGroup","_type","_entry","_turrets","_path", "_timeOut","_unit", "_side", "_spawnParaGroup", "_paraGroupArray", "_paraGroup", "_paraMode", "_heliCrewCount","_p_mcc_spawnfaction", "_p_mcc_zone_behavior", "_mcc_awareness", "_newParaGroup", "_rampOutPos", "_flyHeight","_dropPos", "_rope", "_ropes","_vehicleClass"];
 
 _pos 					= _this select 0;
@@ -302,7 +302,7 @@ if (_cargoNum > 0) then {
 			_x setSkill ["aimingshake", (missionNamespace getVariable ["MCC_AI_Aim",0.1])];
 			_x setSkill ["spottime", (missionNamespace getVariable ["MCC_AI_Spot",0.3])];
 			_x setSkill ["commanding", (missionNamespace getVariable ["MCC_AI_Command",0.5])];
-			_x setSkill ["general", MCC_AI_Skill];
+			_x setSkill ["general", (missionNamespace getVariable ["MCC_AI_Skill",0.5])];
 			/*
 				removeBackpack _x;
 				_x addBackpack "B_Parachute";
@@ -321,7 +321,7 @@ _heliCrew move _pos;
 _heli setSpeedMode "FULL";
 _heli setDestination [_away, "VehiclePlanned", true];
 
-waitUntil { sleep 1;(driver _heli) move _pos;(_heli distance _dropPos) < ((getPosATL _heli select 2) + 150)};  // include heli heigth else if flying higher then 250 m this wil be 'true'
+waitUntil { sleep 1;(driver _heli) move _pos;(_heli distance2d _dropPos) < 100};  // include heli heigth else if flying higher then 250 m this wil be 'true'
 
 //Open doors
 [_heli,true] spawn MCC_fnc_heliOpenCloseDoor;
@@ -549,8 +549,7 @@ _heli setDestination [_away, "VehiclePlanned", true];
 sleep 5;
 
 // activate GAIA for each paragroup
-if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then
-{
+if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then {
 	{
 		private ["_paraGroup"];
 
@@ -565,6 +564,8 @@ if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zo
 		_paraGroup setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 
 	} foreach _cargoGroups;
+} else {
+	[1,_pos,[3,"NO CHANGE","NO CHANGE","FULL","AWARE","true", "",0],_cargoGroups] spawn MCC_fnc_manageWp;
 };
 
 _timeOut = time + 80; // if chopper is still around after 1.2 minute just delete it

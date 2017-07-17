@@ -34,6 +34,11 @@ if (isnil format ["MCC_START_%1",playerSide]) exitWith {
 	_null = [_str,0,0.2,4,0.5,0.0] spawn bis_fnc_dynamictext;
 };
 
+//Call Daynight cycle if using RTS
+if !(missionNamespace getVariable ["MCC_fnc_dayCycle_isRunning",false]) then {
+	[playerSide,sideLogic] remoteExec ["MCC_fnc_dayCycle",2];
+};
+
 //Camera effects
 _camera = "Camera" camcreate [(getpos player) select 0, (getpos player) select 1,((getpos player) select 2) + 100];
 _camera cameraeffect ["internal","back"];
@@ -147,7 +152,7 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 		//units
 		_unitsSpace = _resources select 1;
 
-		_units = {side _x == playerSide && (isPlayer _x || _x getVariable ["MCC_isRTSunit",false])} count allUnits;
+		_units = {side _x == playerSide && (isPlayer _x || group _x getVariable ["MCC_canbecontrolled",false])} count allUnits;
 		_ctrl = (_disp displayCtrl 86);
 		_ctrl ctrlSetText format ["%1/%2",_units,_unitsSpace];
 		if (_units >= _unitsSpace) then {
