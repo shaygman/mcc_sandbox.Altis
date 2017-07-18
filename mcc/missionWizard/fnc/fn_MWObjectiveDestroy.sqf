@@ -1,4 +1,4 @@
-//======================================================MCC_fnc_MWObjectiveDestroy=============================================================================================
+/*====================================================MCC_fnc_MWObjectiveDestroy====================================================================================
 // Create a Destroy objective
 // Example:[_objPos,_isCQB,_side,_faction] call MCC_fnc_MWObjectiveDestroy;
 // _objPos = position, objectice position
@@ -6,7 +6,7 @@
 //_side = enemy side
 //_faction = enemy Faction
 // Return - nothing
-//==============================================================================================================================================================================
+//===========================================================================================================================================================*/
 private ["_objPos","_isCQB","_side","_faction","_preciseMarkers","_type","_objType","_typeSize","_spawnPos","_object","_dummyObject","_spawndir","_unitsArray","_group","_init","_range","_campaignMission","_sidePlayer"];
 
 _objPos 		= _this select 0;
@@ -174,12 +174,6 @@ if (_objType in ["tanks","aa","artillery"]) then
 	_spawndir = getdir _dummyObject;
 };
 
-//If artillery let's delete the camonet
-if (_objType == "artillery") then
-{
-	deletevehicle (nearestObject [getpos _dummyObject, "CamoNet_BLUFOR_big_F"]);
-};
-
 //Case we are dealing with ammo cache
 if (_objType == "cache") then
 {
@@ -200,24 +194,24 @@ if (_objType == "air") then
  if (isnil "_spawndir") then {_spawndir = random 360};
 
 sleep 1;
- //Create the object
-_object = _type createvehicle _spawnPos;
-//_object setpos _spawnPos;
-_object setdir _spawndir;
+
+//Create the object
+if (_objType in ["artillery","aa"]) then {
+	_object = ([_spawnPos,_spawndir,_type,_side] call BIS_fnc_spawnVehicle) select 0;
+} else {
+	_object = _type createvehicle _spawnPos;
+	_object setpos _spawnPos;
+	_object setdir _spawndir;
+};
 
 //destroy only with satchel
 if (_objType in ["tanks","aa","artillery","air"]) then {
-	_init = '_this addEventHandler ["handledamage", {if ((_this select 4) in ["SatchelCharge_Remote_Ammo","DemoCharge_Remote_Ammo"]) then {(_this select 0) setdamage 1} else {true}}];' + '_this setVehicleLock "LOCKED";';
+		_init = '_this setVehicleLock "LOCKED";';
+	_init = '_this setVehicleLock "LOCKED";';
 	[[[netID _object,_object], _init, false], "MCC_fnc_setVehicleInit", false, false] spawn BIS_fnc_MP;
 
-	if (_objType =="artillery") then {
-		_object spawn {
-			sleep 5;
-			createVehicleCrew _this;
-			sleep 10;
-			[0,_this] spawn MCC_fnc_amb_Art;
-		};
-	};
+	if (_objType isEqualTo "artillery") then {[0,_object] spawn MCC_fnc_amb_Art};
+	if (_objType isEqualTo "aa") then {[2,_object] spawn MCC_fnc_amb_Art};
 };
 
 

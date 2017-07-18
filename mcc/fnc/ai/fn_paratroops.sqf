@@ -22,7 +22,7 @@
 private ["_away","_p_mcc_zone_markername","_heli","_heliCrew","_pos","_paraSide", "_paraType", "_helitype","_heli_pilot","_spawn","_heliPilot","_gunnersGroup","_type","_entry","_turrets","_path", "_timeOut","_unit", "_side", "_spawnParaGroup", "_paraGroupArray", "_paraGroup", "_paraMode", "_heliCrewCount","_p_mcc_spawnfaction", "_p_mcc_zone_behavior", "_mcc_awareness", "_newParaGroup", "_rampOutPos", "_flyHeight","_dropPos", "_rope", "_ropes","_vehicleClass"];
 
 _pos 					= _this select 0;
-_paraSide				= _this select 1;
+_paraSide				= param [1,"",["",east]];
 _paraType 				=  if (TypeName  (_this select 2) == "STRING") then {call compile (_this select 2)} else {(_this select 2)};
 _p_mcc_zone_markername  = _this select 3;
 _p_mcc_zone_behavior	= _this select 4;
@@ -30,18 +30,19 @@ _p_mcc_awareness		= _this select 5;
 _p_mcc_spawnfaction		= _this select 6;
 _startPosDir			= _this select 7;
 
-if ( isNil "_startPosDir" ) then
-{
+if ( isNil "_startPosDir" ) then {
 	_spawn = [(_pos select 0)+1000,_pos select 1,(_pos select 2) + 100];
 	_away  = [(_pos select 0)-2000,_pos select 1,(_pos select 2) + 100];
-}
-else
-{
+} else {
 	_spawndir = [_pos, _startPosDir] call BIS_fnc_dirTo;
 	_spawn = [_pos,2000,_spawndir] call BIS_fnc_relpos;
 	_away  = [_pos,2000,_spawndir - 180] call BIS_fnc_relpos;
 };
 
+//id sent a string
+if (typeName _paraSide isEqualTo typeName sideLogic) then {
+	_paraSide = str _paraSide;
+};
 _unitspawned = [];
 _paraGroupArray = [];
 _customParaGroup = false;
@@ -195,13 +196,10 @@ if (count _newHeliClassesArray > 0) then {
 	_helitype = (_newHeliClassesArray select 0) select 1;
 };
 
-if ( _paraType < 3 ) then
-{
+if ( _paraType < 3 ) then {
 	_paraMode = 0; // paradrop
 	_flyHeight = 400;
-}
-else
-{
+} else {
 	if ( _paraType < 6 ) then
 	{
 		_paraMode = 1; // drop-off
@@ -239,8 +237,7 @@ _heli setBehaviour "CARELESS";
 _heliCrewCount = count (crew _heli);
 
 // In case of drop-off or fast-rope return to start position
-if ( _paraMode > 0 ) then
-{
+if ( _paraMode > 0 ) then {
 	_away = _spawn;
 	_heli flyInHeight _flyHeight;
 	_heliPilot flyInHeight _flyHeight;
@@ -326,13 +323,14 @@ waitUntil { sleep 1;(driver _heli) move _pos;(_heli distance2d _dropPos) < 100};
 //Open doors
 [_heli,true] spawn MCC_fnc_heliOpenCloseDoor;
 
-if ( _paraMode == 2 ) then  // toss ropes for fast-rope
-{
+// toss ropes for fast-rope
+if ( _paraMode == 2 ) then {
 
 	_heli flyInHeight 35;
 	sleep 4;
 	doStop (driver _heli);
-	waitUntil { sleep 1; ( (abs(speed _heli) < 0.5) && ((getPos _heli select 2) < 50) )  || !alive _heli || !alive (driver _heli)};
+	_timeOut = time + 10;
+	waitUntil { sleep 1; ( (abs(speed _heli) < 0.5) && ((getPos _heli select 2) < 50) )  || !alive _heli || !alive (driver _heli) || time > _timeOut};
 	if ( !alive _heli || !alive (driver _heli)) exitWith {};
 
 	{
@@ -480,12 +478,9 @@ if ( _paraMode == 2 ) then  // toss ropes for fast-rope
 if ( _paraMode > 0 ) then  // Drop-off or fast-rope
 {
 	// if chopper is still around after 40/70 seconds leave to avoid getting stuck
-	if ( _paraMode > 1 ) then
-	{
+	if ( _paraMode > 1 ) then {
 		_timeOut = time + 40;
-	}
-	else
-	{
+	} else {
 		_timeOut = time + 70;
 	};
 
@@ -549,7 +544,12 @@ _heli setDestination [_away, "VehiclePlanned", true];
 sleep 5;
 
 // activate GAIA for each paragroup
-if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zone_behavior != "bisp") then {
+if (_p_mcc_zone_behavior in ["bis", "bisd","bisp"]) then {
+
+	[1,_pos,[3,"NO CHANGE","NO CHANGE","FULL","AWARE","true", "",0],_cargoGroups] spawn MCC_fnc_manageWp;
+
+} else {
+
 	{
 		private ["_paraGroup"];
 
@@ -564,8 +564,6 @@ if (_p_mcc_zone_behavior != "bis" && _p_mcc_zone_behavior != "bisd" && _p_mcc_zo
 		_paraGroup setVariable ["GAIA_ZONE_INTEND",[_p_mcc_zone_markername,_p_mcc_zone_behavior], true];
 
 	} foreach _cargoGroups;
-} else {
-	[1,_pos,[3,"NO CHANGE","NO CHANGE","FULL","AWARE","true", "",0],_cargoGroups] spawn MCC_fnc_manageWp;
 };
 
 _timeOut = time + 80; // if chopper is still around after 1.2 minute just delete it

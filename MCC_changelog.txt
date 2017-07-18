@@ -5,18 +5,22 @@ Change log r22:
 - Added: Commander console action to the action menu.
 - Added: You can now drag resource crates ACE included.
 - Added: Punchable CAS and Airdrops in the commander console - can be enabled from mission settings module - TO DO WIKI
+- Added: Elapsed day battle's report will show up every time the player used the RTS and not only on MCC campaign.
 - Changed: Shortened MCC campaign/Mission Wizard intro movies time.
 - Changed: Commander Console F1-F5 buttons are visable.
 - Changed: Reduce needed units to build a FOB or other battle emplacements to zero.
 - Changed: Restrict ambient unit module spawn radius has been doubled.
 - Changed: MCC capture moduel won't give more resources then the available free storage space.
 - Changed: MCC campaign missions won't give more resources then the available free storage space.
+- Changed: Remove spawn protection from HQ/Start Location.
 - Fixed: Vehicle Kiosk Custom vehicles array expected [className,[displayName, pictureName],cost] instead of [className,displayName,cost]
 - Fixed: GAIA support for RHS units.
 - Fixed: GAIA settings don't work from Zeus.
 - Fixed: Clear persistent data run localy and not on the server
 - Fixed: Save persistent data will work without inidbi2
 - Fixed: Save persistent data will save every 5 minutes to reduce lags
+- Fixed: Fast rope for CH67 and CH49 wasn't working
+- Fixed: Mission Generator mortars explode on first shot.
 
 - RTS
 	- Changed: UI for selection circles and borders in RTS interface.
@@ -41,13 +45,7 @@ TODO
 	- Real resources in RTS storage
 	- Wipe save game in campaigns description
 
-TODO - attack base funciton is broken
-TODO - daynight cycle from RTS
 TODO - resources move to the left and give option on HUD
-TODO - fast rope for CH47AAF and NATO isn't working
-TODO - Add buy artillery shells to BON
-TODO - remove protection from HQ
-TODO - mortars in MW kill themself
 TODO - Logistics while starting a campaing from Zeus doesn't work.
 TODO - campaign delete brush delete buildings and units
 TODO - Fix squad names can't be edited

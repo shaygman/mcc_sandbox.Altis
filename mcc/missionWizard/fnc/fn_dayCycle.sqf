@@ -150,7 +150,7 @@ while {true} do {
 			_buildingLevel = 1;
 			{
 				_buildingLevel = _buildingLevel max (_x getVariable ["mcc_constructionItemTypeLevel",1]);
-			} forEach _buildings;
+			} forEach (_buildings select 0);
 
 			//Spoil Chance
 			if (random 10 > (6+_buildingLevel)) then {
@@ -184,13 +184,13 @@ while {true} do {
 
 			//War effort
 			if !(_x in [sideLogic,_sidePlayer2]) then {
-				_sideRep = (missionNamespace getvariable [format ["campaignRep_%1",_x],10])*1.3; //rep increase by 20% every day
+				_sideRep = (missionNamespace getvariable [format ["campaignRep_%1",_x],(10 + (floor random 20))])*1.2; //rep increase by 20% every day
 
 				_CompleteText = _CompleteText 	+  "<t align='center' size='1.2' color='#FFCF11'> Infamous Level</t><br/>"
 												+	str floor ((_sideRep) min 100) + "%<br/>";
 				//we really pissed them off lets start a war
 				if (_sideRep >= 90) then {
-					_sideRep = 10;
+					_sideRep = 10 + (floor random 20);
 
 					_CompleteText = _CompleteText 	+ "<t color='#FF0000'>Warning, enemy forces are moving to attack your base. <br/></t>";
 

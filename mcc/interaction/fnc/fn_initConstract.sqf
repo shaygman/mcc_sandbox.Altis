@@ -14,6 +14,7 @@
 #define REQUIRE_CONSTRUCT_FOB_MIN_DISTANCE 100
 #define MAX_WALLS 14
 #define ANCHOR_ITEM "Land_TreeBin_F"
+#define	MCC_FOB_BaseItem	"Land_TBox_F"
 
 private ["_conType","_available","_errorMessegeIndex","_errorMesseges","_check","_respawPositions","_error","_dir","_pos","_vehicleType","_const","_success"];
 
@@ -102,7 +103,7 @@ if (_available) then {
 						case "at":	{if (playerSide == west) then {"B_static_AT_F"} else {"O_static_AT_F"}};
 						case "aa":	{if (playerSide == west) then {"B_static_AA_F"} else {"O_static_AA_F"}};
 						case "mortar":	{if (playerSide == west) then {"B_Mortar_01_F"} else {"O_Mortar_01_F"}};
-						case "fob": {"Land_TBox_F"};
+						case "fob": {MCC_FOB_BaseItem};
 					};
 
 	missionNamespace setVariable ["MCC_FOB_object_position",[[],0]];

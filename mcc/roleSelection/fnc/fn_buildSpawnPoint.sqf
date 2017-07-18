@@ -43,6 +43,9 @@ if (isnil "CP_flagEast") then {CP_flagEast = "\a3\Data_f\Flags\flag_CSAT_co.paa"
 if (isnil "CP_flagGUER") then {CP_flagGUER = "\a3\Data_f\Flags\flag_AAF_co.paa"};
 
 #define REQUIRE_MEMBERS 3
+#define	MCC_HQ_BaseItem	"UserTexture10m_F"
+#define	MCC_FOB_BaseItem	"Land_TBox_F"
+
 
 if (typeName _side == "STRING") then {
 	_side = switch (toupper _side) do
@@ -160,7 +163,7 @@ switch (_mode) do
 			_null = [_pos, _dir , "MCC_rts_hq1", 0, _side] spawn MCC_fnc_construct_base;
 		};
 
-		_building = if (_size == "FOB") then {"Land_TBox_F"} else {"ProtectionZone_Invisible_F"};
+		_building = if (_size == "FOB") then {MCC_FOB_BaseItem} else {MCC_HQ_BaseItem};
 		_flagTex = switch (_side) do {
 			case west:	{CP_flagWest};
 			case east:	{CP_flagEast};
@@ -243,7 +246,7 @@ switch (_mode) do
 		};
 
 		if (!_destructable) then {
-			_sphere = "ProtectionZone_Invisible_F" createvehicle (getpos _dummy);
+			_sphere = MCC_HQ_BaseItem createvehicle (getpos _dummy);
 			_sphere setpos (getpos _dummy);
 			_sphere setVariable ["mcc_delete",false,true];
 		};

@@ -2,7 +2,6 @@ private ["_objs"];
 _objs =
 [
 	["Land_HelipadEmpty_F",[0,0,-1.71661e-005],35.4608,1,0,{},true], //Target
-	["CamoNet_BLUFOR_F",[-0.640625,-0.790039,0],216.627,1,0,{}],
 	["Land_Pallet_MilBoxes_F",[1.7334,-1.05176,0],35.4607,1,0,{}],
 	["Land_PaperBox_open_empty_F",[-1.28809,1.57129,3.8147e-006],35.4607,1,0,{}],
 	["Land_BagFence_Long_F",[2.41992,1.31055,-1.90735e-005],211.563,1,0,{}],
