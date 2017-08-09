@@ -29,3 +29,5 @@
 #include "MCC_Module_createIntelCurator.hpp"
 #include "MCC_Module_LHDSpawnCurator.hpp"
 #include "MCC_Module_LHDSpawnMenuCurator.hpp"
+#include "MCC_Module_GAIARespawnsCurator.hpp"
+#include "MCC_Module_RTSBuildingsCurator.hpp"

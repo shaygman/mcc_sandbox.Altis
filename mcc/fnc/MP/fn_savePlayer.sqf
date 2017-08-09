@@ -77,7 +77,6 @@ addMissionEventHandler ["HandleDisconnect",{
 		};
 }];
 
-/*
 while {true} do {
 
 	sleep _waitTime;
@@ -129,4 +128,3 @@ while {true} do {
 
 	} forEach (if (isMultiplayer) then {playableUnits} else {[player]});
 };
-*/

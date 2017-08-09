@@ -20,7 +20,7 @@ _static			= if (count _this > 5) then {_this select 5} else {false};
 
 if (count _this > 5) then {_static	=  true};
 
-if (CP_debug) then {systemchat str _iedside};
+if (MCC_debug) then {systemchat str _iedside};
 
 _rank = ["SERGEANT","LIEUTENANT","CAPTAIN"] select (floor random 3);
 _group = creategroup civilian;

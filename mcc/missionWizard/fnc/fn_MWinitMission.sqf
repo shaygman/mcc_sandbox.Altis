@@ -326,7 +326,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do {
 		//Spawn some Infantry groups
 		_spawnbehavior	= ["NOFOLLOW","bisd"] call BIS_fnc_selectRandom;
 		_unitPlaced = [(_totalEnemyUnits*0.2),_zoneNumber,_spawnbehavior,_enemySide] call MCC_fnc_MWSpawnInfantry;
-		if (MW_debug) then {diag_log format ["Total enemy's infantry Spawned in zone%1: %2", _zoneNumber,_unitPlaced]};
+		if (MCC_debug) then {diag_log format ["Total enemy's infantry Spawned in zone%1: %2", _zoneNumber,_unitPlaced]};
 
 		// Is CQB
 		if (_isCQB) then {
@@ -354,7 +354,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do {
 					[[_pos,_objectType,"large",floor (random 2),_sidePlayer],"MCC_fnc_SBSingle",false,false] spawn BIS_fnc_MP;
 
 					//Debug
-					if (MW_debug) then {
+					if (MCC_debug) then {
 						private ["_marker","_name"];
 						_name = FORMAT ["SBMarker_%1", ["SBMarker_",1] call bis_fnc_counter];
 						_marker = createMarkerLocal[_name, _pos];
@@ -378,7 +378,7 @@ for [{_x = 1},{_x <=3},{_x = _x+1}] do {
 					[[_pos,_objectType,_sidePlayer,"Armed Civilian",random 360],"MCC_fnc_ACSingle",false,false] spawn BIS_fnc_MP;
 
 					//Debug
-					if (MW_debug) then {
+					if (MCC_debug) then {
 						private ["_marker","_name"];
 						_name = FORMAT ["ACMarker_%1", ["ACMarker_",1] call bis_fnc_counter];
 						_marker = createMarkerLocal[_name, _pos];

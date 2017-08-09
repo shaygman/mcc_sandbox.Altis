@@ -152,14 +152,38 @@ if (count _curatorObjectives > 0) then
 MCC_output = MCC_output + "],[";
 
 //Groups
-private ["_group","_blackListVehicles","_refinedGroup","_tempArray","_groupArrayGeneral","_groupArrayUnits"];
+private ["_group","_blackListVehicles","_refinedGroup","_tempArray","_groupArrayGeneral","_groupArrayUnits","_vars"];
 
 {
 	_group 	= _x select 0;
 	_side 	= _x select 1;
 	if (!isnil "_group" && !isnull _group) then
 	{
-		_groupArrayGeneral = [_side, [["GAIA_ZONE_INTEND",_group getVariable ["GAIA_ZONE_INTEND",[]]],["mcc_gaia_cache", _group getVariable ["mcc_gaia_cache",false]],["MCC_GAIA_RESPAWN", _group getVariable ["MCC_GAIA_RESPAWN",-1]]]];
+		//Get all available vars
+		_vars = [];
+		{
+			//You can't save null vars
+			if (typeName (_group getVariable _x) == typeName objNull ||
+			    typeName (_group getVariable _x) == typeName grpNull ||
+			    typeName (_group getVariable _x) == typeName controlNull ||
+			    typeName (_group getVariable _x) == typeName displayNull ||
+			    typeName (_group getVariable _x) == typeName taskNull ||
+			    typeName (_group getVariable _x) == typeName scriptNull ||
+			    typeName (_group getVariable _x) == typeName configNull ||
+			    typeName (_group getVariable _x) == typeName locationNull ||
+			    typeName (_group getVariable _x) == typeName teamMemberNull
+			    ) then {
+
+				if !(isNull (_group getVariable _x)) then {
+					_vars pushBack ([_x,(_group getVariable _x), true]);
+				};
+			} else {
+				_vars pushBack ([_x,(_group getVariable _x), true]);
+			};
+
+		} forEach (allVariables _group);
+
+		_groupArrayGeneral = [_side, _vars];
 		_blackListVehicles = [];
 		_refinedGroup = [];
 

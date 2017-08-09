@@ -1,6 +1,6 @@
 private ["_string","_group","_weapon","_weaponAttachments"];
 
-if (CP_debug) then {diag_log "CP server init started"};
+if (missionNamespace getVariable ["MCC_debug",false]) then {diag_log "CP server init started"};
 
 //---------------------------------------------
 //		Define Global variables

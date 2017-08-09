@@ -943,11 +943,11 @@ MCC_CONST_CAM_Handler =
 					playsound "click";
 				} else {
 					playSound "MCC_consturctionInitialized";
-					[[getpos MCC_CONST_PLACEHOLDER, getdir MCC_CONST_PLACEHOLDER ,_cfgName, 1, playerside],"MCC_fnc_construct_base",false] call bis_fnc_MP;
+					[getpos MCC_CONST_PLACEHOLDER, getdir MCC_CONST_PLACEHOLDER ,_cfgName, 1, playerside] remoteExec ["MCC_fnc_construct_base",2];
 
 					//Remove old marker
-					[[objNull]] spawn MCC_fnc_baseSelected;
-					[] call MCC_fnc_rtsMakeMarkersGroups;
+					[] spawn MCC_fnc_rtsMakeMarkersGroups;
+					MCC_ConsoleGroupSelected = [];
 				};
 
 				missionNamespace setVariable ["MCC_rtsUIBuiltTime",time];

@@ -1,6 +1,6 @@
 if(!isServer) exitWith {};
 
-_sf   			= _this select 0; 
+_sf   			= _this select 0;
 
 _uv 				= [];
 _crew 			= [];
@@ -9,10 +9,9 @@ _gv					= [];
 _group = creategroup (_sf select 2);
 if (isnull _group) exitwith {};
 _group  setVariable ["GAIA_zone_intend", (_sf select 3),true];
-_group  setVariable ["MCC_GAIA_RESPAWN", (_sf select 9),true];
 
 //Now the trick is to restore the original group variable before we got cached.
-_var2 = "GAIA_RESPAWN_" + str(_group); 	
+_var2 = "GAIA_RESPAWN_" + str(_group);
 missionNamespace setVariable [_var2, (_sf select 10)];
 
 //I gues we were cached, because we just got uncached.
@@ -28,28 +27,32 @@ _group  setVariable ["mcc_gaia_cache", true,true];
 		_cv setdamage (_veh select 2);
 		_cv setfuel (_veh select 3);
 		_cv setdir  (_veh select 5);
-	
-	
+
+
 		{
-			_un = _group createUnit [(_x select 0), (_x select 1), [], 0, "FORM"] ;	
+			_un = _group createUnit [(_x select 0), (_x select 1), [], 0, "FORM"] ;
 			_un setdamage 		(_x select 2);
 			_un setskill  		(_x select 3);
 			_un setrank   		(_x select 4);
-			
+
 			//_un setdir			  (_x select 6);
 			_role = (_x select 5);
-			if ((_role select 0) == "Driver") then 
+			if ((_role select 0) == "Driver") then
 				{_un moveInDriver _cv ; };
-			if ((_role select 0) == "Turret") then 
+			if ((_role select 0) == "Turret") then
 				{_un moveInTurret [_cv, (_role select 1)]; };
-			if ((_role select 0) == "Cargo") then 
-				{_un assignAsCargo  _cv; 
-					_un moveInCargo  _cv;					
+			if ((_role select 0) == "Cargo") then
+				{_un assignAsCargo  _cv;
+					_un moveInCargo  _cv;
 				};
-			
+
 		}	foreach (_veh select 4);
-			
-			_group setFormDir (_veh select 5);
+
+		_group setFormDir (_veh select 5);
+
+		//Add to curatror
+		{_x addCuratorEditableObjects [[_cv],true]} forEach allCurators;
+
 } foreach (_sf select 0);
 
 
@@ -58,16 +61,21 @@ _group  setVariable ["mcc_gaia_cache", true,true];
 	//player globalchat format [" going  %1",(_x select 0)];
 	//_un=(_x select 0) createUnit [(_x select 1), _group,"",(_x select 3),(_x select 4)];
 	_un = _group createUnit [(_x select 0), (_x select 1), [], 0, "CAN_COLLIDE"] ;
-	
+
 	_un setdamage 		(_x select 2);
 	_un setskill  		(_x select 3);
 	_un setrank   		(_x select 4);
 	_un setPosasl 		(_x select 1);
-	
+
 	_un setdir			 	(_x select 5);
-  
+
+	//Add to curatror
+	{_x addCuratorEditableObjects [[_un],false]} forEach allCurators;
+
 } foreach (_sf select 1);
 
+//Update the respawn
+[_group,(_sf select 9)] spawn GAIA_fnc_respawnSet;
 
 _group setspeedmode 	(_sf select 6);
 _group setformation 	(_sf select 7);
@@ -77,23 +85,23 @@ _group setcombatmode (_sf select 5);
 // Clear all way points
 while {(count (waypoints _group)) > 0} do
 {
- deleteWaypoint ((waypoints _group) select 0); 
+ deleteWaypoint ((waypoints _group) select 0);
 };
-if (count (_sf select 8)>1) then 
+if (count (_sf select 8)>1) then
 {
 	_array = (_sf select 8) select 0;
 	_current = (_sf select 8) select 1;
-	
-	
-	
+
+
+
 	{
 		private "_waypoint";
-		if (( (_x select 0) distance [0,0,0])>0) then 
+		if (( (_x select 0) distance [0,0,0])>0) then
 		{
 			_waypoint = _group addwaypoint [(_x select 0), 0];
-			
+
 			_waypoint setwaypointtype (_x select 1);
-			
+
 			_waypoint setwaypointbehaviour (_x select 2);
 			_waypoint setwaypointspeed (_x select 3);
 			_waypoint setwaypointcombatmode (_x select 4);
@@ -102,8 +110,8 @@ if (count (_sf select 8)>1) then
 			_waypoint setwaypointtimeout (_x select 7);
 			_waypoint setwaypointhouseposition (_x select 8);
 		};
-		
+
 	} foreach _array;
-	
+
 	_group setcurrentwaypoint [_group,_current];
 };

@@ -18,7 +18,7 @@ if (isnil "_dir") then {_dir = 0};
 _dummyObject =[_pos, _dir, "c_roadblock"] call MCC_fnc_objectMapper;
 waituntil {alive _dummyObject};
 
-if (MW_debug) then
+if (MCC_debug) then
 {
 	private ["_marker","_name"];
 	_name = FORMAT ["Rpdblock_%1", ["roadblockMarker",1] call bis_fnc_counter];

@@ -6,8 +6,7 @@ MCC_initDone = false;
 MCC_GUI1initDone = false;
 
 //Debug
-CP_debug = false;
-MW_debug = false;
+MCC_debug = missionNamespace getVariable ["MCC_debug",true];
 
 if (MCC_isMode) then {
 	MCC_path = "\mcc_sandbox_mod\";
@@ -1035,8 +1034,10 @@ if (isServer || MCC_isLocalHC) then {
 				if (count(_gaia_respawn)==0) then {[(_x)] call GAIA_fnc_cacheOriginalGroup;};
 
 				if ((({alive _x} count units _x) == 0) && !(_x getVariable ["MCC_CPGroup",false]) && !( leader _x isKindof "logic")) then {
-					//Before we send him to heaven check if he should be reincarnated
-					if (count(_gaia_respawn)==2) then {	[_gaia_respawn,(_x getVariable  ["MCC_GAIA_RESPAWN",-1]),(_x getVariable  ["MCC_GAIA_CACHE",false]),(_x getVariable  ["GAIA_zone_intend",[]])] call GAIA_fnc_uncacheOriginalGroup;};
+
+					//Before we send him to heaven check if he should be reincarnated - respawn groups
+					if (count(_gaia_respawn)==2) then {
+						[_gaia_respawn,(_x getVariable  ["MCC_GAIA_RESPAWN",-1]),(_x getVariable  ["MCC_GAIA_CACHE",false]),(_x getVariable  ["GAIA_zone_intend",[]])] call GAIA_fnc_uncacheOriginalGroup;};
 
 					//Remove the respawn group content before the group is re-used
 					missionNamespace setVariable ["GAIA_RESPAWN_" + str(_x), nil];

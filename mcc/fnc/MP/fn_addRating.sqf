@@ -5,7 +5,7 @@
 // rating  	Integer
 // messege	String
 //===============================================================================================================================================================================
-private ["_uid","_rating","_mesg","_string","_ctrlGroup","_ctrl"];
+private ["_uid","_rating","_mesg","_string","_ctrlGroup","_ctrl","_ratingPrev"];
 _uid 		=_this select 0;
 _rating 	=_this select 1;
 _mesg 		=_this select 2;
@@ -13,6 +13,11 @@ _mesg 		=_this select 2;
 if (isDedicated) exitWith {};
 if (!isDedicated && !hasInterface) exitWith {};
 if (_uid != getplayerUID player) exitWith {};
+
+//If we manually added rating we want to disable the automatic rating
+_ratingPrev = ((rating player)-(player getVariable ["MCC_playerRating",0])) max 0;
+player addrating (_ratingPrev * -1);
+
 
 player addrating _rating;
 

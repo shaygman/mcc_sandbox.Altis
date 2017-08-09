@@ -164,7 +164,6 @@ if (_available) then {
 		_const setPosASL _pos;
 		sleep 0.01;
 		_const setPosASL _pos;
-		//_const = [_pos, _dir, [[_vehicleType,[0,0,0.0237527],0.216771,1,0,{},true]]] call MCC_fnc_objectMapper;
 		_const setVariable ["MCC_CONST_FORT",true, true];
 	} else {
 		[[_conType, _pos, playerside, str _dir] ,"MCC_fnc_construction", false,false] call BIS_fnc_MP;

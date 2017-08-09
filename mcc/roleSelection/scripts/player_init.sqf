@@ -43,7 +43,7 @@ player addRating (-1 * (rating player));
 //Get rank from the server
 [["MCCplayerRank", player, "N/A", "STRING"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 waituntil {! isnil "MCCplayerRank"};
-if (CP_debug) then {systemchat format ["player Rank : %1",MCCplayerRank]};
+if (MCC_debug) then {systemchat format ["player Rank : %1",MCCplayerRank]};
 
 _availableRoles = [];
 _cfg = if (isClass (missionconfigFile >> "MCC_loadouts" )) then {(missionconfigFile >> "MCC_loadouts")} else {(configFile >> "MCC_loadouts")};
@@ -53,14 +53,14 @@ for "_i" from 0 to (count _cfg -1) do {
 	_cfgName = format ["%1Level", configName (_cfg select _i)];
 	[[_cfgName, player, CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 	waituntil {! isnil _cfgName};
-	if (CP_debug) then {systemchat format ["%2 : %1",missionNamespace getVariable [_cfgName,-1],_cfgName]};
+	if (MCC_debug) then {systemchat format ["%2 : %1",missionNamespace getVariable [_cfgName,-1],_cfgName]};
 };
 
 /*
 {
 	[[_x, player, CP_defaultLevel, "ARRAY"], "MCC_fnc_getVariable", false, false] spawn BIS_fnc_MP;
 	waituntil {! isnil _x};
-	if (CP_debug) then {systemchat format ["%2 : %1",missionNamespace getVariable [_x,-1],_x]};
+	if (MCC_debug) then {systemchat format ["%2 : %1",missionNamespace getVariable [_x,-1],_x]};
 } forEach ["officerLevel",
            "arLevel",
            "atLevel",
@@ -87,7 +87,7 @@ while {!_logicEmpty} do
 		if ((count _nearObjects) == 0) then {_logicEmpty = true} else {_logicPos = [_logicPos select 0,_logicPos select 1, (_logicPos select 2)-30]};
 };
 
-if (CP_debug) then {systemchat format ["position: %1",_logicPos]};
+if (MCC_debug) then {systemchat format ["position: %1",_logicPos]};
 _camLogic = createagent ["Logic",_logicPos,[],0,"none"];
 _camLogic setpos _logicPos;
 _camLogic setdir 180;

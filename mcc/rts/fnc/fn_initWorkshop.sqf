@@ -1,25 +1,28 @@
-//=================================================================MCC_fnc_initWorkshop==============================================================================
+/*=================================================================MCC_fnc_initWorkshop==============================================================================
 //	Init workshop class building
 //  Parameter(s):
 //  	_side: SIDE		the building's side
 //		_module: OBJECT the module itself
-//==============================================================================================================================================================================
-private ["_side","_module","_level","_anchor","_trg","_billboard","_helipad","_class","_billboardPos","_helipadPos","_helipadClass"];
+//=================================================================================================================================================================*/
+
+#define	MCC_RTS_WORKSHOPHELIPAD	"Land_HelipadCircle_F"
+#define	MCC_RTS_BARRACKSHOPHELIPAD	"Land_HelipadEmpty_F"
+#define	MCC_RTS_WORKSHOPSIGHN	"Land_Noticeboard_F"
+
+private ["_side","_module","_level","_anchor","_trg","_billboard","_helipad","_class","_billboardPos","_helipadPos"];
 params ["_side", "_module","_constType"];
 
 _level = _module getVariable ["mcc_constructionItemTypeLevel",1];
 _anchor = _module getVariable ["mcc_construction_anchor",objNull];
 _trg = _module getVariable ["mcc_construction_trigger",objNull];
-_helipadClass = "Land_HelipadCircle_F";
 
-if (_constType == "barracks") then {
+if (tolower _constType isEqualTo "barracks") then {
 	_billboardPos =  switch (_level) do {
 					    case 1: {[1.8,-5,-0.4]};
 						default {[1.8,-3.5,-0.4]};
 					};
 	_class = "units";
 	_helipadPos = [10,4,-0.4];
-	_helipadClass = "Land_HelipadEmpty_F";
 } else {
 	switch (_level) do {
 	    case 2: {
@@ -50,13 +53,22 @@ if (_constType == "barracks") then {
 
 
 if (_class != "") then {
-	_billboard = "Land_Noticeboard_F" createVehicle (_anchor modelToWorld [0,5,0]);
-	_helipad = _helipadClass createVehicle (_anchor modelToWorld [0,15,0]);
+	_billboard = MCC_RTS_WORKSHOPSIGHN createVehicle (_anchor modelToWorld [0,5,0]);
+
+	if (tolower _constType isEqualTo "barracks") then {
+		_helipad = MCC_RTS_BARRACKSHOPHELIPAD createVehicle (_anchor modelToWorld [0,15,0]);
+	} else {
+		_helipad = MCC_RTS_WORKSHOPHELIPAD createVehicle (_anchor modelToWorld [0,15,0]);
+	};
+
 
 	_billboard attachto [_anchor,_billboardPos];
 	_helipad attachto [_anchor,_helipadPos];
 	_helipad setVariable ["MCC_vehicleSpawnerHelipad",true,true];
 	[[_billboard,[_class,_helipad]], "MCC_fnc_vehicleSpawnerInit", true, true] spawn BIS_fnc_MP;
+
+	_billboard setVariable ["mcc_delete",false,true];
+	_helipad setVariable ["mcc_delete",false,true];
 };
 
 //No need to continue if barracks

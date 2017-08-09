@@ -26,27 +26,27 @@ class MCC_GroupGenInfo:MCC_RscControlsGroup
 			w = 0.17 * safezoneW;
 			h = 0.23 * safezoneH;
 		};
-		
+
 		class MCC_GroupGenInfoText: MCC_RscStructuredText
 		{
 			idc = MCC_GroupGenInfoText_IDC;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.5)";
 			colorBackground[] = {0,0,0,0.95};
-			
+
 			w = 0.17 * safezoneW;
 			h = 0.23 * safezoneH;
 		};
-		
-		class MCC_GroupGenInfo_zone: MCC_RscCombo 
+
+		class MCC_GroupGenInfo_zone: MCC_RscCombo
 		{
-			idc = MCC_GroupGenInfo_zone_IDC;	
+			idc = MCC_GroupGenInfo_zone_IDC;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 			onLBSelChanged = "MCC_GAIAIntendZone = str ((lbcurSel (_this select 0))+1)";
-			
+
 			w = 0.0458333 * safezoneW;
 			h = 0.0219914 * safezoneH;
 		};
-		
+
 		class MCC_GroupGenInfo_gaiaBehaviorCombo: MCC_RscCombo
 		{
 			idc = MCC_GroupGenInfo_gaiaBehaviorCombo_IDC;
@@ -56,7 +56,7 @@ class MCC_GroupGenInfo:MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
-		
+
 		class MCC_GroupGenInfo_gaiaBehaviorButton: MCC_RscButton
 		{
 			idc = MCC_GroupGenInfo_gaiaBehaviorButton_IDC;
@@ -69,7 +69,7 @@ class MCC_GroupGenInfo:MCC_RscControlsGroup
 			tooltip = "Give the selected groups to GAIA control with the selected zone and behavior"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		
+
 		class MCC_GroupGenInfo_gaiaRespawnCombo: MCC_RscCombo
 		{
 			idc = MCC_GroupGenInfo_gaiaRespawnCombo_IDC;
@@ -79,11 +79,11 @@ class MCC_GroupGenInfo:MCC_RscControlsGroup
 			h = 0.0219914 * safezoneH;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
 		};
-		
+
 		class MCC_GroupGenInfo_gaiaRespawnComboButton: MCC_RscButton
 		{
 			idc = MCC_GroupGenInfo_gaiaRespawnComboButton_IDC;
-			onButtonClick = "if (!isnil 'MCC_GroupGenGroupSelected') then {if (count MCC_GroupGenGroupSelected > 0) then {{_x setVariable ['MCC_GAIA_RESPAWN',MCC_GAIARespawnNumberIndex, true]}foreach MCC_GroupGenGroupSelected}};";
+			onButtonClick = "if (!isnil 'MCC_GroupGenGroupSelected') then {if (count MCC_GroupGenGroupSelected > 0) then {{[_x,MCC_GAIARespawnNumberIndex] spawn GAIA_fnc_respawnSet}foreach MCC_GroupGenGroupSelected}};";
 
 			text = "Respawns"; //--- ToDo: Localize;
 
@@ -92,7 +92,7 @@ class MCC_GroupGenInfo:MCC_RscControlsGroup
 			tooltip = "A group with respawn over 0 will keep on respawning if defeted"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		
+
 		class  MCC_GroupGenInfo_giveToPlayer: MCC_RscButton
 		{
 			idc = MCC_GroupGenInfo_giveToPlayer_IDC;
@@ -104,7 +104,7 @@ class MCC_GroupGenInfo:MCC_RscControlsGroup
 			tooltip = "Give the selected groups to player's control via the M-Tac MCC handheld console"; //--- ToDo: Localize;
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 		};
-		
+
 		class MCC_GroupGenInfo_cacheButton: MCC_RscButton
 		{
 			idc = MCC_GroupGenInfo_cacheButton_IDC;
@@ -114,7 +114,7 @@ class MCC_GroupGenInfo:MCC_RscControlsGroup
 			sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.7)";
 
 			w = 0.0744792 * safezoneW;
-			h = 0.0219914 * safezoneH;		
+			h = 0.0219914 * safezoneH;
 		};
 	};
 };

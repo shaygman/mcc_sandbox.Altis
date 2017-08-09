@@ -22,3 +22,7 @@ if (_deleteModule) then {
 	//Delete module
 	deletevehicle _module;
 };
+
+//Remove old marker
+[] spawn MCC_fnc_rtsMakeMarkersGroups;
+MCC_ConsoleGroupSelected = [];

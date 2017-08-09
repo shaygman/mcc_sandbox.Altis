@@ -30,3 +30,5 @@
 #include "MCC_module_survivalSpawnCrates.hpp"
 #include "MCC_Module_createIntel.hpp"
 #include "MCC_Module_LHDSpawn.hpp"
+#include "MCC_Module_GAIARespawns.hpp"
+#include "MCC_Module_RTSBuildings.hpp"

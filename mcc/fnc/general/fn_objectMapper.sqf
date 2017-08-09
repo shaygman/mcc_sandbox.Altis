@@ -9,7 +9,8 @@ Edited by armatec
 	Parameter(s):
 	_this select 0: compositions name - "fuelDepot_us"
 	_this select 1: Direction in degrees - Number
-	_this select 2: Location to start
+	_this select 2: Location to start or array of objects
+	_this select 3: variable to apply to each spawned object
 
 	Exsample:
 	[ getpos player, 0,"c_campSite"] call MCC_fnc_objectMapper;
@@ -17,12 +18,14 @@ Edited by armatec
 	<out>
 		if obj select 6 got a a value then it is the target vehicle.
 */
-private ["_script","_azi","_pos","_objs","_target"];
+private ["_script","_azi","_pos","_objs","_target","_variable"];
 
 
 _pos 	= _this select 0;
 _azi 	= _this select 1;
 _script = _this select 2;
+_variable = param [3,"",[""]];
+
 
 if (!isserver) exitWith {};
 
@@ -85,6 +88,9 @@ for "_i" from 0 to ((count _objs) - 1) do {
 		if (!isNil "_vehicleinit") then {[[[netID _newObj,_newObj], _vehicleinit], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP};
 		if (!isNil "_vehicleTarget") then {_target = _newObj};
 		MCC_lastSpawn pushBack _newObj;
+
+		//Add global var
+		if !(_variable isEqualTo "") then {_newObj setVariable [_variable,true]};
 
 		//Curator
 		{_x addCuratorEditableObjects [[_newObj],false]} forEach allCurators;

@@ -359,7 +359,7 @@ class MCC_rts_elecPower3 : MCC_rts_elecPower1
 	picture = "mcc\rts\data\elec3.paa";
 	#endif
 
-	displayName = "Solar generator";
+	displayName = "Solar Generator";
 	descriptionShort = "Generate greater electric energy, does not requires fuel to run.";
 	buildings[] = {};
 	anchorType = "Land_dp_transformer_F";

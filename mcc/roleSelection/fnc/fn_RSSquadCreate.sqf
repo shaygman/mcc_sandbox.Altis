@@ -1,11 +1,11 @@
-/*==================================================================MCC_fnc_RSSquadCreate======================================================================================
+/*==================================================================MCC_fnc_RSSquadCreate=====================================================================
 // Create a new sqaud
 	<IN>
 		Nothing
 
 	<OUT>
 		Nothing
-==============================================================================================================================================================================*/
+=========================================================================================================================================================*/
 private ["_name","_groups","_groupsNamesArray","_group","_groupName"];
 #define CP_maxSquads 12
 
@@ -33,7 +33,12 @@ _name = ["Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","Indi
 
 //Create a new squad
 _group = creategroup (player getVariable ["CP_side",  playerside]);
-_null = [] call MCC_fnc_setGear;
+
+//If Role Selection activated reset gear when changing groups
+if (missionNamespace getVariable ["CP_activated",false]) then {
+	_null = [] call MCC_fnc_setGear;
+};
+
 
 [player] join _group;
 

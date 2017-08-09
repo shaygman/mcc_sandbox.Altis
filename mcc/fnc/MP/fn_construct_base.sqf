@@ -60,6 +60,7 @@ _module setVariable ["mcc_constructionItemType",_constType,true];
 _module setVariable ["mcc_constructionItemTypeLevel",_level,true];
 _module setVariable ["mcc_side",_side,true];
 _module setVariable ["cfgClass",_cfgClass,true];
+_module setVariable ["mcc_delete",false,true];
 
 //Create marker
 _markerName = format ["ConstCounter_%1",["MCC_ConstCounter_",1] call bis_fnc_counter];
@@ -98,6 +99,7 @@ _anchor = _anchorType createVehicle _pos;
 waituntil {!isnil "_anchor"};
 _anchor setdir _anchorDir;
 _anchor setVariable ["mcc_side",_side,true];
+_anchor setVariable ["mcc_delete",false,true];
 
 //Attach module to anchor
 _module attachto [_anchor,[0,0,0]];
@@ -139,6 +141,7 @@ for "_i" from 0 to ((count _objs) - 1) do {
 		_object attachTo [_anchor,((_objs select _i) select  1)];
 		_object setVectorDirAndUp  ((_objs select _i) select  2);
 	};
+	_object setVariable ["mcc_delete",false,true];
 	_object AddEventHandler ["HandleDamage", {}];
 };
 
@@ -148,5 +151,5 @@ if (_constType == "hq") then {
 };
 
 if (_constType in ["workshop","barracks"]) then {
-	 [[_side, _module,_constType], "MCC_fnc_initWorkshop", false, false] spawn BIS_fnc_MP;
+	[_side, _module,_constType] remoteExec ["MCC_fnc_initWorkshop",2];
 };

@@ -106,7 +106,7 @@ _vehicles 			= if ((lbCurSel MCC_MWVehiclesIDC)==3) then
 _animals			= if ((lbCurSel MCC_MWAnimalsIDC)==0) then {true} else {false};
 _weatherChange		= lbCurSel MCC_MWWeatherComboIDC;
 _wholeMap			= if ((lbCurSel MCC_MCC_MWAreaComboIDC)==0) then {true} else {false};
-MW_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
+MCC_debug			= if ((lbCurSel MCC_MWDebugComboIDC)==0) then {false} else {true};
 _preciseMarkers		= if ((lbCurSel MCC_MWPreciseMarkersComboIDC)==0) then {true} else {false};
 _reinforcement		= (lbCurSel MCC_MWReinforcementIDC);
 _artillery			= (lbCurSel MCC_MWArtilleryIDC);
@@ -192,7 +192,7 @@ publicVariableServer "mcc_zone_markposition";
 publicVariableServer "mcc_zone_marker_X";
 publicVariableServer "mcc_zone_marker_Y";
 
-if (MW_debug) then {systemchat format ["Total enemy's units: %1", _totalEnemyUnits]};
+if (MCC_debug) then {systemchat format ["Total enemy's units: %1", _totalEnemyUnits]};
 diag_log format ["MCC Mission Wizard total enemy Count = %1", _totalEnemyUnits];
 /*
 //Check if faction has groups in it if not exit

@@ -17,12 +17,13 @@ if (isNull (_disp displayCtrl _ctrlGroupIdc+700)) then {
 	_ctrl = _disp ctrlCreate ["RscEdit",_ctrlGroupIdc+700,_disp displayCtrl _ctrlGroupIdc];
 	_ctrl ctrlSetPosition [0*safezoneW, 0.0* safezoneH, 0.04 * safezoneW, _hight];
 	_ctrl ctrlSetBackgroundColor [0.692,0.692,0.692,0.9];
+	(_disp displayCtrl _ctrlGroupIdc+700) ctrlShow false;
 	(_disp displayCtrl _ctrlGroupIdc+700) ctrlCommit 0;
 };
 
 if !(ctrlShown (_disp displayCtrl _ctrlGroupIdc+700)) then {
 	(_disp displayCtrl _ctrlGroupIdc+700) ctrlShow true;
-	(_disp displayCtrl _ctrlGroupIdc+700) ctrlCommit 0;\
+	(_disp displayCtrl _ctrlGroupIdc+700) ctrlCommit 0;
 	ctrlSetFocus (_disp displayCtrl _ctrlGroupIdc+700);
 } else {
 	_name = ctrlText (_disp displayCtrl _ctrlGroupIdc+700);

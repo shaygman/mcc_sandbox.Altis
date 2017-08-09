@@ -4,7 +4,7 @@
 //     	_ctrl: CONTROL
 //		_res: resources Needed
 //==============================================================================================================================================================================
-private ["_ctrl","_res","_side","_groupArray","_group","_obj","_startPos","_buildings","_unitsSpace","_units","_emptyPos","_pos","_ehID","_cfgName"];
+private ["_ctrl","_res","_side","_groupArray","_group","_obj","_startPos","_buildings","_unitsSpace","_units","_emptyPos","_pos","_ehID","_cfgName","_vehicles"];
 disableSerialization;
 _ctrl = _this select 0;
 _res = param [1, [], [[]]];
@@ -49,6 +49,7 @@ _group = [_pos,_side,_groupArray] call bis_fnc_spawnGroup;
 _group setVariable ["MCC_canbecontrolled",true,true];
 _group setVariable ["MCC_rtsGroupCfg",_cfgName,true];
 
+_vehicles = [];
 {
 	_ehID = _x addMPEventHandler ["mpkilled", {
 												_unit = name (_this select 0);
@@ -58,4 +59,10 @@ _group setVariable ["MCC_rtsGroupCfg",_cfgName,true];
 	_unit = _x;
 	{_x addCuratorEditableObjects [[_unit],true]} forEach allCurators;
 	_x setVariable ["MCC_isRTSunit",true,true];
+	_x setVariable ["mcc_delete",false,true];
+
+	if !(vehicle _x in _vehicles) then {
+		(vehicle _x) setVariable ["mcc_delete",false,true];
+		_vehicles pushBack (vehicle _x);
+	};
 } forEach units _group;

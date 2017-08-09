@@ -1,12 +1,15 @@
-//====================================================MCC_fnc_deleteBrush=================================================================================================
-// Delete objects/Markers in area radius.
-// Example:[_pos, _radius, _type] call MCC_fnc_deleteBrush;
-// 	_pos 					POS ARRAY,  center
-//	_radius					INTEGER, radius to delete
-//	_type					INTEGER, ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","doorsAll","doorsRandom","doorsAllunlock","Buildings","sandstorm","storm","heatwave","clear","N/V","Flashlights"]
-//	true					BOOLEAN if true will ignore player's unit
-// Return - nothing
-//==============================================================================================================================================================================
+/*====================================================MCC_fnc_deleteBrush=================================================================================================
+
+Delete objects/Markers in area radius.
+
+	 Example:[_pos, _radius, _type] call MCC_fnc_deleteBrush;
+	 	_pos 					POS ARRAY,  center
+		_radius					INTEGER, radius to delete
+		_type					INTEGER, ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","doorsAll","doorsRandom","doorsAllunlock","Buildings","sandstorm","storm","heatwave","clear","N/V","Flashlights"]
+		true					BOOLEAN if true will ignore player's unit
+
+	 Return - nothing
+//================================================================================================================================================================*/
 
 private ["_pos","_radius","_type","_nearObjects","_crew","_markers","_ignorePlayers"];
 
@@ -212,7 +215,8 @@ switch _type do
 	};
 
 {
-	if (_x getVariable ["mcc_delete",true] && !(isPlayer _x || isPlayer driver vehicle _x || isPlayer commander vehicle _x || isPlayer gunner vehicle _x)) then {
+	if (_x getVariable ["mcc_delete",true] &&
+	    !(isPlayer _x || isPlayer driver vehicle _x || isPlayer commander vehicle _x || isPlayer gunner vehicle _x  || _x getVariable ["MCC_isRTSunit",false])) then {
 		if (count crew _x >0) then {
 				_crew = crew _x;
 

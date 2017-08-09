@@ -1,7 +1,7 @@
 class GAIA
 {
     tag = "GAIA";
-    
+
     class ambient
     {
         #ifdef MCCMODE
@@ -18,7 +18,7 @@ class GAIA
         class getsideratio {};
         class SpawnGroup {};
         class ShowLocationOwner {};
-        
+
     };
 
 
@@ -39,6 +39,7 @@ class GAIA
         class uncache {};
         class uncacheFar {};
         class uncacheOriginalGroup {};
+        class respawnSet {};
     };
 
     class General
@@ -102,7 +103,7 @@ class GAIA
         class issueOrders {};
         class occupy {};
         class removeWaypoints {};
-        
+
     };
 
     class Orders

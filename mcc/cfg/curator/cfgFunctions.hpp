@@ -27,4 +27,6 @@ class curator
 	class inGameUICurator {description = "setting MCC's UI";};
 	class curatorSetIntel {description = "set an item as pickable intel";};
 	class curatorLHDSpawn {description = "Spawn LHD";};
+	class curatorGAIARespawn {description = "Sets a group or unit to respawns certain number of times";};
+	class curatorRTSBuilding {description = "Instantly construct RTS Building";};
 };

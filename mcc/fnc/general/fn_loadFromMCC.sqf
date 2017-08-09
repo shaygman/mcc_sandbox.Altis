@@ -72,7 +72,7 @@ if (count _arrayGroups > 0) then
 			if (_objectData select 7 != "") then
 			{
 				_vehicle setVariable ["vehicleinit",(_objectData select 7),true];
-				[[[netID _vehicle,_vehicle], _objectData select 7], "MCC_fnc_setVehicleInit", true, false] spawn BIS_fnc_MP;
+				[[netID _vehicle,_vehicle], _objectData select 7] remoteExec ["MCC_fnc_setVehicleInit",0];
 			};
 
 			if (_objectData select 8) then

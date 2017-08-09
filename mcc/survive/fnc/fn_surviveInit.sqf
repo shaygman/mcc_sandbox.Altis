@@ -40,7 +40,7 @@
 			["MCC_SERVER_SURVIVAL",1200,false,false,true,false,false,false,false,false,false] spawn MCC_fnc_saveServer;
 
 			//Save player
-			[30,true,true,true] spawn MCC_fnc_savePlayer;
+			[600,true,true,true] spawn MCC_fnc_savePlayer;
 		};
 	};
 };
