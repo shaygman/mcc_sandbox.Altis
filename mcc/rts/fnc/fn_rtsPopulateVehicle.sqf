@@ -18,7 +18,7 @@ _unitsSpace = 4;
 
 //Find buildings
 {
-	if ((_x getVariable ["mcc_constructionItemType",""]) == "barracks" && !(isNull attachedTo _x)) then {
+	if ((_x getVariable ["mcc_constructionItemType",""]) == "house" && !(isNull attachedTo _x)) then {
 		_unitsSpace = _unitsSpace + ((_x getVariable ["mcc_constructionItemTypeLevel",0])*4);
 	};
 } foreach _buildings;
@@ -27,7 +27,7 @@ _units = {side _x == _side && (isPlayer _x || _x getVariable ["MCC_isRTSunit",fa
 _emptyPos = 0;
 _emptyPos = (_obj emptyPositions "driver") + (_obj emptyPositions "Commander") + (_obj emptyPositions "Gunner");
 
-//Not enough barracks
+//Not enough houses
 if ((_units + _emptyPos)> _unitsSpace) exitWith {
 	[9989,"Not Enough Manpower. Build More Barracks",5,true] call MCC_fnc_setIDCText;
 };

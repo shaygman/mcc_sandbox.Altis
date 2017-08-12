@@ -334,16 +334,6 @@ class MCC_fnc_mainBoxInit {allowedTargets=0;};
 class MCC_fnc_saveCargoBox {allowedTargets=0;};
 //Forts
 class MCC_fnc_buildFort {allowedTargets=0;};
-class MCC_fnc_fortSandbagLong {allowedTargets=0;};
-class MCC_fnc_fortSandbagRound {allowedTargets=0;};
-class MCC_fnc_fortRazorwire {allowedTargets=0;};
-class MCC_fnc_fortSandbagTower {allowedTargets=0;};
-class MCC_fnc_fortHBarrierSmall {allowedTargets=0;};
-class MCC_fnc_fortHBarrierLong {allowedTargets=0;};
-class MCC_fnc_forthBarrierCatwalk{allowedTargets=0;};
-class MCC_fnc_forthBarrierCorner {allowedTargets=0;};
-class MCC_fnc_forthBarrierCorridor {allowedTargets=0;};
-class MCC_fnc_forthBarrierTower {allowedTargets=0;};
 class MCC_fnc_fortAA {allowedTargets=0;};
 class MCC_fnc_fortAT {allowedTargets=0;};
 class MCC_fnc_fortGmg {allowedTargets=0;};

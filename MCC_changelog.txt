@@ -36,6 +36,7 @@ Change log r22:
 	- Changed: UI for selection circles and borders in RTS interface.
 	- Changed: Added different colors for resources.
 	- Added: UI controls for all available forces to the left hand side - click on any to quickly control it.
+	- Added: Spawn RTS buildings from 3eden or Zeus.
 	- Added: Show group information when mouse hovering its icon.
 	- Added: Supply track can withdraw supply crates from the HQ.
 	- Added: Show "get in" text when mouse hovering over enterable building/vehicle.
@@ -43,6 +44,8 @@ Change log r22:
 	- Added: Level 1 HQ will unlock the ability to purchase artillery ammo for the commander console.
 	- Added: Level 2 HQ will unlock the ability to purchase supply drops from the commander console.
 	- Added: Level 3 HQ will unlock the ability to purchase CAS runs from commander console.
+	- Added: Houese & barracks - houses will expend the ammount of AI you can recruit while barracks will train your troops.
+	- Added: Can build practice targets from barracks.
 	- Fixed: Campaign delete brush deletes RTS groups and buildings.
 	- Fixed: Units info wasn't showing the amount of units and vehicles classes available.
 	- Fixed: Men units didn't have the place satchel, rules of fire, change stances actions.
@@ -56,7 +59,7 @@ TODO
 	- Real resources in RTS storage
 	- Wipe save game in campaigns description
 
-TODO - Zeus and 2d editor modules for RTS
+TODO - check why MCC FAK isn't working
 TODO - resources move to the left and give option on HUD
 TODO - template for melden
 TODO - Movie on spawn and fix the focus on units movie

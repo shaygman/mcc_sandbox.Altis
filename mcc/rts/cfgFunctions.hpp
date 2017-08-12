@@ -79,16 +79,6 @@ class forts
 	#endif
 
 	class buildFort {};
-	class fortSandbagLong {};
-	class fortSandbagRound {};
-	class fortRazorwire {};
-	class fortSandbagTower {};
-	class fortHBarrierSmall {};
-	class fortHBarrierLong {};
-	class forthBarrierCatwalk{};
-	class forthBarrierCorner {};
-	class forthBarrierCorridor {};
-	class forthBarrierTower {};
 	class fortAA {};
 	class fortAT {};
 	class fortGmg {};
@@ -96,5 +86,4 @@ class forts
 	class fortMG {};
 	class fortMGHigh {};
 	class fortMortar {};
-	class fortTower {};
 };

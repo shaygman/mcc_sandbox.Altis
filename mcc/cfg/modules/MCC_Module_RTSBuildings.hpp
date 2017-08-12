@@ -34,18 +34,34 @@ class MCC_Module_RTSBuildings : Module_F
 				};
 				class MCC_rts_barracks1
 				{
-					name = "Sleeping Area";
+					name = "Shooting Range - Basic";
 					value = "MCC_rts_barracks1";
+					default = 1;
 				};
 				class MCC_rts_barracks2
 				{
-					name = "Sleeping Shack";
+					name = "Shooting Range - Advanced";
 					value = "MCC_rts_barracks2";
 				};
 				class MCC_rts_barracks3
 				{
 					name = "Barracks";
 					value = "MCC_rts_barracks3";
+				};
+				class MCC_rts_house1
+				{
+					name = "Sleeping Area";
+					value = "MCC_rts_house1";
+				};
+				class MCC_rts_house2
+				{
+					name = "Sleeping Shack";
+					value = "MCC_rts_house2";
+				};
+				class MCC_rts_house3
+				{
+					name = "Cargo House";
+					value = "MCC_rts_house3";
 				};
 				class MCC_rts_tradepost1
 				{

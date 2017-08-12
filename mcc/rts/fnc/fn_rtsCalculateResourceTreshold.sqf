@@ -54,7 +54,7 @@ _returnValue = [];
 
             case "units":
             {
-                if (toLower(_x getVariable ["mcc_constructionItemType",""]) isEqualTo "barracks") then {
+                if (toLower(_x getVariable ["mcc_constructionItemType",""]) isEqualTo "house") then {
                     _subTotal = _subTotal + ((_x getVariable ["mcc_constructionItemTypeLevel",1])*4);
 
                      if (_returnBuildings) then {_subBuildings pushBack _x};

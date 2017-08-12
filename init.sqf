@@ -6,7 +6,7 @@ MCC_initDone = false;
 MCC_GUI1initDone = false;
 
 //Debug
-MCC_debug = missionNamespace getVariable ["MCC_debug",true];
+MCC_debug = missionNamespace getVariable ["MCC_debug",false];
 
 if (MCC_isMode) then {
 	MCC_path = "\mcc_sandbox_mod\";

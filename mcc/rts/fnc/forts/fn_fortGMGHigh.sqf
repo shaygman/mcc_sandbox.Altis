@@ -15,4 +15,4 @@ _varName = switch (_side) do {
 		    default {"I_GMG_01_high_F"};
 		};
 
-[_side,_varName,_res] call MCC_fnc_buildFort;
+[_side,_res,_varName] call MCC_fnc_buildFort;

@@ -33,7 +33,7 @@ _emptyPos = count _groupArray;
 
 //Not enough barracks
 if ((_units + _emptyPos)> _unitsSpace) exitWith {
-	[9989,"Not Enough Manpower. Build More Barracks",5,true] call MCC_fnc_setIDCText;
+	[9989,"Not Enough Manpower. Build More Sleeping Bunks",5,true] call MCC_fnc_setIDCText;
 };
 
 //Start building time

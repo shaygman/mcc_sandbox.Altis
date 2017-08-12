@@ -215,10 +215,10 @@ _handler = (_disp displayCtrl 9120) ctrladdeventhandler ["draw","_this call MCC_
 
 				switch (tolower _type) do {
 					case "hq": {_icon = "n_hq"};
-					case "storage": {_icon = "n_unknown"};
 					case "barracks": {_icon = "n_inf"};
 					case "workshop": {_icon = "n_service"};
 					case "tradepost": {_icon = "loc_Tourism"};
+					default {_icon = "n_unknown"};
 				};
 
 				if (!isnil "_icon") then {

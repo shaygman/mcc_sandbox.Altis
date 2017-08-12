@@ -11,7 +11,8 @@ class MCC_rts_fortSandbagLong
 	condition = "";
 	requiredBuildings[] = {{"hq",1}};
 	needelectricity = 0;
-	actionFNC = "MCC_fnc_fortSandbagLong";
+	fortClass = "Land_BagFence_Long_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",10}};
 };
 
@@ -28,7 +29,8 @@ class MCC_rts_fortSandbagRound
 	condition = "";
 	requiredBuildings[] = {{"hq",1}};
 	needelectricity = 0;
-	actionFNC = "MCC_fnc_fortSandbagRound";
+	fortClass = "Land_BagFence_Round_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",10}};
 };
 
@@ -45,7 +47,8 @@ class MCC_rts_fortRazorwire
 	condition = "";
 	requiredBuildings[] = {{"hq",1}};
 	needelectricity = 0;
-	actionFNC = "MCC_fnc_fortRazorwire";
+	fortClass = "Land_Razorwire_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",10}};
 };
 
@@ -62,7 +65,8 @@ class MCC_rts_fortSandbagTower
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
 	needelectricity = 0;
-	actionFNC = "MCC_fnc_fortSandbagTower";
+	fortClass = "Land_BagBunker_Tower_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",100}};
 };
 
@@ -79,7 +83,8 @@ class MCC_rts_fortHBarrierSmall
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
 	needelectricity = 0;
-	actionFNC = "MCC_fnc_fortHBarrierSmall";
+	fortClass = "Land_HBarrier_3_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",15}};
 };
 
@@ -96,7 +101,8 @@ class MCC_rts_fortHBarrierLong
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
 	needelectricity = 0;
-	actionFNC = "MCC_fnc_fortHBarrierLong";
+	fortClass = "Land_HBarrier_Big_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",20}};
 };
 
@@ -112,8 +118,9 @@ class MCC_rts_forthBarrierCatwalk
 	descriptionShort = "Build H-Barrier Catwalk";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
-	actionFNC = "MCC_fnc_forthBarrierCatwalk";
+	needelectricity = 0;
+	fortClass = "Land_HBarrierWall6_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",30}};
 };
 
@@ -129,8 +136,9 @@ class MCC_rts_forthBarrierCorner
 	descriptionShort = "Build H-Barrier Corner";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
-	actionFNC = "MCC_fnc_forthBarrierCorner";
+	needelectricity = 0;
+	fortClass = "Land_HBarrierWall_corner_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",30}};
 };
 
@@ -146,8 +154,9 @@ class MCC_rts_forthBarrierCorridor
 	descriptionShort = "Build H-Barrier Corridor";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
-	actionFNC = "MCC_fnc_forthBarrierCorridor";
+	needelectricity = 0;
+	fortClass = "Land_HBarrierWall_corridor_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",30}};
 };
 
@@ -163,8 +172,9 @@ class MCC_rts_forthBarrierTower
 	descriptionShort = "Build H-Barrier Tower";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
-	actionFNC = "MCC_fnc_forthBarrierTower";
+	needelectricity = 0;
+	fortClass = "Land_HBarrierTower_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",80}};
 };
 
@@ -180,7 +190,7 @@ class MCC_rts_fortAA
 	descriptionShort = "Build Anti-Air";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
+	needelectricity = 0;
 	actionFNC = "MCC_fnc_fortAA";
 	resources[] = {{"repair",400}};
 };
@@ -197,7 +207,7 @@ class MCC_rts_fortAT
 	descriptionShort = "Build Anti-Tank";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
+	needelectricity = 0;
 	actionFNC = "MCC_fnc_fortAT";
 	resources[] = {{"repair",400}};
 };
@@ -214,7 +224,7 @@ class MCC_rts_fortgmg
 	descriptionShort = "Build Grenade MG";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
+	needelectricity = 0;
 	actionFNC = "MCC_fnc_fortGMG";
 	resources[] = {{"repair",800}};
 };
@@ -231,7 +241,7 @@ class MCC_rts_fortgmgHigh
 	descriptionShort = "Build Grenade MG (High)";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
+	needelectricity = 0;
 	actionFNC = "MCC_fnc_fortGMGHigh";
 	resources[] = {{"repair",800}};
 };
@@ -248,7 +258,7 @@ class MCC_rts_fortmg
 	descriptionShort = "Build Heavy MG";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
+	needelectricity = 0;
 	actionFNC = "MCC_fnc_fortMG";
 	resources[] = {{"repair",400}};
 };
@@ -265,7 +275,7 @@ class MCC_rts_fortmgHigh
 	descriptionShort = "Build Heavy MG (High)";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
+	needelectricity = 0;
 	actionFNC = "MCC_fnc_fortMGHigh";
 	resources[] = {{"repair",400}};
 };
@@ -282,7 +292,7 @@ class MCC_rts_fortMortar
 	descriptionShort = "Build Mortar";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
+	needelectricity = 0;
 	actionFNC = "MCC_fnc_fortMortar";
 	resources[] = {{"repair",400}};
 };
@@ -299,7 +309,76 @@ class MCC_rts_fortTower
 	descriptionShort = "Build Metal Tower";
 	condition = "";
 	requiredBuildings[] = {{"workshop",1}};
-	needelectricity = 1;
-	actionFNC = "MCC_fnc_fortTower";
+	needelectricity = 0;
+	fortClass = "Land_Cargo_Patrol_V1_F";
+	actionFNC = "MCC_fnc_buildFort";
 	resources[] = {{"repair",150}};
+};
+
+class MCC_rts_targetHostage
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\mcc\rts\forts\data\popUp_hostage.paa";
+	#else
+	picture = "mcc\rts\forts\data\popUp_hostage.paa";
+	#endif
+
+	displayName = "Target-Hostage";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	fortClass = "TargetP_Civ3_F";
+	actionFNC = "MCC_fnc_buildFort";
+	resources[] = {{"repair",50}};
+};
+
+class MCC_rts_target1
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\mcc\rts\forts\data\popUp_target1.paa";
+	#else
+	picture = "mcc\rts\forts\data\popUp_target1.paa";
+	#endif
+
+	displayName = "Target-Infantry";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	fortClass = "TargetP_Inf_F";
+	actionFNC = "MCC_fnc_buildFort";
+	resources[] = {{"repair",50}};
+};
+
+class MCC_rts_target2
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\mcc\rts\forts\data\popUp_target2.paa";
+	#else
+	picture = "mcc\rts\forts\data\popUp_target2.paa";
+	#endif
+
+	displayName = "Target-Simple";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	fortClass = "Target_F";
+	actionFNC = "MCC_fnc_buildFort";
+	resources[] = {{"repair",50}};
+};
+
+class MCC_rts_target3
+{
+	#ifdef MCCMODE
+	picture = "\mcc_sandbox_mod\mcc\rts\forts\data\popUp_target3.paa";
+	#else
+	picture = "mcc\rts\forts\data\popUp_target3.paa";
+	#endif
+
+	displayName = "Target-Duel";
+	condition = "";
+	requiredBuildings[] = {};
+	needelectricity = 0;
+	fortClass = "Land_Target_Dueling_01_F";
+	actionFNC = "MCC_fnc_buildFort";
+	resources[] = {{"repair",50}};
 };

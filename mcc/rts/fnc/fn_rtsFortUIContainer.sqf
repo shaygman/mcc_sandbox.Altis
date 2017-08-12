@@ -4,7 +4,7 @@
 //     	_ctrl: CONTROL
 //		_res: resources Needed
 //==============================================================================================================================================================================
-private ["_ctrl","_obj","_consType","_constLevel","_availableActions","_disp","_action","_pic","_res","_req","_elec","_fnc","_cnd","_online","_elecOn"];
+private ["_ctrl","_obj","_consType","_constLevel","_availableActions","_disp","_action","_pic","_res","_req","_elec","_fnc","_cnd","_online","_elecOn","_class"];
 disableSerialization;
 _ctrl = _this select 0;
 _disp = ctrlParent _ctrl;
@@ -53,6 +53,7 @@ for "_i" from 9101 to 9112 do
 			_elec = getNumber (missionconfigFile >> "cfgRtsActions" >> _action >> "needelectricity");
 			_fnc = getText (missionconfigFile >> "cfgRtsActions" >> _action >> "actionFNC");
 			_cnd = getText (missionconfigFile >> "cfgRtsActions" >> _action >> "condition");
+			_class =  getText (missionconfigFile >> "cfgRtsActions" >> _action >> "fortClass");
 		} else {
 			_pic = getText (configFile >> "cfgRtsActions" >> _action >> "picture");
 			_res = getArray (configFile >> "cfgRtsActions" >> _action >> "resources");
@@ -60,6 +61,7 @@ for "_i" from 9101 to 9112 do
 			_elec = getNumber (configFile >> "cfgRtsActions" >> _action >> "needelectricity");
 			_fnc = getText (configFile >> "cfgRtsActions" >> _action >> "actionFNC");
 			_cnd = getText (configFile >> "cfgRtsActions" >> _action >> "condition");
+			_class =  getText (configFile >> "cfgRtsActions" >> _action >> "fortClass");
 		};
 
 		_ctrl ctrlShow true;
@@ -105,7 +107,7 @@ for "_i" from 9101 to 9112 do
 		_ctrl ctrlRemoveAllEventHandlers "MouseExit";
 
 		//add EH
-		if (_available && _online) then {_ctrl ctrlAddEventHandler ["MouseButtonClick",format ['[_this select 0, %2] spawn %1',_fnc,_res]]};
+		if (_available && _online) then {_ctrl ctrlAddEventHandler ["MouseButtonClick",format ['[_this select 0, %2, "%3"] spawn %1',_fnc,_res,_class]]};
 		_ctrl ctrlAddEventHandler ["MouseHolding","[_this,'cfgRtsActions'] call MCC_fnc_baseActionEntered"];
 		_ctrl ctrlAddEventHandler ["MouseExit",format ["[_this,'%1'] call MCC_fnc_baseActionExit",_action]];
 	}
