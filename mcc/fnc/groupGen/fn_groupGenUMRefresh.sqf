@@ -1,7 +1,7 @@
 //===================================================================MCC_fnc_groupGenUMRefresh=========================================================================================
 // Refresh the group gen units lists
 // Example:[] call MCC_fnc_groupGenUMRefresh
-//==============================================================================================================================================================================	
+//==============================================================================================================================================================================
 #define MCC_UM_LIST 3069
 disableSerialization;
 
@@ -9,7 +9,7 @@ private ["_mccdialog", "_name", "_worldPos","_group","_index"];
 
 //If we are messing with the list do not refresh
 if (isnil "MCC_UMFocus") then {MCC_UMFocus = false};
-if (MCC_UMFocus) exitWith {}; 
+if (MCC_UMFocus) exitWith {};
 
 MCC_UMunitsNames = [];
 UMgroupNames = [];
@@ -20,17 +20,17 @@ lbClear _comboBox;
 
 if (("players" in MCC_groupGenGroupStatus) && (count MCC_groupGenGroupStatus == 1)) exitWith //player
 {
-	if (MCC_UMUnit==0) then 
+	if (MCC_UMUnit==0) then
 	{
 		{
-			if ((isPlayer _x) && (alive _x)) then	//unit
+			if (alive _x) then	//unit
 			{
 				_displayname = format ["(Player) - %1",name _x];
 				_index = lbAdd [MCC_UM_LIST,_displayname];
 				MCC_UMunitsNames = MCC_UMunitsNames + [_x];
 			};
-		} forEach  allUnits;
-	} 
+		} forEach (allPlayers - entities "HeadlessClient_F");
+	}
 	else
 	{
 		{
@@ -44,24 +44,24 @@ if (("players" in MCC_groupGenGroupStatus) && (count MCC_groupGenGroupStatus == 
 	};
 };
 
-if (isnil "MCC_GroupGenGroupSelected") exitWith {}; 
+if (isnil "MCC_GroupGenGroupSelected") exitWith {};
 
-if (MCC_UMUnit==0) then 
+if (MCC_UMUnit==0) then
 {
 	{
-		_group = _x; 
+		_group = _x;
 		{
 			if (alive _x && side _x in MCC_groupGenGroupStatus) then	//Unit
 			{
-				_displayname = if (isPlayer _x) then 
+				_displayname = if (isPlayer _x) then
 								{
 									format ["(Player) - %1",name _x];
-								} 
-								else 
+								}
+								else
 								{
 									getText (configFile >> "cfgVehicles" >> typeof (vehicle _x) >> "displayName");
 								};
-								
+
 				if ((_x != vehicle _x) && ((driver (vehicle _x))==_x)) then {_displayname = format ["%1 (Driver)",_displayname]};
 				if ((_x != vehicle _x) && ((gunner (vehicle _x))==_x)) then {_displayname =  format ["%1 (Gunner)",_displayname]};
 				if ((_x != vehicle _x) && ((commander (vehicle _x))==_x)) then {_displayname =  format ["%1 (Commander)",_displayname]};
@@ -70,7 +70,7 @@ if (MCC_UMUnit==0) then
 			};
 		} forEach units _group;
 	} foreach MCC_GroupGenGroupSelected;
-} 
+}
 else
 {
 	{

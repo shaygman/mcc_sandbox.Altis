@@ -1,4 +1,4 @@
-//======================================================MCC_fnc_MWinitMission=========================================================================================================
+/*======================================================MCC_fnc_MWinitMission=============================================================================================
 //Init generated mission - SERVER ONLY
 //Example: [
 //			[_wholeMap, _totalEnemyUnits,  _minObjectivesDistance, _maxObjectivesDistance, _weatherChange, _preciseMarkers, _playMusic],
@@ -45,7 +45,9 @@
 //				Array 4 - Missions' Assets
 //	_reinforcement			Integer, reinforcement 0 - no;	1- Aerial;	2 - Motorized;	3 - Random;
 //	_artillery					Integer, reinforcement 0 - no;	1- mortars;	2 - self propeled;	3 - Random;
-//========================================================================================================================================================================================
+//================================================================================================================================================================*/
+#define	MWinitMissionMusic	["LeadTrack01a_F","LeadTrack02_F","LeadTrack03_F","LeadTrack04a_F","LeadTrack05_F","LeadTrack06_F","AmbientTrack03_F","BackgroundTrack03_F","BackgroundTrack01_F","BackgroundTrack01a_F","BackgroundTrack02_F","LeadTrack01_F_EPA","LeadTrack02_F_EPA","EventTrack01_F_EPA","EventTrack01a_F_EPA","EventTrack03_F_EPA"]
+
 private ["_missionCenter","_missionCenterTrigger","_totalEnemyUnits","_isCQB","_objType","_objArray","_minObjectivesDistance","_maxObjectivesDistance","_objPos","_timeStart","_enemySide","_enemyfaction","_sidePlayer","_factionPlayer","_obj1","_obj2","_obj3","_pos","_center","_wholeMap","_armor","_vehicles","_stealth","_roadPositions","_script_handler","_isIED","_isAS","_isSB","_spawnbehavior","_isRoadblocks","_objectives","_isCiv","_weatherChange","_preciseMarkers","_reinforcement","_artillery","_civFaction","_playMusic","_animals","_markerName","_missionMaker","_campaignMission"];
 
 private ["_arrayGeneral","_arraySides","_arrayObjectives","_arrayDefines","_arrayAssets"];
@@ -677,8 +679,7 @@ _html = _html + format ["<br/><t size='0.8' color='#E2EEE0'>Go over your objecti
 _sounds set [count _sounds, ["isMissiongo",6.2]];
 
 //Briefings
-_music = ["LeadTrack01a_F","LeadTrack02_F","LeadTrack03_F","LeadTrack04a_F","LeadTrack05_F","LeadTrack06_F","AmbientTrack03_F","BackgroundTrack03_F","BackgroundTrack01_F",
-			   "BackgroundTrack01a_F","BackgroundTrack02_F","LeadTrack01_F_EPA","LeadTrack02_F_EPA","EventTrack01_F_EPA","EventTrack01a_F_EPA","EventTrack03_F_EPA"] call BIS_fnc_selectRandom;
+_music = MWinitMissionMusic call BIS_fnc_selectRandom;
 
 if (_playMusic > 0 ) then {_music = ""};
 

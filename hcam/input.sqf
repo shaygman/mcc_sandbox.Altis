@@ -22,10 +22,6 @@ _units = hcam_units;
 if !( _key in _hcam_key ) exitWith {};
 
 
-// Player not wearing suitable Glasses? End the script!
-if !( (goggles player) in hcam_goggles ) exitWith {};
-
-
 // ALT+KEY pressed - Turn Camera off
 if ( !_shift && !_ctrl && _alt ) then {
 	if (hcam_active) then {
@@ -43,7 +39,7 @@ if ( _shift && !_ctrl && !_alt ) then {
 			HCAM_CTRL_PIP ctrlSetPosition [0.8635*safezoneW+safezoneX, 0.733*safezoneH+safezoneY,0.122*safezoneW,0.095*safezoneH];
 			HCAM_CTRL_TITLE ctrlSetPosition [0.8635*safezoneW+safezoneX, 0.81*safezoneH+safezoneY,0.122*safezoneW,0.015*safezoneH];
 			HCAM_CTRL_FRONT ctrlSetPosition [0.8635*safezoneW+safezoneX, 0.733*safezoneH+safezoneY,0.122*safezoneW,0.095*safezoneH];
-			
+
 			HCAM_CTRL_BACK ctrlCommit 1;
 			HCAM_CTRL_PIP ctrlCommit 1;
 			HCAM_CTRL_TITLE ctrlCommit 1;
@@ -55,7 +51,7 @@ if ( _shift && !_ctrl && !_alt ) then {
 			HCAM_CTRL_PIP ctrlSetPosition [0.8*safezoneW+safezoneX, 0.68*safezoneH+safezoneY,0.18*safezoneW,0.15*safezoneH];
 			HCAM_CTRL_TITLE ctrlSetPosition [0.8*safezoneW+safezoneX, 0.81*safezoneH+safezoneY,0.18*safezoneW,0.02*safezoneH];
 			HCAM_CTRL_FRONT ctrlSetPosition [0.8*safezoneW+safezoneX, 0.68*safezoneH+safezoneY,0.18*safezoneW,0.15*safezoneH];
-			
+
 			HCAM_CTRL_BACK ctrlCommit 1;
 			HCAM_CTRL_PIP ctrlCommit 1;
 			HCAM_CTRL_TITLE ctrlCommit 1;
@@ -67,29 +63,29 @@ if ( _shift && !_ctrl && !_alt ) then {
 };
 
 if (! _shift && _ctrl && !_alt ) then {
-	switch (hcamNVG) do 
+	switch (hcamNVG) do
 		{
 			case 0:	//Regular
 			{
 				[1] call bis_fnc_livefeedeffects;
-				hcamNVG = 1; 
-			}; 
-			
+				hcamNVG = 1;
+			};
+
 			case 1:	//NV
 			{
 				[2] call bis_fnc_livefeedeffects;
-				hcamNVG = 2; 
-			}; 
-			
+				hcamNVG = 2;
+			};
+
 			case 2:	//Thermal
 			{
 				[0] call bis_fnc_livefeedeffects;
-				hcamNVG = 0; 
-			}; 
+				hcamNVG = 0;
+			};
 		};
 };
 // KEY pressed - Switch to next groupmember
-if ( !_shift && !_ctrl && !_alt ) then { 
+if ( !_shift && !_ctrl && !_alt ) then {
 
 	// Is HCam already active? If not, create it.
 	if (!hcam_active) then {
@@ -97,15 +93,15 @@ if ( !_shift && !_ctrl && !_alt ) then {
 	} else {;
 		// Continue only if player isnt alone in group
 		if ( count _units > 1 ) then {
-		
+
 			// Select next groupmember (or go back to the first one)
 			hcam_id = hcam_id + 1;
 			if ( hcam_id >= count _units ) then {
 				hcam_id = 0;
 			};
-		 
+
 			hcam_cam cameraEffect ["TERMINATE", "BACK"];
-			
+
 		};
 	};
 };

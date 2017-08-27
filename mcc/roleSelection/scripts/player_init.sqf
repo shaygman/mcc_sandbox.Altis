@@ -87,7 +87,8 @@ while {!_logicEmpty} do
 		if ((count _nearObjects) == 0) then {_logicEmpty = true} else {_logicPos = [_logicPos select 0,_logicPos select 1, (_logicPos select 2)-30]};
 };
 
-if (MCC_debug) then {systemchat format ["position: %1",_logicPos]};
+if (missionNamespace getVariable ["MCC_debug",false]) then {systemchat format ["position: %1",_logicPos]};
+
 _camLogic = createagent ["Logic",_logicPos,[],0,"none"];
 _camLogic setpos _logicPos;
 _camLogic setdir 180;

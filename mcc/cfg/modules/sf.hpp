@@ -44,22 +44,6 @@ class mcc_sandbox_moduleSF : Module_F
 			};
 		};
 
-		class hcam_goggles : Edit
-		{
-			displayName = "Display Goggles";
-			description = "Goggles needed to watch the live feed camera by defaul 'G_Tactical_Clear'. enter as array ['G_Tactical_Clear',G_Tactical_Clear2'...]";
-			defaultValue = """[]""";
-			property = "hcam_goggles";
-		};
-
-		class hcam_headgear : Edit
-		{
-			displayName = "Headger Needed";
-			description = "Headger needed to broadcast the live feed camera by live empty to all or enter as array ['H_Cap_red',H_HelmetB'...]";
-			defaultValue = """[]""";
-			property = "hcam_headgear";
-		};
-
 		class ModuleDescription: ModuleDescription{};
 	};
 

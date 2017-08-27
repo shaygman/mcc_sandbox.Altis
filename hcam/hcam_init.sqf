@@ -4,12 +4,6 @@ hcamNVG = 0;	//Regular cam
 if (isDedicated) exitWith {};
 
 // Define vars (or see if they have already been assigned by the server)
-if (isNil "hcam_goggles") then {
-  hcam_goggles = ["G_Tactical_Clear"];
-};
-if (isNil "hcam_headgear") then {
-  hcam_headgear = [];
-};
 if (isNil "hcam_units") then {
   hcam_units = "group";
 };

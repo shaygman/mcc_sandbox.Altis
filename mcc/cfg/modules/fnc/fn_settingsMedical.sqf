@@ -2,7 +2,7 @@
 // module
 // Medical system settings
 //===========================================================================================================================================================================
-private ["_module","_var","_pos"];
+private ["_module","_pos"];
 
 _module = param [0, objNull, [objNull]];
 if (isNull _module) exitWith {deleteVehicle _module};
@@ -17,12 +17,10 @@ if (typeName (_module getVariable ["medicComplex",true]) == typeName 0) exitWith
 	[] spawn MCC_fnc_initMedic;
 
 	//Complex
-	_var 	= _module getvariable ["medicComplex",1];
-	MCC_medicComplex = if (_var == 0) then {false} else {true};
+	MCC_medicComplex = ((_module getvariable ["medicComplex",1])==1);
 
 	//bleeding
-	_var 	= _module getvariable ["medicBleedingEnabled",1];
-	MCC_medicBleedingEnabled = if (_var == 0) then {false} else {true};
+	MCC_medicBleedingEnabled = ((_module getvariable ["medicBleedingEnabled",1])==1);
 
 	//BleedingTime
 	MCC_medicBleedingTime = (_module getvariable ["BleedingTime",200]);
@@ -31,16 +29,16 @@ if (typeName (_module getVariable ["medicComplex",true]) == typeName 0) exitWith
 	MCC_medicDamageCoef = (_module getvariable ["DamageCoef",1]);
 
 	//XPmesseges
-	_var 	= _module getvariable ["medicXPmesseges",1];
-	MCC_medicXPmesseges = if (_var == 0) then {false} else {true};
+	MCC_medicXPmesseges = ((_module getvariable ["medicXPmesseges",1])==1);
 
 	//PunishTK
-	_var 	= _module getvariable ["medicPunishTK",1];
-	MCC_medicPunishTK = if (_var == 0) then {false} else {true};
+	MCC_medicPunishTK = ((_module getvariable ["medicPunishTK",1])==1);
 
 	//Medic HuD
-	_var 	= _module getvariable ["MCC_medicShowWounded",1];
-	MCC_medicShowWounded = _var == 1;
+	MCC_medicShowWounded = ((_module getvariable ["MCC_medicShowWounded",1])==1);
+
+	//Only Medic Heals
+	MCC_medicOnlyMedicHeals = ((_module getvariable ["onlyMedicsCanHeal",1])==1);
 };
 
 //Not curator exit
@@ -54,7 +52,8 @@ _resualt = ["Medical System",[
  						["Bleeding Time (Sec)",300],
  						["Kill Messages",true],
  						["Punish Team Kill",false],
- 						["Medic HUD",true]
+ 						["Medic HUD",true],
+ 						["Only Medic Can Heal",true]
  					  ]] call MCC_fnc_initDynamicDialog;
 
 if (count _resualt == 0) exitWith {deleteVehicle _module};
@@ -65,9 +64,9 @@ publicvariable "MCC_medicSystemEnabled";
 {
 	missionNamespace setVariable [_x,_resualt select _foreachindex];
 	publicvariable _x;
-} forEach ["MCC_medicComplex","MCC_medicBleedingEnabled","MCC_medicBleedingTime","MCC_medicXPmesseges","MCC_medicPunishTK","MCC_medicShowWounded"];
+} forEach ["MCC_medicComplex","MCC_medicBleedingEnabled","MCC_medicBleedingTime","MCC_medicXPmesseges","MCC_medicPunishTK","MCC_medicShowWounded","MCC_medicOnlyMedicHeals"];
 
-//Start ambient civilians
+//Start Medic system on clients
 [] remoteExec ["MCC_fnc_initMedic", 0, true];
 
 deleteVehicle _module;

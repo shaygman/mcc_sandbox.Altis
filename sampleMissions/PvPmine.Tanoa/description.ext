@@ -1,0 +1,36 @@
+#define MCCPATH
+enableDebugConsole = 1;
+saving = 0;
+
+//----- For PvP ---------
+disableChannels[]={0,1};
+
+//Kits
+#include "loadouts\cfgLoadouts.hpp"
+
+class Params
+{
+	class disableGear
+	{
+		title = "Player Inventory Access";
+		values[] = {0,1};
+		texts[] = {"Disabled","Enabled"};
+		default = 0;
+	};
+
+	class timeMultiplier
+	{
+		title = "24 Game Hours In RL Hours";
+		values[] = {1,3,6,12,18,24,144};
+		texts[] = {"24h","8h","4h","2h","1.5h","1h","10m DEBUG ONLY"};
+		default = 3;
+	};
+
+	class mccVON
+	{
+		title = "MCC Radio VON";
+		values[] = {0,1};
+		texts[] = {"Disabled","Enabled"};
+		default = 1;
+	};
+};

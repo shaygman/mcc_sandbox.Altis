@@ -13,9 +13,14 @@ Delete objects/Markers in area radius.
 
 private ["_pos","_radius","_type","_nearObjects","_crew","_markers","_ignorePlayers"];
 
-_pos = _this select 0;
-_radius = _this select 1;
-_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","doorsAll","doorsRandom","doorsAllunlock","Buildings","sandstorm","storm","snow","heatwave","clear","N/V","Flashlights"] select (_this select 2);
+_pos = param [0,[0,0,0],[[]]];
+_radius = param [1,100,[0]];
+_type = param [2,0,[0,""]];
+
+if (typeName _type == typeName 0) then {
+	_type =  ["All","All Units", "Man", "Car", "Tank", "Air", "ReammoBox","Markers","Bodies","Lights","doorsAll","doorsRandom","doorsAllunlock","Buildings","sandstorm","storm","snow","heatwave","clear","N/V","Flashlights","campaign"] select (_this select 2);
+};
+
 _ignorePlayers = [_this, 3, false, [false]] call BIS_fnc_param;
 
 _nearObjects = [];
@@ -207,6 +212,23 @@ switch _type do
 				_nearObjects = [];
 			};
 
+		case "campaign":
+			{
+				_nearObjects =  [];
+
+				{
+					if (_x getVariable ["mcc_delete",true] &&
+					    !(isPlayer _x || ({isPlayer _x} count (crew vehicle _x) > 0) || _x getVariable ["MCC_isRTSunit",false] || group _x getVariable ["MCC_canbecontrolled",false])) then {
+						if (count crew _x >0) then {
+								_crew = crew _x;
+
+								{deletevehicle _x; sleep 0.1} foreach _crew;
+						};
+
+						deletevehicle _x;
+					};
+				} forEach ([_pos select 0, _pos select 1, 0] nearObjects _radius);
+			};
 
 		default
 			{
@@ -216,7 +238,7 @@ switch _type do
 
 {
 	if (_x getVariable ["mcc_delete",true] &&
-	    !(isPlayer _x || isPlayer driver vehicle _x || isPlayer commander vehicle _x || isPlayer gunner vehicle _x  || _x getVariable ["MCC_isRTSunit",false])) then {
+	    !(isPlayer _x || isPlayer driver vehicle _x || isPlayer commander vehicle _x || isPlayer gunner vehicle _x )) then {
 		if (count crew _x >0) then {
 				_crew = crew _x;
 

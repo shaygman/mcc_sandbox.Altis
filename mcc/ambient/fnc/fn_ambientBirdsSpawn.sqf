@@ -10,6 +10,8 @@ params [
 	["_pos",[0,0,0],[[],objNull]]
 ];
 
+#define	 MCC_ANIMALSTYPE ["Seagull","Crowe","Kestrel_random_F"]
+
 private ["_trees","_maxHeight","_type","_animal","_animals","_tree"];
 
 if (typeName _pos == typeName objNull) then {
@@ -24,7 +26,7 @@ _trees = nearestTerrainObjects [_pos, ["Tree","Bush","SMALL TREE"], 30];
 if (count _trees <=0) exitWith {};
 _tree = (_trees select 0);
 _pos = getpos _tree;
-_type = "Seagull";
+_type = (MCC_ANIMALSTYPE call BIS_fnc_selectRandom);
 _maxHeight = getnumber (configfile >> "cfgnonaivehicles" >> _type >> "maxHeight");
 _animals = [];
 

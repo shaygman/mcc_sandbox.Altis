@@ -54,6 +54,27 @@ class MCC_Module_settingsMedicSystem : Module_F
 			};
 		};
 
+		class onlyMedicsCanHeal
+		{
+			displayName = "Medic Heal";
+			description = "Only medics can use FAK to heal";
+			typeName = "NUMBER";
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
 		class BleedingTime
 		{
 			displayName = "Bleeding Time";

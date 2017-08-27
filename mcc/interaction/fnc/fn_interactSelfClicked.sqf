@@ -42,7 +42,9 @@ switch (true) do {
 		_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
 		_remaineBlood = _suspect getvariable ["MCC_medicRemainBlood",_maxBleeding];
 		_fatigueEffect = floor (30*(getFatigue _suspect));
-		_isMedic = if (((getNumber(configFile >> "CfgVehicles" >> typeOf vehicle player >> "attendant")) == 1) || ((player getvariable ["CP_role",""]) == "Corpsman")) then {true} else {false};
+		_isMedic = (((getNumber(configFile >> "CfgVehicles" >> typeOf vehicle player >> "attendant")) == 1) ||
+		            ((player getvariable ["CP_role",""]) == "Corpsman") ||
+		            !(missionNamespace getVariable ["MCC_medicOnlyMedicHeals",false]));
 
 		//Blood loss
 		switch (true) do {

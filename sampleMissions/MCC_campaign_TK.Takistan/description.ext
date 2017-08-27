@@ -1,0 +1,104 @@
+author = Shay_gman;
+overviewPicture = "\mcc_sandbox_mod\mcc\helpers\data\commanderRTS.paa";
+overviewText = "MCC Campaign";
+onLoadName = A fighting Chance - MCC Campaign;
+loadScreen = "\mcc_sandbox_mod\mcc\helpers\data\commanderRTS.paa";
+onLoadMission =  A mix between RTS and FPS where the players need to capture the island as they expend their base and purchase weapons and equipment ;
+
+respawn      = "BASE";
+respawndelay = 5;
+disabledAI   = 1;
+enableDebugConsole = 1;
+saving = 0;
+
+//----- For PvP ---------
+disableChannels[]={0,1};
+joinUnassigned = 1;
+
+corpseLimit = 30;
+corpseRemovalMinTime = 60;
+corpseRemovalMaxTime = 300;
+
+wreckLimit = 15;
+wreckRemovalMinTime = 60;
+wreckRemovalMaxTime = 1200;
+
+//Kits
+class MCC_loadouts
+{
+	#include "loadouts\rifleman.hpp"
+	#include "loadouts\officer.hpp"
+	#include "loadouts\ar.hpp"
+	#include "loadouts\at.hpp"
+	#include "loadouts\corpsman.hpp"
+	#include "loadouts\marksman.hpp"
+	#include "loadouts\specialist.hpp"
+	#include "loadouts\crew.hpp"
+	#include "loadouts\pilot.hpp"
+};
+
+class Header
+{
+	gameType =CTI;
+	minPlayers = 1;
+	maxPlayers = 60;
+};
+
+class Params
+{
+	class amibientCivilians
+	{
+		title = "Ambient Civilians";
+		values[] = {0,1};
+		texts[] = {"Disabled","Enabled"};
+		default = 1;
+	};
+
+	class civiliansStanding
+	{
+		title = "Civilians relation to players";
+		values[] = {1,3,5,7,9};
+		texts[] = {"Awful","Bad","Average","Good","Excelent"};
+		default = 5;
+	};
+
+	class disableGear
+	{
+		title = "Player Inventory Access";
+		values[] = {0,1};
+		texts[] = {"Disabled","Enabled"};
+		default = 0;
+	};
+
+	class timeMultiplier
+	{
+		title = "24 Game Hours In RL Hours";
+		values[] = {12,18,24,144};
+		texts[] = {"2h","1.5h","1h","10m DEBUG ONLY"};
+		default = 12;
+	};
+
+	class mccVON
+	{
+		title = "MCC Radio VON";
+		values[] = {0,1};
+		texts[] = {"Disabled","Enabled"};
+		default = 1;
+	};
+
+	class difficulty
+	{
+		title = "Difficulty";
+		values[] = {10,20,40};
+		texts[] = {"Easy","Medium","Hard"};
+		default = 20;
+	};
+
+	class missionNumber
+	{
+		title = "Missions untill campaign ends";
+		values[] = {10,20,30,40,50};
+		texts[] = {"10","20","30","40","50"};
+		default = 20;
+	};
+};

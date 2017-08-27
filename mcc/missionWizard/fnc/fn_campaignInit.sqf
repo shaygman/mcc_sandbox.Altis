@@ -282,7 +282,7 @@ while { count _locations > 0 &&
 
 	_ticketsStart = [_sidePlayer] call BIS_fnc_respawnTickets;
 
-	//Wait untill mission wizard mission is done
+	//Wait untill mission is complete
 	waitUntil {!(missionNamespace getVariable ["MCC_MWMissionRuning",true])};
 
 	_activeObjectivesSide1 = missionNamespace getVariable [format ["MCC_campaignMissionsStatus_%1_total",_sidePlayer],0];
@@ -318,7 +318,14 @@ while { count _locations > 0 &&
 	*/
 
 	//clean up
-	[_AOlocationPos,_AOSize*4] spawn {sleep 1200; [_this select 0,_this select 1,0] call MCC_fnc_deleteBrush};
+	[_AOlocationPos,_AOSize*2] spawn {
+		params [["_AOlocationPos",[0,0,0],[[],objNull]],
+				["_AOSize",200,[0]]
+			   ];
+
+		while {{_x distance2D _AOlocationPos < _AOSize} count (allPlayers - entities "HeadlessClient_F") > 0} do {sleep 10};
+		[_this select 0,_this select 1,0] call MCC_fnc_deleteBrush
+	};
 
 	/*
 	//Mark area as captured

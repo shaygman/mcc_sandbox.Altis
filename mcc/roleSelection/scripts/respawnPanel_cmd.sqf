@@ -1,6 +1,8 @@
 private ["_comboBox","_spawnArray","_pos","_spawn","_nearObjects","_spawnErrorCode","_targets","_target","_groups","_countRole","_roleLimit","_role","_spawnPos","_playerDeployPos"];
 disableSerialization;
 
+#define	MWinitMissionMusic	["LeadTrack01a_F","LeadTrack03_F","LeadTrack04a_F","BackgroundTrack03_F","BackgroundTrack01_F","BackgroundTrack01a_F","BackgroundTrack02_F","LeadTrack01_F_EPA","LeadTrack02_F_EPA","EventTrack01_F_EPA","EventTrack01a_F_EPA","EventTrack03_F_EPA"]
+
 #define CP_RESPAWNPANEL_IDD (uiNamespace getVariable "CP_RESPAWNPANEL_IDD")
 #define CP_respawnPointsList (uiNamespace getVariable "CP_respawnPointsList")
 #define CP_ticketsWestText (uiNamespace getVariable "CP_ticketsWestText")
@@ -166,6 +168,7 @@ switch (true) do
 				player setpos (_playerDeployPos findEmptyPosition [1, 50]);
 			} else {
 				//if the vehicle is flying parachute the player
+				_teleportAtStart = 4;
 				[getPos _activeSpawn, ["",player], false, (getPos _activeSpawn) select 2, floor (random 40)] call MCC_fnc_paradrop;
 			};
 		};
@@ -222,6 +225,43 @@ if (_activeSpawn == leader player && (vehicle _activeSpawn != _activeSpawn)) the
 };
 */
 
+//Start respawn cinematic
+if ((missionNamespace getVariable ["MCC_respawnCinematic",true]) && _teleportAtStart == 1) then {
+	private ["_camera","_relPos","_relDir","_music"];
+
+	//Play music
+	_music = MWinitMissionMusic call BIS_fnc_selectRandom;
+	playMusic [_music,5];
+
+	_camera = "Camera" camcreate (player modelToWorld [0,400,3000]);
+	_camera cameraeffect ["internal","back"];
+	_camera camPrepareFOV 0.900;
+	_camera camsetTarget vehicle player;
+	cameraEffectEnableHUD false;
+	showCinemaBorder true;
+
+	//Start cinematic text
+	0 = [] spawn MCC_fnc_camp_showOSD;
+
+	{
+		_camera camSetRelPos _x;
+		_camera camcommit 1;
+		waitUntil {camCommitted _camera};
+		sleep 0.5;
+	} forEach [[0,1000,200],
+			   [0,500,100],
+			   [0,3,2.5]
+			  ];
+
+	sleep 3;
+	_camera cameraEffect ["TERMINATE", "BACK"];
+	camdestroy _camera;
+	_camera = nil;
+
+	sleep 2;
+	playMusic ["",1];
+};
+
 //Remove escape event handlers and reseting menu
 if (!isnil "CP_RESPAWNPANEL_IDD") then {CP_RESPAWNPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
 if (!isnil "CP_SQUADPANEL_IDD") then {CP_SQUADPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
@@ -230,3 +270,7 @@ if (!isnil "CP_WEAPONSPANEL_IDD") then {CP_WEAPONSPANEL_IDD displayRemoveEventHa
 if (!isnil "CP_ACCESPANEL_IDD") then {CP_ACCESPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
 if (!isnil "CP_UNIFORMSPANEL_IDD") then {CP_UNIFORMSPANEL_IDD displayRemoveEventHandler ["KeyDown", CP_disableEsc]};
 CP_respawnPanelOpen = false;
+
+//Remove MCC medic effects
+if (!isNil "MCC_medicBleedingPPEffectColor") then {MCC_medicBleedingPPEffectColor ppEffectEnable false};
+if (!isNil "MCC_medicBleedingPPEffectBlur") then {MCC_medicBleedingPPEffectBlur ppEffectEnable false};

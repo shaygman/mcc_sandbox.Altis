@@ -241,6 +241,29 @@ class MCC_Module_settings : Module_F
 			};
 		};
 
+		class respawnCinematic : Combo
+		{
+			displayName = "Respawn Cinematic";
+			description = "Show cinematic when a player spawn";
+			typeName = "NUMBER";
+			property = "respawnCinematic";
+
+			class values
+			{
+				class Enabled
+				{
+					name = "Yes";
+					value = 1;
+					default = 1;
+				};
+				class Disabled
+				{
+					name = "No";
+					value = 0;
+				};
+			};
+		};
+
 		class sqlPDA : Combo
 		{
 			displayName = "Squad Leader PDA";

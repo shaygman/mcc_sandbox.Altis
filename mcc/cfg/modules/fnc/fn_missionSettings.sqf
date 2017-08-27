@@ -46,6 +46,9 @@ if (typeName (_module getVariable ["t2t",true]) == typeName 0) exitWith {
 	_var 	= _module getvariable ["respawnMenu",1];
 	MCC_openRespawnMenu = if (_var == 0) then {false} else {true};
 
+	//Respawn Cinematic
+	MCC_respawnCinematic = ((_module getvariable ["respawnCinematic",1]) == 1);
+
 	//Respawn on Leader
 	missionNameSpace setVariable ["MCC_respawnOnGroupLeader",(_module getvariable ["respawnOnGroupLeader",1]) ==1];
 
@@ -101,8 +104,9 @@ _resualt = ["Settings MCC",[
  						["Save Gear",(missionNamespace getVariable ["MCC_saveGear",true])],
  						["MCC Messages",(missionNamespace getVariable ["MCC_Chat",true])],
  						["Delete Players' Bodies",(missionNamespace getVariable ["MCC_deletePlayersBody",true])],
- 						["Respawn Menu",(missionNamespace getVariable ["MCC_openRespawnMenu",true])],
+ 						["Respawn Dialog",(missionNamespace getVariable ["MCC_openRespawnMenu",true])],
  						["Respawn On Leader",(missionNamespace getVariable ["MCC_respawnOnGroupLeader",true])],
+ 						["Respawn Cinematic",(missionNamespace getVariable ["MCC_respawnCinematic",true])],
  						["Squad Leader PDA",(missionNamespace getVariable ["MCC_allowsqlPDA",true])],
  						["(CS) Commander Console",(missionNamespace getVariable ["MCC_allowConsole",true])],
  						["(CS) Show groups with GPS only",(missionNamespace getVariable ["MCC_ConsoleOnlyShowUnitsWithGPS",true])],
@@ -129,6 +133,7 @@ if (count _resualt == 0) exitWith {deleteVehicle _module};
            "MCC_deletePlayersBody",
            "MCC_openRespawnMenu",
            "MCC_respawnOnGroupLeader",
+           "MCC_respawnCinematic",
            "MCC_allowsqlPDA",
            "MCC_allowConsole",
            "MCC_ConsoleOnlyShowUnitsWithGPS",
@@ -141,11 +146,11 @@ if (count _resualt == 0) exitWith {deleteVehicle _module};
            "MCC_defaultCASEnabled"
            ];
 
-(_resualt select 16) remoteExec ["enableEngineArtillery",0];
-(_resualt select 17) remoteExec ["setTimeMultiplier",2];
+(_resualt select 17) remoteExec ["enableEngineArtillery",0];
+(_resualt select 18) remoteExec ["setTimeMultiplier",2];
 
 //Resistance Hostility
-switch (_resualt select 18) do {
+switch (_resualt select 19) do {
 
 	//East
 	case 1:
@@ -174,8 +179,5 @@ switch (_resualt select 18) do {
 		[west,[resistance, 0]] remoteExec ["setfriend",2];
 	};
 };
-
-missionNamespace setVariable ["RESISTANCE_HOSTILE_index",_resualt select 16];
-publicvariable "RESISTANCE_HOSTILE_index";
 
 deleteVehicle _module;

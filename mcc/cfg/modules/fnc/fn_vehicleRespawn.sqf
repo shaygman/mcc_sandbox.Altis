@@ -62,7 +62,7 @@ while { true } Do {
 	if (_tickets ==0) exitWith {};
 
 	//No crew lets see if we abonadand the vehicle
-	_abandoned = if (count (crew _object) == 0 && _abondanDistance > 0) then {{isPlayer _x && _x distance _object < _abondanDistance} count allUnits == 0} else {false};
+	_abandoned = if (count (crew _object) == 0 && _abondanDistance > 0) then {{_x distance _object < _abondanDistance} count (allPlayers - entities "HeadlessClient_F") == 0} else {false};
 
 	//see if we have been damaged or disabled
 	if (((_abandoned && _object distance _vehPos > 50 && (count attachedObjects _object == 0)) || (!(alive _object) && _abandoned) || (!(canMove _object) && _respawnDisabled && _abandoned))) then {

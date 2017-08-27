@@ -7,14 +7,12 @@ private ["_bleeding","_remaineBlood","_maxBleeding","_ypos","_ratio","_blink"];
 if (!isNull(findDisplay 312)) exitWith {};
 
 //Bleeding
-if (missionNamespace getvariable ["MCC_medicBleedingEnabled",false]) then
-{
+if (missionNamespace getvariable ["MCC_medicBleedingEnabled",false]) then {
 	_bleeding = player getVariable ["MCC_medicBleeding",0];
 	_maxBleeding = missionNamespace getvariable ["MCC_medicBleedingTime",200];
 	_remaineBlood = player getvariable ["MCC_medicRemainBlood",_maxBleeding];
 
-	if (isnil "MCC_medicBleedingPPEffectColor") then
-	{
+	if (isnil "MCC_medicBleedingPPEffectColor") then {
 		MCC_medicBleedingPPEffectColor = ppEffectCreate ["ColorCorrections", 1522];
 		MCC_medicBleedingPPEffectColor ppEffectForceInNVG True;
 

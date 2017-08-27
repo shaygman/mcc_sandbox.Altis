@@ -1,0 +1,56 @@
+author = Shay_gman & Spirit;
+overviewPicture = "\mcc_sandbox_mod\mcc\data\mcc_loadingScreen.paa";
+overviewText = "MCC stands for Mission Control Centre. With it, a mission maker can create different scenarios and put the players to the test. As the players progress the mission maker can alter and change the mission in order to give the players a more divert and intense experience.";
+onLoadName = MCC Sandbox;
+loadScreen = "mcc_loadingScreen.paa";
+onLoadMission = MCC Sandbox stands for Mission Control Centre. With it you can create mission (on the fly) and generate missions (on the fly).;
+
+respawn      = "BASE";
+respawndelay = 5;
+disabledAI   = 1;
+
+//----- For PvP ---------
+//disableChannels[]={0,6};
+joinUnassigned = 1;
+
+corpseLimit = 30;
+corpseRemovalMinTime = 60;
+corpseRemovalMaxTime = 300;
+
+wreckLimit = 15;
+wreckRemovalMinTime = 60;
+wreckRemovalMaxTime = 1200;
+
+class Header
+{
+	gameType =sandbox;
+	minPlayers = 1;
+	maxPlayers = 149;
+};
+
+class Params
+{
+	 class f_param_gear
+        {
+                title = "Gear";
+                values[] = {0,1,2,3,4};
+                texts[] = {"Regular","Night Ops(SF Only)","Divers(SF Only)","Ghillie Suit(SF Only)","Tier 1(SF Only)"};
+                default = 0;
+        };
+
+		class f_param_nightvision
+        {
+                title = "Night Vision";
+                values[] = {0,1};
+                texts[] = {"Off","On"};
+                default = 1;
+        };
+
+		class f_param_time
+        {
+                title = "Time";
+                values[] = {0,1,2,3};
+                texts[] = {"Morning","Noon","Evening","Night"};
+                default = 1;
+        };
+};

@@ -300,6 +300,12 @@ class CfgMissions
 			briefingName = "(MCC) Template";
 			directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Zargabad";
 		};
+
+		class MCC_TEMPLATE_Malden
+		{
+			briefingName = "(MCC) Template";
+			directory = "mcc_sandbox_mod\sampleMissions\MCC_Template.Malden";
+		};
 	};
 };
 

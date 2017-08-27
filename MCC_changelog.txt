@@ -7,6 +7,10 @@ Change log r22:
 - Added: Punchable CAS and Airdrops in the commander console - can be enabled from mission settings module - TO DO WIKI
 - Added: Elapsed day battle's report will show up every time the player used the RTS and not only on MCC campaign.
 - Added: AI group respawn modules to 3den & Zeus - will respawn the group when all units are dead.
+- Added: Enable/disable Only medic can heal from MCC medic settings modules - Zeus or 3den
+- Added: Cinematic when respawning from the MCC spawn Menu - can be disabled with mission settings  - Zeus or 3eden.
+- Added: Template to Melden Island.
+- Added: Kestrels and crows to ambient birds module.
 - Changed: Shortened MCC campaign/Mission Wizard intro movies time.
 - Changed: Commander Console F1-F5 buttons are visable.
 - Changed: Reduce needed units to build a FOB or other battle emplacements to zero.
@@ -31,6 +35,13 @@ Change log r22:
 - Fixed: Error when creating new squad from MCC Squad Menu.
 - Fixed: Can load and resave missions to MCC now.
 - Fixed: Addrating command will work when Role Selection is on
+- Fixed: Error missing file "MCC_loadingScreen.paa"
+- Fixed: Medic system blur stays after death
+
+- IED suicide bombers
+	- Added: MCC_fnc_addVelocity - add velocity related to center position to simulate a shockwave.
+	- Added: Shockwaves to all types of IED and suicide bombers (real,fake or disabling).
+	- Added: Suicide bombers will have bombs straped around their pelvis when they attack.
 
 - RTS
 	- Changed: UI for selection circles and borders in RTS interface.
@@ -57,13 +68,12 @@ TODO
 	- Commander permissions
 	- Build helipad and hanger for building helis exc
 	- Real resources in RTS storage
+	-TODO - resources move to the left and give option on HUD
 	- Wipe save game in campaigns description
 
-TODO - check why MCC FAK isn't working
-TODO - resources move to the left and give option on HUD
-TODO - template for melden
-TODO - Movie on spawn and fix the focus on units movie
+TODO - HVT rescue add wrecks
 TODO - Convoy missions
+TODO - Movie on spawn and fix the focus on units movie - add to settings
 TODO - Resource cap points in campaign and passsive occuption
 TODO - persistent save vehicles and groups
 TODO - AAS missions to mod,

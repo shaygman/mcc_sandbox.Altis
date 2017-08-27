@@ -60,6 +60,7 @@ class general
 	class openArtillery {};
 	class deleteBrush{};
 	class crewCount {description = "return empty seats of a specific vehicle with or without FFV (firing From Vehicles)";};
+	class addVelocity {description = "adds velocity to object depends on its current velocity";};
 };
 
 class ui

@@ -7,6 +7,8 @@
 //		_IEDExplosionType	= Integer, 0- deadly 	1- Disabling	2- Fake
 // <out>	NOTHING
 //==================================================================================================================================================================
+#define	MCC_MANAGESB_IED "DemoCharge_Remote_Ammo"
+
 private ["_sb","_iedside","_trapvolume","_IEDExplosionType","_check","_close","_dummy","_init","_closeunit","_enemy","_sound","_targ","_sbspeed","_IedExplosion"];
 _sb					= param [0,objNull];
 _iedside			= param [1,west];
@@ -57,14 +59,24 @@ while {alive _sb && _check} do {
 			sleep 1;
 			_closeunit = [];
 			{if(side _x in _iedside) then {_closeunit = _closeunit + [_x]}} forEach _close;
-			_count=count _closeunit;
 
-			for [{_x=0},{_x<_count},{_x=_x+1}] do {
-				_enemy = _closeunit select _x;
+			{
+				_enemy = _x;
 
 				{
-					if(_enemy isKindOf _x && _check) then
-					{
+					if(_enemy isKindOf _x && ({alive _x} count (crew _enemy) > 0) && _check) then {
+
+						//Revel demo charges
+						private ["_exp"];
+						{
+							_exp = MCC_MANAGESB_IED createVehicle position _sb;
+							_exp attachTo [_sb, (_x select 0), "Pelvis"];
+							_exp setVectorDirAndUp (_x select 1);
+						} forEach [ [[-0.1, 0.1, 0.15],[ [0.5, 0.5, 0], [-0.5, 0.5, 0] ]],
+									[[0, 0.15, 0.15],[ [1, 0, 0], [0, 1, 0] ]],
+									[[0.1, 0.1, 0.15],[ [0.5, -0.5, 0], [0.5, 0.5, 0] ]]
+								  ];
+
 						_sb setSpeedMode (_sbspeed select (round (random 3)));
 						_sb setskill 1;
 						_sb setskill ["courage",1];
@@ -97,7 +109,7 @@ while {alive _sb && _check} do {
 						};
 					}
 				} forEach _targ;
-			};
+			} foreach _closeunit;
 		};
 	};
 };
@@ -123,6 +135,10 @@ switch (_IEDExplosionType) do
 [getpos _sb,_trapvolume] spawn _IedExplosion;
 
 _sb setdamage 1;
-deleteVehicle _dummy;
-if (true) exitWith {};
 
+deleteVehicle _dummy;
+
+//Delete ieds
+{
+	deleteVehicle _x
+} forEach attachedObjects _sb;

@@ -5,31 +5,15 @@
 //=					                            13.01.2012
 //==========================================================================================
 //******************************************************************************************
-private ["_logic","_null","_synced","_goggles","_headGear"];
+private ["_logic","_null","_synced"];
 
 _logic = _this select 0;
 _logic setpos [1000,10,0];
 _synced = synchronizedobjects _logic;		//Who synced with the module
 
-_goggles = call compile (_logic getvariable ["hcam_goggles","[]"]);
-_headGear = call compile (_logic getvariable ["hcam_headgear","[]"]);
-
 if (player in _synced)then {
 	//Action key
 	 hcam_Key = (_logic getvariable ["hcam_actionKey",1]);
-
-	//goggles to watch the live feed
-	hcam_goggles = if (count _goggles == 0) then {["G_Tactical_Clear"]} else {_goggles};
-
-	 //Headgear needed to watch the live feed
-	hcam_headgear = if (count _headGear == 0) then
-					{
-						 ["H_Cap_red","H_HelmetB","H_HelmetB_paint"," H_HelmetB_light","H_HelmetO_ocamo","H_PilotHelmetHeli_B","H_PilotHelmetHeli_O"];
-					}
-					else
-					{
-						_headGear
-					};
 
 	hcam_units = synchronizedobjects _logic;			//Units watching the live feed
 
