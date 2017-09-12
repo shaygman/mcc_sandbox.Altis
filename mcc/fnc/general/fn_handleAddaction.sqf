@@ -38,7 +38,7 @@ _nul = ["MCC_interactionEH", "onEachFrame", {
 							"PuristaMedium"
 						];
 		} foreach _interactiveObjects;
-	}, ""] call BIS_fnc_addStackedEventHandler;
+	}, [""]] call BIS_fnc_addStackedEventHandler;
 
 
 //Find out interaction key name
