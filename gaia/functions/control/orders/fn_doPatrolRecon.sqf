@@ -15,15 +15,7 @@ _zone				=	_this select 1;
 
 //Go somewhere
 _pos= [_group,_zone,"INF_HILLS_FLAT_FOREST"] call GAIA_fnc_generateWaypoints;
-
-
-
-if (count (waypoints _group) != (currentWaypoint _group)) then
-	{
-
-			_dummy 	=  [_group,_pos,"MOVE"] call GAIA_fnc_addWaypoint;
-
-	};
+_NrOfBuildingWp 	 = [_group,_pos]call GAIA_fnc_generateBuildingPatrolWaypoints;
 
 //Our result is waypoints
 ((count (waypoints _group)) - currentWaypoint _group)

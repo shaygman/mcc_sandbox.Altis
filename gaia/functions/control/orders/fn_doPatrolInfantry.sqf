@@ -16,7 +16,7 @@ _zone				=	_this select 1;
 //Go somewhere
 _pos= [_group,_zone,"INF_URBAN_ROADS"] call GAIA_fnc_generateWaypoints;
 
-
+_NrOfBuildingWp 	 = [_group,_pos]call GAIA_fnc_generateBuildingPatrolWaypoints;
 
 
 

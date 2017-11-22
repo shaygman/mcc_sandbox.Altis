@@ -52,8 +52,11 @@ if !(surfaceiswater _TargetPos ) then
 
 
 
-		_dummy	=[_group,_TargetPos, "SAD"] call GAIA_fnc_addAttackWaypoint;
-		//_NrOfBuildingWp 	 = [_group]call GAIA_fnc_generateBuildingPatrolWaypoints;
+		_NrOfBuildingWp 	 = [_group,_TargetPos]call GAIA_fnc_generateBuildingPatrolWaypoints;
+		if (_NrOfBuildingWp == 0) then
+		{
+			_dummy	=[_group,_TargetPos, "SAD"] call GAIA_fnc_addAttackWaypoint;
+		};
 
 
 	};
