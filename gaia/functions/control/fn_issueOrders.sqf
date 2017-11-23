@@ -528,7 +528,7 @@ _StartTimeIssueOrders = time;
 						_SpotIsBeingCleared				= [_SpotPos,_side] call GAIA_fnc_isBlacklisted;
 
 						//The dude should be hiding outside a CA (or we will already attack it)
-						_SpotIsOutsideCA					= !((count([_CA, {(_x distance (_SpotPos)<100)}] call BIS_fnc_conditionalSelect))>0);
+						_SpotIsOutsideCA					= !((count([_CA, {(_x distance (_SpotPos)<MCC_GAIA_CA_SIZE)}] call BIS_fnc_conditionalSelect))>0);
 
 						//He cannot be to far out (only one range as only footmobiles can clear)
 						//Or the spot is in the zone from the group, we clear it, no matter how far we need to go!

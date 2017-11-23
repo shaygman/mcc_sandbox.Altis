@@ -27,6 +27,7 @@ MCC_GAIA_OPERATIONAL 			= false;
 
 //Used for the breadcrumb blacklist system. How far should a waypoint be from a position a unit has last been?
 MCC_GAIA_CYCLE								 = 1;
+MCC_GAIA_CA_SIZE					=200;
 MCC_GAIA_AWARENESSRANGE				 = 100;
 MCC_GAIA_CLEARRANGE						 = 70;
 MCC_GAIA_SHARETARGET_DELAY		 = 10;
