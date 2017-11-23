@@ -39,6 +39,7 @@ _staticClass 		= [];
 _mortarClass 		= [];
 _submarineClass 	= [];
 _UnitAssets			= [];
+_TurretWeapons      = [];
 _at		=false;
 _aa		=false;
 _art  =false;
@@ -56,7 +57,24 @@ _art  =false;
 				if (!((vehicle _x) in _tempVehicles) and !(_x in (assignedCargo vehicle _x))) then {
 
 					_tempVehicles pushBack (vehicle _x);
-					_TurretWeapons = weapons vehicle _x;
+					
+					
+					{
+					
+					if ( 
+					    !(["Horn", _x, true] call BIS_fnc_inString)
+					     and
+						!(["Smoke", _x, true] call BIS_fnc_inString)
+						and 
+						!(["Flare", _x, true] call BIS_fnc_inString)
+						and 
+						!(["SEARCHLIGHT", _x, true] call BIS_fnc_inString)
+						)
+                     then 
+					 {_TurretWeapons = _TurretWeapons + [_x]};
+					    
+					   
+					} foreach weapons vehicle _x;
 
 					_UnitAssets = [vehicle _x] call GAIA_fnc_getUnitAssets;
 					_at = (_UnitAssets select 0);
