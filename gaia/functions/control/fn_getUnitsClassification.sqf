@@ -235,20 +235,20 @@ switch(true)do
 				_class = "Helicopter";
 				_speed													= "FAST";
 				_portfolio = _portfolio					+ _DoWait;
-
-
-				//No guns but do hold space? We are a transporter
-
-				if (!_VehicleHasGuns and _EnoughCargo ) then
-				{
-
 				_portfolio = _portfolio					+_DoPatrol;
+				//For now set on 2. I think just a few seats wont make it a transporter.
+				if (_CargoCount>1) then
+				{
+				_portfolio = _portfolio					+ _DoTransport;
+
 				};
+				
+
 
 				//Please, for the love of god check if we have guns before we charge in.
 				if (_VehicleHasGuns) then
 				{
-				_portfolio = _portfolio					+ _DoAttack;
+					_portfolio = _portfolio					+ _DoAttack;
 
 
 				};

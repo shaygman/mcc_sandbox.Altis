@@ -56,7 +56,7 @@ _art  =false;
 				if (!((vehicle _x) in _tempVehicles) and !(_x in (assignedCargo vehicle _x))) then {
 
 					_tempVehicles pushBack (vehicle _x);
-					_TurretWeapons = _class call GAIA_fnc_getTurretWeapons;
+					_TurretWeapons = weapons vehicle _x;
 
 					_UnitAssets = [vehicle _x] call GAIA_fnc_getUnitAssets;
 					_at = (_UnitAssets select 0);
