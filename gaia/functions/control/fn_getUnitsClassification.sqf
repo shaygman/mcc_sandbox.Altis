@@ -145,24 +145,29 @@ switch(true)do
 		case (_CarCount	==  _totalCount):
 			{
 				_class 													= "Car";
+				
+				//Increase speed if we got enough to transport m
 				if (_EnoughCargo) then {_speed 	= "MEDIUM";};
-
-
-
-				//No guns but do hold space? We are a transporter
-				if (!_VehicleHasGuns and _EnoughCargo ) then
-				{
-				_portfolio = _portfolio					+ _DoTransport;
-				_portfolio = _portfolio					+ _DoPark;
-				};
-
-				//Please, for the love of god check if we have guns before we charge in.
+				
+				
+				// Got guns? Get ready for attack orders, else park that shit somewhere.
 				if (_VehicleHasGuns) then
 				{
 				_portfolio = _portfolio					+ _DoAttack;
-				_portfolio = _portfolio					+ _DoPatrol;
 
 				};
+				
+
+				//For now set on 5. I think just a few seats wont make it a transporter.
+				if (_CargoCount>5) then
+				{
+				_portfolio = _portfolio					+ _DoTransport;
+
+				};
+		
+				_portfolio = _portfolio					+ _DoPatrol;
+
+				
 			};
 
 			//Motorized Recon
