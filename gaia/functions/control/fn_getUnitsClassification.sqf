@@ -31,6 +31,14 @@ _submarineCount		= _Assets select 10;
 _AACount			= _Assets select 11;
 _CargoCount			= _Assets select 12;
 _MortarCount		= _Assets select 13;
+_Armor 				= _Assets select 15;
+_atCount			= _Assets select 16;
+_aaCount			= _Assets select 17;
+_artCount			= _Assets select 18;
+
+
+
+
 
 //What is the total shit we got
 _totalCount	= _infantryCount+_CarCount+_tankCount+_artilleryCount+_airCount+_shipCount+_reconCount+_supportCount+_autonomousCount+_staticCount+_submarineCount+_AACount+_mortarcount;
@@ -80,7 +88,7 @@ if (_totalCount >0)  then
 											+(_CarCount *5)
 											+(_tankCount *10)
 											+(_artilleryCount * 5)
-											+(_airCount * 20)
+											+(_airCount * 40)
 											+(_shipCount * 10)
 											+(_reconCount * 3)
 											+(_supportCount * 1)
@@ -89,8 +97,19 @@ if (_totalCount >0)  then
 											+(_submarineCount * 0)
 											+(_AACount * 5)
 											+(_Mortarcount * 5)
-											+(_NrOfVehicleGuns * 5);
+											+(_NrOfVehicleGuns * 5)											
+											+ (_Armor/5);
 };
+
+//	if (_points>0) then
+//	{
+//	player globalchat format ["Points found:%1",_points];
+//	player globalchat format ["at found:%1",_atCount];
+//	player globalchat format ["aa found:%1",_aaCount];
+//	player globalchat format ["aa found:%1",_artCount];
+//
+//	};
+
 //The default speed
 				_speed													= "SLOW";
 
@@ -356,4 +375,4 @@ switch(true)do
 
 
 
-[_Class,_speed,_points,_portfolio,_CargoCount]
+[_Class,_speed,_points,_portfolio,_CargoCount,_atCount,_aaCount,_artCount]
