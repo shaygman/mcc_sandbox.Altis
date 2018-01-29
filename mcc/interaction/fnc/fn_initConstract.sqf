@@ -126,7 +126,7 @@ if (_available) then {
 		_this setPosASL (_ins select 0 select 0);
 		_this setVectorUp (_ins select 0 select 1);
 		_this setDir getDir player;
-	}, MCC_FOB_object] call BIS_fnc_addStackedEventHandler;
+	}, [MCC_FOB_object]] call BIS_fnc_addStackedEventHandler;
 
 	// Add secondary hold fire and place object to the action
 	_action =  player addAction ["Place Constuct", {missionNamespace setVariable ["MCC_FOB_object_position",[getPosASL MCC_FOB_object, getDir MCC_FOB_object]]; [publicVariableServer "MCC_FOB_object_position"]}, "", 0, false, true, "DefaultAction", "true"];
